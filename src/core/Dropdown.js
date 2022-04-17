@@ -87,7 +87,7 @@ class CurrencyDropdown extends React.Component {
     }
 
     render() {
-        const {currency, onChange} = this.props
+        const {currency} = this.props
         const {currencyOpen} = this.state
 
         return (
@@ -103,13 +103,23 @@ class CurrencyDropdown extends React.Component {
                         service.getCurrencies()
                             .map(currency =>
                                 <Buttons.Button message={`${currency.name} (${currency.symbol})`}
-                                                variant='text'
-                                                onClick={() => onChange(currency)}
+                                                onClick={() => this.currencySelected(currency)}
+                                                key={currency.code}
+                                                variant='primary'
                                                 variantType='outline' />)
                     )}
                 </div>
             </div>
         )
+    }
+
+    currencySelected(currency) {
+        const {onChange = changed => {}} = this.props
+
+        onChange(currency)
+        this.setState({
+            currencyOpen: false
+        })
     }
 
     open() {

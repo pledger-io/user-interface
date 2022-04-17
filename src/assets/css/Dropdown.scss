@@ -55,6 +55,17 @@
     position: absolute;
     right: 1rem;
     top: 2.5rem;
+
+    & > .Button {
+      display: block;
+      border: none;
+      padding: .5rem .5rem;
+      min-width: 8rem;
+
+      & + .Button {
+        border-top: 1px solid var(--app-border-color);
+      }
+    }
   }
 }
 

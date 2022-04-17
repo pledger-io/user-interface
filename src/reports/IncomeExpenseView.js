@@ -168,7 +168,7 @@ class IncomeExpenseView extends React.Component {
     refresh() {
         const {year, currency} = this.props
 
-        this.setState({year: year})
+        this.setState({year: year, currency: {code: currency}})
         const updateState = this.state
 
         Promise.all([
@@ -193,15 +193,15 @@ class IncomeExpenseView extends React.Component {
     render() {
         const {charts, year, loaded = false, top: {debtor, creditor}, currency: {symbol}} = this.state
         const {navigate, currency} = this.props
-        if (this.props.year !== this.state.year) {
+        if (this.props.year !== this.state.year || currency !== this.state.currency.code) {
             setTimeout(() => this.refresh(), 50)
         }
 
-        const dateChanged = (year) => {
+        const selectionChanged = ({newYear = year, newCurrency = currency}) => {
             this.setState({
                 loaded: false
             })
-            navigate(`/reports/income-expense/${year}/${currency}`)
+            navigate(`/reports/income-expense/${newYear}/${newCurrency}`)
         }
 
         return (
@@ -210,8 +210,8 @@ class IncomeExpenseView extends React.Component {
                     <BreadCrumbItem label='page.title.reports.default' />
                     <BreadCrumbItem label='page.reports.default.title' />
                     <BreadCrumbMenu>
-                        <Dropdown.Currency currency={currency} />
-                        <Dropdown.Year year={year} onChange={year => dateChanged(year)}/>
+                        <Dropdown.Currency currency={currency} onChange={currency => selectionChanged({newCurrency: currency.code})} />
+                        <Dropdown.Year year={year} onChange={year => selectionChanged({newYear: year})}/>
                     </BreadCrumbMenu>
                 </BreadCrumbs>
 

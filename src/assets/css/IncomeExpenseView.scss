@@ -1,4 +1,12 @@
 .IncomeExpenseView {
+  .Breadcrumb {
+    .Menu {
+      & > div {
+        display: inline;
+      }
+    }
+  }
+
   .Columns {
     display: flex;
 
