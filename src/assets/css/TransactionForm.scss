@@ -1,0 +1,16 @@
+
+.TransactionForm {
+  fieldset.Buttons {
+    display: flex;
+
+    &:before {
+      content: '';
+      flex: 1;
+      max-width: 15vw;
+    }
+
+    & > div {
+      flex: 3;
+    }
+  }
+}

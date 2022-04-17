@@ -1,0 +1,34 @@
+@import "../../config/constants";
+
+.Breadcrumb {
+  transition: left .25s,right .25s,width .25s;
+
+  display: flex;
+  position: relative;
+  flex-wrap: wrap;
+
+  border-radius: 0;
+  border-bottom: 1px solid var(--app-border-color);
+  background-color: var(--app-background);
+
+  padding: .75rem 1rem;
+  list-style: none;
+
+  .Item {
+    flex: 1;
+    max-width: fit-content;
+
+    &:before {
+      content: '/';
+      margin: 0 .25rem;
+    }
+    &:first-child:before {
+      content: '';
+    }
+  }
+
+  .Menu {
+    flex: 1;
+    text-align: -webkit-right;
+  }
+}

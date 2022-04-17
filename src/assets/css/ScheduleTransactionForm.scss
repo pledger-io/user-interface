@@ -1,0 +1,14 @@
+.ScheduleTransactionForm {
+  .Form {
+    .DateRange {
+      & > .Input {
+        display: inline-flex;
+        padding-right: 4em;
+
+        label {
+          min-width: 125px;
+        }
+      }
+    }
+  }
+}

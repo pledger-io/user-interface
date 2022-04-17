@@ -1,0 +1,21 @@
+.Popup.ScheduleTransaction {
+  .Dialog {
+    max-width: 45rem;
+
+    input {
+      opacity: unset;
+    }
+  }
+
+  .RadioButton {
+    margin-left: 125px;
+  }
+
+  footer .Button {
+    border-radius: var(--border-radius-sm) !important;
+  }
+
+  fieldset:last-child {
+    margin-bottom: 0;
+  }
+}

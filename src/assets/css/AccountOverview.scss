@@ -1,0 +1,29 @@
+.AccountOverview {
+
+  .AccountRow {
+    vertical-align: middle;
+
+    .ImageAttachment {
+      max-width: 2rem;
+    }
+  }
+}
+
+.OwnAccountOverview, .AccountOverview, .LiabilityOverview, .ScheduledTransactionOverview {
+  tr {
+
+    td {
+      vertical-align: middle;
+    }
+
+    .Dropdown .Button.icon.muted {
+      visibility: hidden;
+    }
+
+    &:hover {
+      .Dropdown .Button.icon.muted {
+        visibility: visible;
+      }
+    }
+  }
+}

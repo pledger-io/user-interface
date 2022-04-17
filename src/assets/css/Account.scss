@@ -1,0 +1,29 @@
+.Account {
+  margin: .5rem 0;
+
+  h1 {
+    font-size: 1.2em;
+    margin: 0;
+  }
+
+  .Status {
+    font-size: .9em;
+    color: var(--app-text-muted-color);
+
+    display: flex;
+
+    & > * {
+      flex: 1;
+
+      &:first-child {
+        max-width: fit-content;
+        margin-right: .5rem;
+        font-weight: bold;
+
+        &:after {
+          content: ': '
+        }
+      }
+    }
+  }
+}

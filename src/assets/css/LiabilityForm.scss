@@ -1,0 +1,11 @@
+.LiabilityForm {
+  .Form .card {
+    article > div {
+      display: flex;
+
+      & > fieldset {
+        flex: 1
+      }
+    }
+  }
+}

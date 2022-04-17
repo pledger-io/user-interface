@@ -1,0 +1,70 @@
+.IncomeExpenseView {
+  .Columns {
+    display: flex;
+
+    & > * {
+      flex: 1;
+      margin: 0
+    }
+
+    & > * + * {
+      margin-left: 1.5rem;
+    }
+
+    & + .Columns {
+      margin-top: 2rem;
+    }
+
+    &:last-child {
+      margin-bottom: 2rem
+    }
+
+    table.TopAccounts {
+      thead tr th {
+        width: 7em;
+
+        &:first-child {
+          width: auto;
+        }
+      }
+
+      tbody {
+        tr td:first-child {
+          width: 25px;
+
+          .ImageAttachment {
+            width: 25px
+          }
+        }
+      }
+    }
+
+    table.YearSummary {
+      tr {
+        td {
+          border: 0;
+          padding: .15em;
+
+          &:last-child {
+            width: 10em;
+            text-align: right;
+          }
+        }
+
+        &:last-child {
+          td:first-child {
+            text-align: right;
+            font-style: italic;
+
+            &:after {
+              content: ':'
+            }
+          }
+          td:last-child {
+            border-top: 1px solid black;
+          }
+        }
+      }
+    }
+  }
+}

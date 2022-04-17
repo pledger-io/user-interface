@@ -1,0 +1,66 @@
+.Popup {
+  visibility: visible;
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: #00000099;
+
+  .Dialog {
+    background-color: #fff;
+    border: 1px solid var(--app-border-color);
+    border-radius: var(--border-radius);
+
+    max-width: 30rem;
+
+    & > *{
+      &:first-child {
+        border-top-right-radius: var(--border-radius);
+        border-top-left-radius: var(--border-radius);
+      }
+      &:last-child {
+        border-bottom-right-radius: var(--border-radius);
+        border-bottom-left-radius: var(--border-radius);
+      }
+    }
+
+    header, footer {
+      background-color: var(--card-header-background);
+      padding: .5rem 1rem;
+      display: block;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+
+      & > *:last-child {
+        text-align: end;
+        margin-right: -.5rem;
+
+        &:hover {
+          opacity: .5;
+        }
+      }
+    }
+
+    footer {
+      text-align: end;
+
+      .Button {
+        display: inline-flex;
+      }
+    }
+
+    section {
+      padding: 4vh 2vw;
+    }
+  }
+}
+

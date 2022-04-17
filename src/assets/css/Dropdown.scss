@@ -1,0 +1,75 @@
+.Dropdown {
+  max-width: 8px;
+  position: relative;
+
+  .Expanded {
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    visibility: hidden;
+
+    right: 0;
+
+    border: 1px solid var(--app-border-color);
+    border-radius: var(--border-radius);
+
+    & > .Button {
+      border: none;
+      padding: .5rem .5rem;
+      min-width: 8rem;
+
+      &:first-child {
+        border-top-right-radius: var(--border-radius);
+        border-top-left-radius: var(--border-radius);
+      }
+      &:last-child {
+        border-bottom-right-radius: var(--border-radius);
+        border-bottom-left-radius: var(--border-radius);
+      }
+    }
+
+    & > .Button + .Button {
+      margin: 0
+    }
+
+    & > * {
+      flex: 1;
+
+      border-radius: 0;
+    }
+
+    &.true {
+      visibility: visible;
+    }
+  }
+}
+
+.CurrencyDropdown {
+  .Button {
+    display: inline-flex;
+    margin: 0;
+    padding: 0 0.2rem;
+  }
+
+  .Expanded {
+    position: absolute;
+    right: 1rem;
+    top: 2.5rem;
+  }
+}
+
+.YearMonthDropdown, .YearDropdown {
+  .Button {
+    display: inline-flex;
+    margin: 0;
+    padding: 0 0.2rem;
+  }
+
+  .Expanded {
+    & > div {
+      position: absolute;
+      right: 1rem;
+      top: 2.5rem;
+    }
+  }
+}

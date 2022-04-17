@@ -1,0 +1,36 @@
+.LoginCard {
+  display: flex;
+  height: 100vh;
+  align-items: center;
+
+  > * {
+    flex: 1;
+  }
+
+  form {
+    max-width: 420px;
+
+    .register {
+      text-align: -webkit-right;
+    }
+  }
+
+  .card > header {
+    .Expanded {
+      background-color: white;
+
+      border: 1px solid var(--app-border-color);
+      border-radius: var(--border-radius);
+
+      .Button {
+        background-position-x: .25rem !important;
+        padding: .25rem .25rem .25rem 1.4rem;
+
+        &:hover {
+          filter: none;
+          background-color: lightgrey !important;
+        }
+      }
+    }
+  }
+}

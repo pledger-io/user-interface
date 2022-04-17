@@ -1,0 +1,54 @@
+.LiabilityView {
+  .Summary {
+    display: flex;
+    flex-direction: row;
+
+    & > .card {
+      flex: 1;
+      margin: 0;
+
+      h1 {
+        margin: 0;
+      }
+
+      h4 {
+        margin: 0 0 .25rem 0;
+        color: var(--app-text-muted-color);
+        font-weight: normal;
+        font-size: .9em;
+      }
+
+      + .card {
+        margin-left: 2rem;
+        flex: 2
+      }
+    }
+
+    .Details {
+      display: flex;
+      padding: .15rem 0;
+
+      & > label {
+        flex: 1;
+        min-width: 100px;
+        font-weight: 500;
+        &:after {
+          content: ':';
+        }
+      }
+      & > span {
+        flex: 2
+      }
+
+      &.OpenBalance {
+        .Text {
+          color: var(--warning-color)
+        }
+      }
+    }
+  }
+
+  .Table.Transactions {
+    margin-top: .5rem;
+  }
+}

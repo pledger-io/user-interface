@@ -1,0 +1,50 @@
+.card {
+  border-radius: var(--border-radius);
+  margin: 2rem 0;
+
+  header, footer {
+    background: var(--card-header-background);
+    padding: 0.5rem 1rem;
+
+    display: flex;
+    align-items: center;
+    & > * {
+      flex: 1;
+    }
+
+    & > .Buttons {
+      text-align: -webkit-right;
+
+      & > * > *:not(.Button) {
+        text-align: left;
+      }
+
+      & > .Button {
+        display: inline-flex;
+      }
+    }
+  }
+
+  article {
+    background: #fff;
+    padding: 1.25rem;
+  }
+
+  header {
+    border-bottom: var(--app-border-color) 1px solid;
+  }
+
+  footer {
+    border-top: var(--app-border-color) 1px solid;
+  }
+
+  & > *:first-child {
+    border-top-right-radius: var(--border-radius);
+    border-top-left-radius: var(--border-radius);
+  }
+
+  & > *:last-child {
+    border-bottom-right-radius: var(--border-radius);
+    border-bottom-left-radius: var(--border-radius);
+  }
+}

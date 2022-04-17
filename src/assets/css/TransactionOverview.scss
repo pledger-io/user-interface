@@ -1,0 +1,17 @@
+.TransactionOverview {
+  .BalanceButtons {
+    display: flex;
+    flex-direction: row-reverse;
+    margin-bottom: 1.5rem;
+
+    .Button {
+      flex: 1;
+      margin: 0 .25rem;
+      max-width: fit-content;
+
+      &.Hidden {
+        display: none;
+      }
+    }
+  }
+}
