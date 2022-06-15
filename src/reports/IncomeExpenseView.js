@@ -327,7 +327,8 @@ class IncomeExpenseView extends React.Component {
     }
 
     renderTopAccounts(topAccounts) {
-        if (topAccounts.length === 0) {
+        const {loaded} = this.state
+        if (!loaded) {
             return <Loading />
         }
 
