@@ -19,7 +19,7 @@ export class ContractInput extends Autocomplete {
     }
 
     renderInput(field, fieldContext) {
-        const {options = [], selected, resultSelected} = this.state
+        const {options = [], selected = '', resultSelected} = this.state
         const {value} = this.props
         if (selected === '' && value) {
             setTimeout(() => this.setState({

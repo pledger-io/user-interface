@@ -18,7 +18,7 @@ export class BudgetInput extends Autocomplete {
     }
 
     renderInput(field, fieldContext) {
-        const {options = [], resultSelected, selected} = this.state
+        const {options = [], resultSelected, selected = ''} = this.state
         const {value} = this.props
         if (selected === '' && value) {
             setTimeout(() => this.setState({
