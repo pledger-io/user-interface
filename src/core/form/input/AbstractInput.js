@@ -12,7 +12,7 @@ export class AbstractInput extends React.Component {
         // The identifier of the field in the entity
         id: PropTypes.string.isRequired,
         // A text label used for the title of this input (the label)
-        title: PropTypes.string.isRequired,
+        title: PropTypes.string,
         // A text label used for any addition help text for this input
         help: PropTypes.string,
         // Indicator if the field is required
@@ -31,7 +31,7 @@ export class AbstractInput extends React.Component {
     }
 
     render() {
-        const {id, title, help} = this.props;
+        const {id, title = undefined, help} = this.props;
         const field = this.context.fields[id] || {};
         const helpComponent = help ? <HelpTranslation label={help}/> : ''
 
@@ -44,7 +44,7 @@ export class AbstractInput extends React.Component {
 
         return field ? (
             <div className={this.computeClass()}>
-                <label htmlFor={id}><Translation label={title}/>{helpComponent}</label>
+                {title !== undefined && <label htmlFor={id}><Translation label={title}/>{helpComponent}</label>}
                 <div>
                     {this.renderInput(field, this.context)}
                     {this.renderErrors(this.context, field, this.context.errors[id])}

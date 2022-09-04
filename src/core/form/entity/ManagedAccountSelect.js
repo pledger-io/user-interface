@@ -2,6 +2,7 @@ import React from "react";
 
 import restAPI from "../../RestAPI";
 import {SelectInput, SelectOption} from "../input/SelectInput";
+import {FormContext} from "../Form";
 
 class ManagedAccountService {
     lastFetch = null
@@ -24,23 +25,31 @@ class ManagedAccountService {
 const service = new ManagedAccountService()
 
 export class ManagedAccountSelect extends React.Component {
-    state = {
-        accounts: []
-    }
+    static contextType = FormContext
 
-    constructor(props, context) {
-        super(props, context);
-        service.list()
-            .then(accounts => this.setState({
-                accounts: accounts
-            }))
-    }
+    state = {}
 
     render() {
-        const {accounts} = this.state
+        const {accounts = []} = this.state
+        if (!accounts.length) {
+            service.list()
+                .then(accounts => this.setState({
+                    accounts: accounts,
+                    loaded: true
+                }))
+        }
+        const accountSelected = value => {
+            const {id} = this.props
+            const selectedAccount = accounts.find(account => account.id === parseInt(value))
+
+            this.context.onChange({
+                persist: () => {},
+                currentTarget: {value: {id: selectedAccount.id, name: selectedAccount.name}}
+            }, this.context.fields[id])
+        }
 
         return (
-            <SelectInput {...this.props}>
+            <SelectInput {...this.props} onChange={id => accountSelected(id)}>
                 {accounts.map(account => <SelectOption key={account.id} value={account.id} message={account.name} />)}
             </SelectInput>
         )

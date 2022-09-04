@@ -16,8 +16,11 @@ export class AmountInput extends AbstractInput {
     }
 
     renderInput(field, fieldContext) {
-        const {required, readonly, min = 0, max, onChange = value => {}, currency} = this.props
-        const value = field.value || this.props.value || ''
+        const {required, readonly, min = 0, max, onChange = value => {}} = this.props
+        let value = field.value || this.props.value || ''
+        if (readonly) {
+            value = this.props.value
+        }
 
         return (
             <div className='Appender'>

@@ -81,21 +81,46 @@ class TransactionForm extends React.Component {
             tags: entity.tags,
         }
 
+        const splitPromise = ({id}) => new Promise((resolved, reject) => {
+            if (entity.split) {
+                restAPI.patch(`accounts/${account.id}/transactions/${id}`)
+                    .then(resolved)
+                    .catch(reject)
+            } else {
+                resolved()
+            }
+        })
+
         if (isNaN(transaction.id)) {
             restAPI.put(`accounts/${account.id}/transactions`, updatedTransaction)
-                .then(() => Notifications.Service.success('page.transaction.add.success'))
-                .then(() => navigate(-1))
-                .catch(() => Notifications.Service.success('page.transaction.add.failed'))
+                .then(response => splitPromise(response)
+                    .then(() => Notifications.Service.success('page.transaction.add.success'))
+                    .then(() => navigate(-1))
+                    .catch(() => Notifications.Service.success('page.transaction.add.failed')))
+                .catch(() => Notifications.Service.warning('page.transaction.add.failed'))
         } else {
             restAPI.post(`accounts/${account.id}/transactions/${transaction.id}`, updatedTransaction)
-                .then(() => Notifications.Service.success('page.transaction.update.success'))
-                .then(() => navigate(-1))
-                .catch(() => Notifications.Service.success('page.transaction.update.failed'))
+                .then(response => splitPromise(response)
+                    .then(() => Notifications.Service.success('page.transaction.update.success'))
+                    .then(() => navigate(-1))
+                    .catch(() => Notifications.Service.success('page.transaction.update.failed')))
+                .catch(() => Notifications.Service.warning('page.transaction.update.failed'))
         }
     }
 
     render() {
         const {type, account = null, transaction} = this.state
+        const startSplit = () => {
+            this.setState({
+                transaction: {
+                    ...transaction,
+                    split: [{
+                        description: transaction.description,
+                        amount: transaction.amount
+                    }]
+                }
+            })
+        }
 
         return (
             <div className='TransactionForm'>
@@ -131,7 +156,26 @@ class TransactionForm extends React.Component {
                                           value={transaction.amount}
                                           title='Transaction.amount'
                                           currency={transaction.currency || account.account?.currency}
+                                          readonly={transaction.split !== undefined}
                                           required/>
+
+                            {transaction.split &&
+                                <div className="SplitEditor">
+                                    <Input.ComplexType id='split'
+                                                       headers={['Transaction.description', 'Transaction.amount']}
+                                                       rowProducer={({renderInput}) => [
+                                                           renderInput('description'),
+                                                           renderInput('amount', 'number')
+                                                       ]}
+                                                       onChange={value => this.setState({
+                                                           transaction: {
+                                                               ...transaction,
+                                                               amount: value.reduce((value, split) => value + parseFloat(split.amount), 0),
+                                                           }
+                                                       })}
+                                                       blankEntity={{description: '', amount: 0}}
+                                                       value={transaction.split}/>
+                                </div>}
 
                             <Input.Date id='date'
                                         value={transaction.dates?.transaction}
@@ -161,11 +205,12 @@ class TransactionForm extends React.Component {
                                         id='tags' />
                         </fieldset>
 
-                        {!isNaN(transaction.id) &&
+                        {!isNaN(transaction.id) && !transaction.split &&
                         <fieldset className='Buttons'>
-                            <div>
-                                <Buttons.Button label='page.transaction.action.split' variant='primary' variantType='outline' />
-                            </div>
+                            <Buttons.Button label='page.transaction.action.split'
+                                            variant='primary'
+                                            variantType='outline'
+                                            onClick={() => startSplit()}/>
                         </fieldset>
                         }
                     </Card>
@@ -186,7 +231,7 @@ class TransactionForm extends React.Component {
         }
 
         return <Entity.ManagedAccount id='from'
-                                      value={source}
+                                      value={source?.id}
                                       required
                                       title='Transaction.source'/>
     }
@@ -203,7 +248,7 @@ class TransactionForm extends React.Component {
         }
 
         return <Entity.ManagedAccount id='to'
-                                      value={destination}
+                                      value={destination?.id}
                                       required
                                       title='Transaction.to'/>
     }

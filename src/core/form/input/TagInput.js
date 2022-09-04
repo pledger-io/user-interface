@@ -94,10 +94,10 @@ export class TagInput extends Autocomplete {
     }
 
     renderTags() {
-        const {value} = this.props
+        const {value = undefined} = this.props
         const {tags} = this.state
         if (tags.length === 0) {
-            if (value) {
+            if (value !== undefined) {
                 setTimeout(() => this.setState({
                     tags: value
                 }), 50)

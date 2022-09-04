@@ -42,7 +42,7 @@ class AccountRow extends React.Component {
                 <td><Translations.Translation label={`AccountType.${account.type}`}/></td>
                 <td><Formats.Date date={account.history.lastTransaction}/></td>
                 <td>
-                    <When condition={account.account.iban}>{account.account.iban}</When>
+                    <When condition={account.account.iban !== undefined}>{account.account.iban}</When>
                     <When
                         condition={!account.account.iban && account.account.number}>{account.account.number}</When>
                 </td>
@@ -110,7 +110,7 @@ class OwnAccountOverview extends React.Component {
                                                variant='primary'/>]
 
         if (!accounts) {
-            this.loadAccounts()
+            setTimeout(() => this.loadAccounts(), 50)
         }
 
         const accountRows = (accounts || []).map(account => <AccountRow account={account} key={account.id} onDelete={() => reload()}/>)

@@ -37,7 +37,7 @@ export class SelectOption extends React.Component {
         // The label for a translated message in the dropdown option
         label: PropTypes.string,
         // The value of the option in the dropdown
-        value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+        value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.shape])
     }
 
     state = {

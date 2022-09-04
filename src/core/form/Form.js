@@ -47,8 +47,8 @@ export const FormContext = createContext({
      * The errors that are set for any of the attached fields
      */
     errors: {},
-    onChange: event => {
-    }
+    onChange: event => {},
+    addField: field => {}
 })
 
 /**
@@ -130,6 +130,8 @@ export class Form extends React.Component {
                 value: event.currentTarget.value
             }
         });
+
+        return true
     }
 
     submit(event) {

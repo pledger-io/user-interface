@@ -9,6 +9,7 @@ import {RadioButtons} from "./RadioButtons";
 import {ToggleInput} from "./ToggleInput";
 import {AmountInput} from "./AmountInput";
 import {TagInput} from "./TagInput";
+import {ComplexTypeInput} from "./ComplexTypeInput";
 
 export {
     DateInput as Date,
@@ -22,4 +23,5 @@ export {
     ToggleInput as Toggle,
     AmountInput as Amount,
     TagInput as Tags,
+    ComplexTypeInput as ComplexType,
 }
