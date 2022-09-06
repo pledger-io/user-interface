@@ -12,6 +12,7 @@ import {LiabilityForm} from "./liability/LiabilityForm";
 import {AccountTransactionOverview} from "./AccountTransactionOverview";
 import {LiabilityView} from "./liability/LiabilityView";
 import {TransactionForm} from "./transaction/TransactionForm";
+import {LiabilityPaymentForm} from "./transaction/LiabilityPayment";
 
 const ExpenseOverview = withQueryContext(AccountOverview)
 const RevenueOverview = withQueryContext(AccountOverview)
@@ -57,6 +58,8 @@ export const AccountRoutes = [
     <Route key='account-transaction-edit' path='/accounts/:type/:id/transaction/:transactionId/edit' element={<TransactionForm />}/>,
 
     <Route key='liability-transaction-overview' path='/accounts/liability/:id' element={<LiabilityView />}/>,
-    <Route key='liability-transaction-redirect' path='/accounts/liability/:id/transactions' element={<RedirectLiability/>} />
+    <Route key='liability-transaction-redirect' path='/accounts/liability/:id/transactions' element={<RedirectLiability/>} />,
+    <Route key='liability-transaction-add' path='/accounts/liability/:id/transactions/add' element={<LiabilityPaymentForm />}/>,
+    <Route key='liability-transaction-edit' path='/accounts/liability/:id/transaction/:transactionId/edit' element={<LiabilityPaymentForm />}/>,
 
 ]

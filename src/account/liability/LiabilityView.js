@@ -6,7 +6,7 @@ import {
     Card,
     Charts,
     Dates,
-    Formats,
+    Formats, Loading,
     Pagination, Resolver,
     Statistical,
     Translations
@@ -88,6 +88,9 @@ class LiabilityView extends React.Component {
 
     render() {
         const {account, range, charts, page, pagination: {pageSize, records}, transactions, openingTransaction} = this.state
+        if (isNaN(account.id)) {
+            return <Loading />
+        }
 
         return (
             <div className="LiabilityView">
@@ -135,7 +138,7 @@ class LiabilityView extends React.Component {
 
                 <Card title='page.title.transactions.overview'>
                     <Buttons.Button label='page.account.liability.payment.add'
-                                    href={`${Resolver.Account.resolveUrl(account)}/transactions/add/debit`}
+                                    href={`${Resolver.Account.resolveUrl(account)}/transactions/add`}
                                     variant='success'
                                     className={Resolver.Account.isDebtor(account) ? 'Hidden' : ''}
                                     icon={mdiCashPlus}/>

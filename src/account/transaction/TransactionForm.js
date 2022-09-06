@@ -7,6 +7,7 @@ import {Entity, Form, Input, SubmitButton} from "../../core/form";
 import {mdiCancel, mdiContentSave} from "@mdi/js";
 
 import '../../assets/css/TransactionForm.scss'
+import {TransactionService} from "./TransactionService";
 
 class TransactionForm extends React.Component {
     static contextType = PathParams
@@ -65,47 +66,10 @@ class TransactionForm extends React.Component {
     }
 
     process(entity) {
-        const {transaction, account} = this.state
+        const {transaction: {id}, account} = this.state
         const {navigate} = this.props
 
-        const updatedTransaction = {
-            description: entity.description,
-            source: {id: entity.from.id, name: entity.from.name},
-            destination: {id: entity.to.id, name: entity.to.name},
-            amount: entity.amount,
-            currency: transaction.currency ? transaction.currency : account.account.currency,
-            date: entity.date,
-            budget: entity.budget ? {id: -1, name: entity.budget.name} : null,
-            category: entity.category ? {id: -1, name: entity.category.name} : null,
-            contract: entity.contract ? {id: -1, name: entity.contract.name} : null,
-            tags: entity.tags,
-        }
-
-        const splitPromise = ({id}) => new Promise((resolved, reject) => {
-            if (entity.split) {
-                restAPI.patch(`accounts/${account.id}/transactions/${id}`)
-                    .then(resolved)
-                    .catch(reject)
-            } else {
-                resolved()
-            }
-        })
-
-        if (isNaN(transaction.id)) {
-            restAPI.put(`accounts/${account.id}/transactions`, updatedTransaction)
-                .then(response => splitPromise(response)
-                    .then(() => Notifications.Service.success('page.transaction.add.success'))
-                    .then(() => navigate(-1))
-                    .catch(() => Notifications.Service.success('page.transaction.add.failed')))
-                .catch(() => Notifications.Service.warning('page.transaction.add.failed'))
-        } else {
-            restAPI.post(`accounts/${account.id}/transactions/${transaction.id}`, updatedTransaction)
-                .then(response => splitPromise(response)
-                    .then(() => Notifications.Service.success('page.transaction.update.success'))
-                    .then(() => navigate(-1))
-                    .catch(() => Notifications.Service.success('page.transaction.update.failed')))
-                .catch(() => Notifications.Service.warning('page.transaction.update.failed'))
-        }
+        TransactionService.persist(account, entity, navigate, id)
     }
 
     render() {

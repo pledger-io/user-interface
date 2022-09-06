@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from "react";
 import {Link} from "react-router-dom";
 import {
@@ -9,13 +10,13 @@ import {
     mdiTable,
     mdiTrashCanOutline
 } from "@mdi/js";
-
-import {Attachments, Buttons, Dialog, Dropdown, Formats, Loading, Resolver, Translations, When} from "../core";
-
-import '../assets/css/TransactionTable.scss'
 import Icon from "@mdi/react";
 import {ScheduleTransactionDialog} from "./schedule/ScheduleTransactionDialog";
 import {TransactionSplitDialog} from "./TransactionSplitDialog";
+import {EntityShapes} from "../config";
+import {Attachments, Buttons, Dialog, Dropdown, Formats, Loading, Resolver, Translations, When} from "../core";
+
+import '../assets/css/TransactionTable.scss'
 
 const ICON_TYPE_LOOKUP = {
     DEBIT: mdiArrowLeftThin,
@@ -24,6 +25,11 @@ const ICON_TYPE_LOOKUP = {
 }
 
 class TransactionRow extends React.Component {
+    static propTypes = {
+        displayAccount: EntityShapes.Account,
+        transaction: EntityShapes.Transaction
+    }
+
     dropDownActions = {
         close: () => {}
     }
@@ -162,17 +168,23 @@ class TransactionRow extends React.Component {
     }
 
     getEditLink() {
-        const {displaySource, transaction: {id, source}} = this.props
-        const linkForAccount = displaySource || source
+        const {displayAccount, transaction: {id, source}} = this.props
+        const linkForAccount = displayAccount || source
 
         return `${Resolver.Account.resolveUrl(linkForAccount)}/transaction/${id}/edit`
     }
 }
 
 export class TransactionTable extends React.Component {
+    static propTypes = {
+        account: EntityShapes.Account,
+        transactions: PropTypes.arrayOf(EntityShapes.Transaction)
+    }
+
     render() {
-        const {account = null, transactions} = this.props
-        const transactionRows = (transactions || []).map(t => <TransactionRow key={t.id} transaction={t} displayAccount={account}/>)
+        const {account, transactions} = this.props
+        const transactionRows = (transactions || [])
+            .map(t => <TransactionRow key={t.id} transaction={t} displayAccount={account}/>)
 
         return (
             <table className='Table Transactions'>
