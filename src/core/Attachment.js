@@ -81,7 +81,7 @@ class UploadAttachment extends React.Component {
                        accept={accepts || '*.*'}
                        onChange={event => this.selected(event)}/>
                 <When condition={max === 1}>
-                    <img src={UploadSVG} alt='Image attachment'/>
+                    <img src={UploadSVG} alt='Attachment'/>
 
                     <Buttons.Button label={label}
                             icon={mdiTrayArrowUp}
@@ -188,7 +188,7 @@ class ImageAttachment extends React.Component {
 
         if (resolved && data) {
             return (
-                <img src={this.state.data} className='ImageAttachment' alt='Image attachment'/>
+                <img src={this.state.data} className='ImageAttachment' alt='Attachment'/>
             )
         }
         return <div className='ImageAttachment not-found'/>
