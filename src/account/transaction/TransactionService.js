@@ -26,6 +26,7 @@ export const TransactionService = {
     },
 
     persist: (account, entity, navigate, id = NaN) => {
+        console.log(entity)
         const transaction = {
             description: entity.description,
             source: {id: entity.from.id, name: entity.from.name},

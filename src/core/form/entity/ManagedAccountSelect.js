@@ -1,8 +1,10 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import restAPI from "../../RestAPI";
-import {SelectInput, SelectOption} from "../input/SelectInput";
 import {FormContext} from "../Form";
+import {Loading} from "../../index";
+import {AbstractInput} from "../input/AbstractInput";
 
 class ManagedAccountService {
     lastFetch = null
@@ -24,34 +26,60 @@ class ManagedAccountService {
 }
 const service = new ManagedAccountService()
 
-export class ManagedAccountSelect extends React.Component {
+export class ManagedAccountSelect extends AbstractInput {
     static contextType = FormContext
+    static propTypes = {
+        ...AbstractInput.propTypes,
+        value: PropTypes.number
+    }
 
-    state = {}
+    state = {
+        accounts: [],
+        selectedValue: undefined
+    }
 
-    render() {
+    renderInput(field, fieldContext) {
+        this.preload()
+
+        const {accounts, selectedValue} = this.state
+        if (accounts.length === 0) {
+            return <Loading />
+        }
+
+        this.initialValue()
+        const {id} = this.props
+        return (
+            <select id={id} onChange={evt => this.onSelect(evt.currentTarget.value)} value={selectedValue}>
+                {accounts.map(account =>
+                    <option key={account.id} value={account.id}>{account.name}</option>
+                )}
+            </select>
+        )
+    }
+
+    initialValue() {
+        if (!this.state.selectedValue && this.props.value) {
+            setTimeout(() => this.onSelect(this.props.value), 5);
+        }
+    }
+
+    onSelect(value) {
+        const {id} = this.props
+        const {accounts = []} = this.state
+
+        const selectedAccount = accounts.find(account => account.id === parseInt(value))
+        this.setState({selectedValue: value})
+        this.context.onChange({
+            persist: () => {},
+            currentTarget: {value: {id: selectedAccount.id, name: selectedAccount.name}}
+        }, this.context.fields[id])
+    }
+
+    preload() {
         const {accounts = []} = this.state
         if (!accounts.length) {
             service.list()
-                .then(accounts => this.setState({
-                    accounts: accounts,
-                    loaded: true
-                }))
+                .then(accounts => this.setState({accounts: accounts}))
         }
-        const accountSelected = value => {
-            const {id} = this.props
-            const selectedAccount = accounts.find(account => account.id === parseInt(value))
-
-            this.context.onChange({
-                persist: () => {},
-                currentTarget: {value: {id: selectedAccount.id, name: selectedAccount.name}}
-            }, this.context.fields[id])
-        }
-
-        return (
-            <SelectInput {...this.props} onChange={id => accountSelected(id)}>
-                {accounts.map(account => <SelectOption key={account.id} value={account.id} message={account.name} />)}
-            </SelectInput>
-        )
     }
 }
