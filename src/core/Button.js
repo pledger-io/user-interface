@@ -10,7 +10,7 @@ const ButtonPropTypes = {
     // The href that will be navigated to when the button is clicked, ignored if `onClick` is set
     href: PropTypes.string,
     // The styling of the button
-    variant: PropTypes.oneOf(['text', 'success', 'primary', 'warning', 'icon']),
+    variant: PropTypes.oneOf(['text', 'success', 'primary', 'warning', 'info', 'icon']),
     variantType: PropTypes.oneOf(['', 'outline']),
     // Any classes that should be appended
     className: PropTypes.string,

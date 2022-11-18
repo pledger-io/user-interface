@@ -24,11 +24,11 @@ class Service {
 const service = new Service()
 
 class Dropdown extends React.Component {
-    static stateProps = {
+    static propTypes = {
         // The actions that can be triggered, has one function called close() on it
         actions: PropTypes.object,
         // The icon to be used
-        icon: PropTypes.object
+        icon: PropTypes.string
     }
 
     state = {

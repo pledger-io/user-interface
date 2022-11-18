@@ -46,17 +46,17 @@ class TransactionRow extends React.Component {
                 <Formats.Date date={transaction.dates.transaction}/>
                 <Icon path={ICON_TYPE_LOOKUP[transaction.type.code]} size={.8} />
             </td>
-            <td>{this.getSourceImageCode()}</td>
-            <When condition={displayAccount === null}>
-                <td>{this.generateSource()}</td>
-                <td>{this.generateDestination()}</td>
+            <When condition={displayAccount == null}>
+                <td>{this.getAccountTransactionUri(transaction.source)}</td>
+                <td>{this.getSourceImageCode()}</td>
+                <td>{this.getAccountTransactionUri(transaction.destination)}</td>
             </When>
-            <When condition={displayAccount !== null}>
+            {displayAccount && (
                 <td>
                     {this.generateOpposite()}
                     {transaction.split && (<Icon path={mdiTable} size={.6} color='var(--app-text-muted-color)'/>)}
                 </td>
-            </When>
+            )}
             <td>
                 {transaction.description}
                 <When condition={transaction.metadata.hasOwnProperty('category')}>
@@ -133,7 +133,7 @@ class TransactionRow extends React.Component {
 
     generateOpposite() {
         const {displayAccount, transaction: {source, destination}} = this.props
-        const account = source.id === displayAccount.id ? destination : source
+        const account = source.id === displayAccount?.id ? destination : source
 
         return this.getAccountTransactionUri(account)
     }
@@ -151,20 +151,6 @@ class TransactionRow extends React.Component {
         }
 
         return null
-    }
-
-    generateSource() {
-        const {transaction: {source = null, destination = null}} = this.props
-        const account = Resolver.Account.isManaged(source) ? destination : source
-
-        return this.getAccountTransactionUri(account)
-    }
-
-    generateDestination() {
-        const {transaction: {source = null, destination = null}} = this.props
-        const account = Resolver.Account.isManaged(source) ? source : destination
-
-        return this.getAccountTransactionUri(account)
     }
 
     getEditLink() {
@@ -191,7 +177,7 @@ export class TransactionTable extends React.Component {
                 <thead>
                 <tr>
                     <th width='20'/>
-                    <th width='70'><Translations.Translation label='Transaction.date'/></th>
+                    <th width='90'><Translations.Translation label='Transaction.date'/></th>
                     <When condition={account == null}>
                         <th width='150'><Translations.Translation label='Transaction.source'/></th>
                     </When>

@@ -50,6 +50,7 @@ export class ManagedAccountSelect extends AbstractInput {
         const {id} = this.props
         return (
             <select id={id} onChange={evt => this.onSelect(evt.currentTarget.value)} value={selectedValue}>
+                {!selectedValue && <option disabled selected>-</option>}
                 {accounts.map(account =>
                     <option key={account.id} value={account.id}>{account.name}</option>
                 )}

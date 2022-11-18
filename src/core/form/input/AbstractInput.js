@@ -8,7 +8,7 @@ export class AbstractInput extends React.Component {
     static contextType = FormContext
     static propTypes = {
         // The value of the input field
-        value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.shape()]),
+        value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.object]),
         // The identifier of the field in the entity
         id: PropTypes.string.isRequired,
         // A text label used for the title of this input (the label)

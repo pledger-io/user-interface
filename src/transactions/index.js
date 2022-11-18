@@ -5,11 +5,18 @@ import {withNavigation, withPathParams} from "../core/hooks";
 
 import {ScheduledTransactionOverview} from "./schedule/ScheduledTransactionOverview";
 import {ScheduleTransactionForm} from "./schedule/ScheduleTransactionForm";
+import {TransactionGlobalView} from "./TransactionGlobalView";
 
 const ScheduledTransactionEditForm = withNavigation(withPathParams(ScheduleTransactionForm))
 
 export const TransactionRoutes = [
     <Route key='schedule-transaction-overview' path='/automation/schedule/transactions' element={<ScheduledTransactionOverview />}/>,
     <Route key='schedule-transaction-edit' path='/automation/schedule/transactions/:id/edit' element={<ScheduledTransactionEditForm />}/>,
+
+    <Route key='global-transaction-view-all' path='/transactions/income-expense' element={<TransactionGlobalView transfers={false}/>}/>,
+    <Route key='global-transaction-view-all-ranged' path='/transactions/income-expense/:year/:month' element={<TransactionGlobalView transfers={false}/>}/>,
+
+    <Route key='global-transaction-view' path='/transactions/transfers' element={<TransactionGlobalView transfers={true}/>}/>,
+    <Route key='global-transaction-view-ranged' path='/transactions/transfers/:year/:month' element={<TransactionGlobalView transfers={true}/>}/>,
 
 ]

@@ -62,5 +62,13 @@
       padding: 4vh 2vw;
     }
   }
+
+  &.Large {
+    .Dialog {
+      min-width: 35rem;
+      max-width: 45rem;
+    }
+  }
+
 }
 
