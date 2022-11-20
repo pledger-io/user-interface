@@ -186,10 +186,10 @@ class TransactionGlobalView extends React.Component {
 
     renderBreadcrumbMenu() {
         const {range = null} = this.state
-        const {navigate} = this.props
+        const {navigate, transfers} = this.props
 
         const dateChanged = (year, month) => {
-            navigate(`/transactions/transfers/${year}/${month}`)
+            navigate(`/transactions/${transfers ? 'transfers' : 'income-expense'}/${year}/${month}`)
         }
 
         if (range !== null) {

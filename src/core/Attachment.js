@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from 'prop-types';
 import restAPI from "./RestAPI";
 import {mdiTrayArrowUp} from "@mdi/js";
@@ -45,155 +45,90 @@ function matchingType(accepted, presented) {
 const service = new AttachmentService();
 let uploadCounter = 0
 
-/**
- * The upload attachment component can be used to upload a file to the backend system.
- */
-class UploadAttachment extends React.Component {
-    static propTypes = {
-        // The file type accepted by the upload component
-        accepts: PropTypes.string,
-        // The translation text key that will be used on the upload button
-        label: PropTypes.string,
-        // The amount of files that can be uploaded at once, defaults to 1
-        multi: PropTypes.number,
-        // Callback that will be called after an upload succeeded, once per file uploaded
-        onUpload: PropTypes.func
+const validDrop = (event, max, accepts) => {
+    if (event.dataTransfer.items.length > (max || 1)) {
+        Notifications.Service.warning('common.upload.files.tooMany')
+        return false;
     }
 
-    state = {
-        uniqueId: 'attachment-' + (++uploadCounter),
-        dropActive: false,
-        valid: false,
-        selected: []
+    const invalidFiles = [...event.dataTransfer.items]
+        .filter(item => item.kind !== 'file' || !matchingType(accepts, item.type))
+        .length > 0
+
+    if (invalidFiles) {
+        Notifications.Service.warning('common.upload.files.unsupported')
+        return false;
     }
 
-    render() {
-        const {accepts, label, max = 1} = this.props
-        const {uniqueId} = this.state
-
-        return (
-            <div className='UploadAttachment'
-                 onDrop={this.fileDrop.bind(this)}
-                 onDragLeave={this.fileOut.bind(this)}
-                 onDragOver={this.fileOver.bind(this)}>
-                <input type='file'
-                       id={uniqueId}
-                       accept={accepts || '*.*'}
-                       onChange={event => this.selected(event)}/>
-                <When condition={max === 1}>
-                    <img src={UploadSVG} alt='Attachment'/>
-
-                    <Buttons.Button label={label}
-                            icon={mdiTrayArrowUp}
-                            onClick={() => this.openFileDialog()}
-                            variant='text'/>
-                </When>
-            </div>
-        )
-    }
-
-    fileOver(event) {
-        event.preventDefault()
-
-        const {dropActive} = this.state
-        if (!dropActive) {
-            this.setState({
-                ...this.state,
-                valid: this.isValidDrop(event.dataTransfer.items),
-                dropActive: true
-            })
-        }
-    }
-
-    fileOut(event) {
-        event.preventDefault()
-
-        this.setState({
-            ...this.state,
-            valid: false,
-            dropActive: false
-        })
-    }
-
-    fileDrop(event) {
-        event.preventDefault();
-
-        const {onUpload} = this.props
-        const {valid} = this.state
-        if (valid) {
-            const selectedFiles = event.dataTransfer.items
-
-            for (let i = 0; i < selectedFiles.length; i++) {
-                service.upload(selectedFiles[i].getAsFile())
-                    .then(response => (onUpload || (e => console.warn(`No upload handler set, attachmentId=${response}.`)))(response))
-                    .catch(() => Notifications.Service.warning('common.upload.file.failed'))
-            }
-        }
-    }
-
-    isValidDrop(dropItems) {
-        const {selected} = this.state
-        const {max, accepts} = this.props
-
-        if (selected.length + dropItems.length > (max || 1)) {
-            Notifications.Service.warning('common.upload.files.tooMany')
-            return false;
-        }
-
-        for (let x = 0; x < dropItems.length; x++) {
-            if (!(dropItems[x].kind === 'file' && matchingType(accepts, dropItems[x].type))) {
-                Notifications.Service.warning('common.upload.files.unsupported')
-                return false
-            }
-        }
-
-        return true
-    }
-
-    openFileDialog() {
-        const {uniqueId} = this.state
-
-        document.getElementById(uniqueId)
-            .click();
-    }
-
-    selected(event) {
-
-    }
+    return true
 }
 
-class ImageAttachment extends React.Component {
-    static propTypes = {
-        // The unique code for the attachment to be loaded as an image
-        fileCode: PropTypes.string.isRequired
-    }
+const UploadAttachment = ({accepts = '*/*', label, multi = false, onUpload, max = 1}) => {
+    const [dropActive, setDropActive] = useState(false)
+    const [valid, setValid]           = useState(false)
+    const [uniqueId]                  = useState('attachment-' + (++uploadCounter))
 
-    state = {
-        data: null,
-        resolved: false
-    }
+    const onFileOver = event => event.preventDefault() || (!dropActive && (setValid(false) || setDropActive(true)))
+    const onFileOut  = event => event.preventDefault() || setValid(validDrop(event, max, accepts)) || setDropActive(false)
+    const onFileDrop = event => event.preventDefault() || (valid && upload([...event.dataTransfer.items]))
 
-    render() {
-        const {fileCode} = this.props;
-        const {data, resolved} = this.state;
+    const upload = files => files.forEach(file => service.upload(file.getAsFile())
+        .then(response => (onUpload || (e => console.warn(`No upload handler set, attachmentId=${response}.`)))(response))
+        .catch(() => Notifications.Service.warning('common.upload.file.failed')))
 
-        if (!data && !resolved && fileCode) {
-            service.download(fileCode)
-                .then(dataImage => this.setState({
-                    data: dataImage.replace('*/*', 'image/png'),
-                    resolved: true
-                }))
-                .catch(() => this.setState({data: null, resolved: true}))
-        }
+    return (
+        <div className='UploadAttachment'
+             onDrop={onFileDrop}
+             onDragLeave={onFileOver}
+             onDragOver={onFileOut}>
+            <input type='file'
+                   id={uniqueId}
+                   accept={accepts}
+                   onChange={event => this.selected(event)}/>
+            <When condition={max === 1}>
+                <img src={UploadSVG} alt='Attachment'/>
 
-        if (resolved && data) {
-            return (
-                <img src={this.state.data} className='ImageAttachment' alt='Attachment'/>
-            )
-        }
-        return <div className='ImageAttachment not-found'/>
-    }
+                <Buttons.Button label={label}
+                                icon={mdiTrayArrowUp}
+                                onClick={() => document.getElementById(uniqueId).click()}
+                                variant='text'/>
+            </When>
+        </div>
+    )
 }
+UploadAttachment.propTypes = {
+    // The file type accepted by the upload component
+    accepts: PropTypes.string,
+    // The translation text key that will be used on the upload button
+    label: PropTypes.string,
+    // The amount of files that can be uploaded at once, defaults to 1
+    multi: PropTypes.number,
+    // the maximum number of files to support
+    max: PropTypes.number,
+    // Callback that will be called after an upload succeeded, once per file uploaded
+    onUpload: PropTypes.func
+}
+
+
+const ImageAttachment = ({fileCode}) => {
+    const [data, setData] = useState('')
+
+    useEffect(() => {
+        if (fileCode) service.download(fileCode)
+            .then(dataImage => setData(dataImage.replace('*/*', 'image/png')))
+    }, [fileCode])
+
+    if (data !== '') {
+        return <img src={data} className='ImageAttachment' alt='Attachment'/>
+    }
+
+    return <div className='ImageAttachment not-found'/>
+}
+ImageAttachment.propTypes = {
+    // The unique code for the attachment to be loaded as an image
+    fileCode: PropTypes.string
+}
+
 
 export {
     ImageAttachment as Image,

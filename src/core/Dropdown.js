@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useEffect, useState} from "react"
 import PropTypes from 'prop-types'
 
 import * as Buttons from "./Button"
@@ -23,248 +23,143 @@ class Service {
 
 const service = new Service()
 
-class Dropdown extends React.Component {
-    static propTypes = {
-        // The actions that can be triggered, has one function called close() on it
-        actions: PropTypes.object,
-        // The icon to be used
-        icon: PropTypes.string
-    }
+const Dropdown = ({actions, icon, children}) => {
+    const [open, setOpen] = useState(false)
 
-    state = {
-        open: false
-    }
+    useEffect(() => {
+        if (actions) actions.close = () => setOpen(false)
+    }, [actions])
 
-    constructor(props, context) {
-        super(props, context);
-
-        const {actions} = this.props
-        if (actions) {
-            actions.close = () => this.close();
-        }
-    }
-
-    render() {
-        const {open} = this.state
-        const {icon, children} = this.props
-
-        return (
-            <div className='Dropdown'>
-                <Buttons.Button variant='icon' className='muted' icon={icon} onClick={this.toggle.bind(this)}/>
-                <div className={`Expanded ${open}`} onClick={() => this.close()}>{children}</div>
-            </div>
-        )
-    }
-
-    toggle() {
-        this.setState({
-            open: !this.state.open
-        })
-    }
-
-    close() {
-        this.setState({
-            open: false
-        })
-    }
-
-    open() {
-        this.setState({
-            open: true
-        })
-    }
+    return (
+        <div className='Dropdown'>
+            <Buttons.Button variant='icon' className='muted' icon={icon} onClick={() => setOpen(!open)}/>
+            <div className={`Expanded ${open}`} onClick={() => setOpen(false)}>{children}</div>
+        </div>
+    )
+}
+Dropdown.propTypes = {
+    // The actions that can be triggered, has one function called close() on it
+    actions: PropTypes.object,
+    // The icon to be used
+    icon: PropTypes.string
 }
 
-class CurrencyDropdown extends React.Component {
 
-    state = {
-        currencyOpen: false
-    }
 
-    constructor(props, context) {
-        super(props, context);
+const CurrencyDropdown = ({currency, onChange = (currency) => undefined}) => {
+    const [currencyOpen, setCurrencyOpen] = useState(false)
+    const onSelect = selected => onChange(selected) || setCurrencyOpen(false)
+
+    useEffect(() => {
         service.getCurrencies()
-    }
+    }, [])
 
-    render() {
-        const {currency} = this.props
-        const {currencyOpen} = this.state
+    return (
+        <div className="CurrencyDropdown">
+            <Buttons.Button variant='text'
+                            onClick={() => setCurrencyOpen(true)}
+                            icon={mdiMenuDown}
+                            iconPos={'after'}
+                            message={currency} />
 
-        return (
-            <div className="CurrencyDropdown">
-                <Buttons.Button variant='text'
-                                onClick={this.open.bind(this)}
-                                icon={mdiMenuDown}
-                                iconPos={'after'}
-                                message={currency} />
-
-                <div className='Expanded'>
-                    {currencyOpen && (
-                        service.getCurrencies()
-                            .map(currency =>
-                                <Buttons.Button message={`${currency.name} (${currency.symbol})`}
-                                                onClick={() => this.currencySelected(currency)}
-                                                key={currency.code}
-                                                variant='primary'
-                                                variantType='outline' />)
-                    )}
-                </div>
+            <div className='Expanded'>
+                {currencyOpen && (
+                    service.getCurrencies()
+                        .map(currency =>
+                            <Buttons.Button message={`${currency.name} (${currency.symbol})`}
+                                            onClick={() => onSelect(currency)}
+                                            key={currency.code}
+                                            variant='primary'
+                                            variantType='outline' />)
+                )}
             </div>
-        )
-    }
-
-    currencySelected(currency) {
-        const {onChange = changed => {}} = this.props
-
-        onChange(currency)
-        this.setState({
-            currencyOpen: false
-        })
-    }
-
-    open() {
-        const {currencyOpen} = this.state
-        this.setState({
-            currencyOpen: !currencyOpen
-        })
-    }
+        </div>
+    )
+}
+CurrencyDropdown.propTypes = {
+    // The currently selected currency
+    currency: PropTypes.string,
+    // The callback used when a currency is selected
+    onChange: PropTypes.func
 }
 
-class YearDropdown extends React.Component {
-    static propTypes = {
-        year: PropTypes.number,
-        onChange: PropTypes.func.isRequired
-    }
 
-    state = {
-        yearOpen: false
-    }
+const YearDropdown = ({year = 1970, onChange = year => undefined}) => {
+    const [yearOpen, setYearOpen] = useState(false)
+    const onSelect = date => setYearOpen(false) || onChange(date.getFullYear())
 
-    render() {
-        const {year = 1970} = this.props
-        const {yearOpen} = this.state
-        const selectedDate = new Date(year, 0, 1)
+    return (
+        <div className='YearDropdown'>
+            <Buttons.Button variant='text'
+                            onClick={() => setYearOpen(true)}
+                            icon={mdiMenuDown}
+                            iconPos={'after'}
+                            message={'' + year} />
 
-        return (
-            <div className='YearDropdown'>
-                <Buttons.Button variant='text'
-                                onClick={this.openYearDropdown.bind(this)}
-                                icon={mdiMenuDown}
-                                iconPos={'after'}
-                                message={'' + year} />
-
-                <div className='Expanded'>
-                    {yearOpen && (<DatePicker showYearPicker
-                                              dateFormat='yyyy'
-                                              inline
-                                              selected={selectedDate}
-                                              onChange={this.yearSelected.bind(this)}/>)}
-                </div>
+            <div className='Expanded'>
+                {yearOpen && (<DatePicker showYearPicker
+                                          dateFormat='yyyy'
+                                          inline
+                                          selected={new Date(year, 0, 1)}
+                                          onChange={date => onSelect(date)}/>)}
             </div>
-        )
-    }
-
-    openYearDropdown() {
-        const {yearOpen} = this.state
-        this.setState({
-            yearOpen: !yearOpen
-        })
-    }
-
-    yearSelected(date) {
-        const {onChange} = this.props
-
-        this.setState({
-            yearOpen: false,
-            monthOpen: false
-        })
-        onChange(date.getFullYear())
-    }
+        </div>
+    )
+}
+YearDropdown.propTypes = {
+    // The preselected year of the dropdown
+    year: PropTypes.number,
+    // The callback used when a new year is selected
+    onChange: PropTypes.func.isRequired
 }
 
-class MonthYearDropdown extends React.Component {
-    static propTypes = {
-        selected: PropTypes.shape({
-            month: PropTypes.number,
-            year: PropTypes.number
-        }),
-        onChange: PropTypes.func.isRequired
-    }
 
-    state = {
-        yearOpen: false,
-        monthOpen: false
-    }
+const MonthYearDropdown = ({selected: {year, month}, onChange}) => {
+    const [yearOpen, setYearOpen]   = useState(false)
+    const [monthOpen, setMonthOpen] = useState(false)
 
-    render() {
-        const {selected: {month = 1, year = 1970}} = this.props
-        const {yearOpen, monthOpen} = this.state
-        const selectedDate = new Date(year, month - 1, 1)
+    const closeBoth     = ()    => setYearOpen(false) || setMonthOpen(false)
+    const onYearSelect  = date  => closeBoth() || onChange({year: date.getFullYear(), month: month})
+    const onMonthSelect = date  => closeBoth() || onChange({year: date.getFullYear(), month: date.getMonth() + 1})
+    const onOpenMonth   = ()    => closeBoth() || setMonthOpen(!monthOpen)
+    const onOpenYear    = ()    => closeBoth() || setYearOpen(!yearOpen)
 
-        return (
-            <div className='YearMonthDropdown'>
-                <Buttons.Button variant='text'
-                                onClick={this.openMonthDropdown.bind(this)}
-                                icon={mdiMenuDown}
-                                iconPos={'after'}
-                                label={`common.month.${month}`} />
-                <Buttons.Button variant='text'
-                                onClick={this.openYearDropdown.bind(this)}
-                                icon={mdiMenuDown}
-                                iconPos={'after'}
-                                message={'' + year} />
+    const selectedDate = new Date(year, month - 1, 1)
 
-                <div className='Expanded'>
-                    {yearOpen && (<DatePicker showYearPicker
-                                              dateFormat='yyyy'
-                                              inline
-                                              selected={selectedDate}
-                                              onChange={this.yearSelected.bind(this)}/>)}
-                    {monthOpen && (<DatePicker showMonthYearPicker
-                                               dateFormat='MM'
-                                               selected={selectedDate}
-                                               onChange={this.monthSelected.bind(this)}
-                                               inline />)}
-                </div>
+    return (
+        <div className='YearMonthDropdown'>
+            <Buttons.Button variant='text'
+                            onClick={onOpenMonth}
+                            icon={mdiMenuDown}
+                            iconPos={'after'}
+                            label={`common.month.${month}`} />
+            <Buttons.Button variant='text'
+                            onClick={onOpenYear}
+                            icon={mdiMenuDown}
+                            iconPos={'after'}
+                            message={'' + year} />
+
+            <div className='Expanded'>
+                {yearOpen && (<DatePicker showYearPicker
+                                          dateFormat='yyyy'
+                                          inline
+                                          selected={selectedDate}
+                                          onChange={onYearSelect}/>)}
+                {monthOpen && (<DatePicker showMonthYearPicker
+                                           dateFormat='MM'
+                                           selected={selectedDate}
+                                           onChange={onMonthSelect}
+                                           inline />)}
             </div>
-        )
-    }
-
-    yearSelected(date) {
-        const {onChange, selected: {month = 1}} = this.props
-
-        this.setState({
-            yearOpen: false,
-            monthOpen: false
-        })
-        onChange({year: date.getFullYear(), month: month})
-    }
-
-    monthSelected(date) {
-        const {onChange, selected: {year = 1970}} = this.props
-
-        this.setState({
-            yearOpen: false,
-            monthOpen: false
-        })
-        onChange({year: year, month: date.getMonth() + 1})
-    }
-
-    openYearDropdown() {
-        const {yearOpen} = this.state
-        this.setState({
-            yearOpen: !yearOpen,
-            monthOpen: false
-        })
-    }
-
-    openMonthDropdown() {
-        const {monthOpen} = this.state
-        this.setState({
-            monthOpen: !monthOpen,
-            yearOpen: false
-        })
-    }
+        </div>
+    )
+}
+MonthYearDropdown.propTypes = {
+    selected: PropTypes.shape({
+        month: PropTypes.number,
+        year: PropTypes.number
+    }),
+    onChange: PropTypes.func.isRequired
 }
 
 export {

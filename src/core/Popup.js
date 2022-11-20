@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import {mdiCancel, mdiClose, mdiRadioboxBlank} from "@mdi/js";
 
 import {Translation} from "./Translation";
-import {Button} from "./Button";
-
 import {Buttons} from "./index";
 
 import '../assets/css/Popup.scss'
@@ -48,7 +46,7 @@ class Popup extends React.Component {
                 <div className='Dialog'>
                     <header>
                         <Translation label={title}/>
-                        <Button icon={mdiClose}
+                        <Buttons.Button icon={mdiClose}
                                 onClick={this.close.bind(this)}
                                 variant='icon'
                                 className='secondary'/>
@@ -116,7 +114,7 @@ export class Dialog extends React.Component {
 
         return (
             <PopupContext.Provider value={this.popupContext}>
-                <Button {...openButton.props} onClick={() => this.popupContext.open()} />
+                <Buttons.Button {...openButton.props} onClick={() => this.popupContext.open()} />
                 <Popup title={title} className={className} actions={actionsWithClose}>
                     {children}
                 </Popup>
@@ -144,15 +142,15 @@ export class ConfirmPopup extends React.Component {
 
         return (
             <PopupContext.Provider value={this.popupContext}>
-                <Button {...openButton.props} onClick={() => this.popupContext.open()} />
+                <Buttons.Button {...openButton.props} onClick={() => this.popupContext.open()} />
                 <Popup {...this.props}
                        actions={[
-                           <Button label='common.action.confirm'
+                           <Buttons.Button label='common.action.confirm'
                                    key='confirm'
                                    variant='warning'
                                    onClick={() => closeAndConfirm()}
                                    icon={mdiRadioboxBlank}/>,
-                           <Button label='common.action.cancel'
+                           <Buttons.Button label='common.action.cancel'
                                    key='cancel'
                                    variant='secondary'
                                    onClick={() => this.popupContext.close()}
