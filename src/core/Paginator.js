@@ -9,15 +9,15 @@ import '../assets/css/Paginator.scss'
 export const Paginator = ({page = 1, records = 1, pageSize = 10}) => {
     const pages = (Math.ceil(records / pageSize)) || 1
     const links = [...new Array(pages).keys()]
-        .map(page => {
-            if ((page + 1) === this.props.page) {
-                return <div className='PageLink Selected' key={page}>{page + 1}</div>
+        .map(current => {
+            if ((current + 1) === page) {
+                return <div className='PageLink Selected' key={current}>{current + 1}</div>
             }
             return (
-                <Link to={`?page=${page + 1}`}
-                      key={page}
+                <Link to={`?page=${current + 1}`}
+                      key={current}
                       className='PageLink'>
-                    {page + 1}
+                    {current + 1}
                 </Link>
             )
         })

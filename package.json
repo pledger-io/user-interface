@@ -18,7 +18,7 @@
     "luxon": "^3.0.3",
     "chartjs-adapter-luxon": "^1.2.0",
     "web-vitals": "^3.0.1",
-    "node-sass": "^7.0.1",
+    "node-sass": "^8.0.0",
     "axios": "^0.27.2",
     "jwt-decode": "^3.1.2"
   },

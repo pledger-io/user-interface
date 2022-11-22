@@ -25,7 +25,7 @@ routes.push(...ReportRoutes)
 routes.push(...TransactionRoutes)
 
 function App() {
-    if (RestAPI.credentials) {
+    if (RestAPI.user()) {
         return (
             <BrowserRouter>
                 <Sidebar/>

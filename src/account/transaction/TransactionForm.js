@@ -1,7 +1,7 @@
 import React from "react";
 import {PathParams, withNavigation, withPathParams} from "../../core/hooks";
 
-import {BreadCrumbItem, BreadCrumbs, Buttons, Card, Notifications, Resolver, Translations} from "../../core";
+import {BreadCrumbItem, BreadCrumbs, Buttons, Card, Resolver, Translations} from "../../core";
 import restAPI from "../../core/RestAPI";
 import {Entity, Form, Input, SubmitButton} from "../../core/form";
 import {mdiCancel, mdiContentSave} from "@mdi/js";

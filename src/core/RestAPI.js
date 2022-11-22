@@ -1,5 +1,6 @@
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
+import {useNavigate} from "react-router-dom";
 
 const config = {
     root: 'http://dev.ota.pledger.io/api'
@@ -12,12 +13,6 @@ class TokenResponse {
         this.accessToken = props['access_token'];
         this.refreshToken = props['refresh_token'];
     }
-}
-
-function storeTokenInformation(token) {
-    sessionStorage.setItem('refresh-token', token.refreshToken);
-    sessionStorage.setItem('token', token.accessToken);
-    restAPI.credentials = jwt_decode(token.accessToken);
 }
 
 function generateRequestSettings(settings) {
@@ -35,100 +30,44 @@ function generateRequestSettings(settings) {
     }
 }
 
-function handleResponse(axionResponse) {
-    return new Promise((resolved, errorResolve) => {
-        axionResponse.then(response => {
-            if (response.status === 401) {
-                errorResolve('not authenticated');
-                return
-            }
+const RestAPI = (() => {
+    let userProfile = {}
 
-            resolved(response.data);
-        }).catch(error => {
-            const {response} = error;
-            if (response.status === 401) {
-                restAPI.logout();
-            } else {
-                errorResolve(response.data.message || response.statusText);
-            }
-        });
-    })
-}
+    const handle = response => new Promise((resolved, error) =>
+        response
+            .then(httpResponse => resolved(httpResponse.data))
+            .catch(({response}) => {
+                console.log(response)
+                if (response.status === 401) RestAPI.logout()
+                else error(response.data.message || response.statusText)
+            }))
 
-function loadProfile() {
-    if (restAPI.credentials) {
-        restAPI.get('profile')
-            .then(profile => restAPI.activeUser = profile)
-            .catch(exception => console.log(exception));
-    }
-}
-
-class RestAPI {
-    constructor() {
-        this.activeUser = {}
-        this.credentials = null
-        if (sessionStorage.getItem('token')) {
-            this.credentials = jwt_decode(sessionStorage.getItem('token'));
-        }
-    }
-
-    authenticate(username, password) {
-        return new Promise((resolve, error) => {
-            this.post('security/authenticate', {username: username, password: password})
+    const api = {
+        authenticate: (username, password) =>
+            api.post('security/authenticate', {username: username, password: password})
                 .then(serverResponse => {
-                    storeTokenInformation(new TokenResponse(serverResponse));
-                    loadProfile();
-                    resolve();
-                })
-                .catch(e => error(e));
-        })
+                    const token = new TokenResponse(serverResponse)
+                    sessionStorage.setItem('refresh-token', token.refreshToken);
+                    sessionStorage.setItem('token', token.accessToken);
+                }),
+        profile: () => api.get('profile'),
+        logout: () => {
+            sessionStorage.removeItem('token');
+            sessionStorage.removeItem('refresh-token');
+            document.location.href = '/login'
+        },
+        user: () => userProfile,
+
+        get:   (uri, settings = {})       => handle(axios.get(`${config.root}/${uri}`, generateRequestSettings(settings))),
+        patch: (uri, body, settings = {}) => handle(axios.patch(`${config.root}/${uri}`, body, generateRequestSettings(settings))),
+        post:  (uri, body, settings = {}) => handle(axios.post(`${config.root}/${uri}`, body, generateRequestSettings(settings))),
+        put:   (uri, body, settings = {}) => handle(axios.put(`${config.root}/${uri}`, body, generateRequestSettings(settings))),
+        delete: (uri, settings = {})      => handle(axios.delete(`${config.root}/${uri}`, generateRequestSettings(settings)))
     }
 
-    logout() {
-        sessionStorage.removeItem('token');
-        sessionStorage.removeItem('refresh-token');
-        this.credentials = null;
-        this.activeUser = {};
-        document.location.href = '/login';
-    }
+    if (sessionStorage.getItem('token')) api.profile().then(profile => userProfile = profile)
 
-    get(uri, settings = {}) {
-        return handleResponse(axios.get(`${config.root}/${uri}`, generateRequestSettings(settings)));
-    }
+    return api
+})()
 
-    patch(uri, body, settings = {}) {
-        return handleResponse(axios.patch(
-            `${config.root}/${uri}`,
-            body,
-            generateRequestSettings(settings)))
-    }
-
-    post(uri, body, settings = {}) {
-        return handleResponse(axios.post(
-            `${config.root}/${uri}`,
-            body,
-            generateRequestSettings(settings)))
-    }
-
-    put(uri, body, settings = {}) {
-        return handleResponse(axios.put(
-            `${config.root}/${uri}`,
-            body,
-            generateRequestSettings(settings)))
-    }
-
-    delete(uri) {
-        return handleResponse(axios.delete(
-            `${config.root}/${uri}`,
-            generateRequestSettings()))
-    }
-
-    get user() {
-        return this.activeUser;
-    }
-}
-
-const restAPI = new RestAPI();
-loadProfile()
-
-export default restAPI;
+export default RestAPI;

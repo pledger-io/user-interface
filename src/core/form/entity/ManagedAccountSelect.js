@@ -30,7 +30,7 @@ export class ManagedAccountSelect extends AbstractInput {
     static contextType = FormContext
     static propTypes = {
         ...AbstractInput.propTypes,
-        value: PropTypes.number
+        value: PropTypes.any
     }
 
     state = {
