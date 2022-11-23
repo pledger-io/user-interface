@@ -1,7 +1,8 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import RestAPI from "./RestAPI";
 import {mdiHelpCircle} from "@mdi/js";
 import Icon from "@mdi/react";
+import PropTypes from "prop-types";
 
 class TranslationItem {
     constructor() {
@@ -14,74 +15,60 @@ class TranslationItem {
     }
 }
 
-class TranslationService {
-    translations = new Map();
+const TranslationService = (() => {
+    const translations = new Map();
 
-    constructor() {
-        const defaultLanguage = localStorage.getItem('language') || 'en'
-        this.load(defaultLanguage)
+    const getOrCreate = key => {
+        if (!translations.has(key)) translations.set(key, new TranslationItem())
+        return translations.get(key)
+    }
+    const bulkUpdate = localization => Object.entries(localization)
+            .forEach(([key, value]) => getOrCreate(key).resolved(value))
+
+    const service = {
+        load: language => RestAPI.get(`localization/lang/${language}/`).then(bulkUpdate),
+        get: key => getOrCreate(key).$
     }
 
-    load(language) {
-        RestAPI.get(`localization/lang/${language}/`)
-            .then(localized => {
-                for (const key in localized) {
-                    if (!this.translations.has(key)) {
-                        this.translations.set(key, new TranslationItem())
-                    }
-                    this.translations.get(key).resolved(localized[key]);
-                }
-            });
-        localStorage.setItem('language', language)
-    }
+    service.load(localStorage.getItem('language') || 'en')
 
-    get(key) {
-        if (!this.translations.has(key)) {
-            this.translations.set(key, new TranslationItem());
-        }
-        return this.translations.get(key).$;
-    }
+    return service
+})()
+
+/**
+ * The translation component is able to display a localized message on the screen using a given translation
+ * key.
+ */
+const Translation = ({label}) => {
+    const [localized, setLocalized] = useState('!Not translated!')
+
+    useEffect(() => {
+        TranslationService.get(label).then(setLocalized)
+    }, [label])
+
+    return <span className='Translation'>{localized}</span>
+}
+Translation.propTypes = {
+    // The text key to locate the translated text by
+    label: PropTypes.string.isRequired
 }
 
-class Translation extends React.Component {
-    state = {
-        localized: '!Not translated!',
-        textKey: ''
-    }
-
-    render() {
-        const {localized, textKey} = this.state
-        const {label} = this.props
-
-        if (label !== textKey) {
-            service.get(label)
-                .then(localization => this.setState({
-                    localized: localization,
-                    textKey: label
-                }))
-        }
-
-        return <span className='Translation'>{localized}</span>;
-    }
+/**
+ * The help translation is similar to the translation component, with one exception it displays a help icon
+ * before the help text.
+ */
+const HelpTranslation = ({label}) => {
+    return (
+        <span className='HelpText'>
+            <Icon path={mdiHelpCircle} size={.8}/>
+            <Translation label={label}/>
+        </span>
+    )
 }
-
-class HelpTranslation extends React.Component {
-    render() {
-        const {label} = this.props
-
-        return (
-            <span className='HelpText'>
-                <Icon path={mdiHelpCircle} size={.8} />
-                <Translation label={label} />
-            </span>
-        )
-    }
-}
-
-const service = new TranslationService()
+HelpTranslation.propTypes = Translation.propTypes
 
 export {
     Translation,
     HelpTranslation,
-    service as LocalizationService
+    TranslationService as LocalizationService
 }

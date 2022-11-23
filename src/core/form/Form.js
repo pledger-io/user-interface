@@ -1,4 +1,4 @@
-import React, {createContext} from "react";
+import React, {createContext, useState} from "react";
 import PropTypes from 'prop-types';
 
 import '../../assets/css/Form.scss'
@@ -51,102 +51,62 @@ export const FormContext = createContext({
     addField: field => {}
 })
 
+
 /**
  * A form component adds a mutable form to the view for the user. This component supports validation and has a hook
  * to get notified when the form is submitted. This hook is only triggered when there are no validation failures in any
  * of the input components.
  */
-export class Form extends React.Component {
-    static propTypes = {
-        // The handler that will be called with the entity, where the entity is build up of all fields in the form.
-        onSubmit: PropTypes.func.isRequired,
-        // The entity type, used in error building
-        entity: PropTypes.string.isRequired,
-        style: PropTypes.oneOf(['group', 'default'])
+export const Form = ({entity, onSubmit, style = 'group', children}) => {
+    const [fields, setFields] = useState({})
+    const [errors, setErrors] = useState({})
+
+    const onAddField =  ({field}) => {
+        setFields({...fields, [field.id]: field})
+        setErrors({...errors, [field.id]: validateField(field)})
     }
-
-    state = {
-        fields: {},
-        errors: {}
-    }
-
-    register({field}) {
-        const {id} = field;
-
-        field = {
-            value: "",
-            touched: false,
-            ...field
-        };
-
-        this.setState(previous => {
-            return {
-                ...previous,
-                errors: {
-                    ...previous.errors,
-                    [id]: validateField(field)
-                },
-                fields: {
-                    ...previous.fields,
-                    [id]: field
-                }
-            };
-        });
-    }
-
-    render() {
-        const {fields, errors} = this.state;
-        const style = this.props.style || 'group'
-
-        const formContext = {
-            entity: this.props.entity,
-            fields,
-            errors,
-            addField: field => this.register(field),
-            onChange: this.handleInputChanged.bind(this)
-        }
-
-        return (
-            <form onSubmit={event => this.submit(event)}
-                  className={`Form ${style}`}
-                  noValidate={true}
-                  autoComplete='off'
-                  action="">
-                <FormContext.Provider value={formContext}>
-                    {this.props.children}
-                </FormContext.Provider>
-            </form>
-        )
-    }
-
-    handleInputChanged(event, {id}) {
-        event.persist();
-        const {fields} = this.state;
-
-        this.register({
+    const onValueChange = (event, {id}) => event.persist() ||
+        onAddField({
             field: {
                 ...fields[id],
                 touched: true,
                 value: event.currentTarget.value
             }
-        });
+        })
+    const onFormSubmit = event => {
+        event.preventDefault()
 
-        return true
-    }
-
-    submit(event) {
-        event.preventDefault();
-
-        const {onSubmit} = this.props;
-        const entity = {}
-
-        const {fields} = this.state;
-        for (const field in fields) {
-            entity[field] = fields[field].value;
-        }
-        if (onSubmit) {
-            onSubmit(entity);
-        }
+        entity = {}
+        Object.entries(fields)
+            .forEach(([id, field]) => entity[id] = field.value)
+        onSubmit(entity)
         return false;
     }
+
+    const formContext = {
+        fields,
+        errors,
+        addField: onAddField,
+        onChange: onValueChange
+    }
+
+    return (
+        <form onSubmit={onFormSubmit}
+              className={`Form ${style}`}
+              noValidate={true}
+              autoComplete='off'
+              action="#">
+            <FormContext.Provider value={formContext}>
+                {children}
+            </FormContext.Provider>
+        </form>
+    )
 }
+Form.propTypes = {
+    // The handler that will be called with the entity, where the entity is build up of all fields in the form.
+    onSubmit: PropTypes.func.isRequired,
+    // The entity type, used in error building
+    entity: PropTypes.string.isRequired,
+    style: PropTypes.oneOf(['group', 'default'])
+}
+

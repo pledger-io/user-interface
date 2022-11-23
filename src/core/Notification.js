@@ -13,17 +13,18 @@ const NotificationService = (() => {
         notifications = updated
         callback(notifications)
     }
+    const push  = (messageKey, style) => {
+        const notification = <Notification style={style} message={messageKey} key={++notificationId} />
+        setTimeout(() => NotificationService.remove(notification), 2000)
+        notifications.push(notification)
+        notify(notifications)
+    }
 
     return {
-        warning: messageKey => this.push(messageKey, 'warning'),
-        success: messageKey => this.push(messageKey, 'success'),
+        warning: messageKey => push(messageKey, 'warning'),
+        success: messageKey => push(messageKey, 'success'),
         remove: notification => notify(notifications.filter(existing => existing !== notification)),
-        push: (messageKey, style) => {
-            const notification = <Notification style={style} message={messageKey} key={++notificationId} />
-            setTimeout(() => this.remove(notification), 2000)
-            notifications.push(notification)
-            notify(notifications)
-        },
+        push: push,
 
         handler: handler => callback = handler
     }

@@ -1,7 +1,10 @@
 import PropTypes from 'prop-types'
 
+const AccountIdentifier = PropTypes.shape({
+    id: PropTypes.number.isRequired
+})
 const AccountRef = PropTypes.shape({
-    id: PropTypes.number,
+    ...AccountIdentifier,
     name: PropTypes.string,
     type: PropTypes.string
 })
@@ -43,6 +46,7 @@ const Transaction = PropTypes.shape({
 })
 
 const EntityShapes = {
+    AccountIdentifier,
     Account,
     TransactionSchedule,
     Transaction

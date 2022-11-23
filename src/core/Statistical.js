@@ -1,47 +1,26 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from 'prop-types';
 
 import restAPI from "./RestAPI";
 import {Money} from "./Formatters";
 import {EntityShapes} from "../config";
 
-class StatisticsService {
-    balance({accounts = [], categories = [], contracts = [], expenses = [], onlyIncome, allMoney, dateRange, currency}) {
-        return restAPI.post('statistics/balance', {
-            accounts,
-            categories,
-            contracts,
-            expenses,
-            onlyIncome,
-            allMoney,
-            dateRange,
-            currency
-        })
+const StatisticsService = (() => {
+    return {
+        balance: ({accounts = [], categories = [], contracts = [], expenses = [], onlyIncome, allMoney, dateRange, currency}) =>
+            restAPI.post('statistics/balance', {accounts, categories, contracts, expenses, onlyIncome, allMoney, dateRange, currency}),
+        daily: searchCommand => restAPI.post('statistics/balance/daily', searchCommand)
     }
+})()
 
-    daily(searchCommand) {
-        return restAPI.post('statistics/balance/daily', searchCommand)
-    }
-}
+/**
+ * The balance component can display a computed balance on a given search command. Where the search command can
+ * be setup using the properties of the component.
+ */
+const BalanceComponent = ({accounts, income, currency, range}) => {
+    const [balance, setBalance] = useState(0)
 
-const service = new StatisticsService()
-
-class BalanceComponent extends React.Component {
-    static propTypes = {
-        accounts: PropTypes.arrayOf(EntityShapes.Account),
-        income: PropTypes.bool,
-        currency: PropTypes.string,
-        range: PropTypes.object
-    }
-
-    state = {
-        balance: 0,
-        resolved: false
-    }
-
-    constructSearch() {
-        const {accounts, income, currency, range} = this.props;
-
+    useEffect(() => {
         const filter = {
             accounts: accounts || [],
             allMoney: income == null,
@@ -55,30 +34,24 @@ class BalanceComponent extends React.Component {
             }
         }
 
-        return filter
-    }
+        StatisticsService.balance(filter)
+            .then(balanceResponse => setBalance(balanceResponse.balance))
+    }, [accounts, income, currency, range])
 
-    render() {
-        const {currency} = this.props;
-        const {balance, resolved} = this.state;
-
-        if (!resolved) {
-            service.balance(this.constructSearch())
-                .then(balanceResponse => this.setState({
-                    balance: balanceResponse.balance,
-                    resolved: true
-                }))
-        }
-
-        return (
-            <span className='Statistical-Balance'>
-                <Money money={balance} currency={currency} />
-            </span>
-        )
-    }
+    return <span className='Statistical-Balance'><Money money={balance} currency={currency} /></span>
+}
+BalanceComponent.propTypes = {
+    // A list of accounts to filter on
+    accounts: PropTypes.arrayOf(EntityShapes.AccountIdentifier),
+    // Should income / expenses be displayed (or if absent both)
+    income: PropTypes.bool,
+    // The currency to fetch the balance in
+    currency: PropTypes.string,
+    // An optional date range for the balance
+    range: PropTypes.object
 }
 
 export {
-    service as Service,
+    StatisticsService as Service,
     BalanceComponent as Balance
 }

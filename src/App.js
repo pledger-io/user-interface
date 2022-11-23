@@ -1,4 +1,3 @@
-import RestAPI from "./core/RestAPI";
 import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import {Sidebar} from "./core/Sidebar";
 import RegisterCard from "./security/RegisterCard";
@@ -25,7 +24,7 @@ routes.push(...ReportRoutes)
 routes.push(...TransactionRoutes)
 
 function App() {
-    if (RestAPI.user()) {
+    if (sessionStorage.getItem('token')) {
         return (
             <BrowserRouter>
                 <Sidebar/>
