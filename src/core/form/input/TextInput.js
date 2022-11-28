@@ -1,35 +1,46 @@
 import PropTypes from 'prop-types';
 
-import {AbstractInput} from "./AbstractInput";
+import {InputGroup, InputValidationErrors, useInputField} from "./AbstractInput";
 
-export class TextInput extends AbstractInput {
-    static propTypes = {
-        ...AbstractInput.propTypes,
-        // Indicator if the field is in read only mode
-        readonly: PropTypes.bool,
-        // The type of input to use, can be any of text | number | password
-        type: PropTypes.oneOf(['number', 'text', 'password']),
-        // Any pattern validation that should be applied
-        pattern: PropTypes.string,
-        // Any minimum value validation, only valid for type = 'number'
-        min: PropTypes.number,
-        minLength: PropTypes.number,
-        maxLength: PropTypes.number,
-    }
+export const TextInput = (props) => {
+    const [field, errors, onChange] = useInputField({onChange: props.onChange, field: props})
 
-    renderInput(field, formContext) {
-        const {required, type, pattern, readonly, minLength, maxLength, onChange = value => {}} = this.props
-        const value = field.value || this.props.value || '';
+    if (!field) return props.id
+    return (
+        <InputGroup id={props.id}
+                    required={props.required}
+                    title={props.title}
+                    help={props.help}
+                    valid={field.touched ? errors.length === 0 : undefined }>
+            <input id={field.id}
+                   name={field.id}
+                   value={field.value}
+                   required={props.required}
+                   pattern={props.pattern}
+                   readOnly={props.readonly}
+                   onChange={onChange}
+                   minLength={props.minLength}
+                   maxLength={props.maxLength}
+                   type={props.type}/>
 
-        return <input id={field.id}
-                      name={field.id}
-                      value={field && value}
-                      required={required}
-                      pattern={pattern}
-                      readOnly={readonly}
-                      onChange={e => formContext.onChange(e, field) && onChange(e.currentTarget.value)}
-                      minLength={minLength}
-                      maxLength={maxLength}
-                      type={type}/>
-    }
+            {field.touched && <InputValidationErrors field={field} errors={errors} />}
+        </InputGroup>
+    )
+}
+TextInput.propTypes = {
+    ...InputGroup.propTypes,
+    // The value of the input field
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.object]),
+    // The minimum length of a text input
+    minLength: PropTypes.number,
+    // The maximum length of a text input
+    maxLength: PropTypes.number,
+    // The type of input to use, can be any of text | number | password
+    type: PropTypes.oneOf(['number', 'text', 'password']),
+    // Any pattern validation that should be applied
+    pattern: PropTypes.string,
+    // Any minimum value validation, only valid for type = 'number'
+    min: PropTypes.number,
+    // A change handle that will receive a value changes
+    onChange: PropTypes.func,
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import {useContext} from "react";
 
 import {Button} from "../../Button";
 import {FormContext} from "../Form";
@@ -7,20 +7,16 @@ import {FormContext} from "../Form";
  * The submit button component allows for forms to be submitted to the
  * `onSubmit` handler of the form.
  */
-export class SubmitButton extends React.Component {
-    static contextType = FormContext
+export const SubmitButton = (props) => {
+    const formContext = useContext(FormContext)
 
-    render() {
-        const {errors} = this.context
+    const hasErrors = Object.values(formContext.errors)
+        .filter(fieldErrors => fieldErrors.length > 0)
+        .length > 0
 
-        let hasErrors = false
-        for (let field in errors) {
-            hasErrors = hasErrors || errors[field].length > 0
-        }
-
-        return <Button {...this.props}
-                       disabled={hasErrors}
-                       variant='primary'
-                       type='submit'/>
-    }
+    return <Button {...props}
+                   disabled={hasErrors}
+                   variant='primary'
+                   type='submit'/>
 }
+

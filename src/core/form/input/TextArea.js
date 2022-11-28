@@ -1,21 +1,30 @@
 import React from "react";
 
-import {AbstractInput} from "./AbstractInput";
+import {InputGroup, InputValidationErrors, useInputField} from "./AbstractInput";
 
 /**
- * The text area component will add an input text area on the form for the user to fill.
+ * A text area that is bound to the form context it is in.
  */
-export class TextArea extends AbstractInput {
-    static propTypes = AbstractInput.propTypes
+export const TextArea = (props) => {
+    const [field, errors, onChange] = useInputField({onChange: props.onChange, field: props})
 
-    renderInput(field, formContext) {
-        const {required, onChange = value => {}} = this.props
-        const value = field.value || this.props.value || '';
+    if (!field) return props.id
+    return (
+        <InputGroup id={props.id}
+                    required={props.required}
+                    title={props.title}
+                    help={props.help}
+                    valid={field.touched ? errors.length === 0 : undefined }>
+            <textarea id={field.id}
+                      name={field.id}
+                      value={field && props.value}
+                      required={props.required}
+                      onChange={onChange}/>
 
-        return <textarea id={field.id}
-                         name={field.id}
-                         value={field && value}
-                         required={required}
-                         onChange={e => formContext.onChange(e, field) && onChange(e.currentTarget.value)}/>
-    }
+            {field.touched && <InputValidationErrors field={field} errors={errors} />}
+        </InputGroup>
+    )
+}
+TextArea.propTypes = {
+    ...InputGroup.propTypes
 }

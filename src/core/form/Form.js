@@ -1,4 +1,4 @@
-import React, {createContext, useState} from "react";
+import React, {createContext, useMemo, useState} from "react";
 import PropTypes from 'prop-types';
 
 import '../../assets/css/Form.scss'
@@ -35,8 +35,7 @@ function validateField(field) {
 
 /**
  * The form context allows for validating and updating field values.
- *
- * @type {React.Context<{fields: {}, errors: {}}>}
+ * @type {React.Context<{onChange: (function(*, *): undefined), addField: (function(*): undefined), fields: {}, errors: {}, entity: string}>}
  */
 export const FormContext = createContext({
     /**
@@ -47,8 +46,9 @@ export const FormContext = createContext({
      * The errors that are set for any of the attached fields
      */
     errors: {},
-    onChange: event => {},
-    addField: field => {}
+    entity: '',
+    onChange: event => undefined,
+    addField: field => undefined,
 })
 
 
@@ -62,10 +62,11 @@ export const Form = ({entity, onSubmit, style = 'group', children}) => {
     const [errors, setErrors] = useState({})
 
     const onAddField =  ({field}) => {
-        setFields({...fields, [field.id]: field})
-        setErrors({...errors, [field.id]: validateField(field)})
+        setFields(current => ({...current, [field.id]: field}))
+        setErrors(current => ({...current, [field.id]: validateField(field)}))
     }
-    const onValueChange = (event, {id}) => event.persist() ||
+    const onValueChange = (event, {id}) => {
+        event.persist()
         onAddField({
             field: {
                 ...fields[id],
@@ -73,6 +74,7 @@ export const Form = ({entity, onSubmit, style = 'group', children}) => {
                 value: event.currentTarget.value
             }
         })
+    }
     const onFormSubmit = event => {
         event.preventDefault()
 
@@ -86,6 +88,7 @@ export const Form = ({entity, onSubmit, style = 'group', children}) => {
     const formContext = {
         fields,
         errors,
+        entity: entity,
         addField: onAddField,
         onChange: onValueChange
     }

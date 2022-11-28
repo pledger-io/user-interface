@@ -1,6 +1,43 @@
 import {useNavigate, useParams, useSearchParams} from "react-router-dom";
-import React, {createContext, useContext, useEffect} from "react";
+import React, {createContext, useContext, useEffect, useState} from "react";
 
+/**
+ * Binds a value to the localstorage, fetching it from localstorage if present. Or else using the initialValue
+ * argument.
+ */
+export const useLocalStorage = (key, initialValue) => {
+    const [value, setValue] = useState(() => {
+        return localStorage.getItem(key) || (() => {
+            if (initialValue instanceof Function) return initialValue()
+            return initialValue
+        })()
+    })
+
+    useEffect(() => {
+        localStorage.setItem(key, value)
+    }, [value])
+
+    return [value, setValue]
+}
+
+export const useLocalStorageJson = (key, initialValue) => {
+    const [value, setValue] = useState(() => {
+        return JSON.parse(localStorage.getItem(key)) || (() => {
+            if (initialValue instanceof Function) return initialValue()
+            return initialValue
+        })()
+    })
+
+    useEffect(() => {
+        localStorage.setItem(key, JSON.stringify(value))
+    }, [value])
+
+    return [value, setValue]
+}
+
+/**
+ * @deprecated
+ */
 export function withNavigation(Component) {
     return props => <Component {...props} navigate={useNavigate()}/>;
 }

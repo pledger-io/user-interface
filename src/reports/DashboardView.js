@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {Card, Charts, Dates, Formats, Statistical, Translations, When} from "../core";
 import Icon from "@mdi/react";
 import {
@@ -70,11 +70,11 @@ class DashboardService {
     }
 }
 
-class SummaryComponent extends React.Component {
-    render() {
-        const {currency, icon = null, current, previous = null, title} = this.props
-        let comparisonClass = 'same'
-        let comparisonKey = 'page.dashboard.summary.trend.same'
+const SummaryComponent = ({currency, current, previous, title, icon}) => {
+    let comparisonClass = 'same'
+    let comparisonKey = 'page.dashboard.summary.trend.same'
+
+    useEffect(() => {
         if (current < previous) {
             comparisonClass = 'down'
             comparisonKey = 'page.dashboard.summary.trend.down'
@@ -82,33 +82,24 @@ class SummaryComponent extends React.Component {
             comparisonClass = 'up'
             comparisonKey = 'page.dashboard.summary.trend.up'
         }
+    }, [current, previous])
 
-        return (
-            <Card>
-                <div>
-                    <h1><Translations.Translation label={title} /></h1>
-                    <Formats.Money money={current} currency={currency} />
-                    <When condition={previous !== null}>
-                        <div className={`Comparison ${comparisonClass}`}>
-                            <Translations.Translation label={comparisonKey} />
-                        </div>
-                    </When>
-                </div>
-                {this.renderIcon()}
-            </Card>)
-    }
-
-    renderIcon() {
-        const {icon = null} = this.props
-        if (icon !== null) {
-            return (
-                <div className="Icon">
-                    <Icon path={icon}/>
-                </div>
-            )
-        }
-    }
+    return (
+        <Card>
+            <div>
+                <h1><Translations.Translation label={title} /></h1>
+                <Formats.Money money={current} currency={currency} />
+                { previous && (
+                    <div className={`Comparison ${comparisonClass}`}>
+                        <Translations.Translation label={comparisonKey} />
+                    </div>
+                )}
+            </div>
+            {icon && <div className="Icon"><Icon path={icon}/></div>}
+        </Card>
+    )
 }
+
 
 const percentageOfYear = DASHBOARD_DAYS / 365
 const range = Dates.Ranges.previousDays(DASHBOARD_DAYS)
