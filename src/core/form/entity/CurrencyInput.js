@@ -1,35 +1,28 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 
 import restAPI from "../../RestAPI";
 import {SelectInput} from "../input/SelectInput";
 
 /**
- * Specification of a Select but then only ment for currency values.
+ * Specification of a Select but then only meant for currency values.
+ * @param props
+ * @returns {*|JSX.Element}
+ * @constructor
  */
-export class CurrencyInput extends React.Component {
-    static propTypes = SelectInput.propTypes
+export const CurrencyInput = (props) => {
+    const [currencies, setCurrencies] = useState()
 
-    state = {
-        currencies: []
-    }
+    useEffect(() => {
+        restAPI.get('settings/currencies').then(setCurrencies)
+    }, [])
 
-    render() {
-        const {currencies} = this.state
-        if (!currencies.length) {
-            restAPI.get('settings/currencies')
-                .then(currencies => this.setState({
-                    currencies: currencies
-                }))
-        }
-
-        const options = currencies
-            .filter(currency => currency.enabled)
-            .map(currency => <option key={currency.code} value={currency.code}>{currency.symbol}</option>)
-
-        return (
-            <SelectInput {...this.props}>
-                {options}
-            </SelectInput>
-        )
-    }
+    if (!currencies) return props.id
+    return (
+        <SelectInput {...props}>
+            {(currencies || [])
+                .filter(currency => currency.enabled)
+                .map(currency => <option key={currency.code} value={currency.code}>{currency.symbol}</option>)}
+        </SelectInput>
+    )
 }
+CurrencyInput.propTypes = SelectInput.propTypes
