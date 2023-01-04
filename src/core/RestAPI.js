@@ -61,6 +61,7 @@ const AccountRepository = (api => {
             accountTypes: types,
             page: page
         }),
+        own: () => api.get('accounts/my-own'),
         get: id => api.get(`accounts/${id}`),
         firstTransaction: (id, description) => api.get(`accounts/${id}/transactions/first?description=${description}`),
         transactions: (id, range, page) => api.post(`accounts/${id}/transactions`, {

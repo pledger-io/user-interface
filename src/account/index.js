@@ -2,12 +2,11 @@ import React, {lazy, useState} from "react";
 import {Navigate, Route} from "react-router-dom";
 import {withPathParams, withQueryContext} from "../core/hooks";
 
-import {OwnAccountOverview} from "./OwnAccountOverview";
 import {AccountOverview} from "./AccountOverview";
 
-import '../assets/css/Account.scss'
 import {TransactionForm} from "./transaction/TransactionForm";
 import {LiabilityPaymentForm} from "./transaction/LiabilityPayment";
+import '../assets/css/Account.scss'
 
 const ExpenseOverview = withQueryContext(AccountOverview)
 const RevenueOverview = withQueryContext(AccountOverview)
@@ -23,8 +22,12 @@ const RedirectLiability = withPathParams(props => {
     return ''
 })
 
+
+const OwnAccountOverview = lazy(() => import('./OwnAccountOverview'))
+
 const AccountForm = lazy(() => import("./AccountForm"))
 const AccountTransactionOverview = lazy(() => import("./AccountTransactionOverview"))
+
 const LiabilityView = lazy(() => import('./liability/LiabilityView'))
 const LiabilityOverview = lazy(() => import('./liability/LiabilityOverview'))
 const LiabilityForm = lazy(() => import('./liability/LiabilityForm'))

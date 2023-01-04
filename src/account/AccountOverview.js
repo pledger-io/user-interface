@@ -58,8 +58,8 @@ class AccountRow extends React.Component {
                     <div className='Text Muted'>{account.description}</div>
                 </td>
                 <td>
-                    <When condition={account.account.iban}>{account.account.iban}</When>
-                    <When condition={!account.account.iban && account.account.number}>{account.account.number}</When>
+                    <When condition={account.account.iban !== null}>{account.account.iban}</When>
+                    <When condition={account.account.iban === null && account.account.number}>{account.account.number}</When>
                 </td>
                 <td><Statistical.Balance accounts={[account]} currency={account.account.currency}/></td>
                 <td>
