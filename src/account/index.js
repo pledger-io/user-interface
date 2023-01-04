@@ -7,7 +7,6 @@ import {AccountOverview} from "./AccountOverview";
 
 import '../assets/css/Account.scss'
 import {LiabilityForm} from "./liability/LiabilityForm";
-import {LiabilityView} from "./liability/LiabilityView";
 import {TransactionForm} from "./transaction/TransactionForm";
 import {LiabilityPaymentForm} from "./transaction/LiabilityPayment";
 
@@ -29,6 +28,7 @@ const RedirectLiability = withPathParams(props => {
 
 const AccountForm = lazy(() => import("./AccountForm"))
 const AccountTransactionOverview = lazy(() => import("./AccountTransactionOverview"))
+const LiabilityView = lazy(() => import('./liability/LiabilityView'))
 const LiabilityOverview = lazy(() => import('./liability/LiabilityOverview'))
 
 export const AccountRoutes = [

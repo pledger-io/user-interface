@@ -39,7 +39,7 @@ AccountTransactionUrl.propTypes = {
 }
 
 const TransactionRow = ({displayAccount = null, transaction}) => {
-    const [accountIcon, setAccountIcon]     = useState({})
+    const [accountIcon, setAccountIcon]     = useState()
     const [opposite, setOpposite]           = useState({})
     const [displayAmount, setDisplayAmount] = useState(0)
 

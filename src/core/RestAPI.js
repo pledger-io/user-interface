@@ -62,6 +62,7 @@ const AccountRepository = (api => {
             page: page
         }),
         get: id => api.get(`accounts/${id}`),
+        firstTransaction: (id, description) => api.get(`accounts/${id}/transactions/first?description=${description}`),
         transactions: (id, range, page) => api.post(`accounts/${id}/transactions`, {
             page: page,
             dateRange: {
