@@ -121,12 +121,12 @@ const config = [
         icon: mdiWallet
       },
       {
-        href: '/accounts/expense',
+        href: '/accounts/expense?page=1',
         label: 'page.nav.accounts.creditor',
         icon: mdiCartOutline
       },
       {
-        href: '/accounts/revenue',
+        href: '/accounts/revenue?page=1',
         label: 'page.nav.accounts.debtor',
         icon: mdiCashMultiple
       },

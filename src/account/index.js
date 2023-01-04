@@ -1,15 +1,10 @@
 import React, {lazy, useState} from "react";
 import {Navigate, Route} from "react-router-dom";
-import {withPathParams, withQueryContext} from "../core/hooks";
-
-import {AccountOverview} from "./AccountOverview";
+import {withPathParams} from "../core/hooks";
 
 import {TransactionForm} from "./transaction/TransactionForm";
 import {LiabilityPaymentForm} from "./transaction/LiabilityPayment";
 import '../assets/css/Account.scss'
-
-const ExpenseOverview = withQueryContext(AccountOverview)
-const RevenueOverview = withQueryContext(AccountOverview)
 
 const RedirectLiability = withPathParams(props => {
     const [path, setPath] = useState(null)
@@ -24,6 +19,7 @@ const RedirectLiability = withPathParams(props => {
 
 
 const OwnAccountOverview = lazy(() => import('./OwnAccountOverview'))
+const AccountOverview = lazy(() => import('./AccountOverview'))
 
 const AccountForm = lazy(() => import("./AccountForm"))
 const AccountTransactionOverview = lazy(() => import("./AccountTransactionOverview"))
@@ -34,8 +30,8 @@ const LiabilityForm = lazy(() => import('./liability/LiabilityForm'))
 
 export const AccountRoutes = [
     <Route key='own-account' path='/accounts/own' element={<OwnAccountOverview/>}/>,
-    <Route key='debit-overview' path='/accounts/revenue' element={<RevenueOverview type='debtor'/>}/>,
-    <Route key='credit-overview' path='/accounts/expense' element={<ExpenseOverview type='creditor'/>}/>,
+    <Route key='debit-overview' path='/accounts/revenue' element={<AccountOverview type='debtor'/>}/>,
+    <Route key='credit-overview' path='/accounts/expense' element={<AccountOverview type='creditor'/>}/>,
     <Route key='liability-overview' path='/accounts/liability' element={<LiabilityOverview />}/>,
 
     <Route key='account-edit' path='/accounts/own/:id/edit' element={<AccountForm type='accounts' />}/>,

@@ -46,7 +46,7 @@ const UploadAttachment = ({accepts = '*/*', label, multi = false, onUpload, max 
     const onFileDrop = event => event.preventDefault() || (valid && upload([...event.dataTransfer.items]))
 
     const upload = files => files.forEach(file => AttachmentRepository.upload(file.getAsFile())
-        .then(response => (onUpload || (e => console.warn(`No upload handler set, attachmentId=${response}.`)))(response))
+        .then(response => (onUpload || (_ => console.warn(`No upload handler set, attachmentId=${response}.`)))(response))
         .catch(() => Notifications.Service.warning('common.upload.file.failed')))
 
     return (
@@ -90,6 +90,7 @@ const ImageAttachment = ({fileCode}) => {
         if (fileCode) {
             AttachmentRepository.download(fileCode)
                 .then(dataImage => setData(dataImage.replace('*/*', 'image/png')))
+                .catch(() => undefined)
         }
     }, [fileCode])
 

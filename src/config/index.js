@@ -20,7 +20,8 @@ const Account = PropTypes.shape({
     interest: PropTypes.shape({
         interest: PropTypes.number,
         periodicity: PropTypes.string
-    })
+    }),
+    iconFileCode: PropTypes.string
 })
 
 const TransactionSchedule = PropTypes.shape({
