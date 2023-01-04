@@ -1,59 +1,55 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from 'prop-types';
 
 import DatePicker from "react-datepicker";
-import {AbstractInput} from "./AbstractInput";
+import {InputGroup, InputValidationErrors, useInputField} from "./AbstractInput";
 
 import 'react-datepicker/dist/react-datepicker.css';
+
+const DateFormats = {
+    nl: 'dd-MM-yyyy',
+    en: 'MM/dd/yyyy',
+    de: 'dd.MM.yyyy'
+}
 
 /**
  * A date selection component for forms.
  */
-export class DateInput extends AbstractInput {
-    static dateFormats = {
-        nl: 'dd-MM-yyyy',
-        en: 'MM/dd/yyyy',
-        de: 'dd.MM.yyyy'
-    }
-    static propTypes = {
-        ...AbstractInput.propTypes,
-        // Indicator if the field is in read only mode
-        readonly: PropTypes.bool
+const DateInput = (props) => {
+    const [field, errors, onChange] = useInputField({onChange: props.onChange, field: props})
+    const [selected, setSelected]   = useState(new Date())
+
+    const onDateChanged = date => {
+        const isoDate = date.toISOString().substring(0, 10)
+        onChange(isoDate)
+        setSelected(date)
     }
 
-    constructor(props, context) {
-        super(props, context);
+    useEffect(() => {
+        if (props.value) setSelected(new Date(props.value))
+    }, [props.value])
 
-        this.state = {
-            selected: (props.hasOwnProperty('value') && props.value) ? new Date(props.value) : ''
-        }
-    }
+    if (!field) return ""
+    return (
+        <InputGroup id={props.id}
+                    required={props.required}
+                    title={props.title}
+                    help={props.help}
+                    valid={field.touched ? errors.length === 0 : undefined }>
+            <DatePicker required={props.required}
+                        selected={selected}
+                        readOnly={props.readonly}
+                        dateFormat={DateFormats[localStorage.getItem('language')]}
+                        onChange={onDateChanged}/>
 
-    renderInput(field, formContext) {
-        const {required, readonly, value} = this.props
-        const {selected} = this.state
-
-        if (!selected && value) {
-            setTimeout(() => this.setState({
-                selected: new Date(value)
-            }), 50)
-        }
-
-        return <DatePicker required={required}
-                           selected={selected}
-                           readOnly={readonly}
-                           dateFormat={DateInput.dateFormats[localStorage.getItem('language')]}
-                           onChange={date => this.selected(date, field)}/>
-    }
-
-    selected(date, field) {
-        const isoDate = date.toISOString().substr(0, 10)
-        this.context.onChange({
-            persist: () => {
-            }, currentTarget: {value: isoDate}
-        }, field)
-        this.setState({
-            selected: date
-        })
-    }
+            {field.touched && <InputValidationErrors field={field} errors={errors} />}
+        </InputGroup>
+    )
 }
+DateInput.propTypes = {
+    ...InputGroup.propTypes,
+    // Indicator if the field is in read only mode
+    readonly: PropTypes.bool
+}
+
+export default DateInput

@@ -1,57 +1,50 @@
 import PropTypes from 'prop-types';
 
-import {AbstractInput} from "./AbstractInput";
+import {InputGroup, useInputField} from "./AbstractInput";
+import {useEffect} from "react";
 
-export class AmountInput extends AbstractInput {
-    static propTypes = {
-        ...AbstractInput.propTypes,
-        // Indicator if the field is in read only mode
-        readonly: PropTypes.bool,
-        // Any minimum value validation
-        min: PropTypes.number,
-        // Any maximum value
-        max: PropTypes.number,
-        // The currency the amount is in
-        currency: PropTypes.string
-    }
+export const AmountInput = (props) => {
+    const [field, errors, onChange] = useInputField({onChange: props.onChange, field: props})
+    const language = localStorage.getItem('language') || 'en';
+    const formatter = new Intl.NumberFormat(language, {
+        currency: props.currency || 'EUR',
+        style: 'currency'
+    })
 
-    renderInput(field, fieldContext) {
-        const {required, readonly, min = 0, max, onChange = value => {}} = this.props
-        let value = field.value || this.props.value || ''
-        if (readonly) {
-            value = this.props.value
-        }
-
-        return (
+    if (!field) return props.id
+    return (
+        <InputGroup id={props.id}
+                    required={props.required}
+                    title={props.title}
+                    help={props.help}
+                    valid={field.touched ? errors.length === 0 : undefined }>
             <div className='Appender'>
-                <span className='Prepend'>{this.renderCurrencySymbol()}</span>
+                <span className='Prepend'>
+                    {formatter.formatToParts(0)
+                        .find(x => x.type === 'currency')
+                        ?.value}
+                </span>
                 <input id={field.id}
                        name={field.id}
-                       value={field && value}
-                       required={required}
-                       min={min}
-                       max={max}
-                       readOnly={readonly}
-                       onChange={e => fieldContext.onChange(e, field) && onChange(e.currentTarget.value)}
+                       value={field.value}
+                       required={props.required}
+                       min={props.min}
+                       max={props.max}
+                       readOnly={props.readonly}
+                       onChange={onChange}
                        type='number' />
             </div>
-        )
-    }
-
-    renderCurrencySymbol() {
-        const {currency = null} = this.props
-        if (currency === null) {
-            return ''
-        }
-
-        const language = localStorage.getItem('language') || 'en';
-        const formatter = new Intl.NumberFormat(language, {
-            currency: currency,
-            style: 'currency'
-        })
-
-        return formatter.formatToParts(0)
-            .find(x => x.type === 'currency')
-            ?.value
-    }
+        </InputGroup>
+    )
+}
+AmountInput.propTypes = {
+    ...InputGroup.propTypes,
+    // Indicator if the field is in read only mode
+    readonly: PropTypes.bool,
+    // Any minimum value validation
+    min: PropTypes.number,
+    // Any maximum value
+    max: PropTypes.number,
+    // The currency the amount is in
+    currency: PropTypes.string
 }

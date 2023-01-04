@@ -3,9 +3,9 @@ import Icon from '@mdi/react'
 import config from '../config/sidebar-config.js'
 import {Translation} from "./Translation";
 import {mdiChevronDown, mdiChevronLeft, mdiClose, mdiLogoutVariant, mdiMenu} from "@mdi/js";
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import {ProfilePicture} from "../profile";
-import RestAPI from "./RestAPI";
+import {SecurityRepository} from "./RestAPI";
 import {Buttons} from "./index";
 
 import logo from '../assets/logo.png'
@@ -13,10 +13,12 @@ import '../assets/css/Sidebar.scss'
 import PropTypes from "prop-types";
 
 
-export const Sidebar = () => {
+export const Sidebar = ({logoutCallback}) => {
     const [open, setOpen] = useState(true)
+    const navigate        = useNavigate()
 
     const onToggleClick = () => setOpen(!open)
+    const onLogout = () => SecurityRepository.logout() || logoutCallback() || navigate('/')
 
     return (
         <div className={'sidebar ' + (open ? '' : 'closed')}>
@@ -41,12 +43,15 @@ export const Sidebar = () => {
                 <NavLink to='/user/profile' className='Profile'><ProfilePicture size='40'/></NavLink>
                 <span className="text"/>
                 <Buttons.Button icon={mdiLogoutVariant}
-                                onClick={() => RestAPI.logout()}
+                                onClick={onLogout}
                                 variant='icon'
                                 className='logout'/>
             </footer>
         </div>
     )
+}
+Sidebar.propTypes = {
+    logoutCallback: PropTypes.func
 }
 
 

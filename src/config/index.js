@@ -4,14 +4,23 @@ const AccountIdentifier = PropTypes.shape({
     id: PropTypes.number.isRequired
 })
 const AccountRef = PropTypes.shape({
-    ...AccountIdentifier,
+    id: PropTypes.number.isRequired,
     name: PropTypes.string,
     type: PropTypes.string
 })
 
 const Account = PropTypes.shape({
-    ...AccountRef,
-    currency: PropTypes.string
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string,
+    type: PropTypes.string,
+    currency: PropTypes.string,
+    history: PropTypes.shape({
+        lastTransaction: PropTypes.string
+    }),
+    interest: PropTypes.shape({
+        interest: PropTypes.number,
+        periodicity: PropTypes.string
+    })
 })
 
 const TransactionSchedule = PropTypes.shape({
@@ -34,6 +43,12 @@ const Transaction = PropTypes.shape({
     source: PropTypes.shape({
         id: PropTypes.number,
         name: PropTypes.string
+    }),
+    dates: PropTypes.shape({
+        transaction: PropTypes.string.isRequired
+    }),
+    type: PropTypes.shape({
+        code: PropTypes.string
     }),
     destination: PropTypes.shape({
         id: PropTypes.number,

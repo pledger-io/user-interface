@@ -1,9 +1,11 @@
 import React from "react";
 
-class ReconcileOverview extends React.Component {
-    render() {
-        return  ''
-    }
+const ReconcileOverview = () => {
+    return (
+        <div className='ReconcileOverview'>
+
+        </div>
+    )
 }
 
 export {

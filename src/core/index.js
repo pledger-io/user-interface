@@ -209,6 +209,9 @@ const Resolver = {
         },
         isTransfer({type}) {
             return type?.code === 'TRANSFER'
+        },
+        resolveUrl({id, source}) {
+            return `${Resolver.Account.resolveUrl(source)}/transaction/${id}`
         }
     }
 }

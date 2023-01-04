@@ -1,8 +1,6 @@
-import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
+import {BrowserRouter, Navigate, Outlet, Route, Routes} from "react-router-dom";
 import {Sidebar} from "./core/Sidebar";
-import RegisterCard from "./security/RegisterCard";
-import {LoginCard} from "./security/LoginCard";
-import {Notifications} from "./core";
+import {Loading, Notifications} from "./core";
 
 // Routes import
 import {AccountRoutes} from "./account";
@@ -13,6 +11,10 @@ import {TransactionRoutes} from "./transactions";
 
 import './assets/css/Main.scss'
 import './assets/css/Theme.scss'
+import {lazy, Suspense, useState} from "react";
+
+const LoginCard = lazy(() => import("./security/LoginCard"));
+const RegisterCard = lazy(() => import("./security/RegisterCard"));
 
 const routes = [
     <Route exact path='/' element={<Navigate to='/dashboard'/>} key='index' />
@@ -24,29 +26,41 @@ routes.push(...ReportRoutes)
 routes.push(...TransactionRoutes)
 
 function App() {
+    const [authenticate, setAuthenticate] = useState(false)
+
     if (sessionStorage.getItem('token')) {
         return (
-            <BrowserRouter>
-                <Sidebar/>
-                <main className='Main'>
-                    <Notifications.NotificationCenter />
-                    <Routes>
-                        {routes}
-                    </Routes>
-                </main>
-            </BrowserRouter>
+            <Suspense>
+                <BrowserRouter>
+                    <Sidebar logoutCallback={() => setAuthenticate(false)}/>
+                    <main className='Main'>
+                        <Notifications.NotificationCenter />
+                        <Routes>
+                            {routes}
+                        </Routes>
+                        <Suspense>
+                            <Outlet />
+                        </Suspense>
+                    </main>
+                </BrowserRouter>
+            </Suspense>
         );
     }
 
     return (
-        <BrowserRouter>
-            <Routes>
-                <Route exact path='/' element={<Navigate to='/login'/>}/>
-                <Route path='/login' element={<LoginCard />}/>
-                <Route path='/register' element={<RegisterCard />}/>
-                <Route path='/*' element={<Navigate to='/login'/>} />
-            </Routes>
-        </BrowserRouter>
+        <Suspense>
+            <BrowserRouter>
+                <Routes>
+                    <Route exact path='/' element={<Navigate to='/login'/>}/>
+                    <Route path='/login' element={<LoginCard callback={() => setAuthenticate(true)} />}/>
+                    <Route path='/register' element={<RegisterCard />}/>
+                    <Route path='/*' element={<Navigate to='/login'/>} />
+                </Routes>
+                <Suspense fallback={<Loading/>}>
+                    <Outlet />
+                </Suspense>
+            </BrowserRouter>
+        </Suspense>
     )
 }
 

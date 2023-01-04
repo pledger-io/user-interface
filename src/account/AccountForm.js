@@ -1,8 +1,8 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {PathParams, withNavigation} from "../core/hooks";
 
-import {Form, Input, Entity, SubmitButton} from '../core/form'
-import restAPI from "../core/RestAPI";
+import {Entity, Form, Input, SubmitButton} from '../core/form'
+import {AccountRepository} from "../core/RestAPI";
 import {
     Attachments,
     BreadCrumbItem,
@@ -17,32 +17,7 @@ import {
 import {mdiCancel, mdiContentSave} from "@mdi/js";
 
 import '../assets/css/AccountForm.scss'
-
-class AccountService {
-    load(id) {
-        return new Promise((resolved, failed) => {
-            restAPI.get(`accounts/${id}`)
-                .then(account => resolved(new AccountModel(account)))
-                .catch(e => failed(e))
-        })
-    }
-
-    create(account) {
-        return restAPI.put('accounts', account)
-    }
-
-    update(id, account) {
-        return restAPI.post(`accounts/${id}`, account)
-    }
-
-    updateIcon(id, attachmentCode) {
-        return restAPI.post(`accounts/${id}/image`, {
-            fileCode: attachmentCode
-        })
-    }
-}
-
-const service = new AccountService()
+import {useNavigate, useParams} from "react-router-dom";
 
 class AccountModel {
     constructor(account) {
@@ -56,57 +31,18 @@ class AccountModel {
     }
 }
 
-class AccountForm extends React.Component {
-    static contextType = PathParams
+const AccountForm = ({type}) => {
+    const {id}                      = useParams()
+    const [account, setAccount]     = useState(new AccountModel({type: type, account: {}}))
+    const [exception, setException] = useState(null)
+    const navigate                  = useNavigate();
 
-    state = {
-        id: NaN,
-        account: null,
-        exception: null
-    }
+    const overviewHref      = isNaN(id) ? './../' : './../../'
+    const addEditBreadcrumb = isNaN(id) ? 'page.title.accounts.add' : 'page.title.accounts.edit'
 
-    constructor(props, context) {
-        super(props, context);
-
-        this.context.resolved = params => {
-            const {id, type} = params
-
-            if (isNaN(id)) {
-                this.setState({
-                    ...this.state,
-                    account: new AccountModel({
-                        type: type,
-                        account: {}
-                    })
-                })
-            } else {
-                service.load(id)
-                    .then(account => this.setState({
-                        id: id,
-                        account: account
-                    }))
-                    .catch(exception => this.setState({
-                        id: id,
-                        exception: exception
-                    }))
-            }
-        }
-    }
-
-    pictureSet(attachment) {
-        const {id} = this.state
-
-        service.updateIcon(id, attachment.fileCode)
-            .then(() => Notifications.Service.success(''))
-            .catch(() => Notifications.Service.warning('common.upload.file.failed'))
-    }
-
-    submit(entity) {
-        const {id} = this.state
-        const {navigate} = this.props
-
+    const onSubmit = entity => {
         if (isNaN(id)) {
-            service.create(entity)
+            AccountRepository.create(entity)
                 .then(() => Notifications.Service.success('page.account.creation.success'))
                 .then(() => navigate(-1))
                 .catch(exception => {
@@ -117,7 +53,7 @@ class AccountForm extends React.Component {
                     Notifications.Service.warning('page.account.creation.failed')
                 })
         } else {
-            service.update(id, entity)
+            AccountRepository.update(id, entity)
                 .then(() => Notifications.Service.success('page.account.update.success'))
                 .then(() => navigate(-1))
                 .catch(exception => {
@@ -129,99 +65,90 @@ class AccountForm extends React.Component {
                 })
         }
     }
+    const onPictureChange = attachment => AccountRepository.icon(id, attachment.fileCode)
+        .then(() => Notifications.Service.success(''))
+        .catch(() => Notifications.Service.warning('common.upload.file.failed'))
 
-    render() {
-        const {id, account, exception} = this.state
-        const {type} = this.props
+    useEffect(() => {
+        if (!isNaN(id))
+            AccountRepository.get(id)
+                .then(a => new AccountModel(a))
+                .then(setAccount)
+                .catch(setException)
+    }, [id])
 
-        if (!account) {
-            return '';
-        }
+    return (
+        <div className='AccountForm'>
+            <BreadCrumbs>
+                <BreadCrumbItem label='page.nav.settings'/>
+                <BreadCrumbItem label='page.nav.accounts'/>
+                <BreadCrumbItem label={`page.nav.accounts.${type}`} href={overviewHref}/>
+                <BreadCrumbItem label={addEditBreadcrumb}/>
+            </BreadCrumbs>
 
-        const overviewHref = isNaN(id) ? './../' : './../../'
-        const addEditBreadcrumb = isNaN(id) ? 'page.title.accounts.add' : 'page.title.accounts.edit'
+            <Form entity='Account' onSubmit={onSubmit}>
+                <Card title={addEditBreadcrumb}
+                      buttons={[
+                          <SubmitButton key='save' label='common.action.save' icon={mdiContentSave}/>,
+                          <Buttons.BackButton key='cancel' label='common.action.cancel' icon={mdiCancel}/>]}>
+                    { (type === 'creditor' || type === 'debtor') && (<Input.Hidden id='type' value={type} />) }
+                    {exception && <Message message={exception} variant={'warning'}/>}
+                    <fieldset className='General'>
+                        <div>
+                            <legend><Translations.Translation label='page.account.accounts.general'/></legend>
 
-        return (
-            <div className='AccountForm'>
-                <BreadCrumbs>
-                    <BreadCrumbItem label='page.nav.settings'/>
-                    <BreadCrumbItem label='page.nav.accounts'/>
-                    <BreadCrumbItem label={`page.nav.accounts.${type}`} href={overviewHref}/>
-                    <BreadCrumbItem label={addEditBreadcrumb}/>
-                </BreadCrumbs>
+                            <Input.Text id='name'
+                                        value={account.name}
+                                        title='Account.name'
+                                        help='Account.name.help'
+                                        type='text'
+                                        required/>
 
-                <Form entity='Account' onSubmit={this.submit.bind(this)}>
-                    <Card title={addEditBreadcrumb}
-                          buttons={[
-                              <SubmitButton key='save' label='common.action.save' icon={mdiContentSave}/>,
-                              <Buttons.BackButton key='cancel' label='common.action.cancel' icon={mdiCancel}/>]}>
-                        <When condition={type === 'creditor' || type === 'debtor'}>
-                            <Input.Hidden id='type' value={type} />
-                        </When>
-                        <When condition={exception}>
-                            <Message message={exception} variant={'warning'}/>
-                        </When>
-                        <fieldset className='General'>
-                            <div>
-                                <legend><Translations.Translation label='page.account.accounts.general'/></legend>
-
-                                <Input.Text id='name'
-                                             value={account.name}
-                                             title='Account.name'
-                                             help='Account.name.help'
-                                             type='text'
+                            <Entity.Currency id='currency'
+                                             value={account.currency}
+                                             title='Account.currency'
                                              required/>
 
-                                <Entity.Currency id='currency'
-                                                value={account.currency}
-                                                title='Account.currency'
-                                                required/>
+                            {type !== 'creditor' && type !== 'debtor' && (
+                                <Entity.AccountType id='type'
+                                                    value={account.type}
+                                                    title='Account.type'
+                                                    required/>)}
+                        </div>
+                        <Attachments.Upload label='page.accounts.accounts.changeIcon'
+                                            accepts='image/*'
+                                            onUpload={onPictureChange}/>
+                    </fieldset>
 
-                                <When condition={type !== 'creditor' && type !== 'debtor'}>
-                                    <Entity.AccountType id='type'
-                                                       value={account.type}
-                                                       title='Account.type'
-                                                       required/>
-                                </When>
-                            </div>
-                            <Attachments.Upload label='page.accounts.accounts.changeIcon'
-                                                accepts='image/*'
-                                                onUpload={this.pictureSet.bind(this)}/>
-                        </fieldset>
+                    <fieldset>
+                        <legend><Translations.Translation label='page.account.accounts.accountdetails'/></legend>
 
-                        <fieldset>
-                            <legend><Translations.Translation label='page.account.accounts.accountdetails'/></legend>
+                        <Input.Text id='iban'
+                                    value={account.iban}
+                                    title='Account.iban'
+                                    pattern='^([A-Z]{2}[ \-]?[0-9]{2})(?=(?:[ \-]?[A-Z0-9]){9,30}$)((?:[ \-]?[A-Z0-9]{3,5}){2,7})([ \-]?[A-Z0-9]{1,3})?$'
+                                    type='text'
+                                    help='Account.iban.help'/>
 
-                            <Input.Text id='iban'
-                                         value={account.iban}
-                                         title='Account.iban'
-                                         pattern='^([A-Z]{2}[ \-]?[0-9]{2})(?=(?:[ \-]?[A-Z0-9]){9,30}$)((?:[ \-]?[A-Z0-9]{3,5}){2,7})([ \-]?[A-Z0-9]{1,3})?$'
-                                         type='text'
-                                         help='Account.iban.help'/>
+                        <Input.Text id='bic'
+                                    value={account.bic}
+                                    title='Account.bic'
+                                    type='text'
+                                    help='Account.bic.help'/>
 
-                            <Input.Text id='bic'
-                                         value={account.bic}
-                                         title='Account.bic'
-                                         type='text'
-                                         help='Account.bic.help'/>
+                        <Input.Text id='number'
+                                    value={account.number}
+                                    title='Account.number'
+                                    type='text'/>
 
-                            <Input.Text id='number'
-                                         value={account.number}
-                                         title='Account.number'
-                                         type='text'/>
-
-                            <Input.TextArea id='description'
+                        <Input.TextArea id='description'
                                         value={account.description}
                                         title='Account.description'/>
-                        </fieldset>
-                    </Card>
-                </Form>
-            </div>
-        )
-    }
+                    </fieldset>
+                </Card>
+            </Form>
+        </div>
+    )
 }
 
-const formWithNavigate = withNavigation(AccountForm)
-export {
-    formWithNavigate as AccountForm
-}
+export default AccountForm

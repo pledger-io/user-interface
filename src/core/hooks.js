@@ -36,6 +36,21 @@ export const useLocalStorageJson = (key, initialValue) => {
 }
 
 /**
+ *
+ * @returns {[string]}
+ */
+export const useQueryParam = (key, initialValue) => {
+    const [value, setValue] = useState(initialValue)
+    const [searchParams]    = useSearchParams()
+
+    useEffect(() => {
+        if (searchParams.has(key) && searchParams.get(key) !== value) setValue(searchParams.get(key))
+    }, [searchParams])
+
+    return [value]
+}
+
+/**
  * @deprecated
  */
 export function withNavigation(Component) {

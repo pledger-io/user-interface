@@ -35,25 +35,12 @@ const RestAPI = (() => {
         response
             .then(httpResponse => resolved(httpResponse.data))
             .catch(({response}) => {
-                console.log(response)
                 if (response.status === 401) RestAPI.logout()
-                else error(response.data.message || response.statusText)
+                else error(response?.data?.message || response.statusText)
             }))
 
     const api = {
-        authenticate: (username, password) =>
-            api.post('security/authenticate', {username: username, password: password})
-                .then(serverResponse => {
-                    const token = new TokenResponse(serverResponse)
-                    sessionStorage.setItem('refresh-token', token.refreshToken);
-                    sessionStorage.setItem('token', token.accessToken);
-                }),
         profile: () => api.get('profile'),
-        logout: () => {
-            sessionStorage.removeItem('token');
-            sessionStorage.removeItem('refresh-token');
-            document.location.href = '/login'
-        },
         user: () => userProfile,
 
         get:   (uri, settings = {})       => handle(axios.get(`${config.root}/${uri}`, generateRequestSettings(settings))),
@@ -68,4 +55,69 @@ const RestAPI = (() => {
     return api
 })()
 
+const AccountRepository = (api => {
+    return {
+        search: ({types = [], page = 1}) => api.post('accounts', {
+            accountTypes: types,
+            page: page
+        }),
+        get: id => api.get(`accounts/${id}`),
+        transactions: (id, range, page) => api.post(`accounts/${id}/transactions`, {
+            page: page,
+            dateRange: {
+                start: range.startString(),
+                end: range.endString()
+            }
+        }),
+        create: account => api.put('accounts', account),
+        update: (id, account) => api.post(`account/${id}`, account),
+        delete: id => api.delete(`accounts/${id}`),
+        icon: (id, attachmentId) => api.post(`accounts/${id}/image`, {
+            fileCode: attachmentId
+        })
+    }
+})(RestAPI)
+
+const SecurityRepository = (api => {
+    return {
+        authenticate: (username, password) => api.post('security/authenticate', {username: username, password: password})
+            .then(serverResponse => {
+                const token = new TokenResponse(serverResponse)
+                sessionStorage.setItem('refresh-token', token.refreshToken);
+                sessionStorage.setItem('token', token.accessToken);
+            }),
+        register: (username, password) => api.put(`security/create-account`, {username, password}),
+        logout: () => {
+            sessionStorage.removeItem('token');
+            sessionStorage.removeItem('refresh-token');
+        }
+    }
+})(RestAPI)
+
+const AttachmentRepository = (api => {
+    return {
+        upload: blob => {
+            const formData = new FormData()
+            formData.append('upload', blob, blob.name)
+            return api.post('attachment', formData)
+        },
+        download: fileCode => new Promise((resolved, reject) => {
+            api.get(`attachment/${fileCode}`, {responseType: 'blob'})
+                .then(rawData => {
+                    const fileReader = new FileReader();
+                    fileReader.onloadend = () => {
+                        const {result} = fileReader
+                        resolved(result)
+                    }
+                    fileReader.readAsDataURL(rawData);
+                }).catch(reject)
+        })
+    }
+})(RestAPI)
+
 export default RestAPI;
+export {
+    AccountRepository,
+    SecurityRepository,
+    AttachmentRepository
+}

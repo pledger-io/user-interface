@@ -1,4 +1,4 @@
-import {DateInput} from "./DateInput";
+import DateInput from "./DateInput";
 import {HiddenInput} from "./HiddenInput";
 import {TextInput} from "./TextInput";
 import {TextArea} from "./TextArea";

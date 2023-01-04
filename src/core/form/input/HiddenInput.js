@@ -1,24 +1,18 @@
 import React from "react";
-
-import {FormContext} from "../Form";
+import {useInputField} from "./AbstractInput";
+import PropTypes from "prop-types";
 
 /**
  * The hidden input component will add a field to the form that is not visible to the user.
  */
-export class HiddenInput extends React.Component {
-    static contextType = FormContext
+export const HiddenInput = (props) => {
+    const [field, errors, onChange] = useInputField({onChange: props.onChange, field: props})
 
-    constructor(props, context) {
-        super(props, context);
-
-        this.context.addField({
-            field: props,
-            value: props.value
-        })
-    }
-
-    render() {
-        const {value, id} = this.props
-        return <input type='hidden' id={id} name={id} value={value}/>
-    }
+    if (!field) return props.id
+    return <input type='hidden' id={props.id} name={props.id} value={field.value}/>
 }
+HiddenInput.propTypes = {
+    id: PropTypes.string,
+    value: PropTypes.any
+}
+

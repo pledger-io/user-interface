@@ -1,36 +1,10 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from 'prop-types';
-import restAPI from "./RestAPI";
+import {AttachmentRepository} from "./RestAPI";
 import {mdiTrayArrowUp} from "@mdi/js";
 import {Buttons, Notifications, When} from "./index";
 
 import UploadSVG from '../assets/ic-upload-file.svg'
-
-/**
- * The attachment service allows for downloading and uploading attachments to the backend.
- */
-class AttachmentService {
-    upload(blob) {
-        const formData = new FormData()
-        formData.append('upload', blob, blob.name)
-        return restAPI.post('attachment', formData)
-    }
-
-    download(fileCode) {
-        return new Promise((resolved, failed) => {
-            restAPI.get(`attachment/${fileCode}`, {responseType: 'blob'})
-                .then(rawData => {
-                    const fileReader = new FileReader();
-                    fileReader.onloadend = () => {
-                        const {result} = fileReader
-                        resolved(result)
-                    }
-                    fileReader.readAsDataURL(rawData);
-                })
-                .catch(failed)
-        })
-    }
-}
 
 function matchingType(accepted, presented) {
     accepted = accepted || '*/*'
@@ -42,7 +16,6 @@ function matchingType(accepted, presented) {
     return accepted.startsWith('image/') && presented.startsWith('image/');
 }
 
-const service = new AttachmentService();
 let uploadCounter = 0
 
 const validDrop = (event, max, accepts) => {
@@ -72,7 +45,7 @@ const UploadAttachment = ({accepts = '*/*', label, multi = false, onUpload, max 
     const onFileOut  = event => event.preventDefault() || setValid(validDrop(event, max, accepts)) || setDropActive(false)
     const onFileDrop = event => event.preventDefault() || (valid && upload([...event.dataTransfer.items]))
 
-    const upload = files => files.forEach(file => service.upload(file.getAsFile())
+    const upload = files => files.forEach(file => AttachmentRepository.upload(file.getAsFile())
         .then(response => (onUpload || (e => console.warn(`No upload handler set, attachmentId=${response}.`)))(response))
         .catch(() => Notifications.Service.warning('common.upload.file.failed')))
 
@@ -114,8 +87,10 @@ const ImageAttachment = ({fileCode}) => {
     const [data, setData] = useState('')
 
     useEffect(() => {
-        if (fileCode) service.download(fileCode)
-            .then(dataImage => setData(dataImage.replace('*/*', 'image/png')))
+        if (fileCode) {
+            AttachmentRepository.download(fileCode)
+                .then(dataImage => setData(dataImage.replace('*/*', 'image/png')))
+        }
     }, [fileCode])
 
     if (data !== '') {

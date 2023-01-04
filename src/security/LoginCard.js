@@ -1,77 +1,66 @@
-import React from "react";
+import React, {useState} from "react";
+import {useNavigate} from "react-router-dom";
+import {mdiAccountPlus, mdiLogin, mdiWeb} from "@mdi/js";
 
 import {Form, Input, SubmitButton} from '../core/form'
 import {Buttons, Card, Dropdown, Message, Translations} from "../core";
-import {mdiAccountPlus, mdiLogin, mdiWeb} from "@mdi/js";
-import RestAPI from "../core/RestAPI";
+import {SecurityRepository} from "../core/RestAPI";
 
 import '../assets/css/LoginCard.scss'
+import PropTypes from "prop-types";
 
-export class LoginCard extends React.Component {
+const LoginCard = ({callback}) => {
+    const [failure, setFailure] = useState()
+    const navigate              = useNavigate()
 
-    constructor(props, context) {
-        super(props, context);
-        this.failure = "";
-    }
+    const onSubmit = entity => SecurityRepository.authenticate(entity.username, entity.password)
+        .then(() => callback())
+        .then(() => navigate('/dashboard'))
+        .catch(setFailure)
 
-    renderFailure() {
-        if (this.failure) {
-            return <Message label='page.login.invalid' style='warning'/>
-        }
-        return '';
-    }
+    return (
+        <div className='LoginCard'>
+            <span/>
+            <Form entity='UserAccount' onSubmit={onSubmit}>
+                <Card title='page.login.title'
+                      actions={[
+                          <Dropdown.Dropdown icon={mdiWeb} key='language-dropdown'>
+                              <button className='Button text Flag us'
+                                      onClick={() => Translations.LocalizationService.load('en')}>English</button>
+                              <button className='Button text Flag de'
+                                      onClick={() => Translations.LocalizationService.load('de')}>Deutsch</button>
+                              <button className='Button text Flag nl'
+                                      onClick={() => Translations.LocalizationService.load('nl')}>Nederlands</button>
+                          </Dropdown.Dropdown>]}
+                      buttons={[
+                          <SubmitButton key='login' label='page.login.login' icon={mdiLogin}/>]}>
+                    {failure && <Message label='page.login.invalid' variant='warning'/>}
+                    <div className='form'>
+                        <Input.Text id='username'
+                                    title='UserAccount.username'
+                                    type='text'
+                                    required/>
+                        <Input.Text id='password'
+                                    title='UserAccount.password'
+                                    type='password'
+                                    required/>
+                    </div>
 
-    render() {
-        return (
-            <div className='LoginCard'>
-                <span/>
-                <Form entity='UserAccount' onSubmit={entity => this.authenticate(entity)}>
-                    <Card title='page.login.title'
-                          actions={this.getLanguageDropdown()}
-                          buttons={[
-                              <SubmitButton key='login' label='page.login.login' icon={mdiLogin}/>]}>
-                        {this.renderFailure()}
-                        <div className='form'>
-                            <Input.Text id='username'
-                                         title='UserAccount.username'
-                                         type='text'
-                                         required/>
-                            <Input.Text id='password'
-                                         title='UserAccount.password'
-                                         type='password'
-                                         required/>
-                        </div>
-
-                        <div className='register'>
-                            <Buttons.Button
-                                href='/register'
-                                icon={mdiAccountPlus}
-                                label='page.login.register'
-                                variant='text'/>
-                        </div>
-                    </Card>
-                </Form>
-                <span/>
-            </div>
-        )
-    }
-
-    getLanguageDropdown() {
-        return [
-            <Dropdown.Dropdown icon={mdiWeb} key='language-dropdown'>
-                <button className='Button text Flag us'
-                        onClick={() => Translations.LocalizationService.load('en')}>English</button>
-                <button className='Button text Flag de'
-                        onClick={() => Translations.LocalizationService.load('de')}>Deutsch</button>
-                <button className='Button text Flag nl'
-                        onClick={() => Translations.LocalizationService.load('nl')}>Nederlands</button>
-            </Dropdown.Dropdown>
-        ]
-    }
-
-    authenticate(entity) {
-        RestAPI.authenticate(entity.username, entity.password)
-            .then(() => document.location.href = '/')
-            .catch(exception => this.failure = exception)
-    }
+                    <div className='register'>
+                        <Buttons.Button
+                            href='/register'
+                            icon={mdiAccountPlus}
+                            label='page.login.register'
+                            variant='text'/>
+                    </div>
+                </Card>
+            </Form>
+            <span/>
+        </div>
+    )
 }
+LoginCard.propTypes = {
+    callback: PropTypes.func
+}
+
+export default LoginCard
