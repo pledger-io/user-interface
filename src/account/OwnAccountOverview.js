@@ -38,7 +38,7 @@ const AccountRow = ({account, deleteCallback}) => {
             <td><Formats.Date date={account.history.lastTransaction}/></td>
             <td>
                 {account.account.iban && `${account.account.iban}`}
-                {!account.account.iban && `${account.account.number}`}
+                {!account.account.iban && account.account.number && `${account.account.number}`}
             </td>
             <td><Statistical.Balance accounts={[account]} currency={account.account.currency}/></td>
             <td>
