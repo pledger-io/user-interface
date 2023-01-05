@@ -1,9 +1,10 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 
 import {Input} from '../../core/form'
 import {BreadCrumbItem, BreadCrumbs, Buttons, Card, Notifications, Translations, When} from "../../core";
 import {mdiPlus, mdiSquareEditOutline} from "@mdi/js";
 import restAPI from "../../core/RestAPI";
+import PropTypes from "prop-types";
 
 class CurrencyService {
     load() {
@@ -16,19 +17,13 @@ class CurrencyService {
 }
 const service = new CurrencyService()
 
-class CurrencyRow extends React.Component {
-    onEnabledChange(enabled) {
-        const {currency: {code}} = this.props
+const CurrencyRow = ({currency}) => {
+    const onEnabledChange = enabled => service.changeEnabled(currency.code, enabled)
+        .then(() => Notifications.Service.success('page.settings.currencies.enabled.success'))
+        .catch(() => Notifications.Service.warning('page.settings.currencies.enabled.failed'))
 
-        service.changeEnabled(code, enabled)
-            .then(() => Notifications.Service.success('page.settings.currencies.enabled.success'))
-            .catch(() => Notifications.Service.warning('page.settings.currencies.enabled.failed'))
-    }
-
-    render() {
-        const {currency} = this.props
-
-        return <tr className='CurrencyRow'>
+    return (
+        <tr className='CurrencyRow'>
             <td>
                 <Buttons.Button icon={mdiSquareEditOutline} variant='icon' className='primary' href={`${currency.code}/edit`}/>
             </td>
@@ -37,66 +32,49 @@ class CurrencyRow extends React.Component {
             <td>{currency.name}</td>
             <td>{currency.numberDecimals}</td>
             <td className='Form'>
-                <Input.Toggle id={`toggle-${currency.code}`} value={currency.enabled} onChange={this.onEnabledChange.bind(this)}/>
+                <Input.Toggle id={`toggle-${currency.code}`} value={currency.enabled} onChange={onEnabledChange}/>
             </td>
         </tr>
-    }
+    )
+}
+CurrencyRow.propTypes = {
+    currency: PropTypes.any
 }
 
-class CurrencyOverview extends React.Component {
-    state = {
-        currencies: null,
-        exception: null
-    }
+export const CurrencyOverview = () => {
+    const [currencies, setCurrencies] = useState([])
 
-    render() {
-        const {currencies} = this.state
+    useEffect(() => {
+        service.load().then(setCurrencies)
+    }, [])
 
-        if (!currencies) {
-            service.load()
-                .then(currencies => this.setState({
-                    currencies: currencies
-                }))
-                .catch(exception => this.setState({
-                    exception: exception
-                }))
-        }
+    return <>
+        <BreadCrumbs>
+            <BreadCrumbItem label='page.nav.settings.options'/>
+            <BreadCrumbItem label='page.settings.currencies.title'/>
+        </BreadCrumbs>
 
-        const currencyRows = (currencies || []).map(currency => <CurrencyRow key={currency.code} currency={currency} />)
-        return <>
-            <BreadCrumbs>
-                <BreadCrumbItem label='page.nav.settings.options'/>
-                <BreadCrumbItem label='page.settings.currencies.title'/>
-            </BreadCrumbs>
-
-            <Card title='page.settings.currencies.title'
-                  actions={[<Buttons.Button label='page.settings.currencies.add'
-                                            variant='primary'
-                                            icon={mdiPlus}
-                                            key='add'
-                                            href='./add'/>]}>
-                <table className='Table'>
-                    <thead>
-                    <tr>
-                        <th width='15'/>
-                        <th width='10' />
-                        <th width='20' />
-                        <th><Translations.Translation label='Currency.name' /></th>
-                        <th width='200'><Translations.Translation label='Currency.decimalPlaces' /></th>
-                        <th width='20'><Translations.Translation label='Currency.enabled' /></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <When condition={currencies != null}>
-                        {currencyRows}
-                    </When>
-                    </tbody>
-                </table>
-            </Card>
-        </>
-    }
-}
-
-export {
-    CurrencyOverview
+        <Card title='page.settings.currencies.title'
+              actions={[<Buttons.Button label='page.settings.currencies.add'
+                                        variant='primary'
+                                        icon={mdiPlus}
+                                        key='add'
+                                        href='./add'/>]}>
+            <table className='Table'>
+                <thead>
+                <tr>
+                    <th width='15'/>
+                    <th width='10' />
+                    <th width='20' />
+                    <th><Translations.Translation label='Currency.name' /></th>
+                    <th width='200'><Translations.Translation label='Currency.decimalPlaces' /></th>
+                    <th width='20'><Translations.Translation label='Currency.enabled' /></th>
+                </tr>
+                </thead>
+                <tbody>
+                {currencies.map(currency => <CurrencyRow key={currency.code} currency={currency} />)}
+                </tbody>
+            </table>
+        </Card>
+    </>
 }
