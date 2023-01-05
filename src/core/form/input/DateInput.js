@@ -21,8 +21,11 @@ const DateInput = (props) => {
 
     const onDateChanged = date => {
         const isoDate = date.toISOString().substring(0, 10)
-        onChange(isoDate)
         setSelected(date)
+        onChange({
+            persist: () => {},
+            currentTarget: {value: isoDate}
+        })
     }
 
     useEffect(() => {

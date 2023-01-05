@@ -56,6 +56,7 @@ export const useAutocomplete = ({
                 .then(setOptions)
     }
 
+    if (!field) return props.id
     return (
         <InputGroup id={props.id}
                     required={props.required}

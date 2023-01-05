@@ -1,86 +1,46 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
+
+import {AccountRepository} from "../../RestAPI";
+import {Loading} from "../../index";
+import {InputGroup, useInputField} from "../input/AbstractInput";
+import {EntityShapes} from "../../../config";
 import PropTypes from "prop-types";
 
-import restAPI from "../../RestAPI";
-import {FormContext} from "../Form";
-import {Loading} from "../../index";
-import {AbstractInput} from "../input/AbstractInput";
+export const ManagedAccountSelect = props => {
+    const [field, errors, onChange]         = useInputField({onChange: props.onChange, field: props})
+    const [selectedValue, setSelectedValue] = useState()
+    const [accounts, setAccounts]           = useState([])
 
-class ManagedAccountService {
-    lastFetch = null
-    cachedList = null
+    useEffect(() => {
+        AccountRepository.own().then(setAccounts)
+    }, [])
 
-    list() {
-        const now = new Date()
-        if (this.lastFetch == null || now.getTime() - this.lastFetch > 2000) {
-            this.lastFetch = now.getTime()
-            this.cachedList = new Promise((resolved, failed) => {
-                restAPI.get('accounts/my-own')
-                    .then(resolved)
-                    .catch(failed)
-            })
-        }
-
-        return this.cachedList
-    }
-}
-const service = new ManagedAccountService()
-
-export class ManagedAccountSelect extends AbstractInput {
-    static contextType = FormContext
-    static propTypes = {
-        ...AbstractInput.propTypes,
-        value: PropTypes.any
+    const valueSelected = event => {
+        const selectedAccount = accounts.find(account => account.id === parseInt(event.currentTarget.value))
+        setSelectedValue(selectedAccount.id)
+        onChange({
+            persist: () => {},
+            currentTarget: {value: selectedAccount}
+        })
     }
 
-    state = {
-        accounts: [],
-        selectedValue: undefined
-    }
-
-    renderInput(field, fieldContext) {
-        this.preload()
-
-        const {accounts, selectedValue} = this.state
-        if (accounts.length === 0) {
-            return <Loading />
-        }
-
-        this.initialValue()
-        const {id} = this.props
-        return (
-            <select id={id} onChange={evt => this.onSelect(evt.currentTarget.value)} value={selectedValue} defaultValue="-">
+    if (!field || !accounts.length) return <Loading />
+    return (
+        <InputGroup id={props.id}
+                    required={props.required}
+                    title={props.title}
+                    help={props.help}
+                    valid={field.touched ? errors.length === 0 : undefined }>
+            <select id={props.id} onChange={valueSelected} value={selectedValue} defaultValue="-">
                 {!selectedValue && <option disabled value="-">-</option>}
                 {accounts.map(account =>
                     <option key={account.id} value={account.id}>{account.name}</option>
                 )}
             </select>
-        )
-    }
-
-    initialValue() {
-        if (!this.state.selectedValue && this.props.value) {
-            setTimeout(() => this.onSelect(this.props.value), 5);
-        }
-    }
-
-    onSelect(value) {
-        const {id} = this.props
-        const {accounts = []} = this.state
-
-        const selectedAccount = accounts.find(account => account.id === parseInt(value))
-        this.setState({selectedValue: value})
-        this.context.onChange({
-            persist: () => {},
-            currentTarget: {value: {id: selectedAccount.id, name: selectedAccount.name}}
-        }, this.context.fields[id])
-    }
-
-    preload() {
-        const {accounts = []} = this.state
-        if (!accounts.length) {
-            service.list()
-                .then(accounts => this.setState({accounts: accounts}))
-        }
-    }
+        </InputGroup>
+    )
+}
+ManagedAccountSelect.propTypes = {
+    ...InputGroup.propTypes,
+    value: PropTypes.any
 }

@@ -69,7 +69,9 @@ class TransactionForm extends React.Component {
         const {transaction: {id}, account} = this.state
         const {navigate} = this.props
 
-        TransactionService.persist(account, entity, navigate, id)
+        console.log(entity)
+
+        //TransactionService.persist(account, entity, navigate, id)
     }
 
     render() {

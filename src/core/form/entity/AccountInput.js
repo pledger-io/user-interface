@@ -1,6 +1,8 @@
 import React from "react";
 import {useAutocomplete} from "../Autocomplete";
 import restAPI from "../../RestAPI";
+import {InputGroup} from "../input/AbstractInput";
+import {EntityShapes} from "../../../config";
 
 const AccountAutocompleteRow = (account) => {
     return (
@@ -22,4 +24,8 @@ export const AccountInput = (props) => {
             entityLabel: account => account?.name
         },
         props)
+}
+AccountInput.propTypes = {
+    ...InputGroup.propTypes,
+    value: EntityShapes.Account
 }
