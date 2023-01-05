@@ -1,5 +1,5 @@
 import React from "react";
-import {useInputField} from "./AbstractInput";
+import {useInputField} from "./InputGroup";
 import PropTypes from "prop-types";
 
 /**

@@ -1,7 +1,7 @@
 import React from "react";
 import {useAutocomplete} from "../Autocomplete";
 import restAPI from "../../RestAPI";
-import {InputGroup} from "../input/AbstractInput";
+import {InputGroup} from "../input/InputGroup";
 import {EntityShapes} from "../../../config";
 
 const AccountAutocompleteRow = (account) => {

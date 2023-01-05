@@ -1,4 +1,4 @@
-import {InputGroup, InputValidationErrors, useInputField} from "./input/AbstractInput";
+import {InputGroup, InputValidationErrors, useInputField} from "./input/InputGroup";
 import React, {useState} from "react";
 
 const MIN_CHARS = 2

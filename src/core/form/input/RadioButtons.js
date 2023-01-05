@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from 'prop-types';
 
 import {Translation} from "../../Translation";
-import {useInputField} from "./AbstractInput";
+import {useInputField} from "./InputGroup";
 
 export const RadioButtons = (props) => {
     const [field, errors, onChange] = useInputField({onChange: props.onChange, field: props})

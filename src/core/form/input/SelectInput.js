@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from 'prop-types';
 
-import {InputGroup, useInputField} from "./AbstractInput";
+import {InputGroup, useInputField} from "./InputGroup";
 import {LocalizationService} from "../../Translation";
 
 /**

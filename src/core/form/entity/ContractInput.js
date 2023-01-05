@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import restAPI from "../../RestAPI";
 
 import {useAutocomplete} from "../Autocomplete";
-import {InputGroup} from "../input/AbstractInput";
+import {InputGroup} from "../input/InputGroup";
 
 const ContractAutocompleteRow = contract => {
     return (

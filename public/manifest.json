@@ -1,5 +1,6 @@
 {
-  "short_name": "Pledger",
+  "id": "pledger.io",
+  "short_name": "Pledger.io",
   "name": "Your personal finance application.",
   "icons": [
     {
@@ -18,7 +19,7 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": ".",
+  "start_url": "/dashboard",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff"

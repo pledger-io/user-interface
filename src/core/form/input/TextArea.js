@@ -1,6 +1,6 @@
 import React from "react";
 
-import {InputGroup, InputValidationErrors, useInputField} from "./AbstractInput";
+import {InputGroup, InputValidationErrors, useInputField} from "./InputGroup";
 
 /**
  * A text area that is bound to the form context it is in.

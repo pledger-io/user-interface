@@ -3,7 +3,7 @@ import React from "react";
 import {Translation} from "../../Translation";
 import Icon from "@mdi/react";
 import {mdiAlertCircle, mdiCheck} from "@mdi/js";
-import {InputGroup, useInputField} from "./AbstractInput";
+import {InputGroup, useInputField} from "./InputGroup";
 
 const validations = [
     {label: 'Account.password.at_least_six_chars',validate: value => RegExp(/^.{6,63}$/).test(value)},

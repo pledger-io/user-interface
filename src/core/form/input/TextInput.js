@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import {InputGroup, InputValidationErrors, useInputField} from "./AbstractInput";
+import {InputGroup, InputValidationErrors, useInputField} from "./InputGroup";
 
 export const TextInput = (props) => {
     const [field, errors, onChange] = useInputField({onChange: props.onChange, field: props})

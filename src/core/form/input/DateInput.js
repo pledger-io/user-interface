@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import PropTypes from 'prop-types';
 
 import DatePicker from "react-datepicker";
-import {InputGroup, InputValidationErrors, useInputField} from "./AbstractInput";
+import {InputGroup, InputValidationErrors, useInputField} from "./InputGroup";
 
 import 'react-datepicker/dist/react-datepicker.css';
 

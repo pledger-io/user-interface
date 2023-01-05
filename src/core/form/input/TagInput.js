@@ -1,7 +1,7 @@
 import React, {createRef, useState} from "react";
 import PropTypes from 'prop-types'
 
-import {InputGroup, useInputField} from "./AbstractInput";
+import {InputGroup, useInputField} from "./InputGroup";
 import Icon from "@mdi/react";
 import {mdiClose, mdiPlus} from "@mdi/js";
 import restAPI from "../../RestAPI";

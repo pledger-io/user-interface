@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import {InputGroup, useInputField} from "./AbstractInput";
+import {InputGroup, useInputField} from "./InputGroup";
 
 export const AmountInput = (props) => {
     const [field, errors, onChange] = useInputField({onChange: props.onChange, field: props})

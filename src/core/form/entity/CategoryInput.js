@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import {InputGroup} from "../input/AbstractInput";
+import {InputGroup} from "../input/InputGroup";
 import {useAutocomplete} from "../Autocomplete";
 import restAPI from "../../RestAPI";
 

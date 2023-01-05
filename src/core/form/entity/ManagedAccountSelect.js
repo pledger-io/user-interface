@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 
 import {AccountRepository} from "../../RestAPI";
 import {Loading} from "../../index";
-import {InputGroup, useInputField} from "../input/AbstractInput";
+import {InputGroup, useInputField} from "../input/InputGroup";
 import {EntityShapes} from "../../../config";
 import PropTypes from "prop-types";
 
