@@ -1,155 +1,109 @@
-import React from "react";
+import React, {createRef, useState} from "react";
 import PropTypes from 'prop-types'
 
-import {AbstractInput} from "./AbstractInput";
+import {InputGroup, useInputField} from "./AbstractInput";
 import Icon from "@mdi/react";
 import {mdiClose, mdiPlus} from "@mdi/js";
-import {Autocomplete} from "../Autocomplete";
 import restAPI from "../../RestAPI";
 
-export class TagInput extends Autocomplete {
-    static propTypes = {
-        ...AbstractInput.propTypes,
-        value: PropTypes.arrayOf(PropTypes.string)
+const Tag = ({tag, onRemove = _ => undefined}) => {
+    return (
+        <div className='Tag' key={tag}>
+            {tag}
+            <Icon path={mdiClose}
+                  onClick={() => onRemove(tag)}
+                  size={.5}/>
+        </div>
+    )
+}
+
+export const TagInput = props => {
+    const [field, errors, onChange] = useInputField({onChange: props.onChange, field: props})
+
+    const [tagValue, setTagValue] = useState('')
+    const [options, setOptions]   = useState([])
+    const [selectedIdx, setSelectedIdx]   = useState(-1)
+
+    const onTagRemove = tag => undefined
+    const onTagCreate = () => restAPI.post('transactions/tags', {tag: tagValue})
+        .then(_ => onSelect({name: tagValue}))
+
+    const onSelect = ({name}) => {
+        const updatedTags = (field.value || [])
+        updatedTags.push(name)
+
+        inputDivRef.current.innerText = ''
+        onChange({persist: () => {}, currentTarget: {value: updatedTags}})
+        setOptions([]) || setTagValue('')
     }
+    const onKeyUp = event => {
+        if (tagValue !== '' && event.key === 'Tab') {
+            event.stopPropagation() || onTagCreate()
+        } else {
+            switch (event.key) {
+                case 'Escape': setOptions([]) || event.stopPropagation(); break
+                case 'ArrowUp': setSelectedIdx(Math.max(0, selectedIdx - 1)) || event.stopPropagation(); break
+                case 'ArrowDown': setSelectedIdx(Math.min(options.length, selectedIdx + 1)) || event.stopPropagation(); break
+                case 'Enter': onSelect(options[selectedIdx]) || event.stopPropagation(); break
+            }
 
-    constructor(props, context) {
-        super(props, context, token => restAPI.get(`transactions/tags/auto-complete?token=${token}`));
-
-        this.inputDivRef = React.createRef()
-        this.state = {
-            ...this.state,
-            tagValue: '',
-            tags: []
+            if (!event.isPropagationStopped() && tagValue.length > 2) {
+                restAPI.get(`transactions/tags/auto-complete?token=${tagValue}`)
+                    .then(setOptions)
+            }
+        }
+    }
+    const onKeyDown = event => {
+        if (tagValue !== '' && event.key === 'Tab') {
+            event.stopPropagation() || event.preventDefault()
+        } else if (options.length) {
+            switch (event.key) {
+                case 'Escape' | 'ArrowUp' | 'ArrowDown' | 'Enter':
+                    event.preventDefault() || event.stopPropagation()
+            }
         }
     }
 
-    renderInput(field, fieldContext) {
-        return (
+    const inputDivRef = createRef()
+    if (!field) return props.id
+    return (
+        <InputGroup id={props.id}
+                    required={props.required}
+                    title={props.title}
+                    help={props.help}
+                    valid={field.touched ? errors.length === 0 : undefined }>
             <div className='TagInput'>
-                {this.renderTags()}
+                {(field.value || []).map(tag => <Tag tag={tag} onRemove={onTagRemove} />)}
                 <div className='EditableTag'>
                     <div className='Input'
-                         ref={this.inputDivRef}
-                         onKeyDown={this.onKeyDown.bind(this)}
-                         onKeyUp={this.onKeyUp.bind(this)}
-                         onKeyUpCapture={event => this.setState({
-                             tagValue: event.currentTarget.innerText
-                         })}
+                         ref={inputDivRef}
+                         onKeyDown={onKeyDown}
+                         onKeyUp={onKeyUp}
+                         onKeyUpCapture={event => setTagValue(event.currentTarget.innerText)}
                          contentEditable={true} />
 
-                    {this.renderCompleteDropdown()}
+                    {tagValue !== '' && (
+                        <div className='AutoComplete'>
+                            {options.map((option, idx) => (
+                                <div key={idx}
+                                     className={`Result ${idx === selectedIdx ? ' selected' : ''}`}
+                                     onClick={() => onSelect(option)}>
+                                    {option.name}
+                                </div>
+                                ))}
+                            <div className='Result Add' onClick={onTagCreate}>
+                                <Icon path={mdiPlus}
+                                      size={.65}/>
+                                Hit tab to create
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
-        )
-    }
-
-    onKeyDown(event) {
-        const {tagValue} = this.state
-        if (tagValue !== '' && event.key === 'Tab') {
-            event.preventDefault()
-            event.stopPropagation()
-        } else {
-            super.onKeyDown(event)
-        }
-    }
-
-    onKeyUp(event) {
-        const {tagValue} = this.state
-        if (tagValue !== '' && event.key === 'Tab') {
-            event.stopPropagation()
-            this.createTag()
-            return
-        }
-
-        super.onKeyUp(event)
-        if (!event.isPropagationStopped()) {
-            this.autocomplete({currentTarget: {value: event.currentTarget.innerText}})
-        }
-    }
-
-    renderCompleteDropdown() {
-        const {tagValue, options, resultSelected} = this.state
-        if (tagValue === '' && options.length === 0) {
-            return ''
-        }
-
-        return (
-            <div className='AutoComplete'>
-                {options.length > 0 &&
-                    options.map((tag, idx) =>
-                    <div key={idx}
-                         className={`Result ${idx === resultSelected ? ' selected' : ''}`}
-                         onClick={() => this.select(tag)}>
-                        {tag.name}
-                    </div>)
-                }
-                <div className='Result Add' onClick={() => this.createTag()}>
-                    <Icon path={mdiPlus}
-                          size={.65}/>
-                    Hit tab to create
-                </div>
-            </div>
-        )
-    }
-
-    renderTags() {
-        const {value = undefined} = this.props
-        const {tags} = this.state
-        if (tags.length === 0) {
-            if (value !== undefined) {
-                setTimeout(() => this.setState({
-                    tags: value
-                }), 50)
-            }
-            return '';
-        }
-
-        return tags.map((tag, idx) =>
-            <div className='Tag' key={idx}>
-                {tag}
-                <Icon path={mdiClose}
-                      onClick={() => this.removeTag(tag)}
-                      size={.5}/>
-            </div>
-        )
-    }
-
-    createTag() {
-        const {tagValue, tags} = this.state
-
-        restAPI.post('transactions/tags', {
-            tag: tagValue
-        }).then(() => {
-            this.inputDivRef.current.innerText = ''
-            tags.push(tagValue)
-            this.setState({
-                tagValue: '',
-                tags: tags
-            })
-        })
-    }
-
-    select({name}) {
-        const {id, onChange = value => {}} = this.props
-        const {tags} = this.state
-        const field = this.context.fields[id] || {};
-
-        tags.push(name)
-
-        this.inputDivRef.current.innerText = ''
-        this.setState({
-            options: [],
-            tagValue: ''
-        })
-
-        onChange(tags)
-        this.context.onChange({persist: () => {}, currentTarget: {value: tags}}, field);
-    }
-
-    removeTag(toRemove) {
-        this.setState({
-            tags: this.state.tags.filter(tag => tag !== toRemove)
-        })
-    }
+        </InputGroup>
+    )
+}
+TagInput.propTypes = {
+    ...InputGroup.propTypes,
+    value: PropTypes.arrayOf(PropTypes.string)
 }

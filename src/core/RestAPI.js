@@ -35,7 +35,10 @@ const RestAPI = (() => {
         response
             .then(httpResponse => resolved(httpResponse.data))
             .catch(({response}) => {
-                if (response.status === 401) SecurityRepository.logout()
+                if (response.status === 401) {
+                    SecurityRepository.logout()
+                    document.body.href.reload()
+                }
                 else error(response?.data?.message || response.statusText)
             }))
 
