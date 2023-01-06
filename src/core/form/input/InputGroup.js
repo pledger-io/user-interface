@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import PropTypes from 'prop-types';
 
 import {HelpTranslation, Translation} from "../../Translation";
@@ -32,18 +32,19 @@ InputGroup.propTypes = {
 }
 
 export const useInputField = ({onChange, field}) => {
-    const formContext    = useContext(FormContext)
+    const formContext           = useContext(FormContext)
     const onChangedEvent = event => {
         formContext.onChange(event, formContext.fields[field.id])
         if (onChange) onChange(event.currentTarget.value)
     }
 
-    useEffect(() => {
-        formContext.addField({
-            field: field,
-            value: field.value || ''
-        })
-    }, [field.value])
+    useEffect(() => formContext.addField({
+        field: field,
+        value: field.value || ''
+    }), [field])
+    if (!formContext.fields.hasOwnProperty(field.id)) {
+        return [undefined, undefined, onChangedEvent]
+    }
 
     return [
         formContext.fields[field.id],

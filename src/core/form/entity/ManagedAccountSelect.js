@@ -13,6 +13,9 @@ export const ManagedAccountSelect = props => {
     useEffect(() => {
         AccountRepository.own().then(setAccounts)
     }, [])
+    useEffect(() => {
+        setSelectedValue(props.value)
+    }, [props.value])
 
     const valueSelected = event => {
         const selectedAccount = accounts.find(account => account.id === parseInt(event.currentTarget.value))

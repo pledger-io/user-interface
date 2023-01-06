@@ -8,7 +8,7 @@ import restAPI from "../../RestAPI";
 
 const Tag = ({tag, onRemove = _ => undefined}) => {
     return (
-        <div className='Tag' key={tag}>
+        <div className='Tag'>
             {tag}
             <Icon path={mdiClose}
                   onClick={() => onRemove(tag)}
@@ -73,7 +73,7 @@ export const TagInput = props => {
                     help={props.help}
                     valid={field.touched ? errors.length === 0 : undefined }>
             <div className='TagInput'>
-                {(field.value || []).map(tag => <Tag tag={tag} onRemove={onTagRemove} />)}
+                {(field.value || []).map(tag => <Tag tag={tag} onRemove={onTagRemove} key={tag} />)}
                 <div className='EditableTag'>
                     <div className='Input'
                          ref={inputDivRef}

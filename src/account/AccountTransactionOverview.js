@@ -35,7 +35,7 @@ const AccountTransactionOverview = () => {
     const [balanceSeries, setBalanceSeries]  = useState([])
     const [range, setRange]                  = useState(Dates.Ranges.currentMonth())
 
-    const onDateChange = ({year, month}) => navigate(`/accounts/${type}/${id}/transactions/${year}/${month}?page=1`)
+    const onDateChange = ({year, month}) => navigate(`/accounts/${type}/${id}/transactions/${year}/${month}`)
 
     useEffect(() => {
         AccountRepository.get(id).then(setAccount)

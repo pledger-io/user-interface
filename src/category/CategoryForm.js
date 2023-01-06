@@ -1,146 +1,59 @@
-import React from "react";
-import restAPI from "../core/RestAPI";
+import React, {useEffect, useState} from "react";
+import {CategoryRepository} from "../core/RestAPI";
 
-import {Form, Input, SubmitButton, Styles} from '../core/form'
+import {Form, Input, Styles, SubmitButton} from '../core/form'
 import {BreadCrumbItem, BreadCrumbs, Buttons, Card, Message, Notifications} from "../core";
 import {mdiCancel, mdiContentSave} from "@mdi/js";
-import {withNavigation} from "../core/hooks";
+import {useNavigate, useParams} from "react-router-dom";
 
-class CategoryService {
-    load(categoryId) {
-        return restAPI.get(`categories/${categoryId}`)
-    }
+export const CategoryForm = () => {
+    const [category, setCategory]   = useState({})
+    const [exception, setException] = useState()
+    const {id}                      = useParams()
+    const navigate                  = useNavigate()
 
-    update(categoryId, category) {
-        return restAPI.post(`categories/${categoryId}`, category)
-    }
+    useEffect(() => {
+        if (id) CategoryRepository.get(id).then(setCategory)
+    }, [id])
 
-    create(category) {
-        return restAPI.put('categories', category)
-    }
-}
-
-const service = new CategoryService()
-
-class CategoryForm extends React.Component {
-
-    state = {
-        id: NaN,
-        category: null,
-        exception: null
-    }
-
-    constructor(props, context) {
-        super(props, context);
-
-        const {pathContext} = this.props
-        pathContext.resolved = params => this.updatePathParams(params)
-    }
-
-    updatePathParams(params) {
-        const {id} = params
-
-        if (isNaN(id)) {
-            this.setState({
-                ...this.state,
-                category: {
-                    label: '',
-                    description: '',
-                }
-            })
-        } else {
-            service.load(id)
-                .then(resolved => {
-                    this.setState({
-                        id: id,
-                        category: resolved,
-                        loaded: true
-                    })
-                })
-                .catch(exception => this.setState({
-                    ...this.state,
-                    exception: exception,
-                    loaded: true
-                }))
-        }
-    }
-
-    process(entity) {
-        const {id} = this.state
-
-        if (isNaN(id)) {
-            service.create(entity)
+    const onSubmit = entity => {
+        if (id)
+            CategoryRepository.update(id, entity)
                 .then(() => Notifications.Service.success('page.category.create.success'))
-                .then(() => this.props.navigate(-1))
-                .catch(exception => {
-                    this.setState({
-                        ...this.state,
-                        exception: exception
-                    })
-                    Notifications.Service.warning('page.category.create.failed')
-                })
-        } else {
-            service.update(id, entity)
+                .then(() => navigate(-1))
+                .catch(e => setException(e) || Notifications.Service.warning('page.category.create.failed'))
+        else
+            CategoryRepository.create(entity)
                 .then(() => Notifications.Service.success('page.category.update.success'))
-                .then(() => this.props.navigate(-1))
-                .catch(exception => {
-                    this.setState({
-                        ...this.state,
-                        exception: exception
-                    })
-                    Notifications.Service.warning('page.category.update.failed')
-                })
-        }
+                .then(() => navigate(-1))
+                .catch(e => setException(e) || Notifications.Service.warning('page.category.update.failed'))
     }
 
-    render() {
-        let {category} = this.state
+    return (
+        <div className='CategoryForm'>
+            <BreadCrumbs>
+                <BreadCrumbItem label='page.nav.settings'/>
+                <BreadCrumbItem label='page.nav.settings.categories'/>
+            </BreadCrumbs>
 
-        if (!category) {
-            return ''
-        }
-
-        return (
-            <div className='CategoryForm'>
-                <BreadCrumbs>
-                    <BreadCrumbItem label='page.nav.settings'/>
-                    <BreadCrumbItem label='page.nav.settings.categories'/>
-                </BreadCrumbs>
-
-                <Form entity='Category' onSubmit={this.process.bind(this)} style={Styles.Inline}>
-                    <Card title='page.settings.categories.add'
-                          buttons={[
-                              <SubmitButton key='save' label='common.action.save' icon={mdiContentSave}/>,
-                              <Buttons.BackButton key='cancel' label='common.action.cancel' icon={mdiCancel}/>]}>
-                        {this.renderExceptions()}
-                        <Message label='page.settings.category.help' variant='info'/>
-                        <Input.Text id='name'
-                                    title='Category.label'
+            <Form entity='Category' onSubmit={onSubmit} style={Styles.Inline}>
+                <Card title='page.settings.categories.add'
+                      buttons={[
+                          <SubmitButton key='save' label='common.action.save' icon={mdiContentSave}/>,
+                          <Buttons.BackButton key='cancel' label='common.action.cancel' icon={mdiCancel}/>]}>
+                    {exception && <Message message={exception} variant='warning'/>}
+                    <Message label='page.settings.category.help' variant='info'/>
+                    <Input.Text id='name'
+                                title='Category.label'
+                                type='text'
+                                value={category.label}
+                                required/>
+                    <Input.TextArea id='description'
+                                    title='Category.description'
                                     type='text'
-                                    value={category.label}
-                                    required/>
-                        <Input.TextArea id='description'
-                                   title='Category.description'
-                                   type='text'
-                                   value={category.description}/>
-                    </Card>
-                </Form>
-            </div>
-        );
-    }
-
-    renderExceptions() {
-        const {exception} = this.state
-        if (exception) {
-            return <Message message={exception} variant='warning'/>
-        }
-
-        return '';
-    }
-}
-
-const formWithNavigate = withNavigation(CategoryForm)
-
-export {
-    formWithNavigate as CategoryForm
+                                    value={category.description}/>
+                </Card>
+            </Form>
+        </div>
+    )
 }

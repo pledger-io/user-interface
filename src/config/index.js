@@ -61,11 +61,19 @@ const Transaction = PropTypes.shape({
     }))
 })
 
+const Category = PropTypes.shape({
+    id: PropTypes.number,
+    label: PropTypes.string,
+    description: PropTypes.string,
+    lastUsed: PropTypes.string
+})
+
 const EntityShapes = {
     AccountIdentifier,
     Account,
     TransactionSchedule,
-    Transaction
+    Transaction,
+    Category
 }
 
 export {

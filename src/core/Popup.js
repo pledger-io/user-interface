@@ -51,11 +51,14 @@ Popup.propTypes = {
 
 
 export const Dialog = ({control, openButton, title, actions = [], className = '', children}) => {
-    const popupContext = useContext(PopupContext)
     useEffect(() => {
         if (control) control.close = () => undefined
     })
 
+    const popupContext = {
+        close: () => {},
+        open: () => {}
+    }
     const actionsWithClose = [...actions, <Buttons.Button key='cancel'
                                                           label='common.action.cancel'
                                                           onClick={() => popupContext.close()}

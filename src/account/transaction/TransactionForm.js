@@ -4,10 +4,9 @@ import {PathParams, withNavigation, withPathParams} from "../../core/hooks";
 import {BreadCrumbItem, BreadCrumbs, Buttons, Card, Resolver, Translations} from "../../core";
 import restAPI from "../../core/RestAPI";
 import {Entity, Form, Input, SubmitButton} from "../../core/form";
-import {mdiCancel, mdiContentSave} from "@mdi/js";
+import {mdiCallSplit, mdiCancel, mdiContentSave} from "@mdi/js";
 
 import '../../assets/css/TransactionForm.scss'
-import {TransactionService} from "./TransactionService";
 
 class TransactionForm extends React.Component {
     static contextType = PathParams
@@ -174,6 +173,7 @@ class TransactionForm extends React.Component {
                         {!isNaN(transaction.id) && !transaction.split &&
                         <fieldset className='Buttons'>
                             <Buttons.Button label='page.transaction.action.split'
+                                            icon={mdiCallSplit}
                                             variant='primary'
                                             variantType='outline'
                                             onClick={() => startSplit()}/>

@@ -1,19 +1,8 @@
 import React, {useEffect, useState} from "react";
-import {PathParams, withNavigation} from "../core/hooks";
 
 import {Entity, Form, Input, SubmitButton} from '../core/form'
 import {AccountRepository} from "../core/RestAPI";
-import {
-    Attachments,
-    BreadCrumbItem,
-    BreadCrumbs,
-    Buttons,
-    Card,
-    Message,
-    Notifications,
-    Translations,
-    When
-} from "../core";
+import {Attachments, BreadCrumbItem, BreadCrumbs, Buttons, Card, Message, Notifications, Translations} from "../core";
 import {mdiCancel, mdiContentSave} from "@mdi/js";
 
 import '../assets/css/AccountForm.scss'

@@ -80,7 +80,7 @@ const TransactionRow = ({displayAccount = null, transaction}) => {
                 <input type='checkbox' className='Select'/>
             </td>
             <td>
-                <Formats.Date date={transaction.dates.transaction}/>
+                <Formats.Date date={transaction.dates.transaction}/><br/>
                 <Icon path={ICON_TYPE_LOOKUP[transaction.type.code]} size={.8} />
             </td>
             <When condition={displayAccount == null}>

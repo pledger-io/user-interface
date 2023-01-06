@@ -37,7 +37,6 @@ const RestAPI = (() => {
             .catch(({response}) => {
                 if (response.status === 401) {
                     SecurityRepository.logout()
-                    document.body.href.reload()
                 }
                 else error(response?.data?.message || response.statusText)
             }))
@@ -120,9 +119,34 @@ const AttachmentRepository = (api => {
     }
 })(RestAPI)
 
+const CategoryRepository = (api => {
+    return {
+        list: page => api.post('categories', {page: page}),
+        get: id => api.get(`categories/${id}`),
+        update: (id, category) => api.post(`categories/${id}`, category),
+        create: category => api.put('categories', category),
+        delete: ({id}) => api.delete(`categories/${id}`)
+    }
+})(RestAPI)
+
+const TransactionRepository = (api => {
+    return {
+        search: ({range, page, transfers = false}) => api.post('transactions', {
+            dateRange: {
+                start: range.startString(),
+                end: range.endString()
+            },
+            page: page,
+            transfers: transfers
+        })
+    }
+})(RestAPI)
+
 export default RestAPI;
 export {
     AccountRepository,
     SecurityRepository,
-    AttachmentRepository
+    AttachmentRepository,
+    CategoryRepository,
+    TransactionRepository
 }
