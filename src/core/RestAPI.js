@@ -142,11 +142,18 @@ const TransactionRepository = (api => {
     }
 })(RestAPI)
 
+const TransactionScheduleRepository = (api => {
+    return {
+        create: schedule => api.put('schedule/transaction', schedule)
+    }
+})(RestAPI)
+
 export default RestAPI;
 export {
     AccountRepository,
     SecurityRepository,
     AttachmentRepository,
     CategoryRepository,
-    TransactionRepository
+    TransactionRepository,
+    TransactionScheduleRepository
 }
