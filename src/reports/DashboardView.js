@@ -146,6 +146,12 @@ export const DashboardView = () => {
         Statistical.Service.balance({...baseCommand, onlyIncome: false})
             .then(({balance}) => setCurrentExpense(Math.abs(balance)))
 
+        Charts.SeriesProvider.balanceSeries({
+            id: 'balance-series',
+            title: 'graph.series.balance',
+            dateRange: range,
+            allMoney: true
+        }).then(result => setBalanceSeries([result]))
     }, [])
 
     return <div className='Dashboard'>
@@ -176,6 +182,13 @@ export const DashboardView = () => {
                 current={budget}
                 currency='EUR' />
         </div>
+
+        <Card title='page.dashboard.accounts.balance'>
+            <Charts.Chart height={75}
+                          id='dashboard-balance-graph'
+                          dataSets={balanceSeries}>
+            </Charts.Chart>
+        </Card>
 
         <div className='TwoColumn'>
 
