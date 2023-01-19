@@ -16,7 +16,7 @@ import {
 } from "../core/index";
 
 import '../assets/css/IncomeExpenseView.scss'
-import restAPI, {CurrencyRepository} from "../core/RestAPI";
+import restAPI, {AccountRepository, CurrencyRepository} from "../core/RestAPI";
 import {useNavigate, useParams} from "react-router-dom";
 
 const ROLLING_AVERAGE_MONTHS = 4;
@@ -57,7 +57,7 @@ class ReportService {
 
     accountBalances(year, currency) {
         return new Promise((resolve, failure) => {
-            restAPI.get('accounts/my-own')
+            AccountRepository.own()
                 .then(accounts => Promise.all(accounts.map(async account => {
                     return {
                         ...account,
@@ -198,6 +198,67 @@ const BalanceChart = ({currencySymbol, year, currency}) => {
     )
 }
 
+const AccountBalances = ({year, currency}) => {
+    const [accounts, setAccounts] = useState([])
+
+    useEffect(() => {
+        service.accountBalances(year, currency)
+            .then(setAccounts)
+    }, [year, currency])
+
+    return (
+        <table className='Table'>
+            <thead>
+            <tr>
+                <th><Translations.Translation label='Account.name'/></th>
+                <th><Translations.Translation label='page.reports.default.startBalance'/></th>
+                <th><Translations.Translation label='page.reports.default.endBalance'/></th>
+                <th><Translations.Translation label='common.difference'/></th>
+            </tr>
+            </thead>
+            <tbody>
+            {accounts.length === 0 && <tr>
+                <td style={{textAlign: 'center'}} colSpan='4'><Loading /></td>
+            </tr>}
+            {accounts.map(account =>
+                <tr key={account.id}>
+                    <td>{account.name}</td>
+                    <td><Formats.Money money={account.balance.start} currency={currency}/></td>
+                    <td><Formats.Money money={account.balance.end} currency={currency}/></td>
+                    <td><Formats.Money money={account.balance.end - account.balance.start} currency={currency}/></td>
+                </tr>)}
+            </tbody>
+        </table>
+    )
+}
+
+const YearSummary = ({currency, year}) => {
+    const [range, setRange] = useState(Dates.Ranges.currentYear())
+
+    useEffect(() => {
+        setRange(Dates.Ranges.forYear(year))
+    }, [year])
+
+    return (
+        <table className="Table YearSummary">
+            <tbody>
+            <tr>
+                <td><Translations.Translation label='common.in'/></td>
+                <td><Statistical.Balance currency={currency} income={true} range={range}/></td>
+            </tr>
+            <tr>
+                <td><Translations.Translation label='common.out'/></td>
+                <td><Statistical.Balance currency={currency} income={false} range={range}/></td>
+            </tr>
+            <tr>
+                <td><Translations.Translation label='common.difference'/></td>
+                <td><Statistical.Balance currency={currency} range={range}/></td>
+            </tr>
+            </tbody>
+        </table>
+    )
+}
+
 export const IncomeExpenseView = () => {
     const [currencySymbol, setCurrencySymbol] = useState('')
     const [range, setRange]                   = useState(Dates.Ranges.currentYear())
@@ -229,6 +290,15 @@ export const IncomeExpenseView = () => {
             <Card title='page.reports.default.title'>
                 <BalanceChart year={year} currencySymbol={currencySymbol} currency={currency} />
             </Card>
+
+            <div className='Columns'>
+                <Card title='page.reports.default.balances'>
+                    <AccountBalances currency={currency} year={parseInt(year)} />
+                </Card>
+                <Card title='page.reports.default.title'>
+                    <YearSummary year={parseInt(year)} currency={currency} />
+                </Card>
+            </div>
         </div>
     )
 }
