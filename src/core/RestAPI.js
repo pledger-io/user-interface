@@ -142,6 +142,12 @@ const TransactionRepository = (api => {
     }
 })(RestAPI)
 
+const CurrencyRepository = (api => {
+    return {
+        get: code => api.get(`settings/currencies/${code}`)
+    }
+})(RestAPI)
+
 const TransactionScheduleRepository = (api => {
     return {
         create: schedule => api.put('schedule/transaction', schedule)
@@ -155,5 +161,6 @@ export {
     AttachmentRepository,
     CategoryRepository,
     TransactionRepository,
-    TransactionScheduleRepository
+    TransactionScheduleRepository,
+    CurrencyRepository
 }

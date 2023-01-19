@@ -1,14 +1,14 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
-
-import {withNavigation, withPathParams} from "../core/hooks";
 import {
     Attachments,
-    BreadCrumbItem, BreadCrumbMenu,
+    BreadCrumbItem,
+    BreadCrumbMenu,
     BreadCrumbs,
     Card,
     Charts,
-    Dates, Dropdown,
+    Dates,
+    Dropdown,
     Formats,
     Loading,
     Statistical,
@@ -16,7 +16,8 @@ import {
 } from "../core/index";
 
 import '../assets/css/IncomeExpenseView.scss'
-import restAPI from "../core/RestAPI";
+import restAPI, {CurrencyRepository} from "../core/RestAPI";
+import {useNavigate, useParams} from "react-router-dom";
 
 const ROLLING_AVERAGE_MONTHS = 4;
 
@@ -145,7 +146,94 @@ class ReportService {
 
 const service = new ReportService()
 
-class IncomeExpenseView extends React.Component {
+const BalanceChart = ({currencySymbol, year, currency}) => {
+    const [labels, setLabels]           = useState([])
+    const [incomeData, setIncomeData]   = useState([])
+    const [expenseData, setExpenseData] = useState([])
+
+    useEffect(() => {
+        setLabels(service.computeMonths(year)
+            .map(monthRange => monthRange.start))
+    }, [])
+
+    useEffect(() => {
+        if (year) {
+            service.monthlyExpense(year, currency)
+                .then(setExpenseData)
+            service.monthlyIncome(year, currency)
+                .then(setIncomeData)
+        }
+    }, [year, currency])
+
+    return (
+        <Charts.Chart height={75}
+                      id='income-expense-graph'
+                      type='bar'
+                      labels={labels}
+                      dataSets={[...incomeData, ...expenseData]}
+                      options={{
+                          scales: {
+                              x: {
+                                  type: 'time',
+                                  time: {
+                                      unit: 'month'
+                                  }
+                              },
+                              y: {
+                                  ticks: {
+                                      callback: value => `${currencySymbol}${value}`
+                                  }
+                              }
+                          },
+                          plugins: {
+                              tooltip: {
+                                  mode: 'point'
+                              },
+                              legend: {
+                                  position: 'bottom',
+                                  display: true
+                              }
+                          },
+                      }} />
+    )
+}
+
+export const IncomeExpenseView = () => {
+    const [currencySymbol, setCurrencySymbol] = useState('')
+    const [range, setRange]                   = useState(Dates.Ranges.currentYear())
+    const {year = range.year(), currency = 'EUR'} = useParams()
+
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        setRange(Dates.Ranges.forYear(parseInt(year)))
+    }, [year])
+    useEffect(() => {
+        CurrencyRepository.get(currency)
+            .then(({symbol}) => setCurrencySymbol(symbol))
+    }, [currency])
+
+    const onDateChanged = ({newYear = year, newCurrency = currency}) => navigate(`/reports/income-expense/${newYear}/${newCurrency}`)
+
+    return (
+        <div className='IncomeExpenseView'>
+            <BreadCrumbs>
+                <BreadCrumbItem label='page.title.reports.default' />
+                <BreadCrumbItem label='page.reports.default.title' />
+                <BreadCrumbMenu>
+                    <Dropdown.Currency currency={currency} onChange={currency => onDateChanged({newCurrency: currency.code})} />
+                    <Dropdown.Year year={parseInt(year)} onChange={year => onDateChanged({newYear: year})}/>
+                </BreadCrumbMenu>
+            </BreadCrumbs>
+
+            <Card title='page.reports.default.title'>
+                <BalanceChart year={year} currencySymbol={currencySymbol} currency={currency} />
+            </Card>
+        </div>
+    )
+}
+
+class IncomeExpenseView1 extends React.Component {
     static propTypes = {
         year: PropTypes.number
     }
@@ -356,17 +444,17 @@ class IncomeExpenseView extends React.Component {
     }
 }
 
-const withPresetProps = withNavigation(withPathParams(props => {
-    const [year, setYear] = useState(new Date().getFullYear())
-    const [currency, setCurrency] = useState('EUR')
-
-    props.pathContext.resolved = ({year, currency}) => {
-        if (year) setYear(parseInt(year))
-        if (currency) setCurrency(currency)
-    }
-    return <IncomeExpenseView year={year} currency={currency} navigate={props.navigate}/>
-}))
-
-export {
-    withPresetProps as IncomeExpenseView
-}
+// const withPresetProps = withNavigation(withPathParams(props => {
+//     const [year, setYear] = useState(new Date().getFullYear())
+//     const [currency, setCurrency] = useState('EUR')
+//
+//     props.pathContext.resolved = ({year, currency}) => {
+//         if (year) setYear(parseInt(year))
+//         if (currency) setCurrency(currency)
+//     }
+//     return <IncomeExpenseView year={year} currency={currency} navigate={props.navigate}/>
+// }))
+//
+// export {
+//     withPresetProps as IncomeExpenseView
+// }

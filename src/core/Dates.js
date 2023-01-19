@@ -36,6 +36,10 @@ const RangeService = (() => {
             const now = new Date()
             return RangeService.forMonth(now.getFullYear(), now.getMonth() + 1)
         },
+        currentYear: () => {
+            const now = new Date()
+            return RangeService.forYear(now.getFullYear())
+        },
         forMonth: (year, month) => new Range(new Date(Date.UTC(year, month - 1, 1)), new Date(Date.UTC(year, month, 1))),
         forYear: (year) => new Range(new Date(Date.UTC(year, 1, 1)), new Date(Date.UTC(year, 12, 31))),
         forRange: (start, end) => {
