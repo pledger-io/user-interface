@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {Card, Charts, Dates, Formats, Statistical, Translations, When} from "../core";
 import Icon from "@mdi/react";
 import {
@@ -106,7 +106,84 @@ const range = Dates.Ranges.previousDays(DASHBOARD_DAYS)
 const compareRange = range.before(DASHBOARD_DAYS)
 const service = new DashboardService()
 
-class DashboardView extends React.Component {
+const baseCommand = {
+    dateRange: {
+        start: range.startString(),
+        end: range.endString()
+    }
+}
+const compareBaseCommand = {
+    dateRange: {
+        start: compareRange.startString(),
+        end: compareRange.endString()
+    }
+}
+
+export const DashboardView = () => {
+    const [currentIncome, setCurrentIncome]     = useState(0)
+    const [currentExpense, setCurrentExpense]   = useState(0)
+    const [currentBalance, setCurrentBalance]   = useState(0)
+    const [previousIncome, setPreviousIncome]   = useState(0)
+    const [previousExpense, setPreviousExpense] = useState(0)
+    const [previousBalance, setPreviousBalance] = useState(0)
+    const [budget, setBudget]                   = useState(0)
+
+    const [balanceSeries, setBalanceSeries]     = useState([])
+
+
+    useEffect(() => {
+        Statistical.Service.balance({dateRange: {start: '1970-01-01', end: compareRange.endString()}, allMoney: true})
+            .then(({balance}) => setPreviousBalance(balance))
+        Statistical.Service.balance({dateRange: {start: '1970-01-01', end: range.endString()}, allMoney: true})
+            .then(({balance}) => setCurrentBalance(balance))
+        Statistical.Service.balance({...compareBaseCommand, onlyIncome: true})
+            .then(({balance}) => setPreviousIncome(balance))
+        Statistical.Service.balance({...baseCommand, onlyIncome: true})
+            .then(({balance}) => setCurrentIncome(balance))
+
+        Statistical.Service.balance({...compareBaseCommand, onlyIncome: false})
+            .then(({balance}) => setPreviousExpense(Math.abs(balance)))
+        Statistical.Service.balance({...baseCommand, onlyIncome: false})
+            .then(({balance}) => setCurrentExpense(Math.abs(balance)))
+
+    }, [])
+
+    return <div className='Dashboard'>
+        <div className='Summary'>
+            <SummaryComponent
+                title='page.dashboard.income'
+                icon={mdiSwapVerticalCircle}
+                current={currentIncome}
+                previous={previousIncome}
+                currency='EUR' />
+
+            <SummaryComponent
+                title='page.dashboard.expense'
+                icon={mdiContactlessPaymentCircle}
+                current={currentExpense}
+                previous={previousExpense}
+                currency='EUR' />
+
+            <SummaryComponent
+                title='page.dashboard.balance'
+                icon={mdiScaleBalance}
+                current={currentBalance}
+                previous={previousBalance}
+                currency='EUR' />
+
+            <SummaryComponent
+                title='page.dashboard.budget'
+                current={budget}
+                currency='EUR' />
+        </div>
+
+        <div className='TwoColumn'>
+
+        </div>
+    </div>
+}
+
+class DashboardView1 extends React.Component {
     loaded = false;
 
     state = {
@@ -263,8 +340,4 @@ class DashboardView extends React.Component {
             </div>
         )
     }
-}
-
-export {
-    DashboardView
 }
