@@ -129,6 +129,7 @@ export const DashboardView = () => {
     const [budget, setBudget]                   = useState(0)
 
     const [balanceSeries, setBalanceSeries]     = useState([])
+    const [budgetSeries, setBudgetSeries]       = useState({labels: [], data: []})
 
 
     useEffect(() => {
@@ -145,6 +146,12 @@ export const DashboardView = () => {
             .then(({balance}) => setPreviousExpense(Math.abs(balance)))
         Statistical.Service.balance({...baseCommand, onlyIncome: false})
             .then(({balance}) => setCurrentExpense(Math.abs(balance)))
+
+        service.budgets()
+            .then(({labels, data}) => setBudgetSeries({
+                labels: labels,
+                data: data
+            }))
 
         Charts.SeriesProvider.balanceSeries({
             id: 'balance-series',
@@ -191,7 +198,24 @@ export const DashboardView = () => {
         </Card>
 
         <div className='TwoColumn'>
+            <Card title='page.dashboard.budgets.balance'>
+                <Charts.Chart height={125}
+                              id='dashboard-budgets-graph'
+                              labels={budgetSeries.labels}
+                              dataSets={budgetSeries.data}
+                              type='bar'
+                              options={{
+                                  plugins: {
+                                      legend: {
+                                          position: 'bottom',
+                                          display: true
+                                      }
+                                  },
+                              }}/>
+            </Card>
 
+            <Card title='page.dashboard.categories.balance'>
+            </Card>
         </div>
     </div>
 }
