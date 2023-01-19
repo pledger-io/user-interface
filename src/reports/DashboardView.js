@@ -1,11 +1,7 @@
 import React, {useEffect, useState} from "react";
-import {Card, Charts, Dates, Formats, Statistical, Translations, When} from "../core";
+import {Card, Charts, Dates, Formats, Statistical, Translations} from "../core";
 import Icon from "@mdi/react";
-import {
-    mdiContactlessPaymentCircle,
-    mdiScaleBalance,
-    mdiSwapVerticalCircle
-} from "@mdi/js";
+import {mdiContactlessPaymentCircle, mdiScaleBalance, mdiSwapVerticalCircle} from "@mdi/js";
 import restAPI from "../core/RestAPI";
 
 import '../assets/css/DashboardView.scss'
@@ -130,6 +126,7 @@ export const DashboardView = () => {
 
     const [balanceSeries, setBalanceSeries]     = useState([])
     const [budgetSeries, setBudgetSeries]       = useState({labels: [], data: []})
+    const [categorySeries, setCategorySeries]   = useState({labels: [], data: []})
 
 
     useEffect(() => {
@@ -148,10 +145,9 @@ export const DashboardView = () => {
             .then(({balance}) => setCurrentExpense(Math.abs(balance)))
 
         service.budgets()
-            .then(({labels, data}) => setBudgetSeries({
-                labels: labels,
-                data: data
-            }))
+            .then(setBudgetSeries)
+        service.categories()
+            .then(setCategorySeries)
 
         Charts.SeriesProvider.balanceSeries({
             id: 'balance-series',
@@ -215,166 +211,12 @@ export const DashboardView = () => {
             </Card>
 
             <Card title='page.dashboard.categories.balance'>
+                <Charts.Chart height={125}
+                              id='dashboard-categories-graph'
+                              labels={categorySeries.labels}
+                              dataSets={categorySeries.data}
+                              type='bar' />
             </Card>
         </div>
     </div>
-}
-
-class DashboardView1 extends React.Component {
-    loaded = false;
-
-    state = {
-        income: {
-            current: 0,
-            previous: 0
-        },
-        expense: {
-            current: 0,
-            previous: 0
-        },
-        balance: {
-            current: 0,
-            previous: 0
-        },
-        budget: 0,
-        budgets: [],
-        categories: [],
-        charts: {
-            balanceSeries: [],
-            budgets: [],
-            categories: []
-        }
-    }
-
-    refresh() {
-        const baseCommand = {
-            dateRange: {
-                start: range.startString(),
-                end: range.endString()
-            }
-        }
-        const compareBaseCommand = {
-            dateRange: {
-                start: compareRange.startString(),
-                end: compareRange.endString()
-            }
-        }
-        const state = this.state
-        state.charts.budgets = []
-
-        Promise.all([
-            // balance fetching
-            Statistical.Service.balance({dateRange: {start: '1970-01-01', end: compareRange.endString()}, allMoney: true})
-                .then(response => state.balance.previous = response.balance),
-            Statistical.Service.balance({dateRange: {start: '1970-01-01', end: range.endString()}, allMoney: true})
-                .then(response => state.balance.current = response.balance),
-
-            // Income fetching
-            Statistical.Service.balance({...compareBaseCommand, onlyIncome: true})
-                .then(response => state.income.previous = response.balance),
-            Statistical.Service.balance({...baseCommand, onlyIncome: true})
-                .then(response => state.income.current = response.balance),
-
-            // Expense fetching
-            Statistical.Service.balance({...compareBaseCommand, onlyIncome: false})
-                .then(response => state.expense.previous = Math.abs(response.balance)),
-            Statistical.Service.balance({...baseCommand, onlyIncome: false})
-                .then(response => state.expense.current = Math.abs(response.balance)),
-
-            service.budgets()
-                .then(seriesData => {
-                    state.budgets = seriesData.labels
-                    state.charts.budgets = seriesData.data
-                }),
-
-            service.categories()
-                .then(seriesData => {
-                    state.categories = seriesData.labels
-                    state.charts.categories = seriesData.data
-                }),
-
-            Charts.SeriesProvider.balanceSeries({
-                id: 'balance-series',
-                title: 'graph.series.balance',
-                dateRange: range,
-                allMoney: true
-            }).then(result => state.charts.balanceSeries = [result])
-        ]).then(() => this.setState({
-            ...state,
-            loaded: true
-        }))
-    }
-
-    render() {
-        const {income, expense, balance, budget, budgets, categories, charts} = this.state
-
-        if (!this.loaded) {
-            this.loaded = true
-            setTimeout(() => this.refresh(), 10);
-        }
-
-        return (
-            <div className='Dashboard'>
-                <div className='Summary'>
-                    <SummaryComponent
-                        title='page.dashboard.income'
-                        icon={mdiSwapVerticalCircle}
-                        current={income.current}
-                        previous={income.previous}
-                        currency='EUR' />
-
-                    <SummaryComponent
-                        title='page.dashboard.expense'
-                        icon={mdiContactlessPaymentCircle}
-                        current={expense.current}
-                        previous={expense.previous}
-                        currency='EUR' />
-
-                    <SummaryComponent
-                        title='page.dashboard.balance'
-                        icon={mdiScaleBalance}
-                        current={balance.current}
-                        previous={balance.previous}
-                        currency='EUR' />
-
-                    <SummaryComponent
-                        title='page.dashboard.budget'
-                        current={budget}
-                        currency='EUR' />
-                </div>
-
-                <Card title='page.dashboard.accounts.balance'>
-                    <Charts.Chart height={75}
-                                  id='dashboard-balance-graph'
-                                  dataSets={charts.balanceSeries}>
-                    </Charts.Chart>
-                </Card>
-
-                <div>
-                    <Card title='page.dashboard.budgets.balance'>
-                        <Charts.Chart height={125}
-                                      id='dashboard-budgets-graph'
-                                      labels={budgets}
-                                      dataSets={charts.budgets}
-                                      type='bar'
-                                      options={{
-                                          plugins: {
-                                              legend: {
-                                                  position: 'bottom',
-                                                  display: true
-                                              }
-                                          },
-                                      }}/>
-                    </Card>
-                    <Card title='page.dashboard.categories.balance'>
-                        <Charts.Chart height={125}
-                                      id='dashboard-categories-graph'
-                                      labels={categories}
-                                      dataSets={charts.categories}
-                                      type='bar' />
-                    </Card>
-                </div>
-            </div>
-        )
-    }
 }
