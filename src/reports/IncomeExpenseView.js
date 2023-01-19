@@ -339,6 +339,7 @@ export const IncomeExpenseView = () => {
                     <TopAccountTable year={year} type={'debit'} />
                 </Card>
                 <Card title='page.reports.default.top.credit'>
+                    <TopAccountTable year={year} type={'creditor'} />
                 </Card>
             </div>
         </div>
