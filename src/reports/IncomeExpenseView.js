@@ -259,6 +259,40 @@ const YearSummary = ({currency, year}) => {
     )
 }
 
+const TopAccountTable = ({year, type}) => {
+    const [accounts, setAccounts] = useState([])
+
+    useEffect(() => {
+        service.topAccounts(year, type)
+            .then(setAccounts)
+    }, [year, type])
+
+    return (
+        <table className='Table TopAccounts'>
+            <thead>
+            <tr>
+                <th colSpan="2"><Translations.Translation label='Account.name'/></th>
+                <th><Translations.Translation label='common.total'/></th>
+                <th><Translations.Translation label='common.average'/></th>
+            </tr>
+            </thead>
+            <tbody>
+            {!accounts.length && <tr>
+                <td colSpan='4'><Loading /></td>
+            </tr>}
+            {accounts.map(account => (
+                <tr key={account.account.id}>
+                    <td><Attachments.Image fileCode={account.account.iconFileCode}/></td>
+                    <td>{account.account.name}</td>
+                    <td><Formats.Money money={account.total * -1} currency={account.account.account.currency}/></td>
+                    <td><Formats.Money money={account.average * -1} currency={account.account.account.currency}/></td>
+                </tr>
+            ))}
+            </tbody>
+        </table>
+    )
+}
+
 export const IncomeExpenseView = () => {
     const [currencySymbol, setCurrencySymbol] = useState('')
     const [range, setRange]                   = useState(Dates.Ranges.currentYear())
@@ -297,6 +331,14 @@ export const IncomeExpenseView = () => {
                 </Card>
                 <Card title='page.reports.default.title'>
                     <YearSummary year={parseInt(year)} currency={currency} />
+                </Card>
+            </div>
+
+            <div className='Columns'>
+                <Card title='page.reports.default.top.debit'>
+                    <TopAccountTable year={year} type={'debit'} />
+                </Card>
+                <Card title='page.reports.default.top.credit'>
                 </Card>
             </div>
         </div>
