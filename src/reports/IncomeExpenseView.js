@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react'
-import PropTypes from 'prop-types'
 import {
     Attachments,
     BreadCrumbItem,
@@ -15,9 +14,10 @@ import {
     Translations
 } from "../core/index";
 
-import '../assets/css/IncomeExpenseView.scss'
-import restAPI, {AccountRepository, CurrencyRepository} from "../core/RestAPI";
+import {AccountRepository, CurrencyRepository} from "../core/RestAPI";
 import {useNavigate, useParams} from "react-router-dom";
+
+import '../assets/css/IncomeExpenseView.scss'
 
 const ROLLING_AVERAGE_MONTHS = 4;
 
@@ -48,11 +48,6 @@ class ReportService {
                 }
             }))
         )
-    }
-
-    topAccounts(year, type) {
-        const dateRange = Dates.Ranges.forYear(year)
-        return restAPI.get(`accounts/top/${type}/${dateRange.startString()}/${dateRange.endString()}`)
     }
 
     accountBalances(year, currency) {
@@ -263,7 +258,7 @@ const TopAccountTable = ({year, type}) => {
     const [accounts, setAccounts] = useState([])
 
     useEffect(() => {
-        service.topAccounts(year, type)
+        AccountRepository.top(type, year)
             .then(setAccounts)
     }, [year, type])
 
@@ -345,229 +340,3 @@ export const IncomeExpenseView = () => {
         </div>
     )
 }
-
-class IncomeExpenseView1 extends React.Component {
-    static propTypes = {
-        year: PropTypes.number
-    }
-
-    state = {
-        accounts: [],
-        top: {
-            debtor: [],
-            creditor: []
-        },
-        currency: {},
-        charts: {
-            balance: {
-                income: [],
-                expenses: []
-            }
-        }
-    }
-
-    refresh() {
-        const {year, currency} = this.props
-
-        this.setState({year: year, currency: {code: currency}})
-        const updateState = this.state
-
-        Promise.all([
-            service.monthlyIncome(year, currency)
-                .then(series => updateState.charts.balance.income = series),
-            service.monthlyExpense(year, currency)
-                .then(series => updateState.charts.balance.expenses = series),
-            service.accountBalances(year, currency)
-                .then(accounts => updateState.accounts = accounts),
-            service.topAccounts(year, 'debit')
-                .then(topDebit => updateState.top.debtor = topDebit),
-            service.topAccounts(year, 'creditor')
-                .then(topCreditor => updateState.top.creditor = topCreditor),
-            restAPI.get(`settings/currencies/${currency}`)
-                .then(currency => updateState.currency = currency)
-        ]).then(() => this.setState({
-            ...updateState,
-            loaded: true
-        }))
-    }
-
-    render() {
-        const {charts, year, loaded = false, top: {debtor, creditor}, currency: {symbol}} = this.state
-        const {navigate, currency} = this.props
-        if (this.props.year !== this.state.year || currency !== this.state.currency.code) {
-            setTimeout(() => this.refresh(), 50)
-        }
-
-        const selectionChanged = ({newYear = year, newCurrency = currency}) => {
-            this.setState({
-                loaded: false
-            })
-            navigate(`/reports/income-expense/${newYear}/${newCurrency}`)
-        }
-
-        return (
-            <div className='IncomeExpenseView'>
-                <BreadCrumbs>
-                    <BreadCrumbItem label='page.title.reports.default' />
-                    <BreadCrumbItem label='page.reports.default.title' />
-                    <BreadCrumbMenu>
-                        <Dropdown.Currency currency={currency} onChange={currency => selectionChanged({newCurrency: currency.code})} />
-                        <Dropdown.Year year={year} onChange={year => selectionChanged({newYear: year})}/>
-                    </BreadCrumbMenu>
-                </BreadCrumbs>
-
-                <Card title='page.reports.default.title'>
-                    {loaded && <Charts.Chart height={75}
-                                  id='income-expense-graph'
-                                  type='bar'
-                                  labels={service.computeMonths(year)
-                                      .map(monthRange => monthRange.start)}
-                                  dataSets={[...charts.balance.income, ...charts.balance.expenses]}
-                                  options={{
-                                      scales: {
-                                          x: {
-                                              type: 'time',
-                                              time: {
-                                                  unit: 'month'
-                                              }
-                                          },
-                                          y: {
-                                              ticks: {
-                                                callback: value => `${symbol}${value}`
-                                              }
-                                          }
-                                      },
-                                      plugins: {
-                                          tooltip: {
-                                              mode: 'point'
-                                          },
-                                          legend: {
-                                              position: 'bottom',
-                                              display: true
-                                          }
-                                      },
-                                  }}/>}
-                    {!loaded && <Loading />}
-                </Card>
-                <div className='Columns'>
-                    <Card title='page.reports.default.balances'>
-                        {this.renderAccountBalances()}
-                    </Card>
-                    <Card title='page.reports.default.title'>
-                        {this.renderYearSummary()}
-                    </Card>
-                </div>
-                <div className='Columns'>
-                    <Card title='page.reports.default.top.debit'>
-                        {this.renderTopAccounts(debtor)}
-                    </Card>
-                    <Card title='page.reports.default.top.credit'>
-                        {this.renderTopAccounts(creditor)}
-                    </Card>
-                </div>
-            </div>
-        )
-    }
-
-    renderYearSummary() {
-        const {loaded, year} = this.state
-        const {currency} = this.props
-        if (!loaded) {
-            return <Loading />
-        }
-
-        const range = Dates.Ranges.forYear(year)
-        return (
-            <table className="Table YearSummary">
-                <tbody>
-                <tr>
-                    <td><Translations.Translation label='common.in'/></td>
-                    <td><Statistical.Balance currency={currency} income={true} range={range}/></td>
-                </tr>
-                <tr>
-                    <td><Translations.Translation label='common.out'/></td>
-                    <td><Statistical.Balance currency={currency} income={false} range={range}/></td>
-                </tr>
-                <tr>
-                    <td><Translations.Translation label='common.difference'/></td>
-                    <td><Statistical.Balance currency={currency} range={range}/></td>
-                </tr>
-                </tbody>
-            </table>
-        )
-    }
-
-    renderAccountBalances() {
-        const {loaded, accounts} = this.state
-        const {currency} = this.props
-        if (!loaded) {
-            return <Loading />
-        }
-
-        return (
-            <table className='Table'>
-                <thead>
-                <tr>
-                    <th><Translations.Translation label='Account.name'/></th>
-                    <th><Translations.Translation label='page.reports.default.startBalance'/></th>
-                    <th><Translations.Translation label='page.reports.default.endBalance'/></th>
-                    <th><Translations.Translation label='common.difference'/></th>
-                </tr>
-                </thead>
-                <tbody>
-                {accounts.map(account =>
-                    <tr key={account.id}>
-                        <td>{account.name}</td>
-                        <td><Formats.Money money={account.balance.start} currency={currency}/></td>
-                        <td><Formats.Money money={account.balance.end} currency={currency}/></td>
-                        <td><Formats.Money money={account.balance.end - account.balance.start} currency={currency}/></td>
-                    </tr>)}
-                </tbody>
-            </table>
-        )
-    }
-
-    renderTopAccounts(topAccounts) {
-        const {loaded} = this.state
-        if (!loaded) {
-            return <Loading />
-        }
-
-        return (
-            <table className='Table TopAccounts'>
-                <thead>
-                <tr>
-                    <th colSpan="2"><Translations.Translation label='Account.name'/></th>
-                    <th><Translations.Translation label='common.total'/></th>
-                    <th><Translations.Translation label='common.average'/></th>
-                </tr>
-                </thead>
-                <tbody>
-                {topAccounts.map(account => (
-                    <tr key={account.account.id}>
-                        <td><Attachments.Image fileCode={account.account.iconFileCode}/></td>
-                        <td>{account.account.name}</td>
-                        <td><Formats.Money money={account.total * -1} currency={account.account.account.currency}/></td>
-                        <td><Formats.Money money={account.average * -1} currency={account.account.account.currency}/></td>
-                    </tr>
-                ))}
-                </tbody>
-            </table>
-        )
-    }
-}
-
-// const withPresetProps = withNavigation(withPathParams(props => {
-//     const [year, setYear] = useState(new Date().getFullYear())
-//     const [currency, setCurrency] = useState('EUR')
-//
-//     props.pathContext.resolved = ({year, currency}) => {
-//         if (year) setYear(parseInt(year))
-//         if (currency) setCurrency(currency)
-//     }
-//     return <IncomeExpenseView year={year} currency={currency} navigate={props.navigate}/>
-// }))
-//
-// export {
-//     withPresetProps as IncomeExpenseView
-// }
