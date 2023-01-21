@@ -17,15 +17,16 @@ const StatisticsService = (() => {
  * The balance component can display a computed balance on a given search command. Where the search command can
  * be setup using the properties of the component.
  */
-const BalanceComponent = ({accounts, income, currency, range}) => {
+const BalanceComponent = ({accounts = [], categories = [], income, currency, range}) => {
     const [balance, setBalance] = useState(0)
 
     useEffect(() => {
         const filter = {
-            accounts: accounts || [],
+            accounts: accounts,
             allMoney: income == null,
             onlyIncome: income,
-            currency: currency
+            currency: currency,
+            categories: categories
         }
         if (range) {
             filter.dateRange = {
@@ -36,7 +37,7 @@ const BalanceComponent = ({accounts, income, currency, range}) => {
 
         StatisticsService.balance(filter)
             .then(balanceResponse => setBalance(balanceResponse.balance))
-    }, [accounts, income, currency, range])
+    }, [accounts, income, currency, range, categories])
 
     return <span className='Statistical-Balance'><Money money={balance} currency={currency} /></span>
 }
