@@ -146,6 +146,7 @@ const TransactionRepository = (api => {
 
 const CurrencyRepository = (api => {
     return {
+        list: () => api.get('settings/currencies'),
         get: code => api.get(`settings/currencies/${code}`)
     }
 })(RestAPI)

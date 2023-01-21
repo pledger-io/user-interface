@@ -6,22 +6,7 @@ import * as Buttons from "./Button"
 import '../assets/css/Dropdown.scss'
 import {mdiMenuDown} from "@mdi/js";
 import DatePicker from "react-datepicker";
-import restAPI from "./RestAPI";
-
-class Service {
-    currencies = []
-
-    getCurrencies() {
-        if (this.currencies.length === 0) {
-            restAPI.get('settings/currencies')
-                .then(response => this.currencies = response)
-        }
-
-        return this.currencies
-    }
-}
-
-const service = new Service()
+import {CurrencyRepository} from "./RestAPI";
 
 const Dropdown = ({actions, icon, children}) => {
     const [open, setOpen] = useState(false)
@@ -44,14 +29,15 @@ Dropdown.propTypes = {
     icon: PropTypes.string
 }
 
-
-
 const CurrencyDropdown = ({currency, onChange = (currency) => undefined}) => {
     const [currencyOpen, setCurrencyOpen] = useState(false)
+    const [currencies, setCurrencies]     = useState([])
+
     const onSelect = selected => onChange(selected) || setCurrencyOpen(false)
 
     useEffect(() => {
-        service.getCurrencies()
+        CurrencyRepository.list()
+            .then(setCurrencies)
     }, [])
 
     return (
@@ -64,7 +50,7 @@ const CurrencyDropdown = ({currency, onChange = (currency) => undefined}) => {
 
             <div className='Expanded'>
                 {currencyOpen && (
-                    service.getCurrencies()
+                    currencies
                         .map(currency =>
                             <Buttons.Button message={`${currency.name} (${currency.symbol})`}
                                             onClick={() => onSelect(currency)}
