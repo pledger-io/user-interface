@@ -32,6 +32,11 @@
 
   header {
     border-bottom: var(--app-border-color) 1px solid;
+
+    & > .Translation {
+      font-size: 1.1em;
+      font-weight: bold;
+    }
   }
 
   footer {

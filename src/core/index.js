@@ -104,53 +104,29 @@ export class Message extends React.Component {
     }
 }
 
-class Card extends React.Component {
-    static propTypes = {
-        // The translation text key for the title of the card
-        title: PropTypes.string,
-        // The buttons that will be placed in the header of the card
-        actions: PropTypes.arrayOf(PropTypes.element),
-        // The buttons that will be placed in the footer of the card
-        buttons: PropTypes.arrayOf(PropTypes.element)
-    }
-
-    render() {
-        const {title = null, actions = null, children} = this.props
-
-        return (
-            <div className='card'>
-                <When condition={title !== null || actions !== null}>
-                    <header>
-                        <Translations.Translation label={title} />
-                        {this.getHeaderButtons()}
-                    </header>
-                </When>
-                <article>
-                    {children}
-                </article>
-                {this.getFooter()}
-            </div>
-        )
-    }
-
-    getHeaderButtons() {
-        const {actions = null} = this.props
-        if (actions !== null) {
-            return <div className='Buttons'>{actions}</div>;
-        }
-
-        return '';
-    }
-
-    getFooter() {
-        if (this.props.hasOwnProperty('buttons')) {
-            return (
-                <footer><div className='Buttons'>{this.props.buttons}</div></footer>
-            )
-        }
-
-        return '';
-    }
+const Card = ({title, actions, buttons, children}) => {
+    return (
+        <div className='card'>
+            <When condition={title || actions}>
+                <header>
+                    {title && <Translations.Translation label={title} />}
+                    {actions && <div className='Buttons'>{actions}</div>}
+                </header>
+            </When>
+            <article>
+                {children}
+            </article>
+            {buttons && <footer><div className='Buttons'>{buttons}</div></footer>}
+        </div>
+    )
+}
+Card.propTypes = {
+    // The translation text key for the title of the card
+    title: PropTypes.string,
+    // The buttons that will be placed in the header of the card
+    actions: PropTypes.arrayOf(PropTypes.element),
+    // The buttons that will be placed in the footer of the card
+    buttons: PropTypes.arrayOf(PropTypes.element)
 }
 
 class When extends React.Component {
