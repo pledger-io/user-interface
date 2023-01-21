@@ -122,6 +122,7 @@ const AttachmentRepository = (api => {
 
 const CategoryRepository = (api => {
     return {
+        all: () => api.get('categories'),
         list: page => api.post('categories', {page: page}),
         get: id => api.get(`categories/${id}`),
         update: (id, category) => api.post(`categories/${id}`, category),

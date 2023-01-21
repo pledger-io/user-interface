@@ -149,7 +149,7 @@ const BalanceChart = ({currencySymbol, year, currency}) => {
     useEffect(() => {
         setLabels(service.computeMonths(year)
             .map(monthRange => monthRange.start))
-    }, [])
+    }, [year])
 
     useEffect(() => {
         if (year) {

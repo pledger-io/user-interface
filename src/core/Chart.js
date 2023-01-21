@@ -6,12 +6,17 @@ import 'chartjs-adapter-luxon';
 import {DefaultChartConfig, Service as ChartUtil} from '../config/global-chart-config'
 import {Service as BalanceService} from './Statistical'
 import {LocalizationService} from './Translation'
+import PropTypes from "prop-types";
 
-function ChartComponent({id, height = 50, children, type = 'line', options = {}, dataSets = [], labels = [], ...props}) {
+const ChartComponent = ({id, height = 50, children, type = 'line', options = {}, dataSets = [], labels = [], ...props}) => {
     const canvasRef = useRef(null)
     const chartRef = useRef(null)
 
-    const render = () => {
+    const redraw = () => {
+        chartRef.current.update()
+    }
+
+    useEffect(() => {
         if (canvasRef.current && !chartRef.current) {
             chartRef.current = new Chart(canvasRef.current, {
                 type: type,
@@ -20,22 +25,15 @@ function ChartComponent({id, height = 50, children, type = 'line', options = {},
 
             window.addEventListener('resize', redraw)
         }
-    }
-    const redraw = () => {
-        chartRef.current.update()
-    }
-    const destroy = () => {
-        if (chartRef.current) {
-            chartRef.current.destroy()
-            chartRef.current = null
-            window.removeEventListener('resize', redraw)
-        }
-    }
 
-    useEffect(() => {
-        render()
-        return () => destroy()
-    }, [])
+        return () => {
+            if (chartRef.current) {
+                chartRef.current.destroy()
+                chartRef.current = null
+                window.removeEventListener('resize', redraw)
+            }
+        }
+    }, [chartRef])
 
     useEffect(() => {
         if (dataSets && dataSets.length > 0 && chartRef.current !== null) {
@@ -56,6 +54,14 @@ function ChartComponent({id, height = 50, children, type = 'line', options = {},
             <canvas ref={canvasRef} id={id} height={height} {...props} />
         </div>
     )
+}
+ChartComponent.propTypes = {
+    // The unique identifier of the chart
+    id: PropTypes.string.isRequired,
+    // The height of the chart, defaults to 50
+    height: PropTypes.number,
+    // The default type of any series in the chart
+    type: PropTypes.oneOf(['line', 'bar'])
 }
 
 class ChartSeriesProvider {
