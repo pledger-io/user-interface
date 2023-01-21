@@ -60,6 +60,10 @@ export const CategoryReportView = () => {
                     <CategoryMonthly categories={categories} range={range}/>
                 </Card>
             </div>
+
+            <Card>
+                <CategoryPerMonth categories={categories} year={range.year()} />
+            </Card>
         </div>
     )
 }
@@ -155,6 +159,32 @@ const CategoryMonthly = ({categories, range}) => {
                                              categories={categories}
                                              range={Dates.Ranges.forMonth(range.year(), month + 1)}/></td>
                 </tr>)}
+            </tbody>
+        </table>
+    )
+}
+
+const CategoryPerMonth = ({categories, year}) => {
+    const months = [...new Array(12).keys()]
+        .map(month => Dates.Ranges.forMonth(year, month + 1))
+
+    return (
+        <table className='Table'>
+            <thead>
+            <tr>
+                <th><Translations.Translation label='Category.label'/></th>
+                {months.map(month => <th key={month.month()}><Translations.Translation label={`common.month.${month.month()}`}/></th>)}
+            </tr>
+            </thead>
+            <tbody>
+            {categories.map(category => (
+                <tr>
+                    <td>{category.label}</td>
+                    {months.map(month => <td key={month.month()}>
+                        <Statistical.Balance income={false} categories={[category]} range={month}/>
+                    </td>)}
+                </tr>
+            ))}
             </tbody>
         </table>
     )
