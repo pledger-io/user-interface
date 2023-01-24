@@ -66,14 +66,23 @@ class BreadCrumbMenu extends React.Component {
     }
 }
 
-class Loading extends React.Component {
-    render() {
+/**
+ * Display a loading icon until the condition becomes true.
+ */
+const Loading = ({condition, children}) => {
+    if (!condition) {
         return (
             <div className='Loading'>
                 <Icon path={mdiLoading} spin={true} size={2} />
             </div>
         )
+    } else {
+        return children
     }
+}
+Loading.propTypes = {
+    // the condition used, as long as false the loading icon is shown
+    condition: PropTypes.oneOfType([PropTypes.bool, PropTypes.object, PropTypes.any])
 }
 
 export class Message extends React.Component {
@@ -105,9 +114,11 @@ export class Message extends React.Component {
 }
 
 const Card = ({title, actions, buttons, children}) => {
+    const hasHeader = (title || actions) !== undefined
+
     return (
         <div className='card'>
-            <When condition={title || actions}>
+            <When condition={hasHeader}>
                 <header>
                     {title && <Translations.Translation label={title} />}
                     {actions && <div className='Buttons'>{actions}</div>}

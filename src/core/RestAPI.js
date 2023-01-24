@@ -153,7 +153,9 @@ const CurrencyRepository = (api => {
 
 const TransactionScheduleRepository = (api => {
     return {
-        create: schedule => api.put('schedule/transaction', schedule)
+        list: () => api.get('schedule/transaction'),
+        create: schedule => api.put('schedule/transaction', schedule),
+        delete: ({id}) => api.delete(`schedule/transaction/${id}`)
     }
 })(RestAPI)
 

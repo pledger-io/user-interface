@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from 'prop-types'
 import {
     BreadCrumbItem,
@@ -7,123 +7,88 @@ import {
     Card,
     Dialog,
     Dropdown,
-    Formats, Notifications,
+    Formats,
+    Loading,
+    Notifications,
     Resolver,
     Translations,
     When
 } from "../../core";
-import restAPI from "../../core/RestAPI";
+import {TransactionScheduleRepository} from "../../core/RestAPI";
 import {EntityShapes} from "../../config";
 import {NavLink} from "react-router-dom";
 import {mdiDotsVertical, mdiSquareEditOutline, mdiTrashCanOutline} from "@mdi/js";
 import {ScheduleTransactionDialog} from "./ScheduleTransactionDialog";
 
-class ScheduledTransactionService {
-    list() {
-        return restAPI.get('schedule/transaction')
-    }
 
-    delete({id}) {
-        return restAPI.delete(`schedule/transaction/${id}`)
-    }
-}
+const ScheduledTransactionRow = ({schedule, deleteCallback}) => {
 
-const service = new ScheduledTransactionService()
+    const onDelete = () => TransactionScheduleRepository.delete(schedule)
+        .then(() => Notifications.Service.success('page.budget.schedule.delete.success'))
+        .then(() => deleteCallback())
+        .catch(() => Notifications.Service.warning('page.budget.schedule.delete.failed'))
 
-class ScheduledTransactionRow extends React.Component {
-    static propTypes = {
-        schedule: EntityShapes.TransactionSchedule,
-        onDelete: PropTypes.func
-    }
-
-    dropDownActions = {
+    const dropDownActions = {
         close: () => {}
     }
 
-    render() {
-        const {schedule} = this.props
-
-        return (
-            <tr className='ScheduledTransactionRow' onMouseLeave={() => this.dropDownActions.close()}>
-                <td>
-                    {schedule.name}
-                    {schedule.description != null && <div className='Description'>{schedule.description}</div>}
-                </td>
-                <td>
-                    <When condition={schedule.range.start != null}>
-                        <Formats.Date date={schedule.range.start}/> - <Formats.Date date={schedule.range.end}/>
-                    </When>
-                </td>
-                <td><NavLink to={Resolver.Account.resolveUrl(schedule.source) + '/transactions'}>{schedule.source.name}</NavLink></td>
-                <td><NavLink to={Resolver.Account.resolveUrl(schedule.destination) + '/transactions'}>{schedule.destination.name}</NavLink></td>
-                <td><Formats.Money money={schedule.amount} currency={schedule.source.currency}/></td>
-                <td>
-                    <Dropdown.Dropdown icon={mdiDotsVertical}
-                                       actions={this.dropDownActions}>
-                        <Buttons.Button label='common.action.edit'
-                                        variant='primary'
-                                        icon={mdiSquareEditOutline}
-                                        href={`./${schedule.id}/edit`}/>
-                        <Dialog.ConfirmPopup title='common.action.delete'
-                                             openButton={<Buttons.Button label='common.action.delete'
-                                                                         variant='warning'
-                                                                         icon={mdiTrashCanOutline}/>}
-                                             onConfirm={this.delete.bind(this)}>
-                            <Translations.Translation label='page.budget.schedule.delete.confirm'/>
-                        </Dialog.ConfirmPopup>
-                    </Dropdown.Dropdown>
-                </td>
-            </tr>
-        )
-    }
-
-    delete() {
-        const {schedule, onDelete = () => {}} = this.props
-
-        service.delete(schedule)
-            .then(() => Notifications.Service.success('page.budget.schedule.delete.success'))
-            .then(() => onDelete())
-            .catch(() => Notifications.Service.warning('page.budget.schedule.delete.failed'))
-    }
+    return (
+        <tr className='ScheduledTransactionRow' onMouseLeave={() => dropDownActions.close()}>
+            <td>
+                {schedule.name}
+                {schedule.description != null && <div className='Description'>{schedule.description}</div>}
+            </td>
+            <td>
+                <When condition={schedule.range.start != null}>
+                    <Formats.Date date={schedule.range.start}/> - <Formats.Date date={schedule.range.end}/>
+                </When>
+            </td>
+            <td><NavLink to={Resolver.Account.resolveUrl(schedule.source) + '/transactions'}>{schedule.source.name}</NavLink></td>
+            <td><NavLink to={Resolver.Account.resolveUrl(schedule.destination) + '/transactions'}>{schedule.destination.name}</NavLink></td>
+            <td><Formats.Money money={schedule.amount} currency={schedule.source.currency}/></td>
+            <td>
+                <Dropdown.Dropdown icon={mdiDotsVertical}
+                                   actions={dropDownActions}>
+                    <Buttons.Button label='common.action.edit'
+                                    variant='primary'
+                                    icon={mdiSquareEditOutline}
+                                    href={`./${schedule.id}/edit`}/>
+                    <Dialog.ConfirmPopup title='common.action.delete'
+                                         openButton={<Buttons.Button label='common.action.delete'
+                                                                     variant='warning'
+                                                                     icon={mdiTrashCanOutline}/>}
+                                         onConfirm={onDelete}>
+                        <Translations.Translation label='page.budget.schedule.delete.confirm'/>
+                    </Dialog.ConfirmPopup>
+                </Dropdown.Dropdown>
+            </td>
+        </tr>
+    )
+}
+ScheduledTransactionRow.propTypes = {
+    schedule: EntityShapes.TransactionSchedule,
+    deleteCallback: PropTypes.func
 }
 
-class ScheduledTransactionOverview extends React.Component {
+export const ScheduledTransactionOverview = () => {
+    const [schedules, setSchedules] = useState(undefined)
 
-    loaded = false;
-    state = {
-        schedules: [],
-    }
+    const loadSchedules = () => TransactionScheduleRepository.list().then(setSchedules)
+    useEffect(() => {
+        loadSchedules()
+    }, [])
 
-    refresh() {
-        service.list()
-            .then(schedules => this.setState({
-                schedules: schedules
-            }))
-    }
+    return (
+        <div className="ScheduledTransactionOverview">
+            <BreadCrumbs>
+                <BreadCrumbItem label='page.nav.accounting'/>
+                <BreadCrumbItem label='page.nav.automation'/>
+                <BreadCrumbItem label='page.nav.budget.recurring'/>
+            </BreadCrumbs>
 
-    render() {
-        const {schedules} = this.state
-        if (!this.loaded) {
-            this.loaded = true
-            this.refresh();
-        }
-
-        const scheduleRows = (schedules || [])
-            .filter(schedule => schedule.source && schedule.destination)
-            .map(schedule => <ScheduledTransactionRow schedule={schedule}
-                                                      onDelete={() => this.refresh()}
-                                                      key={schedule.id}/>)
-
-        return (
-            <div className="ScheduledTransactionOverview">
-                <BreadCrumbs>
-                    <BreadCrumbItem label='page.nav.accounting'/>
-                    <BreadCrumbItem label='page.nav.automation'/>
-                    <BreadCrumbItem label='page.nav.budget.recurring'/>
-                </BreadCrumbs>
-
-                <Card title='page.budget.schedules.title'
-                      actions={[<ScheduleTransactionDialog key='schedule-dialog' />]}>
+            <Card title='page.budget.schedules.title'
+                  actions={[<ScheduleTransactionDialog key='schedule-dialog' />]}>
+                <Loading condition={schedules}>
                     <table className='Table'>
                         <thead>
                         <tr>
@@ -136,15 +101,13 @@ class ScheduledTransactionOverview extends React.Component {
                         </tr>
                         </thead>
                         <tbody>
-                        {scheduleRows}
+                        {schedules && schedules.filter(schedule => schedule.source && schedule.destination)
+                            .map(schedule => <ScheduledTransactionRow schedule={schedule}
+                                                                      onDelete={loadSchedules}
+                                                                      key={schedule.id}/>)}
                         </tbody>
                     </table>
-                </Card>
-            </div>
-        )
-    }
-}
-
-export {
-    ScheduledTransactionOverview
+                </Loading>
+            </Card>
+        </div>)
 }
