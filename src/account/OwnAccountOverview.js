@@ -6,7 +6,7 @@ import {
     Card,
     Dialog,
     Dropdown,
-    Formats,
+    Formats, Loading,
     Notifications,
     Statistical,
     Translations
@@ -66,7 +66,7 @@ AccountRow.propTypes = {
 }
 
 const OwnAccountOverview = () => {
-    const [accounts, setAccounts] = useState([])
+    const [accounts, setAccounts] = useState(undefined)
     const navigate                = useNavigate()
 
     useEffect(() => {
@@ -87,22 +87,24 @@ const OwnAccountOverview = () => {
                                  icon={mdiPlus}
                                  href='./add'
                                  variant='primary'/>]}>
-                <table className='Table'>
-                    <thead>
-                    <tr>
-                        <th><Translations.Translation label='Account.name'/></th>
-                        <th><Translations.Translation label='Account.type'/></th>
-                        <th><Translations.Translation label='Account.lastActivity'/></th>
-                        <th><Translations.Translation label='Account.number'/></th>
-                        <th width='150'><Translations.Translation label='common.account.saldo'/></th>
-                        <th width='15'/>
-                    </tr>
-                    </thead>
-                    <tbody>
-                        {accounts.map(account =>
-                            <AccountRow account={account} key={account.id} onDelete={() => navigate('.')}/>)}
-                    </tbody>
-                </table>
+                <Loading condition={accounts}>
+                    <table className='Table'>
+                        <thead>
+                        <tr>
+                            <th><Translations.Translation label='Account.name'/></th>
+                            <th><Translations.Translation label='Account.type'/></th>
+                            <th><Translations.Translation label='Account.lastActivity'/></th>
+                            <th><Translations.Translation label='Account.number'/></th>
+                            <th width='150'><Translations.Translation label='common.account.saldo'/></th>
+                            <th width='15'/>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {(accounts || []).map(account =>
+                                <AccountRow account={account} key={account.id} onDelete={() => navigate('.')}/>)}
+                        </tbody>
+                    </table>
+                </Loading>
             </Card>
 
             <ReconcileOverview/>

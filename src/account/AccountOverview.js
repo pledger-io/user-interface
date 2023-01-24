@@ -7,7 +7,7 @@ import {
     Card,
     Dialog,
     Dropdown,
-    Formats,
+    Formats, Loading,
     Notifications,
     Pagination,
     Statistical,
@@ -75,13 +75,14 @@ AccountRow.propTypes = {
 }
 
 const AccountOverview = ({type}) => {
-    const [accounts, setAccounts]       = useState([])
+    const [accounts, setAccounts]       = useState(undefined)
     const [page]                        = useQueryParam('page', "1")
     const [pagination, setPagination]   = useState({})
 
     const navigate = useNavigate()
 
     useEffect(() => {
+        setAccounts(undefined)
         AccountRepository.search({
             types: [type],
             page: parseInt(page)
@@ -102,24 +103,26 @@ const AccountOverview = ({type}) => {
                                  icon={mdiPlus}
                                  href='./add'
                                  variant='primary'/>]}>
-                <table className='Table AccountTable'>
-                    <thead>
-                    <tr>
-                        <th width='30'/>
-                        <th><Translations.Translation label='Account.name'/></th>
-                        <th width='150'><Translations.Translation label='Account.number'/></th>
-                        <th width='110'><Translations.Translation label='common.account.saldo'/></th>
-                        <th width='20'/>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {accounts.map(account =>
-                        <AccountRow key={account.id} account={account} deleteCallback={() => navigate('.')}/>)}
-                    </tbody>
-                </table>
+                <Loading condition={accounts}>
+                    <table className='Table AccountTable'>
+                        <thead>
+                        <tr>
+                            <th width='30'/>
+                            <th><Translations.Translation label='Account.name'/></th>
+                            <th width='150'><Translations.Translation label='Account.number'/></th>
+                            <th width='110'><Translations.Translation label='common.account.saldo'/></th>
+                            <th width='20'/>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {(accounts || []).map(account =>
+                            <AccountRow key={account.id} account={account} deleteCallback={() => navigate('.')}/>)}
+                        </tbody>
+                    </table>
 
-                <Pagination.Paginator page={parseInt(page)} records={pagination.records}
-                                      pageSize={pagination.pageSize}/>
+                    <Pagination.Paginator page={parseInt(page)} records={pagination.records}
+                                          pageSize={pagination.pageSize}/>
+                </Loading>
             </Card>
         </div>
     )

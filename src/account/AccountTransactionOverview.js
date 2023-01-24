@@ -8,7 +8,7 @@ import {
     Card,
     Charts,
     Dates,
-    Dropdown,
+    Dropdown, Loading,
     Pagination,
     Resolver,
 } from "../core";
@@ -30,9 +30,9 @@ const AccountTransactionOverview = () => {
     const {id, type, year, month}            = useParams()
     const [account, setAccount]              = useState({})
     const [page]                             = useQueryParam('page', "1")
-    const [transactions, setTransactions]    = useState([])
+    const [transactions, setTransactions]    = useState(undefined)
     const [pagination, setPagination]        = useState({})
-    const [balanceSeries, setBalanceSeries]  = useState([])
+    const [balanceSeries, setBalanceSeries]  = useState(undefined)
     const [range, setRange]                  = useState(Dates.Ranges.currentMonth())
 
     const onDateChange = ({year, month}) => navigate(`/accounts/${type}/${id}/transactions/${year}/${month}`)
@@ -50,6 +50,7 @@ const AccountTransactionOverview = () => {
             .then(results => setTransactions(results.content) || setPagination(results.info))
     }, [id, range, page])
     useEffect(() => {
+        setBalanceSeries(undefined)
         Charts.SeriesProvider.balanceSeries({
             id: 'balance-series',
             title: 'graph.series.balance',
@@ -75,10 +76,12 @@ const AccountTransactionOverview = () => {
             </BreadCrumbs>
 
             <Card title='common.account.balance'>
-                <Charts.Chart height={75}
-                              id='dashboard-balance-graph'
-                              dataSets={balanceSeries}>
-                </Charts.Chart>
+                <Loading condition={balanceSeries}>
+                    <Charts.Chart height={75}
+                                  id='dashboard-balance-graph'
+                                  dataSets={balanceSeries || []}>
+                    </Charts.Chart>
+                </Loading>
             </Card>
 
             <Card title='page.title.transactions.overview'>
