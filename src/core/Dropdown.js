@@ -8,16 +8,17 @@ import {mdiMenuDown} from "@mdi/js";
 import DatePicker from "react-datepicker";
 import {CurrencyRepository} from "./RestAPI";
 
-const Dropdown = ({actions, icon, children}) => {
+const Dropdown = ({actions, title, icon, children}) => {
     const [open, setOpen] = useState(false)
 
     useEffect(() => {
         if (actions) actions.close = () => setOpen(false)
     }, [actions])
 
+    const variant = title ? 'primary' : 'icon'
     return (
-        <div className='Dropdown'>
-            <Buttons.Button variant='icon' className='muted' icon={icon} onClick={() => setOpen(!open)}/>
+        <div className={`Dropdown ${variant}`}>
+            <Buttons.Button variant={variant} label={title} className='muted' icon={icon} iconPos='after' onClick={() => setOpen(!open)}/>
             <div className={`Expanded ${open}`} onClick={() => setOpen(false)}>{children}</div>
         </div>
     )
@@ -26,7 +27,8 @@ Dropdown.propTypes = {
     // The actions that can be triggered, has one function called close() on it
     actions: PropTypes.object,
     // The icon to be used
-    icon: PropTypes.string
+    icon: PropTypes.string,
+    title: PropTypes.string
 }
 
 const CurrencyDropdown = ({currency, onChange = (currency) => undefined}) => {

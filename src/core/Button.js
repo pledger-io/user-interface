@@ -13,10 +13,10 @@ const Button = ({label, href, message, type = 'button', variant = 'primary', var
             onClick={() => (href && navigate(href)) || onClick()}
             className={`Button ${variant} ${variantType}`}
             disabled={disabled}>
-            {iconPos !== 'after' && <Icon path={icon} size={.8}/>}
+            {iconPos !== 'after' && <Icon className='before' path={icon} size={.8}/>}
             {label && <Translation label={label}/>}
             {!label && message}
-            {iconPos === 'after' && <Icon path={icon} size={.8}/>}
+            {iconPos === 'after' && <Icon className='after' path={icon} size={.8}/>}
         </button>
     )
 }

@@ -1,5 +1,8 @@
 .Dropdown {
-  max-width: 8px;
+
+  &.icon {
+    max-width: 8px;
+  }
   position: relative;
 
   .Expanded {

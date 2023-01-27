@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react"
-import {useDateRange, useQueryParam, withNavigation} from "../core/hooks";
+import {useDateRange, useQueryParam} from "../core/hooks";
 import {
     BreadCrumbItem,
     BreadCrumbMenu,
@@ -14,7 +14,7 @@ import {
 } from "../core";
 import {TransactionTable} from "./TransactionTable";
 import {TransactionRepository} from "../core/RestAPI";
-import {mdiCartPlus, mdiCashPlus, mdiPageNext, mdiPlusBox, mdiSwapHorizontal} from "@mdi/js";
+import {mdiCartPlus, mdiCashPlus, mdiChevronDown, mdiPageNext, mdiSwapHorizontal} from "@mdi/js";
 import {Entity, Form, SubmitButton} from "../core/form";
 import PropTypes from "prop-types";
 import {useNavigate} from "react-router-dom";
@@ -61,12 +61,14 @@ export const TransactionGlobalView = ({transfers}) => {
     const [range]                            = useDateRange()
 
     useEffect(() => {
-        Charts.SeriesProvider.balanceSeries({
-            id: 'balance-series',
-            title: 'graph.series.balance',
-            dateRange: range,
-            allMoney: true,
-        }).then(result => setBalanceSeries([result]))
+        if (!transfers) {
+            Charts.SeriesProvider.balanceSeries({
+                id: 'balance-series',
+                title: 'graph.series.balance',
+                dateRange: range,
+                allMoney: true,
+            }).then(result => setBalanceSeries([result]))
+        }
     }, [range])
 
     useEffect(() => {
@@ -80,6 +82,8 @@ export const TransactionGlobalView = ({transfers}) => {
             <BreadCrumbs>
                 <BreadCrumbItem label='page.nav.accounting'/>
                 <BreadCrumbItem label='page.nav.transactions'/>
+                {transfers && <BreadCrumbItem label='page.nav.transfers'/>}
+                {!transfers && <BreadCrumbItem label='page.nav.incomeexpense'/>}
 
                 <BreadCrumbMenu>
                     <Dropdown.YearMonth
@@ -88,16 +92,16 @@ export const TransactionGlobalView = ({transfers}) => {
                 </BreadCrumbMenu>
             </BreadCrumbs>
 
-            <Card title='common.account.balance'>
+            {!transfers && <Card title='common.account.balance'>
                 <Charts.Chart height={75}
                               id='dashboard-balance-graph'
                               dataSets={balanceSeries}>
                 </Charts.Chart>
-            </Card>
+            </Card>}
 
             <Card title='page.title.transactions.overview'
                   actions={[
-                      <Dropdown.Dropdown icon={mdiPlusBox} key='add-debit-popup'>
+                      <Dropdown.Dropdown icon={mdiChevronDown} key='add-debit-popup' title='page.transaction.add'>
                           <AccountSelectorPopup type='debit' icon={mdiCashPlus} variant='success'/>
                           <AccountSelectorPopup type='credit' icon={mdiCartPlus} variant='warning'/>
                           <AccountSelectorPopup type='transfer' icon={mdiSwapHorizontal} variant='info'/>

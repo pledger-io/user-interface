@@ -29,7 +29,13 @@
 
   svg {
     max-width: 25px;
-    margin-right: .25rem;
+
+    &.before {
+      margin-right: .25rem;
+    }
+    &.after {
+      margin-left: .35em;
+    }
   }
 
   &[disabled] {
