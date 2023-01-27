@@ -1,12 +1,16 @@
 .ScheduleTransactionForm {
   .Form {
     .DateRange {
-      & > .Input {
-        display: inline-flex;
-        padding-right: 4em;
+      display: flex;
 
-        label {
-          min-width: 125px;
+      & > * {
+        flex: 1;
+        max-width: 15em;
+
+        &:nth-child(2) {
+          text-align: center;
+          max-width: 1.2em;
+          font-size: 1.2em;
         }
       }
     }

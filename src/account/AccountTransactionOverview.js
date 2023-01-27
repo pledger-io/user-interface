@@ -58,7 +58,7 @@ const AccountTransactionOverview = () => {
             allMoney: true,
             accounts: [account]
         }).then(result => setBalanceSeries([result]))
-    }, [id, range])
+    }, [id, range, account])
 
     return (
         <div className='TransactionOverview'>

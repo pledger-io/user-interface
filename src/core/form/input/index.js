@@ -1,4 +1,4 @@
-import DateInput from "./DateInput";
+import {DateInput, DateRangeInput} from "./DateInput";
 import {HiddenInput} from "./HiddenInput";
 import {TextInput} from "./TextInput";
 import {TextArea} from "./TextArea";
@@ -13,6 +13,7 @@ import {ComplexTypeInput} from "./ComplexTypeInput";
 
 export {
     DateInput as Date,
+    DateRangeInput as DateRange,
     HiddenInput as Hidden,
     TextInput as Text,
     TextArea,

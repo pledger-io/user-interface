@@ -15,7 +15,7 @@ const DateFormats = {
 /**
  * A date selection component for forms.
  */
-const DateInput = (props) => {
+export const DateInput = (props) => {
     const [field, errors, onChange] = useInputField({onChange: props.onChange, field: props})
     const [selected, setSelected]   = useState(new Date())
 
@@ -55,4 +55,65 @@ DateInput.propTypes = {
     readonly: PropTypes.bool
 }
 
-export default DateInput
+Date.prototype.isofy = function() {
+    return this.toISOString().substring(0, 10)
+}
+
+export const DateRangeInput = (props) => {
+    const [field, errors, onChange] = useInputField({onChange: props.onChange, field: props})
+
+    const [startDate, setStartDate] = useState()
+    const [endDate, setEndDate]     = useState()
+
+    useEffect(() => {
+        if (!startDate || !endDate) return
+        onChange({
+            persist: () => {},
+            currentTarget: {
+                value: {
+                    start: startDate.isofy(),
+                    end: endDate.isofy()
+                }
+            }
+        })
+    }, [startDate, endDate])
+    useEffect(() => {
+        const {start, end} = props.value
+        if (start && end) setEndDate(new Date(end)) || setStartDate(new Date(start))
+    }, [props.value])
+
+    if (!field) return ""
+    return (
+        <InputGroup id={props.id}
+                    title={props.title}
+                    help={props.help}
+                    required={props.required}
+                    valid={field.touched ? errors.length === 0 : undefined }>
+            <div className='DateRange'>
+                <DatePicker required={props.required}
+                            selected={startDate}
+                            startDate={startDate}
+                            endDate={endDate}
+                            selectStart
+                            showMonthDropdown
+                            useShortMonthInDropdown
+                            showYearDropdown
+                            readOnly={props.readonly}
+                            dateFormat={DateFormats[localStorage.getItem('language')]}
+                            onChange={setStartDate}/>
+                <span>-</span>
+                <DatePicker required={props.required}
+                            selected={endDate}
+                            startDate={startDate}
+                            endDate={endDate}
+                            selectEnd
+                            showMonthDropdown
+                            useShortMonthInDropdown
+                            showYearDropdown
+                            readOnly={props.readonly}
+                            dateFormat={DateFormats[localStorage.getItem('language')]}
+                            onChange={setEndDate}/>
+            </div>
+        </InputGroup>
+    )
+}
