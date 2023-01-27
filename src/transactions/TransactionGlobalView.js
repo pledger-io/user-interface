@@ -57,19 +57,7 @@ export const TransactionGlobalView = ({transfers}) => {
     const [page]                             = useQueryParam('page', "1")
     const [transactions, setTransactions]    = useState([])
     const [pagination, setPagination]        = useState({})
-    const [balanceSeries, setBalanceSeries]  = useState([])
     const [range]                            = useDateRange()
-
-    useEffect(() => {
-        if (!transfers) {
-            Charts.SeriesProvider.balanceSeries({
-                id: 'balance-series',
-                title: 'graph.series.balance',
-                dateRange: range,
-                allMoney: true,
-            }).then(result => setBalanceSeries([result]))
-        }
-    }, [range])
 
     useEffect(() => {
         TransactionRepository.search({range, page, transfers})
@@ -93,10 +81,9 @@ export const TransactionGlobalView = ({transfers}) => {
             </BreadCrumbs>
 
             {!transfers && <Card title='common.account.balance'>
-                <Charts.Chart height={75}
-                              id='dashboard-balance-graph'
-                              dataSets={balanceSeries}>
-                </Charts.Chart>
+                <Charts.BalanceChart id='dashboard-balance-graph'
+                                     allMoney={true}
+                                     range={range}/>
             </Card>}
 
             <Card title='page.title.transactions.overview'

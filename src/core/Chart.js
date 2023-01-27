@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from "react";
+import React, {useEffect, useRef, useState} from "react";
 
 import Chart from 'chart.js/auto';
 import 'chartjs-adapter-luxon';
@@ -7,6 +7,7 @@ import {DefaultChartConfig, Service as ChartUtil} from '../config/global-chart-c
 import {Service as BalanceService} from './Statistical'
 import {LocalizationService} from './Translation'
 import PropTypes from "prop-types";
+import {Charts, Loading} from "./index";
 
 const ChartComponent = ({id, height = 50, children, type = 'line', options = {}, dataSets = [], labels = [], ...props}) => {
     const canvasRef = useRef(null)
@@ -64,6 +65,35 @@ ChartComponent.propTypes = {
     type: PropTypes.oneOf(['line', 'bar'])
 }
 
+const BalanceChart = ({id, range, allMoney, accounts}) => {
+    const [balanceSeries, setBalanceSeries] = useState(undefined)
+
+    useEffect(() => {
+        setBalanceSeries(undefined)
+        provider.balanceSeries({
+            id: 'balance-series',
+            title: 'graph.series.balance',
+            dateRange: range,
+            allMoney: allMoney,
+        }).then(result => setBalanceSeries([result]))
+    }, [range, allMoney, accounts])
+
+    return (
+        <Loading condition={balanceSeries}>
+            <Charts.Chart height={75}
+                          id={id}
+                          dataSets={balanceSeries || []}>
+            </Charts.Chart>
+        </Loading>
+    )
+}
+BalanceChart.propTypes = {
+    id: PropTypes.string.isRequired,
+    range: PropTypes.any,
+    accounts: PropTypes.array,
+    allMoney: PropTypes.bool,
+}
+
 class ChartSeriesProvider {
     async balanceSeries({id, title, accounts = [], categories = [], contracts = [], expenses = [], onlyIncome, allMoney, currency, dateRange = {}}) {
         const dataSearchCommand = {
@@ -109,5 +139,6 @@ const provider = new ChartSeriesProvider()
 
 export {
     ChartComponent as Chart,
+    BalanceChart,
     provider as SeriesProvider
 }

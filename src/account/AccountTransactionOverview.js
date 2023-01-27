@@ -8,7 +8,7 @@ import {
     Card,
     Charts,
     Dates,
-    Dropdown, Loading,
+    Dropdown,
     Pagination,
     Resolver,
 } from "../core";
@@ -32,7 +32,6 @@ const AccountTransactionOverview = () => {
     const [page]                             = useQueryParam('page', "1")
     const [transactions, setTransactions]    = useState(undefined)
     const [pagination, setPagination]        = useState({})
-    const [balanceSeries, setBalanceSeries]  = useState(undefined)
     const [range, setRange]                  = useState(Dates.Ranges.currentMonth())
 
     const onDateChange = ({year, month}) => navigate(`/accounts/${type}/${id}/transactions/${year}/${month}`)
@@ -49,16 +48,6 @@ const AccountTransactionOverview = () => {
         AccountRepository.transactions(id, range, parseInt(page))
             .then(results => setTransactions(results.content) || setPagination(results.info))
     }, [id, range, page])
-    useEffect(() => {
-        setBalanceSeries(undefined)
-        Charts.SeriesProvider.balanceSeries({
-            id: 'balance-series',
-            title: 'graph.series.balance',
-            dateRange: range,
-            allMoney: true,
-            accounts: [account]
-        }).then(result => setBalanceSeries([result]))
-    }, [id, range, account])
 
     return (
         <div className='TransactionOverview'>
@@ -76,12 +65,10 @@ const AccountTransactionOverview = () => {
             </BreadCrumbs>
 
             <Card title='common.account.balance'>
-                <Loading condition={balanceSeries}>
-                    <Charts.Chart height={75}
-                                  id='dashboard-balance-graph'
-                                  dataSets={balanceSeries || []}>
-                    </Charts.Chart>
-                </Loading>
+                <Charts.BalanceChart id='dashboard-balance-graph'
+                                     accounts={[account]}
+                                     range={range}
+                                     allMoney={true}/>
             </Card>
 
             <Card title='page.title.transactions.overview'>
