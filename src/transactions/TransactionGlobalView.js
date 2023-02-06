@@ -80,11 +80,19 @@ export const TransactionGlobalView = ({transfers}) => {
                 </BreadCrumbMenu>
             </BreadCrumbs>
 
-            {!transfers && <Card title='common.account.balance'>
-                <Charts.BalanceChart id='dashboard-balance-graph'
-                                     allMoney={true}
-                                     range={range}/>
-            </Card>}
+            {!transfers && <>
+                <div className="Columns">
+                    <Card title='page.transactions.expense.category'>
+                        <Charts.CategorizedPieChart id='category-expense' range={range} split='category' incomeOnly={false} />
+                    </Card>
+                    <Card title='page.transactions.expense.budget'>
+                        <Charts.CategorizedPieChart id='budget-expense' range={range} split='budget' incomeOnly={false} />
+                    </Card>
+                    <Card title='page.transactions.income.category'>
+                        <Charts.CategorizedPieChart id='category-income' range={range} split='category' incomeOnly={true} />
+                    </Card>
+                </div>
+            </>}
 
             <Card title='page.title.transactions.overview'
                   actions={[

@@ -8,6 +8,22 @@
   }
 }
 
+.Columns {
+  display: flex;
+  flex-direction: row;
+
+  gap: 1em;
+
+  & > * {
+    flex: 1;
+  }
+
+  & > .card {
+    margin-top: .5em;
+    margin-bottom: .5em;
+  }
+}
+
 .Main {
   height: 100vh;
   display: flex;

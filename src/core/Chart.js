@@ -7,7 +7,32 @@ import {DefaultChartConfig, Service as ChartUtil} from '../config/global-chart-c
 import {Service as BalanceService} from './Statistical'
 import {LocalizationService} from './Translation'
 import PropTypes from "prop-types";
-import {Charts, Loading} from "./index";
+import {Charts, Loading, Statistical} from "./index";
+
+const defaultGraphColors = [
+    '#E0FFFF',
+    '#00CED1',
+    '#40E0D0',
+    '#48D1CC',
+    '#AFEEEE',
+    '#7FFFD4',
+    '#B0E0E6',
+    '#5F9EA0',
+    '#66CDAA',
+    '#3CB371',
+    '#20B2AA',
+    '#2F4F4F',
+    '#008080',
+    '#008B8B',
+    '#32CD32',
+    '#90EE90',
+    '#ADFF2F',
+    '#90EE90',
+    '#ADFF2F',
+    '#7FFF00',
+    '#7FFF00',
+    '#6B8E23',
+]
 
 const ChartComponent = ({id, height = 50, children, type = 'line', options = {}, dataSets = [], labels = [], ...props}) => {
     const canvasRef = useRef(null)
@@ -62,7 +87,7 @@ ChartComponent.propTypes = {
     // The height of the chart, defaults to 50
     height: PropTypes.number,
     // The default type of any series in the chart
-    type: PropTypes.oneOf(['line', 'bar'])
+    type: PropTypes.oneOf(['line', 'bar', 'pie'])
 }
 
 const BalanceChart = ({id, range, allMoney, accounts}) => {
@@ -92,6 +117,45 @@ BalanceChart.propTypes = {
     range: PropTypes.any,
     accounts: PropTypes.array,
     allMoney: PropTypes.bool,
+}
+
+const CategorizedPieChart = ({id, range, split, incomeOnly}) => {
+    const [pieSeries, setPieSeries] = useState(undefined)
+
+    useEffect(() => {
+        if (range && split) {
+            const command = {
+                dateRange: range,
+                onlyIncome: incomeOnly
+            }
+            Statistical.Service.split(split, command)
+                .then(setPieSeries)
+        }
+    }, [range, split])
+
+    return (
+        <Loading condition={pieSeries}>
+            <Charts.Chart id={id}
+                          type='pie'
+                          height={250}
+                          labels={(pieSeries || []).map(point => point.partition)}
+                          dataSets={[{
+                              data: (pieSeries || []).map(point => point.balance)
+                          }]}
+                          options={{
+                              elements: {
+                                  arc: {
+                                      backgroundColor: context => defaultGraphColors[context.dataIndex]
+                                  }
+                              },
+                              maintainAspectRatio: false
+                          }}/>
+        </Loading>
+    )
+}
+CategorizedPieChart.propTypes = {
+    range: PropTypes.shape({}),
+    split: PropTypes.oneOf(['account', 'category', 'budget'])
 }
 
 class ChartSeriesProvider {
@@ -140,5 +204,6 @@ const provider = new ChartSeriesProvider()
 export {
     ChartComponent as Chart,
     BalanceChart,
+    CategorizedPieChart,
     provider as SeriesProvider
 }
