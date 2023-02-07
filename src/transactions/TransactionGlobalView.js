@@ -111,6 +111,9 @@ const TransactionOverviewComponent = ({range, transfers}) => {
         TransactionRepository.search(searchCommand)
             .then(response => setTransactions(response.content) || setPagination(response.info))
     }, [searchCommand])
+    useEffect(() => {
+        setSearchCommand({transfers})
+    }, [transfers])
 
     useEffect(() => {
         setSearchCommand(previous => {
@@ -120,8 +123,7 @@ const TransactionOverviewComponent = ({range, transfers}) => {
                     start: range.startString(),
                     end: range.endString()
                 },
-                page,
-                transfers
+                page
             }
         })
     }, [page, range, transfers])
