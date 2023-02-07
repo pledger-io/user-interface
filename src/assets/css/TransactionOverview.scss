@@ -14,4 +14,52 @@
       }
     }
   }
+
+  .TransactionFilters {
+    max-width: 90em;
+    margin: 0 auto;
+
+    fieldset {
+      border: 1px solid var(--app-border-color);
+
+      .Columns {
+        & > *:last-child {
+          max-width: 20em;
+        }
+      }
+
+      legend {
+        font-size: 1.5em;
+        font-weight: normal;
+        padding: 0 0.5em;
+      }
+
+      .Input {
+        label {
+          font-weight: bold;
+        }
+
+        input, select {
+          border: none;
+        }
+
+        select:focus, input:focus, input[value]:not([value='']) {
+          border-bottom: 1px solid var(--app-border-color);
+          box-shadow: none;
+        }
+
+        &:hover {
+          input, select {
+            border-bottom: 1px solid var(--app-border-color)
+          }
+        }
+      }
+    }
+
+    .ActionRow {
+      margin: auto;
+      padding-left: 2em;
+      padding-right: 2em;
+    }
+  }
 }

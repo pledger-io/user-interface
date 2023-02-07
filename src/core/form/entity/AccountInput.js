@@ -3,6 +3,7 @@ import {useAutocomplete} from "../Autocomplete";
 import restAPI from "../../RestAPI";
 import {InputGroup} from "../input/InputGroup";
 import {EntityShapes} from "../../../config";
+import PropTypes from "prop-types";
 
 const AccountAutocompleteRow = (account) => {
     return (
@@ -27,5 +28,6 @@ export const AccountInput = (props) => {
 }
 AccountInput.propTypes = {
     ...InputGroup.propTypes,
-    value: EntityShapes.Account
+    value: EntityShapes.Account,
+    type: PropTypes.string
 }

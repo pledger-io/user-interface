@@ -27,6 +27,10 @@ class Range {
         const begin = new Date(this.start.getTime() - (ONE_DAY * days))
         return new Range(begin, this.start)
     }
+
+    toString() {
+        return this.startString() + '_' + this.endString()
+    }
 }
 
 const RangeService = (() => {

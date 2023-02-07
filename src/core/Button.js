@@ -4,14 +4,14 @@ import Icon from "@mdi/react";
 import {Translation} from "./Translation";
 import {useNavigate} from "react-router-dom";
 
-const Button = ({label, href, message, type = 'button', variant = 'primary', variantType = '', disabled, icon, iconPos, onClick = () => undefined}) => {
+const Button = ({label, href, message, type = 'button', variant = 'primary', variantType = '', className = '', disabled, icon, iconPos, onClick = () => undefined}) => {
     const navigate = useNavigate()
 
     return (
         <button
             type={type}
             onClick={() => (href && navigate(href)) || onClick()}
-            className={`Button ${variant} ${variantType}`}
+            className={`Button ${variant} ${variantType} ${className}`}
             disabled={disabled}>
             {iconPos !== 'after' && <Icon className='before' path={icon} size={.8}/>}
             {label && <Translation label={label}/>}

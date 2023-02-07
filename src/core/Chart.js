@@ -121,9 +121,12 @@ BalanceChart.propTypes = {
 
 const CategorizedPieChart = ({id, range, split, incomeOnly}) => {
     const [pieSeries, setPieSeries] = useState(undefined)
+    const [pieKey, setPieKey]       = useState(undefined)
 
     useEffect(() => {
-        if (range && split) {
+        const newKey = `${range.toString()}_${split}_${incomeOnly}`
+        if (newKey !== pieKey) {
+            setPieKey(newKey)
             const command = {
                 dateRange: range,
                 onlyIncome: incomeOnly
@@ -131,7 +134,7 @@ const CategorizedPieChart = ({id, range, split, incomeOnly}) => {
             Statistical.Service.split(split, command)
                 .then(setPieSeries)
         }
-    }, [range, split])
+    }, [range, split, incomeOnly])
 
     return (
         <Loading condition={pieSeries}>

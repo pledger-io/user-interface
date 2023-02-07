@@ -10,14 +10,16 @@ import {
     Dialog,
     Dropdown,
     Pagination,
-    Resolver
+    Resolver, Translations
 } from "../core";
 import {TransactionTable} from "./TransactionTable";
 import {TransactionRepository} from "../core/RestAPI";
-import {mdiCartPlus, mdiCashPlus, mdiChevronDown, mdiPageNext, mdiSwapHorizontal} from "@mdi/js";
-import {Entity, Form, SubmitButton} from "../core/form";
+import {mdiCartPlus, mdiCashPlus, mdiChevronDown, mdiFilter, mdiPageNext, mdiSwapHorizontal} from "@mdi/js";
+import {Entity, Form, Input, SubmitButton} from "../core/form";
 import PropTypes from "prop-types";
 import {useNavigate} from "react-router-dom";
+
+import '../assets/css/TransactionOverview.scss'
 
 const AccountSelectorPopup = ({variant, icon, type}) => {
     const navigate = useNavigate()
@@ -52,17 +54,99 @@ AccountSelectorPopup.propTypes = {
     variant: PropTypes.oneOf(['success', 'warning', 'info'])
 }
 
-export const TransactionGlobalView = ({transfers}) => {
-    const navigate                           = useNavigate()
+const TransactionFilterOptions = ({onChange = filter => {}}) => {
+    const onSubmit = entity => {
+        const filter = {}
+        if (entity.account) filter.account = entity.account.name
+        if (entity.category) filter.category = {id: entity.category.id}
+        if (entity.budget) filter.budget = {id: entity.budget.id}
+        filter.onlyIncome = entity.onlyIncome
+        filter.onlyExpense = entity.onlyExpense
+        filter.description = entity.description
+        if (entity.currency) filter.currency = entity.currency
+        onChange(filter)
+    }
+    return <div className='TransactionFilters'>
+        <Form onSubmit={onSubmit} entity='Transaction'>
+            <fieldset>
+                <legend><Translations.Translation label='page.transactions.filter'/></legend>
+                <div className="Columns">
+                    <Entity.Account id='account' title='page.transactions.filter.account' type='creditor' />
+                    <Input.Text id='description' title='page.transaction.filter.description' />
+                    <Entity.Currency id='currency' title='page.transaction.filter.currency' />
+                </div>
+                <div className="Columns">
+                    <Entity.Category id='category' title='page.transactions.filter.category' />
+                    <Entity.Budget id='budget' title='page.transactions.filter.budget' />
+                    <div />
+                </div>
+                <div className='Input'>
+                    <Input.Toggle id='onlyExpense' />&nbsp;<Translations.Translation label='page.transaction.filter.expense' />
+                </div>
+                <div className='Input'>
+                    <Input.Toggle id='onlyIncome' />&nbsp;<Translations.Translation label='page.transaction.filter.income' />
+                </div>
+
+                <Buttons.Button type='submit'
+                                label='page.transactions.filter'
+                                icon={mdiFilter}
+                                variant='info'
+                                variantType='outline'
+                                className='ActionRow'/>
+            </fieldset>
+        </Form>
+    </div>
+}
+
+const TransactionOverviewComponent = ({range, transfers}) => {
     const [page]                             = useQueryParam('page', "1")
+    const [searchCommand, setSearchCommand]  = useState({})
     const [transactions, setTransactions]    = useState([])
     const [pagination, setPagination]        = useState({})
-    const [range]                            = useDateRange()
 
     useEffect(() => {
-        TransactionRepository.search({range, page, transfers})
+        if (!searchCommand.hasOwnProperty('dateRange')) return
+
+        setTransactions(undefined)
+        TransactionRepository.search(searchCommand)
             .then(response => setTransactions(response.content) || setPagination(response.info))
+    }, [searchCommand])
+
+    useEffect(() => {
+        setSearchCommand(previous => {
+            return {
+                ...previous,
+                dateRange: {
+                    start: range.startString(),
+                    end: range.endString()
+                },
+                page,
+                transfers
+            }
+        })
     }, [page, range, transfers])
+
+    const onFilterChange = filter => setSearchCommand(oldValue => {
+        return {
+            ...oldValue,
+            ...filter
+        }
+    })
+
+    return <>
+        {!transfers && <TransactionFilterOptions onChange={onFilterChange}/>}
+
+        <TransactionTable transactions={transactions}/>
+
+        <Pagination.Paginator page={parseInt(page)}
+                              records={pagination.records}
+                              pageSize={pagination.pageSize}/>
+    </>
+}
+
+export const TransactionGlobalView = ({transfers}) => {
+    const navigate                           = useNavigate()
+    const [range]                            = useDateRange()
 
     const onDateChange = (year, month) => navigate(`/transactions/${transfers ? 'transfers' : 'income-expense'}/${year}/${month}`)
     return <>
@@ -102,11 +186,8 @@ export const TransactionGlobalView = ({transfers}) => {
                           <AccountSelectorPopup type='transfer' icon={mdiSwapHorizontal} variant='info'/>
                       </Dropdown.Dropdown>
                   ]}>
-                <TransactionTable transactions={transactions}/>
 
-                <Pagination.Paginator page={parseInt(page)}
-                                      records={pagination.records}
-                                      pageSize={pagination.pageSize}/>
+                <TransactionOverviewComponent range={range} transfers={transfers} />
             </Card>
         </div>
     </>

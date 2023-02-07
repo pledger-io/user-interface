@@ -133,14 +133,7 @@ const CategoryRepository = (api => {
 
 const TransactionRepository = (api => {
     return {
-        search: ({range, page, transfers = false}) => api.post('transactions', {
-            dateRange: {
-                start: range.startString(),
-                end: range.endString()
-            },
-            page: page,
-            transfers: transfers
-        })
+        search: searchCommand => api.post('transactions', searchCommand)
     }
 })(RestAPI)
 

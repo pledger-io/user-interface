@@ -80,6 +80,17 @@
     }
   }
 
+  &.info {
+    color: #fff;
+    background-color: var(--dark-info-color);
+    border-color: var(--dark-info-color);
+
+    &.outline {
+      color: var(--dark-info-color);
+      background-color: #fff;
+    }
+  }
+
   &.success {
     color: #fff;
     background-color: var(--dark-success-color);
