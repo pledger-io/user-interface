@@ -127,7 +127,7 @@ $footer-height: 45px;
   footer {
     position: fixed;
     bottom: 0;
-    height: $footer-height;
+    //height: $footer-height;
     width: $sidebar-offset;
 
     display: flex;
@@ -140,21 +140,21 @@ $footer-height: 45px;
     }
 
     .Profile {
-      padding-left: .25rem
+      .ProfilePicture {
+        background: var(--sidebar-title-color);
+        border-radius: .5rem;
+
+        margin: 0.2em;
+      }
     }
 
-    .ProfilePicture {
-      background: var(--sidebar-title-color);
-      border-radius: .5rem;
-    }
 
     .logout {
       cursor: pointer;
-      max-width: 2.5rem;
+      max-width: 2rem;
       color: var(--sidebar-icon-color);
 
-      .Icon {
-        font-size: 1.5em;
+      &.icon {
         transform: scale(1.5);
       }
     }
