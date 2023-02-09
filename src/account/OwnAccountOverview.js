@@ -6,17 +6,20 @@ import {
     Card,
     Dialog,
     Dropdown,
-    Formats, Loading,
+    Formats,
+    Loading,
     Notifications,
     Statistical,
     Translations
 } from "../core";
 import {mdiCheck, mdiDotsVertical, mdiPlus, mdiSquareEditOutline, mdiTrashCanOutline} from "@mdi/js";
-import {Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {AccountRepository} from "../core/RestAPI";
 import {ReconcileOverview} from "./ReconcileOverview";
 import {EntityShapes} from "../config";
 import PropTypes from "prop-types";
+
+import '../assets/css/AccountOverview.scss'
 
 const AccountRow = ({account, deleteCallback}) => {
 
@@ -33,9 +36,19 @@ const AccountRow = ({account, deleteCallback}) => {
 
     return (
         <tr onMouseLeave={() => dropDownActions.close()}>
-            <td><Link to={accountLink}>{account.name}</Link></td>
-            <td><Translations.Translation label={`AccountType.${account.type}`}/></td>
-            <td><Formats.Date date={account.history.lastTransaction}/></td>
+            <td>
+                <h2><Link to={accountLink}>{account.name}</Link></h2>
+
+                <div className='Summary'>
+                    <label><Translations.Translation label='Account.type'/></label>
+                    <Translations.Translation label={`AccountType.${account.type}`}/>
+                </div>
+                <div className='Summary'>
+                    <label><Translations.Translation label='Account.lastActivity'/></label>
+                    <Formats.Date date={account.history.lastTransaction}/>
+                </div>
+                <div className='Description Text Muted'>{account.description}</div>
+            </td>
             <td>
                 {account.account.iban && `${account.account.iban}`}
                 {!account.account.iban && account.account.number && `${account.account.number}`}
@@ -67,11 +80,13 @@ AccountRow.propTypes = {
 
 const OwnAccountOverview = () => {
     const [accounts, setAccounts] = useState(undefined)
-    const navigate                = useNavigate()
 
-    useEffect(() => {
+    const loadAccounts = () => {
+        setAccounts(undefined)
         AccountRepository.own().then(setAccounts)
-    }, [])
+    }
+
+    useEffect(loadAccounts, [])
 
     return (
         <div className='OwnAccountOverview'>
@@ -92,16 +107,15 @@ const OwnAccountOverview = () => {
                         <thead>
                         <tr>
                             <th><Translations.Translation label='Account.name'/></th>
-                            <th><Translations.Translation label='Account.type'/></th>
-                            <th><Translations.Translation label='Account.lastActivity'/></th>
-                            <th><Translations.Translation label='Account.number'/></th>
+                            <th width='175'><Translations.Translation label='Account.number'/></th>
                             <th width='150'><Translations.Translation label='common.account.saldo'/></th>
                             <th width='15'/>
                         </tr>
                         </thead>
                         <tbody>
-                            {(accounts || []).map(account =>
-                                <AccountRow account={account} key={account.id} onDelete={() => navigate('.')}/>)}
+                        {!accounts && <tr><td><Loading /></td></tr>}
+                        {accounts && accounts.map(account =>
+                                <AccountRow account={account} key={account.id} onDelete={loadAccounts}/>)}
                         </tbody>
                     </table>
                 </Loading>

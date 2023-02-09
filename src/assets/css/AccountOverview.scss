@@ -20,6 +20,30 @@
       visibility: hidden;
     }
 
+    h2 {
+      font-size: 1.2em;
+      margin: var(--border-radius-sm) 0;
+    }
+
+    .Description {
+      margin-top: 0.2em;
+      padding-left: .2em;
+    }
+
+    .Summary {
+      font-size: .8rem;
+      color: var(--app-text-muted-color);
+      padding-left: .2em;
+
+      & label {
+        font-weight: 600;
+
+        &:after {
+          content: ': ';
+        }
+      }
+    }
+
     &:hover {
       .Dropdown .Button.icon.muted {
         visibility: visible;
