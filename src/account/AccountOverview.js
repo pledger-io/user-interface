@@ -16,7 +16,7 @@ import {
     When
 } from "../core";
 import {AccountRepository} from "../core/RestAPI";
-import {NavLink, useNavigate} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import {mdiDotsVertical, mdiPlus, mdiSquareEditOutline, mdiTrashCanOutline} from "@mdi/js";
 import {EntityShapes} from "../config";
 import PropTypes from "prop-types";
@@ -80,15 +80,15 @@ const AccountOverview = ({type}) => {
     const [page]                        = useQueryParam('page', "1")
     const [pagination, setPagination]   = useState({})
 
-    const navigate = useNavigate()
-
-    useEffect(() => {
+    const reload = () => {
         setAccounts(undefined)
         AccountRepository.search({
             types: [type],
             page: parseInt(page)
         }).then(response => setAccounts(response.content) || setPagination(response.info))
-    }, [page, type])
+    }
+
+    useEffect(reload, [page, type])
 
     return (
         <div className='AccountOverview'>
@@ -117,7 +117,7 @@ const AccountOverview = ({type}) => {
                         </thead>
                         <tbody>
                         {(accounts || []).map(account =>
-                            <AccountRow key={account.id} account={account} deleteCallback={() => navigate('.')}/>)}
+                            <AccountRow key={account.id} account={account} deleteCallback={reload}/>)}
                         </tbody>
                     </table>
 
