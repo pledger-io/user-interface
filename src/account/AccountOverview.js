@@ -7,7 +7,8 @@ import {
     Card,
     Dialog,
     Dropdown,
-    Formats, Loading,
+    Formats,
+    Loading,
     Notifications,
     Pagination,
     Statistical,
@@ -17,11 +18,11 @@ import {
 import {AccountRepository} from "../core/RestAPI";
 import {NavLink, useNavigate} from "react-router-dom";
 import {mdiDotsVertical, mdiPlus, mdiSquareEditOutline, mdiTrashCanOutline} from "@mdi/js";
-
-import '../assets/css/AccountOverview.scss'
 import {EntityShapes} from "../config";
 import PropTypes from "prop-types";
 import {useQueryParam} from "../core/hooks";
+
+import '../assets/css/AccountOverview.scss'
 
 const AccountRow = ({account, deleteCallback}) => {
 
@@ -37,14 +38,14 @@ const AccountRow = ({account, deleteCallback}) => {
                 {account.iconFileCode && <Attachments.Image fileCode={account.iconFileCode}/>}
             </td>
             <td>
-                <NavLink to={`./${account.id}/transactions`}>{account.name}</NavLink>
+                <h2><NavLink to={`./${account.id}/transactions`}>{account.name}</NavLink></h2>
                 <When condition={account.history.lastTransaction !== null}>
-                    <div className='Text Muted'>
-                        <Translations.Translation label='Account.lastActivity'/>
+                    <div className='Summary'>
+                        <label><Translations.Translation label='Account.lastActivity'/></label>
                         <Formats.Date date={account.history.lastTransaction}/>
                     </div>
                 </When>
-                <div className='Text Muted'>{account.description}</div>
+                <div className='Description Text Muted'>{account.description}</div>
             </td>
             <td>
                 {account.account.iban && `${account.account.iban}`}
@@ -109,8 +110,8 @@ const AccountOverview = ({type}) => {
                         <tr>
                             <th width='30'/>
                             <th><Translations.Translation label='Account.name'/></th>
-                            <th width='150'><Translations.Translation label='Account.number'/></th>
-                            <th width='110'><Translations.Translation label='common.account.saldo'/></th>
+                            <th width='160'><Translations.Translation label='Account.number'/></th>
+                            <th width='120'><Translations.Translation label='common.account.saldo'/></th>
                             <th width='20'/>
                         </tr>
                         </thead>
