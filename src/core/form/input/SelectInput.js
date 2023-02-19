@@ -23,7 +23,7 @@ export const SelectInput = (props) => {
                     value={field.value}
                     required={props.required}
                     onChange={onChange}>
-                <option disabled></option>
+                (field.value && <option disabled selected />}
                 {props.children}
             </select>
         </InputGroup>

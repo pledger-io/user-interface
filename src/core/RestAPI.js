@@ -63,6 +63,7 @@ const AccountRepository = (api => {
             accountTypes: types,
             page: page
         }),
+        types: () => api.get('account-types'),
         top: (type, year) => api.get(`accounts/top/${type}/${year}-01-01/${year}-12-31`),
         own: () => api.get('accounts/my-own'),
         get: id => api.get(`accounts/${id}`),

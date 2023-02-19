@@ -1,29 +1,23 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 
-import restAPI from "../../RestAPI";
+import {AccountRepository} from "../../RestAPI";
 import {SelectInput, SelectOption} from "../input/SelectInput";
 
 /**
  * Specification of a Select but then only ment for an account type selection.
  */
-export class AccountTypeInput extends React.Component {
-    static propTypes = SelectInput.propTypes
+export const AccountTypeInput = (props) => {
+    const [accountTypes, setAccountTypes] = useState([])
 
-    state = {
-        types: []
-    }
+    useEffect(() => {
+        AccountRepository.types()
+            .then(setAccountTypes)
+    }, [])
 
-    render() {
-        const {types} = this.state
-        if (!types.length) {
-            restAPI.get('account-types')
-                .then(types => this.setState({
-                    types: types
-                }))
-        }
-
-        return <SelectInput {...this.props}>
-            {types.map(type => <SelectOption key={type} value={type} label={`AccountType.${type}`}/>)}
+    return <>
+        <SelectInput {...props}>
+            {accountTypes.map(type => <SelectOption key={type} value={type} label={`AccountType.${type}`}/>)}
         </SelectInput>
-    }
+    </>
 }
+AccountTypeInput.propTypes = SelectInput.propTypes
