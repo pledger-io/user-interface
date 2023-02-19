@@ -8,6 +8,7 @@ import {Service as BalanceService} from './Statistical'
 import {LocalizationService} from './Translation'
 import PropTypes from "prop-types";
 import {Charts, Loading, Statistical} from "./index";
+import {EntityShapes} from "../config";
 
 const defaultGraphColors = [
     '#E0FFFF',
@@ -92,14 +93,16 @@ ChartComponent.propTypes = {
 
 const BalanceChart = ({id, range, allMoney, accounts}) => {
     const [balanceSeries, setBalanceSeries] = useState(undefined)
-
     useEffect(() => {
+        const actualAccounts = Array.isArray(accounts) ? accounts : [accounts]
+
         setBalanceSeries(undefined)
         provider.balanceSeries({
             id: 'balance-series',
             title: 'graph.series.balance',
             dateRange: range,
             allMoney: allMoney,
+            accounts: actualAccounts
         }).then(result => setBalanceSeries([result]))
     }, [range, allMoney, accounts])
 
@@ -115,26 +118,25 @@ const BalanceChart = ({id, range, allMoney, accounts}) => {
 BalanceChart.propTypes = {
     id: PropTypes.string.isRequired,
     range: PropTypes.any,
-    accounts: PropTypes.array,
+    accounts: PropTypes.oneOfType([PropTypes.array, EntityShapes.Account]),
     allMoney: PropTypes.bool,
 }
 
-const CategorizedPieChart = ({id, range, split, incomeOnly}) => {
+const CategorizedPieChart = ({id, range, split, incomeOnly, accounts}) => {
     const [pieSeries, setPieSeries] = useState(undefined)
-    const [pieKey, setPieKey]       = useState(undefined)
 
     useEffect(() => {
-        const newKey = `${range.toString()}_${split}_${incomeOnly}`
-        if (newKey !== pieKey) {
-            setPieKey(newKey)
-            const command = {
-                dateRange: range,
-                onlyIncome: incomeOnly
-            }
-            Statistical.Service.split(split, command)
-                .then(setPieSeries)
+        const command = {
+            dateRange: range,
+            onlyIncome: incomeOnly
         }
-    }, [range, split, incomeOnly])
+        if (Array.isArray(accounts)) command.accounts = accounts
+        else if (accounts) command.accounts = [accounts]
+
+        Statistical.Service.split(split, command)
+            .then(series => series.filter(point => point.balance !== 0))
+            .then(setPieSeries)
+    }, [range, split, incomeOnly, accounts])
 
     return (
         <Loading condition={pieSeries}>
@@ -151,6 +153,12 @@ const CategorizedPieChart = ({id, range, split, incomeOnly}) => {
                                       backgroundColor: context => defaultGraphColors[context.dataIndex]
                                   }
                               },
+                              plugins: {
+                                  legend: {
+                                      display: true,
+                                      position: 'right'
+                                  }
+                              },
                               maintainAspectRatio: false
                           }}/>
         </Loading>
@@ -158,7 +166,8 @@ const CategorizedPieChart = ({id, range, split, incomeOnly}) => {
 }
 CategorizedPieChart.propTypes = {
     range: PropTypes.shape({}),
-    split: PropTypes.oneOf(['account', 'category', 'budget'])
+    split: PropTypes.oneOf(['account', 'category', 'budget']),
+    accounts: PropTypes.oneOfType([PropTypes.array, EntityShapes.Account])
 }
 
 class ChartSeriesProvider {
