@@ -102,13 +102,13 @@ const LiabilityOverview = () => {
                 <table className='Table'>
                     <thead>
                     <tr>
-                        <th width='50'/>
+                        <th width='30'/>
                         <th><Translations.Translation label='Account.name'/></th>
                         <th width='150'>
                             <Translations.Translation label='Account.interest'/>
                             (<Translations.Translation label='Account.interestPeriodicity'/>)
                         </th>
-                        <th width='70'><Translations.Translation label='common.account.saldo'/></th>
+                        <th width='120'><Translations.Translation label='common.account.saldo'/></th>
                         <th width='25' />
                     </tr>
                     </thead>

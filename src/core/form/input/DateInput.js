@@ -42,6 +42,7 @@ export const DateInput = (props) => {
             <DatePicker required={props.required}
                         selected={selected}
                         readOnly={props.readonly}
+                        showYearDropdown
                         dateFormat={DateFormats[localStorage.getItem('language')]}
                         onChange={onDateChanged}/>
 
@@ -76,7 +77,7 @@ export const DateRangeInput = (props) => {
                 }
             }
         })
-    }, [startDate, endDate])
+    }, [startDate, endDate, onChange])
     useEffect(() => {
         const {start, end} = props.value
         if (start && end) setEndDate(new Date(end)) || setStartDate(new Date(start))
