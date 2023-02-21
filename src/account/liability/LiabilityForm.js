@@ -12,7 +12,7 @@ class AccountModel {
 
     constructor(account) {
         this.name = account.name
-        this.interest = (account?.interest?.interest || 0) * 100
+        this.interest = account?.interest?.interest * 100
         this.interestPeriodicity = account.interest?.periodicity
         this.description = account.description
         this.currency = account.account.currency
@@ -59,7 +59,7 @@ const LiabilityForm = () => {
                             restAPI.put(`accounts/${created.id}/transactions`, {
                                 date: entity.startDate,
                                 amount: entity.startBalance,
-                                currency: account.currency,
+                                currency: entity.currency,
                                 source: {id: created.id},
                                 destination: {id: response.content[0].id},
                                 description: 'Opening balance'

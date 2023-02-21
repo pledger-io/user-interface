@@ -76,7 +76,7 @@ const AccountRepository = (api => {
             }
         }),
         create: account => api.put('accounts', account),
-        update: (id, account) => api.post(`account/${id}`, account),
+        update: (id, account) => api.post(`accounts/${id}`, account),
         delete: id => api.delete(`accounts/${id}`),
         icon: (id, attachmentId) => api.post(`accounts/${id}/image`, {
             fileCode: attachmentId

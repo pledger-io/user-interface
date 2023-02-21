@@ -14,7 +14,7 @@ export const TextInput = (props) => {
                     valid={field.touched ? errors.length === 0 : undefined }>
             <input id={field.id}
                    name={field.id}
-                   defaultValue={field.value}
+                   value={field.value}
                    required={props.required}
                    pattern={props.pattern}
                    readOnly={props.readonly}

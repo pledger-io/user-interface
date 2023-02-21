@@ -17,7 +17,7 @@ import {
 } from "../../core";
 import {mdiDotsVertical, mdiPlus, mdiSquareEditOutline, mdiTrashCanOutline} from "@mdi/js";
 import {AccountRepository} from "../../core/RestAPI";
-import {Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {useQueryParam} from "../../core/hooks";
 import {EntityShapes} from "../../config";
 
@@ -76,14 +76,15 @@ const LiabilityOverview = () => {
     const [page]                             = useQueryParam('page', "1")
     const [accounts, setAccounts]            = useState([])
     const [pagination, setPagination]        = useState({})
-    const navigate                           = useNavigate()
 
-    useEffect(() => {
+    const reload = () => {
         AccountRepository.search({
             types: ['loan', 'mortgage', 'debt'],
             page: parseInt(page)
         }).then(resultPage => setAccounts(resultPage.content) || setPagination(resultPage.info))
-    }, [page])
+    }
+
+    useEffect(reload, [page])
 
     return (
         <div className='LiabilityOverview'>
@@ -113,7 +114,7 @@ const LiabilityOverview = () => {
                     </tr>
                     </thead>
                     <tbody>
-                        {accounts.map(a => <AccountRow key={a.id} account={a} deleteCallback={() => navigate('.')}/>)}
+                        {accounts.map(a => <AccountRow key={a.id} account={a} deleteCallback={reload}/>)}
                     </tbody>
                 </table>
 
