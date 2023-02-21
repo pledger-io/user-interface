@@ -26,7 +26,7 @@ const LiabilityView = () => {
     const [openingTransaction, setOpeningTransaction] = useState({})
     const [transactions, setTransactions]             = useState()
     const [pagination, setPagination]                 = useState({})
-    const [range, setRange]                           = useState(Dates.Ranges.currentMonth())
+    const [range, setRange]                           = useState()
     const [balanceSeries, setBalanceSeries]           = useState([])
 
     const {id}     = useParams()
@@ -38,12 +38,10 @@ const LiabilityView = () => {
             .then(setOpeningTransaction)
     }, [id])
     useEffect(() => {
-        setRange(Dates.Ranges.forRange(
-            account?.history?.firstTransaction,
-            account?.history?.lastTransaction))
+        if (account) setRange(Dates.Ranges.forRange(account.history.firstTransaction, account.history.lastTransaction))
     }, [account])
     useEffect(() => {
-        if (account)
+        if (account && range)
             Charts.SeriesProvider.balanceSeries({
                 id: 'balance-series',
                 title: 'graph.series.balance',
@@ -53,10 +51,10 @@ const LiabilityView = () => {
             }).then(result => setBalanceSeries([result]))
     }, [range, account])
     useEffect(() => {
-        if (account)
-            AccountRepository.transactions(account.id, range, page)
+        if (range)
+            AccountRepository.transactions(id, range, page)
                 .then(result => setTransactions(result.content) || setPagination(result.info))
-    }, [page, range, account])
+    }, [page, range, id])
 
     if (!account || !range) return <Loading />
     return (
