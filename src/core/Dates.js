@@ -28,6 +28,13 @@ class Range {
         return new Range(begin, this.start)
     }
 
+    // Move the entire range up by the given number of days
+    shiftDays(days) {
+        const begin = new Date(this.start.getTime() + (ONE_DAY * days))
+        const end = new Date(this.end.getTime() + (ONE_DAY * days))
+        return new Range(begin, end)
+    }
+
     toString() {
         return this.startString() + '_' + this.endString()
     }

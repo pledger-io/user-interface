@@ -15,22 +15,41 @@ import {
     Translations
 } from "../../core";
 
-import '../../assets/css/LiabiliryView.scss'
 import {AccountRepository} from "../../core/RestAPI";
 import {TransactionTable} from "../../transactions/TransactionTable";
 import {mdiCashPlus} from "@mdi/js";
 import {useParams} from "react-router-dom";
 
+import '../../assets/css/LiabiliryView.scss'
+
+const LiabilityTransactionComponent = ({account, range}) => {
+    const [page]                            = useQueryParam('page', "1")
+    const [transactions, setTransactions]   = useState()
+    const [pagination, setPagination]       = useState({})
+
+    useEffect(() => {
+        setTransactions(undefined)
+
+        const correctedRange = range.shiftDays(1)
+        AccountRepository.transactions(account.id, correctedRange, page)
+            .then(result => setTransactions(result.content) || setPagination(result.info))
+    }, [page, range, account])
+
+    return <>
+        <TransactionTable account={account} transactions={transactions}/>
+
+        <Pagination.Paginator page={parseInt(page)} records={pagination.records}
+                              pageSize={pagination.pageSize} />
+    </>
+}
+
 const LiabilityView = () => {
     const [account, setAccount]                       = useState()
     const [openingTransaction, setOpeningTransaction] = useState({})
-    const [transactions, setTransactions]             = useState()
-    const [pagination, setPagination]                 = useState({})
     const [range, setRange]                           = useState()
     const [balanceSeries, setBalanceSeries]           = useState([])
 
     const {id}     = useParams()
-    const [page]   = useQueryParam('page', "1")
 
     useEffect(() => {
         AccountRepository.get(id).then(setAccount)
@@ -50,11 +69,7 @@ const LiabilityView = () => {
                 accounts: [account]
             }).then(result => setBalanceSeries([result]))
     }, [range, account])
-    useEffect(() => {
-        if (range)
-            AccountRepository.transactions(id, range, page)
-                .then(result => setTransactions(result.content) || setPagination(result.info))
-    }, [page, range, id])
+
 
     if (!account || !range) return <Loading />
     return (
@@ -107,11 +122,7 @@ const LiabilityView = () => {
                                 variant='success'
                                 className={Resolver.Account.isDebtor(account) ? 'Hidden' : ''}
                                 icon={mdiCashPlus}/>
-
-                <TransactionTable account={account} transactions={transactions}/>
-
-                <Pagination.Paginator page={parseInt(page)} records={transactions}
-                                      pageSize={pagination.pageSize} />
+                <LiabilityTransactionComponent range={range} account={account} />
             </Card>
         </div>
     )
