@@ -110,6 +110,13 @@ const SecurityRepository = (api => {
     }
 })(RestAPI)
 
+const SettingRepository = (api => {
+    return {
+        list: () => api.get('settings'),
+        update: (id, value) => api.post(`settings/${id}`, {value})
+    }
+})(RestAPI)
+
 const AttachmentRepository = (api => {
     return {
         upload: blob => {
@@ -174,5 +181,6 @@ export {
     TransactionRepository,
     TransactionScheduleRepository,
     CurrencyRepository,
-    SavingsRepository
+    SavingsRepository,
+    SettingRepository
 }
