@@ -27,6 +27,7 @@ const AccountTransactionOverview = lazy(() => import("./AccountTransactionOvervi
 const LiabilityView = lazy(() => import('./liability/LiabilityView'))
 const LiabilityOverview = lazy(() => import('./liability/LiabilityOverview'))
 const LiabilityForm = lazy(() => import('./liability/LiabilityForm'))
+const SavingDetailOverview = lazy(() => import('./savings/SavingAccountDetailOverview'))
 
 export const AccountRoutes = [
     <Route key='own-account' path='/accounts/own' element={<OwnAccountOverview/>}/>,
@@ -55,4 +56,6 @@ export const AccountRoutes = [
     <Route key='liability-transaction-add' path='/accounts/liability/:id/transactions/add' element={<LiabilityPaymentForm />}/>,
     <Route key='liability-transaction-edit' path='/accounts/liability/:id/transaction/:transactionId/edit' element={<LiabilityPaymentForm />}/>,
 
+    <Route key='savings-detail-view' path='/accounts/savings/:id/transactions' element={<SavingDetailOverview />}/>,
+    <Route key='savings-detail-month-view' path='/accounts/savings/:id/transactions/:year/:month' element={<SavingDetailOverview />}/>,
 ]

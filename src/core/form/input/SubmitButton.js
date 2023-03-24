@@ -19,4 +19,5 @@ export const SubmitButton = (props) => {
                    variant='primary'
                    type='submit'/>
 }
+SubmitButton.propTypes = Button.propTypes
 

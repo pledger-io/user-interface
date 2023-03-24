@@ -27,18 +27,18 @@ export const Popup = ({title, className, actions, children}) => {
 
     return (
         <span className={`Popup ${className}`}>
-                <div className='Dialog'>
-                    <header>
-                        <Translation label={title}/>
-                        <Buttons.Button icon={mdiClose}
-                                        onClick={() => setClosed(true)}
-                                        variant='icon'
-                                        className='secondary'/>
-                    </header>
-                    <section>{children}</section>
-                    {actions && <footer>{actions}</footer>}
-                </div>
-            </span>
+            <div className='Dialog'>
+                <header>
+                    <Translation label={title}/>
+                    <Buttons.Button icon={mdiClose}
+                                    onClick={() => setClosed(true)}
+                                    variant='icon'
+                                    className='secondary'/>
+                </header>
+                <section>{children}</section>
+                {actions && <footer>{actions}</footer>}
+            </div>
+        </span>
     )
 }
 Popup.propTypes = {
@@ -51,23 +51,27 @@ Popup.propTypes = {
 
 
 export const Dialog = ({control, openButton, title, actions = [], className = '', children}) => {
-    useEffect(() => {
-        if (control) control.close = () => undefined
-    })
-
     const popupContext = {
         close: () => {},
         open: () => {}
     }
+
+    useEffect(() => {
+        if (control) control.close = () => popupContext.close()
+    }, [control, popupContext])
+
     const actionsWithClose = [...actions, <Buttons.Button key='cancel'
                                                           label='common.action.cancel'
+                                                          variant='secondary'
                                                           onClick={() => popupContext.close()}
                                                           icon={mdiCancel}/>]
 
     return (
         <PopupContext.Provider value={popupContext}>
             <Buttons.Button {...openButton.props} onClick={() => popupContext.open()} />
-            <Popup title={title} className={className} actions={actionsWithClose}>
+            <Popup title={title}
+                   className={className}
+                   actions={actionsWithClose}>
                 {children}
             </Popup>
         </PopupContext.Provider>
@@ -91,7 +95,10 @@ Dialog.propTypes = {
 export const ConfirmPopup = (props) => {
     const {openButton, onConfirm = () => undefined, children} = props
 
-    const popupContext = useContext(PopupContext)
+    const popupContext = {
+        close: () => {},
+        open: () => {}
+    }
     const onConfirmClick = () => popupContext.close() || onConfirm()
     const onCloseClick   = () => popupContext.close()
 

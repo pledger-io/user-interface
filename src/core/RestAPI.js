@@ -37,6 +37,7 @@ const RestAPI = (() => {
             .catch(({response}) => {
                 if (response.status === 401) {
                     SecurityRepository.logout()
+                    window.location.reload()
                 }
                 else error(response?.data?.message || response.statusText)
             }))
@@ -81,6 +82,15 @@ const AccountRepository = (api => {
         icon: (id, attachmentId) => api.post(`accounts/${id}/image`, {
             fileCode: attachmentId
         })
+    }
+})(RestAPI)
+
+const SavingsRepository = (api => {
+    return {
+        create: (accountId, savingGoal) => api.post(`accounts/${accountId}/savings`, savingGoal),
+        update: (accountId, savingsId, savingGoal) => api.post(`accounts/${accountId}/savings/${savingsId}`, savingGoal),
+        assign: (accountId, savingId, amount) => api.put(`accounts/${accountId}/savings/${savingId}/reserve?amount=${amount}`, {}),
+        delete: (accountId, savingId) => api.delete(`accounts/${accountId}/savings/${savingId}`)
     }
 })(RestAPI)
 
@@ -163,5 +173,6 @@ export {
     CategoryRepository,
     TransactionRepository,
     TransactionScheduleRepository,
-    CurrencyRepository
+    CurrencyRepository,
+    SavingsRepository
 }

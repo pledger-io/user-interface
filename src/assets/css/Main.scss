@@ -171,3 +171,16 @@ a {
 .Loading {
   text-align: center;
 }
+
+.Progressbar {
+  height: 1em;
+  margin: .2em;
+
+  background-color: var(--app-border-color);
+  opacity: .8;
+
+  .fg-color {
+    height: 1em;
+    background-color: var(--primary-color);
+  }
+}

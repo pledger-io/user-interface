@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 
 import {Input} from '../../core/form'
-import {BreadCrumbItem, BreadCrumbs, Buttons, Card, Notifications, Translations, When} from "../../core";
+import {BreadCrumbItem, BreadCrumbs, Buttons, Card, Notifications, Translations} from "../../core";
 import {mdiPlus, mdiSquareEditOutline} from "@mdi/js";
 import restAPI from "../../core/RestAPI";
 import PropTypes from "prop-types";

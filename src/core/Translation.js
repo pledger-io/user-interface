@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react";
 import RestAPI from "./RestAPI";
-import {mdiHelpCircle} from "@mdi/js";
+import {mdiHelpCircleOutline} from "@mdi/js";
 import Icon from "@mdi/react";
 import PropTypes from "prop-types";
 
 class TranslationItem {
     constructor() {
-        this.resolved = text => void 0
+        this.resolved = _ => void 0
         this.$ = new Promise(resolve => {
             this.resolved = function(localization) {
                 resolve(localization);
@@ -60,7 +60,7 @@ Translation.propTypes = {
 const HelpTranslation = ({label}) => {
     return (
         <span className='HelpText'>
-            <Icon path={mdiHelpCircle} size={.8}/>
+            <Icon path={mdiHelpCircleOutline} size={.8}/>
             <Translation label={label}/>
         </span>
     )

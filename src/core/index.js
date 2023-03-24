@@ -113,6 +113,22 @@ export class Message extends React.Component {
     }
 }
 
+const Progressbar = ({total = 1, current = 0}) => {
+    const percentage = Math.round(current / total * 100)
+
+    return <>
+        <div className='Progressbar' title={`${percentage}%`}>
+            <div className='fg-color' style={{width: `${percentage}%`}} />
+        </div>
+    </>
+}
+Progressbar.propTypes = {
+    // the total that can be achieved (this is 100%)
+    total: PropTypes.number.isRequired,
+    // the current value
+    current: PropTypes.number
+}
+
 const Card = ({title, actions, buttons, children}) => {
     const hasHeader = (title || actions) !== undefined
 
@@ -221,5 +237,6 @@ export {
     Card,
     Charts,
     Loading,
-    Resolver
+    Resolver,
+    Progressbar
 }
