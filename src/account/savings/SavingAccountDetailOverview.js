@@ -78,13 +78,14 @@ SavingSummaryComponent.propTypes = {
     savingAccount: EntityShapes.Account
 }
 
-const ReserveToGoalComponent = ({account, savingGoal}) => {
+const ReserveToGoalComponent = ({account, savingGoal, onChanged = _ => {}}) => {
     const control = {
         close: () => undefined
     }
 
     const onSubmit = e => SavingsRepository.assign(account.id, savingGoal.id, e.amount)
-            .then(control.close)
+        .then(updatedAccount => onChanged(updatedAccount))
+        .then(control.close)
 
     return <>
         <Form onSubmit={onSubmit} entity='SavingGoal'>
@@ -101,6 +102,7 @@ const ReserveToGoalComponent = ({account, savingGoal}) => {
                                                        variant='icon'/>}>
                 <Input.Text id='amount'
                             type='number'
+                            required={true}
                             min={0} />
             </Dialog.Dialog>
         </Form>
@@ -139,7 +141,9 @@ const SavingGoalTableComponent = ({account, savingGoals = [], currency = 'EUR'})
                 <td>{savingGoal.name}</td>
                 <td>
                     <Progressbar total={savingGoal.goal} current={savingGoal.reserved} />
-                    <ReserveToGoalComponent savingGoal={savingGoal} account={account} />
+                    <ReserveToGoalComponent savingGoal={savingGoal}
+                                            onChanged={onUpdated}
+                                            account={account} />
                 </td>
                 <td><Formats.Money money={savingGoal.goal} currency={currency}/></td>
                 <td><Formats.Money money={savingGoal.goal - savingGoal.reserved} currency={currency}/></td>
