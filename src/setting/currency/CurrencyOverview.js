@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 
-import {Input} from '../../core/form'
+import {Form, Input} from '../../core/form'
 import {BreadCrumbItem, BreadCrumbs, Buttons, Card, Notifications, Translations} from "../../core";
 import {mdiPlus, mdiSquareEditOutline} from "@mdi/js";
 import restAPI from "../../core/RestAPI";
@@ -32,7 +32,11 @@ const CurrencyRow = ({currency}) => {
             <td>{currency.name}</td>
             <td>{currency.numberDecimals}</td>
             <td className='Form'>
-                <Input.Toggle id={`toggle-${currency.code}`} value={currency.enabled} onChange={onEnabledChange}/>
+                <Form onSubmit={_ => undefined} entity='Currency'>
+                    <Input.Toggle id={`toggle-${currency.code}`}
+                                  value={currency.enabled}
+                                  onChange={onEnabledChange}/>
+                </Form>
             </td>
         </tr>
     )
