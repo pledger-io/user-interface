@@ -57,7 +57,7 @@ export const SettingOverviewComponent = () => {
                                 </Dialog.Dialog>
                             </Form>
                         </td>
-                        <td>{setting.name}</td>
+                        <td><Translations.Translation label={`page.setting.overview.setting.${setting.name}`}/></td>
                         <td>{setting.type}</td>
                         <td>{setting.value}</td>
                     </tr>

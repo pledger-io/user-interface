@@ -40,7 +40,7 @@ const TranslationService = (() => {
  * key.
  */
 const Translation = ({label}) => {
-    const [localized, setLocalized] = useState('!Not translated!')
+    const [localized, setLocalized] = useState(`!Not translated! [${label}]`)
 
     useEffect(() => {
         TranslationService.get(label).then(setLocalized)
