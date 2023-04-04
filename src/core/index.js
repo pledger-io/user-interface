@@ -113,11 +113,11 @@ export class Message extends React.Component {
     }
 }
 
-const Progressbar = ({total = 1, current = 0}) => {
-    const percentage = Math.round(current / total * 100)
+const Progressbar = ({total = 1, current = 0, className = ''}) => {
+    const percentage = Math.min(100, Math.round(current / total * 100))
 
     return <>
-        <div className='Progressbar' title={`${percentage}%`}>
+        <div className={`Progressbar ${className}`} title={`${percentage}%`}>
             <div className='fg-color' style={{width: `${percentage}%`}} />
         </div>
     </>

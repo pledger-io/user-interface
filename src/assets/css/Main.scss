@@ -180,7 +180,18 @@ a {
   opacity: .8;
 
   .fg-color {
-    height: 1em;
+    height: 100%;
     background-color: var(--primary-color);
+  }
+
+  &.warning {
+    .fg-color {
+      background-color: var(--dark-warning-color);
+    }
+  }
+  &.success {
+    .fg-color {
+      background-color: var(--dark-success-color);
+    }
   }
 }

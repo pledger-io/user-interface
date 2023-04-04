@@ -1,0 +1,36 @@
+.BudgetReport {
+  .Breadcrumb {
+    .Menu {
+      & > div {
+        display: inline;
+      }
+    }
+  }
+
+  .MonthlyView {
+
+    tr.success {
+      background-color: var(--bg-success-color);
+    }
+    tr.warning {
+      background-color: var(--bg-warning-color);
+    }
+
+    td.success {
+      color: var(--dark-success-color)
+    }
+    td.warning {
+      color: var(--dark-warning-color)
+    }
+  }
+
+  .Progressbar {
+    height: 4em;
+
+    border-radius: var(--border-radius);
+
+    & > .fg-color {
+      border-radius: var(--border-radius);
+    }
+  }
+}

@@ -1,8 +1,7 @@
 import axios from 'axios';
 
 const config = {
-    root: 'http://dev.ota.pledger.io/api'
-    //root: 'http://localhost:8080/api'
+    root: '/api'
 }
 
 class TokenResponse {
@@ -172,6 +171,12 @@ const TransactionScheduleRepository = (api => {
     }
 })(RestAPI)
 
+const BudgetRepository = (api => {
+    return {
+        forMonth: (year, month) => api.get(`budgets/${year}/${month}`)
+    }
+})(RestAPI)
+
 export default RestAPI;
 export {
     AccountRepository,
@@ -182,5 +187,6 @@ export {
     TransactionScheduleRepository,
     CurrencyRepository,
     SavingsRepository,
-    SettingRepository
+    SettingRepository,
+    BudgetRepository
 }
