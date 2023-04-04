@@ -45,6 +45,7 @@ export const TagInput = props => {
                 case 'ArrowUp': setSelectedIdx(Math.max(0, selectedIdx - 1)) || event.stopPropagation(); break
                 case 'ArrowDown': setSelectedIdx(Math.min(options.length, selectedIdx + 1)) || event.stopPropagation(); break
                 case 'Enter': onSelect(options[selectedIdx]) || event.stopPropagation(); break
+                default: break
             }
 
             if (!event.isPropagationStopped() && tagValue.length > 2) {
@@ -60,6 +61,8 @@ export const TagInput = props => {
             switch (event.key) {
                 case 'Escape' | 'ArrowUp' | 'ArrowDown' | 'Enter':
                     event.preventDefault() || event.stopPropagation()
+                    break
+                default: break
             }
         }
     }

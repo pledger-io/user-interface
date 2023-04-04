@@ -49,12 +49,14 @@ export const CategoryOverview = () => {
     const [page]                        = useQueryParam('page', "1")
     const [pagination, setPagination]   = useState({})
 
-    const load = () => CategoryRepository.list(parseInt(page))
-        .then(response => setCategories(response.content) || setPagination(response.info))
+    const load = React.useCallback(() => {
+        CategoryRepository.list(parseInt(page))
+            .then(response => setCategories(response.content) || setPagination(response.info))
+    }, [page])
 
     useEffect(() => {
         load()
-    }, [page])
+    }, [load])
 
     return <>
         <div className="CategoryOverview">

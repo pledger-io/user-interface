@@ -26,7 +26,7 @@ routes.push(...ReportRoutes)
 routes.push(...TransactionRoutes)
 
 function App() {
-    const [authenticate, setAuthenticate] = useState(false)
+    const [_, setAuthenticate] = useState(false)
 
     if (sessionStorage.getItem('token')) {
         return (

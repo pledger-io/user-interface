@@ -1,10 +1,9 @@
-import React, {useContext, useState} from "react";
-import {FormContext} from "../Form";
+import React, {useState} from "react";
 import {useInputField} from "./InputGroup";
 import PropTypes from "prop-types";
 
 export const ToggleInput = (props) => {
-    const [field, errors, onChange] = useInputField({onChange: props.onChange, field: props})
+    const [field, _, onChange] = useInputField({onChange: props.onChange, field: props})
     const [checked, setChecked] = useState(props.value || false)
 
     const onToggle = () => onChange({persist: () => {}, currentTarget: {value: !checked}}) || setChecked(!checked)

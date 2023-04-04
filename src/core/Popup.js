@@ -1,4 +1,4 @@
-import React, {createContext, useContext, useEffect, useState} from "react";
+import React, {createContext, useContext, useEffect, useMemo, useState} from "react";
 import PropTypes from 'prop-types';
 import {mdiCancel, mdiClose, mdiRadioboxBlank} from "@mdi/js";
 
@@ -51,10 +51,12 @@ Popup.propTypes = {
 
 
 export const Dialog = ({control, openButton, title, actions = [], className = '', children}) => {
-    const popupContext = {
-        close: () => {},
-        open: () => {}
-    }
+    const popupContext = useMemo(() => {
+        return {
+            close: () => {},
+            open: () => {}
+        }
+    }, [])
 
     useEffect(() => {
         if (control) control.close = () => popupContext.close()

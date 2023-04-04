@@ -16,7 +16,7 @@ export const useLocalStorage = (key, initialValue) => {
 
     useEffect(() => {
         localStorage.setItem(key, value)
-    }, [value])
+    }, [value, key])
 
     return [value, setValue]
 }
@@ -31,7 +31,7 @@ export const useLocalStorageJson = (key, initialValue) => {
 
     useEffect(() => {
         localStorage.setItem(key, JSON.stringify(value))
-    }, [value])
+    }, [value, key])
 
     return [value, setValue]
 }
@@ -47,7 +47,7 @@ export const useQueryParam = (key, initialValue) => {
     useEffect(() => {
         if (searchParams.has(key) && searchParams.get(key) !== value) setValue(searchParams.get(key))
         else if (!searchParams.has(key)) setValue(initialValue)
-    }, [searchParams])
+    }, [searchParams, initialValue, key])
 
     return [value]
 }

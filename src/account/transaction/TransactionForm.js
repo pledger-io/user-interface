@@ -65,8 +65,8 @@ class TransactionForm extends React.Component {
     }
 
     process(entity) {
-        const {transaction: {id}, account} = this.state
-        const {navigate} = this.props
+        // const {transaction: {id}, account} = this.state
+        // const {navigate} = this.props
 
         console.log(entity)
 

@@ -23,6 +23,8 @@ export const useAutocomplete = ({
                 case 'Enter':
                     e.preventDefault()
                     e.stopPropagation()
+                    break
+                default: break
             }
         }
     }
@@ -47,6 +49,7 @@ export const useAutocomplete = ({
                     e.stopPropagation()
                     changeHandler(options[selected])
                     break
+                default: break
             }
         }
     }

@@ -1,4 +1,4 @@
-import React, {createContext, useMemo, useState} from "react";
+import React, {createContext, useState} from "react";
 import PropTypes from 'prop-types';
 
 import '../../assets/css/Form.scss'
@@ -11,7 +11,7 @@ function validateField(field) {
     }
 
     if (field.pattern && value) {
-        const pattern = new RegExp(field.pattern, '\i')
+        const pattern = new RegExp(field.pattern, '\\i')
         if (!pattern.test(field.value)) {
             errors.push('pattern')
         }

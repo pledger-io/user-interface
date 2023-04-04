@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect} from "react";
 import PropTypes from 'prop-types';
 
 import {HelpTranslation, Translation} from "../../Translation";
@@ -41,7 +41,7 @@ export const useInputField = ({onChange, field}) => {
     useEffect(() => formContext.addField({
         field: field,
         value: field.value || ''
-    }), [field])
+    }), [field, formContext])
     if (!formContext.fields.hasOwnProperty(field.id)) {
         return [undefined, undefined, onChangedEvent]
     }

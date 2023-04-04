@@ -5,7 +5,7 @@ import {Translation} from "../../Translation";
 import {useInputField} from "./InputGroup";
 
 export const RadioButtons = (props) => {
-    const [field, errors, onChange] = useInputField({onChange: props.onChange, field: props})
+    const [field, _, onChange] = useInputField({onChange: props.onChange, field: props})
 
     return (
         <div className='RadioButton'>

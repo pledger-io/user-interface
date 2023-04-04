@@ -23,7 +23,7 @@ export const Sidebar = ({logoutCallback}) => {
     return (
         <div className={'sidebar ' + (open ? '' : 'closed')}>
             <div className='brand'>
-                <img src={logo}/>
+                <img src={logo} alt='logo'/>
                 <span>Pledger<span style={{color: 'var(--app-text-muted-color)'}}>.io</span></span>
                 <a className='toggle' onClick={onToggleClick}>
                     <Icon path={open ? mdiClose : mdiMenu}

@@ -200,6 +200,7 @@ const Resolver = {
                 case 'own': return 'accounts'
                 case 'revenue': return 'debtor'
                 case 'expense': return 'creditor'
+                default: return ''
             }
         }
     },
