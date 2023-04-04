@@ -1,20 +1,22 @@
 definitions:
   services:
-    node-builder:
-      image:
-        name: node:18.12.1
     java-builder:
       image:
         name: maven:3-amazoncorretto-17
   steps:
+    - step: &node-prepare
+        name: Prepare node environment
+        image: node:18.12.1
+        caches:
+          - node
+        scripts:
+          - npm install
     - step: &build-react
         name: Build React App
-        services:
-          - node-builder
+        image: node:18.12.1
         caches:
           - node
         script:
-          - npm install
           - npm run build
         artifacts:
           - build/**
@@ -36,5 +38,6 @@ definitions:
 pipelines:
   branches:
     master:
+      - step: *node-prepare
       - step: *build-react
       - step: *build-java
