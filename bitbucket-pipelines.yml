@@ -9,7 +9,7 @@ definitions:
         image: node:18.12.1
         caches:
           - node
-        scripts:
+        script:
           - npm install
     - step: &build-react
         name: Build React App
