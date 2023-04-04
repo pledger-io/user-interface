@@ -1,0 +1,22 @@
+definitions:
+  services:
+    node-builder:
+      image:
+        name: node:16
+  steps:
+    - step: &build-react
+        name: Build React App
+        services:
+          - node-builder
+        caches:
+          - node
+        script:
+          - npm install
+          - npm run build
+        artifacts:
+          - build/**
+
+pipelines:
+  branches:
+    master:
+      - step: *build-react
