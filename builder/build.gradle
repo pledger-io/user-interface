@@ -1,0 +1,64 @@
+apply plugin: 'java'
+apply plugin: 'signing'
+apply plugin: 'maven-publish'
+
+repositories {
+    mavenCentral()
+}
+
+ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
+
+project(':') {
+    processResources {
+        from('../build') {
+            into 'public'
+        }
+    }
+
+    publishing {
+        repositories {
+            maven {
+                def releaseRepo = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+                def snapshotRepo = "https://oss.sonatype.org/content/repositories/snapshots/"
+                url = isReleaseVersion ? releaseRepo : snapshotRepo
+                credentials {
+                    username = System.getenv('OSSRH_USERNAME')
+                    password = System.getenv('OSSRH_PASSWORD')
+                }
+            }
+        }
+
+        publications {
+            mavenJava(MavenPublication) {
+                pom {
+                    groupId = 'com.jongsoft.finance'
+                    artifactId = 'pledger-ui'
+                    name = 'pledger-ui'
+                    description = 'The React application for the FinTrack application.'
+                    url = 'https://www.pledger.io/'
+                    from components.java
+                    licenses {
+                        license {
+                            name = 'MIT'
+                            url = 'https://opensource.org/licenses/MIT'
+                        }
+                    }
+                    scm {
+                        connection = 'scm:git:git@bitbucket.org:jongsoftdev/user-interface.git'
+                        developerConnection = 'scm:git:git@bitbucket.org:jongsoftdev/user-interface.git'
+                        url = 'https://bitbucket.org/jongsoftdev/user-interface'
+                    }
+                    developers {
+                        developer {
+                            id = 'gjong'
+                            name = 'Gerben Jongerius'
+                            email = 'g.jongerius@jong-soft.com'
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    archivesBaseName = "pledger-ui"
+}
