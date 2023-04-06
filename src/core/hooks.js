@@ -47,7 +47,7 @@ export const useQueryParam = (key, initialValue) => {
     useEffect(() => {
         if (searchParams.has(key) && searchParams.get(key) !== value) setValue(searchParams.get(key))
         else if (!searchParams.has(key)) setValue(initialValue)
-    }, [searchParams, initialValue, key])
+    }, [searchParams, initialValue, key, value])
 
     return [value]
 }

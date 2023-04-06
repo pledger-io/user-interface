@@ -67,16 +67,16 @@ class DashboardService {
 }
 
 const SummaryComponent = ({currency, current, previous, title, icon}) => {
-    let comparisonClass = 'same'
-    let comparisonKey = 'page.dashboard.summary.trend.same'
+    const [comparisonClass, setComparisonClass]    = useState('same')
+    const [comparisonKey, setComparisonKey]        = useState('page.dashboard.summary.trend.same')
 
     useEffect(() => {
         if (current < previous) {
-            comparisonClass = 'down'
-            comparisonKey = 'page.dashboard.summary.trend.down'
+            setComparisonKey('page.dashboard.summary.trend.down')
+            setComparisonClass('down')
         } else if (current > previous) {
-            comparisonClass = 'up'
-            comparisonKey = 'page.dashboard.summary.trend.up'
+            setComparisonKey('page.dashboard.summary.trend.up')
+            setComparisonClass('up')
         }
     }, [current, previous])
 
@@ -122,7 +122,7 @@ export const DashboardView = () => {
     const [previousIncome, setPreviousIncome]   = useState(0)
     const [previousExpense, setPreviousExpense] = useState(0)
     const [previousBalance, setPreviousBalance] = useState(0)
-    const [budget, setBudget]                   = useState(0)
+    const [budget]                              = useState(0)
 
     const [balanceSeries, setBalanceSeries]     = useState([])
     const [budgetSeries, setBudgetSeries]       = useState({labels: [], data: []})
