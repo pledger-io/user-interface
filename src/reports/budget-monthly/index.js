@@ -3,7 +3,7 @@ import {BreadCrumbItem, BreadCrumbMenu, BreadCrumbs, Card, Dates, Dropdown, Prog
 import {useNavigate, useParams} from "react-router-dom";
 import {BudgetRepository} from "../../core/RestAPI";
 
-import MonthlyTableComponent from "./MonthlyTableComponent";
+import MonthlyTableComponent from "./BudgetTableComponent";
 import MonthlyPerBudgetTableComponent from "./MonthlyTableComponent";
 import YearlyIncomeGraphComponent from "./YearlyIncomeGraphComponent";
 import YearlyExpenseGraphComponent from "./YearlyExpenseGraphComponent";
@@ -11,11 +11,11 @@ import YearlyExpenseGraphComponent from "./YearlyExpenseGraphComponent";
 import '../../assets/css/BudgetReportView.scss'
 
 export const BudgetReportView = () => {
-    const [range, setRange]                            = useState(Dates.Ranges.currentYear)
-    const {currency = 'EUR', year}      = useParams()
-    const [budgets, setBudgets]                 = useState([])
+    const [range, setRange] = useState(() => Dates.Ranges.currentYear())
+    const {currency = 'EUR', year = new Date().getFullYear()} = useParams()
+    const [budgets, setBudgets] = useState([])
 
-    const navigate                    = useNavigate()
+    const navigate = useNavigate()
 
     useEffect(() => {
         if (year) {
@@ -65,13 +65,14 @@ export const BudgetReportView = () => {
 }
 
 const YearlyBudgetIncomeComponent = ({range, budgets = []}) => {
-    const [yearlyIncome, setYearlyIncome]       = useState(0)
-    const [yearlyExpected, setYearlyExpected]   = useState(0)
+    const [yearlyIncome, setYearlyIncome] = useState(0)
+    const [yearlyExpected, setYearlyExpected] = useState(0)
 
     useEffect(() => {
         Statistical.Service.balance({
-            onlyIncome: true,
-            dateRange: range}
+                onlyIncome: true,
+                dateRange: range
+            }
         ).then(b => setYearlyIncome(b.balance))
     }, [range])
     useEffect(() => {
@@ -82,7 +83,7 @@ const YearlyBudgetIncomeComponent = ({range, budgets = []}) => {
         <Card title='page.reports.budget.incomePercent'>
             <Progressbar total={yearlyExpected}
                          className='success'
-                         current={yearlyIncome} />
+                         current={yearlyIncome}/>
         </Card>
     </>
 }
@@ -119,7 +120,7 @@ const YearlyBudgetExpenseComponent = ({budgets = [], range}) => {
         <Card title='page.reports.budget.expensePercent'>
             <Progressbar total={yearlyExpected}
                          className='warning'
-                         current={yearlyExpenses} />
+                         current={yearlyExpenses}/>
         </Card>
     </>
 }

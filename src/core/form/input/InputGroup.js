@@ -38,10 +38,13 @@ export const useInputField = ({onChange, field}) => {
         if (onChange) onChange(event.currentTarget.value)
     }
 
-    useEffect(() => formContext.addField({
-        field: field,
-        value: field.value || ''
-    }), [field, formContext])
+    useEffect(() => {
+        formContext.addField({
+            field: field,
+            value: field.value || ''
+        })
+    }, [field])
+
     if (!formContext.fields.hasOwnProperty(field.id)) {
         return [undefined, undefined, onChangedEvent]
     }

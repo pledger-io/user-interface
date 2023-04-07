@@ -14,6 +14,7 @@ const YearlyIncomeGraphComponent = ({year = 1970, budgets = []}) => {
     const [actualDataset, setActualDataset]     = useState()
 
     useEffect(() => {
+        setExpectedDataset(undefined)
         Translations.LocalizationService.get('graph.series.budget.expected')
             .then(t => setExpectedDataset({
                 label: t,
@@ -23,6 +24,7 @@ const YearlyIncomeGraphComponent = ({year = 1970, budgets = []}) => {
             }))
     }, [budgets])
     useEffect(() => {
+        setActualDataset(undefined)
         Promise.all(
             [...new Array(12).keys()]
                 .map(m => Statistical.Service.balance({

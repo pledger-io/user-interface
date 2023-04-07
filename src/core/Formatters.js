@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from 'prop-types';
 import {useLocalStorage} from "./hooks";
 
@@ -7,10 +6,11 @@ import {useLocalStorage} from "./hooks";
  */
 const FormattedDate = ({date}) => {
     const [language] = useLocalStorage('language', 'en');
+    const formatted = new Intl.DateTimeFormat(language).format(new Date(date))
 
     if (date) {
         return (
-            <span className='FormattedDate'>{new Intl.DateTimeFormat(language).format(new Date(date))}</span>
+            <span className='FormattedDate'>{formatted}</span>
         )
     }
 

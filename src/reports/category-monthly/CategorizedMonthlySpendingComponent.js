@@ -15,7 +15,7 @@ const CategorizedMonthlySpendingComponent = ({categories, year}) => {
             </thead>
             <tbody>
             {categories.map(category => (
-                <tr>
+                <tr key={category.id}>
                     <td>{category.label}</td>
                     {months.map(month => <td key={month.month()}>
                         <Statistical.Balance income={false} categories={[category]} range={month}/>

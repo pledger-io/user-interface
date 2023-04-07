@@ -58,7 +58,7 @@ export const useQueryParam = (key, initialValue) => {
  */
 export const useDateRange = () => {
     const {year, month}       = useParams()
-    const [range, setRange]   = useState(Dates.Ranges.currentMonth())
+    const [range, setRange]   = useState(() => Dates.Ranges.currentMonth())
 
     useEffect(() => {
         if (year && month) setRange(Dates.Ranges.forMonth(year, month))

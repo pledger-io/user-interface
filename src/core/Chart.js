@@ -60,7 +60,7 @@ const ChartComponent = ({id, height = 50, children, type = 'line', options = {},
                 window.removeEventListener('resize', redraw)
             }
         }
-    }, [chartRef, options, type])
+    }, [chartRef])
 
     useEffect(() => {
         if (dataSets && dataSets.length > 0 && chartRef.current !== null) {
