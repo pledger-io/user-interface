@@ -1,8 +1,4 @@
 definitions:
-  services:
-    java-builder:
-      image:
-        name: maven:3-amazoncorretto-17
   steps:
     - step: &node-prepare
         name: Prepare node environment
@@ -22,8 +18,17 @@ definitions:
           - build/**
     - step: &build-java
         name: Build JAR file
-        services:
-          - java-builder
+        image: maven:3-amazoncorretto-17
+        caches:
+          - gradle
+        script:
+          - cd builder
+          - bash ./gradlew jar
+        artifacts:
+          - builder/build/**
+    - step: &sign-publish
+        image: maven:3-amazoncorretto-17
+        name: Publish artifact
         caches:
           - gradle
         script:
@@ -33,7 +38,7 @@ definitions:
           - openssl11 aes-256-cbc -a -k "$SIGNING_PWD" -in private-key.gpg.enc -out private-key.gpg -d
           - gpg --import private-key.gpg
           - printf "signing.keyId=$GPG_KEY\nsigning.password=$GPG_PASSWORD\nsigning.secretKeyRingFile=$BITBUCKET_CLONE_DIR/private-key.gpg" > ~/.gradle/gradle.properties
-          - bash ./gradlew jar
+          - bash ./gradlew publish
 
 pipelines:
   branches:
@@ -41,3 +46,4 @@ pipelines:
       - step: *node-prepare
       - step: *build-react
       - step: *build-java
+      - step: *sign-publish
