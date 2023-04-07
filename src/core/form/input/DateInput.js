@@ -56,10 +56,6 @@ DateInput.propTypes = {
     readonly: PropTypes.bool
 }
 
-Date.prototype.isofy = function() {
-    return this.toISOString().substring(0, 10)
-}
-
 export const DateRangeInput = (props) => {
     const [field, errors, onChange] = useInputField({onChange: props.onChange, field: props})
 
@@ -72,8 +68,8 @@ export const DateRangeInput = (props) => {
             persist: () => {},
             currentTarget: {
                 value: {
-                    start: startDate.isofy(),
-                    end: endDate.isofy()
+                    start: startDate.toISOString().substring(0, 10),
+                    end: endDate.toISOString().substring(0, 10)
                 }
             }
         })
