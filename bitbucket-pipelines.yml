@@ -7,6 +7,13 @@ definitions:
           - node
         script:
           - npm install
+    - step: &test-react
+        name: Test React App
+        images: node:18.12.1
+        caches:
+          - node
+        script:
+          - npm run test
     - step: &build-react
         name: Build React App
         image: node:18.12.1
@@ -44,6 +51,8 @@ pipelines:
   branches:
     master:
       - step: *node-prepare
-      - step: *build-react
+      - parallel:
+          - step: *build-react
+          - step: *test-react
       - step: *build-java
       - step: *sign-publish

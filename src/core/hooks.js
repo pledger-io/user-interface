@@ -1,6 +1,6 @@
 import {useNavigate, useParams, useSearchParams} from "react-router-dom";
 import React, {createContext, useContext, useEffect, useState} from "react";
-import {Dates} from "./index";
+import {Ranges} from "./Dates";
 
 /**
  * Binds a value to the localstorage, fetching it from localstorage if present. Or else using the initialValue
@@ -58,10 +58,10 @@ export const useQueryParam = (key, initialValue) => {
  */
 export const useDateRange = () => {
     const {year, month}       = useParams()
-    const [range, setRange]   = useState(() => Dates.Ranges.currentMonth())
+    const [range, setRange]   = useState(() => Ranges.currentMonth())
 
     useEffect(() => {
-        if (year && month) setRange(Dates.Ranges.forMonth(year, month))
+        if (year && month) setRange(Ranges.forMonth(year, month))
     }, [year, month])
 
     return [range]
