@@ -177,6 +177,12 @@ const BudgetRepository = (api => {
     }
 })(RestAPI)
 
+const ContractRepository = (api => {
+    return {
+        list: () => api.get('contracts')
+    }
+})(RestAPI)
+
 export default RestAPI;
 export {
     AccountRepository,
@@ -188,5 +194,6 @@ export {
     CurrencyRepository,
     SavingsRepository,
     SettingRepository,
-    BudgetRepository
+    BudgetRepository,
+    ContractRepository
 }

@@ -12,6 +12,7 @@ import {TransactionRoutes} from "./transactions";
 import './assets/css/Main.scss'
 import './assets/css/Theme.scss'
 import {lazy, Suspense, useState} from "react";
+import {ContractRoutes} from "./contract";
 
 const LoginCard = lazy(() => import("./security/LoginCard"));
 const RegisterCard = lazy(() => import("./security/RegisterCard"));
@@ -24,6 +25,7 @@ routes.push(...CategoryRoutes)
 routes.push(...SettingRoutes)
 routes.push(...ReportRoutes)
 routes.push(...TransactionRoutes)
+routes.push(...ContractRoutes)
 
 function App() {
     const [_, setAuthenticate] = useState(false)
