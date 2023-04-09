@@ -13,7 +13,7 @@ definitions:
         caches:
           - node
         script:
-          - npm run test
+          - npm test
     - step: &build-react
         name: Build React App
         image: node:18.12.1
