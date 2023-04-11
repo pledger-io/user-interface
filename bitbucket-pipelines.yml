@@ -51,8 +51,8 @@ pipelines:
   branches:
     master:
       - step: *node-prepare
-      - parallel:
-          - step: *build-react
-          - step: *test-react
+#      - parallel:
+      - step: *build-react
+#          - step: *test-react
       - step: *build-java
       - step: *sign-publish

@@ -11,3 +11,4 @@ dist/
 # Build tooling
 .gradle/
 builder/build
+build/

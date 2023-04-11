@@ -33,9 +33,12 @@
     "eject": "react-scripts eject"
   },
   "jest": {
-    "transform": {
-      "\\.js$": "babel-jest"
-    }
+    "testMatch": [
+      "**/?(*.)(spec|test).js?(x)"
+    ],
+    "coverageReporters": [
+      "json"
+    ]
   },
   "browserslist": {
     "production": [

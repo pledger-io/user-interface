@@ -52,7 +52,7 @@ const RangeService = (() => {
             return RangeService.forYear(now.getFullYear())
         },
         forMonth: (year, month) => new Range(new Date(Date.UTC(year, month - 1, 1)), new Date(Date.UTC(year, month, 1))),
-        forYear: (year) => new Range(new Date(Date.UTC(year, 1, 1)), new Date(Date.UTC(year, 12, 31))),
+        forYear: (year) => new Range(new Date(Date.UTC(year, 0, 1)), new Date(Date.UTC(year, 11, 31))),
         forRange: (start, end) => {
             const parsedStart = new Date(start)
             let parsedEnd = new Date(end)
