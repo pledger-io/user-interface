@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {BreadCrumbItem, BreadCrumbMenu, BreadCrumbs, Card, Dates, Dropdown, Loading} from "../../core";
+import {BreadCrumbItem, BreadCrumbMenu, BreadCrumbs, Dates, Dropdown, Layout, Loading} from "../../core";
 import {useNavigate, useParams} from "react-router-dom";
 import {CategoryRepository, CurrencyRepository} from "../../core/RestAPI";
 
@@ -46,17 +46,17 @@ const CategoryReportView = () => {
             </BreadCrumbs>
 
             <div className='Columns'>
-                <Card title='page.reports.category.title'>
+                <Layout.Card title='page.reports.category.title'>
                     <CategoryGraph categories={categories} range={range} currencySymbol={currencySymbol} />
-                </Card>
-                <Card title='page.reports.category.monthly'>
+                </Layout.Card>
+                <Layout.Card title='page.reports.category.monthly'>
                     <MonthlySpendingComponent categories={categories} range={range}/>
-                </Card>
+                </Layout.Card>
             </div>
 
-            <Card>
+            <Layout.Card>
                 <CategorizedMonthlySpendingComponent categories={categories} year={range.year()} />
-            </Card>
+            </Layout.Card>
         </div>
     )
 }

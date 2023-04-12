@@ -3,7 +3,7 @@ import {useNavigate} from "react-router-dom";
 import {mdiAccountPlus, mdiLogin, mdiWeb} from "@mdi/js";
 
 import {Form, Input, SubmitButton} from '../core/form'
-import {Buttons, Card, Dropdown, Message, Translations} from "../core";
+import {Buttons, Dropdown, Layout, Message, Translations} from "../core";
 import {SecurityRepository} from "../core/RestAPI";
 
 import '../assets/css/LoginCard.scss'
@@ -22,7 +22,7 @@ const LoginCard = ({callback}) => {
         <div className='LoginCard'>
             <span/>
             <Form entity='UserAccount' onSubmit={onSubmit}>
-                <Card title='page.login.title'
+                <Layout.Card title='page.login.title'
                       actions={[
                           <Dropdown.Dropdown icon={mdiWeb} key='language-dropdown'>
                               <button className='Button text Flag us'
@@ -53,7 +53,7 @@ const LoginCard = ({callback}) => {
                             label='page.login.register'
                             variant='text'/>
                     </div>
-                </Card>
+                </Layout.Card>
             </Form>
             <span/>
         </div>

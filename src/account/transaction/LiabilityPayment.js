@@ -1,6 +1,6 @@
 import React from 'react'
 import {PathParams, withNavigation, withPathParams} from "../../core/hooks";
-import {BreadCrumbItem, BreadCrumbs, Buttons, Card, Translations} from "../../core";
+import {BreadCrumbItem, BreadCrumbs, Buttons, Card, Layout, Translations} from "../../core";
 import {Entity, Form, Input, SubmitButton} from "../../core/form";
 import {TransactionService} from "./TransactionService";
 import {mdiCancel, mdiContentSave} from "@mdi/js";
@@ -62,7 +62,7 @@ class LiabilityPayment extends React.Component {
                 </BreadCrumbs>
 
                 <Form onSubmit={this.process.bind(this)} entity='Transaction'>
-                    <Card title='page.transactions.add'
+                    <Layout.Card title='page.transactions.add'
                           buttons={[
                               <SubmitButton key='save' label='common.action.save' icon={mdiContentSave}/>,
                               <Buttons.BackButton key='cancel' label='common.action.cancel' icon={mdiCancel}/>]}>
@@ -109,7 +109,7 @@ class LiabilityPayment extends React.Component {
                                         value={transaction?.metadata?.tags}
                                         id='tags' />
                         </fieldset>
-                    </Card>
+                    </Layout.Card>
                 </Form>
             </div>
         )

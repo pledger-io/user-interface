@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 
 import {Form, Input, SubmitButton} from "../core/form";
-import {Buttons, Card, Message} from "../core";
+import {Buttons, Layout, Message} from "../core";
 import {mdiAccountPlus, mdiLogin} from "@mdi/js";
 
 import '../assets/css/RegisterCard.scss'
@@ -21,7 +21,7 @@ const RegisterCard = () => {
             <span/>
             <Form onSubmit={onSubmit}
                   entity='UserAccount'>
-                <Card title='page.title.register'
+                <Layout.Card title='page.title.register'
                       buttons={[
                           <SubmitButton key='login'
                                         label='page.register.register'
@@ -42,7 +42,7 @@ const RegisterCard = () => {
                             label='page.register.login'
                             variant='text'/>
                     </div>
-                </Card>
+                </Layout.Card>
             </Form>
             <span/>
         </div>

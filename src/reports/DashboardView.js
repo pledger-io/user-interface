@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Card, Charts, Dates, Formats, Statistical, Translations} from "../core";
+import {Charts, Dates, Formats, Layout, Statistical, Translations} from "../core";
 import Icon from "@mdi/react";
 import {mdiContactlessPaymentCircle, mdiScaleBalance, mdiSwapVerticalCircle} from "@mdi/js";
 import restAPI from "../core/RestAPI";
@@ -81,7 +81,7 @@ const SummaryComponent = ({currency, current, previous, title, icon}) => {
     }, [current, previous])
 
     return (
-        <Card>
+        <Layout.Card>
             <div>
                 <h1><Translations.Translation label={title} /></h1>
                 <Formats.Money money={current} currency={currency} />
@@ -92,7 +92,7 @@ const SummaryComponent = ({currency, current, previous, title, icon}) => {
                 )}
             </div>
             {icon && <div className="Icon"><Icon path={icon}/></div>}
-        </Card>
+        </Layout.Card>
     )
 }
 
@@ -158,7 +158,7 @@ export const DashboardView = () => {
     }, [])
 
     return <div className='Dashboard'>
-        <div className='Summary'>
+        <div className='Summary Columns'>
             <SummaryComponent
                 title='page.dashboard.income'
                 icon={mdiSwapVerticalCircle}
@@ -186,16 +186,16 @@ export const DashboardView = () => {
                 currency='EUR' />
         </div>
 
-        <Card title='page.dashboard.accounts.balance'>
-            <Charts.Chart height={75}
+        <Layout.Card title='page.dashboard.accounts.balance'>
+            <Charts.Chart height={400}
                           id='dashboard-balance-graph'
                           dataSets={balanceSeries}>
             </Charts.Chart>
-        </Card>
+        </Layout.Card>
 
-        <div className='TwoColumn'>
-            <Card title='page.dashboard.budgets.balance'>
-                <Charts.Chart height={125}
+        <Layout.Grid type='column' minWidth='35em'>
+            <Layout.Card title='page.dashboard.budgets.balance'>
+                <Charts.Chart height={300}
                               id='dashboard-budgets-graph'
                               labels={budgetSeries.labels}
                               dataSets={budgetSeries.data}
@@ -208,15 +208,15 @@ export const DashboardView = () => {
                                       }
                                   },
                               }}/>
-            </Card>
+            </Layout.Card>
 
-            <Card title='page.dashboard.categories.balance'>
-                <Charts.Chart height={125}
+            <Layout.Card title='page.dashboard.categories.balance'>
+                <Charts.Chart height={300}
                               id='dashboard-categories-graph'
                               labels={categorySeries.labels}
                               dataSets={categorySeries.data}
                               type='bar' />
-            </Card>
-        </div>
+            </Layout.Card>
+        </Layout.Grid>
     </div>
 }

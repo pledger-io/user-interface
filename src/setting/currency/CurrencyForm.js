@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {mdiCancel, mdiContentSave} from "@mdi/js";
 
 import {Form, Input, SubmitButton} from "../../core/form";
-import {BreadCrumbItem, BreadCrumbs, Buttons, Card} from "../../core";
+import {BreadCrumbItem, BreadCrumbs, Buttons, Layout} from "../../core";
 import restAPI from "../../core/RestAPI";
 import {useParams} from "react-router-dom";
 
@@ -27,7 +27,7 @@ export const CurrencyForm = () => {
         </BreadCrumbs>
 
         <Form onSubmit={onSubmit} entity='Currency'>
-            <Card title={pageBreadCrumb}
+            <Layout.Card title={pageBreadCrumb}
                   buttons={[
                       <SubmitButton key='save' label='common.action.save' icon={mdiContentSave}/>,
                       <Buttons.BackButton key='cancel' label='common.action.cancel' icon={mdiCancel}/>]}>
@@ -47,7 +47,7 @@ export const CurrencyForm = () => {
                             minLength={1}
                             maxLength={1}
                             required/>
-            </Card>
+            </Layout.Card>
         </Form>
     </>
 }

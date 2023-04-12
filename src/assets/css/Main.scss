@@ -10,8 +10,8 @@
 
 .Columns {
   display: flex;
-  flex-direction: row;
-
+  flex-wrap: wrap;
+  flex-shrink: inherit;
   gap: 1em;
 
   & > * {

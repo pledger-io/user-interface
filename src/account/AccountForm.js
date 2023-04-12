@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 
 import {Entity, Form, Input, SubmitButton} from '../core/form'
 import {AccountRepository} from "../core/RestAPI";
-import {Attachments, BreadCrumbItem, BreadCrumbs, Buttons, Card, Message, Notifications, Translations} from "../core";
+import {Attachments, BreadCrumbItem, BreadCrumbs, Buttons, Layout, Message, Notifications, Translations} from "../core";
 import {mdiCancel, mdiContentSave} from "@mdi/js";
 
 import '../assets/css/AccountForm.scss'
@@ -76,7 +76,7 @@ const AccountForm = ({type}) => {
             </BreadCrumbs>
 
             <Form entity='Account' onSubmit={onSubmit}>
-                <Card title={addEditBreadcrumb}
+                <Layout.Card title={addEditBreadcrumb}
                       buttons={[
                           <SubmitButton key='save' label='common.action.save' icon={mdiContentSave}/>,
                           <Buttons.BackButton key='cancel' label='common.action.cancel' icon={mdiCancel}/>]}>
@@ -134,7 +134,7 @@ const AccountForm = ({type}) => {
                                         value={account.description}
                                         title='Account.description'/>
                     </fieldset>
-                </Card>
+                </Layout.Card>
             </Form>
         </div>
     )

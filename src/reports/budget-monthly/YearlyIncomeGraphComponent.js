@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Card, Charts, Dates, Loading, Statistical, Translations} from "../../core";
+import {Charts, Dates, Layout, Loading, Statistical, Translations} from "../../core";
 
 /**
  * Creates ta graph with the income per month for the entire year.
@@ -46,7 +46,7 @@ const YearlyIncomeGraphComponent = ({year = 1970, budgets = []}) => {
         .map(m => m.start)
 
     return <>
-        <Card title='page.reports.budget.incomePercent'>
+        <Layout.Card title='page.reports.budget.incomePercent'>
             {actualDataset && expectedDataset && <>
                 <Charts.Chart id='budget-income'
                               type='line'
@@ -66,10 +66,10 @@ const YearlyIncomeGraphComponent = ({year = 1970, budgets = []}) => {
                                       }
                                   }
                               }}
-                              height={100} />
+                              height={300} />
             </>}
             {(!actualDataset || !expectedDataset) && <Loading />}
-        </Card>
+        </Layout.Card>
     </>
 }
 

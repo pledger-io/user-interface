@@ -4,10 +4,10 @@ import {
     BreadCrumbItem,
     BreadCrumbs,
     Buttons,
-    Card,
     Dialog,
     Dropdown,
     Formats,
+    Layout,
     Loading,
     Notifications,
     Pagination,
@@ -98,7 +98,7 @@ const AccountOverview = ({type}) => {
                 <BreadCrumbItem label={`page.nav.accounts.${type}`}/>
             </BreadCrumbs>
 
-            <Card title={`page.nav.accounts.${type}`} actions={
+            <Layout.Card title={`page.nav.accounts.${type}`} actions={
                 [<Buttons.Button label={`page.account.${type}.add`}
                                  key='add'
                                  icon={mdiPlus}
@@ -124,7 +124,7 @@ const AccountOverview = ({type}) => {
                     <Pagination.Paginator page={parseInt(page)} records={pagination.records}
                                           pageSize={pagination.pageSize}/>
                 </Loading>
-            </Card>
+            </Layout.Card>
         </div>
     )
 }

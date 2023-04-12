@@ -6,7 +6,7 @@ import {
     Card,
     Dialog,
     Dropdown,
-    Formats,
+    Formats, Layout,
     Loading,
     Notifications,
     Pagination,
@@ -279,17 +279,17 @@ const SavingAccountDetailOverview = () => {
                 </BreadCrumbMenu>
             </BreadCrumbs>
 
-            <Card title='page.account.savings.goals'>
+            <Layout.Card title='page.account.savings.goals'>
                 <SavingSummaryComponent savingAccount={account} />
 
                 <hr />
 
                 <SavingGoalTableComponent savingGoals={account?.savingGoals} account={account} currency={account?.account?.currency} />
-            </Card>
+            </Layout.Card>
 
-            <Card title='page.account.savings.transactions'>
+            <Layout.Card title='page.account.savings.transactions'>
                 <SavingMonthlyTransactionComponent account={account}/>
-            </Card>
+            </Layout.Card>
         </div>
     </>
 }

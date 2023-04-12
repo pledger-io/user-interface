@@ -4,10 +4,10 @@ import {
     BreadCrumbItem,
     BreadCrumbs,
     Buttons,
-    Card,
     Dialog,
     Dropdown,
     Formats,
+    Layout,
     Loading,
     Notifications,
     Resolver,
@@ -86,7 +86,7 @@ export const ScheduledTransactionOverview = () => {
                 <BreadCrumbItem label='page.nav.budget.recurring'/>
             </BreadCrumbs>
 
-            <Card title='page.budget.schedules.title'
+            <Layout.Card title='page.budget.schedules.title'
                   actions={[<ScheduleTransactionDialog key='schedule-dialog' />]}>
                 <Loading condition={schedules}>
                     <table className='Table'>
@@ -108,6 +108,6 @@ export const ScheduledTransactionOverview = () => {
                         </tbody>
                     </table>
                 </Loading>
-            </Card>
+            </Layout.Card>
         </div>)
 }

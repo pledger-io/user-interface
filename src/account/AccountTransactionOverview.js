@@ -5,10 +5,11 @@ import {
     BreadCrumbMenu,
     BreadCrumbs,
     Buttons,
-    Card,
     Charts,
     Dates,
-    Dropdown, Loading,
+    Dropdown,
+    Layout,
+    Loading,
     Pagination,
     Resolver,
 } from "../core";
@@ -93,42 +94,42 @@ const AccountTransactionOverview = () => {
                 </BreadCrumbMenu>
             </BreadCrumbs>
 
-            <Card title='common.account.balance'>
+            <Layout.Card title='common.account.balance'>
                 <Charts.BalanceChart id='dashboard-balance-graph'
                                      accounts={account}
                                      range={range}
                                      allMoney={true}/>
-            </Card>
+            </Layout.Card>
 
             {!Resolver.Account.isManaged(account) && <>
-                <div className='Columns'>
-                    <Card title='page.transactions.expense.category'>
+                <Layout.Grid type='column' minWidth='35em'>
+                    <Layout.Card title='page.transactions.expense.category'>
                         <Charts.CategorizedPieChart id='category-expenses'
                                                     range={range}
                                                     incomeOnly={false}
                                                     accounts={account}
                                                     split='category'/>
-                    </Card>
-                    <Card title='page.transactions.expense.budget'>
+                    </Layout.Card>
+                    <Layout.Card title='page.transactions.expense.budget'>
                         <Charts.CategorizedPieChart id='budget-expenses'
                                                     range={range}
                                                     incomeOnly={false}
                                                     accounts={account}
                                                     split='budget'/>
-                    </Card>
-                    <Card title='page.transactions.income.category'>
+                    </Layout.Card>
+                    <Layout.Card title='page.transactions.income.category'>
                         <Charts.CategorizedPieChart id='category-income'
                                                     range={range}
                                                     incomeOnly={true}
                                                     accounts={account}
                                                     split='category'/>
-                    </Card>
-                </div>
+                    </Layout.Card>
+                </Layout.Grid>
             </>}
 
-            <Card title='page.title.transactions.overview'>
+            <Layout.Card title='page.title.transactions.overview'>
                 <AccountTransactionComponent account={account} range={range} />
-            </Card>
+            </Layout.Card>
         </div>
     )
 }

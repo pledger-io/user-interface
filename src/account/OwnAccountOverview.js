@@ -3,10 +3,10 @@ import {
     BreadCrumbItem,
     BreadCrumbs,
     Buttons,
-    Card,
     Dialog,
     Dropdown,
     Formats,
+    Layout,
     Loading,
     Notifications,
     Statistical,
@@ -96,7 +96,7 @@ const OwnAccountOverview = () => {
                 <BreadCrumbItem label='page.nav.accounts.accounts'/>
             </BreadCrumbs>
 
-            <Card title='page.nav.accounts.accounts' actions={
+            <Layout.Card title='page.nav.accounts.accounts' actions={
                 [<Buttons.Button label='page.account.accounts.add'
                                  key='add'
                                  icon={mdiPlus}
@@ -119,7 +119,7 @@ const OwnAccountOverview = () => {
                         </tbody>
                     </table>
                 </Loading>
-            </Card>
+            </Layout.Card>
 
             <ReconcileOverview/>
         </div>

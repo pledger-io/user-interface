@@ -39,25 +39,21 @@ const ChartComponent = ({id, height = 50, children, type = 'line', options = {},
     const canvasRef = useRef(null)
     const chartRef = useRef(null)
 
-    const redraw = () => {
-        chartRef.current.update()
-    }
-
     useEffect(() => {
+        const resize = () => chartRef.current.update()
         if (canvasRef.current && !chartRef.current) {
             chartRef.current = new Chart(canvasRef.current, {
                 type: type,
                 options: ChartUtil.mergeOptions(options, DefaultChartConfig[type])
             })
-
-            window.addEventListener('resize', redraw)
         }
+        window.addEventListener('resize', resize)
 
         return () => {
+            window.removeEventListener('resize', resize)
             if (chartRef.current) {
                 chartRef.current.destroy()
                 chartRef.current = null
-                window.removeEventListener('resize', redraw)
             }
         }
     }, [chartRef])
@@ -108,7 +104,7 @@ const BalanceChart = ({id, range, allMoney, accounts}) => {
 
     return (
         <Loading condition={balanceSeries}>
-            <Charts.Chart height={75}
+            <Charts.Chart height={350}
                           id={id}
                           dataSets={balanceSeries || []}>
             </Charts.Chart>
@@ -142,7 +138,7 @@ const CategorizedPieChart = ({id, range, split, incomeOnly, accounts}) => {
         <Loading condition={pieSeries}>
             <Charts.Chart id={id}
                           type='pie'
-                          height={250}
+                          height={300}
                           labels={(pieSeries || []).map(point => point.partition)}
                           dataSets={[{
                               data: (pieSeries || []).map(point => point.balance)

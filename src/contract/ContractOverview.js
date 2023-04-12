@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {ContractRepository} from "../core/RestAPI";
-import {BreadCrumbItem, BreadCrumbs, Buttons, Card, Loading} from "../core";
+import {BreadCrumbItem, BreadCrumbs, Buttons, Card, Layout, Loading} from "../core";
 import {ContractTable} from "./ContractTable";
 import {mdiClockTimeTwoOutline, mdiHistory} from "@mdi/js";
 
@@ -20,7 +20,7 @@ export const ContractOverview = () => {
                 <BreadCrumbItem label='page.nav.budget.contracts' />
             </BreadCrumbs>
 
-            <Card title='page.budget.contracts.title'>
+            <Layout.Card title='page.budget.contracts.title'>
                 <div className="ButtonBar Tabs">
                     <Buttons.Button onClick={() => setTabSection('active')}
                                     variant='text'
@@ -37,7 +37,7 @@ export const ContractOverview = () => {
 
                 {!contracts && <Loading />}
                 {contracts && <ContractTable contracts={contracts[tabSection]} />}
-            </Card>
+            </Layout.Card>
         </div>
     </>
 }

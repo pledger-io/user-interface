@@ -34,6 +34,7 @@ const GlobalChartConfig = {
         size: 12
     },
     responsive: true,
+    maintainAspectRatio: false,
     animation: {
         active: true,
         easing: 'easeOutQuart'

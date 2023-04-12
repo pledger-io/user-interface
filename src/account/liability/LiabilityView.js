@@ -4,10 +4,10 @@ import {
     BreadCrumbItem,
     BreadCrumbs,
     Buttons,
-    Card,
     Charts,
     Dates,
     Formats,
+    Layout,
     Loading,
     Pagination,
     Resolver,
@@ -83,7 +83,7 @@ const LiabilityView = () => {
             </BreadCrumbs>
 
             <div className="Summary">
-                <Card>
+                <Layout.Card>
                     <h1>{account.name}</h1>
                     <div className="Details">
                         <label><Translations.Translation label='Account.interest'/></label>
@@ -101,8 +101,8 @@ const LiabilityView = () => {
                         <label><Translations.Translation label='page.accounts.liability.paid'/></label>
                         <Statistical.Balance accounts={[account]} income={true}/>
                     </div>
-                </Card>
-                <Card>
+                </Layout.Card>
+                <Layout.Card>
                     <h1><Translations.Translation label='common.account.balance'/></h1>
                     <h4>
                         <Translations.Translation label={`common.month.${range.start?.getMonth() + 1}`} /> {range.start?.getFullYear()}
@@ -113,17 +113,17 @@ const LiabilityView = () => {
                     <Charts.Chart height={100}
                                   id='liability-balance-graph'
                                   dataSets={balanceSeries} />
-                </Card>
+                </Layout.Card>
             </div>
 
-            <Card title='page.title.transactions.overview'>
+            <Layout.Card title='page.title.transactions.overview'>
                 <Buttons.Button label='page.account.liability.payment.add'
                                 href={`${Resolver.Account.resolveUrl(account)}/transactions/add`}
                                 variant='success'
                                 className={Resolver.Account.isDebtor(account) ? 'Hidden' : ''}
                                 icon={mdiCashPlus}/>
                 <LiabilityTransactionComponent range={range} account={account} />
-            </Card>
+            </Layout.Card>
         </div>
     )
 }

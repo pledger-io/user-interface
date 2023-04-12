@@ -1,4 +1,4 @@
-import {BreadCrumbItem, BreadCrumbs, Buttons, Card, Dialog, Translations} from "../core";
+import {BreadCrumbItem, BreadCrumbs, Buttons, Dialog, Layout, Translations} from "../core";
 import React, {useEffect, useState} from "react";
 import {SettingRepository} from "../core/RestAPI";
 import {mdiContentSave, mdiPencilBoxOutline} from "@mdi/js";
@@ -23,7 +23,7 @@ export const SettingOverviewComponent = () => {
             <BreadCrumbItem label='page.nav.settings.options'/>
         </BreadCrumbs>
 
-        <Card title='page.header.application.settings'>
+        <Layout.Card title='page.header.application.settings'>
             <table className='Table'>
                 <thead>
                 <tr>
@@ -64,6 +64,6 @@ export const SettingOverviewComponent = () => {
                 )}
                 </tbody>
             </table>
-        </Card>
+        </Layout.Card>
     </>
 }

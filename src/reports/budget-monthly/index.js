@@ -1,5 +1,15 @@
 import React, {useEffect, useState} from "react";
-import {BreadCrumbItem, BreadCrumbMenu, BreadCrumbs, Card, Dates, Dropdown, Progressbar, Statistical} from "../../core";
+import {
+    BreadCrumbItem,
+    BreadCrumbMenu,
+    BreadCrumbs,
+    Card,
+    Dates,
+    Dropdown,
+    Layout,
+    Progressbar,
+    Statistical
+} from "../../core";
 import {useNavigate, useParams} from "react-router-dom";
 import {BudgetRepository} from "../../core/RestAPI";
 
@@ -44,23 +54,23 @@ export const BudgetReportView = () => {
             </BreadCrumbMenu>
         </BreadCrumbs>
 
-        <div className="Columns">
+        <Layout.Grid type='column' minWidth='35em'>
             <YearlyBudgetIncomeComponent range={range} budgets={budgets}/>
             <YearlyBudgetExpenseComponent range={range} budgets={budgets}/>
-        </div>
+        </Layout.Grid>
 
-        <div className="Columns">
+        <Layout.Grid type='column' minWidth='35em'>
             <YearlyIncomeGraphComponent year={parseInt(year)} budgets={budgets}/>
             <YearlyExpenseGraphComponent year={parseInt(year)} budgets={budgets}/>
-        </div>
+        </Layout.Grid>
 
-        <Card>
+        <Layout.Card>
             {budgets.length > 0 && <MonthlyTableComponent budgets={budgets} year={year} currency={currency}/>}
-        </Card>
+        </Layout.Card>
 
-        <Card>
+        <Layout.Card>
             {budgets.length > 0 && <MonthlyPerBudgetTableComponent budgets={budgets} year={year} currency={currency}/>}
-        </Card>
+        </Layout.Card>
     </div>
 }
 
@@ -80,11 +90,11 @@ const YearlyBudgetIncomeComponent = ({range, budgets = []}) => {
     }, [budgets])
 
     return <>
-        <Card title='page.reports.budget.incomePercent'>
+        <Layout.Card title='page.reports.budget.incomePercent'>
             <Progressbar total={yearlyExpected}
                          className='success'
                          current={yearlyIncome}/>
-        </Card>
+        </Layout.Card>
     </>
 }
 
@@ -117,10 +127,10 @@ const YearlyBudgetExpenseComponent = ({budgets = [], range}) => {
     }, [budgets, range])
 
     return <>
-        <Card title='page.reports.budget.expensePercent'>
+        <Layout.Card title='page.reports.budget.expensePercent'>
             <Progressbar total={yearlyExpected}
                          className='warning'
                          current={yearlyExpenses}/>
-        </Card>
+        </Layout.Card>
     </>
 }

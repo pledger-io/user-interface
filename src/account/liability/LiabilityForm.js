@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 
 import {Entity, Form, Input, SubmitButton} from '../../core/form'
-import {BreadCrumbItem, BreadCrumbs, Buttons, Card, Notifications, Translations} from "../../core";
+import {BreadCrumbItem, BreadCrumbs, Buttons, Layout, Notifications, Translations} from "../../core";
 import {mdiCancel, mdiContentSave} from "@mdi/js";
 import restAPI, {AccountRepository} from "../../core/RestAPI";
 
@@ -85,7 +85,7 @@ const LiabilityForm = () => {
             </BreadCrumbs>
 
             <Form entity='Account' onSubmit={onSubmit}>
-                <Card title={editLabel}
+                <Layout.Card title={editLabel}
                       buttons={[
                           <SubmitButton key='save' label='common.action.save' icon={mdiContentSave}/>,
                           <Buttons.BackButton key='cancel' label='common.action.cancel' icon={mdiCancel}/>]}>
@@ -159,7 +159,7 @@ const LiabilityForm = () => {
                                     title='Account.description'
                                     value={account.description} />
                     </fieldset>
-                </Card>
+                </Layout.Card>
             </Form>
         </div>
     )

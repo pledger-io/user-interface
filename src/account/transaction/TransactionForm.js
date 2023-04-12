@@ -1,7 +1,7 @@
 import React from "react";
 import {PathParams, withNavigation, withPathParams} from "../../core/hooks";
 
-import {BreadCrumbItem, BreadCrumbs, Buttons, Card, Resolver, Translations} from "../../core";
+import {BreadCrumbItem, BreadCrumbs, Buttons, Card, Layout, Resolver, Translations} from "../../core";
 import restAPI from "../../core/RestAPI";
 import {Entity, Form, Input, SubmitButton} from "../../core/form";
 import {mdiCallSplit, mdiCancel, mdiContentSave} from "@mdi/js";
@@ -101,7 +101,7 @@ class TransactionForm extends React.Component {
                 </BreadCrumbs>
 
                 <Form onSubmit={this.process.bind(this)} entity='Transaction'>
-                    <Card title='page.transactions.add'
+                    <Layout.Card title='page.transactions.add'
                           buttons={[
                               <SubmitButton key='save' label='common.action.save' icon={mdiContentSave}/>,
                               <Buttons.BackButton key='cancel' label='common.action.cancel' icon={mdiCancel}/>]}>
@@ -179,7 +179,7 @@ class TransactionForm extends React.Component {
                                             onClick={() => startSplit()}/>
                         </fieldset>
                         }
-                    </Card>
+                    </Layout.Card>
                 </Form>
             </div>
         )

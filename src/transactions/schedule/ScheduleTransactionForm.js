@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 
 import {Form, Input, SubmitButton} from "../../core/form";
 import {useNavigate, useParams} from "react-router-dom";
-import {BreadCrumbItem, BreadCrumbs, Buttons, Card, Loading, Message, Notifications, Translations} from "../../core";
+import {BreadCrumbItem, BreadCrumbs, Buttons, Layout, Loading, Message, Notifications, Translations} from "../../core";
 import {mdiCancel, mdiContentSave} from "@mdi/js";
 import {TransactionScheduleRepository} from "../../core/RestAPI";
 
@@ -45,7 +45,7 @@ export const ScheduleTransactionForm = () => {
             </BreadCrumbs>
 
             <Form entity='ScheduledTransaction' onSubmit={onSubmit}>
-                <Card title='page.title.schedule.transaction.edit'
+                <Layout.Card title='page.title.schedule.transaction.edit'
                       buttons={[
                           <SubmitButton key='save' label='common.action.save' icon={mdiContentSave}/>,
                           <Buttons.BackButton key='cancel' label='common.action.cancel' icon={mdiCancel}/>]}>
@@ -85,7 +85,7 @@ export const ScheduleTransactionForm = () => {
                                          value={schedule.range}
                                          required/>
                     </fieldset>
-                </Card>
+                </Layout.Card>
             </Form>
         </div>
     )

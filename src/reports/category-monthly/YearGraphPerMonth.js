@@ -47,7 +47,7 @@ const CategoryGraph = ({categories, range, currencySymbol}) => {
 
     if (!incomeSeries || !expenseSeries) return <Loading />
     return (
-        <Chart height={110}
+        <Chart height={450}
                id='category-monthly'
                type='bar'
                labels={monthLabels}

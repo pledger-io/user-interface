@@ -7,7 +7,7 @@ import {
     Buttons,
     Card,
     Dialog,
-    Formats,
+    Formats, Layout,
     Notifications,
     Pagination,
     Translations
@@ -65,7 +65,7 @@ export const CategoryOverview = () => {
                 <BreadCrumbItem label='page.nav.settings.categories'/>
             </BreadCrumbs>
 
-            <Card title='page.nav.settings.categories' actions={[
+            <Layout.Card title='page.nav.settings.categories' actions={[
                 <Buttons.Button label='page.settings.categories.add' variant='primary' icon={mdiPlus} href='./add' key='add'/>
             ]}>
                 <table className='Table'>
@@ -84,7 +84,7 @@ export const CategoryOverview = () => {
 
                 <Pagination.Paginator page={parseInt(page)} records={pagination.records}
                                       pageSize={pagination.pageSize}/>
-            </Card>
+            </Layout.Card>
         </div>
     </>
 }

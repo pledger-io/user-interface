@@ -4,11 +4,11 @@ import {
     BreadCrumbItem,
     BreadCrumbMenu,
     BreadCrumbs,
-    Card,
     Charts,
     Dates,
     Dropdown,
     Formats,
+    Layout,
     Loading,
     Statistical,
     Translations
@@ -161,7 +161,7 @@ const BalanceChart = ({currencySymbol, year, currency}) => {
     }, [year, currency])
 
     return (
-        <Charts.Chart height={75}
+        <Charts.Chart height={400}
                       id='income-expense-graph'
                       type='bar'
                       labels={labels}
@@ -316,26 +316,26 @@ export const IncomeExpenseView = () => {
                 </BreadCrumbMenu>
             </BreadCrumbs>
 
-            <Card title='page.reports.default.title'>
+            <Layout.Card title='page.reports.default.title'>
                 <BalanceChart year={year} currencySymbol={currencySymbol} currency={currency} />
-            </Card>
+            </Layout.Card>
 
             <div className='Columns'>
-                <Card title='page.reports.default.balances'>
+                <Layout.Card title='page.reports.default.balances'>
                     <AccountBalances currency={currency} year={parseInt(year)} />
-                </Card>
-                <Card title='page.reports.default.title'>
+                </Layout.Card>
+                <Layout.Card title='page.reports.default.title'>
                     <YearSummary year={parseInt(year)} currency={currency} />
-                </Card>
+                </Layout.Card>
             </div>
 
             <div className='Columns'>
-                <Card title='page.reports.default.top.debit'>
+                <Layout.Card title='page.reports.default.top.debit'>
                     <TopAccountTable year={year} type={'debit'} />
-                </Card>
-                <Card title='page.reports.default.top.credit'>
+                </Layout.Card>
+                <Layout.Card title='page.reports.default.top.credit'>
                     <TopAccountTable year={year} type={'creditor'} />
-                </Card>
+                </Layout.Card>
             </div>
         </div>
     )

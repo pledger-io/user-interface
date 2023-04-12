@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 
 import {Form, Input} from '../../core/form'
-import {BreadCrumbItem, BreadCrumbs, Buttons, Card, Notifications, Translations} from "../../core";
+import {BreadCrumbItem, BreadCrumbs, Buttons, Layout, Notifications, Translations} from "../../core";
 import {mdiPlus, mdiSquareEditOutline} from "@mdi/js";
 import restAPI from "../../core/RestAPI";
 import PropTypes from "prop-types";
@@ -58,7 +58,7 @@ export const CurrencyOverview = () => {
             <BreadCrumbItem label='page.settings.currencies.title'/>
         </BreadCrumbs>
 
-        <Card title='page.settings.currencies.title'
+        <Layout.Card title='page.settings.currencies.title'
               actions={[<Buttons.Button label='page.settings.currencies.add'
                                         variant='primary'
                                         icon={mdiPlus}
@@ -79,6 +79,6 @@ export const CurrencyOverview = () => {
                 {currencies.map(currency => <CurrencyRow key={currency.code} currency={currency} />)}
                 </tbody>
             </table>
-        </Card>
+        </Layout.Card>
     </>
 }

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {CategoryRepository} from "../core/RestAPI";
 
 import {Form, Input, Styles, SubmitButton} from '../core/form'
-import {BreadCrumbItem, BreadCrumbs, Buttons, Card, Message, Notifications} from "../core";
+import {BreadCrumbItem, BreadCrumbs, Buttons, Card, Layout, Message, Notifications} from "../core";
 import {mdiCancel, mdiContentSave} from "@mdi/js";
 import {useNavigate, useParams} from "react-router-dom";
 
@@ -37,7 +37,7 @@ export const CategoryForm = () => {
             </BreadCrumbs>
 
             <Form entity='Category' onSubmit={onSubmit} style={Styles.Inline}>
-                <Card title='page.settings.categories.add'
+                <Layout.Card title='page.settings.categories.add'
                       buttons={[
                           <SubmitButton key='save' label='common.action.save' icon={mdiContentSave}/>,
                           <Buttons.BackButton key='cancel' label='common.action.cancel' icon={mdiCancel}/>]}>
@@ -52,7 +52,7 @@ export const CategoryForm = () => {
                                     title='Category.description'
                                     type='text'
                                     value={category.description}/>
-                </Card>
+                </Layout.Card>
             </Form>
         </div>
     )

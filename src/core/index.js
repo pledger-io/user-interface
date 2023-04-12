@@ -14,8 +14,8 @@ import * as Attachments from './Attachment'
 import * as Dates from './Dates'
 import * as Charts from './Chart'
 import * as Dropdown from './dropdown'
+import * as Layout from './layout'
 
-import '../assets/css/Card.scss'
 import '../assets/css/Button.scss'
 import '../assets/css/BreadCrumbs.scss'
 import '../assets/css/Message.scss'
@@ -129,33 +129,6 @@ Progressbar.propTypes = {
     current: PropTypes.number
 }
 
-const Card = ({title, actions, buttons, children}) => {
-    const hasHeader = (title || actions) !== undefined
-
-    return (
-        <div className='card'>
-            <When condition={hasHeader}>
-                <header>
-                    {title && <Translations.Translation label={title} />}
-                    {actions && <div className='Buttons'>{actions}</div>}
-                </header>
-            </When>
-            <article>
-                {children}
-            </article>
-            {buttons && <footer><div className='Buttons'>{buttons}</div></footer>}
-        </div>
-    )
-}
-Card.propTypes = {
-    // The translation text key for the title of the card
-    title: PropTypes.string,
-    // The buttons that will be placed in the header of the card
-    actions: PropTypes.arrayOf(PropTypes.element),
-    // The buttons that will be placed in the footer of the card
-    buttons: PropTypes.arrayOf(PropTypes.element)
-}
-
 class When extends React.Component {
     static propTypes = {
         // The condition that needs to be true for the children to be rendered.
@@ -235,9 +208,9 @@ export {
     Dropdown,
     Formats,
     Dates,
-    Card,
     Charts,
     Loading,
     Resolver,
-    Progressbar
+    Progressbar,
+    Layout
 }

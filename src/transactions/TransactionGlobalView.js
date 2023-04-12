@@ -5,12 +5,13 @@ import {
     BreadCrumbMenu,
     BreadCrumbs,
     Buttons,
-    Card,
     Charts,
     Dialog,
     Dropdown,
+    Layout,
     Pagination,
-    Resolver, Translations
+    Resolver,
+    Translations
 } from "../core";
 import {TransactionTable} from "./TransactionTable";
 import {TransactionRepository} from "../core/RestAPI";
@@ -167,20 +168,20 @@ export const TransactionGlobalView = ({transfers}) => {
             </BreadCrumbs>
 
             {!transfers && <>
-                <div className="Columns">
-                    <Card title='page.transactions.expense.category'>
+                <Layout.Grid type='column' minWidth='35em'>
+                    <Layout.Card title='page.transactions.expense.category'>
                         <Charts.CategorizedPieChart id='category-expense' range={range} split='category' incomeOnly={false} />
-                    </Card>
-                    <Card title='page.transactions.expense.budget'>
+                    </Layout.Card>
+                    <Layout.Card title='page.transactions.expense.budget'>
                         <Charts.CategorizedPieChart id='budget-expense' range={range} split='budget' incomeOnly={false} />
-                    </Card>
-                    <Card title='page.transactions.income.category'>
+                    </Layout.Card>
+                    <Layout.Card title='page.transactions.income.category'>
                         <Charts.CategorizedPieChart id='category-income' range={range} split='category' incomeOnly={true} />
-                    </Card>
-                </div>
+                    </Layout.Card>
+                </Layout.Grid>
             </>}
 
-            <Card title='page.title.transactions.overview'
+            <Layout.Card title='page.title.transactions.overview'
                   actions={[
                       <Dropdown.Dropdown icon={mdiChevronDown} key='add-debit-popup' title='page.transaction.add'>
                           <AccountSelectorPopup type='debit' icon={mdiCashPlus} variant='success'/>
@@ -190,7 +191,7 @@ export const TransactionGlobalView = ({transfers}) => {
                   ]}>
 
                 <TransactionOverviewComponent range={range} transfers={transfers} />
-            </Card>
+            </Layout.Card>
         </div>
     </>
 }

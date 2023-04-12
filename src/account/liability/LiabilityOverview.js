@@ -5,10 +5,10 @@ import {
     BreadCrumbItem,
     BreadCrumbs,
     Buttons,
-    Card,
     Dialog,
     Dropdown,
     Formats,
+    Layout,
     Notifications,
     Pagination,
     Statistical,
@@ -94,7 +94,7 @@ const LiabilityOverview = () => {
                 <BreadCrumbItem label='page.nav.accounts.liability'/>
             </BreadCrumbs>
 
-            <Card title='page.nav.accounts.liability'
+            <Layout.Card title='page.nav.accounts.liability'
                   actions={[<Buttons.Button label='page.title.accounts.liabilities.add'
                                            key='add'
                                            icon={mdiPlus}
@@ -120,7 +120,7 @@ const LiabilityOverview = () => {
 
                 <Pagination.Paginator page={parseInt(page)} records={pagination.records}
                                       pageSize={pagination.pageSize}/>
-            </Card>
+            </Layout.Card>
         </div>
     )
 }
