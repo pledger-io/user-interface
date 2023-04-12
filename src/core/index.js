@@ -13,7 +13,7 @@ import * as Formats from './Formatters'
 import * as Attachments from './Attachment'
 import * as Dates from './Dates'
 import * as Charts from './Chart'
-import * as Dropdown from './Dropdown'
+import * as Dropdown from './dropdown'
 
 import '../assets/css/Card.scss'
 import '../assets/css/Button.scss'
