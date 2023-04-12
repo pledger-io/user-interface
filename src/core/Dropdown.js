@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react"
 import PropTypes from 'prop-types'
 
-import * as Buttons from "./Button"
+import * as Buttons from "./buttons"
 
 import '../assets/css/Dropdown.scss'
 import {mdiMenuDown} from "@mdi/js";

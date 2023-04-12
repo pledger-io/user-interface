@@ -1,24 +1,24 @@
 import {render, screen} from "@testing-library/react"
 import {Date, Money, Percent} from "./Formatters"
 
-describe("Money formatting", () => {
+describe(Money, () => {
     test("Should be correctly rendered", () => {
-        render(<Money money={20.32233} currency={'EUR'} />)
-        const element = screen.getByRole('money')
-        expect(element).toBeValid()
-        expect(element).toBeInTheDocument()
+        const {container} = render(<Money money={20.32233} currency={'EUR'} />)
+
+        expect(container).toBeValid()
+        expect(container).toBeInTheDocument()
     })
 
     test("Positive amount should be formatted", () => {
-        render(<Money money={20.32233} currency={'EUR'} />)
-        const element = screen.getByRole('money')
+        const {getByTestId} = render(<Money money={20.32233} currency={'EUR'} />)
+        const element = getByTestId('money')
         expect(element).toHaveClass('Green')
         expect(element).toHaveTextContent('20.32')
     })
 
     test("Negative amount should be formatted", () => {
-        render(<Money money={-20.32233} currency={'EUR'} />)
-        const element = screen.getByRole('money')
+        const {getByTestId} = render(<Money money={-20.32233} currency={'EUR'} />)
+        const element = getByTestId('money')
         expect(element).toHaveClass('Red')
         expect(element).toHaveTextContent(/-.20\.32/)
     })

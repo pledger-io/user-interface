@@ -38,7 +38,10 @@
     ],
     "coverageReporters": [
       "json"
-    ]
+    ],
+    "moduleNameMapper": {
+      "axios": "axios/dist/node/axios.cjs"
+    }
   },
   "browserslist": {
     "production": [

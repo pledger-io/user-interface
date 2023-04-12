@@ -34,7 +34,7 @@ const FormattedMoney = ({money = 0.0, currency = sessionStorage.getItem('currenc
     })
 
     return (
-        <span role='money' className={className}>{formatter.format(money)}</span>
+        <span data-testid="money" className={className}>{formatter.format(money)}</span>
     )
 }
 FormattedMoney.propTypes = {

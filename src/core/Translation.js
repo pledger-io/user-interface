@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
-import RestAPI from "./RestAPI";
 import {mdiHelpCircleOutline} from "@mdi/js";
 import Icon from "@mdi/react";
 import PropTypes from "prop-types";
+import {LocalizationRepository} from "./RestAPI";
 
 class TranslationItem {
     constructor() {
@@ -26,7 +26,7 @@ const TranslationService = (() => {
             .forEach(([key, value]) => getOrCreate(key).resolved(value))
 
     const service = {
-        load: language => RestAPI.get(`localization/lang/${language}/`).then(bulkUpdate),
+        load: language => LocalizationRepository.get(language).then(bulkUpdate),
         get: key => getOrCreate(key).$
     }
 

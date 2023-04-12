@@ -1,6 +1,6 @@
 import {Range, Ranges} from "./Dates";
 
-describe("Date service", () => {
+describe('Ranges', () => {
     beforeEach(() => {
         jest.useFakeTimers()
             .setSystemTime(new Date('2010-01-03'))
@@ -36,7 +36,7 @@ describe("Date service", () => {
     })
 })
 
-describe('Range', () => {
+describe(Range, () => {
     const range = new Range(new Date('2010-02-01'), new Date('2010-03-01'))
 
     it("The month should be February", () => expect(range.month()).toEqual(2))

@@ -1,4 +1,4 @@
-import axios from 'axios';
+const axios = require('axios')
 
 const config = {
     root: '/api'
@@ -183,6 +183,12 @@ const ContractRepository = (api => {
     }
 })(RestAPI)
 
+const LocalizationRepository = (api => {
+    return {
+        get: language => api.get(`localization/lang/${language}/`)
+    }
+})(RestAPI)
+
 export default RestAPI;
 export {
     AccountRepository,
@@ -195,5 +201,6 @@ export {
     SavingsRepository,
     SettingRepository,
     BudgetRepository,
-    ContractRepository
+    ContractRepository,
+    LocalizationRepository
 }

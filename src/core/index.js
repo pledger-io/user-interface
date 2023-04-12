@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 // Export all core classes and functions
 import * as Dialog from './Popup'
 import * as Notifications from './Notification'
-import * as Buttons from './Button'
+import * as Buttons from './buttons'
 import * as Pagination from './Paginator'
 import * as Statistical from './Statistical'
 import * as Translations from './Translation'
