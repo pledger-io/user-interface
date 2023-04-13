@@ -36,7 +36,7 @@ const validDrop = (event, max, accepts) => {
     return true
 }
 
-const UploadAttachment = ({accepts = '*/*', label, multi = false, onUpload, max = 1}) => {
+const UploadAttachment = ({accepts = '*/*', label, onUpload, max = 1}) => {
     const [dropActive, setDropActive] = useState(false)
     const [valid, setValid]           = useState(false)
     const [uniqueId]                  = useState('attachment-' + (++uploadCounter))

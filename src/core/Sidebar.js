@@ -25,10 +25,10 @@ export const Sidebar = ({logoutCallback}) => {
             <div className='brand'>
                 <img src={logo} alt='logo'/>
                 <span>Pledger<span style={{color: 'var(--app-text-muted-color)'}}>.io</span></span>
-                <a className='toggle' onClick={onToggleClick}>
+                <span className='toggle' onClick={onToggleClick}>
                     <Icon path={open ? mdiClose : mdiMenu}
                           size={1}/>
-                </a>
+                </span>
             </div>
             {config
                 .map((section, index) => {
@@ -61,13 +61,13 @@ const ExpandableSection = ({label, icon, links}) => {
 
     return (
         <section className='expandable'>
-            <a className='button' onClick={onClick}>
+            <span className='button' onClick={onClick}>
                 <Icon path={icon} size={1} />
                 <Translation label={label} />
                 <Icon path={expanded ? mdiChevronDown : mdiChevronLeft}
                       className='expand'
                       size={1}/>
-            </a>
+            </span>
             <div className={'expand-buttons' + (expanded ? ' active' : '')}>
                 {links.map((link, index) =>
                     <SidebarButton

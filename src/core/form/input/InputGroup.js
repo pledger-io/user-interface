@@ -1,4 +1,4 @@
-import React, {useContext, useRef} from "react";
+import React, {useContext} from "react";
 import PropTypes from 'prop-types';
 
 import {HelpTranslation, Translation} from "../../Translation";
@@ -32,22 +32,22 @@ InputGroup.propTypes = {
 }
 
 export const useInputField = ({onChange, field}) => {
-    const formContext = useRef(useContext(FormContext))
+    const formContext = useContext(FormContext)
     const onChangedEvent = event => {
-        formContext.current.onChange(event, formContext.current.fields[field.id])
+        formContext.onChange(event, formContext.fields[field.id])
         if (onChange) onChange(event.currentTarget.value)
     }
 
-    if (!formContext.current.fields.hasOwnProperty(field.id)) {
-        formContext.current.addField({
+    if (!formContext.fields.hasOwnProperty(field.id)) {
+        formContext.addField({
             field: field,
             value: field.value || ''
         })
     }
 
     return [
-        formContext.current.fields[field.id],
-        formContext.current.errors[field.id] || [],
+        formContext.fields[field.id],
+        formContext.errors[field.id] || [],
         onChangedEvent
     ]
 }
