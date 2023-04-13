@@ -1,6 +1,6 @@
 import React from 'react'
 import {PathParams, withNavigation, withPathParams} from "../../core/hooks";
-import {BreadCrumbItem, BreadCrumbs, Buttons, Card, Layout, Translations} from "../../core";
+import {BreadCrumbItem, BreadCrumbs, Buttons, Layout, Translations} from "../../core";
 import {Entity, Form, Input, SubmitButton} from "../../core/form";
 import {TransactionService} from "./TransactionService";
 import {mdiCancel, mdiContentSave} from "@mdi/js";

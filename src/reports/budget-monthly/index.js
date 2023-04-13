@@ -3,7 +3,6 @@ import {
     BreadCrumbItem,
     BreadCrumbMenu,
     BreadCrumbs,
-    Card,
     Dates,
     Dropdown,
     Layout,

@@ -9,14 +9,14 @@ definitions:
           - npm install
     - step: &test-react
         name: Test React App
-        images: node:18.12.1
+        images: node:18
         caches:
           - node
         script:
           - npm test
     - step: &build-react
         name: Build React App
-        image: node:18.12.1
+        image: node:18
         caches:
           - node
         script:
@@ -51,8 +51,8 @@ pipelines:
   branches:
     master:
       - step: *node-prepare
-#      - parallel:
-      - step: *build-react
-#          - step: *test-react
+      - parallel:
+          - step: *build-react
+          - step: *test-react
       - step: *build-java
       - step: *sign-publish

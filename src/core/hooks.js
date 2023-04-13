@@ -79,7 +79,7 @@ export const QueryContext = createContext({
 })
 
 export const PathParams = createContext({
-    resolved: params => {},
+    resolved: _ => {},
     parameters: {}
 })
 

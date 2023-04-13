@@ -4,7 +4,7 @@ import {Button} from "../buttons";
 import {mdiMenuDown} from "@mdi/js";
 import PropTypes from "prop-types";
 
-const CurrencyDropdown = ({currency, onChange = (currency) => undefined}) => {
+const CurrencyDropdown = ({currency, onChange = _ => undefined}) => {
     const [currencyOpen, setCurrencyOpen] = useState(false)
     const [currencies, setCurrencies]     = useState([])
 

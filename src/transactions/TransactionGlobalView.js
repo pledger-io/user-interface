@@ -55,7 +55,7 @@ AccountSelectorPopup.propTypes = {
     variant: PropTypes.oneOf(['success', 'warning', 'info'])
 }
 
-const TransactionFilterOptions = ({onChange = filter => {}}) => {
+const TransactionFilterOptions = ({onChange = _ => {}}) => {
     const onSubmit = entity => {
         const filter = {}
         if (entity.account) filter.account = entity.account.name

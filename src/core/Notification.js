@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 const NotificationService = (() => {
     let notifications  = []
     let notificationId = 0;
-    let callback       = notifications => undefined
+    let callback       = _ => undefined
 
     const notify = updated => {
         notifications = updated

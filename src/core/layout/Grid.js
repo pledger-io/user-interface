@@ -9,6 +9,8 @@ const Grid = ({type, children, minWidth}) => {
     switch (type) {
         case 'column':
             style.gridTemplateColumns = `repeat(auto-fit, minmax(${minWidth}, 1fr))`
+            break
+        default: console.log(`Unknown type provided ${type}`)
     }
 
     return <div className={`Grid ${type}`} style={style}>

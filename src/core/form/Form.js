@@ -47,8 +47,8 @@ export const FormContext = createContext({
      */
     errors: {},
     entity: '',
-    onChange: event => undefined,
-    addField: field => undefined,
+    onChange: _ => undefined,
+    addField: _ => undefined,
 })
 
 

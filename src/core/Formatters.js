@@ -10,7 +10,7 @@ const FormattedDate = ({date}) => {
 
     if (date) {
         return (
-            <span role='date' className='FormattedDate'>{formatted}</span>
+            <span className='FormattedDate'>{formatted}</span>
         )
     }
 
@@ -55,7 +55,7 @@ const FormattedPercentage = ({percentage = 0, decimals = 2}) => {
         maximumFractionDigits: decimals
     })
 
-    return <span role='percentage' className='Percentage'>{formatter.format(percentage * 100)}%</span>
+    return <span className='Percentage'>{formatter.format(percentage * 100)}%</span>
 }
 FormattedPercentage.propTypes = {
     // The value to be formatted

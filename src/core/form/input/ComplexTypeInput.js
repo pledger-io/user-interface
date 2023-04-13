@@ -75,7 +75,7 @@ export class ComplexTypeInput extends React.Component {
     }
 
     onChange(value) {
-        const {id, onChange = value => {}} = this.props
+        const {id, onChange = _ => {}} = this.props
         const field = this.context.fields[id] || {id: id, value: []};
 
         onChange(value)

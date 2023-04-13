@@ -43,6 +43,18 @@
       "axios": "axios/dist/node/axios.cjs"
     }
   },
+  "eslintConfig": {
+    "extends": "react-app",
+    "rules": {
+      "no-unused-vars": [
+        "warn",
+        {
+          "argsIgnorePattern": "^_",
+          "varsIgnorePattern": "^_"
+        }
+      ]
+    }
+  },
   "browserslist": {
     "production": [
       ">0.2%",

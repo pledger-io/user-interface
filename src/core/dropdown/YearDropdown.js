@@ -4,7 +4,7 @@ import {mdiMenuDown} from "@mdi/js";
 import DatePicker from "react-datepicker";
 import PropTypes from "prop-types";
 
-const YearDropdown = ({year = 1970, onChange = year => undefined}) => {
+const YearDropdown = ({year = 1970, onChange = _ => undefined}) => {
     const [yearOpen, setYearOpen] = useState(false)
     const onSelect = date => setYearOpen(false) || onChange(date.getFullYear())
 

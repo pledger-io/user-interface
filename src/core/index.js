@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {Link} from "react-router-dom";
 
 // Export all core classes and functions
-import * as Dialog from './Popup'
+import * as Dialog from './popups'
 import * as Notifications from './Notification'
 import * as Buttons from './buttons'
 import * as Pagination from './Paginator'
@@ -16,7 +16,6 @@ import * as Charts from './Chart'
 import * as Dropdown from './dropdown'
 import * as Layout from './layout'
 
-import '../assets/css/Button.scss'
 import '../assets/css/BreadCrumbs.scss'
 import '../assets/css/Message.scss'
 import {mdiLoading} from "@mdi/js";

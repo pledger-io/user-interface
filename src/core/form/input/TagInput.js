@@ -24,7 +24,7 @@ export const TagInput = props => {
     const [options, setOptions]   = useState([])
     const [selectedIdx, setSelectedIdx]   = useState(-1)
 
-    const onTagRemove = tag => undefined
+    const onTagRemove = _ => undefined
     const onTagCreate = () => restAPI.post('transactions/tags', {tag: tagValue})
         .then(_ => onSelect({name: tagValue}))
 
