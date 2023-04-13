@@ -60,7 +60,7 @@ const GlobalChartConfig = {
             usePointStyle: true,
             position: 'nearest',
             callbacks: {
-                labelPointStyle: (tooltipItem) => {
+                labelPointStyle: (_) => {
                     return {
                         pointStyle: 'triangle',
                         rotation: 0
@@ -155,7 +155,7 @@ const PieGraphOptions = {
         tooltip: {
             usePointStyle: true,
             callbacks: {
-                labelPointStyle: (tooltipItem) => {
+                labelPointStyle: (_) => {
                     return {
                         pointStyle: 'triangle',
                         rotation: 0

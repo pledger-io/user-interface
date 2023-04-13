@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {CategoryRepository} from "../core/RestAPI";
 
 import {Form, Input, Styles, SubmitButton} from '../core/form'
-import {BreadCrumbItem, BreadCrumbs, Buttons, Card, Layout, Message, Notifications} from "../core";
+import {BreadCrumbItem, BreadCrumbs, Buttons, Layout, Message, Notifications} from "../core";
 import {mdiCancel, mdiContentSave} from "@mdi/js";
 import {useNavigate, useParams} from "react-router-dom";
 

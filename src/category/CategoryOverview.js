@@ -5,9 +5,9 @@ import {
     BreadCrumbItem,
     BreadCrumbs,
     Buttons,
-    Card,
     Dialog,
-    Formats, Layout,
+    Formats,
+    Layout,
     Notifications,
     Pagination,
     Translations

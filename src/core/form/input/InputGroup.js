@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from "react";
+import React, {useContext, useRef} from "react";
 import PropTypes from 'prop-types';
 
 import {HelpTranslation, Translation} from "../../Translation";
@@ -6,7 +6,7 @@ import {FormContext} from "../Form";
 
 export const InputGroup = ({id, help, title, required = false, valid, children}) => {
     const className = `Input ${required ? 'Required ' : ''}` +
-        (valid !== undefined ? (valid ? 'valid' : 'invalid' ) : '')
+        (valid !== undefined ? (valid ? 'valid' : 'invalid') : '')
 
     return (
         <div className={className}>
@@ -16,7 +16,7 @@ export const InputGroup = ({id, help, title, required = false, valid, children})
                     {help ? <HelpTranslation label={help}/> : ''}
                 </label>
             )}
-            <div>{ children }</div>
+            <div>{children}</div>
         </div>
     )
 }
@@ -32,26 +32,22 @@ InputGroup.propTypes = {
 }
 
 export const useInputField = ({onChange, field}) => {
-    const formContext           = useContext(FormContext)
+    const formContext = useRef(useContext(FormContext))
     const onChangedEvent = event => {
-        formContext.onChange(event, formContext.fields[field.id])
+        formContext.current.onChange(event, formContext.current.fields[field.id])
         if (onChange) onChange(event.currentTarget.value)
     }
 
-    useEffect(() => {
-        formContext.addField({
+    if (!formContext.current.fields.hasOwnProperty(field.id)) {
+        formContext.current.addField({
             field: field,
             value: field.value || ''
         })
-    }, [field])
-
-    if (!formContext.fields.hasOwnProperty(field.id)) {
-        return [undefined, undefined, onChangedEvent]
     }
 
     return [
-        formContext.fields[field.id],
-        formContext.errors[field.id] || [],
+        formContext.current.fields[field.id],
+        formContext.current.errors[field.id] || [],
         onChangedEvent
     ]
 }

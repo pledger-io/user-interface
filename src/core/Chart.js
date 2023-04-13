@@ -35,7 +35,7 @@ const defaultGraphColors = [
     '#6B8E23',
 ]
 
-const ChartComponent = ({id, height = 50, children, type = 'line', options = {}, dataSets = [], labels = [], ...props}) => {
+const ChartComponent = ({id, height = 50, type = 'line', options = {}, dataSets = [], labels = [], ...props}) => {
     const canvasRef = useRef(null)
     const chartRef = useRef(null)
 
@@ -56,7 +56,7 @@ const ChartComponent = ({id, height = 50, children, type = 'line', options = {},
                 chartRef.current = null
             }
         }
-    }, [chartRef])
+    }, [chartRef]) // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         if (dataSets && dataSets.length > 0 && chartRef.current !== null) {
@@ -167,7 +167,7 @@ CategorizedPieChart.propTypes = {
 }
 
 class ChartSeriesProvider {
-    async balanceSeries({id, title, accounts = [], categories = [], contracts = [], expenses = [], onlyIncome, allMoney, currency, dateRange = {}}) {
+    async balanceSeries({title, accounts = [], categories = [], contracts = [], expenses = [], onlyIncome, allMoney, currency, dateRange = {}}) {
         const dataSearchCommand = {
             accounts: accounts,
             categories: categories,
