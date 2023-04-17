@@ -7,7 +7,7 @@ import restAPI from "../../RestAPI";
 const CategoryAutocompleteRow = category => {
     return (
         <span>
-            {category.label}
+            {category.name}
             <div className='Summary'>{category.description}</div>
         </span>
     )

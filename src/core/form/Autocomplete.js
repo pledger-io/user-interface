@@ -1,5 +1,5 @@
 import {InputGroup, InputValidationErrors, useInputField} from "./input/InputGroup";
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 
 const MIN_CHARS = 2
 
@@ -9,12 +9,22 @@ export const useAutocomplete = ({
                                     entityLabel = _ => '',
                                 },
                                 props) => {
-    const [field, errors, onChange]         = useInputField({onChange: props.onChange, field: props})
-    const [options, setOptions]             = useState([])
-    const [selected, setSelected]           = useState(-1)
+    const [field, errors, onChange] = useInputField({onChange: props.onChange, field: props})
+    const [options, setOptions] = useState([])
+    const [selected, setSelected] = useState(-1)
+    const inputRef = useRef()
 
-    const changeHandler = value => onChange({currentTarget: {value: value}, persist: _ => undefined}) || setSelected(-1) || setOptions([])
+    const changeHandler = selected => onChange({currentTarget: {value: selected}, persist: _ => undefined})
+        || setSelected(-1) || setOptions([])
+        || (inputRef.current.value = entityLabel(selected))
+
     const onKeyDown = e => {
+        const actualKeyValue = String.fromCharCode(e.which).match(/(\w|\s)/g)
+        if ((actualKeyValue || e.key === 'Backspace' || e.key === 'Delete') && field.value) {
+            // reset the value on new key presses
+            onChange({currentTarget: {value: undefined}, persist: _ => undefined})
+        }
+
         if (options.length > 0) {
             switch (e.key) {
                 case 'Escape':
@@ -33,9 +43,7 @@ export const useAutocomplete = ({
             switch (e.key) {
                 case 'Escape':
                     e.stopPropagation()
-                    this.setState({
-                        options: []
-                    })
+                    setOptions([])
                     break
                 case 'ArrowUp':
                     e.stopPropagation()
@@ -68,11 +76,12 @@ export const useAutocomplete = ({
                     valid={field.touched ? errors.length === 0 : undefined }>
             <div className='AccountInput'>
                 <input type='text'
+                       ref={inputRef}
                        style={{width: '-webkit-max-content'}}
                        onKeyDown={onKeyDown}
                        onKeyUp={onKeyUp}
                        onChange={onAutocomplete}
-                       value={entityLabel(field.value)}/>
+                       defaultValue={entityLabel(field.value)}/>
 
                 {options.length > 0 &&
                     <div className='AutoComplete'>
