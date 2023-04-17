@@ -2,7 +2,7 @@ import React, {lazy, useState} from "react";
 import {Navigate, Route} from "react-router-dom";
 import {withPathParams} from "../core/hooks";
 
-import {TransactionForm} from "./transaction/TransactionForm";
+import TransactionForm from "./transaction/edit";
 import {LiabilityPaymentForm} from "./transaction/LiabilityPayment";
 import '../assets/css/Account.scss'
 

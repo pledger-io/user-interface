@@ -150,6 +150,10 @@ const CategoryRepository = (api => {
 
 const TransactionRepository = (api => {
     return {
+        create: (id, transaction) => api.put(`accounts/${id}/transactions`, transaction),
+        get: (id, transactionId) => api.get(`accounts/${id}/transactions/${transactionId}`),
+        update: (transactionId, transaction) => api.post(`accounts/-1/transactions/${transactionId}`, transaction),
+        splits: (transactionId, split) => api.patch(`accounts/-1/transactions/${transactionId}`, split),
         search: searchCommand => api.post('transactions', searchCommand)
     }
 })(RestAPI)
