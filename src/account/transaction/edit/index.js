@@ -3,11 +3,13 @@ import React, {useEffect, useState} from "react";
 import {mdiCallSplit, mdiCancel, mdiContentSave} from "@mdi/js";
 
 import {BreadCrumbItem, BreadCrumbs, Buttons, Layout, Loading, Notifications, Resolver} from "../../../core";
-import restAPI, {AccountRepository, TransactionRepository} from "../../../core/RestAPI";
+import {AccountRepository, TransactionRepository} from "../../../core/RestAPI";
 
 import {Form, SubmitButton} from "../../../core/form";
 import GenericFieldsetComponent from "./GenericFieldsetComponent";
 import MetadataFieldsetComponent from "./MetadataFieldsetComponent";
+
+import '../../../assets/css/TransactionForm.scss'
 
 const TransactionForm = () => {
     const {type, transactionType, id, transactionId} = useParams()
