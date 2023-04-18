@@ -1,4 +1,4 @@
-import {render, screen} from "@testing-library/react"
+import {render} from "@testing-library/react"
 import {Date, Money, Percent} from "./Formatters"
 
 describe(Money, () => {
@@ -39,6 +39,13 @@ describe("Date formatter", () => {
 
         const element = container.querySelector('.FormattedDate')
         expect(element).toHaveTextContent('1/2/2020')
+    })
+
+    test("No date provided", () => {
+        const {container} = render(<Date date={undefined} />)
+
+        const element = container.querySelector('.FormattedDate')
+        expect(element).toBeNull()
     })
 })
 

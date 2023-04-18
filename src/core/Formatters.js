@@ -6,9 +6,9 @@ import {useLocalStorage} from "./hooks";
  */
 const FormattedDate = ({date}) => {
     const [language] = useLocalStorage('language', 'en');
-    const formatted = new Intl.DateTimeFormat(language).format(new Date(date))
 
     if (date) {
+        const formatted = new Intl.DateTimeFormat(language).format(new Date(date))
         return (
             <span className='FormattedDate'>{formatted}</span>
         )
