@@ -87,7 +87,7 @@ export const ScheduledTransactionOverview = () => {
             </BreadCrumbs>
 
             <Layout.Card title='page.budget.schedules.title'
-                  actions={[<ScheduleTransactionDialog key='schedule-dialog' />]}>
+                  actions={[<ScheduleTransactionDialog key='schedule-dialog' onCreated={loadSchedules}/>]}>
                 <Loading condition={schedules}>
                     <table className='Table'>
                         <thead>

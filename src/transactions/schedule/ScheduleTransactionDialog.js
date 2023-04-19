@@ -7,6 +7,7 @@ import {EntityShapes} from "../../config";
 import {TransactionScheduleRepository} from "../../core/RestAPI";
 
 import '../../assets/css/ScheduleTransactionDialog.scss'
+import PropTypes from "prop-types";
 
 const createScheduleEntity = entity => {
     return {
@@ -27,7 +28,7 @@ const createScheduleEntity = entity => {
     }
 }
 
-export const ScheduleTransactionDialog = ({transaction}) => {
+export const ScheduleTransactionDialog = ({transaction, onCreated = () => {}}) => {
     const [type, setType] = useState(transaction?.type.code.toLowerCase() || 'credit')
 
     const dialogHandler = {
@@ -35,6 +36,7 @@ export const ScheduleTransactionDialog = ({transaction}) => {
     }
     const onSubmit = entity => TransactionScheduleRepository.create(createScheduleEntity(entity))
             .then(() => Notifications.Service.success('popup.schedule.transaction.create.success'))
+            .then(() => onCreated())
             .then(() => dialogHandler.close())
             .catch(() => Notifications.Service.warning('popup.schedule.transaction.create.failed'))
 
@@ -114,5 +116,6 @@ export const ScheduleTransactionDialog = ({transaction}) => {
     )
 }
 ScheduleTransactionDialog.propTypes = {
-    transaction: EntityShapes.Transaction
+    transaction: EntityShapes.Transaction,
+    onCreated: PropTypes.func
 }
