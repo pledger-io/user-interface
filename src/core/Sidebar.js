@@ -14,8 +14,10 @@ import PropTypes from "prop-types";
 
 
 export const Sidebar = ({logoutCallback}) => {
-    const [open, setOpen] = useState(true)
-    const navigate        = useNavigate()
+    const [open, setOpen] = useState(() => {
+        return window.document.body.clientWidth > 500
+    })
+    const navigate = useNavigate()
 
     const onToggleClick = () => setOpen(!open)
     const onLogout = () => SecurityRepository.logout() || logoutCallback() || navigate('/')
@@ -39,6 +41,7 @@ export const Sidebar = ({logoutCallback}) => {
                         default: return ''
                     }
                 })}
+            <div className='spacer'/>
             <footer>
                 <NavLink to='/user/profile' className='Profile'><ProfilePicture size='40'/></NavLink>
                 <span className="text"/>

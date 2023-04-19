@@ -3,7 +3,7 @@
 $footer-height: 45px;
 
 .sidebar {
-  height: calc(100vh - #{$footer-height});
+  height: 100svh;
   max-width: $sidebar-offset;
 
   color: var(--sidebar-color);
@@ -11,6 +11,9 @@ $footer-height: 45px;
   position: relative;
 
   overflow-y: auto;
+
+  display: flex;
+  flex-direction: column;
 
   .brand {
     padding: 5px;
@@ -124,38 +127,33 @@ $footer-height: 45px;
     margin: 15px 0 5px 0;
   }
 
-  footer {
-    position: fixed;
-    bottom: 0;
-    //height: $footer-height;
-    width: $sidebar-offset;
+  .spacer {
+    flex: auto;
+  }
 
+  footer {
     display: flex;
     align-items: center;
+    justify-content: space-between;
 
     background: var(--sidebar-sub-background);
 
-    & > * {
-      flex: 1;
-    }
-
     .Profile {
+      padding: 0 .25em;
+
       .ProfilePicture {
         background: var(--sidebar-title-color);
         border-radius: .5rem;
-
-        margin: 0.2em;
       }
     }
 
 
     .logout {
       cursor: pointer;
-      max-width: 2rem;
       color: var(--sidebar-icon-color);
 
       &.icon {
-        transform: scale(1.5);
+        padding-right: .75em;
       }
     }
   }
