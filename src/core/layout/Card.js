@@ -10,15 +10,16 @@ import '../../assets/css/Card.scss'
  * @param title                 the optional title key for this card
  * @param actions               the buttons to be placed in the header of the card
  * @param buttons               the buttons to be placed in the footer of the card
+ * @param className             the additional CSS classes
  * @param children              the content of the card
  * @returns {JSX.Element}
  * @constructor
  */
-const Card = ({ title, actions, buttons, children }) => {
+const Card = ({ title, actions, buttons, children, className = ''}) => {
     const hasHeader = (title || actions) !== undefined
 
     return (
-        <div className='card'>
+        <div className={`card ${className}`}>
             { hasHeader && (
                 <header>
                     {title && <Translations.Translation label={title} />}
