@@ -1,6 +1,7 @@
 import {Charts, Layout, Statistical, Translations} from "../../core";
 import React, {useEffect, useState} from "react";
 import CategoryRepository from "../../core/repositories/category-repository";
+import {Loading} from "../../core/layout";
 
 const CategoriesBalance = ({ range }) => {
     const [categorySeries, setCategorySeries] = useState({labels: [], data: []})
@@ -28,11 +29,13 @@ const CategoriesBalance = ({ range }) => {
 
     return <>
         <Layout.Card title='page.dashboard.categories.balance'>
-            <Charts.Chart height={300}
-                          id='dashboard-categories-graph'
-                          labels={categorySeries.labels}
-                          dataSets={categorySeries.data}
-                          type='bar'/>
+            <Loading condition={categorySeries.labels.length}>
+                <Charts.Chart height={300}
+                              id='dashboard-categories-graph'
+                              labels={categorySeries.labels}
+                              dataSets={categorySeries.data}
+                              type='bar'/>
+            </Loading>
         </Layout.Card>
     </>
 }

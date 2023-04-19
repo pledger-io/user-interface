@@ -1,6 +1,7 @@
 import {Charts, Layout, Statistical, Translations} from "../../core";
 import React, {useEffect, useState} from "react";
 import {BudgetRepository} from "../../core/RestAPI";
+import {Loading} from "../../core/layout";
 
 const percentageOfYear = 90 / 365
 
@@ -39,19 +40,21 @@ const BudgetBalance = ({ range }) => {
 
     return <>
         <Layout.Card title='page.dashboard.budgets.balance'>
-            <Charts.Chart height={300}
-                          id='dashboard-budgets-graph'
-                          labels={budgetSeries.labels}
-                          dataSets={budgetSeries.data}
-                          type='bar'
-                          options={{
-                              plugins: {
-                                  legend: {
-                                      position: 'bottom',
-                                      display: true
-                                  }
-                              },
-                          }}/>
+            <Loading condition={budgetSeries.labels.length}>
+                <Charts.Chart height={300}
+                              id='dashboard-budgets-graph'
+                              labels={budgetSeries.labels}
+                              dataSets={budgetSeries.data}
+                              type='bar'
+                              options={{
+                                  plugins: {
+                                      legend: {
+                                          position: 'bottom',
+                                          display: true
+                                      }
+                                  },
+                              }}/>
+            </Loading>
         </Layout.Card>
     </>
 }

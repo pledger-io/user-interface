@@ -1,5 +1,6 @@
 import {Charts, Layout} from "../../core";
 import React, {useEffect, useState} from "react";
+import {Loading} from "../../core/layout";
 
 const BalanceChart = ({ range }) => {
     const [balanceSeries, setBalanceSeries] = useState([])
@@ -13,13 +14,14 @@ const BalanceChart = ({ range }) => {
         }).then(result => setBalanceSeries([result]))
     }, [range])
 
-
     return <>
         <Layout.Card title='page.dashboard.accounts.balance'>
-            <Charts.Chart height={400}
-                          id='dashboard-balance-graph'
-                          dataSets={balanceSeries}>
-            </Charts.Chart>
+            <Loading condition={balanceSeries.length !== 0}>
+                <Charts.Chart height={400}
+                              id='dashboard-balance-graph'
+                              dataSets={balanceSeries}>
+                </Charts.Chart>
+            </Loading>
         </Layout.Card>
     </>
 }
