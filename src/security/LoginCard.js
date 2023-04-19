@@ -4,10 +4,10 @@ import {mdiAccountPlus, mdiLogin, mdiWeb} from "@mdi/js";
 
 import {Form, Input, SubmitButton} from '../core/form'
 import {Buttons, Dropdown, Layout, Message, Translations} from "../core";
-import {SecurityRepository} from "../core/RestAPI";
+import SecurityRepository from "../core/repositories/security-repository";
+import PropTypes from "prop-types";
 
 import '../assets/css/LoginCard.scss'
-import PropTypes from "prop-types";
 
 const LoginCard = ({callback}) => {
     const [failure, setFailure] = useState()

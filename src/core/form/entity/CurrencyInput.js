@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 
-import restAPI from "../../RestAPI";
+import restAPI from "../../repositories/rest-api";
 import {SelectInput} from "../input/SelectInput";
 
 /**

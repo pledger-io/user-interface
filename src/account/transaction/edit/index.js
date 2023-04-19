@@ -3,7 +3,8 @@ import React, {useEffect, useState} from "react";
 import {mdiCallSplit, mdiCancel, mdiContentSave} from "@mdi/js";
 
 import {BreadCrumbItem, BreadCrumbs, Buttons, Layout, Loading, Notifications, Resolver} from "../../../core";
-import {AccountRepository, TransactionRepository} from "../../../core/RestAPI";
+import {TransactionRepository} from "../../../core/RestAPI";
+import AccountRepository from "../../../core/repositories/account-repository";
 
 import {Form, SubmitButton} from "../../../core/form";
 import GenericFieldsetComponent from "./GenericFieldsetComponent";

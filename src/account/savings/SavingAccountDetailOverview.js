@@ -18,7 +18,8 @@ import {
 import React, {useEffect, useState} from "react";
 import {EntityShapes} from "../../config";
 import {useNavigate, useParams} from "react-router-dom";
-import {AccountRepository, SavingsRepository} from "../../core/RestAPI";
+import SavingsRepository from "../../core/repositories/savings-repository";
+import AccountRepository from "../../core/repositories/account-repository";
 
 import {
     mdiContentSave,

@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from "react";
 
-import {AccountRepository} from "../../RestAPI";
-import {Loading} from "../../index";
 import {InputGroup, useInputField} from "../input/InputGroup";
 import PropTypes from "prop-types";
+import {Loading} from "../../layout";
+
+import AccountRepository from "../../repositories/account-repository";
 
 export const ManagedAccountSelect = props => {
     const [field, errors, onChange]         = useInputField({onChange: props.onChange, field: props})
@@ -11,7 +12,9 @@ export const ManagedAccountSelect = props => {
     const [accounts, setAccounts]           = useState([])
 
     useEffect(() => {
-        AccountRepository.own().then(setAccounts)
+        AccountRepository.own()
+            .then(setAccounts)
+            .catch(_ => console.error('could not load accounts'))
     }, [])
     useEffect(() => {
         setSelectedValue(props.value)

@@ -3,15 +3,15 @@ import {mdiCancel, mdiContentSave} from "@mdi/js";
 
 import {Form, Input, SubmitButton} from "../../core/form";
 import {BreadCrumbItem, BreadCrumbs, Buttons, Layout} from "../../core";
-import restAPI from "../../core/RestAPI";
 import {useParams} from "react-router-dom";
+import {CurrencyRepository} from "../../core/RestAPI";
 
 export const CurrencyForm = () => {
     const [currency, setCurrency] = useState({})
     const {code}                  = useParams()
 
     useEffect(() => {
-        if (code) restAPI.get(`settings/currencies/${code}`)
+        CurrencyRepository.get(code)
             .then(setCurrency)
     }, [code])
 

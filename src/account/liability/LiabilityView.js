@@ -15,7 +15,7 @@ import {
     Translations
 } from "../../core";
 
-import {AccountRepository} from "../../core/RestAPI";
+import AccountRepository from "../../core/repositories/account-repository";
 import {TransactionTable} from "../../transactions/TransactionTable";
 import {mdiCashPlus} from "@mdi/js";
 import {useParams} from "react-router-dom";

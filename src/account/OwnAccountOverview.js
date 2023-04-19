@@ -14,7 +14,7 @@ import {
 } from "../core";
 import {mdiCheck, mdiDotsVertical, mdiPlus, mdiSquareEditOutline, mdiTrashCanOutline} from "@mdi/js";
 import {Link} from "react-router-dom";
-import {AccountRepository} from "../core/RestAPI";
+import AccountRepository from "../core/repositories/account-repository";
 import {ReconcileOverview} from "./ReconcileOverview";
 import {EntityShapes} from "../config";
 import PropTypes from "prop-types";

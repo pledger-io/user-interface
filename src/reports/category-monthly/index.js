@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from "react";
 import {BreadCrumbItem, BreadCrumbMenu, BreadCrumbs, Dates, Dropdown, Layout, Loading} from "../../core";
 import {useNavigate, useParams} from "react-router-dom";
-import {CategoryRepository, CurrencyRepository} from "../../core/RestAPI";
+import {CurrencyRepository} from "../../core/RestAPI";
+import CategoryRepository from "../../core/repositories/category-repository";
 
 import CategoryGraph from "./YearGraphPerMonth";
 import MonthlySpendingComponent from "./MonthlySpendingComponent";

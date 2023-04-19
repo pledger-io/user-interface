@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react";
 
 import {Entity, Form, Input, SubmitButton} from '../core/form'
-import {AccountRepository} from "../core/RestAPI";
 import {Attachments, BreadCrumbItem, BreadCrumbs, Buttons, Layout, Message, Notifications, Translations} from "../core";
 import {mdiCancel, mdiContentSave} from "@mdi/js";
+import {useNavigate, useParams} from "react-router-dom";
+import AccountRepository from "../core/repositories/account-repository";
 
 import '../assets/css/AccountForm.scss'
-import {useNavigate, useParams} from "react-router-dom";
 
 class AccountModel {
     constructor(account) {

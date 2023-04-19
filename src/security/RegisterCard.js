@@ -3,10 +3,10 @@ import React, {useState} from "react";
 import {Form, Input, SubmitButton} from "../core/form";
 import {Buttons, Layout, Message} from "../core";
 import {mdiAccountPlus, mdiLogin} from "@mdi/js";
+import {useNavigate} from "react-router-dom";
+import SecurityRepository from "../core/repositories/security-repository";
 
 import '../assets/css/RegisterCard.scss'
-import {SecurityRepository} from "../core/RestAPI";
-import {useNavigate} from "react-router-dom";
 
 const RegisterCard = () => {
     const [exception, setException] = useState()

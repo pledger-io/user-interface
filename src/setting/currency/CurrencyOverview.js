@@ -3,22 +3,11 @@ import React, {useEffect, useState} from "react";
 import {Form, Input} from '../../core/form'
 import {BreadCrumbItem, BreadCrumbs, Buttons, Layout, Notifications, Translations} from "../../core";
 import {mdiPlus, mdiSquareEditOutline} from "@mdi/js";
-import restAPI from "../../core/RestAPI";
 import PropTypes from "prop-types";
-
-class CurrencyService {
-    load() {
-        return restAPI.get('settings/currencies')
-    }
-
-    changeEnabled(currencyCode, enabled) {
-        return restAPI.patch(`settings/currencies/${currencyCode}`, {enabled: enabled})
-    }
-}
-const service = new CurrencyService()
+import {CurrencyRepository} from "../../core/RestAPI";
 
 const CurrencyRow = ({currency}) => {
-    const onEnabledChange = enabled => service.changeEnabled(currency.code, enabled)
+    const onEnabledChange = enabled => CurrencyRepository.change(currency.code, enabled)
         .then(() => Notifications.Service.success('page.settings.currencies.enabled.success'))
         .catch(() => Notifications.Service.warning('page.settings.currencies.enabled.failed'))
 
@@ -49,7 +38,8 @@ export const CurrencyOverview = () => {
     const [currencies, setCurrencies] = useState([])
 
     useEffect(() => {
-        service.load().then(setCurrencies)
+        CurrencyRepository.list()
+            .then(setCurrencies())
     }, [])
 
     return <>

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Charts, Dates, Formats, Layout, Statistical, Translations} from "../core";
 import Icon from "@mdi/react";
 import {mdiContactlessPaymentCircle, mdiScaleBalance, mdiSwapVerticalCircle} from "@mdi/js";
-import restAPI from "../core/RestAPI";
+import restAPI from "../core/repositories/rest-api"
 
 import '../assets/css/DashboardView.scss'
 

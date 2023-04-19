@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from 'prop-types';
 
-import restAPI from "./RestAPI";
+import restAPI from "./repositories/rest-api";
 import {Money} from "./Formatters";
 import {EntityShapes} from "../config";
 import {Loading} from "./index";

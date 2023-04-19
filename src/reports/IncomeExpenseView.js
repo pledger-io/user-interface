@@ -14,7 +14,8 @@ import {
     Translations
 } from "../core/index";
 
-import {AccountRepository, CurrencyRepository} from "../core/RestAPI";
+import AccountRepository from "../core/repositories/account-repository";
+import { CurrencyRepository} from "../core/RestAPI";
 import {useNavigate, useParams} from "react-router-dom";
 
 import '../assets/css/IncomeExpenseView.scss'

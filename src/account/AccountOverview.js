@@ -15,12 +15,12 @@ import {
     Translations,
     When
 } from "../core";
-import {AccountRepository} from "../core/RestAPI";
 import {NavLink} from "react-router-dom";
 import {mdiDotsVertical, mdiPlus, mdiSquareEditOutline, mdiTrashCanOutline} from "@mdi/js";
 import {EntityShapes} from "../config";
 import PropTypes from "prop-types";
 import {useQueryParam} from "../core/hooks";
+import AccountRepository from "../core/repositories/account-repository";
 
 import '../assets/css/AccountOverview.scss'
 

@@ -16,10 +16,10 @@ import {
     When
 } from "../../core";
 import {mdiDotsVertical, mdiPlus, mdiSquareEditOutline, mdiTrashCanOutline} from "@mdi/js";
-import {AccountRepository} from "../../core/RestAPI";
 import {Link} from "react-router-dom";
 import {useQueryParam} from "../../core/hooks";
 import {EntityShapes} from "../../config";
+import AccountRepository from "../../core/repositories/account-repository";
 
 const AccountRow = ({account, deleteCallback}) => {
     const onDelete = () => AccountRepository.delete(account.id)

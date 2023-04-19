@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import {InputGroup, useInputField} from "./InputGroup";
 import Icon from "@mdi/react";
 import {mdiClose, mdiPlus} from "@mdi/js";
-import restAPI from "../../RestAPI";
+import restAPI from "../../repositories/rest-api";
 
 const Tag = ({tag, onRemove = _ => undefined}) => {
     return (

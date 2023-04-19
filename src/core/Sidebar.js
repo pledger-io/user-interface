@@ -5,7 +5,7 @@ import {Translation} from "./Translation";
 import {mdiChevronDown, mdiChevronLeft, mdiClose, mdiLogoutVariant, mdiMenu} from "@mdi/js";
 import {NavLink, useNavigate} from "react-router-dom";
 import {ProfilePicture} from "../profile";
-import {SecurityRepository} from "./RestAPI";
+import SecurityRepository from "./repositories/security-repository";
 import {Buttons} from "./index";
 
 import logo from '../assets/logo.png'

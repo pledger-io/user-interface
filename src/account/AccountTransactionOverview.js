@@ -17,8 +17,8 @@ import {TransactionTable} from "../transactions/TransactionTable";
 
 import '../assets/css/TransactionOverview.scss'
 import {useNavigate, useParams} from "react-router-dom";
-import {AccountRepository} from "../core/RestAPI";
 import {useQueryParam} from "../core/hooks";
+import AccountRepository from "../core/repositories/account-repository";
 
 const TYPE_MAPPING = {
     expense: 'creditor',

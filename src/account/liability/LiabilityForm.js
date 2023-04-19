@@ -3,10 +3,11 @@ import React, {useEffect, useState} from "react";
 import {Entity, Form, Input, SubmitButton} from '../../core/form'
 import {BreadCrumbItem, BreadCrumbs, Buttons, Layout, Notifications, Translations} from "../../core";
 import {mdiCancel, mdiContentSave} from "@mdi/js";
-import restAPI, {AccountRepository} from "../../core/RestAPI";
+import AccountRepository from "../../core/repositories/account-repository";
+import {TransactionRepository} from "../../core/RestAPI";
+import {useNavigate, useParams} from "react-router-dom";
 
 import '../../assets/css/LiabilityForm.scss'
-import {useNavigate, useParams} from "react-router-dom";
 
 class AccountModel {
 
@@ -56,7 +57,7 @@ const LiabilityForm = () => {
                 .then(created => {
                     AccountRepository.search({types: ['reconcile']})
                         .then(response => {
-                            restAPI.put(`accounts/${created.id}/transactions`, {
+                            TransactionRepository.create(`accounts/${created.id}/transactions`, {
                                 date: entity.startDate,
                                 amount: entity.startBalance,
                                 currency: entity.currency,

@@ -40,7 +40,8 @@
       "json"
     ],
     "moduleNameMapper": {
-      "axios": "axios/dist/node/axios.cjs"
+      "axios": "axios/dist/node/axios.cjs",
+      "luxon": "chartjs-adapter-luxon/dist/chartjs-adapter-luxon.umd.js"
     }
   },
   "eslintConfig": {

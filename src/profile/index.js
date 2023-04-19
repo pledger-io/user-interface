@@ -1,5 +1,5 @@
 import React from "react";
-import RestAPI from "../core/RestAPI";
+import RestAPI from "../core/repositories/rest-api"
 import defaultPicture from '../assets/user60.png';
 
 export class ProfilePicture extends React.Component {

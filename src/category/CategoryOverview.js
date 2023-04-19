@@ -1,5 +1,5 @@
-import {CategoryRepository} from "../core/RestAPI";
 import React, {useEffect, useState} from "react";
+import CategoryRepository from "../core/repositories/category-repository";
 import {mdiPlus, mdiSquareEditOutline, mdiTrashCanOutline} from "@mdi/js";
 import {
     BreadCrumbItem,
@@ -27,11 +27,11 @@ const CategoryRow = ({category, deleteCallback = () => undefined}) => {
         <tr>
             <td>
                 <Dialog.ConfirmPopup title='common.action.delete'
-                                     openButton={<Buttons.Button icon={mdiTrashCanOutline} variant='warning icon'/>}
+                                     openButton={<Buttons.Button icon={mdiTrashCanOutline} variant='icon' className='warning' />}
                                      onConfirm={onDelete}>
                     <Translations.Translation label='page.category.delete.confirm'/>
                 </Dialog.ConfirmPopup>
-                <Buttons.Button icon={mdiSquareEditOutline} variant='primary icon' href={`${category.id}/edit`}/>
+                <Buttons.Button icon={mdiSquareEditOutline} variant='icon' className='primary' href={`${category.id}/edit`}/>
             </td>
             <td>{category.label}</td>
             <td>{category.description}</td>

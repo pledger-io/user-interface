@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 
-import {AccountRepository} from "../../RestAPI";
+import AccountRepository from "../../repositories/account-repository";
 import {SelectInput, SelectOption} from "../input/SelectInput";
 
 /**

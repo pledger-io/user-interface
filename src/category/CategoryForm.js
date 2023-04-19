@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {CategoryRepository} from "../core/RestAPI";
-
+import CategoryRepository from "../core/repositories/category-repository";
 import {Form, Input, Styles, SubmitButton} from '../core/form'
 import {BreadCrumbItem, BreadCrumbs, Buttons, Layout, Message, Notifications} from "../core";
 import {mdiCancel, mdiContentSave} from "@mdi/js";

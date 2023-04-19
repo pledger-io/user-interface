@@ -1,6 +1,6 @@
 import React from "react";
 import {useAutocomplete} from "../Autocomplete";
-import restAPI from "../../RestAPI";
+import restAPI from "../../repositories/rest-api";
 import {InputGroup} from "../input/InputGroup";
 import {EntityShapes} from "../../../config";
 import PropTypes from "prop-types";

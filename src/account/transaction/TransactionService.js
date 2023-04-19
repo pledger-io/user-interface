@@ -1,9 +1,10 @@
-import restAPI from "../../core/RestAPI";
 import {Notifications} from "../../core";
+import AccountRepository from "../../core/repositories/account-repository";
+import {TransactionRepository} from "../../core/RestAPI";
 
 export const TransactionService = {
     fetchAccount: ({id}) => {
-        return restAPI.get(`accounts/${id}`)
+        return AccountRepository.get(id)
     },
 
     fetchTransaction: ({id, transactionId}) => {
@@ -11,7 +12,7 @@ export const TransactionService = {
             return new Promise(resolve => resolve());
         }
 
-        return restAPI.get(`accounts/${id}/transactions/${transactionId}`)
+        return TransactionRepository.get(id, transactionId)
             .then(transaction => {
                 return {
                     ...transaction,
@@ -42,13 +43,13 @@ export const TransactionService = {
 
         const promises = []
         if (isNaN(id)) {
-            promises.push(restAPI.put(`accounts/${account.id}/transactions`, transaction));
+            promises.push(TransactionRepository.create(account.id, transaction));
         } else {
-            promises.push(restAPI.post(`accounts/${account.id}/transactions/${id}`, transaction))
+            promises.push(TransactionRepository.update(id, transaction))
         }
 
         if (entity.split) {
-            promises.push(restAPI.patch(`accounts/${account.id}/transactions/${id}`))
+            promises.push(TransactionRepository.splits(id, entity.split))
         }
 
         Promise.all(promises)
