@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {ContractRepository} from "../core/RestAPI";
-import {BreadCrumbItem, BreadCrumbs, Buttons, Layout, Loading} from "../core";
+import {BreadCrumbItem, BreadCrumbs, Buttons, Layout} from "../core";
 import {ContractTable} from "./ContractTable";
 import {mdiClockTimeTwoOutline, mdiHistory} from "@mdi/js";
 
@@ -35,7 +35,7 @@ export const ContractOverview = () => {
                     <div className='Filler'></div>
                 </div>
 
-                {!contracts && <Loading />}
+                {!contracts && <Layout.Loading />}
                 {contracts && <ContractTable contracts={contracts[tabSection]} />}
             </Layout.Card>
         </div>

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Dates, Loading, Statistical, Translations} from "../../core";
+import {Dates, Layout, Statistical, Translations} from "../../core";
 import {Chart} from "../../core/Chart";
 
 const CategoryGraph = ({categories, range, currencySymbol}) => {
@@ -45,7 +45,7 @@ const CategoryGraph = ({categories, range, currencySymbol}) => {
             .then(setExpenseSeries)
     }, [categories, range, currentRange])
 
-    if (!incomeSeries || !expenseSeries) return <Loading />
+    if (!incomeSeries || !expenseSeries) return <Layout.Loading />
     return (
         <Chart height={450}
                id='category-monthly'

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 
 import {Form, Input, SubmitButton} from "../../core/form";
 import {useNavigate, useParams} from "react-router-dom";
-import {BreadCrumbItem, BreadCrumbs, Buttons, Layout, Loading, Message, Notifications, Translations} from "../../core";
+import {BreadCrumbItem, BreadCrumbs, Buttons, Layout, Message, Notifications, Translations} from "../../core";
 import {mdiCancel, mdiContentSave} from "@mdi/js";
 import {TransactionScheduleRepository} from "../../core/RestAPI";
 
@@ -34,7 +34,7 @@ export const ScheduleTransactionForm = () => {
             .catch(setException)
     }
 
-    if (!schedule) return <Loading />
+    if (!schedule) return <Layout.Loading />
     return (
         <div className='ScheduleTransactionForm'>
             <BreadCrumbs>

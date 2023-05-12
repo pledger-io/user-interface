@@ -11,7 +11,7 @@ const YearDropdown = ({year = 1970, onChange = _ => undefined}) => {
     return (
         <div className='YearDropdown'>
             <Button variant='text'
-                            onClick={() => setYearOpen(true)}
+                            onClick={() => setYearOpen(!yearOpen)}
                             icon={mdiMenuDown}
                             iconPos={'after'}
                             message={'' + year} />

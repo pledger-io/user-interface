@@ -9,7 +9,6 @@ import {
     Dropdown,
     Formats,
     Layout,
-    Loading,
     Statistical,
     Translations
 } from "../core/index";
@@ -214,7 +213,7 @@ const AccountBalances = ({year, currency}) => {
             </thead>
             <tbody>
             {accounts.length === 0 && <tr>
-                <td style={{textAlign: 'center'}} colSpan='4'><Loading /></td>
+                <td style={{textAlign: 'center'}} colSpan='4'><Layout.Loading /></td>
             </tr>}
             {accounts.map(account =>
                 <tr key={account.id}>
@@ -274,7 +273,7 @@ const TopAccountTable = ({year, type}) => {
             </thead>
             <tbody>
             {!accounts.length && <tr>
-                <td colSpan='4'><Loading /></td>
+                <td colSpan='4'><Layout.Loading /></td>
             </tr>}
             {accounts.map(account => (
                 <tr key={account.account.id}>
@@ -311,7 +310,7 @@ export const IncomeExpenseView = () => {
             <BreadCrumbs>
                 <BreadCrumbItem label='page.title.reports.default' />
                 <BreadCrumbItem label='page.reports.default.title' />
-                <BreadCrumbMenu>
+                <BreadCrumbMenu className='flex justify-end'>
                     <Dropdown.Currency currency={currency} onChange={currency => onDateChanged({newCurrency: currency.code})} />
                     <Dropdown.Year year={parseInt(year)} onChange={year => onDateChanged({newYear: year})}/>
                 </BreadCrumbMenu>

@@ -8,7 +8,6 @@ import {
     Dropdown,
     Formats,
     Layout,
-    Loading,
     Notifications,
     Resolver,
     Translations,
@@ -88,7 +87,7 @@ export const ScheduledTransactionOverview = () => {
 
             <Layout.Card title='page.budget.schedules.title'
                   actions={[<ScheduleTransactionDialog key='schedule-dialog' onCreated={loadSchedules}/>]}>
-                <Loading condition={schedules}>
+                <Layout.Loading condition={schedules !== undefined}>
                     <table className='Table'>
                         <thead>
                         <tr>
@@ -107,7 +106,7 @@ export const ScheduledTransactionOverview = () => {
                                                                       key={schedule.id}/>)}
                         </tbody>
                     </table>
-                </Loading>
+                </Layout.Loading>
             </Layout.Card>
         </div>)
 }

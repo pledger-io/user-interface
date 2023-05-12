@@ -7,7 +7,6 @@ import {
     Dropdown,
     Formats,
     Layout,
-    Loading,
     Notifications,
     Statistical,
     Translations
@@ -102,7 +101,7 @@ const OwnAccountOverview = () => {
                                  icon={mdiPlus}
                                  href='./add'
                                  variant='primary'/>]}>
-                <Loading condition={accounts}>
+                <Layout.Loading condition={accounts !== undefined}>
                     <table className='Table'>
                         <thead>
                         <tr>
@@ -113,12 +112,12 @@ const OwnAccountOverview = () => {
                         </tr>
                         </thead>
                         <tbody>
-                        {!accounts && <tr><td><Loading /></td></tr>}
+                        {!accounts && <tr><td><Layout.Loading /></td></tr>}
                         {accounts && accounts.map(account =>
                                 <AccountRow account={account} key={account.id} onDelete={loadAccounts}/>)}
                         </tbody>
                     </table>
-                </Loading>
+                </Layout.Loading>
             </Layout.Card>
 
             <ReconcileOverview/>

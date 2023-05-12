@@ -8,7 +8,6 @@ import {
     Dropdown,
     Formats,
     Layout,
-    Loading,
     Notifications,
     Pagination,
     Statistical,
@@ -104,7 +103,7 @@ const AccountOverview = ({type}) => {
                                  icon={mdiPlus}
                                  href='./add'
                                  variant='primary'/>]}>
-                <Loading condition={accounts}>
+                <Layout.Loading condition={accounts !== undefined}>
                     <table className='Table AccountTable'>
                         <thead>
                         <tr>
@@ -123,7 +122,7 @@ const AccountOverview = ({type}) => {
 
                     <Pagination.Paginator page={parseInt(page)} records={pagination.records}
                                           pageSize={pagination.pageSize}/>
-                </Loading>
+                </Layout.Loading>
             </Layout.Card>
         </div>
     )

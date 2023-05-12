@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {Button} from "../buttons";
+import {Button, ButtonBar} from "../buttons";
 import {mdiMenuDown} from "@mdi/js";
 import DatePicker from "react-datepicker";
 import PropTypes from "prop-types";
@@ -18,16 +18,18 @@ const MonthYearDropdown = ({selected: {year, month}, onChange}) => {
 
     return (
         <div className='YearMonthDropdown'>
-            <Button variant='text'
-                            onClick={onOpenMonth}
-                            icon={mdiMenuDown}
-                            iconPos={'after'}
-                            label={`common.month.${month}`} />
-            <Button variant='text'
-                            onClick={onOpenYear}
-                            icon={mdiMenuDown}
-                            iconPos={'after'}
-                            message={'' + year} />
+            <ButtonBar>
+                <Button variant='text'
+                                onClick={onOpenMonth}
+                                icon={mdiMenuDown}
+                                iconPos={'after'}
+                                label={`common.month.${month}`} />
+                <Button variant='text'
+                                onClick={onOpenYear}
+                                icon={mdiMenuDown}
+                                iconPos={'after'}
+                                message={'' + year} />
+            </ButtonBar>
 
             <div className='Expanded'>
                 {yearOpen && (<DatePicker showYearPicker

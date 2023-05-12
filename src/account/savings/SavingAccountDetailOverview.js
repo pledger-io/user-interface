@@ -7,7 +7,6 @@ import {
     Dropdown,
     Formats,
     Layout,
-    Loading,
     Notifications,
     Pagination,
     Progressbar,
@@ -37,7 +36,7 @@ import {useDateRange, useQueryParam} from "../../core/hooks";
 import {TransactionTable} from "../../transactions/TransactionTable";
 
 const SavingSummaryComponent = ({savingAccount}) => {
-    if (!savingAccount) return <Loading />
+    if (!savingAccount) return <Layout.Loading />
 
     const requiredSavings = (savingAccount?.savingGoals || [])
             .map(s => s.reserved)
@@ -122,7 +121,7 @@ const SavingGoalTableComponent = ({account, savingGoals = [], currency = 'EUR'})
             .then(() => setGoals(goals.filter(goal => goal.id !== toDelete.id)))
             .catch(() => Notifications.Service.warning('page.account.saving.goal.endingFail'))
 
-    if (!account) return <Loading />
+    if (!account) return <Layout.Loading />
     return <>
         <table className='Table SavingGoals'>
             <thead>
@@ -264,7 +263,7 @@ const SavingAccountDetailOverview = () => {
 
     const onDateChange = ({year, month}) => navigate(`/accounts/savings/${id}/transactions/${year}/${month}`)
 
-    if (!account) return <Loading />
+    if (!account) return <Layout.Loading />
     return <>
         <div className='SavingDetailView'>
             <BreadCrumbs>

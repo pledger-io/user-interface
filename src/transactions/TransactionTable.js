@@ -13,7 +13,7 @@ import {
 import Icon from "@mdi/react";
 import {ScheduleTransactionDialog} from "./schedule/ScheduleTransactionDialog";
 import {EntityShapes} from "../config";
-import {Attachments, Buttons, Dialog, Dropdown, Formats, Loading, Resolver, Translations, When} from "../core";
+import {Attachments, Buttons, Dialog, Dropdown, Formats, Layout, Resolver, Translations, When} from "../core";
 import '../assets/css/TransactionTable.scss'
 
 const TransactionSplitDialog = lazy(() => import('./TransactionSplitDialog'))
@@ -170,7 +170,7 @@ export const TransactionTable = ({account = null, transactions}) => {
             </thead>
             <tbody>
             { !transactionRows && (
-                <tr><td colSpan={account ? 7 : 8}><Loading /></td></tr>
+                <tr><td colSpan={account ? 7 : 8}><Layout.Loading /></td></tr>
             )}
             { transactionRows && transactionRows.length === 0 && (
                 <tr>

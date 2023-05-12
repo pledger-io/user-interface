@@ -122,7 +122,7 @@ $invalid-color: #dc3545;
 
       & > .Prepend {
         padding: .25rem .5rem;
-        max-width: .7rem;
+        max-width: 2em;
 
         text-align: center;
 
@@ -240,26 +240,6 @@ $invalid-color: #dc3545;
     border: 1px solid var(--app-border-color);
     border-radius: var(--border-radius);
     box-shadow: 0 0.2rem 0.3rem #0000002d;
-
-    .Rule {
-      display: flex;
-
-      &.invalid {
-        color: var(--dark-warning-color)
-      }
-
-      &.valid {
-        color: var(--dark-success-color)
-      }
-
-      & > * {
-        flex: 1;
-      }
-
-      & > svg {
-        max-width: 1.5rem;
-      }
-    }
   }
 
   .RadioButton {

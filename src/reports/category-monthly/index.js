@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {BreadCrumbItem, BreadCrumbMenu, BreadCrumbs, Dates, Dropdown, Layout, Loading} from "../../core";
+import {BreadCrumbItem, BreadCrumbMenu, BreadCrumbs, Dates, Dropdown, Layout} from "../../core";
 import {useNavigate, useParams} from "react-router-dom";
 import {CurrencyRepository} from "../../core/RestAPI";
 import CategoryRepository from "../../core/repositories/category-repository";
@@ -32,7 +32,7 @@ const CategoryReportView = () => {
 
     const onDateChanged = ({newYear = year, newCurrency = currency}) => navigate(`/reports/monthly-category/${newYear}/${newCurrency}`)
 
-    if (!categories) return <Loading />
+    if (!categories) return <Layout.Loading />
     return (
         <div className='CategoryReport'>
             <BreadCrumbs>

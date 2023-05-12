@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Charts, Dates, Layout, Loading, Statistical, Translations} from "../../core";
+import {Charts, Dates, Layout, Statistical, Translations} from "../../core";
 
 /**
  * Creates ta graph with the income per month for the entire year.
@@ -68,7 +68,7 @@ const YearlyIncomeGraphComponent = ({year = 1970, budgets = []}) => {
                               }}
                               height={300} />
             </>}
-            {(!actualDataset || !expectedDataset) && <Loading />}
+            {(!actualDataset || !expectedDataset) && <Layout.Loading />}
         </Layout.Card>
     </>
 }

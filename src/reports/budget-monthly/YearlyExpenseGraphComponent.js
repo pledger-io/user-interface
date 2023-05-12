@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Charts, Dates, Layout, Loading, Statistical, Translations} from "../../core";
+import {Charts, Dates, Layout, Statistical, Translations} from "../../core";
 
 const YearlyExpenseGraphComponent = ({year = 1970, budgets = []}) => {
     const [expectedDataset, setExpectedDataset] = useState()
@@ -68,7 +68,7 @@ const YearlyExpenseGraphComponent = ({year = 1970, budgets = []}) => {
                               }}
                               height={300} />
             </>}
-            {(!actualDataset || !expectedDataset) && <Loading />}
+            {(!actualDataset || !expectedDataset) && <Layout.Loading />}
         </Layout.Card>
     </>
 }

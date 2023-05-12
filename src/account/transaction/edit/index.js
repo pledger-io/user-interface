@@ -2,7 +2,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import {mdiCallSplit, mdiCancel, mdiContentSave} from "@mdi/js";
 
-import {BreadCrumbItem, BreadCrumbs, Buttons, Layout, Loading, Notifications, Resolver} from "../../../core";
+import {BreadCrumbItem, BreadCrumbs, Buttons, Layout, Notifications, Resolver} from "../../../core";
 import {TransactionRepository} from "../../../core/RestAPI";
 import AccountRepository from "../../../core/repositories/account-repository";
 
@@ -58,7 +58,7 @@ const TransactionForm = () => {
     }))
 
     const backendType = Resolver.Account.convertToBackendType(type)
-    if (!transaction) return <Loading />
+    if (!transaction) return <Layout.Loading />
     return <>
         <div className='TransactionForm'>
             <BreadCrumbs>

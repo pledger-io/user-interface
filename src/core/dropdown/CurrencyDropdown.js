@@ -18,7 +18,7 @@ const CurrencyDropdown = ({currency, onChange = _ => undefined}) => {
     return (
         <div className="CurrencyDropdown">
             <Button variant='text'
-                            onClick={() => setCurrencyOpen(true)}
+                            onClick={() => setCurrencyOpen(!currencyOpen)}
                             icon={mdiMenuDown}
                             iconPos={'after'}
                             message={currency} />

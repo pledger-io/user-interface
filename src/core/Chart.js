@@ -7,8 +7,9 @@ import {DefaultChartConfig, Service as ChartUtil} from '../config/global-chart-c
 import {Service as BalanceService} from './Statistical'
 import {LocalizationService} from './Translation'
 import PropTypes from "prop-types";
-import {Charts, Loading, Statistical} from "./index";
+import {Charts, Statistical} from "./index";
 import {EntityShapes} from "../config";
+import {Loading} from "./layout";
 
 const defaultGraphColors = [
     '#E0FFFF',
@@ -103,7 +104,7 @@ const BalanceChart = ({id, range, allMoney, accounts}) => {
     }, [range, allMoney, accounts])
 
     return (
-        <Loading condition={balanceSeries}>
+        <Loading condition={balanceSeries !== undefined}>
             <Charts.Chart height={350}
                           id={id}
                           dataSets={balanceSeries || []}>

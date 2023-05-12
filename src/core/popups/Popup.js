@@ -27,7 +27,11 @@ const Popup = forwardRef(({title, className, actions, children}, ref) => {
                                     className='secondary'/>
                 </header>
                 <section>{children}</section>
-                {actions && <footer>{actions}</footer>}
+                {actions && <footer>
+                    <Buttons.ButtonBar>
+                        {actions}
+                    </Buttons.ButtonBar>
+                </footer>}
             </div>
         </span>
     )

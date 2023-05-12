@@ -57,9 +57,9 @@ Translation.propTypes = {
  * The help translation is similar to the translation component, with one exception it displays a help icon
  * before the help text.
  */
-const HelpTranslation = ({label}) => {
+const HelpTranslation = ({ label, className = '' }) => {
     return (
-        <span className='HelpText'>
+        <span className={`HelpText ${className}`}>
             <Icon path={mdiHelpCircleOutline} size={.8}/>
             <Translation label={label}/>
         </span>

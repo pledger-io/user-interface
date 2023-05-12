@@ -18,8 +18,6 @@ import * as Layout from './layout'
 
 import '../assets/css/BreadCrumbs.scss'
 import '../assets/css/Message.scss'
-import {mdiLoading} from "@mdi/js";
-import Icon from "@mdi/react";
 
 class BreadCrumbs extends React.Component {
     render() {
@@ -60,28 +58,9 @@ class BreadCrumbItem extends React.Component {
 
 class BreadCrumbMenu extends React.Component {
     render() {
-        const {children} = this.props
-        return <li className='Menu'>{children}</li>
+        const {children, className} = this.props
+        return <li className={`Menu ${className}`}>{children}</li>
     }
-}
-
-/**
- * Display a loading icon until the condition becomes true.
- */
-const Loading = ({condition, children}) => {
-    if (!condition) {
-        return (
-            <div className='Loading'>
-                <Icon path={mdiLoading} spin={true} size={2} />
-            </div>
-        )
-    } else {
-        return children
-    }
-}
-Loading.propTypes = {
-    // the condition used, as long as false the loading icon is shown
-    condition: PropTypes.oneOfType([PropTypes.bool, PropTypes.object, PropTypes.any])
 }
 
 export class Message extends React.Component {
@@ -208,7 +187,6 @@ export {
     Formats,
     Dates,
     Charts,
-    Loading,
     Resolver,
     Progressbar,
     Layout

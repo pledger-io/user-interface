@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import {Loading} from "../../layout";
 
 import AccountRepository from "../../repositories/account-repository";
+import {SelectOption} from "../input";
 
 export const ManagedAccountSelect = props => {
     const [field, errors, onChange]         = useInputField({onChange: props.onChange, field: props})
@@ -36,11 +37,10 @@ export const ManagedAccountSelect = props => {
                     title={props.title}
                     help={props.help}
                     valid={field.touched ? errors.length === 0 : undefined }>
-            <select id={props.id} onChange={valueSelected} value={selectedValue} defaultValue="-">
-                {!selectedValue && <option disabled value="-">-</option>}
-                {accounts.map(account =>
-                    <option key={account.id} value={account.id}>{account.name}</option>
-                )}
+            <select id={props.id} onChange={valueSelected} value={selectedValue}>
+                {accounts.map(account => <SelectOption key={account.id}
+                                                       value={account.id}
+                                                       message={account.name}/>)}
             </select>
         </InputGroup>
     )

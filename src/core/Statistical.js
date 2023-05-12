@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import restAPI from "./repositories/rest-api";
 import {Money} from "./Formatters";
 import {EntityShapes} from "../config";
-import {Loading} from "./index";
+import {Loading} from "./layout";
 
 const StatisticsService = (() => {
     return {

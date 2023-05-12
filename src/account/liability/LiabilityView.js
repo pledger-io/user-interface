@@ -8,7 +8,6 @@ import {
     Dates,
     Formats,
     Layout,
-    Loading,
     Pagination,
     Resolver,
     Statistical,
@@ -71,7 +70,7 @@ const LiabilityView = () => {
     }, [range, account])
 
 
-    if (!account || !range) return <Loading />
+    if (!account || !range) return <Layout.Loading />
     return (
         <div className="LiabilityView">
             <BreadCrumbs>

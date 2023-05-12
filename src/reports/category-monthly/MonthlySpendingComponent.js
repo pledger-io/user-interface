@@ -1,9 +1,9 @@
-import {Dates, Loading, Statistical, Translations} from "../../core";
+import {Dates, Layout, Statistical, Translations} from "../../core";
 import React from "react";
 
 const MonthlySpendingComponent = ({categories, range}) => {
 
-    if (!categories || !range) return <Loading />
+    if (!categories || !range) return <Layout.Loading />
     return (
         <table className='Table'>
             <thead>

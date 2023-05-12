@@ -9,7 +9,6 @@ import {
     Dates,
     Dropdown,
     Layout,
-    Loading,
     Pagination,
     Resolver,
 } from "../core";
@@ -27,9 +26,9 @@ const TYPE_MAPPING = {
 }
 
 const AccountTransactionComponent = ({account, range}) => {
-    const [transactions, setTransactions]    = useState(undefined)
-    const [pagination, setPagination]        = useState({})
-    const [page]                             = useQueryParam('page', "1")
+    const [transactions, setTransactions] = useState(undefined)
+    const [pagination, setPagination] = useState({})
+    const [page] = useQueryParam('page', "1")
 
     useEffect(() => {
         setTransactions(undefined)
@@ -38,7 +37,7 @@ const AccountTransactionComponent = ({account, range}) => {
     }, [account, range, page])
 
     return <>
-        <div className="BalanceButtons">
+        <Buttons.ButtonBar className='pb-2'>
             <Buttons.Button label='page.transactions.debit.add'
                             href={`${Resolver.Account.resolveUrl(account)}/transactions/add/debit`}
                             variant='success'
@@ -54,7 +53,7 @@ const AccountTransactionComponent = ({account, range}) => {
                             className={Resolver.Account.isManaged(account) ? 'Hidden' : ''}
                             variant='primary'
                             icon={mdiSwapHorizontal}/>
-        </div>
+        </Buttons.ButtonBar>
 
         <TransactionTable account={account} transactions={transactions}/>
 
@@ -64,10 +63,10 @@ const AccountTransactionComponent = ({account, range}) => {
 }
 
 const AccountTransactionOverview = () => {
-    const navigate                           = useNavigate()
-    const {id, type, year, month}            = useParams()
-    const [account, setAccount]              = useState({})
-    const [range, setRange]                  = useState(Dates.Ranges.currentMonth())
+    const navigate = useNavigate()
+    const {id, type, year, month} = useParams()
+    const [account, setAccount] = useState({})
+    const [range, setRange] = useState(Dates.Ranges.currentMonth())
 
     const onDateChange = ({year, month}) => navigate(`/accounts/${type}/${id}/transactions/${year}/${month}`)
 
@@ -78,19 +77,19 @@ const AccountTransactionOverview = () => {
         if (year && month) setRange(Dates.Ranges.forMonth(year, month))
     }, [year, month])
 
-    if (!account.hasOwnProperty('id')) return <Loading />
+    if (!account.hasOwnProperty('id')) return <Layout.Loading/>
     return (
         <div className='TransactionOverview'>
             <BreadCrumbs>
-                <BreadCrumbItem label='page.nav.settings' />
-                <BreadCrumbItem label='page.nav.accounts' />
-                <BreadCrumbItem label={`page.nav.accounts.${TYPE_MAPPING[type]}`} />
-                <BreadCrumbItem message={account.name} />
+                <BreadCrumbItem label='page.nav.settings'/>
+                <BreadCrumbItem label='page.nav.accounts'/>
+                <BreadCrumbItem label={`page.nav.accounts.${TYPE_MAPPING[type]}`}/>
+                <BreadCrumbItem message={account.name}/>
 
                 <BreadCrumbMenu>
                     <Dropdown.YearMonth
                         onChange={onDateChange}
-                        selected={{month: range.month(), year: range.year()}} />
+                        selected={{month: range.month(), year: range.year()}}/>
                 </BreadCrumbMenu>
             </BreadCrumbs>
 
@@ -128,7 +127,7 @@ const AccountTransactionOverview = () => {
             </>}
 
             <Layout.Card title='page.title.transactions.overview'>
-                <AccountTransactionComponent account={account} range={range} />
+                <AccountTransactionComponent account={account} range={range}/>
             </Layout.Card>
         </div>
     )

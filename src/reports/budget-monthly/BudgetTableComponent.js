@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Dates, Formats, Loading, Statistical, Translations} from "../../core";
+import {Dates, Formats, Layout, Statistical, Translations} from "../../core";
 
 const MonthlyTableBudgetComponent = ({budgets, year, currency}) => {
     const [months, setMonths]                   = useState([])
@@ -19,7 +19,7 @@ const MonthlyTableBudgetComponent = ({budgets, year, currency}) => {
         setMonths(ranges)
     }, [year])
 
-    if (!budgets.length) return <Loading />
+    if (!budgets.length) return <Layout.Loading />
     return <>
         <table className='Table MonthlyView'>
             <thead>

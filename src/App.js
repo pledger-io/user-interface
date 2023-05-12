@@ -1,6 +1,6 @@
 import {BrowserRouter, Navigate, Outlet, Route, Routes} from "react-router-dom";
 import {Sidebar} from "./core/Sidebar";
-import {Loading, Notifications} from "./core";
+import {Layout, Notifications} from "./core";
 
 // Routes import
 import {AccountRoutes} from "./account";
@@ -58,7 +58,7 @@ function App() {
                     <Route path='/register' element={<RegisterCard />}/>
                     <Route path='/*' element={<Navigate to='/login'/>} />
                 </Routes>
-                <Suspense fallback={<Loading/>}>
+                <Suspense fallback={<Layout.Loading/>}>
                     <Outlet />
                 </Suspense>
             </BrowserRouter>

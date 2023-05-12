@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 
 import restAPI from "../../repositories/rest-api";
-import {SelectInput} from "../input/SelectInput";
+import {SelectInput, SelectOption} from "../input/SelectInput";
 
 /**
  * Specification of a Select but then only meant for currency values.
@@ -21,7 +21,9 @@ export const CurrencyInput = (props) => {
         <SelectInput {...props}>
             {(currencies || [])
                 .filter(currency => currency.enabled)
-                .map(currency => <option key={currency.code} value={currency.code}>{currency.symbol}</option>)}
+                .map(currency => <SelectOption key={currency.code}
+                                               value={currency.code}
+                                               message={currency.symbol} />)}
         </SelectInput>
     )
 }
