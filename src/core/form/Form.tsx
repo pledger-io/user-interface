@@ -41,7 +41,7 @@ export const FormContext: Context<FormContextType> = createContext({} as FormCon
 
 type FormProps = {
     entity: string,                             // The entity type, used in error building
-    onSubmit: (entity: any) => undefined,       // The handler that will be called with the entity, where the entity is build up of all fields in the form.
+    onSubmit: (_: any) => undefined,            // The handler that will be called with the entity, where the entity is build up of all fields in the form.
     style?: 'group' | 'default',
     children: ReactNode[]
 }
@@ -60,7 +60,7 @@ export const Form: FC<FormProps> = ({entity, onSubmit, style = 'group', children
         return () => {
             console.info(`Destroying form %c${entity}%c.`, 'color: red', '')
         }
-    }, [])
+    }, [entity])
 
     const onAddField: AddFieldFunc =  ({field}) => {
         setFields(current => ({...current, [field.id]: field}))

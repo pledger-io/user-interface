@@ -54,7 +54,7 @@ const Button: FC<ButtonProps> = ({
             className={`whitespace-nowrap outline-none
                         flex items-center justify-center cursor-pointer
                         hover:brightness-125
-                        text-sm gap-1
+                        text-sm gap-1 ${variantType}
                         ${disabled ? 'pointer-events-none opacity-60' : ''}
                         ${specialVariant 
                             ? 'border-none hover:border-b-primary hover:underline text-primary'

@@ -1,4 +1,4 @@
-import React, {ChangeEvent, ChangeEventHandler, FC, FormEvent, ReactNode, useContext, useEffect} from "react";
+import React, {ChangeEventHandler, FC, ReactNode, useContext, useEffect} from "react";
 
 import {HelpTranslation, Translation} from "../../Translation";
 import {FormContext} from "../Form";
@@ -14,9 +14,6 @@ type InputGroupProps = {
 }
 
 export const InputGroup: FC<InputGroupProps> = ({ id, help, title, required = false, valid, children }) => {
-    const className = `Input ${required ? 'Required ' : ''}` +
-        (valid !== undefined ? (valid ? 'valid' : 'invalid') : '')
-
     return (
         <div className={ `Input ${valid !== undefined ? (valid ? 'valid' : 'invalid') : ''}` }>
             {title && (
@@ -32,7 +29,7 @@ export const InputGroup: FC<InputGroupProps> = ({ id, help, title, required = fa
 
 type useInputFieldProps = {
     field: any,
-    onChange?: (value: string) => void,
+    onChange?: (_: string) => void,
 }
 export const useInputField = ({onChange, field}: useInputFieldProps) : [FieldType, string[], InputChangeFunc<any>] => {
     const formContext = useContext(FormContext) as FormContextType

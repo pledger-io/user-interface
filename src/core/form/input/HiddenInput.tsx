@@ -3,7 +3,7 @@ import {useInputField} from "./InputGroup";
 import {FieldType} from "../form-types";
 
 type HiddenInputProps = FieldType & {
-    onChange: (value: string) => void
+    onChange: (_: string) => void
 }
 
 /**
