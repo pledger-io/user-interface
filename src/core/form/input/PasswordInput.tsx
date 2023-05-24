@@ -13,7 +13,7 @@ const validations: ValidatorType[] = [
     {label: 'Account.password.at_least_one_digit_char',validate: value => RegExp(/^(?=.*?[0-9])/).test(value)}]
 
 type PasswordInputProps = FieldType & {
-    onChange?: (value: any) => void
+    onChange?: (_: any) => void
 }
 
 /**

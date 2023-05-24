@@ -1,5 +1,5 @@
 import SummaryComponent from "./summary-component";
-import {mdiContactlessPaymentCircle, mdiScaleBalance, mdiSwapVerticalCircle} from "@mdi/js";
+import {mdiAbacus, mdiContactlessPaymentCircle, mdiScaleBalance, mdiSwapVerticalCircle} from "@mdi/js";
 import {Statistical} from "../../core";
 import React from "react";
 
@@ -22,11 +22,11 @@ const Summary = ({ range, compareRange }) => {
             <SummaryComponent
                 title='page.dashboard.income'
                 icon={mdiSwapVerticalCircle}
-                current={
+                currentPromise={
                     Statistical.Service.balance({...baseCommand, onlyIncome: true})
                         .then(({ balance }) => balance)
                 }
-                previous={
+                previousPromise={
                     Statistical.Service.balance({...compareBaseCommand, onlyIncome: true})
                         .then(({ balance }) => balance)
                 }
@@ -35,11 +35,11 @@ const Summary = ({ range, compareRange }) => {
             <SummaryComponent
                 title='page.dashboard.expense'
                 icon={mdiContactlessPaymentCircle}
-                current={
+                currentPromise={
                     Statistical.Service.balance({...baseCommand, onlyIncome: false})
                         .then(({ balance }) => Math.abs(balance))
                 }
-                previous={
+                previousPromise={
                     Statistical.Service.balance({...compareBaseCommand, onlyIncome: false})
                         .then(({ balance }) => Math.abs(balance))
                 }
@@ -48,11 +48,11 @@ const Summary = ({ range, compareRange }) => {
             <SummaryComponent
                 title='page.dashboard.balance'
                 icon={mdiScaleBalance}
-                current={
+                currentPromise={
                     Statistical.Service.balance({dateRange: {start: '1970-01-01', end: range.endString()}, allMoney: true})
                         .then(({ balance }) => balance)
                 }
-                previous={
+                previousPromise={
                     Statistical.Service.balance({dateRange: {start: '1970-01-01', end: compareRange.endString()}, allMoney: true})
                         .then(({ balance }) => balance)
                 }
@@ -60,8 +60,8 @@ const Summary = ({ range, compareRange }) => {
 
             <SummaryComponent
                 title='page.dashboard.budget'
-                current={0}
-                currency='EUR' />
+                currency='EUR'
+                icon={mdiAbacus}/>
         </div>
     </>
 }
