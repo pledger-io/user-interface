@@ -9,35 +9,6 @@
   & > .Button {
     display: inline-block;
   }
-
-  &.Tabs {
-    & > .Button {
-      margin: 0;
-      padding: 1em 1.5em;
-      border-radius: var(--border-radius);
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
-      border-bottom: 1px solid var(--app-border-color);
-
-      svg {
-        vertical-align: sub;
-      }
-
-      &:hover {
-        filter: none;
-      }
-
-      &.Active {
-        border: 1px solid var(--app-border-color);
-        border-bottom: 0;
-      }
-
-    }
-
-    & > .Filler {
-      border-bottom: 1px solid var(--app-border-color);
-    }
-  }
 }
 
 .Button {
