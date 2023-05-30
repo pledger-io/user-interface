@@ -11,6 +11,7 @@ import * as Statistical from './Statistical'
 import * as Translations from './Translation'
 import * as Formats from './Formatters'
 import * as Attachments from './Attachment'
+import * as Attachment from './attachment'
 import * as Dates from './Dates'
 import * as Charts from './Chart'
 import * as Dropdown from './dropdown'
@@ -181,6 +182,7 @@ export {
     BreadCrumbs,
     BreadCrumbItem,
     BreadCrumbMenu,
+    Attachment,
     Attachments,
     When,
     Dropdown,

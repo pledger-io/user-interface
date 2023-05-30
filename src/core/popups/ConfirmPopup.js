@@ -31,13 +31,13 @@ const ConfirmPopup = (props) => {
                                    icon={mdiCancel}/>]}>{children}</Popup>
     </>
 }
-ConfirmPopup.propTypes = {
-    // The translation key that is used in the header of the popup
-    title: PropTypes.string.isRequired,
-    // The callback handler that is used when the user accepts the popup
-    onConfirm: PropTypes.func.isRequired,
-    // The button to open the confirm popup
-    openButton: PropTypes.any
-}
+// ConfirmPopup.propTypes = {
+//     // The translation key that is used in the header of the popup
+//     title: PropTypes.string.isRequired,
+//     // The callback handler that is used when the user accepts the popup
+//     onConfirm: PropTypes.func.isRequired,
+//     // The button to open the confirm popup
+//     openButton: PropTypes.any
+// }
 
 export default ConfirmPopup

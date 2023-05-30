@@ -1,6 +1,6 @@
 import {FC, useEffect, useState} from "react";
 import {ContractRepository} from "../core/RestAPI";
-import {BreadCrumbItem, BreadCrumbs, Buttons, Layout} from "../core";
+import {BreadCrumbItem, BreadCrumbs, Layout} from "../core";
 import {ContractTable} from "./ContractTable";
 import {mdiClockTimeTwoOutline, mdiHistory} from "@mdi/js";
 

@@ -14,7 +14,7 @@ const FormattedDate = ({date}) => {
         )
     }
 
-    return ''
+    return <></>
 }
 FormattedDate.propTypes = {
     // The ISO date string
