@@ -2,7 +2,7 @@ definitions:
   steps:
     - step: &node-prepare
         name: Prepare node environment
-        image: node:18.12.1
+        image: node:19
         caches:
           - node
         script:
@@ -16,7 +16,7 @@ definitions:
           - npm test
     - step: &build-react
         name: Build React App
-        image: node:18
+        image: node:19
         caches:
           - node
         script:
