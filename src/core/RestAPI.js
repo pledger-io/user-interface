@@ -63,12 +63,6 @@ const BudgetRepository = (api => {
     }
 })(RestApi)
 
-const ContractRepository = (api => {
-    return {
-        list: () => api.get('contracts')
-    }
-})(RestApi)
-
 const LocalizationRepository = (api => {
     return {
         get: language => api.get(`localization/lang/${language}/`)
@@ -82,6 +76,5 @@ export {
     CurrencyRepository,
     SettingRepository,
     BudgetRepository,
-    ContractRepository,
     LocalizationRepository
 }

@@ -32,7 +32,7 @@ export const DateInput = (props) => {
         if (props.value) setSelected(new Date(props.value))
     }, [props.value])
 
-    if (!field) return ""
+    if (!field) return <></>
     return (
         <InputGroup id={props.id}
                     required={props.required}
@@ -52,6 +52,7 @@ export const DateInput = (props) => {
 }
 DateInput.propTypes = {
     ...InputGroup.propTypes,
+    value: PropTypes.string,
     // Indicator if the field is in read only mode
     readonly: PropTypes.bool
 }
@@ -79,8 +80,8 @@ export const DateRangeInput = (props) => {
         if (start && end) setEndDate(new Date(end)) || setStartDate(new Date(start))
     }, [props.value])
 
-    if (!field) return ""
-    return (
+    if (!field) return <></>
+    return <>
         <InputGroup id={props.id}
                     title={props.title}
                     help={props.help}
@@ -112,5 +113,5 @@ export const DateRangeInput = (props) => {
                             onChange={setEndDate}/>
             </div>
         </InputGroup>
-    )
+    </>
 }

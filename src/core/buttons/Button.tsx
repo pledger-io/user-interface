@@ -9,7 +9,7 @@ const specialVariant = ['icon', 'text']
 type SpecializedVariant = (typeof specialVariant)[number]
 const isSpecializedVariant = (x: any): x is SpecializedVariant => specialVariant.includes(x)
 
-type ButtonProps  = {
+export type ButtonProps  = {
     label?: string,
     message?: string,
     // The href that will be navigated to when the button is clicked, ignored if `onClick` is set

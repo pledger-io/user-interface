@@ -13,7 +13,7 @@ export type FieldType = {
     pattern?: string,
     min?: number,
     touched?: boolean,
-    validators: ValidatorType[]
+    validators?: ValidatorType[]
 }
 
 export type InputChangeFunc<T> = (value: T) => void

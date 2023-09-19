@@ -32,6 +32,3 @@ export const TextArea: FC<TextAreaProps> = (props) => {
         </InputGroup>
     )
 }
-TextArea.propTypes = {
-    ...InputGroup.propTypes
-}

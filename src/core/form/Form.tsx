@@ -23,10 +23,10 @@ function validateField(field: FieldType) {
         }
     }
 
-    if (field.hasOwnProperty('validators')) {
+    if (field.validators) {
         for (let idx = 0; idx < field.validators.length; idx++) {
-            if (!field.validators[idx].validate(value)) {
-                errors.push(field.validators[idx].label)
+            if (!field?.validators[idx].validate(value)) {
+                errors.push(field?.validators[idx].label)
             }
         }
     }
@@ -41,9 +41,9 @@ export const FormContext: Context<FormContextType> = createContext({} as FormCon
 
 type FormProps = {
     entity: string,                             // The entity type, used in error building
-    onSubmit: (_: any) => undefined,            // The handler that will be called with the entity, where the entity is build up of all fields in the form.
+    onSubmit: (_: any) => void,                 // The handler that will be called with the entity, where the entity is build up of all fields in the form.
     style?: 'group' | 'default',
-    children: ReactNode[]
+    children: ReactNode | ReactNode[]
 }
 
 /**

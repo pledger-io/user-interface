@@ -1,6 +1,5 @@
 import {Buttons} from "../index";
 import {mdiCancel, mdiRadioboxBlank} from "@mdi/js";
-import PropTypes from "prop-types";
 import React, {useRef} from "react";
 import Popup from "./Popup";
 

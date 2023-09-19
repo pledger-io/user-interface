@@ -1,11 +1,11 @@
-import {Attachment, Buttons, Dialog, Dropdown, Formats, Resolver, Translations} from "../core";
+import {Attachment, Buttons, Dialog, Dropdown, Formats, Resolver, Translations} from "../../core";
 import {NavLink} from "react-router-dom";
 import {FC} from "react";
-import {Contract} from "../core/types";
+import {Contract} from "../../core/types";
 import {
     mdiCalendarCheck,
     mdiCalendarPlus,
-    mdiDotsVertical, mdiDownload,
+    mdiDotsVertical,
     mdiSquareEditOutline,
     mdiTrashCanOutline,
     mdiUpload
@@ -14,7 +14,7 @@ import {
 type ContractTableProps = {
     contracts: Contract[]
 }
-export const ContractTable: FC<ContractTableProps> = ({contracts = []}) => {
+const ContractTable: FC<ContractTableProps> = ({contracts = []}) => {
     return <table className='Table'>
         <thead>
         <tr>
@@ -30,6 +30,8 @@ export const ContractTable: FC<ContractTableProps> = ({contracts = []}) => {
         </tbody>
     </table>
 }
+
+export default ContractTable
 
 type ContractRowProps = {
     contract: Contract
