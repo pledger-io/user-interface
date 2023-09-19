@@ -39,7 +39,7 @@ export const CurrencyOverview = () => {
 
     useEffect(() => {
         CurrencyRepository.list()
-            .then(setCurrencies())
+            .then(setCurrencies)
     }, [])
 
     return <>

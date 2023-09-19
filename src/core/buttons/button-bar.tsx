@@ -6,7 +6,7 @@ type ButtonBarProps = {
 }
 const ButtonBar: FC<ButtonBarProps> = ({ children, className }) => {
     return <>
-        <div className={`flex justify-end gap-1 ${className}`}>
+        <div className={`flex justify-end gap-1 ${className}`} data-testid='button-bar'>
             { children }
         </div>
     </>

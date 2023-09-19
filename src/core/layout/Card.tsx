@@ -14,15 +14,10 @@ type CardProps = {
 /**
  * A basic card that has borders, an optional title bar and options to add buttons to the header and footer.
  *
- * @param title                 the optional title key for this card
- * @param actions               the buttons to be placed in the header of the card
- * @param buttons               the buttons to be placed in the footer of the card
- * @param className             the additional CSS classes
- * @param children              the content of the card
  * @returns {JSX.Element}
  * @constructor
  */
-const Card: FC<CardProps> = ({title, actions, buttons, children, className = ''}) => {
+const Card: FC<CardProps> = ({title, actions, buttons, children, className = ''}): JSX.Element => {
     const hasHeader = (title || actions) !== undefined
 
     return (
