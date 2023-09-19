@@ -20,7 +20,7 @@ describe(HistoryButton, () => {
         const button = getByRole('button')
 
         expect(button).toBeInTheDocument()
-        expect(button).toHaveClass('Button')
+        expect(button).toHaveAttribute('type', 'button')
         fireEvent.click(button)
         //expect(mockNavigate).toBeCalled()
     })
