@@ -42,6 +42,7 @@ export const useInputField = ({onChange, field}: useInputFieldProps) : [FieldTyp
                 value: field.value || ''
             })
         }
+        // eslint-disable-next-line
     }, [field.id])
     useEffect(() => {
         if (field.value) console.debug(`\tUpdating field %c${field.id}%c value to '%c${JSON.stringify(field.value)}%c'.`, 'color: blue', '', 'color: purple', '')
@@ -52,6 +53,7 @@ export const useInputField = ({onChange, field}: useInputFieldProps) : [FieldTyp
                     value: field.value || ''
                 }
             })
+        // eslint-disable-next-line
     }, [field.value])
 
 
