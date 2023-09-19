@@ -4,7 +4,7 @@ import {InputGroup, useInputField} from "./InputGroup";
 import {LocalizationService} from "../../Translation";
 import {FieldType} from "../form-types";
 
-type SelectInputProps = FieldType & {
+export type SelectInputProps = FieldType & {
     title?: string,
     help?: string,
     onChange?: (_: any) => void,

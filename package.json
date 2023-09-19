@@ -8,10 +8,10 @@
     "@mdi/react": "^1.6.1",
     "axios": "^1.3.5",
     "chart.js": "^4.4.0",
-    "chartjs-adapter-luxon": "^1.3.1",
+    "chartjs-adapter-spacetime": "^1.0.1",
+    "spacetime": "^7.4.7",
     "cra-template": "1.2.0",
     "jwt-decode": "^3.1.2",
-    "luxon": "^3.2.1",
     "react": "^18.2.0",
     "react-datepicker": "^4.11.0",
     "react-dom": "^18.2.0",
@@ -44,7 +44,7 @@
     ],
     "moduleNameMapper": {
       "axios": "axios/dist/node/axios.cjs",
-      "luxon": "chartjs-adapter-luxon/dist/chartjs-adapter-luxon.umd.js"
+      "spacetime": "spacetime/builds/spacetime.cjs"
     }
   },
   "eslintConfig": {

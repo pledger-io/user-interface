@@ -1,9 +1,6 @@
 import React, {FC} from "react";
 import {useAutocomplete} from "../Autocomplete";
 import restAPI from "../../repositories/rest-api";
-import {InputGroup} from "../input/InputGroup";
-import {EntityShapes} from "../../../config";
-import PropTypes from "prop-types";
 import {Account} from "../../types";
 import {FieldType} from "../form-types";
 

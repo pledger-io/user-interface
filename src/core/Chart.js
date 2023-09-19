@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from "react";
 
 import Chart from 'chart.js/auto';
-import 'chartjs-adapter-luxon';
+import 'chartjs-adapter-spacetime';
 
 import {DefaultChartConfig, Service as ChartUtil} from '../config/global-chart-config'
 import {Service as BalanceService} from './Statistical'
