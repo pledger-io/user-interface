@@ -9,7 +9,7 @@ definitions:
           - npm install
     - step: &test-react
         name: Test React App
-        images: node:19
+        image: node:19
         caches:
           - node
         script:
