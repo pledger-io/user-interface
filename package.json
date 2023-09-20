@@ -43,7 +43,7 @@
       "json"
     ],
     "moduleNameMapper": {
-      "axios": "axios/dist/node/axios.cjs",
+      "axios": "<rootDir>/__mocks__/axios.js",
       "spacetime": "spacetime/builds/spacetime.cjs"
     }
   },
