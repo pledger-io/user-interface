@@ -1,8 +1,11 @@
-import {render, waitFor} from "@testing-library/react";
+import {act, render, screen} from "@testing-library/react";
 import {LocalizationService, Translation} from "./Translation";
 import axios from "axios";
+import {unmountComponentAtNode} from "react-dom";
 
 describe('Translation', () => {
+
+    let container = null
 
     beforeEach(() => {
         axios.get.mockImplementationOnce(_ => {
@@ -10,23 +13,33 @@ describe('Translation', () => {
         })
 
         LocalizationService.load('en')
+
+        container = document.createElement('div')
+        document.body.appendChild(container)
     })
 
     it('Verify not loaded text', async () => {
-        const {container} = render(<Translation label='test' />)
+        act(() => {
+            render(<Translation label='auto' />, container)
+        })
 
-        expect(container.querySelector('.Translation'))
-            .toHaveTextContent('!Not translated!')
+        const translation = await screen.findByText('!Not translated! [auto]')
+        expect(translation).toBeInTheDocument()
     })
 
     it('Render a localized text', async () => {
-        const {container} = render(<Translation label='test' />)
+        act(() => {
+            render(<Translation label='test' />, container)
+        })
 
-        await waitFor(() => expect(container.querySelector('.Translation'))
-            .toHaveTextContent('Localization test'))
+        const translation = await screen.findByText('Localization test')
+        expect(translation).toBeInTheDocument()
     })
 
     afterEach(() => {
         jest.restoreAllMocks()
+
+        unmountComponentAtNode(container)
+        container.remove()
     })
 })
