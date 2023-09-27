@@ -13,7 +13,7 @@ const Popup = forwardRef(({title, className, actions, children}, ref) => {
     }))
 
     if (closed) {
-        return ''
+        return <></>
     }
 
     return (

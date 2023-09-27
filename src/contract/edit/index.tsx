@@ -13,7 +13,7 @@ const ContractEdit: FC<void> = () => {
 
     useEffect(() => {
         if (id) {
-            ContractRepository.get(parseInt(id))
+            ContractRepository.get(id)
                 .then(setContract)
         } else {
             setContract({} as Contract)
@@ -22,7 +22,7 @@ const ContractEdit: FC<void> = () => {
 
     const onSubmit = (entity: any) => {
         if (id) {
-            ContractRepository.update(parseInt(id), entity)
+            ContractRepository.update(id, entity)
                 .then(() => Notifications.Service.success('page.budget.contracts.updated.success'))
                 .then(() => navigate(-1))
                 .catch(() => Notifications.Service.success('page.budget.contracts.updated.failed'))

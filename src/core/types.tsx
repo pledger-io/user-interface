@@ -4,7 +4,7 @@
  */
 export type StyleVariant = 'primary' | 'secondary' | 'warning' | 'info' | 'success'
 
-type Identifier = string | undefined
+export type Identifier = string | undefined
 
 export type Identifiable = {
     id: Identifier
