@@ -33,7 +33,7 @@ import {Form, Input, SubmitButton} from "../../core/form";
 
 import '../../assets/css/SavingAccountView.scss'
 import {useDateRange, useQueryParam} from "../../core/hooks";
-import {TransactionTable} from "../../transactions/TransactionTable";
+import {TransactionTable} from "../../transactions/table-view";
 
 const SavingSummaryComponent = ({savingAccount}) => {
     if (!savingAccount) return <Layout.Loading />

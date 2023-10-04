@@ -12,12 +12,12 @@ import {
     Pagination,
     Resolver,
 } from "../core";
-import {TransactionTable} from "../transactions/TransactionTable";
 
 import '../assets/css/TransactionOverview.scss'
 import {useNavigate, useParams} from "react-router-dom";
 import {useQueryParam} from "../core/hooks";
 import AccountRepository from "../core/repositories/account-repository";
+import {TransactionTable} from "../transactions/table-view";
 
 const TYPE_MAPPING = {
     expense: 'creditor',

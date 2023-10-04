@@ -21,7 +21,8 @@ export type Account = AccountRef & {
         number: string,
         bic: string
     },
-    description: string
+    description: string,
+    iconFileCode: Identifier
 }
 
 export type Contract = Identifiable & {
@@ -35,6 +36,27 @@ export type Contract = Identifiable & {
     terminated: boolean,
     scheduled: boolean,
     contractAvailable: boolean
+}
+
+export type Transaction = {
+    id: Identifier,
+    description: string,
+    source: Account,
+    destination: Account,
+    metadata: {
+        category?: string
+        budget?: string,
+        contract?: string
+    }
+    currency: string,
+    amount: number,
+    type: {
+        code: string
+    },
+    dates: {
+        transaction: string
+    },
+    split: []
 }
 
 export type SavingGoal = {

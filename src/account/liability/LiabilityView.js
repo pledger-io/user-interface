@@ -15,11 +15,11 @@ import {
 } from "../../core";
 
 import AccountRepository from "../../core/repositories/account-repository";
-import {TransactionTable} from "../../transactions/TransactionTable";
 import {mdiCashPlus} from "@mdi/js";
 import {useParams} from "react-router-dom";
 
 import '../../assets/css/LiabiliryView.scss'
+import {TransactionTable} from "../../transactions/table-view";
 
 const LiabilityTransactionComponent = ({account, range}) => {
     const [page]                            = useQueryParam('page', "1")

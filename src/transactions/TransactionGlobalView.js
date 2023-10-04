@@ -13,7 +13,6 @@ import {
     Resolver,
     Translations
 } from "../core";
-import {TransactionTable} from "./TransactionTable";
 import {TransactionRepository} from "../core/RestAPI";
 import {mdiCartPlus, mdiCashPlus, mdiChevronDown, mdiFilter, mdiPageNext, mdiSwapHorizontal} from "@mdi/js";
 import {Entity, Form, Input, SubmitButton} from "../core/form";
@@ -21,6 +20,7 @@ import PropTypes from "prop-types";
 import {useNavigate} from "react-router-dom";
 
 import '../assets/css/TransactionOverview.scss'
+import {TransactionTable} from "./table-view";
 
 const AccountSelectorPopup = ({variant, icon, type}) => {
     const navigate = useNavigate()

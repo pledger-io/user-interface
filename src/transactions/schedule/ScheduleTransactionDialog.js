@@ -116,6 +116,5 @@ export const ScheduleTransactionDialog = ({transaction, onCreated = () => {}}) =
     )
 }
 ScheduleTransactionDialog.propTypes = {
-    transaction: EntityShapes.Transaction,
     onCreated: PropTypes.func
 }

@@ -36,6 +36,7 @@ const BudgetBalance = ({ range }) => {
                     ]
                 })
             })
+            .catch(_ => null)
     }, [range])
 
     return <>
