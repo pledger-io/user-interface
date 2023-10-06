@@ -8,6 +8,7 @@ export type SelectInputProps = FieldType & {
     title?: string,
     help?: string,
     onChange?: (_: any) => void,
+    className?: string,
     children?: ReactNode
 }
 
@@ -23,6 +24,7 @@ export const SelectInput: FC<SelectInputProps> = (props) => {
                     required={props.required}
                     title={props.title}
                     help={props.help}
+                    className={props.className}
                     valid={field.touched ? errors.length === 0 : undefined }>
 
             <select id={field.id}

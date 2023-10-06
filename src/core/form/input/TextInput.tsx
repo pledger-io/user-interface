@@ -10,7 +10,8 @@ type TextInputProps = FieldType & {
     maxLength?: number,
     pattern?: string,
     readonly?: boolean,
-    onChange?: (_: any) => void
+    onChange?: (_: any) => void,
+    className?: string
 }
 
 export const TextInput: FC<TextInputProps> = (props) => {
@@ -22,6 +23,7 @@ export const TextInput: FC<TextInputProps> = (props) => {
                     required={props.required}
                     title={props.title}
                     help={props.help}
+                    className={props.className}
                     valid={field.touched ? errors.length === 0 : undefined }>
             <input id={field.id}
                    name={field.id}

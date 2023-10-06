@@ -39,18 +39,19 @@ const TranslationService = (() => {
  * The translation component is able to display a localized message on the screen using a given translation
  * key.
  */
-const Translation = ({label}) => {
+const Translation = ({label, className}) => {
     const [localized, setLocalized] = useState(`!Not translated! [${label}]`)
 
     useEffect(() => {
         TranslationService.get(label).then(setLocalized)
     }, [label])
 
-    return <span className='Translation'>{localized}</span>
+    return <span className={`Translation ${className}`}>{localized}</span>
 }
 Translation.propTypes = {
     // The text key to locate the translated text by
-    label: PropTypes.string.isRequired
+    label: PropTypes.string.isRequired,
+    className: PropTypes.string
 }
 
 /**

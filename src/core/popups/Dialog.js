@@ -8,7 +8,10 @@ export const Dialog = ({control, openButton, title, actions = [], className = ''
     const dialogRef = useRef()
 
     useEffect(() => {
-        if (control) control.close = () => dialogRef.current.close()
+        if (control) {
+            control.close = () => dialogRef.current.close()
+            control.open = () => dialogRef.current.open()
+        }
     }, [control, dialogRef])
 
     const actionsWithClose = [...actions, <Buttons.Button key='cancel'
@@ -18,7 +21,7 @@ export const Dialog = ({control, openButton, title, actions = [], className = ''
                                                           icon={mdiCancel}/>]
 
     return <>
-        <Buttons.Button {...openButton.props} onClick={() => dialogRef.current.open()}/>
+        { openButton && <Buttons.Button {...openButton.props} onClick={() => dialogRef.current.open()}/> }
         <Popup title={title}
                className={className}
                ref={dialogRef}
@@ -34,8 +37,8 @@ Dialog.propTypes = {
     className: PropTypes.string,
     actions: PropTypes.arrayOf(PropTypes.element),
     control: PropTypes.shape({
-        close: () => {
-        }
+        close: PropTypes.func,
+        open: PropTypes.func
     })
 }
 

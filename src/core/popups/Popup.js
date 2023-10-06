@@ -24,7 +24,7 @@ const Popup = forwardRef(({title, className, actions, children}, ref) => {
                     <Buttons.Button icon={mdiClose}
                                     onClick={() => setClosed(true)}
                                     variant='icon'
-                                    className='secondary'/>
+                                    className='secondary close'/>
                 </header>
                 <section>{children}</section>
                 {actions && <footer>

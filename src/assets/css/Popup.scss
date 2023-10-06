@@ -40,6 +40,7 @@
     header {
       display: flex;
       align-items: center;
+      justify-content: space-between;
 
       & > *:last-child {
         text-align: end;

@@ -10,12 +10,13 @@ type InputGroupProps = {
     title?: string,             // A text label used for any addition help text for this input
     required?: boolean          // Indicator if the field is required,
     valid?: boolean,
+    className?: string,
     children: ReactNode | ReactNode[]
 }
 
-export const InputGroup: FC<InputGroupProps> = ({ id, help, title, required = false, valid, children }) => {
+export const InputGroup: FC<InputGroupProps> = ({ id, help, title, required = false, valid, className = '', children }) => {
     return (
-        <div className={ `Input ${valid !== undefined ? (valid ? 'valid' : 'invalid') : ''}` }>
+        <div className={ `Input ${valid !== undefined ? (valid ? 'valid' : 'invalid') : ''} ${className}` }>
             {title && (
                 <label htmlFor={ id } className={`inline-flex items-center ${required ? 'font-bold' : ''}`}>
                     <Translation label={ title }/>

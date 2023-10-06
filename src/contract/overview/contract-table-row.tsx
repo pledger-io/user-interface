@@ -2,15 +2,9 @@ import {Contract} from "../../core/types";
 import {FC} from "react";
 import {NavLink, useNavigate} from "react-router-dom";
 import {Attachment, Buttons, Dialog, Dropdown, Formats, Notifications, Resolver, Translations} from "../../core";
-import {
-    mdiCalendarCheck,
-    mdiCalendarPlus,
-    mdiDotsVertical,
-    mdiSquareEditOutline,
-    mdiTrashCanOutline,
-    mdiUpload
-} from "@mdi/js";
+import {mdiCalendarCheck, mdiDotsVertical, mdiSquareEditOutline, mdiTrashCanOutline, mdiUpload} from "@mdi/js";
 import ContractRepository from "../../core/repositories/contract-repository";
+import ScheduleContract from "../schedule";
 
 type ContractRowProps = {
     contract: Contract
@@ -46,8 +40,7 @@ const ContractRow: FC<ContractRowProps> = ({ contract }) => {
                 <Dropdown.Dropdown icon={ mdiDotsVertical }
                                    className={`invisible group-hover:visible`}
                                    actions={ dropDownActions }>
-                    <Buttons.Button label='page.contract.action.schedule'
-                                    icon={ mdiCalendarPlus }/>
+                    <ScheduleContract contract={ contract } />
 
                     { contract.contractAvailable && <Attachment.DownloadButton title='page.budget.contracts.action.downloadContract'
                                                                                fileCode={ contract.fileToken } /> }
