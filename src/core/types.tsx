@@ -51,7 +51,7 @@ export type Transaction = {
     currency: string,
     amount: number,
     type: {
-        code: string
+        code: 'DEBIT' | 'CREDIT' | 'TRANSFER'
     },
     dates: {
         transaction: string

@@ -3,7 +3,6 @@ import React, {useState} from "react";
 import {Entity, Form, Input, SubmitButton} from '../../core/form'
 import {Buttons, Dialog, Message, Notifications, Translations} from "../../core";
 import {mdiCalendarCheck, mdiContentSave} from "@mdi/js";
-import {EntityShapes} from "../../config";
 import {TransactionScheduleRepository} from "../../core/RestAPI";
 
 import '../../assets/css/ScheduleTransactionDialog.scss'
@@ -56,6 +55,7 @@ export const ScheduleTransactionDialog = ({transaction, onCreated = () => {}}) =
                 <fieldset>
                     <legend><Translations.Translation label='popup.schedule.transaction.info'/></legend>
                     <Input.Text id='name'
+                                type='text'
                                 title='ScheduledTransaction.name'
                                 value={transaction?.description}
                                 required />

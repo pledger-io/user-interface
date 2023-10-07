@@ -59,7 +59,7 @@ export const TransactionRow: FC<TransactionRowProps> = ({ account, transaction }
             </td>
             <td>
                 <Formats.Date date={ transaction.dates.transaction }/><br/>
-                {/*<Icon path={ ICON_TYPE_LOOKUP[transaction.type.code] } size={.8} />*/}
+                <Icon path={ ICON_TYPE_LOOKUP[transaction.type.code] } size={.8} />
             </td>
             { account == null && <>
                 <td><TransactionOverviewUrl account={ transaction.source } transaction={ transaction } /></td>
