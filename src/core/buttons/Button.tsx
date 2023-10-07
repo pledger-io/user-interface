@@ -26,7 +26,8 @@ export type ButtonProps  = {
     // Indicator if the button should be disabled or not
     disabled?: boolean,
     icon?: any,
-    iconPos?: 'after' | 'before'
+    iconPos?: 'after' | 'before',
+    dataTestId?: string
 }
 
 const Button: FC<ButtonProps> = ({
@@ -40,7 +41,8 @@ const Button: FC<ButtonProps> = ({
                                      disabled,
                                      icon,
                                      iconPos,
-                                     onClick = () => undefined
+                                     onClick = () => undefined,
+                                     dataTestId
                                  }) => {
     const navigate = useNavigate()
     const specialVariant = isSpecializedVariant(variant)
@@ -51,6 +53,7 @@ const Button: FC<ButtonProps> = ({
         <button
             type={type}
             onClick={() => (href && navigate(href)) || onClick()}
+            data-testid={ dataTestId }
             className={`whitespace-nowrap outline-none
                         flex items-center justify-center cursor-pointer
                         hover:brightness-125

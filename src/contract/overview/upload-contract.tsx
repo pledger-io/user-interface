@@ -44,6 +44,7 @@ const UploadContract:FC<UploadContractProps> = ({id, onChanges}) => {
     return <>
         <Buttons.Button label='page.budget.contracts.action.uploadContract'
                         variant='secondary'
+                        dataTestId='upload-button'
                         onClick={ () => dialogControl.open() }
                         icon={ mdiUpload }/>
 
