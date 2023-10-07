@@ -29,7 +29,7 @@ export const Sidebar = ({logoutCallback}) => {
                 <span>Pledger<span style={{color: 'var(--app-text-muted-color)'}}>.io</span></span>
                 <span className='toggle' onClick={onToggleClick}>
                     <Icon path={open ? mdiClose : mdiMenu}
-                          size={1}/>
+                          size={ 1 }/>
                 </span>
             </div>
             {config

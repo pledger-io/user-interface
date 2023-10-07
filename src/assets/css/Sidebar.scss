@@ -139,7 +139,7 @@ $footer-height: 45px;
     background: var(--sidebar-sub-background);
 
     .Profile {
-      padding: 0 .25em;
+      padding: .15em .25em;
 
       .ProfilePicture {
         background: var(--sidebar-title-color);
@@ -151,10 +151,7 @@ $footer-height: 45px;
     .logout {
       cursor: pointer;
       color: var(--sidebar-icon-color);
-
-      &.icon {
-        padding-right: .75em;
-      }
+      padding-right: 1em;
     }
   }
 }
