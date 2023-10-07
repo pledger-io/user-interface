@@ -49,6 +49,7 @@ const ContractRow: FC<ContractRowProps> = ({ contract , onChanges }) => {
                     <ScheduleContract contract={ contract } />
 
                     { contract.contractAvailable && <Attachment.DownloadButton title='page.budget.contracts.action.downloadContract'
+                                                                               fileName={ `Contract-${contract.name}.pdf` }
                                                                                fileCode={ contract.fileToken } /> }
                     { !contract.contractAvailable && <UploadContract id={ contract.id } onChanges={ onChanges } /> }
 
