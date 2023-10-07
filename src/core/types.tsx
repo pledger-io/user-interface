@@ -34,7 +34,7 @@ export type Contract = Identifiable & {
     fileToken?: string,
 
     terminated: boolean,
-    scheduled: boolean,
+    notification: boolean,
     contractAvailable: boolean
 }
 
@@ -63,4 +63,8 @@ export type SavingGoal = {
     name: string,
     goal: number,
     targetDate: string
+}
+
+export type Attachment = {
+    fileCode: string,
 }

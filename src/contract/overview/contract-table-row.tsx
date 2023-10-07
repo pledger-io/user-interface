@@ -5,31 +5,38 @@ import {Attachment, Buttons, Dialog, Dropdown, Formats, Notifications, Resolver,
 import {mdiCalendarCheck, mdiDotsVertical, mdiSquareEditOutline, mdiTrashCanOutline, mdiUpload} from "@mdi/js";
 import ContractRepository from "../../core/repositories/contract-repository";
 import ScheduleContract from "../schedule";
+import UploadContract from "./upload-contract";
 
 type ContractRowProps = {
-    contract: Contract
+    contract: Contract,
+    onChanges?: () => any
 }
 
-const ContractRow: FC<ContractRowProps> = ({ contract }) => {
+const ContractRow: FC<ContractRowProps> = ({ contract , onChanges }) => {
     const dropDownActions = {close: () => undefined}
     const navigation = useNavigate()
 
     const onDelete = () => {
         ContractRepository.delete(contract.id)
             .then(() => Notifications.Service.success('page.budget.contracts.delete.success'))
-            .then(() => navigation(-1))
+            .then(() => onChanges && onChanges())
             .catch(() => Notifications.Service.warning('page.budget.contracts.delete.failed'))
+    }
+    const onWarnClick = () => {
+        ContractRepository.warn(contract.id)
+            .then(() => Notifications.Service.success('page.title.budget.contracts.warn.success'))
+            .catch(() => Notifications.Service.warning('page.title.budget.contracts.warn.failed'))
     }
 
     return <tr key={ contract.id }
-               onMouseLeave={() => dropDownActions.close()}
+               onMouseLeave={ () => dropDownActions.close() }
                className='group'>
         <td>
             <span className='text-lg'><NavLink to={`/contracts/${ contract.id }`}>{ contract.name }</NavLink></span>
             <div className='text-gray-700 text-sm'>{ contract.description }</div>
         </td>
         <td>
-            <NavLink to={`${Resolver.Account.resolveUrl(contract.company)}/transactions`}>
+            <NavLink to={ `${Resolver.Account.resolveUrl(contract.company)}/transactions` }>
                 { contract.company.name }
             </NavLink>
         </td>
@@ -44,18 +51,17 @@ const ContractRow: FC<ContractRowProps> = ({ contract }) => {
 
                     { contract.contractAvailable && <Attachment.DownloadButton title='page.budget.contracts.action.downloadContract'
                                                                                fileCode={ contract.fileToken } /> }
-                    { !contract.contractAvailable && <Buttons.Button label='page.budget.contracts.action.uploadContract'
-                                                                     variant='secondary'
-                                                                     icon={ mdiUpload }/> }
+                    { !contract.contractAvailable && <UploadContract id={ contract.id } onChanges={ onChanges } /> }
 
-                    <Buttons.Button label='page.title.budget.contracts.warn'
+                    { !contract.notification && <Buttons.Button label='page.title.budget.contracts.warn'
                                     variant='secondary'
-                                    icon={ mdiCalendarCheck }/>
+                                    onClick={ onWarnClick }
+                                    icon={ mdiCalendarCheck }/> }
 
                     <Buttons.Button label='common.action.edit'
                                     variant='primary'
-                                    icon={mdiSquareEditOutline}
-                                    href={`./${ contract.id }/edit`}/>
+                                    icon={ mdiSquareEditOutline }
+                                    href={ `./${ contract.id }/edit` }/>
 
                     <Dialog.ConfirmPopup title='common.action.delete'
                                          openButton={ <Buttons.Button label='common.action.delete'

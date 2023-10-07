@@ -25,7 +25,8 @@ const AttachmentRepository = (api => {
                     }
                     fileReader.readAsDataURL(rawData);
                 }).catch(reject)
-        })
+        }),
+        delete: fileCode => api.delete(`attachment/${fileCode}`)
     }
 })(RestApi)
 

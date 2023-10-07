@@ -4,9 +4,10 @@ import {Contract} from "../../core/types";
 import ContractRow from "./contract-table-row";
 
 type ContractTableProps = {
-    contracts: Contract[]
+    contracts: Contract[],
+    onChanges?: () => any
 }
-const ContractTable: FC<ContractTableProps> = ({contracts = []}) => {
+const ContractTable: FC<ContractTableProps> = ({contracts = [], onChanges}) => {
     return <table className='Table'>
         <thead>
         <tr>
@@ -18,7 +19,7 @@ const ContractTable: FC<ContractTableProps> = ({contracts = []}) => {
         </tr>
         </thead>
         <tbody>
-        {contracts.map(contract => <ContractRow key={ contract.id } contract={ contract } />)}
+        {contracts.map(contract => <ContractRow key={ contract.id } contract={ contract } onChanges={ onChanges } />)}
         </tbody>
     </table>
 }
