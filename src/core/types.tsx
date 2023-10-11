@@ -68,3 +68,8 @@ export type SavingGoal = {
 export type Attachment = {
     fileCode: string,
 }
+
+export type Pagination = {
+    records: number,
+    pageSize: number,
+}
