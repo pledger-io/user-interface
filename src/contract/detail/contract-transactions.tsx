@@ -25,7 +25,7 @@ const ContractTransactions: FC<ContractTransactionsProps> = ({ contract }) => {
     }, [contract, page]);
 
     return <>
-        <Layout.Loading condition={ transactions != undefined }>
+        <Layout.Loading condition={ transactions !== undefined }>
             { transactions && <TransactionTable transactions={ transactions } /> }
 
             <Pagination.Paginator page={ parseInt(page) }

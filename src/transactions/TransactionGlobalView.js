@@ -91,8 +91,7 @@ const TransactionFilterOptions = ({onChange = _ => {}}) => {
                 <Buttons.Button type='submit'
                                 label='page.transactions.filter'
                                 icon={mdiFilter}
-                                variant='info'
-                                variantType='outline'
+                                variant='secondary'
                                 className='ActionRow'/>
             </fieldset>
         </Form>

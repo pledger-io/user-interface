@@ -1,3 +1,5 @@
+import {Dates} from "./index";
+
 const ONE_DAY = 86400000;
 
 class Range {
@@ -62,7 +64,10 @@ const RangeService = (() => {
             }
 
             return new Range(parsedStart, parsedEnd)
-        }
+        },
+        // Return a list of monthly ranges for the given year
+        months: (year) => [...new Array(12).keys()]
+            .map(month => RangeService.forMonth(year, month + 1))
     }
 })()
 

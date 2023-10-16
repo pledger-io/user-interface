@@ -8,7 +8,7 @@ import {Loading} from "./layout";
 
 const StatisticsService = (() => {
     return {
-        balance: ({accounts = [], categories = [], contracts = [], expenses = [], onlyIncome, allMoney, dateRange, currency}) =>
+        balance: ({accounts = [], categories = [], contracts = [], expenses = [], onlyIncome, allMoney = undefined, dateRange, currency = ""}) =>
             restAPI.post('statistics/balance', {accounts, categories, contracts, expenses, onlyIncome, allMoney, dateRange, currency}),
         daily: searchCommand => restAPI.post('statistics/balance/daily', searchCommand),
         split: (splitBy, searchCommand) => restAPI.post(`statistics/balance/partitioned/${encodeURI(splitBy)}`, searchCommand)

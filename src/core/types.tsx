@@ -1,4 +1,3 @@
-
 /**
  * The variants of actions that are available for styling
  */
@@ -67,6 +66,18 @@ export type SavingGoal = {
 
 export type Attachment = {
     fileCode: string,
+}
+
+export type BudgetExpense = {
+    id: Identifier,
+    name: string,
+    expected: number,
+}
+
+export type Budget = {
+    id: Identifier,
+    name: string,
+    expenses: BudgetExpense[]
 }
 
 export type Pagination = {

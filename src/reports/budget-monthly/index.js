@@ -12,8 +12,8 @@ import {
 import {useNavigate, useParams} from "react-router-dom";
 import {BudgetRepository} from "../../core/RestAPI";
 
-import MonthlyTableComponent from "./BudgetTableComponent";
-import MonthlyPerBudgetTableComponent from "./MonthlyTableComponent";
+import MonthlyTableComponent from "./budget-table";
+import MonthlyPerBudgetTableComponent from "./monthly-budget-table";
 import YearlyIncomeGraphComponent from "./YearlyIncomeGraphComponent";
 import YearlyExpenseGraphComponent from "./YearlyExpenseGraphComponent";
 
@@ -33,6 +33,7 @@ export const BudgetReportView = () => {
             Promise.all([...new Array(12).keys()]
                 .map(month => BudgetRepository.forMonth(year, month + 1)))
                 .then(setBudgets)
+                .catch(console.error)
         }
     }, [year])
 
@@ -64,11 +65,11 @@ export const BudgetReportView = () => {
         </Layout.Grid>
 
         <Layout.Card>
-            {budgets.length > 0 && <MonthlyTableComponent budgets={budgets} year={year} currency={currency}/>}
+            <MonthlyTableComponent budgets={budgets} year={year} currency={currency}/>
         </Layout.Card>
 
         <Layout.Card>
-            {budgets.length > 0 && <MonthlyPerBudgetTableComponent budgets={budgets} year={year} currency={currency}/>}
+            <MonthlyPerBudgetTableComponent budgets={budgets} year={year} currency={currency}/>
         </Layout.Card>
     </div>
 }
