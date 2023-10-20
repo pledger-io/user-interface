@@ -52,7 +52,7 @@ const TransactionGlobalView = ({ transfers } : { transfers: boolean }) => {
 
         <Layout.Card title='page.title.transactions.overview'
                      actions={[
-                         <Dropdown.Dropdown icon={ mdiChevronDown }
+                         !transfers ? <Dropdown.Dropdown icon={ mdiChevronDown }
                                             key='add-debit-popup'
                                             title='page.transaction.add'>
                              <NewTransactionDialog type='debit'
@@ -61,11 +61,11 @@ const TransactionGlobalView = ({ transfers } : { transfers: boolean }) => {
                              <NewTransactionDialog type='credit'
                                                    icon={ mdiCashMinus }
                                                    variant='warning'/>
-                             <NewTransactionDialog type='transfer'
-                                                   icon={ mdiSwapHorizontal }
-                                                   variant='info'/>
-                         </Dropdown.Dropdown>
-                     ]}>
+                         </Dropdown.Dropdown> : <NewTransactionDialog type='transfer'
+                                                                      icon={mdiSwapHorizontal}
+                                                                      variant='info'/>
+
+                         ]}>
 
             <TransactionOverview range={range} transfers={transfers} />
         </Layout.Card>
