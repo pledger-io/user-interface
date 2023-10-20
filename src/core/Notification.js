@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 
 import '../assets/css/NotificationCenter.scss'
-import {Translation} from "./Translation";
+import {Translation} from "./localization";
 import PropTypes from "prop-types";
 
 const NotificationService = (() => {

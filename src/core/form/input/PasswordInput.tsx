@@ -2,7 +2,7 @@ import React, {FC} from "react";
 import Icon from "@mdi/react";
 import {mdiAlertCircle, mdiCheck} from "@mdi/js";
 
-import {Translation} from "../../Translation";
+import {Translation} from "../../localization";
 import {InputGroup, useInputField} from "./InputGroup";
 import {FieldType, ValidatorType} from "../form-types";
 

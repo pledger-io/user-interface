@@ -1,5 +1,5 @@
 import React, {FC, useEffect, useState} from "react";
-import {Dates, Formats, Layout, Statistical, Translations} from "../../core";
+import {Dates, Formats, Statistical, Translations} from "../../core";
 import {Range} from "../../core/Dates";
 import {Budget} from "../../core/types";
 

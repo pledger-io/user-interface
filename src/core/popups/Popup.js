@@ -1,5 +1,5 @@
 import {forwardRef, useImperativeHandle, useState} from "react";
-import {Translation} from "../Translation";
+import {Translation} from "../localization";
 import {Buttons} from "../index";
 import {mdiClose} from "@mdi/js";
 import PropTypes from "prop-types";

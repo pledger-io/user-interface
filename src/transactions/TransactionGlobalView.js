@@ -167,7 +167,7 @@ export const TransactionGlobalView = ({transfers}) => {
             </BreadCrumbs>
 
             {!transfers && <>
-                <Layout.Grid type='column' minWidth='35em'>
+                <Layout.Grid type='column' minWidth='20em'>
                     <Layout.Card title='page.transactions.expense.category'>
                         <Charts.CategorizedPieChart id='category-expense' range={range} split='category' incomeOnly={false} />
                     </Layout.Card>

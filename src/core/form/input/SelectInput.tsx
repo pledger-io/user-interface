@@ -1,7 +1,7 @@
 import React, {FC, ReactNode, useEffect, useState} from "react";
 
 import {InputGroup, useInputField} from "./InputGroup";
-import {LocalizationService} from "../../Translation";
+import {LocalizationService} from "../../localization";
 import {FieldType} from "../form-types";
 
 export type SelectInputProps = FieldType & {

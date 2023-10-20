@@ -101,7 +101,7 @@ const AccountTransactionOverview = () => {
             </Layout.Card>
 
             {!Resolver.Account.isManaged(account) && <>
-                <Layout.Grid type='column' minWidth='35em'>
+                <Layout.Grid type='column' minWidth='20em'>
                     <Layout.Card title='page.transactions.expense.category'>
                         <Charts.CategorizedPieChart id='category-expenses'
                                                     range={range}

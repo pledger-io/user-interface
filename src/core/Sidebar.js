@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import Icon from '@mdi/react'
 import config from '../config/sidebar-config.js'
-import {Translation} from "./Translation";
+import {Translation} from "./localization";
 import {mdiChevronDown, mdiChevronLeft, mdiClose, mdiLogoutVariant, mdiMenu} from "@mdi/js";
 import {NavLink, useNavigate} from "react-router-dom";
 import {ProfilePicture} from "../profile";

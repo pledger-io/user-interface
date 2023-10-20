@@ -1,6 +1,6 @@
 import React, {FC} from "react";
 
-import {Translation} from "../../Translation";
+import {Translation} from "../../localization";
 import {useInputField} from "./InputGroup";
 import {FieldType} from "../form-types";
 

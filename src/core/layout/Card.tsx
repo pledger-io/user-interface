@@ -1,4 +1,4 @@
-import * as Translations from "../Translation";
+import * as Translations from "../localization";
 import React, {FC, ReactNode} from "react";
 
 import {Buttons} from "../index";

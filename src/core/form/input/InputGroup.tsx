@@ -1,6 +1,6 @@
 import React, {ChangeEventHandler, FC, ReactNode, useContext, useEffect} from "react";
 
-import {HelpTranslation, Translation} from "../../Translation";
+import {HelpTranslation, Translation} from "../../localization";
 import {FormContext} from "../Form";
 import {FieldType, FormContextType, InputChangeFunc} from "../form-types";
 

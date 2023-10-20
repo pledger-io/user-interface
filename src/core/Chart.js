@@ -5,11 +5,12 @@ import 'chartjs-adapter-spacetime';
 
 import {DefaultChartConfig, Service as ChartUtil} from '../config/global-chart-config'
 import {Service as BalanceService} from './Statistical'
-import {LocalizationService} from './Translation'
+import {LocalizationService} from './localization'
 import PropTypes from "prop-types";
 import {Charts, Statistical} from "./index";
 import {EntityShapes} from "../config";
 import {Loading} from "./layout";
+import {isArray} from "chart.js/helpers";
 
 const defaultGraphColors = [
     '#E0FFFF',
@@ -154,6 +155,17 @@ const CategorizedPieChart = ({id, range, split, incomeOnly, accounts}) => {
                                   legend: {
                                       display: true,
                                       position: 'right'
+                                  },
+                                  tooltip: {
+                                        callbacks: {
+                                            title: (context) => pieSeries[context[0].dataIndex]?.partition,
+                                            label: (context) => {
+                                                if (accounts && !isArray(accounts)) {
+                                                    const point = pieSeries[context.dataIndex]
+                                                    return `${point.balance} ${accounts?.account.currency}`
+                                                }
+                                            }
+                                        }
                                   }
                               },
                               maintainAspectRatio: false

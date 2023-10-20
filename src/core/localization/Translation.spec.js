@@ -1,7 +1,8 @@
 import {act, render, screen} from "@testing-library/react";
-import {LocalizationService, Translation} from "./Translation";
 import axios from "axios";
 import {unmountComponentAtNode} from "react-dom";
+import Translation from "./translation";
+import LocalizationService from "./localization-service";
 
 describe('Translation', () => {
 
