@@ -8,9 +8,9 @@ export const ToggleInput = (props) => {
 
     const onToggle = () => onChange({persist: () => {}, currentTarget: {value: !checked}}) || setChecked(!checked)
 
-    if (!field) return ''
+    if (!field) return <></>
     return (
-        <div className='Switch'>
+        <div className={`Switch ${props.className}`}>
             <input name={props.id} id={props.id} defaultChecked={checked} type='checkbox'/>
             <label htmlFor={props.id} onClick={onToggle}/>
         </div>
@@ -19,6 +19,7 @@ export const ToggleInput = (props) => {
 ToggleInput.propTypes = {
     id: PropTypes.string,
     onChange: PropTypes.func,
-    value: PropTypes.any
+    value: PropTypes.any,
+    className: PropTypes.string
 }
 

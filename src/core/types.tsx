@@ -24,6 +24,12 @@ export type Account = AccountRef & {
     iconFileCode: Identifier
 }
 
+export type Category = Identifiable & {
+    enabled: boolean,
+    code: string,
+    symbol: string,
+}
+
 export type Contract = Identifiable & {
     name: string,
     description?: string,

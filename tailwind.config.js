@@ -12,6 +12,8 @@ module.exports = {
         'dark-warning': '#af2735',
         'success': '#24dc24',
         'dark-success': '#157347',
+        'info': '#0dcaf0',
+        'dark-info': '#0a8ab8',
 
 
         'header': '#f0f3f5',

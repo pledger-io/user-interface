@@ -79,6 +79,7 @@ export const useAutocomplete = function <T extends Identifiable>({autoCompleteCa
                     required={props.required}
                     title={props.title}
                     help={props.help}
+                    className={props.className}
                     valid={field.touched ? errors.length === 0 : undefined }>
             <div className='AccountInput'>
                 <input type='text'

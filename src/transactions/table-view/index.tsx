@@ -5,7 +5,7 @@ import {TransactionRow} from "./transaction-row";
 
 type TransactionTableProps = {
     account?: Account,
-    transactions: Transaction[]
+    transactions?: Transaction[]
 }
 
 export const TransactionTable: FC<TransactionTableProps> = ({account, transactions}) => {
