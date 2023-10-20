@@ -46,7 +46,7 @@ CategoryRow.propTypes = {
 
 export const CategoryOverview = () => {
     const [categories, setCategories]   = useState([])
-    const [page]                        = useQueryParam('page', "1")
+    const [page]                        = useQueryParam({key: 'page', initialValue: "1"})
     const [pagination, setPagination]   = useState({})
 
     const load = React.useCallback(() => {

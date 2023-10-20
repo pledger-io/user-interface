@@ -73,7 +73,7 @@ AccountRow.propTypes = {
 }
 
 const LiabilityOverview = () => {
-    const [page]                             = useQueryParam('page', "1")
+    const [page]                             = useQueryParam({key: 'page', initialValue: "1"})
     const [accounts, setAccounts]            = useState([])
     const [pagination, setPagination]        = useState({})
 

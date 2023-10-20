@@ -22,7 +22,7 @@ import '../../assets/css/LiabiliryView.scss'
 import {TransactionTable} from "../../transactions/table-view";
 
 const LiabilityTransactionComponent = ({account, range}) => {
-    const [page]                            = useQueryParam('page', "1")
+    const [page]                            = useQueryParam({key: 'page', initialValue: "1"})
     const [transactions, setTransactions]   = useState()
     const [pagination, setPagination]       = useState({})
 

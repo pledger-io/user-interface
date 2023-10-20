@@ -3,7 +3,7 @@ import React, {FC, useEffect, useState} from "react";
 import {Range} from "../../core/Dates";
 import {TransactionRepository} from "../../core/RestAPI";
 import {Pagination, Transaction} from "../../core/types";
-import TransactionFilters from "./transaction-filters";
+import TransactionFilters, {TransactionFilter} from "./transaction-filters";
 import {TransactionTable} from "../table-view";
 import {Paginator} from "../../core/Paginator";
 
@@ -13,7 +13,7 @@ type TransactionOverviewProps = {
 }
 
 const TransactionOverview: FC<TransactionOverviewProps> = ({ range, transfers }) => {
-    const [page] = useQueryParam('page', "1")
+    const [page] = useQueryParam({key: 'page', initialValue: "1"})
     const [searchCommand, setSearchCommand] = useState({})
     const [transactions, setTransactions] = useState<Transaction[] | undefined>([])
     const [pagination, setPagination] = useState<Pagination>()
@@ -45,7 +45,7 @@ const TransactionOverview: FC<TransactionOverviewProps> = ({ range, transfers })
         })
     }, [page, range])
 
-    const onFilterChange = (filter: any) => setSearchCommand(oldValue => {
+    const onFilterChange = (filter: TransactionFilter) => setSearchCommand(oldValue => {
         return {
             ...oldValue,
             ...filter

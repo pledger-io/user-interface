@@ -28,7 +28,7 @@ const TYPE_MAPPING = {
 const AccountTransactionComponent = ({account, range}) => {
     const [transactions, setTransactions] = useState(undefined)
     const [pagination, setPagination] = useState({})
-    const [page] = useQueryParam('page', "1")
+    const [page] = useQueryParam({key: 'page', initialValue: "1"})
 
     useEffect(() => {
         setTransactions(undefined)

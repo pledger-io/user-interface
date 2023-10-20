@@ -12,7 +12,7 @@ type ContractTransactionsProps = {
 const ContractTransactions: FC<ContractTransactionsProps> = ({ contract }) => {
     const [transactions, setTransactions] = useState<Transaction[] | undefined>(undefined)
     const [pagination, setPagination] = useState<PaginationType>({} as PaginationType)
-    const [page] = useQueryParam('page', "1")
+    const [page] = useQueryParam({key: 'page', initialValue: "1"})
 
     useEffect(() => {
         setTransactions(undefined)

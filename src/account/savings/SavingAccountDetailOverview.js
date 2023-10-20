@@ -225,7 +225,7 @@ const EditSavingGoalComponent = ({accountId, currency = 'EUR', savingGoal = null
 
 const SavingMonthlyTransactionComponent = ({account}) => {
     const [range]                            = useDateRange()
-    const [page]                             = useQueryParam('page', "1")
+    const [page]                             = useQueryParam({key: 'page', initialValue: "1"})
     const [pagination, setPagination]        = useState({})
     const [transactions, setTransactions]    = useState(undefined)
 

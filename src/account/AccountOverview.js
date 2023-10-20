@@ -76,7 +76,7 @@ AccountRow.propTypes = {
 
 const AccountOverview = ({type}) => {
     const [accounts, setAccounts]       = useState(undefined)
-    const [page]                        = useQueryParam('page', "1")
+    const [page]                        = useQueryParam({key: 'page', initialValue: "1"})
     const [pagination, setPagination]   = useState({})
 
     const reload = () => {

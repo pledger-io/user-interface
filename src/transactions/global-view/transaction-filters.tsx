@@ -4,7 +4,7 @@ import {Entity, Form, Input} from "../../core/form";
 import {Buttons, Translations} from "../../core";
 import {mdiFilter} from "@mdi/js";
 
-export type FilterChangeHandler = (filter: {
+export type TransactionFilter = {
     account?: string,
     category?: Identifiable,
     budget?: Identifiable,
@@ -12,13 +12,14 @@ export type FilterChangeHandler = (filter: {
     onlyExpenses?: boolean,
     description?: string,
     currency?: string,
-}) => void
+}
+export type FilterChangeHandler = (_: TransactionFilter) => void
 
 type TransactionFiltersProps = {
     onChange: FilterChangeHandler
 }
 
-const TransactionFilters: FC<TransactionFiltersProps> = ({ onChange }) => {
+const TransactionFilters: FC<TransactionFiltersProps> = ({onChange}) => {
 
     const onSubmit = (form: any) => {
         const filter = {
@@ -35,7 +36,7 @@ const TransactionFilters: FC<TransactionFiltersProps> = ({ onChange }) => {
     }
 
     return <div className='max-w-[90em] mx-auto my-0'>
-        <Form entity='Transaction' onSubmit={ onSubmit }>
+        <Form entity='Transaction' onSubmit={onSubmit}>
             <fieldset className='!border-solid !border-[1px] !border-separator'>
                 <legend className='text-xl font-normal px-2'>
                     <Translations.Translation label='page.transactions.filter'/>
@@ -45,38 +46,38 @@ const TransactionFilters: FC<TransactionFiltersProps> = ({ onChange }) => {
                     <Entity.Account id='account'
                                     title='page.transactions.filter.account'
                                     className='flex-1'
-                                    type='CREDITOR' />
+                                    type='CREDITOR'/>
                     <Input.Text id='description'
                                 type='text'
                                 className='flex-1'
-                                title='page.transaction.filter.description' />
+                                title='page.transaction.filter.description'/>
                     <Entity.Currency id='currency'
                                      className='flex-1'
-                                     title='page.transaction.filter.currency' />
+                                     title='page.transaction.filter.currency'/>
                 </div>
 
                 <div className='flex px-2 gap-2 flex-1'>
                     <Entity.Category id='category'
                                      className='flex-1'
-                                     title='page.transactions.filter.category' />
+                                     title='page.transactions.filter.category'/>
                     <Entity.Budget id='budget'
                                    className='flex-1'
-                                   title='page.transactions.filter.budget' />
-                    <div className='flex-1' />
+                                   title='page.transactions.filter.budget'/>
+                    <div className='flex-1'/>
                 </div>
 
                 <div className='flex px-2 pb-1 items-center gap-2'>
-                    <Input.Toggle id='onlyExpense' className='w-8' />
+                    <Input.Toggle id='onlyExpense' className='w-8'/>
                     <Translations.Translation label='page.transaction.filter.expense' className='flex-auto'/>
                 </div>
                 <div className='flex px-2 items-center gap-2'>
-                    <Input.Toggle id='onlyIncome' className='w-8' />
+                    <Input.Toggle id='onlyIncome' className='w-8'/>
                     <Translations.Translation label='page.transaction.filter.income' className='flex-auto'/>
                 </div>
 
                 <Buttons.Button type='submit'
                                 label='page.transactions.filter'
-                                icon={ mdiFilter }
+                                icon={mdiFilter}
                                 variant='secondary'
                                 className='mx-auto my-2'/>
             </fieldset>
