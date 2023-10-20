@@ -98,7 +98,7 @@ const LiabilityView = () => {
                     </div>
                     <div className="Details">
                         <label><Translations.Translation label='page.accounts.liability.paid'/></label>
-                        <Statistical.Balance accounts={[account]} income={true}/>
+                        <Statistical.Balance accounts={[{id: account.id}]} income={ true } currency={account.account.currency}/>
                     </div>
                 </Layout.Card>
                 <Layout.Card>
@@ -109,7 +109,7 @@ const LiabilityView = () => {
                         <Translations.Translation label={`common.month.${range.end?.getMonth() + 1}`} /> {range.end?.getFullYear()}
                     </h4>
 
-                    <Charts.Chart height={100}
+                    <Charts.Chart height={250}
                                   id='liability-balance-graph'
                                   dataSets={balanceSeries} />
                 </Layout.Card>

@@ -2,7 +2,7 @@ import {useNavigate} from "react-router-dom";
 import {useDateRange} from "../../core/hooks";
 import {BreadCrumbItem, BreadCrumbMenu, BreadCrumbs, Charts, Dropdown, Layout} from "../../core";
 import React from "react";
-import {mdiCartMinus, mdiCartPlus, mdiCashMinus, mdiCashPlus, mdiChevronDown, mdiSwapHorizontal} from "@mdi/js";
+import {mdiCashMinus, mdiCashPlus, mdiChevronDown, mdiSwapHorizontal} from "@mdi/js";
 import NewTransactionDialog from "./new-transaction-dialog";
 import TransactionOverview from "./transaction-overview";
 
