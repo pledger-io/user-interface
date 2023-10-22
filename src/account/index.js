@@ -24,9 +24,9 @@ const AccountOverview = lazy(() => import('./AccountOverview'))
 const AccountForm = lazy(() => import("./AccountForm"))
 const AccountTransactionOverview = lazy(() => import("./AccountTransactionOverview"))
 
-const LiabilityView = lazy(() => import('./liability/LiabilityView'))
+const LiabilityView = lazy(() => import('./liability/liability-detail-page'))
 const LiabilityOverview = lazy(() => import('./liability/LiabilityOverview'))
-const LiabilityForm = lazy(() => import('./liability/LiabilityForm'))
+const LiabilityForm = lazy(() => import('./liability/liability-edit-page'))
 const SavingDetailOverview = lazy(() => import('./savings/SavingAccountDetailOverview'))
 
 export const AccountRoutes = [

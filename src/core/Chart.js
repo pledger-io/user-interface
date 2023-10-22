@@ -180,7 +180,15 @@ CategorizedPieChart.propTypes = {
 }
 
 class ChartSeriesProvider {
-    async balanceSeries({title, accounts = [], categories = [], contracts = [], expenses = [], onlyIncome, allMoney, currency, dateRange = {}}) {
+    async balanceSeries({ title = '',
+                          accounts = [],
+                          categories = [],
+                            contracts = [],
+                            expenses = [],
+                            onlyIncome = false,
+                            allMoney = true,
+                            currency = undefined,
+                            dateRange = {}}) {
         const dataSearchCommand = {
             accounts: accounts,
             categories: categories,

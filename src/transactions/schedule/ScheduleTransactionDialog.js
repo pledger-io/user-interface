@@ -27,7 +27,7 @@ const createScheduleEntity = entity => {
     }
 }
 
-export const ScheduleTransactionDialog = ({transaction, onCreated = () => {}}) => {
+export const ScheduleTransactionDialog = ({transaction, onCreated = () => {}, iconStyle = false}) => {
     const [type, setType] = useState(transaction?.type.code.toLowerCase() || 'credit')
 
     const dialogHandler = {
@@ -48,7 +48,7 @@ export const ScheduleTransactionDialog = ({transaction, onCreated = () => {}}) =
                                <SubmitButton key='save' label='common.action.save' icon={mdiContentSave}/>
                            ]}
                            openButton={<Buttons.Button label='page.transaction.action.recurring'
-                                                       variantType='outline'
+                                                       variant={iconStyle ? 'icon' : 'primary'}
                                                        icon={mdiCalendarCheck}/>}>
                 <Message label='page.budget.schedule.explained' variant='info'/>
 
@@ -116,5 +116,6 @@ export const ScheduleTransactionDialog = ({transaction, onCreated = () => {}}) =
     )
 }
 ScheduleTransactionDialog.propTypes = {
-    onCreated: PropTypes.func
+    onCreated: PropTypes.func,
+    iconStyle: PropTypes.bool,
 }

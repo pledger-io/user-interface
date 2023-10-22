@@ -19,7 +19,16 @@ export type Account = AccountRef & {
         iban: string
         number: string,
         bic: string
+        currency: string,
     },
+    interest: {
+        interest: number,
+        periodicity: string
+    },
+    history: {
+        firstTransaction: string,
+        lastTransaction: string
+    }
     description: string,
     iconFileCode: Identifier
 }
@@ -89,4 +98,12 @@ export type Budget = {
 export type Pagination = {
     records: number,
     pageSize: number,
+}
+
+export type ChartSeries = {
+    label: string,
+    data: number[] | {x: string, y: number}[],
+    cubicInterpolationMode?: string,
+    tension?: number,
+    borderColor?: string,
 }

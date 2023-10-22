@@ -4,6 +4,7 @@ import {mdiTable} from "@mdi/js";
 
 import {Buttons, Dialog, Formats, Translations} from "../core";
 import {EntityShapes} from "../config";
+import PropTypes from "prop-types";
 
 const priceStyle = {
     textAlign: 'right'
@@ -17,7 +18,7 @@ const totalStyle = {
     fontWeight: 600
 }
 
-const TransactionSplitDialog = ({transaction: {split, currency, amount}}) => {
+const TransactionSplitDialog = ({transaction: {split, currency, amount}, iconStyle = false}) => {
 
     return (
         <Dialog.Dialog title='page.transactions.detail.title'
@@ -48,7 +49,8 @@ const TransactionSplitDialog = ({transaction: {split, currency, amount}}) => {
     )
 }
 TransactionSplitDialog.propTypes = {
-    transaction: EntityShapes.Transaction
+    transaction: EntityShapes.Transaction,
+    iconStyle: PropTypes.bool
 }
 
 export default TransactionSplitDialog
