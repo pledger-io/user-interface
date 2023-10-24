@@ -40,7 +40,7 @@ const LiabilityTransactionList: FC<LiabilityTransactionListProps> = ({ account, 
                 setPagination(result.info)
             })
             .catch(error => console.log(error))
-    }, [ page ]);
+    }, [ page, account, range ]);
 
     if (!transactions) return <Layout.Loading />
     return <>

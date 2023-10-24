@@ -23,7 +23,7 @@ const TransactionSplitDialog = ({transaction: {split, currency, amount}, iconSty
     return (
         <Dialog.Dialog title='page.transactions.detail.title'
                        openButton={<Buttons.Button label='page.transaction.action.details'
-                                                   variantType='outline'
+                                                   variant={iconStyle ? 'icon' : 'primary'}
                                                    icon={mdiTable}/>}>
             <table className='Table'>
                 <thead>

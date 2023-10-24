@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react'
-import {useQueryParam} from "../../core/hooks";
 import {
     BreadCrumbItem,
     BreadCrumbs,
@@ -8,7 +7,6 @@ import {
     Dates,
     Formats,
     Layout,
-    Pagination,
     Resolver,
     Statistical,
     Translations
@@ -19,31 +17,9 @@ import {mdiCashPlus} from "@mdi/js";
 import {useParams} from "react-router-dom";
 
 import '../../assets/css/LiabiliryView.scss'
-import {TransactionTable} from "../../transactions/table-view";
 import {Account, ChartSeries, Transaction} from "../../core/types";
 import {Range} from "../../core/Dates";
 import LiabilityTransactionList from "./liability-transaction-list";
-
-// const LiabilityTransactionComponent = ({account, range}) => {
-//     const [page]                            = useQueryParam({key: 'page', initialValue: "1"})
-//     const [transactions, setTransactions]   = useState()
-//     const [pagination, setPagination]       = useState({})
-//
-//     useEffect(() => {
-//         setTransactions(undefined)
-//
-//         const correctedRange = range.shiftDays(1)
-//         AccountRepository.transactions(account.id, correctedRange, page)
-//             .then(result => setTransactions(result.content) || setPagination(result.info))
-//     }, [page, range, account])
-//
-//     return <>
-//         <TransactionTable account={account} transactions={transactions}/>
-//
-//         <Pagination.Paginator page={parseInt(page)} records={pagination.records}
-//                               pageSize={pagination.pageSize} />
-//     </>
-// }
 
 const LiabilityDetailView = () => {
     const [account, setAccount] = useState<Account>()

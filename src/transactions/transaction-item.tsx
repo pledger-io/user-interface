@@ -14,7 +14,7 @@ type TransactionItemProps = {
 
 const TransactionItem: FC<TransactionItemProps> = ({ transaction, className = '' , account }) => {
 
-    const isSource = account && account.id == transaction.source.id
+    const isSource = account && account.id === transaction.source.id
     const otherAccount = isSource ? transaction.destination : transaction.source
     const amount = isSource ? (-transaction.amount) : transaction.amount
 
