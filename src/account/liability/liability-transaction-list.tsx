@@ -7,14 +7,11 @@ import {useQueryParam} from "../../core/hooks";
 import {Formats, Layout} from "../../core";
 import TransactionItem from "../../transactions/transaction-item";
 import {Paginator} from "../../core/Paginator";
+import {groupTransactionByYear, YearlyTransactions} from "../../core/reducers";
 
 type LiabilityTransactionListProps = {
     account: Account,
     range: Range
-}
-
-type YearlyTransactions = {
-    [year: string]: Transaction[]
 }
 
 const LiabilityTransactionList: FC<LiabilityTransactionListProps> = ({ account, range }) => {
@@ -31,15 +28,11 @@ const LiabilityTransactionList: FC<LiabilityTransactionListProps> = ({ account, 
         AccountRepository.transactions(account.id, correctedRange, page)
             .then(result => {
                 const transactions = result.content
-                    .reduce((accumulator: any, transaction: Transaction) => {
-                        const year = `${new Date(transaction.dates.transaction).getFullYear()}`
-                        accumulator[year] = [...(accumulator[year] || []), transaction]
-                        return accumulator
-                    }, {})
+                    .reduce(groupTransactionByYear, {})
                 setTransactions(transactions)
                 setPagination(result.info)
             })
-            .catch(error => console.log(error))
+            .catch(console.log)
     }, [ page, account, range ]);
 
     if (!transactions) return <Layout.Loading />
@@ -58,6 +51,7 @@ const LiabilityTransactionList: FC<LiabilityTransactionListProps> = ({ account, 
 
                 { transactions[year].map(transaction =>
                     <TransactionItem key={ transaction.id }
+                                     account={ account }
                                      transaction={ transaction }/>)}
             </div>
         </>) }

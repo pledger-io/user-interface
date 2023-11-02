@@ -125,7 +125,10 @@ const CategorizedPieChart = ({id, range, split, incomeOnly, accounts}) => {
 
     useEffect(() => {
         const command = {
-            dateRange: range,
+            dateRange: {
+                start: range.startString(),
+                end: range.endString()
+            },
             onlyIncome: incomeOnly
         }
         if (Array.isArray(accounts)) command.accounts = accounts

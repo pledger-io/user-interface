@@ -60,7 +60,8 @@ export type Transaction = {
     metadata: {
         category?: string
         budget?: string,
-        contract?: string
+        contract?: string,
+        tags?: string[]
     }
     currency: string,
     amount: number,

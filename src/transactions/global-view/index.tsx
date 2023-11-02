@@ -67,7 +67,7 @@ const TransactionGlobalView = ({ transfers } : { transfers: boolean }) => {
 
                          ]}>
 
-            <TransactionOverview range={range} transfers={transfers} />
+            <TransactionOverview range={ range } transfers={ transfers } />
         </Layout.Card>
     </div>
 }
