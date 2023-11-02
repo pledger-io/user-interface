@@ -89,7 +89,7 @@ ChartComponent.propTypes = {
     type: PropTypes.oneOf(['line', 'bar', 'pie'])
 }
 
-const BalanceChart = ({id, range, allMoney, accounts}) => {
+const BalanceChart = ({id, range, allMoney, accounts = {}}) => {
     const [balanceSeries, setBalanceSeries] = useState(undefined)
     useEffect(() => {
         const actualAccounts = Array.isArray(accounts) ? accounts : [accounts]
@@ -120,7 +120,7 @@ BalanceChart.propTypes = {
     allMoney: PropTypes.bool,
 }
 
-const CategorizedPieChart = ({id, range, split, incomeOnly, accounts}) => {
+const CategorizedPieChart = ({id, range, split, incomeOnly, accounts = {}}) => {
     const [pieSeries, setPieSeries] = useState(undefined)
 
     useEffect(() => {
@@ -161,12 +161,13 @@ const CategorizedPieChart = ({id, range, split, incomeOnly, accounts}) => {
                                   },
                                   tooltip: {
                                         callbacks: {
-                                            title: (context) => pieSeries[context[0].dataIndex]?.partition,
+                                            title: (context) => context.label,
                                             label: (context) => {
                                                 if (accounts && !isArray(accounts)) {
-                                                    const point = pieSeries[context.dataIndex]
-                                                    return `${point.balance} ${accounts?.account.currency}`
+                                                    return `${context.raw} ${accounts?.account?.currency}`
                                                 }
+
+                                                return context.raw
                                             }
                                         }
                                   }

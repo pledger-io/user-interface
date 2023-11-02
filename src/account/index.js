@@ -4,6 +4,15 @@ import {withPathParams} from "../core/hooks";
 
 import TransactionForm from "./transaction/edit";
 import {LiabilityPaymentForm} from "./transaction/LiabilityPayment";
+import AccountTransactionOverview from "./detail-view"
+import OwnAccountOverview from "./OwnAccountOverview"
+import AccountOverview from "./AccountOverview"
+import AccountForm from "./AccountForm"
+
+import LiabilityForm from "./liability/liability-edit-page"
+import LiabilityOverview from "./liability/LiabilityOverview";
+import SavingDetailOverview from "./savings/SavingAccountDetailOverview";
+
 import '../assets/css/Account.scss'
 
 const RedirectLiability = withPathParams(props => {
@@ -18,16 +27,7 @@ const RedirectLiability = withPathParams(props => {
 })
 
 
-const OwnAccountOverview = lazy(() => import('./OwnAccountOverview'))
-const AccountOverview = lazy(() => import('./AccountOverview'))
-
-const AccountForm = lazy(() => import("./AccountForm"))
-const AccountTransactionOverview = lazy(() => import("./AccountTransactionOverview"))
-
 const LiabilityView = lazy(() => import('./liability/liability-detail-page'))
-const LiabilityOverview = lazy(() => import('./liability/LiabilityOverview'))
-const LiabilityForm = lazy(() => import('./liability/liability-edit-page'))
-const SavingDetailOverview = lazy(() => import('./savings/SavingAccountDetailOverview'))
 
 export const AccountRoutes = [
     <Route key='own-account' path='/accounts/own' element={<OwnAccountOverview/>}/>,
