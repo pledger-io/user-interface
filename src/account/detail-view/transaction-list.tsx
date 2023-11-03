@@ -2,7 +2,7 @@ import React, {FC, useEffect, useState} from "react";
 import {Account, Pagination} from "../../core/types";
 import {Dates, Formats, Layout, Resolver, Translations} from "../../core";
 import {useQueryParam} from "../../core/hooks";
-import {groupTransactionByDay, groupTransactionByYear, YearlyTransactions} from "../../core/reducers";
+import {groupTransactionByDay, YearlyTransactions} from "../../core/reducers";
 import AccountRepository from "../../core/repositories/account-repository";
 import {Paginator} from "../../core/Paginator";
 import TransactionItem from "../../transactions/transaction-item";
@@ -16,8 +16,6 @@ const TransactionList: FC<TransactionListProps> = ({ account, range }) => {
     const [page] = useQueryParam({key: 'page', initialValue: "1"})
     const [transactions, setTransactions] = useState<YearlyTransactions>()
     const [pagination, setPagination] = useState<Pagination>()
-
-    const showPagination = pagination && pagination?.records > pagination?.pageSize
 
     useEffect(() => {
         setTransactions(undefined)
