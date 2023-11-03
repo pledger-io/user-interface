@@ -2,7 +2,7 @@ import {useQueryParam} from "../../core/hooks";
 import React, {FC, useEffect, useState} from "react";
 import {Range} from "../../core/Dates";
 import {TransactionRepository} from "../../core/RestAPI";
-import {Pagination, Transaction} from "../../core/types";
+import {Pagination} from "../../core/types";
 import TransactionFilters, {TransactionFilter} from "./transaction-filters";
 import {Paginator} from "../../core/Paginator";
 import {DailyTransactions, groupTransactionByDay} from "../../core/reducers";
