@@ -44,10 +44,10 @@ const TransactionList: FC<TransactionListProps> = ({ account, range }) => {
         { hasTransactions && Object.keys(transactions).map(key => {
             const date = new Date(key)
             const expense = transactions[key]
-                .filter(t => !isManaged && Resolver.Transaction.isCredit(t) || isManaged && Resolver.Transaction.isDebit(t))
+                .filter(t => (!isManaged && Resolver.Transaction.isCredit(t)) || (isManaged && Resolver.Transaction.isDebit(t)))
                 .reduce((a, t) => a - t.amount, 0)
             const income = transactions[key]
-                .filter(t => !isManaged && Resolver.Transaction.isDebit(t) || isManaged && Resolver.Transaction.isCredit(t))
+                .filter(t => (!isManaged && Resolver.Transaction.isDebit(t)) || (isManaged && Resolver.Transaction.isCredit(t)))
                 .reduce((a, t) => a + t.amount, 0)
 
             return <div key={key} className='flex flex-col gap-0.5 pb-3'>
