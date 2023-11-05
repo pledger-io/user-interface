@@ -1,10 +1,11 @@
 import {useNavigate} from "react-router-dom";
 import {useDateRange} from "../../core/hooks";
-import {BreadCrumbItem, BreadCrumbMenu, BreadCrumbs, Charts, Dropdown, Layout} from "../../core";
+import {BreadCrumbItem, BreadCrumbMenu, BreadCrumbs, Dropdown, Layout} from "../../core";
 import React from "react";
 import {mdiCashMinus, mdiCashPlus, mdiChevronDown, mdiSwapHorizontal} from "@mdi/js";
 import NewTransactionDialog from "./new-transaction-dialog";
 import TransactionOverview from "./transaction-overview";
+import CategorizedPieChart from "../../core/graphs/categorized-pie-chart";
 
 const TransactionGlobalView = ({ transfers } : { transfers: boolean }) => {
     const navigate = useNavigate()
@@ -30,22 +31,19 @@ const TransactionGlobalView = ({ transfers } : { transfers: boolean }) => {
         { !transfers && <>
             <Layout.Grid type='column' minWidth='20em'>
                 <Layout.Card title='page.transactions.expense.category'>
-                    <Charts.CategorizedPieChart id='category-expense'
-                                                range={ range }
-                                                split='category'
-                                                incomeOnly={ false } />
+                    <CategorizedPieChart id='category-expense'
+                                         split='category'
+                                         incomeOnly={ false } />
                 </Layout.Card>
                 <Layout.Card title='page.transactions.expense.budget'>
-                    <Charts.CategorizedPieChart id='budget-expense'
-                                                range={ range }
-                                                split='budget'
-                                                incomeOnly={ false } />
+                    <CategorizedPieChart id='budget-expense'
+                                         split='budget'
+                                         incomeOnly={ false } />
                 </Layout.Card>
                 <Layout.Card title='page.transactions.income.category'>
-                    <Charts.CategorizedPieChart id='category-income'
-                                                range={ range }
-                                                split='category'
-                                                incomeOnly={ true } />
+                    <CategorizedPieChart id='category-income'
+                                         split='category'
+                                         incomeOnly={ true } />
                 </Layout.Card>
             </Layout.Grid>
         </> }

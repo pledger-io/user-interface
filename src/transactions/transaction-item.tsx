@@ -2,7 +2,14 @@ import React, {FC, useState} from "react";
 import {Account, Transaction} from "../core/types";
 import {Buttons, Dialog, Formats, Layout, Resolver, Translations} from "../core";
 import {NavLink} from "react-router-dom";
-import {mdiArrowRight, mdiChevronLeftBox, mdiChevronRightBox, mdiSquareEditOutline, mdiTrashCanOutline} from "@mdi/js";
+import {
+    mdiArrowRight,
+    mdiChevronLeftBox,
+    mdiChevronRightBox,
+    mdiFileSign,
+    mdiSquareEditOutline,
+    mdiTrashCanOutline
+} from "@mdi/js";
 import TransactionSplitDialog from "./TransactionSplitDialog";
 import {ScheduleTransactionDialog} from "./schedule/ScheduleTransactionDialog";
 import Icon from "@mdi/react";
@@ -53,6 +60,12 @@ const TransactionItem: FC<TransactionItemProps> = ({ transaction, className = ''
                         { otherAccount.name }
                     </NavLink>
                 </> }
+                { transaction.metadata.contract &&
+                    <div className='text-cyan-500 text-[.8em] pt-[.2em] ml-4 flex gap-0.5 items-center' title='Contract'>
+                        <Icon path={mdiFileSign} size={.52} />
+                        <span>{ transaction.metadata.contract }</span>
+                    </div>
+                }
             </span>
             <span className='text-[.9em] [&>*]:inline-block'>
                 <ActionExpander transaction={ transaction } onDelete={ onDelete } />

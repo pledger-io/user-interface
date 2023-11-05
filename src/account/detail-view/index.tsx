@@ -1,9 +1,11 @@
 import React, {FC, useEffect, useState} from "react";
-import {BreadCrumbItem, BreadCrumbMenu, BreadCrumbs, Charts, Dates, Dropdown, Layout} from "../../core";
+import {BreadCrumbItem, BreadCrumbMenu, BreadCrumbs, Dates, Dropdown, Layout} from "../../core";
 import {Account} from "../../core/types";
 import {useNavigate, useParams} from "react-router-dom";
 import AccountRepository from "../../core/repositories/account-repository";
 import TransactionList from "./transaction-list";
+import CategorizedPieChart from "../../core/graphs/categorized-pie-chart";
+import BalanceChart from "../../core/graphs/balance-chart";
 
 const TYPE_MAPPING = {
     expense: 'creditor',
@@ -47,30 +49,26 @@ const AccountDetailView: FC = () => {
 
         { isOwnType && <>
             <Layout.Card title='common.account.balance'>
-                <Charts.BalanceChart id='dashboard-balance-graph'
+                <BalanceChart id='dashboard-balance-graph'
                                      accounts={ account }
-                                     range={ range }
                                      allMoney={ true }/>
             </Layout.Card>
 
             <Layout.Grid type='column' minWidth='20em'>
                 <Layout.Card title='page.transactions.expense.category'>
-                    <Charts.CategorizedPieChart id='category-expenses'
-                                                range={ range }
+                    <CategorizedPieChart id='category-expenses'
                                                 incomeOnly={ false }
                                                 accounts={ account }
                                                 split='category'/>
                 </Layout.Card>
                 <Layout.Card title='page.transactions.expense.budget'>
-                    <Charts.CategorizedPieChart id='budget-expenses'
-                                                range={ range }
+                    <CategorizedPieChart id='budget-expenses'
                                                 incomeOnly={ false }
                                                 accounts={ account }
                                                 split='budget'/>
                 </Layout.Card>
                 <Layout.Card title='page.transactions.income.category'>
-                    <Charts.CategorizedPieChart id='category-income'
-                                                range={ range }
+                    <CategorizedPieChart id='category-income'
                                                 incomeOnly={ true }
                                                 accounts={ account }
                                                 split='category'/>

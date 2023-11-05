@@ -28,8 +28,8 @@ const ContractTransactions: FC<ContractTransactionsProps> = ({ contract }) => {
     const showPagination = pagination && pagination?.records > pagination?.pageSize
     if (!transactions) return <Layout.Loading />
     return <>
-        { transactions && Object.keys(transactions).sort().reverse().map(year => <>
-            <div className='flex flex-col'>
+        { transactions && Object.keys(transactions).sort().reverse().map(year =>
+            <div className='flex flex-col' key={ year }>
                 <div className='border-b-[1px] pb-1 mb-1 flex'>
                     <h1 className='font-bold flex-1'>
                         { year }
@@ -45,7 +45,7 @@ const ContractTransactions: FC<ContractTransactionsProps> = ({ contract }) => {
                                      account={ contract.company }
                                      transaction={ transaction }/>)}
             </div>
-        </>) }
+        ) }
 
         { showPagination && <Pagination.Paginator page={ parseInt(page) }
                               records={ pagination.records }

@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef} from "react";
 
 import Chart from 'chart.js/auto';
 import 'chartjs-adapter-spacetime';
@@ -7,12 +7,8 @@ import {DefaultChartConfig, Service as ChartUtil} from '../config/global-chart-c
 import {Service as BalanceService} from './Statistical'
 import {LocalizationService} from './localization'
 import PropTypes from "prop-types";
-import {Charts, Statistical} from "./index";
-import {EntityShapes} from "../config";
-import {Loading} from "./layout";
-import {isArray} from "chart.js/helpers";
 
-const defaultGraphColors = [
+export const defaultGraphColors = [
     '#E0FFFF',
     '#00CED1',
     '#40E0D0',
@@ -89,100 +85,6 @@ ChartComponent.propTypes = {
     type: PropTypes.oneOf(['line', 'bar', 'pie'])
 }
 
-const BalanceChart = ({id, range, allMoney, accounts = {}}) => {
-    const [balanceSeries, setBalanceSeries] = useState(undefined)
-    useEffect(() => {
-        const actualAccounts = Array.isArray(accounts) ? accounts : [accounts]
-
-        setBalanceSeries(undefined)
-        provider.balanceSeries({
-            id: 'balance-series',
-            title: 'graph.series.balance',
-            dateRange: range,
-            allMoney: allMoney,
-            accounts: actualAccounts
-        }).then(result => setBalanceSeries([result]))
-    }, [range, allMoney, accounts])
-
-    return (
-        <Loading condition={balanceSeries !== undefined}>
-            <Charts.Chart height={350}
-                          id={id}
-                          dataSets={balanceSeries || []}>
-            </Charts.Chart>
-        </Loading>
-    )
-}
-BalanceChart.propTypes = {
-    id: PropTypes.string.isRequired,
-    range: PropTypes.any,
-    accounts: PropTypes.oneOfType([PropTypes.array, EntityShapes.Account]),
-    allMoney: PropTypes.bool,
-}
-
-const CategorizedPieChart = ({id, range, split, incomeOnly, accounts = {}}) => {
-    const [pieSeries, setPieSeries] = useState(undefined)
-
-    useEffect(() => {
-        const command = {
-            dateRange: {
-                start: range.startString(),
-                end: range.endString()
-            },
-            onlyIncome: incomeOnly
-        }
-        if (Array.isArray(accounts)) command.accounts = accounts
-        else if (accounts) command.accounts = [accounts]
-
-        Statistical.Service.split(split, command)
-            .then(series => series.filter(point => point.balance !== 0))
-            .then(setPieSeries)
-    }, [range, split, incomeOnly, accounts])
-
-    return (
-        <Loading condition={pieSeries}>
-            <Charts.Chart id={id}
-                          type='pie'
-                          height={300}
-                          labels={(pieSeries || []).map(point => point.partition)}
-                          dataSets={[{
-                              data: (pieSeries || []).map(point => point.balance)
-                          }]}
-                          options={{
-                              elements: {
-                                  arc: {
-                                      backgroundColor: context => defaultGraphColors[context.dataIndex]
-                                  }
-                              },
-                              plugins: {
-                                  legend: {
-                                      display: true,
-                                      position: 'right'
-                                  },
-                                  tooltip: {
-                                        callbacks: {
-                                            title: (context) => context.label,
-                                            label: (context) => {
-                                                if (accounts && !isArray(accounts)) {
-                                                    return `${context.raw} ${accounts?.account?.currency}`
-                                                }
-
-                                                return context.raw
-                                            }
-                                        }
-                                  }
-                              },
-                              maintainAspectRatio: false
-                          }}/>
-        </Loading>
-    )
-}
-CategorizedPieChart.propTypes = {
-    range: PropTypes.shape({}),
-    split: PropTypes.oneOf(['account', 'category', 'budget']),
-    accounts: PropTypes.oneOfType([PropTypes.array, EntityShapes.Account])
-}
-
 class ChartSeriesProvider {
     async balanceSeries({ title = '',
                           accounts = [],
@@ -236,7 +138,5 @@ const provider = new ChartSeriesProvider()
 
 export {
     ChartComponent as Chart,
-    BalanceChart,
-    CategorizedPieChart,
     provider as SeriesProvider
 }
