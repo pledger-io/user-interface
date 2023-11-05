@@ -18,10 +18,11 @@ const BudgetTable: FC<BudgetTableProps> = ({budgets, year, currency}) => {
 
         Promise.all(ranges.map(month => Statistical.Service.balance({
             onlyIncome: false,
-            dateRange: month
+            dateRange: month.toBackend()
         })))
             .then(expenses => expenses.map(({balance}) => Math.abs(balance)))
             .then(setMonthlyExpenses)
+            .catch(console.error)
 
         setMonths(ranges)
     }, [year])

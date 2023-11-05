@@ -81,9 +81,10 @@ const YearlyBudgetIncomeComponent = ({range, budgets = []}) => {
     useEffect(() => {
         Statistical.Service.balance({
                 onlyIncome: true,
-                dateRange: range
+                dateRange: range.toBackend()
             }
         ).then(b => setYearlyIncome(b.balance))
+         .catch(console.error)
     }, [range])
     useEffect(() => {
         setYearlyExpected(budgets.reduce((left, right) => left + right.income, 0))
@@ -122,8 +123,9 @@ const YearlyBudgetExpenseComponent = ({budgets = [], range}) => {
         Statistical.Service.balance({
             expenses: allExpenses,
             onlyIncome: false,
-            dateRange: range
+            dateRange: range.toBackend()
         }).then(({balance}) => setYearlyExpenses(Math.abs(balance)))
+          .catch(console.error)
     }, [budgets, range])
 
     return <>

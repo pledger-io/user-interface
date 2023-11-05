@@ -20,7 +20,10 @@ const CategoryGraph = ({categories, range, currencySymbol}) => {
         setMonthLabels(months.map(month => month.start))
 
         Promise.all(months.map(m => Statistical.Service.balance({
-            dateRange: m,
+            dateRange: {
+                start: m.startString(),
+                end: m.endString()
+            },
             onlyIncome: true,
             categories: categories})))
             .then(async responses => {
@@ -31,8 +34,12 @@ const CategoryGraph = ({categories, range, currencySymbol}) => {
                 }
             })
             .then(setIncomeSeries)
+            .catch(console.error)
         Promise.all(months.map(m => Statistical.Service.balance({
-            dateRange: m,
+            dateRange: {
+                start: m.startString(),
+                end: m.endString()
+            },
             onlyIncome: false,
             categories: categories})))
             .then(async responses => {
@@ -43,6 +50,7 @@ const CategoryGraph = ({categories, range, currencySymbol}) => {
                 }
             })
             .then(setExpenseSeries)
+            .catch(console.error)
     }, [categories, range, currentRange])
 
     if (!incomeSeries || !expenseSeries) return <Layout.Loading />

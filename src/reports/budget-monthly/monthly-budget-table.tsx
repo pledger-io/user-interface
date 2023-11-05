@@ -57,7 +57,7 @@ const MonthlyBudgetTableRow: FC<MonthlyBudgetTableRowProps> = ({ months, expense
     useEffect(() => {
         Promise.all(months.map(month => Statistical.Service.balance({
             expenses: [expense],
-            dateRange: month,
+            dateRange: month.toBackend(),
             onlyIncome: false,
             currency: currency
         })))

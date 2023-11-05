@@ -28,7 +28,7 @@ const YearlyExpenseGraphComponent = ({year = 1970, budgets = []}) => {
         Promise.all(
             [...new Array(12).keys()]
                 .map(m => Statistical.Service.balance({
-                    dateRange: Dates.Ranges.forMonth(year, m + 1),
+                    dateRange: Dates.Ranges.forMonth(year, m + 1).toBackend(),
                     onlyIncome: false,
                     expenses: allExpenses
                 })))
@@ -39,6 +39,7 @@ const YearlyExpenseGraphComponent = ({year = 1970, budgets = []}) => {
                 borderColor: '#de7370',
                 backgroundColor: '#de7370'
             }))
+            .catch(console.error)
     }, [budgets, year])
 
     const labels = [...new Array(12).keys()]

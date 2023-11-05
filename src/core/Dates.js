@@ -35,6 +35,13 @@ class Range {
         return new Range(begin, end)
     }
 
+    toBackend() {
+        return {
+            start: this.startString(),
+            end: this.endString()
+        }
+    }
+
     toString() {
         return this.startString() + '_' + this.endString()
     }
