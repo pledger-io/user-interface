@@ -40,7 +40,7 @@ const CategoryReportView = () => {
                 <BreadCrumbItem label='page.reports.category.title' />
                 <BreadCrumbItem message={`${range.year()}`} />
                 <BreadCrumbItem message={currencySymbol} />
-                <BreadCrumbMenu>
+                <BreadCrumbMenu className='flex justify-end'>
                     <Dropdown.Currency currency={currency} onChange={currency => onDateChanged({newCurrency: currency.code})} />
                     <Dropdown.Year year={range.year()} onChange={year => onDateChanged({newYear: year})}/>
                 </BreadCrumbMenu>

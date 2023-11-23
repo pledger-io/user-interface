@@ -15,7 +15,7 @@ import {BudgetRepository} from "../../core/RestAPI";
 import MonthlyTableComponent from "./budget-table";
 import MonthlyPerBudgetTableComponent from "./monthly-budget-table";
 import YearlyIncomeGraphComponent from "./YearlyIncomeGraphComponent";
-import YearlyExpenseGraphComponent from "./YearlyExpenseGraphComponent";
+import BudgetYearlyExpense from "./budget-yearly-expense";
 
 import '../../assets/css/BudgetReportView.scss'
 
@@ -47,7 +47,7 @@ export const BudgetReportView = () => {
             <BreadCrumbItem label='page.title.reports.default'/>
             <BreadCrumbItem label='page.reports.budget.title'/>
             <BreadCrumbItem message={`${range.year()}`}/>
-            <BreadCrumbMenu>
+            <BreadCrumbMenu className='flex justify-end'>
                 <Dropdown.Currency currency={currency}
                                    onChange={currency => onDateChanged({newCurrency: currency.code})}/>
                 <Dropdown.Year year={range.year()} onChange={year => onDateChanged({newYear: year})}/>
@@ -61,7 +61,7 @@ export const BudgetReportView = () => {
 
         <Layout.Grid type='column' minWidth='35em'>
             <YearlyIncomeGraphComponent year={parseInt(year)} budgets={budgets}/>
-            <YearlyExpenseGraphComponent year={parseInt(year)} budgets={budgets}/>
+            <BudgetYearlyExpense year={parseInt(year)} budgets={budgets}/>
         </Layout.Grid>
 
         <Layout.Card>

@@ -1,19 +1,10 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from 'prop-types';
 
-import restAPI from "./repositories/rest-api";
+import StatisticalRepository from "./repositories/statistical-repository";
 import {Money} from "./Formatters";
 import {EntityShapes} from "../config";
 import {Loading} from "./layout";
-
-const StatisticsService = (() => {
-    return {
-        balance: ({accounts = [], categories = [], contracts = [], expenses = [], onlyIncome, allMoney = undefined, dateRange, currency = ""}) =>
-            restAPI.post('statistics/balance', {accounts, categories, contracts, expenses, onlyIncome, allMoney, dateRange, currency}),
-        daily: searchCommand => restAPI.post('statistics/balance/daily', searchCommand),
-        split: (splitBy, searchCommand) => restAPI.post(`statistics/balance/partitioned/${encodeURI(splitBy)}`, searchCommand)
-    }
-})()
 
 /**
  * The balance component can display a computed balance on a given search command. Where the search command can
@@ -38,7 +29,7 @@ const BalanceComponent = ({accounts = [], categories = [], expenses = [],  incom
             }
         }
 
-        StatisticsService.balance(filter)
+        StatisticalRepository.balance(filter)
             .then(balanceResponse => setBalance(balanceResponse.balance))
     }, [accounts, income, currency, range, categories, expenses])
 
@@ -57,6 +48,6 @@ BalanceComponent.propTypes = {
 }
 
 export {
-    StatisticsService as Service,
+    StatisticalRepository as Service,
     BalanceComponent as Balance
 }

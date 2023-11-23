@@ -33,6 +33,9 @@ export const defaultGraphColors = [
     '#6B8E23',
 ]
 
+/**
+ * @deprecated Use Chart instead
+ */
 const ChartComponent = ({id, height = 50, type = 'line', options = {}, dataSets = [], labels = [], ...props}) => {
     const canvasRef = useRef(null)
     const chartRef = useRef(null)
@@ -93,7 +96,7 @@ class ChartSeriesProvider {
                             expenses = [],
                             onlyIncome = false,
                             allMoney = true,
-                            currency = undefined,
+                            currency = 'EUR',
                             dateRange = {}}) {
         const dataSearchCommand = {
             accounts: accounts,

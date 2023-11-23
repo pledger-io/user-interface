@@ -3,7 +3,6 @@ import {
     BreadCrumbItem,
     BreadCrumbs,
     Buttons,
-    Charts,
     Dates,
     Formats,
     Layout,
@@ -15,19 +14,18 @@ import {
 import AccountRepository from "../../core/repositories/account-repository";
 import {mdiCashPlus} from "@mdi/js";
 import {useParams} from "react-router-dom";
-
-import '../../assets/css/LiabiliryView.scss'
-import {Account, ChartSeries, Transaction} from "../../core/types";
+import {Account, Transaction} from "../../core/types";
 import {Range} from "../../core/Dates";
 import LiabilityTransactionList from "./liability-transaction-list";
+
+import '../../assets/css/LiabiliryView.scss'
+import LiabilityGraph from "./liability-graph";
 
 const LiabilityDetailView = () => {
     const [account, setAccount] = useState<Account>()
     const [openingTransaction, setOpeningTransaction] = useState<Transaction>()
     const [range, setRange] = useState<Range>()
-    const [balanceSeries, setBalanceSeries] = useState<ChartSeries[]>()
-
-    const {id}     = useParams()
+    const {id} = useParams()
 
     useEffect(() => {
         AccountRepository.get(id).then(setAccount)
@@ -41,18 +39,6 @@ const LiabilityDetailView = () => {
                 account.history.firstTransaction,
                 account.history.lastTransaction))
     }, [account])
-
-    useEffect(() => {
-        if (account && range) {
-            Charts.SeriesProvider.balanceSeries({
-                title: 'graph.series.balance',
-                dateRange: range,
-                allMoney: true,
-                accounts: [account]
-            }).then(result => setBalanceSeries([ result ]))
-        }
-    }, [range, account])
-
 
     if (!account || !range) return <Layout.Loading />
     return (
@@ -105,9 +91,7 @@ const LiabilityDetailView = () => {
                         {range.end?.getFullYear()}
                     </h4>
 
-                    <Charts.Chart height={ 250 }
-                                  id='liability-balance-graph'
-                                  dataSets={balanceSeries} />
+                    <LiabilityGraph account={ account } range={ range } />
                 </Layout.Card>
             </div>
 

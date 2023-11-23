@@ -32,5 +32,6 @@ CategoryInput.propTypes = {
     value: PropTypes.shape({
         id: PropTypes.number.isRequired,
         name: PropTypes.string.isRequired
-    })
+    }),
+    onChange: PropTypes.func
 }

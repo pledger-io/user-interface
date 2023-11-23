@@ -1,10 +1,12 @@
 import {FC, useEffect, useState} from "react";
 import {useDateRange} from "../hooks";
-import {Charts, Layout, Statistical} from "../index";
+import {Layout} from "../index";
 import {isArray} from "chart.js/helpers";
 import {defaultGraphColors} from "../Chart";
 import {Account} from "../types";
-import {Datasets} from "./chart-types";
+import StatisticalRepository from "../repositories/statistical-repository";
+import {Chart} from "react-chartjs-2";
+import {ChartData} from "chart.js";
 
 type CategorizedPieChartProps = {
     id: string
@@ -14,8 +16,7 @@ type CategorizedPieChartProps = {
 }
 
 const CategorizedPieChart: FC<CategorizedPieChartProps> = ({ id, split, incomeOnly, accounts = [] }) => {
-    const [pieSeries, setPieSeries] = useState<Datasets>(undefined)
-    const [labels, setLabels] = useState<string[]>([])
+    const [pieSeries, setPieSeries] = useState<ChartData | undefined>(undefined)
     const [range] = useDateRange()
 
     useEffect(() => {
@@ -30,50 +31,52 @@ const CategorizedPieChart: FC<CategorizedPieChartProps> = ({ id, split, incomeOn
             accounts: Array.isArray(accounts) ? accounts : [accounts]
         }
 
-        Statistical.Service.split(split, searchCommand)
+        StatisticalRepository.split(split, searchCommand)
             .then(series => {
-                setLabels(series.map(({partition}: any) => partition || 'Uncategorized'))
-                setPieSeries([{
-                    label: split,
-                    data: series.map(({balance}: any) => Math.abs(balance))
-                }])
-                series.filter((point: any) => point.balance !== 0)
+                setPieSeries({
+                    labels: series.map(({partition}) => partition || 'Uncategorized'),
+                    datasets: [
+                        {
+                            data: series.map(({balance}) => Math.abs(balance))
+                        }
+                    ]
+                })
             })
-    }, [split, incomeOnly, range])
+    }, [split, incomeOnly, range]) // eslint-disable-line react-hooks/exhaustive-deps
 
     if (!pieSeries) return <Layout.Loading />
     return <>
-        <Charts.Chart id={ id }
-                      type='pie'
-                      height={ 300 }
-                      labels={ labels }
-                      data={ pieSeries }
-                      options={{
-                          elements: {
-                              arc: {
-                                  backgroundColor: (context : any) => defaultGraphColors[context.dataIndex]
-                              }
+        <Chart id={ id }
+               type='pie'
+               height={ 300 }
+               data={ pieSeries }
+               options={
+                  {
+                      elements: {
+                          arc: {
+                              backgroundColor: (context : any) => defaultGraphColors[context.dataIndex]
+                          }
+                      },
+                      plugins: {
+                          legend: {
+                              display: true,
+                              position: 'right'
                           },
-                          plugins: {
-                              legend: {
-                                  display: true,
-                                  position: 'right'
-                              },
-                              tooltip: {
-                                  callbacks: {
-                                      title: (context : any) => context.label,
-                                      label: (context: any) => {
-                                          if (accounts && !isArray(accounts)) {
-                                              return `${context.raw} ${accounts?.account?.currency}`
-                                          }
-
-                                          return context.raw
+                          tooltip: {
+                              callbacks: {
+                                  title: (context : any) => context.label,
+                                  label: (context: any) => {
+                                      if (accounts && !isArray(accounts)) {
+                                          return `${context.raw} ${accounts?.account?.currency}`
                                       }
+
+                                      return context.raw
                                   }
                               }
-                          },
-                          maintainAspectRatio: false
-                      }}/>
+                          }
+                      },
+                      maintainAspectRatio: false
+                  }}/>
     </>
 }
 

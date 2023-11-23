@@ -98,7 +98,7 @@ export class ComplexTypeInput extends React.Component {
         }
 
         return <table className='Table'>
-            <thead>
+            { headers && <thead>
             <tr>
                 {headers.map(header =>
                     <th key={header}>
@@ -106,7 +106,7 @@ export class ComplexTypeInput extends React.Component {
                     </th>)}
                 <th/>
             </tr>
-            </thead>
+            </thead> }
             <tbody>
             {value.map(entity =>
                 <tr key={entity._uuid}>

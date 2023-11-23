@@ -5,6 +5,7 @@ import {Buttons} from "../index";
 
 type CardProps = {
     title?: string,                             // The translation text key for the title of the card
+    message?: string,                           // The message that will be displayed as title of the card
     actions?: ReactNode[],                      // The buttons that will be placed in the header of the card
     buttons?: ReactNode[],                      // The buttons that will be placed in the footer of the card
     children: ReactNode | ReactNode[],
@@ -17,8 +18,8 @@ type CardProps = {
  * @returns {JSX.Element}
  * @constructor
  */
-const Card: FC<CardProps> = ({title, actions, buttons, children, className = ''}): JSX.Element => {
-    const hasHeader = (title || actions) !== undefined
+const Card: FC<CardProps> = ({title, actions, buttons, children, className = '', message}): JSX.Element => {
+    const hasHeader = (title || actions || message) !== undefined
 
     return (
         <div className={`card rounded-lg my-4 ${className}`}>
@@ -27,6 +28,7 @@ const Card: FC<CardProps> = ({title, actions, buttons, children, className = ''}
                                    font-bold text-lg rounded-t-lg
                                    border-b-solid border-b-[1px] border-bottom-separator'>
                     {title && <Translations.Translation label={title}/>}
+                    {message !== undefined && <div>{ message }</div> }
                     {actions && <div className='font-normal text-sm'>{ actions }</div>}
                 </header>
             )}

@@ -2,13 +2,13 @@ import React, {FC, useEffect, useState} from "react";
 
 import restAPI from "../../repositories/rest-api";
 import {SelectInput, SelectInputProps, SelectOption} from "../input/SelectInput";
-import {Category} from "../../types";
+import {Currency} from "../../types";
 
 /**
  * Specification of a Select but then only meant for currency values.
  */
 export const CurrencyInput: FC<SelectInputProps> = (props) => {
-    const [currencies, setCurrencies] = useState<Category[]>()
+    const [currencies, setCurrencies] = useState<Currency[]>()
 
     useEffect(() => {
         restAPI.get('settings/currencies').then(setCurrencies)

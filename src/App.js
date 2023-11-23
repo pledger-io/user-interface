@@ -8,6 +8,7 @@ import {CategoryRoutes} from "./category";
 import {SettingRoutes} from "./setting";
 import {ReportRoutes} from "./reports";
 import {TransactionRoutes} from "./transactions";
+import {RulesRoutes} from "./rules";
 
 import './assets/css/Main.scss'
 import './assets/css/Theme.scss'
@@ -26,6 +27,8 @@ routes.push(...SettingRoutes)
 routes.push(...ReportRoutes)
 routes.push(...TransactionRoutes)
 routes.push(...ContractRoutes)
+routes.push(...ContractRoutes)
+routes.push(...RulesRoutes)
 
 function App() {
     const [_, setAuthenticate] = useState(false)

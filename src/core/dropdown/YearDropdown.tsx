@@ -2,11 +2,20 @@ import {useState} from "react";
 import {Button} from "../buttons";
 import {mdiMenuDown} from "@mdi/js";
 import DatePicker from "react-datepicker";
-import PropTypes from "prop-types";
 
-const YearDropdown = ({year = 1970, onChange = _ => undefined}) => {
-    const [yearOpen, setYearOpen] = useState(false)
-    const onSelect = date => setYearOpen(false) || onChange(date.getFullYear())
+type YearDropdownProps = {
+    // The preselected year of the dropdown
+    year?: number,
+    // The callback used when a new year is selected
+    onChange?: (_: number) => void
+}
+
+const YearDropdown = ({year = 1970, onChange = _ => undefined}: YearDropdownProps) => {
+    const [yearOpen, setYearOpen] = useState<boolean>(false)
+    const onSelect = (date: Date) => {
+        setYearOpen(false)
+        onChange(date.getFullYear())
+    }
 
     return (
         <div className='YearDropdown'>
@@ -21,16 +30,10 @@ const YearDropdown = ({year = 1970, onChange = _ => undefined}) => {
                                           dateFormat='yyyy'
                                           inline
                                           selected={new Date(year, 0, 1)}
-                                          onChange={date => onSelect(date)}/>)}
+                                          onChange={(date : Date) => onSelect(date)}/>)}
             </div>
         </div>
     )
-}
-YearDropdown.propTypes = {
-    // The preselected year of the dropdown
-    year: PropTypes.number,
-    // The callback used when a new year is selected
-    onChange: PropTypes.func.isRequired
 }
 
 export default YearDropdown

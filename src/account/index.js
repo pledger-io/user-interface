@@ -1,4 +1,4 @@
-import React, {lazy, useState} from "react";
+import React, {useState} from "react";
 import {Navigate, Route} from "react-router-dom";
 import {withPathParams} from "../core/hooks";
 
@@ -11,7 +11,8 @@ import AccountForm from "./AccountForm"
 
 import LiabilityForm from "./liability/liability-edit-page"
 import LiabilityOverview from "./liability/LiabilityOverview";
-import SavingDetailOverview from "./savings/SavingAccountDetailOverview";
+import LiabilityView from "./liability/liability-detail-page";
+import SavingDetailOverview from "./savings";
 
 import '../assets/css/Account.scss'
 
@@ -25,9 +26,6 @@ const RedirectLiability = withPathParams(props => {
 
     return ''
 })
-
-
-const LiabilityView = lazy(() => import('./liability/liability-detail-page'))
 
 export const AccountRoutes = [
     <Route key='own-account' path='/accounts/own' element={<OwnAccountOverview/>}/>,

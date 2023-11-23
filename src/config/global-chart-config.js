@@ -169,7 +169,12 @@ const PieGraphOptions = {
 const DefaultChartConfig = {
     line: LineGraphOptions,
     pie: PieGraphOptions,
-    bar: BarGraphOptions
+    bar: BarGraphOptions,
+    scatter: {},
+    bubble: {},
+    radar: {},
+    polarArea: {},
+    doughnut: {}
 }
 
 const Service = {

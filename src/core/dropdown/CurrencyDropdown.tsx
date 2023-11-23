@@ -2,13 +2,23 @@ import {useEffect, useState} from "react";
 import {CurrencyRepository} from "../RestAPI";
 import {Button} from "../buttons";
 import {mdiMenuDown} from "@mdi/js";
-import PropTypes from "prop-types";
+import {Currency} from "../types";
 
-const CurrencyDropdown = ({currency, onChange = _ => undefined}) => {
+type CurrencyDropdownProps = {
+    // The currently selected currency
+    currency: string,
+    // The callback used when a currency is selected
+    onChange: (_: Currency) => void
+}
+
+const CurrencyDropdown = ({currency, onChange = _ => undefined} : CurrencyDropdownProps) => {
     const [currencyOpen, setCurrencyOpen] = useState(false)
-    const [currencies, setCurrencies]     = useState([])
+    const [currencies, setCurrencies] = useState<Currency[]>([])
 
-    const onSelect = selected => onChange(selected) || setCurrencyOpen(false)
+    const onSelect = (selected: Currency) => {
+        onChange(selected)
+        setCurrencyOpen(false)
+    }
 
     useEffect(() => {
         CurrencyRepository.list()
@@ -36,12 +46,6 @@ const CurrencyDropdown = ({currency, onChange = _ => undefined}) => {
             </div>
         </div>
     )
-}
-CurrencyDropdown.propTypes = {
-    // The currently selected currency
-    currency: PropTypes.string,
-    // The callback used when a currency is selected
-    onChange: PropTypes.func
 }
 
 export default CurrencyDropdown

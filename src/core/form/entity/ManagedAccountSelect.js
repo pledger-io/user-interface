@@ -28,6 +28,7 @@ export const ManagedAccountSelect = props => {
             persist: () => {},
             currentTarget: {value: selectedAccount}
         })
+        if (props.onChange) props.onChange(selectedAccount)
     }
 
     if (!field || !accounts.length) return <Loading />
@@ -36,6 +37,7 @@ export const ManagedAccountSelect = props => {
                     required={props.required}
                     title={props.title}
                     help={props.help}
+                    className={props.className}
                     valid={field.touched ? errors.length === 0 : undefined }>
             <select id={props.id} onChange={valueSelected} value={selectedValue}>
                 {accounts.map(account => <SelectOption key={account.id}
@@ -47,5 +49,6 @@ export const ManagedAccountSelect = props => {
 }
 ManagedAccountSelect.propTypes = {
     ...InputGroup.propTypes,
-    value: PropTypes.any
+    value: PropTypes.any,
+    onChange: PropTypes.func
 }

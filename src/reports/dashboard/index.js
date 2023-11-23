@@ -22,8 +22,7 @@ const Dashboard = () => {
 
             <Layout.Grid type='column' minWidth='35em'>
                 <BudgetBalance range={ range } />
-
-                <CategoriesBalance />
+                <CategoriesBalance range={ range } />
             </Layout.Grid>
         </div>
     </>

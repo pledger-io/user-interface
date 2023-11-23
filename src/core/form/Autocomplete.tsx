@@ -12,7 +12,7 @@ type useAutocompleteParams<T extends Identifiable> = {
 type InputChangeHandler = ChangeEventHandler<HTMLInputElement>
 
 export const useAutocomplete = function <T extends Identifiable>({autoCompleteCallback, entityRender, entityLabel}: useAutocompleteParams<T>, props: any) {
-    const [field, errors, onChange] = useInputField({onChange: props.onChange, field: props})
+    const [field, errors, onChange] = useInputField({onChange: undefined, field: props})
     const [options, setOptions] = useState<Array<T>>([])
     const [selected, setSelected] = useState(-1)
     const inputRef = useRef<HTMLInputElement>(null)
@@ -22,6 +22,7 @@ export const useAutocomplete = function <T extends Identifiable>({autoCompleteCa
         setSelected(-1)
         setOptions([])
         if (inputRef.current) inputRef.current.value = entityLabel(selected)
+        if (props.onChange) props.onChange(selected)
     }
 
     const onKeyDown: KeyboardEventHandler = e => {

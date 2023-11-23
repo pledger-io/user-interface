@@ -3,10 +3,14 @@
  */
 export type StyleVariant = 'primary' | 'secondary' | 'warning' | 'info' | 'success'
 
-export type Identifier = string | undefined
+export type Identifier = string | number | undefined
 
 export type Identifiable = {
     id: Identifier
+}
+
+export type Unique = {
+    uuid: string
 }
 
 export type AccountRef = Identifiable & {
@@ -30,12 +34,19 @@ export type Account = AccountRef & {
         lastTransaction: string
     }
     description: string,
-    iconFileCode: Identifier
+    iconFileCode: string,
+    savingGoals: SavingGoal[],
 }
 
 export type Category = Identifiable & {
+    label: string,
+    description: string
+}
+
+export type Currency = Identifiable & {
     enabled: boolean,
     code: string,
+    name: string,
     symbol: string,
 }
 
@@ -74,10 +85,12 @@ export type Transaction = {
     split: []
 }
 
-export type SavingGoal = {
+export type SavingGoal = Identifiable & {
     name: string,
     goal: number,
-    targetDate: string
+    targetDate: string,
+    reserved: number,
+    monthsLeft: number,
 }
 
 export type Attachment = {
@@ -101,10 +114,32 @@ export type Pagination = {
     pageSize: number,
 }
 
-export type ChartSeries = {
-    label: string,
-    data: number[] | {x: string, y: number}[],
-    cubicInterpolationMode?: string,
-    tension?: number,
-    borderColor?: string,
+export type Balance = {
+    balance: number
+}
+
+export type RuleGroup = {
+    name: string
+}
+
+export type RuleField = 'SOURCE_ACCOUNT' | 'TO_ACCOUNT' | 'DESCRIPTION' | 'AMOUNT' | 'CATEGORY' | 'CHANGE_TRANSFER_TO' | 'CHANGE_TRANSFER_FROM' | 'BUDGET' | 'CONTRACT' | 'TAGS'
+export type RuleOperator = 'EQUALS' | 'CONTAINS' | 'STARTS_WITH' | 'MORE_THAN' | 'LESS_THAN'
+export type RuleCondition = Identifiable & Unique & {
+    field: RuleField
+    operation: RuleOperator
+    condition: string,
+}
+export type RuleChange = Identifiable & Unique & {
+    field: RuleField
+    change: string
+}
+
+export type Rule = Identifiable & {
+    name: string
+    restrictive: boolean
+    description?: string
+    active: boolean
+    sort: number
+    conditions: RuleCondition[]
+    changes: RuleChange[]
 }

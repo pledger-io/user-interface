@@ -74,6 +74,7 @@ export const TagInput = props => {
                     required={props.required}
                     title={props.title}
                     help={props.help}
+                    className={props.className}
                     valid={field.touched ? errors.length === 0 : undefined }>
             <div className='TagInput'>
                 {(field.value || []).map(tag => <Tag tag={tag} onRemove={onTagRemove} key={tag} />)}
@@ -108,5 +109,6 @@ export const TagInput = props => {
 }
 TagInput.propTypes = {
     ...InputGroup.propTypes,
-    value: PropTypes.arrayOf(PropTypes.string)
+    value: PropTypes.arrayOf(PropTypes.string),
+    onChange: PropTypes.func,
 }

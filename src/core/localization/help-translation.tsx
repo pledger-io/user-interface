@@ -16,7 +16,7 @@ const HelpTranslation: FC<HelpTranslationProps> = ({ label, className = '' }) =>
 
     return <span className={ `HelpText ${className}` }>
         <Icon path={ mdiHelpCircleOutline }
-              size={ .8 }/>
+              size={ .7 }/>
         <Translation label={ label }/>
     </span>
 }

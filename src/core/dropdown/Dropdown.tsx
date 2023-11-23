@@ -31,6 +31,7 @@ const Dropdown: FC<DropdownProps> = ({actions, title, icon, className, children}
                     onClick={ () => setOpen(!open) }/>
             <div className={`flex flex-col absolute right-0
                              [&>button]:rounded-none [&>button]:p-2 [&>button]:justify-start
+                             z-10
                             ${open ? '' : 'invisible'} `}
                  onClick={ () => setOpen(false) }>
                 { children }

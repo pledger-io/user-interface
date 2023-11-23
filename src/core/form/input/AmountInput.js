@@ -40,6 +40,7 @@ AmountInput.propTypes = {
     ...InputGroup.propTypes,
     // Indicator if the field is in read only mode
     readonly: PropTypes.bool,
+    value: PropTypes.number,
     // Any minimum value validation
     min: PropTypes.number,
     // Any maximum value

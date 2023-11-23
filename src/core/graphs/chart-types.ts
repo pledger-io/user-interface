@@ -1,6 +1,8 @@
+import {Identifiable} from "../types";
+import {Range} from "../Dates";
 
-type DataPoint = number | {
-    x: number
+export type DataPoint = number | {
+    x: number | string
     y: number
 }
 
@@ -13,3 +15,15 @@ export type DataSet = {
 }
 
 export type Datasets = DataSet[] | undefined
+
+export type BalanceSeriesFilter = {
+    title: string,
+    dateRange: Range
+    onlyIncome?: boolean,
+    allMoney?: boolean,
+    accounts?: Identifiable[],
+    categories?: Identifiable[],
+    contracts?: Identifiable[],
+    expenses?: Identifiable[],
+    currency?: string
+}
