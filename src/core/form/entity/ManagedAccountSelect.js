@@ -18,7 +18,7 @@ export const ManagedAccountSelect = props => {
             .catch(_ => console.error('could not load accounts'))
     }, [])
     useEffect(() => {
-        setSelectedValue(props.value)
+        setSelectedValue(props.value.id)
     }, [props.value])
 
     const valueSelected = event => {

@@ -35,8 +35,8 @@ const TransactionSplitDialog = ({transaction: {split, currency, amount}, iconSty
                 <tbody>
                 {split.map((row, idx) => (
                     <tr key={idx}>
-                        <td>{split.description}</td>
-                        <td style={priceStyle}><Formats.Money money={split.amount} currency={currency}/></td>
+                        <td>{row.description}</td>
+                        <td style={priceStyle}><Formats.Money money={row.amount} currency={currency}/></td>
                     </tr>
                 ))}
                 <tr>

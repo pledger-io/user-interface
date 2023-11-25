@@ -38,11 +38,15 @@ const TransactionForm = () => {
                     }
                 }))
         } else {
+            const isDebit = transactionType === 'debit'
+            const code = Resolver.Account.isManaged(account) ?
+                    isDebit ? 'CREDIT' : 'DEBIT'
+                    : transactionType.toUpperCase()
             setTransaction({
-                source: transactionType !== 'debit' ? account : null,
-                destination: transactionType === 'debit' ? account : null,
+                source: !isDebit ? account : null,
+                destination: isDebit ? account : null,
                 type: {
-                    code: transactionType.toUpperCase()
+                    code: code
                 }
             })
         }
@@ -119,7 +123,9 @@ const processSubmit = (id, entity, currency, navigate) => {
     }
 
     if (entity.split) {
-        promises.push(TransactionRepository.splits(id, entity.split))
+        promises.push(TransactionRepository.splits(id, {
+            splits: entity.split
+        }))
     }
 
     Promise.all(promises)

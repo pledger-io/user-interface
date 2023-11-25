@@ -11,7 +11,7 @@ const DestinationInputComponent = ({transaction: {destination, type}}) => {
     }
 
     return <Entity.ManagedAccount id='to'
-                                  value={destination?.id}
+                                  value={destination}
                                   required
                                   title='Transaction.to'/>
 }

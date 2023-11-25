@@ -86,9 +86,9 @@ const ActionExpander = ({transaction, onDelete} : {transaction: Transaction, onD
                                        className='opacity-40 !text-gray-500'
                                        icon={ mdiChevronRightBox }
                                        onClick={ () => setExpanded(true) }/> }
-        <div className={`${expanded ? '[&>*]:inline-flex max-w-[20em] opacity-100' : 'max-w-0 overflow-hidden opacity-0'} flex h-[2em] gap-1 transition ease-in-out duration-300`}>
+        <div className={`${expanded ? '[&>*]:inline-flex max-w-[35em] opacity-100' : 'max-w-0 overflow-hidden opacity-0'} flex h-[2em] gap-1 transition ease-in-out duration-300`}>
             <ScheduleTransactionDialog transaction={ transaction } iconStyle={ true }/>
-            {transaction.split && <TransactionSplitDialog transaction={ transaction }/>}
+            {transaction.split && <TransactionSplitDialog transaction={ transaction } iconStyle={ true }/>}
             <Buttons.Button variant='icon'
                             label='common.action.edit'
                             variantType='outline'

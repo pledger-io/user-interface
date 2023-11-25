@@ -33,11 +33,11 @@ const SavingGoalTableComponent = ({account} : SavingGoalTableComponentProps) => 
             </tr>
             </thead>
             <tbody>
-            { goals.length === 0 && <tr><td colSpan={ 5 } className='text-center'>
+            { (goals === undefined || goals.length === 0) && <tr><td colSpan={ 5 } className='text-center'>
                 <Translations.Translation label="common.overview.noresults"/>
             </td></tr> }
 
-            { goals.map(savingGoal => <tr key={ savingGoal.id }>
+            { goals && goals.map(savingGoal => <tr key={ savingGoal.id }>
                 <td>{ savingGoal.name }</td>
                 <td className='grid grid-cols-10'>
                     <div className='col-span-9'>

@@ -2,7 +2,7 @@ import React, {useContext} from "react";
 import {Translations} from "../../../core";
 import {Input} from "../../../core/form";
 
-import SourceInputComponent from "./SourceInputComponent";
+import SourceInputComponent from "./source-input.component";
 import DestinationInputComponent from "./DestinationInputComponent";
 import SplitEditor from "./SplitEditor";
 import {FormContext} from "../../../core/form/Form";
@@ -19,6 +19,7 @@ const GenericDetailsComponent = ({transaction, account}) => {
             <legend><Translations.Translation label='page.transaction.add.details'/></legend>
 
             <Input.Text id='description'
+                        type='text'
                         value={transaction.description}
                         title='Transaction.description'
                         required/>

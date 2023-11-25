@@ -1,11 +1,12 @@
 import React, {FC, useEffect, useState} from "react";
-import {BreadCrumbItem, BreadCrumbMenu, BreadCrumbs, Dates, Dropdown, Layout} from "../../core";
+import {BreadCrumbItem, BreadCrumbMenu, BreadCrumbs, Buttons, Dates, Dropdown, Layout, Resolver} from "../../core";
 import {Account} from "../../core/types";
 import {useNavigate, useParams} from "react-router-dom";
 import AccountRepository from "../../core/repositories/account-repository";
 import TransactionList from "./transaction-list";
 import CategorizedPieChart from "../../core/graphs/categorized-pie-chart";
 import BalanceChart from "../../core/graphs/balance-chart";
+import {mdiCartPlus, mdiCashPlus, mdiSwapHorizontal} from "@mdi/js";
 
 const TYPE_MAPPING = {
     expense: 'creditor',
@@ -77,6 +78,26 @@ const AccountDetailView: FC = () => {
         </> }
 
         <Layout.Card title='page.title.transactions.overview'>
+            { account && <Buttons.ButtonBar className='pb-2'>
+                { (!Resolver.Account.isManaged(account) || Resolver.Account.isCreditor(account))
+                    && <Buttons.Button label='page.transactions.debit.add'
+                                       href={ `${Resolver.Account.resolveUrl(account)}/transactions/add/debit`}
+                                       variant='success'
+                                       className={Resolver.Account.isDebtor(account) ? 'Hidden' : ''}
+                                       icon={mdiCashPlus}/> }
+                { (!Resolver.Account.isManaged(account) || Resolver.Account.isDebtor(account))
+                    && <Buttons.Button label='page.transactions.credit.add'
+                                href={`${Resolver.Account.resolveUrl(account)}/transactions/add/credit`}
+                                className={Resolver.Account.isCreditor(account) ? 'Hidden' : ''}
+                                variant='warning'
+                                icon={mdiCartPlus}/> }
+                { !Resolver.Account.isManaged(account) &&<Buttons.Button label='page.transactions.transfer.add'
+                                href={`${Resolver.Account.resolveUrl(account)}/transactions/add/transfer`}
+                                className={Resolver.Account.isManaged(account) ? 'Hidden' : ''}
+                                variant='primary'
+                                icon={mdiSwapHorizontal}/> }
+            </Buttons.ButtonBar> }
+
             { !account && <Layout.Loading /> }
             { account && <TransactionList range={ range } account={ account }/> }
         </Layout.Card>
