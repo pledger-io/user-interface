@@ -58,12 +58,6 @@ const TransactionScheduleRepository = (api => {
     }
 })(RestApi)
 
-const BudgetRepository = (api => {
-    return {
-        forMonth: (year, month) => api.get(`budgets/${year}/${month}`)
-    }
-})(RestApi)
-
 const LocalizationRepository = (api => {
     return {
         get: language => api.get(`localization/lang/${language}/`)
@@ -76,6 +70,5 @@ export {
     TransactionScheduleRepository,
     CurrencyRepository,
     SettingRepository,
-    BudgetRepository,
     LocalizationRepository
 }

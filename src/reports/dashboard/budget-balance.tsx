@@ -1,6 +1,5 @@
 import {Layout, Translations} from "../../core";
 import React, {useEffect, useState} from "react";
-import {BudgetRepository} from "../../core/RestAPI";
 import {Loading} from "../../core/layout";
 import {Chart} from "react-chartjs-2";
 import {Range} from "../../core/Dates";
@@ -8,6 +7,7 @@ import {ChartData} from "chart.js";
 import {Budget, BudgetExpense} from "../../core/types";
 import StatisticalRepository from "../../core/repositories/statistical-repository";
 import {DefaultChartConfig, Service} from "../../config/global-chart-config";
+import BudgetRepository from "../../core/repositories/budget.repository";
 
 const percentageOfYear = 90 / 365
 
@@ -15,7 +15,7 @@ function BudgetBalance({ range } : {range : Range}) {
     const [budgetSeries, setBudgetSeries] = useState<ChartData | undefined | null>()
 
     useEffect(() => {
-        BudgetRepository.forMonth(range.year(), range.month())
+        BudgetRepository.budgetMonth(range.year(), range.month())
             .then(async (budget: Budget) => {
                 const expenses = budget.expenses
 

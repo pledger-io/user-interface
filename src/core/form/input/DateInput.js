@@ -57,6 +57,43 @@ DateInput.propTypes = {
     readonly: PropTypes.bool
 }
 
+export const MonthPicker = (props) => {
+    const [field, errors, onChange] = useInputField({onChange: props.onChange, field: props})
+    const [selected, setSelected]   = useState(new Date())
+
+    const onDateChanged = date => {
+        const isoDate = date.toISOString().substring(0, 10)
+        setSelected(date)
+        onChange({
+            persist: () => {},
+            currentTarget: {value: isoDate}
+        })
+    }
+
+    useEffect(() => {
+        if (props.value) setSelected(new Date(props.value))
+    }, [props.value])
+
+    if (!field) return <></>
+    return (
+        <InputGroup id={props.id}
+                    required={props.required}
+                    title={props.title}
+                    help={props.help}
+                    valid={field.touched ? errors.length === 0 : undefined }>
+            <DatePicker required={props.required}
+                        selected={selected}
+                        readOnly={props.readonly}
+                        showMonthYearPicker
+                        showFullMonthYearPicker
+                        dateFormat='MM/yyyy'
+                        onChange={onDateChanged}/>
+
+            {field.touched && <InputValidationErrors field={field} errors={errors} />}
+        </InputGroup>
+    )
+}
+
 export const DateRangeInput = (props) => {
     const [field, errors, onChange] = useInputField({onChange: props.onChange, field: props})
 

@@ -10,7 +10,6 @@ import {
     Statistical
 } from "../../core";
 import {useNavigate, useParams} from "react-router-dom";
-import {BudgetRepository} from "../../core/RestAPI";
 
 import MonthlyTableComponent from "./budget-table";
 import MonthlyPerBudgetTableComponent from "./monthly-budget-table";
@@ -18,6 +17,7 @@ import YearlyIncomeGraphComponent from "./YearlyIncomeGraphComponent";
 import BudgetYearlyExpense from "./budget-yearly-expense";
 
 import '../../assets/css/BudgetReportView.scss'
+import BudgetRepository from "../../core/repositories/budget.repository";
 
 export const BudgetReportView = () => {
     const [range, setRange] = useState(() => Dates.Ranges.currentYear())

@@ -1,9 +1,9 @@
 import {Account, BudgetExpense, Category, Contract, Identifier, RuleField} from "../core/types";
 import AccountRepository from "../core/repositories/account-repository";
 import CategoryRepository from "../core/repositories/category-repository";
-import {BudgetRepository} from "../core/RestAPI";
 import ContractRepository from "../core/repositories/contract-repository";
 import {useEffect, useState} from "react";
+import BudgetRepository from "../core/repositories/budget.repository";
 
 async function lookup_entity<T>(type: RuleField, id: Identifier) : Promise<T> {
     switch (type) {
@@ -15,8 +15,8 @@ async function lookup_entity<T>(type: RuleField, id: Identifier) : Promise<T> {
         case 'CATEGORY':
             return await CategoryRepository.get(id)
         case 'BUDGET':
-            return (await BudgetRepository.forMonth(new Date().getFullYear(), new Date().getMonth() + 1))
-                .expenses.filter((e : BudgetExpense) => e.id === id)[0]
+            return (await BudgetRepository.budgetMonth(new Date().getFullYear(), new Date().getMonth() + 1))
+                .expenses.filter((e : BudgetExpense) => e.id === id)[0] as T
         case 'CONTRACT':
             return await ContractRepository.get(id) as T
         case 'TAGS': return (id as string).split(',') as T
