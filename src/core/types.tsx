@@ -106,6 +106,7 @@ export type BudgetExpense = {
 export type Budget = {
     id: Identifier,
     name: string,
+    income: number,
     expenses: BudgetExpense[]
 }
 

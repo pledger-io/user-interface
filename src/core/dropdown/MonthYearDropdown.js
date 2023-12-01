@@ -4,7 +4,7 @@ import {mdiMenuDown} from "@mdi/js";
 import DatePicker from "react-datepicker";
 import PropTypes from "prop-types";
 
-const MonthYearDropdown = ({selected: {year, month}, onChange}) => {
+const MonthYearDropdown = ({selected: {year, month}, onChange, minDate, maxDate}) => {
     const [yearOpen, setYearOpen]   = useState(false)
     const [monthOpen, setMonthOpen] = useState(false)
 
@@ -34,11 +34,15 @@ const MonthYearDropdown = ({selected: {year, month}, onChange}) => {
             <div className='Expanded'>
                 {yearOpen && (<DatePicker showYearPicker
                                           dateFormat='yyyy'
+                                          minDate={minDate}
+                                          maxDate={maxDate}
                                           inline
                                           selected={selectedDate}
                                           onChange={onYearSelect}/>)}
                 {monthOpen && (<DatePicker showMonthYearPicker
                                            dateFormat='MM'
+                                           minDate={minDate}
+                                           maxDate={maxDate}
                                            selected={selectedDate}
                                            onChange={onMonthSelect}
                                            inline />)}
@@ -51,6 +55,8 @@ MonthYearDropdown.propTypes = {
         month: PropTypes.number,
         year: PropTypes.number
     }),
-    onChange: PropTypes.func.isRequired
+    onChange: PropTypes.func.isRequired,
+    minDate: PropTypes.instanceOf(Date),
+    maxDate: PropTypes.instanceOf(Date)
 }
 export default MonthYearDropdown
