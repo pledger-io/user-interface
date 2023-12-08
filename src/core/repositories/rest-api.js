@@ -21,6 +21,14 @@ function generateRequestSettings(settings) {
 
 const RestAPI = (() => {
     let userProfile = {}
+    function updateProfile(profile) {
+        userProfile = profile
+
+        document.body.classList.remove('dark', 'navy')
+        document.body.classList.add(profile.theme)
+
+        return profile
+    }
 
     const handle = response => new Promise((resolved, error) =>
         response
@@ -34,7 +42,7 @@ const RestAPI = (() => {
             }))
 
     const api = {
-        profile: () => api.get('profile'),
+        profile: () => api.get('profile').then(updateProfile),
         user: () => userProfile,
 
         get:   (uri, settings = {})       => handle(axios.get(`${config.root}/${uri}`, generateRequestSettings(settings))),
@@ -44,7 +52,7 @@ const RestAPI = (() => {
         delete: (uri, settings = {})      => handle(axios.delete(`${config.root}/${uri}`, generateRequestSettings(settings)))
     }
 
-    if (sessionStorage.getItem('token')) api.profile().then(profile => userProfile = profile)
+    if (sessionStorage.getItem('token')) api.profile().finally(() => {})
 
     return api
 })()

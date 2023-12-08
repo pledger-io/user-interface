@@ -8,6 +8,7 @@ import {PasswordInput} from "./PasswordInput";
 import {RadioButtons} from "./RadioButtons";
 import {ToggleInput} from "./ToggleInput";
 import {AmountInput} from "./AmountInput";
+import RadioInput from "./RadioInput";
 import {TagInput} from "./TagInput";
 import {ComplexTypeInput} from "./ComplexTypeInput";
 
@@ -25,5 +26,6 @@ export {
     ToggleInput as Toggle,
     AmountInput as Amount,
     TagInput as Tags,
+    RadioInput as Radio,
     ComplexTypeInput as ComplexType,
 }

@@ -1,18 +1,12 @@
+import {Route} from "react-router-dom";
 import React from "react";
-import RestAPI from "../core/repositories/rest-api"
-import defaultPicture from '../assets/user60.png';
+import ProfileThemeView from "./profile-theme.view";
+import ProfileCurrencyView from "./profile-currency.view";
+import Profile2factorView from "./profile-2factor.view";
 
-export class ProfilePicture extends React.Component {
-    render() {
-        const {size} = this.props;
+export const ProfileRoutes = [
+    <Route key='own-account' path='/user/profile/theme' element={<ProfileThemeView />} />,
+    <Route key='currency' path='/user/profile/currency' element={<ProfileCurrencyView />} />,
+    <Route key='two-factor' path='/user/profile/two-factor' element={<Profile2factorView />} />,
 
-        if (RestAPI.user().hasOwnProperty('profilePicture')) {
-            const base64Picture = `data:image/png;base64, ${RestAPI.activeUser.profilePicture}`;
-            return (
-                <img className='ProfilePicture' src={base64Picture} alt='profile' width={size}/>
-            )
-        }
-
-        return <img className='ProfilePicture' src={defaultPicture} alt='profile' width={size}/>
-    }
-}
+]

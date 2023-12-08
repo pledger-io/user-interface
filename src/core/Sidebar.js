@@ -4,13 +4,13 @@ import config from '../config/sidebar-config.js'
 import {Translation} from "./localization";
 import {mdiChevronDown, mdiChevronLeft, mdiClose, mdiLogoutVariant, mdiMenu} from "@mdi/js";
 import {NavLink, useNavigate} from "react-router-dom";
-import {ProfilePicture} from "../profile";
 import SecurityRepository from "./repositories/security-repository";
 import {Buttons} from "./index";
 
 import logo from '../assets/logo.png'
 import '../assets/css/Sidebar.scss'
 import PropTypes from "prop-types";
+import ProfilePicture from "../profile/profile-picture.component";
 
 
 export const Sidebar = ({logoutCallback}) => {
@@ -43,7 +43,9 @@ export const Sidebar = ({logoutCallback}) => {
                 })}
             <div className='spacer'/>
             <footer>
-                <NavLink to='/user/profile' className='Profile'><ProfilePicture size='40'/></NavLink>
+                <NavLink to='/user/profile/theme' className='Profile'>
+                    <ProfilePicture size='40'/>
+                </NavLink>
                 <span className="text"/>
                 <Buttons.Button icon={mdiLogoutVariant}
                                 onClick={onLogout}
