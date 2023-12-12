@@ -4,11 +4,11 @@ import {useNavigate, useParams} from "react-router-dom";
 import {CurrencyRepository} from "../../core/RestAPI";
 import CategoryRepository from "../../core/repositories/category-repository";
 
-import CategoryGraph from "./YearGraphPerMonth";
 import MonthlySpendingComponent from "./MonthlySpendingComponent";
 import CategorizedMonthlySpendingComponent from "./CategorizedMonthlySpendingComponent";
 
 import '../../assets/css/CategorieReportView.scss'
+import CategoryGraph from "./montly-categorized-chart";
 
 const CategoryReportView = () => {
     const [categories, setCategories]           = useState()
@@ -48,7 +48,9 @@ const CategoryReportView = () => {
 
             <div className='Columns'>
                 <Layout.Card title='page.reports.category.title'>
-                    <CategoryGraph categories={categories} range={range} currencySymbol={currencySymbol} />
+                    <CategoryGraph categories={ categories }
+                                   year={ parseInt(year) }
+                                   currencySymbol={ currencySymbol } />
                 </Layout.Card>
                 <Layout.Card title='page.reports.category.monthly'>
                     <MonthlySpendingComponent categories={categories} range={range}/>

@@ -13,7 +13,6 @@ import * as Formats from './Formatters'
 import * as Attachments from './Attachment'
 import * as Attachment from './attachment/index'
 import * as Dates from './Dates'
-import * as Charts from './Chart'
 import * as Dropdown from './dropdown'
 import * as Layout from './layout'
 
@@ -174,8 +173,7 @@ const Resolver = {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
             .replace(/[xy]/g, function (c) {
                 // eslint-disable-next-line
-                const r = Math.random() * 16 | 0,
-                    v = c === 'x' ? r : (r & 0x3 | 0x8);
+                const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
                 return v.toString(16);
             })
     }
@@ -197,7 +195,6 @@ export {
     Dropdown,
     Formats,
     Dates,
-    Charts,
     Resolver,
     Progressbar,
     Layout

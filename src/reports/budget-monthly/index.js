@@ -13,7 +13,7 @@ import {useNavigate, useParams} from "react-router-dom";
 
 import MonthlyTableComponent from "./budget-table";
 import MonthlyPerBudgetTableComponent from "./monthly-budget-table";
-import YearlyIncomeGraphComponent from "./YearlyIncomeGraphComponent";
+import YearlyIncomeGraphComponent from "./budget-yearly-income";
 import BudgetYearlyExpense from "./budget-yearly-expense";
 
 import '../../assets/css/BudgetReportView.scss'

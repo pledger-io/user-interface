@@ -181,6 +181,31 @@ const Service = {
     mergeOptions: deepMerge
 }
 
+export const defaultGraphColors = [
+    '#E0FFFF',
+    '#00CED1',
+    '#40E0D0',
+    '#48D1CC',
+    '#AFEEEE',
+    '#7FFFD4',
+    '#B0E0E6',
+    '#5F9EA0',
+    '#66CDAA',
+    '#3CB371',
+    '#20B2AA',
+    '#2F4F4F',
+    '#008080',
+    '#008B8B',
+    '#32CD32',
+    '#90EE90',
+    '#ADFF2F',
+    '#90EE90',
+    '#ADFF2F',
+    '#7FFF00',
+    '#7FFF00',
+    '#6B8E23',
+]
+
 export {
     GlobalChartConfig,
     DefaultChartConfig,

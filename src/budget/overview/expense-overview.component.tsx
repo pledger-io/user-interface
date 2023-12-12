@@ -29,7 +29,7 @@ const ExpenseOverviewComponent = ({ budget, year, month } : {budget : Budget, ye
                             .catch(fail)
                     )))
             .then(setComputedExpenses)
-    }, [budget]);
+    }, [budget, month, year]);
 
     if (!computedExpenses) return <Layout.Loading />
     return <>

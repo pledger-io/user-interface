@@ -65,10 +65,10 @@ const Button: FC<ButtonProps> = ({
                         }
                         ${className}`}
             disabled={disabled}>
-            {iconPos !== 'after' && <Icon className='before' path={icon} size={.8}/>}
+            {icon && iconPos !== 'after' && <Icon className='before' path={icon} size={.8}/>}
             {label && <Translation label={label}/>}
             {!label && message}
-            {iconPos === 'after' && <Icon className='after' path={icon} size={.8}/>}
+            {icon && iconPos === 'after' && <Icon className='after' path={icon} size={.8}/>}
         </button>
     </>
 }

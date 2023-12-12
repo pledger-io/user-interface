@@ -2,11 +2,11 @@ import {FC, useEffect, useState} from "react";
 import {useDateRange} from "../hooks";
 import {Layout} from "../index";
 import {isArray} from "chart.js/helpers";
-import {defaultGraphColors} from "../Chart";
 import {Account} from "../types";
 import StatisticalRepository from "../repositories/statistical-repository";
 import {Chart} from "react-chartjs-2";
 import {ChartData} from "chart.js";
+import {defaultGraphColors} from "../../config/global-chart-config";
 
 type CategorizedPieChartProps = {
     id: string
