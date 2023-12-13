@@ -22,6 +22,7 @@ const ProfileRepository = (api => {
         }),
         enableMfa: (verificationCode: string)               => api.post('profile/multi-factor/enable', { verificationCode }),
         disableMfa: ()                                      => api.post('profile/multi-factor/disable', {}),
+        sessions: ()                                        => api.get('profile/sessions'),
     }
 })(RestAPI)
 

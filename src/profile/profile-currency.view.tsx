@@ -25,7 +25,6 @@ const ProfileCurrencyView = () => {
             .catch(() => Notifications.Service.warning('page.user.profile.currency.error'))
     }
 
-    if (!currencies) return <Layout.Loading />
     return <>
         <Layout.Card title='page.title.user.profile'>
             <div className='flex gap-4'>
@@ -35,14 +34,15 @@ const ProfileCurrencyView = () => {
                 <div className='flex-1'>
                     <h1 className='font-bold text-lg'><Translations.Translation label='page.user.profile.currency' /></h1>
 
-                    <Form entity='Profile' onSubmit={ onSubmit }>
+                    { !currencies && <Layout.Loading /> }
+                    { currencies && <Form entity='Profile' onSubmit={ onSubmit }>
                         <Input.Radio id='currency'
                                      options={ currencies.map(c => ({ value: c.code, message: c.name })) }
                                     value={ current } />
 
                         <SubmitButton label='common.action.save'
                                       icon={ mdiContentSave } />
-                    </Form>
+                    </Form> }
                 </div>
             </div>
         </Layout.Card>

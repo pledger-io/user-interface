@@ -39,7 +39,8 @@ const Profile2FactorView = () => {
                     { !currentlyEnabled && <Form entity='Profile' onSubmit={ onSubmit }>
                         <div className='flex gap-5'>
                             <div>
-                                <img src={ qrCode } alt='QR code' />
+                                { !qrCode && <Layout.Loading /> }
+                                { qrCode && <img src={ qrCode } alt='QR code' /> }
                             </div>
                             <div className='flex-1'>
                                 <Message label='page.user.profile.twofactor.explained' variant='info' />

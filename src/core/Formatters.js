@@ -21,6 +21,25 @@ FormattedDate.propTypes = {
     date: PropTypes.string
 }
 
+const FormattedDateTime = ({ date }) => {
+    const [language] = useLocalStorage('language', 'en');
+
+    if (date) {
+        const formatted = new Intl.DateTimeFormat(language, {
+            year: 'numeric',
+            month: 'numeric',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric'
+        }).format(new Date(date))
+        return (
+            <span className='FormattedDate'>{ formatted }</span>
+        )
+    }
+
+    return <></>
+}
+
 
 /**
  * Formats a decimal value as a money output with the currency prepended, pending on the locale.
@@ -68,5 +87,6 @@ FormattedPercentage.propTypes = {
 export {
     FormattedPercentage as Percent,
     FormattedMoney as Money,
-    FormattedDate as Date
+    FormattedDate as Date,
+    FormattedDateTime as DateTime
 }
