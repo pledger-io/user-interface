@@ -25,7 +25,7 @@ function validateField(field: FieldType) {
 
     if (field.validators) {
         for (let idx = 0; idx < field.validators.length; idx++) {
-            if (!field?.validators[idx].validate(value)) {
+            if (!field.validators[idx].validate(value)) {
                 errors.push(field?.validators[idx].label)
             }
         }

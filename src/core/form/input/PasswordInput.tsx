@@ -7,8 +7,8 @@ import { InputGroup, useInputField } from "./InputGroup";
 import { FieldType, ValidatorType } from "../form-types";
 
 const validations: ValidatorType[] = [
-    { label: 'Account.password.at_least_six_chars',validate: value => RegExp(/^.{6,63}$/).test(value) },
-    { label: 'Account.password.at_least_one_lower_case_char',validate: value => RegExp(/^(?=.*?[a-z])/).test(value) },
+    { label: 'Account.password.at_least_six_chars',validate: value => value && RegExp(/^.{6,63}$/).test(value) },
+    { label: 'Account.password.at_least_one_lower_case_char',validate: value => value && RegExp(/^(?=.*?[a-z])/).test(value) },
     { label: 'Account.password.at_least_one_upper_case_char',validate: value => RegExp(/^(?=.*?[A-Z])/).test(value) },
     { label: 'Account.password.at_least_one_digit_char',validate: value => RegExp(/^(?=.*?[0-9])/).test(value) }]
 

@@ -2,7 +2,7 @@ import { Buttons, Layout, Message, Notifications, Translations } from "../core";
 import NavigationComponent from "./navigation.component";
 import { Form, Input, SubmitButton } from "../core/form";
 import RestAPI from "../core/repositories/rest-api";
-import { mdiContentSave, mdiLockOff } from "@mdi/js";
+import { mdiLockOff } from "@mdi/js";
 import ProfileRepository from "../core/repositories/profile.repository";
 import { useEffect, useState } from "react";
 
@@ -50,15 +50,16 @@ const Profile2FactorView = () => {
                                             title='UserAccount.twofactor.secret' />
 
                                 <div className='mx-auto w-fit mt-4'>
-                                    <SubmitButton label='common.action.save'
-                                                  className='min-w-[100px]'
-                                                  icon={ mdiContentSave } />
+                                    <SubmitButton label='page.user.profile.action.twofactor.enable'
+                                                  className='min-w-[100px]' />
                                 </div>
                             </div>
                         </div>
                     </Form> }
 
                     { currentlyEnabled && <>
+                        <Message label='page.user.profile.twofactor.disableExplain' variant='info' />
+
                         <Buttons.Button label='page.user.profile.action.twofactor.disable'
                                         onClick={ onDisable }
                                         icon={ mdiLockOff }
