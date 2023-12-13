@@ -1,8 +1,8 @@
-import {useNavigate} from "react-router-dom";
-import React, {useEffect, useState} from "react";
+import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import BudgetRepository from "../../core/repositories/budget.repository";
-import {BreadCrumbItem, BreadCrumbMenu, BreadCrumbs, Dropdown, Layout} from "../../core";
-import {useDateRange} from "../../core/hooks";
+import { BreadCrumbItem, BreadCrumbMenu, BreadCrumbs, Dropdown, Layout } from "../../core";
+import { useDateRange } from "../../core/hooks";
 import BudgetDetailComponent from "./budget-detail.component";
 
 const BudgetOverview = () => {
@@ -16,7 +16,7 @@ const BudgetOverview = () => {
             .catch(() => navigate('/budgets/first-setup'))
     }, [navigate])
 
-    const onDateChange = ({year, month} : any) => navigate(`/budgets/${year}/${month}`)
+    const onDateChange = ({ year, month } : any) => navigate(`/budgets/${year}/${month}`)
 
     return <>
         <BreadCrumbs>
@@ -28,7 +28,7 @@ const BudgetOverview = () => {
                     minDate={ firstBudget }
                     maxDate={ new Date() }
                     onChange={ onDateChange }
-                    selected={ {month: range.month(), year: range.year()} }/>
+                    selected={ { month: range.month(), year: range.year() } }/>
             </BreadCrumbMenu>
         </BreadCrumbs>
 

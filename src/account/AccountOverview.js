@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import {
     Attachments,
     BreadCrumbItem,
@@ -14,16 +14,16 @@ import {
     Translations,
     When
 } from "../core";
-import {NavLink} from "react-router-dom";
-import {mdiDotsVertical, mdiPlus, mdiSquareEditOutline, mdiTrashCanOutline} from "@mdi/js";
-import {EntityShapes} from "../config";
+import { NavLink } from "react-router-dom";
+import { mdiDotsVertical, mdiPlus, mdiSquareEditOutline, mdiTrashCanOutline } from "@mdi/js";
+import { EntityShapes } from "../config";
 import PropTypes from "prop-types";
-import {useQueryParam} from "../core/hooks";
+import { useQueryParam } from "../core/hooks";
 import AccountRepository from "../core/repositories/account-repository";
 
 import '../assets/css/AccountOverview.scss'
 
-const AccountRow = ({account, deleteCallback}) => {
+const AccountRow = ({ account, deleteCallback }) => {
 
     const dropDownActions = {}
     const onDelete = () => AccountRepository.delete(account.id)
@@ -74,9 +74,9 @@ AccountRow.propTypes = {
     deleteCallback: PropTypes.func
 }
 
-const AccountOverview = ({type}) => {
+const AccountOverview = ({ type }) => {
     const [accounts, setAccounts]       = useState(undefined)
-    const [page]                        = useQueryParam({key: 'page', initialValue: "1"})
+    const [page]                        = useQueryParam({ key: 'page', initialValue: "1" })
     const [pagination, setPagination]   = useState({})
 
     const reload = () => {

@@ -1,7 +1,7 @@
-import {Entity} from "../../../core/form";
+import { Entity } from "../../../core/form";
 import React from "react";
 
-const DestinationInputComponent = ({transaction: {destination, type}}) => {
+const DestinationInputComponent = ({ transaction: { destination, type } }) => {
     if (type?.code?.toLowerCase() === 'credit') {
         return <Entity.Account id='to'
                                type='creditor'

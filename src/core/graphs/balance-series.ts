@@ -1,9 +1,9 @@
-import {BalanceSeriesFilter} from "./chart-types";
-import {Balance} from "../types";
-import {LocalizationService} from "../localization";
-import {Range, Ranges} from "../Dates";
+import { BalanceSeriesFilter } from "./chart-types";
+import { Balance } from "../types";
+import { LocalizationService } from "../localization";
+import { Range, Ranges } from "../Dates";
 import StatisticalRepository from "../repositories/statistical-repository";
-import {ChartDataset} from "chart.js/dist/types";
+import { ChartDataset } from "chart.js/dist/types";
 
 export const BalanceSeries = async (filter : BalanceSeriesFilter): Promise<ChartDataset> => {
     const label = await LocalizationService.get(filter.title)
@@ -31,9 +31,9 @@ export const BalanceSeries = async (filter : BalanceSeriesFilter): Promise<Chart
     let balance = startBalance.balance
     for (let idx = 0; idx < dailyBalance.length; idx++) {
         balance += dailyBalance[idx].amount
-        points.push({x: dailyBalance[idx].date, y: balance})
+        points.push({ x: dailyBalance[idx].date, y: balance })
     }
-    points.push({x: filter.dateRange.endString(), y: endBalance.balance})
+    points.push({ x: filter.dateRange.endString(), y: endBalance.balance })
 
     return {
         label: label,

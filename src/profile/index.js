@@ -1,4 +1,4 @@
-import {Route} from "react-router-dom";
+import { Route } from "react-router-dom";
 import React from "react";
 import ProfileThemeView from "./profile-theme.view";
 import ProfileCurrencyView from "./profile-currency.view";

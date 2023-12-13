@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     BreadCrumbItem,
     BreadCrumbs,
@@ -12,10 +12,10 @@ import {
 } from "../../core";
 
 import AccountRepository from "../../core/repositories/account-repository";
-import {mdiCashPlus} from "@mdi/js";
-import {useParams} from "react-router-dom";
-import {Account, Transaction} from "../../core/types";
-import {Range} from "../../core/Dates";
+import { mdiCashPlus } from "@mdi/js";
+import { useParams } from "react-router-dom";
+import { Account, Transaction } from "../../core/types";
+import { Range } from "../../core/Dates";
 import LiabilityTransactionList from "./liability-transaction-list";
 
 import '../../assets/css/LiabiliryView.scss'
@@ -25,7 +25,7 @@ const LiabilityDetailView = () => {
     const [account, setAccount] = useState<Account>()
     const [openingTransaction, setOpeningTransaction] = useState<Transaction>()
     const [range, setRange] = useState<Range>()
-    const {id} = useParams()
+    const { id } = useParams()
 
     useEffect(() => {
         AccountRepository.get(id).then(setAccount)
@@ -73,7 +73,7 @@ const LiabilityDetailView = () => {
                     <div className="flex">
                         <label className='min-w-[8em]'><Translations.Translation label='page.accounts.liability.paid'/>:</label>
                         <span className='flex-1'>
-                            <Statistical.Balance accounts={ [{id: account.id}] }
+                            <Statistical.Balance accounts={ [{ id: account.id }] }
                                                  income={ true }
                                                  currency={ account.account.currency }/>
                         </span>

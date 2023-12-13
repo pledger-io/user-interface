@@ -1,15 +1,15 @@
-import {Account, BudgetExpense, Category, Contract, RuleChange} from "../../core/types";
-import React, {useEffect, useState} from "react";
-import {lookup_entity} from "../lookup-name.util";
-import {Buttons, Translations} from "../../core";
-import {Entity, Input} from "../../core/form";
-import {mdiDelete} from "@mdi/js";
+import { Account, BudgetExpense, Category, Contract, RuleChange } from "../../core/types";
+import React, { useEffect, useState } from "react";
+import { lookup_entity } from "../lookup-name.util";
+import { Buttons, Translations } from "../../core";
+import { Entity, Input } from "../../core/form";
+import { mdiDelete } from "@mdi/js";
 
 export type ChangeProperty = keyof RuleChange
 export type ChangeValueHandler = (_uuid: string, _field: ChangeProperty, _value: string) => void
 
 const ChangeFieldComponent = (props: {change : RuleChange, onChangeDelete: (_:RuleChange) => void, onValueChange: ChangeValueHandler}) => {
-    const {change, onChangeDelete, onValueChange} = props
+    const { change, onChangeDelete, onValueChange } = props
     const [entity, setEntity] = useState<any>()
 
     useEffect(() => {
@@ -60,7 +60,7 @@ const ChangeFieldComponent = (props: {change : RuleChange, onChangeDelete: (_:Ru
 
 
             { change.field === 'CATEGORY'
-                && <Entity.Category value={ {name: entity?.label, id: entity?.id} }
+                && <Entity.Category value={ { name: entity?.label, id: entity?.id } }
                                     onChange={ (value: Category) => onValueChange(change.uuid, 'change', value.id as string) }
                                     id={ `chang_${change.uuid}_change` }
                                     className='!m-0 flex-1 [&>label]:!hidden'

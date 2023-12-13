@@ -1,6 +1,6 @@
-import {Buttons} from "../index";
-import {mdiCancel, mdiRadioboxBlank} from "@mdi/js";
-import React, {useRef} from "react";
+import { Buttons } from "../index";
+import { mdiCancel, mdiRadioboxBlank } from "@mdi/js";
+import React, { useRef } from "react";
 import Popup from "./Popup";
 
 /**
@@ -8,7 +8,7 @@ import Popup from "./Popup";
  */
 const ConfirmPopup = (props) => {
     const dialogRef = useRef()
-    const {openButton, onConfirm = () => undefined, children} = props
+    const { openButton, onConfirm = () => undefined, children } = props
 
     const onConfirmClick = () => dialogRef.current.close() || onConfirm()
     const onCloseClick = () => dialogRef.current.close()

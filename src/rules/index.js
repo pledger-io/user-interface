@@ -1,5 +1,5 @@
 import RulesOverview from "./overview/rules.overview";
-import {Route} from "react-router-dom";
+import { Route } from "react-router-dom";
 import React from "react";
 import EditPage from "./edit-page/edit-page";
 

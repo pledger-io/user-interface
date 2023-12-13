@@ -1,14 +1,14 @@
-import {useInputField} from "../../core/form/input/InputGroup";
-import {RuleChange, RuleCondition} from "../../core/types";
-import {Buttons, Resolver} from "../../core";
-import ChangeFieldComponent, {ChangeProperty, ChangeValueHandler} from "./change-field.component";
-import {mdiPlusBox} from "@mdi/js";
+import { useInputField } from "../../core/form/input/InputGroup";
+import { RuleChange, RuleCondition } from "../../core/types";
+import { Buttons, Resolver } from "../../core";
+import ChangeFieldComponent, { ChangeProperty, ChangeValueHandler } from "./change-field.component";
+import { mdiPlusBox } from "@mdi/js";
 import React from "react";
 
 
 const ChangesComponent = (props: any) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [field, _, onChange] = useInputField({onChange: (_) => void 0, field: props})
+    const [field, _, onChange] = useInputField({ onChange: (_) => void 0, field: props })
 
     /**
      * Delete a change from the list of changes

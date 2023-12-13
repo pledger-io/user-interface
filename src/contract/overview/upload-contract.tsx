@@ -1,18 +1,18 @@
-import {Buttons, Dialog, Notifications, Translations} from "../../core";
-import {mdiContentSave, mdiUpload} from "@mdi/js";
-import {FC, useState} from "react";
-import {Attachment, Identifier} from "../../core/types";
-import {Upload} from "../../core/Attachment";
-import {AttachmentRepository} from "../../core/RestAPI";
+import { Buttons, Dialog, Notifications, Translations } from "../../core";
+import { mdiContentSave, mdiUpload } from "@mdi/js";
+import { FC, useState } from "react";
+import { Attachment, Identifier } from "../../core/types";
+import { Upload } from "../../core/Attachment";
+import { AttachmentRepository } from "../../core/RestAPI";
 import ContractRepository from "../../core/repositories/contract-repository";
-import {Form, SubmitButton} from "../../core/form";
+import { Form, SubmitButton } from "../../core/form";
 
 type UploadContractProps = {
     id: Identifier,
     onChanges?: () => void
 }
 
-const UploadContract:FC<UploadContractProps> = ({id, onChanges}) => {
+const UploadContract:FC<UploadContractProps> = ({ id, onChanges }) => {
     const [attachment, setAttachment] = useState<Attachment | undefined>(undefined)
 
     const dialogControl = {

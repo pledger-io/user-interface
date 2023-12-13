@@ -1,10 +1,10 @@
-import {forwardRef, useImperativeHandle, useState} from "react";
-import {Translation} from "../localization";
-import {Buttons} from "../index";
-import {mdiClose} from "@mdi/js";
+import { forwardRef, useImperativeHandle, useState } from "react";
+import { Translation } from "../localization";
+import { Buttons } from "../index";
+import { mdiClose } from "@mdi/js";
 import PropTypes from "prop-types";
 
-const Popup = forwardRef(({title, className, actions, children}, ref) => {
+const Popup = forwardRef(({ title, className, actions, children }, ref) => {
     const [closed, setClosed] = useState(true)
 
     useImperativeHandle(ref, () => ({

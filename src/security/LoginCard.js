@@ -1,15 +1,15 @@
-import React, {useState} from "react";
-import {useNavigate} from "react-router-dom";
-import {mdiAccountPlus, mdiLogin, mdiWeb} from "@mdi/js";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { mdiAccountPlus, mdiLogin, mdiWeb } from "@mdi/js";
 
-import {Form, Input, SubmitButton} from '../core/form'
-import {Buttons, Dropdown, Layout, Message, Translations} from "../core";
+import { Form, Input, SubmitButton } from '../core/form'
+import { Buttons, Dropdown, Layout, Message, Translations } from "../core";
 import SecurityRepository from "../core/repositories/security-repository";
 import PropTypes from "prop-types";
 
 import '../assets/css/LoginCard.scss'
 
-const LoginCard = ({callback}) => {
+const LoginCard = ({ callback }) => {
     const [failure, setFailure] = useState()
     const navigate              = useNavigate()
 

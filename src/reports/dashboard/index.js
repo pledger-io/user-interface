@@ -1,7 +1,7 @@
 import React from "react";
 
 import './style.scss'
-import {Dates, Layout} from "../../core";
+import { Dates, Layout } from "../../core";
 import Summary from "./summary";
 import BalanceChart from "./balance-chart";
 import BudgetBalance from "./budget-balance";

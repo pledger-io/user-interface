@@ -1,8 +1,8 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import SavingsRepository from "../../core/repositories/savings-repository";
-import {Buttons, Dialog, Dropdown, Formats, Layout, Notifications, Progressbar, Translations} from "../../core";
-import {mdiDotsVertical, mdiPencilBoxOutline, mdiPiggyBankOutline, mdiTrashCanOutline} from "@mdi/js";
-import {Account, SavingGoal} from "../../core/types";
+import { Buttons, Dialog, Dropdown, Formats, Layout, Notifications, Progressbar, Translations } from "../../core";
+import { mdiDotsVertical, mdiPencilBoxOutline, mdiPiggyBankOutline, mdiTrashCanOutline } from "@mdi/js";
+import { Account, SavingGoal } from "../../core/types";
 import ReserveToGoalComponent from "./reserve-money.component";
 import EditSavingGoalComponent from "./saving-goal-form.component";
 
@@ -10,7 +10,7 @@ type SavingGoalTableComponentProps = {
     account : Account
 }
 
-const SavingGoalTableComponent = ({account} : SavingGoalTableComponentProps) => {
+const SavingGoalTableComponent = ({ account } : SavingGoalTableComponentProps) => {
     const [goals, setGoals] = useState(() => account.savingGoals)
 
     const onUpdated = (updatedAccount: Account) => setGoals(updatedAccount.savingGoals)

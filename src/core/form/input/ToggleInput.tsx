@@ -1,5 +1,5 @@
 import React from "react";
-import {useInputField} from "./InputGroup";
+import { useInputField } from "./InputGroup";
 import PropTypes from "prop-types";
 
 type ToggleInputProps = {
@@ -11,7 +11,7 @@ type ToggleInputProps = {
 
 export const ToggleInput = (props: ToggleInputProps) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [field, _, onChange] = useInputField({onChange: props.onChange, field: props})
+    const [field, _, onChange] = useInputField({ onChange: props.onChange, field: props })
 
     const onToggle = () => {
         const value = field.value === undefined ? true : !field.value

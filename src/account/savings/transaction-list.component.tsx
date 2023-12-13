@@ -1,13 +1,13 @@
-import {Account, Pagination as PaginationType, Transaction} from "../../core/types";
-import {useQueryParam} from "../../core/hooks";
-import React, {useEffect, useState} from "react";
-import {groupTransactionByYear, YearlyTransactions} from "../../core/reducers";
+import { Account, Pagination as PaginationType, Transaction } from "../../core/types";
+import { useQueryParam } from "../../core/hooks";
+import React, { useEffect, useState } from "react";
+import { groupTransactionByYear, YearlyTransactions } from "../../core/reducers";
 import AccountRepository from "../../core/repositories/account-repository";
-import {Dates, Formats, Layout, Pagination, Translations} from "../../core";
+import { Dates, Formats, Layout, Pagination, Translations } from "../../core";
 import TransactionItem from "../../transactions/transaction-item";
 
 const TransactionListComponent = ({ account } : { account : Account }) => {
-    const [page] = useQueryParam({key: 'page', initialValue: "1"})
+    const [page] = useQueryParam({ key: 'page', initialValue: "1" })
     const [transactions, setTransactions] = useState<YearlyTransactions>()
     const [pagination, setPagination] = useState<PaginationType>()
 

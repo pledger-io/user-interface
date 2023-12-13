@@ -1,16 +1,16 @@
-import React, {FC} from "react";
+import React, { FC } from "react";
 import Icon from "@mdi/react";
-import {mdiAlertCircle, mdiCheck} from "@mdi/js";
+import { mdiAlertCircle, mdiCheck } from "@mdi/js";
 
-import {Translation} from "../../localization";
-import {InputGroup, useInputField} from "./InputGroup";
-import {FieldType, ValidatorType} from "../form-types";
+import { Translation } from "../../localization";
+import { InputGroup, useInputField } from "./InputGroup";
+import { FieldType, ValidatorType } from "../form-types";
 
 const validations: ValidatorType[] = [
-    {label: 'Account.password.at_least_six_chars',validate: value => RegExp(/^.{6,63}$/).test(value)},
-    {label: 'Account.password.at_least_one_lower_case_char',validate: value => RegExp(/^(?=.*?[a-z])/).test(value)},
-    {label: 'Account.password.at_least_one_upper_case_char',validate: value => RegExp(/^(?=.*?[A-Z])/).test(value)},
-    {label: 'Account.password.at_least_one_digit_char',validate: value => RegExp(/^(?=.*?[0-9])/).test(value)}]
+    { label: 'Account.password.at_least_six_chars',validate: value => RegExp(/^.{6,63}$/).test(value) },
+    { label: 'Account.password.at_least_one_lower_case_char',validate: value => RegExp(/^(?=.*?[a-z])/).test(value) },
+    { label: 'Account.password.at_least_one_upper_case_char',validate: value => RegExp(/^(?=.*?[A-Z])/).test(value) },
+    { label: 'Account.password.at_least_one_digit_char',validate: value => RegExp(/^(?=.*?[0-9])/).test(value) }]
 
 type PasswordInputProps = FieldType & {
     onChange?: (_: any) => void
@@ -21,10 +21,10 @@ type PasswordInputProps = FieldType & {
  * the password requirements displayed.
  */
 export const PasswordInput: FC<PasswordInputProps> = (props) => {
-    const [field, errors, onChange] = useInputField({onChange: props.onChange, field: {
+    const [field, errors, onChange] = useInputField({ onChange: props.onChange, field: {
         id: 'password',
         required: true,
-        validators: validations}})
+        validators: validations } })
 
     if (!field) return <>''</>
     return (

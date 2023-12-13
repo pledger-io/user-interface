@@ -1,14 +1,14 @@
-import React, {FC, ReactElement, useEffect, useState} from "react";
-import {Account, Transaction} from "../../core/types";
-import {Layout, Translations} from "../../core";
-import {TransactionRow} from "./transaction-row";
+import React, { FC, ReactElement, useEffect, useState } from "react";
+import { Account, Transaction } from "../../core/types";
+import { Layout, Translations } from "../../core";
+import { TransactionRow } from "./transaction-row";
 
 type TransactionTableProps = {
     account?: Account,
     transactions?: Transaction[]
 }
 
-export const TransactionTable: FC<TransactionTableProps> = ({account, transactions}) => {
+export const TransactionTable: FC<TransactionTableProps> = ({ account, transactions }) => {
     const [transactionRows, setTransactionRows] = useState<ReactElement[]>()
 
     useEffect(() => {
@@ -45,7 +45,7 @@ export const TransactionTable: FC<TransactionTableProps> = ({account, transactio
             { transactionRows && transactionRows.length > 0 && transactionRows }
             { transactionRows && transactionRows.length === 0 && (
                 <tr>
-                    <td colSpan={account ? 7 : 8} style={{textAlign: 'center', color: 'grey'}}><Translations.Translation label='common.overview.noresults'/></td>
+                    <td colSpan={account ? 7 : 8} style={{ textAlign: 'center', color: 'grey' }}><Translations.Translation label='common.overview.noresults'/></td>
                 </tr>
             ) }
             </tbody>

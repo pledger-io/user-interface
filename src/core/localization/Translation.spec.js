@@ -1,6 +1,6 @@
-import {act, render, screen} from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import axios from "axios";
-import {unmountComponentAtNode} from "react-dom";
+import { unmountComponentAtNode } from "react-dom";
 import Translation from "./translation";
 import LocalizationService from "./localization-service";
 
@@ -10,7 +10,7 @@ describe('Translation', () => {
 
     beforeEach(() => {
         axios.get.mockImplementationOnce(_ => {
-            return Promise.resolve({data: {test: 'Localization test'}})
+            return Promise.resolve({ data: { test: 'Localization test' } })
         })
 
         LocalizationService.load('en')

@@ -1,9 +1,9 @@
 import React from "react";
 
-import {mdiTable} from "@mdi/js";
+import { mdiTable } from "@mdi/js";
 
-import {Buttons, Dialog, Formats, Translations} from "../core";
-import {EntityShapes} from "../config";
+import { Buttons, Dialog, Formats, Translations } from "../core";
+import { EntityShapes } from "../config";
 import PropTypes from "prop-types";
 
 const priceStyle = {
@@ -18,7 +18,7 @@ const totalStyle = {
     fontWeight: 600
 }
 
-const TransactionSplitDialog = ({transaction: {split, currency, amount}, iconStyle = false}) => {
+const TransactionSplitDialog = ({ transaction: { split, currency, amount }, iconStyle = false }) => {
 
     return (
         <Dialog.Dialog title='page.transactions.detail.title'

@@ -1,8 +1,8 @@
-import React, {FC} from "react";
-import {Identifiable} from "../../core/types";
-import {Entity, Form, Input} from "../../core/form";
-import {Buttons, Translations} from "../../core";
-import {mdiFilter} from "@mdi/js";
+import React, { FC } from "react";
+import { Identifiable } from "../../core/types";
+import { Entity, Form, Input } from "../../core/form";
+import { Buttons, Translations } from "../../core";
+import { mdiFilter } from "@mdi/js";
 
 export type TransactionFilter = {
     account?: string,
@@ -19,7 +19,7 @@ type TransactionFiltersProps = {
     onChange: FilterChangeHandler
 }
 
-const TransactionFilters: FC<TransactionFiltersProps> = ({onChange}) => {
+const TransactionFilters: FC<TransactionFiltersProps> = ({ onChange }) => {
 
     const onSubmit = (form: any) => {
         const filter = {

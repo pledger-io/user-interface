@@ -1,4 +1,4 @@
-import {FC, useEffect, useState} from "react";
+import { FC, useEffect, useState } from "react";
 import LocalizationService from "./localization-service";
 
 
@@ -11,7 +11,7 @@ type TranslationProps = {
  * The translation component is able to display a localized message on the screen using a given translation
  * key.
  */
-const Translation: FC<TranslationProps> = ({label, className = ''}) => {
+const Translation: FC<TranslationProps> = ({ label, className = '' }) => {
     const [localized, setLocalized] = useState(`!Not translated! [${label}]`)
 
     useEffect(() => {

@@ -1,7 +1,7 @@
-import React, {FC, useEffect, useState} from "react";
+import React, { FC, useEffect, useState } from "react";
 
 import AccountRepository from "../../repositories/account-repository";
-import {SelectInput, SelectInputProps, SelectOption} from "../input/SelectInput";
+import { SelectInput, SelectInputProps, SelectOption } from "../input/SelectInput";
 
 /**
  * Specification of a Select but then only meant for an account type selection.

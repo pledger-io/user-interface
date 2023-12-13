@@ -1,7 +1,7 @@
-import {fireEvent, render} from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import Button from './Button';
-import {routerWrapped} from "../../setupTests";
-import {mdiAbacus} from "@mdi/js";
+import { routerWrapped } from "../../setupTests";
+import { mdiAbacus } from "@mdi/js";
 
 describe('Button', () => {
     const mockNavigate = jest.fn()

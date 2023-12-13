@@ -1,10 +1,10 @@
-import {useEffect, useRef} from "react";
-import {Buttons} from "../index";
-import {mdiCancel} from "@mdi/js";
+import { useEffect, useRef } from "react";
+import { Buttons } from "../index";
+import { mdiCancel } from "@mdi/js";
 import PropTypes from "prop-types";
 import Popup from "./Popup";
 
-export const Dialog = ({control, openButton, title, actions = [], className = '', children}) => {
+export const Dialog = ({ control, openButton, title, actions = [], className = '', children }) => {
     const dialogRef = useRef()
 
     useEffect(() => {

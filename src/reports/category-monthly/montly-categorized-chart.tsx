@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from "react";
-import {Dates, Layout, Statistical, Translations} from "../../core";
-import {ChartData} from "chart.js";
-import {Range} from "../../core/Dates";
-import {ChartDataset} from "chart.js/dist/types";
-import {Category} from "../../core/types";
-import {Chart} from "react-chartjs-2";
-import {DefaultChartConfig, Service} from "../../config/global-chart-config";
+import React, { useEffect, useState } from "react";
+import { Dates, Layout, Statistical, Translations } from "../../core";
+import { ChartData } from "chart.js";
+import { Range } from "../../core/Dates";
+import { ChartDataset } from "chart.js/dist/types";
+import { Category } from "../../core/types";
+import { Chart } from "react-chartjs-2";
+import { DefaultChartConfig, Service } from "../../config/global-chart-config";
 
 type CategoryGraphProps = {
     categories: Category[],
@@ -13,7 +13,7 @@ type CategoryGraphProps = {
     currencySymbol: string
 }
 
-const CategoryGraph = ({categories, year, currencySymbol}: CategoryGraphProps) => {
+const CategoryGraph = ({ categories, year, currencySymbol }: CategoryGraphProps) => {
     const [chartData, setChartData] = useState<ChartData>()
     const [months, setMonths] = useState<Range[]>()
 
@@ -38,7 +38,7 @@ const CategoryGraph = ({categories, year, currencySymbol}: CategoryGraphProps) =
                     resolve([{
                         label: await Translations.LocalizationService.get('graph.series.income'),
                         backgroundColor: '#7fc6a5',
-                        data: income.map(({balance}) => balance)
+                        data: income.map(({ balance }) => balance)
                     }])
                 })
                 .catch(fail)
@@ -56,7 +56,7 @@ const CategoryGraph = ({categories, year, currencySymbol}: CategoryGraphProps) =
                     resolve([{
                         label: await Translations.LocalizationService.get('graph.series.expenses'),
                         backgroundColor: '#dc3545',
-                        data: responses.map(({balance}) => balance)
+                        data: responses.map(({ balance }) => balance)
                     }])
                 })
                 .catch(fail)

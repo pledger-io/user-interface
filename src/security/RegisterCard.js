@@ -1,9 +1,9 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 
-import {Form, Input, SubmitButton} from "../core/form";
-import {Buttons, Layout, Message} from "../core";
-import {mdiAccountPlus, mdiLogin} from "@mdi/js";
-import {useNavigate} from "react-router-dom";
+import { Form, Input, SubmitButton } from "../core/form";
+import { Buttons, Layout, Message } from "../core";
+import { mdiAccountPlus, mdiLogin } from "@mdi/js";
+import { useNavigate } from "react-router-dom";
 import SecurityRepository from "../core/repositories/security-repository";
 
 import '../assets/css/RegisterCard.scss'
@@ -12,7 +12,7 @@ const RegisterCard = () => {
     const [exception, setException] = useState()
     const navigate                  = useNavigate()
 
-    const onSubmit = ({username, password}) => SecurityRepository.register(username, password)
+    const onSubmit = ({ username, password }) => SecurityRepository.register(username, password)
         .then(() => navigate('/login'))
         .catch(setException)
 

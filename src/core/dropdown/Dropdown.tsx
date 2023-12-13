@@ -1,5 +1,5 @@
-import {FC, ReactNode, useEffect, useState} from "react";
-import {Button} from "../buttons";
+import { FC, ReactNode, useEffect, useState } from "react";
+import { Button } from "../buttons";
 
 type DropdownProps = {
     actions?: DropdownActions,
@@ -13,7 +13,7 @@ export type DropdownActions = {
     close: () => void
 }
 
-const Dropdown: FC<DropdownProps> = ({actions, title, icon, className, children}) => {
+const Dropdown: FC<DropdownProps> = ({ actions, title, icon, className, children }) => {
     const [open, setOpen] = useState(false)
 
     useEffect(() => {

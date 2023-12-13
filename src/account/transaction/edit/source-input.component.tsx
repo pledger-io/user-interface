@@ -1,12 +1,12 @@
-import {Entity} from "../../../core/form";
+import { Entity } from "../../../core/form";
 import React from "react";
-import {Transaction} from "../../../core/types";
+import { Transaction } from "../../../core/types";
 
 type SourceInputComponentProps = {
     transaction: Transaction
 }
 
-const SourceInputComponent = ({transaction: {source, type}} : SourceInputComponentProps) => {
+const SourceInputComponent = ({ transaction: { source, type } } : SourceInputComponentProps) => {
     if (type.code.toLowerCase() === 'debit') {
         return <Entity.Account id='from'
                                type='DEBTOR'

@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from "react";
-import {ChartData} from "chart.js";
-import {Account} from "../../core/types";
-import {BalanceSeries} from "../../core/graphs/balance-series";
-import {Range} from "../../core/Dates";
-import {Chart} from "react-chartjs-2";
-import {DefaultChartConfig} from "../../config/global-chart-config";
-import {Loading} from "../../core/layout";
+import React, { useEffect, useState } from "react";
+import { ChartData } from "chart.js";
+import { Account } from "../../core/types";
+import { BalanceSeries } from "../../core/graphs/balance-series";
+import { Range } from "../../core/Dates";
+import { Chart } from "react-chartjs-2";
+import { DefaultChartConfig } from "../../config/global-chart-config";
+import { Loading } from "../../core/layout";
 
 type LiabilityGraphProps = {
     range: Range,
@@ -34,7 +34,7 @@ function LiabilityGraph(props: LiabilityGraphProps) {
         <Chart height={ 100 }
                type={ 'line' }
                id='liability-balance-graph'
-               options={ {...DefaultChartConfig.line, maintainAspectRatio: true} }
+               options={ { ...DefaultChartConfig.line, maintainAspectRatio: true } }
                data={ balanceSeries } />
     </>
 }

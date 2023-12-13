@@ -1,8 +1,8 @@
-import {Resolver, Translations} from "../../../core";
+import { Resolver, Translations } from "../../../core";
 import React from "react";
-import {Entity, Input} from "../../../core/form";
+import { Entity, Input } from "../../../core/form";
 
-const MetadataFieldsetComponent = ({transaction}) => {
+const MetadataFieldsetComponent = ({ transaction }) => {
 
     const isNotTransfer = !Resolver.Transaction.isTransfer(transaction)
     return <>

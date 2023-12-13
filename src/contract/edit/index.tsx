@@ -1,10 +1,10 @@
-import React, {FC, useEffect, useState} from "react";
-import {BreadCrumbItem, BreadCrumbs, Buttons, Layout, Notifications} from "../../core";
-import {useNavigate, useParams} from "react-router-dom";
+import React, { FC, useEffect, useState } from "react";
+import { BreadCrumbItem, BreadCrumbs, Buttons, Layout, Notifications } from "../../core";
+import { useNavigate, useParams } from "react-router-dom";
 import ContractRepository from "../../core/repositories/contract-repository";
-import {Contract} from "../../core/types";
-import {Entity, Form, Input, SubmitButton} from "../../core/form";
-import {mdiCancel, mdiContentSave} from "@mdi/js";
+import { Contract } from "../../core/types";
+import { Entity, Form, Input, SubmitButton } from "../../core/form";
+import { mdiCancel, mdiContentSave } from "@mdi/js";
 
 const ContractEdit: FC<void> = () => {
     const { id } = useParams()

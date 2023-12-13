@@ -1,12 +1,12 @@
-import React, {createRef, useState} from "react";
+import React, { createRef, useState } from "react";
 import PropTypes from 'prop-types'
 
-import {InputGroup, useInputField} from "./InputGroup";
+import { InputGroup, useInputField } from "./InputGroup";
 import Icon from "@mdi/react";
-import {mdiClose, mdiPlus} from "@mdi/js";
+import { mdiClose, mdiPlus } from "@mdi/js";
 import restAPI from "../../repositories/rest-api";
 
-const Tag = ({tag, onRemove = _ => undefined}) => {
+const Tag = ({ tag, onRemove = _ => undefined }) => {
     return (
         <div className='Tag'>
             {tag}
@@ -18,22 +18,22 @@ const Tag = ({tag, onRemove = _ => undefined}) => {
 }
 
 export const TagInput = props => {
-    const [field, errors, onChange] = useInputField({onChange: props.onChange, field: props})
+    const [field, errors, onChange] = useInputField({ onChange: props.onChange, field: props })
 
     const [tagValue, setTagValue] = useState('')
     const [options, setOptions]   = useState([])
     const [selectedIdx, setSelectedIdx]   = useState(-1)
 
     const onTagRemove = _ => undefined
-    const onTagCreate = () => restAPI.post('transactions/tags', {tag: tagValue})
-        .then(_ => onSelect({name: tagValue}))
+    const onTagCreate = () => restAPI.post('transactions/tags', { tag: tagValue })
+        .then(_ => onSelect({ name: tagValue }))
 
-    const onSelect = ({name}) => {
+    const onSelect = ({ name }) => {
         const updatedTags = (field.value || [])
         updatedTags.push(name)
 
         inputDivRef.current.innerText = ''
-        onChange({persist: () => {}, currentTarget: {value: updatedTags}})
+        onChange({ persist: () => {}, currentTarget: { value: updatedTags } })
         setOptions([]) || setTagValue('')
     }
     const onKeyUp = event => {

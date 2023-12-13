@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 
-import {InputGroup, useInputField} from "./InputGroup";
+import { InputGroup, useInputField } from "./InputGroup";
 
 export const AmountInput = (props) => {
-    const [field, errors, onChange] = useInputField({onChange: props.onChange, field: props})
+    const [field, errors, onChange] = useInputField({ onChange: props.onChange, field: props })
     const language = localStorage.getItem('language') || 'en';
     const formatter = new Intl.NumberFormat(language, {
         currency: props.currency || 'EUR',

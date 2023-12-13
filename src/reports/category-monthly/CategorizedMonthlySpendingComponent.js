@@ -1,7 +1,7 @@
-import {Dates, Statistical, Translations} from "../../core";
+import { Dates, Statistical, Translations } from "../../core";
 import React from "react";
 
-const CategorizedMonthlySpendingComponent = ({categories, year}) => {
+const CategorizedMonthlySpendingComponent = ({ categories, year }) => {
     const months = [...new Array(12).keys()]
         .map(month => Dates.Ranges.forMonth(year, month + 1))
 

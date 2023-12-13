@@ -1,17 +1,17 @@
-import React, {useContext} from "react";
-import {Translations} from "../../../core";
-import {Input} from "../../../core/form";
+import React, { useContext } from "react";
+import { Translations } from "../../../core";
+import { Input } from "../../../core/form";
 
 import SourceInputComponent from "./source-input.component";
 import DestinationInputComponent from "./DestinationInputComponent";
 import SplitEditor from "./SplitEditor";
-import {FormContext} from "../../../core/form/Form";
+import { FormContext } from "../../../core/form/Form";
 
-const GenericDetailsComponent = ({transaction, account}) => {
+const GenericDetailsComponent = ({ transaction, account }) => {
     const formContext = useContext(FormContext)
 
     const onSplitTotalChanged = total => formContext.onChange(
-        {currentTarget: {value: total}, persist: () => {}},
+        { currentTarget: { value: total }, persist: () => {} },
         formContext.fields['amount'])
 
     return <>

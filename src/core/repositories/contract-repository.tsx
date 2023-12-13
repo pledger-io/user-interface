@@ -1,5 +1,5 @@
 import RestApi from "./rest-api";
-import {Attachment, Contract, Identifier} from "../types";
+import { Attachment, Contract, Identifier } from "../types";
 
 const ContractRepository = (api => {
     return {

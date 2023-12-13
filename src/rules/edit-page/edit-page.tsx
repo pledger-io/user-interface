@@ -1,16 +1,16 @@
-import {BreadCrumbItem, BreadCrumbs, Buttons, Layout, Message, Notifications, Translations} from "../../core";
-import React, {useEffect, useState} from "react";
-import {useNavigate, useParams} from "react-router-dom";
-import {Rule} from "../../core/types";
-import {Form, Input, SubmitButton} from "../../core/form";
+import { BreadCrumbItem, BreadCrumbs, Buttons, Layout, Message, Notifications, Translations } from "../../core";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { Rule } from "../../core/types";
+import { Form, Input, SubmitButton } from "../../core/form";
 import RuleRepository from "../../core/repositories/rule-repository";
 import ConditionFieldComponent from "./conditions.component";
 import ChangesComponent from "./changes.component";
-import {mdiCancel, mdiContentSave} from "@mdi/js";
+import { mdiCancel, mdiContentSave } from "@mdi/js";
 
 
 const EditPage = () => {
-    const {id, group} = useParams()
+    const { id, group } = useParams()
     const [rule, setRule] = useState<Rule>()
     const navigate = useNavigate()
 
@@ -26,8 +26,8 @@ const EditPage = () => {
             description: data.description,
             restrictive: data.restrictive,
             active: data.active,
-            conditions: data.conditions.map(c => ({column: c.field, operation: c.operation, value: c.condition})),
-            changes: data.changes.map(c => ({column: c.field, value: c.change}))
+            conditions: data.conditions.map(c => ({ column: c.field, operation: c.operation, value: c.condition })),
+            changes: data.changes.map(c => ({ column: c.field, value: c.change }))
         }
 
         if (id === undefined) {

@@ -1,8 +1,8 @@
-import {useNavigate} from "react-router-dom";
-import {useDateRange} from "../../core/hooks";
-import {BreadCrumbItem, BreadCrumbMenu, BreadCrumbs, Dropdown, Layout} from "../../core";
+import { useNavigate } from "react-router-dom";
+import { useDateRange } from "../../core/hooks";
+import { BreadCrumbItem, BreadCrumbMenu, BreadCrumbs, Dropdown, Layout } from "../../core";
 import React from "react";
-import {mdiCashMinus, mdiCashPlus, mdiChevronDown, mdiSwapHorizontal} from "@mdi/js";
+import { mdiCashMinus, mdiCashPlus, mdiChevronDown, mdiSwapHorizontal } from "@mdi/js";
 import NewTransactionDialog from "./new-transaction-dialog";
 import TransactionOverview from "./transaction-overview";
 import CategorizedPieChart from "../../core/graphs/categorized-pie-chart";
@@ -23,8 +23,8 @@ const TransactionGlobalView = ({ transfers } : { transfers: boolean }) => {
 
             <BreadCrumbMenu>
                 <Dropdown.YearMonth
-                    onChange={ ({year, month}) => onDateChange(year, month) }
-                    selected={ {month: range.month(), year: range.year()} }/>
+                    onChange={ ({ year, month }) => onDateChange(year, month) }
+                    selected={ { month: range.month(), year: range.year() } }/>
             </BreadCrumbMenu>
         </BreadCrumbs>
 

@@ -1,11 +1,11 @@
-import React, {Context, createContext, FC, FormEvent, ReactNode, useEffect, useState} from "react";
-import {AddFieldFunc, FieldType, FormContextType, OnValueChangeFunc} from "./form-types";
+import React, { Context, createContext, FC, FormEvent, ReactNode, useEffect, useState } from "react";
+import { AddFieldFunc, FieldType, FormContextType, OnValueChangeFunc } from "./form-types";
 
 import '../../assets/css/Form.scss'
 
 function validateField(field: FieldType) {
-    const {value} = field;
-    let errors = [];
+    const { value } = field;
+    const errors = [];
     if (field.required && !value) {
         errors.push('required')
     }
@@ -51,7 +51,7 @@ type FormProps = {
  * to get notified when the form is submitted. This hook is only triggered when there are no validation failures in any
  * of the input components.
  */
-export const Form: FC<FormProps> = ({entity, onSubmit, style = 'group', children}) => {
+export const Form: FC<FormProps> = ({ entity, onSubmit, style = 'group', children }) => {
     const [fields, setFields] = useState({})
     const [errors, setErrors] = useState({})
 
@@ -62,11 +62,11 @@ export const Form: FC<FormProps> = ({entity, onSubmit, style = 'group', children
         }
     }, [entity])
 
-    const onAddField: AddFieldFunc =  ({field}) => {
-        setFields(current => ({...current, [field.id]: field}))
-        setErrors(current => ({...current, [field.id]: validateField(field)}))
+    const onAddField: AddFieldFunc =  ({ field }) => {
+        setFields(current => ({ ...current, [field.id]: field }))
+        setErrors(current => ({ ...current, [field.id]: validateField(field) }))
     }
-    const onValueChange: OnValueChangeFunc = (event, {id}) => {
+    const onValueChange: OnValueChangeFunc = (event, { id }) => {
         event.persist()
 
         type FieldKey = keyof typeof fields

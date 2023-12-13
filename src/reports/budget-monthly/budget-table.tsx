@@ -1,7 +1,7 @@
-import React, {FC, useEffect, useState} from "react";
-import {Dates, Formats, Statistical, Translations} from "../../core";
-import {Range} from "../../core/Dates";
-import {Budget} from "../../core/types";
+import React, { FC, useEffect, useState } from "react";
+import { Dates, Formats, Statistical, Translations } from "../../core";
+import { Range } from "../../core/Dates";
+import { Budget } from "../../core/types";
 
 type BudgetTableProps = {
     budgets: Budget[],
@@ -9,7 +9,7 @@ type BudgetTableProps = {
     currency: string
 }
 
-const BudgetTable: FC<BudgetTableProps> = ({budgets, year, currency}) => {
+const BudgetTable: FC<BudgetTableProps> = ({ budgets, year, currency }) => {
     const [months, setMonths] = useState<Range[]>([])
     const [monthlyExpenses, setMonthlyExpenses] = useState<number[]>([])
 
@@ -20,7 +20,7 @@ const BudgetTable: FC<BudgetTableProps> = ({budgets, year, currency}) => {
             onlyIncome: false,
             dateRange: month.toBackend()
         })))
-            .then(expenses => expenses.map(({balance}) => Math.abs(balance)))
+            .then(expenses => expenses.map(({ balance }) => Math.abs(balance)))
             .then(setMonthlyExpenses)
             .catch(console.error)
 

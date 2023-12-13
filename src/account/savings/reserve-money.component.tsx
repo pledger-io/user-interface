@@ -1,9 +1,9 @@
 import SavingsRepository from "../../core/repositories/savings-repository";
-import {Form, Input, SubmitButton} from "../../core/form";
-import {Buttons, Dialog} from "../../core";
-import {mdiPlusBox} from "@mdi/js";
+import { Form, Input, SubmitButton } from "../../core/form";
+import { Buttons, Dialog } from "../../core";
+import { mdiPlusBox } from "@mdi/js";
 import React from "react";
-import {Account, SavingGoal} from "../../core/types";
+import { Account, SavingGoal } from "../../core/types";
 
 type ReserveToGoalComponentProps = {
     account: Account,
@@ -11,7 +11,7 @@ type ReserveToGoalComponentProps = {
     onChanged: (_: Account) => void
 }
 
-const ReserveToGoalComponent = ({account, savingGoal, onChanged} : ReserveToGoalComponentProps) => {
+const ReserveToGoalComponent = ({ account, savingGoal, onChanged } : ReserveToGoalComponentProps) => {
     const control = {
         close: () => undefined
     }

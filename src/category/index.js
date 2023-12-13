@@ -1,7 +1,7 @@
 import React from "react";
-import {Route} from "react-router-dom";
-import {CategoryOverview} from "./CategoryOverview";
-import {CategoryForm} from "./CategoryForm";
+import { Route } from "react-router-dom";
+import { CategoryOverview } from "./CategoryOverview";
+import { CategoryForm } from "./CategoryForm";
 
 export const CategoryRoutes = [
     <Route key='category-overview' path='/categories' element={<CategoryOverview/>}/>,

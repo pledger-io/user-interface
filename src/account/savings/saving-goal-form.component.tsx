@@ -1,9 +1,9 @@
 import SavingsRepository from "../../core/repositories/savings-repository";
-import {Form, Input, SubmitButton} from "../../core/form";
-import {Dialog} from "../../core";
-import {mdiContentSave} from "@mdi/js";
+import { Form, Input, SubmitButton } from "../../core/form";
+import { Dialog } from "../../core";
+import { mdiContentSave } from "@mdi/js";
 import React from "react";
-import {Account, SavingGoal} from "../../core/types";
+import { Account, SavingGoal } from "../../core/types";
 
 type EditSavingGoalComponentProps = {
     account: Account,
@@ -12,7 +12,7 @@ type EditSavingGoalComponentProps = {
     openButton: React.ReactElement
 }
 
-const EditSavingGoalComponent = ({account, savingGoal = undefined, onChanged = _ => {}, openButton} : EditSavingGoalComponentProps) => {
+const EditSavingGoalComponent = ({ account, savingGoal = undefined, onChanged = _ => {}, openButton } : EditSavingGoalComponentProps) => {
     const control = {
         close: () => undefined
     }

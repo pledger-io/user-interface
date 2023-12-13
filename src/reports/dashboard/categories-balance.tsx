@@ -1,13 +1,13 @@
-import {Layout, Translations} from "../../core";
-import React, {useEffect, useState} from "react";
+import { Layout, Translations } from "../../core";
+import React, { useEffect, useState } from "react";
 import CategoryRepository from "../../core/repositories/category-repository";
-import {Loading} from "../../core/layout";
-import {Range} from "../../core/Dates";
-import {ChartData} from "chart.js";
-import {Category} from "../../core/types";
+import { Loading } from "../../core/layout";
+import { Range } from "../../core/Dates";
+import { ChartData } from "chart.js";
+import { Category } from "../../core/types";
 import StatisticalRepository from "../../core/repositories/statistical-repository";
-import {Chart} from "react-chartjs-2";
-import {DefaultChartConfig} from "../../config/global-chart-config";
+import { Chart } from "react-chartjs-2";
+import { DefaultChartConfig } from "../../config/global-chart-config";
 
 const CategoriesBalance = ({ range } : {range: Range}) => {
     const [categorySeries, setCategorySeries] = useState<ChartData | undefined>()
@@ -25,7 +25,7 @@ const CategoriesBalance = ({ range } : {range: Range}) => {
                                 StatisticalRepository.balance({
                                     dateRange: range.toBackend(),
                                     onlyIncome: false,
-                                    categories: [{id: c.id}]
+                                    categories: [{ id: c.id }]
                                 }))))
                             .map(b => b.balance)
                     }]

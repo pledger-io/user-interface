@@ -1,8 +1,8 @@
-import {Dialog} from "../../core/popups";
-import {mdiContentSave, mdiPlus} from "@mdi/js";
-import {Buttons, Notifications} from "../../core";
+import { Dialog } from "../../core/popups";
+import { mdiContentSave, mdiPlus } from "@mdi/js";
+import { Buttons, Notifications } from "../../core";
 import React from "react";
-import {Form, Input, SubmitButton} from "../../core/form";
+import { Form, Input, SubmitButton } from "../../core/form";
 import RuleRepository from "../../core/repositories/rule-repository";
 
 type GroupAddDialogProps = {
@@ -10,7 +10,7 @@ type GroupAddDialogProps = {
 }
 
 const GroupAddDialog = (props: GroupAddDialogProps) => {
-    const dialogControl = {close: () => undefined}
+    const dialogControl = { close: () => undefined }
     const onSubmit = (data: any) =>
         RuleRepository.createGroup(data.name)
             .then(props.onAdd)

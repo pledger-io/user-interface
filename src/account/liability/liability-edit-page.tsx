@@ -1,14 +1,14 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 
-import {Entity, Form, Input, SubmitButton} from '../../core/form'
-import {BreadCrumbItem, BreadCrumbs, Buttons, Layout, Notifications, Translations} from "../../core";
-import {mdiCancel, mdiContentSave} from "@mdi/js";
+import { Entity, Form, Input, SubmitButton } from '../../core/form'
+import { BreadCrumbItem, BreadCrumbs, Buttons, Layout, Notifications, Translations } from "../../core";
+import { mdiCancel, mdiContentSave } from "@mdi/js";
 import AccountRepository from "../../core/repositories/account-repository";
-import {TransactionRepository} from "../../core/RestAPI";
-import {useNavigate, useParams} from "react-router-dom";
+import { TransactionRepository } from "../../core/RestAPI";
+import { useNavigate, useParams } from "react-router-dom";
 
 import '../../assets/css/LiabilityForm.scss'
-import {Account} from "../../core/types";
+import { Account } from "../../core/types";
 
 class AccountModel {
 
@@ -41,9 +41,9 @@ type OpeningBalance = {
 }
 
 const LiabilityForm = () => {
-    const {id} = useParams()
+    const { id } = useParams()
     const [account, setAccount] = useState(new AccountModel({} as Account))
-    const [openingBalance, setOpeningBalance] = useState<OpeningBalance>({amount: 0} as OpeningBalance)
+    const [openingBalance, setOpeningBalance] = useState<OpeningBalance>({ amount: 0 } as OpeningBalance)
     const navigate = useNavigate()
 
     const editLabel = !id ? 'page.title.accounts.liabilities.add' : 'page.title.accounts.liabilities.edit'
@@ -71,14 +71,14 @@ const LiabilityForm = () => {
         if (!id) {
             AccountRepository.create(updatedEntity)
                 .then(created => {
-                    AccountRepository.search({types: ['reconcile']})
+                    AccountRepository.search({ types: ['reconcile'] })
                         .then(response => {
                             TransactionRepository.create(`accounts/${created.id}/transactions`, {
                                 date: entity.startDate,
                                 amount: entity.startBalance,
                                 currency: entity.currency,
-                                source: {id: created.id},
-                                destination: {id: response.content[0].id},
+                                source: { id: created.id },
+                                destination: { id: response.content[0].id },
                                 description: 'Opening balance'
                             })
                             .then(() => Notifications.Service.success('page.accounts.liability.created.success'))

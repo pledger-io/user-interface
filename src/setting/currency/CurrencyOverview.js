@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 
-import {Form, Input} from '../../core/form'
-import {BreadCrumbItem, BreadCrumbs, Buttons, Layout, Notifications, Translations} from "../../core";
-import {mdiPlus, mdiSquareEditOutline} from "@mdi/js";
+import { Form, Input } from '../../core/form'
+import { BreadCrumbItem, BreadCrumbs, Buttons, Layout, Notifications, Translations } from "../../core";
+import { mdiPlus, mdiSquareEditOutline } from "@mdi/js";
 import PropTypes from "prop-types";
-import {CurrencyRepository} from "../../core/RestAPI";
+import { CurrencyRepository } from "../../core/RestAPI";
 
-const CurrencyRow = ({currency}) => {
+const CurrencyRow = ({ currency }) => {
     const onEnabledChange = enabled => CurrencyRepository.change(currency.code, enabled)
         .then(() => Notifications.Service.success('page.settings.currencies.enabled.success'))
         .catch(() => Notifications.Service.warning('page.settings.currencies.enabled.failed'))

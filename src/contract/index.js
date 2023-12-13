@@ -1,4 +1,4 @@
-import {Route} from "react-router-dom";
+import { Route } from "react-router-dom";
 import ContractOverview from "./overview";
 import ContractEdit from "./edit";
 import ContractDetail from "./detail";

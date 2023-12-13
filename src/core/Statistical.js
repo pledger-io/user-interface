@@ -1,16 +1,16 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from 'prop-types';
 
 import StatisticalRepository from "./repositories/statistical-repository";
-import {Money} from "./Formatters";
-import {EntityShapes} from "../config";
-import {Loading} from "./layout";
+import { Money } from "./Formatters";
+import { EntityShapes } from "../config";
+import { Loading } from "./layout";
 
 /**
  * The balance component can display a computed balance on a given search command. Where the search command can
  * be setup using the properties of the component.
  */
-const BalanceComponent = ({accounts = [], categories = [], expenses = [],  income, currency, range}) => {
+const BalanceComponent = ({ accounts = [], categories = [], expenses = [],  income, currency, range }) => {
     const [balance, setBalance] = useState(null)
 
     useEffect(() => {

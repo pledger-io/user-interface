@@ -1,10 +1,10 @@
-import {Buttons, Layout, Message, Notifications, Translations} from "../core";
+import { Buttons, Layout, Message, Notifications, Translations } from "../core";
 import NavigationComponent from "./navigation.component";
-import {Form, Input, SubmitButton} from "../core/form";
+import { Form, Input, SubmitButton } from "../core/form";
 import RestAPI from "../core/repositories/rest-api";
-import {mdiContentSave, mdiLockOff} from "@mdi/js";
+import { mdiContentSave, mdiLockOff } from "@mdi/js";
 import ProfileRepository from "../core/repositories/profile.repository";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 
 const Profile2FactorView = () => {
     const [qrCode, setQrCode] = useState<string>()

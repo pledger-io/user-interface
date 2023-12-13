@@ -1,11 +1,11 @@
-import React, {FC, useEffect, useState} from "react";
-import {Account} from "../types";
-import {useDateRange} from "../hooks";
-import {Loading} from "../layout";
-import {BalanceSeries} from "./balance-series";
-import {Chart} from "react-chartjs-2";
-import {ChartData} from "chart.js";
-import {DefaultChartConfig} from "../../config/global-chart-config";
+import React, { FC, useEffect, useState } from "react";
+import { Account } from "../types";
+import { useDateRange } from "../hooks";
+import { Loading } from "../layout";
+import { BalanceSeries } from "./balance-series";
+import { Chart } from "react-chartjs-2";
+import { ChartData } from "chart.js";
+import { DefaultChartConfig } from "../../config/global-chart-config";
 
 type BalanceChartProps = {
     id: string

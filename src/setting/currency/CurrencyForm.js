@@ -1,14 +1,14 @@
-import React, {useEffect, useState} from "react";
-import {mdiCancel, mdiContentSave} from "@mdi/js";
+import React, { useEffect, useState } from "react";
+import { mdiCancel, mdiContentSave } from "@mdi/js";
 
-import {Form, Input, SubmitButton} from "../../core/form";
-import {BreadCrumbItem, BreadCrumbs, Buttons, Layout} from "../../core";
-import {useParams} from "react-router-dom";
-import {CurrencyRepository} from "../../core/RestAPI";
+import { Form, Input, SubmitButton } from "../../core/form";
+import { BreadCrumbItem, BreadCrumbs, Buttons, Layout } from "../../core";
+import { useParams } from "react-router-dom";
+import { CurrencyRepository } from "../../core/RestAPI";
 
 export const CurrencyForm = () => {
     const [currency, setCurrency] = useState({})
-    const {code}                  = useParams()
+    const { code }                  = useParams()
 
     useEffect(() => {
         CurrencyRepository.get(code)

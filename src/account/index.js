@@ -1,9 +1,9 @@
-import React, {useState} from "react";
-import {Navigate, Route} from "react-router-dom";
-import {withPathParams} from "../core/hooks";
+import React, { useState } from "react";
+import { Navigate, Route } from "react-router-dom";
+import { withPathParams } from "../core/hooks";
 
 import TransactionForm from "./transaction/edit";
-import {LiabilityPaymentForm} from "./transaction/LiabilityPayment";
+import { LiabilityPaymentForm } from "./transaction/LiabilityPayment";
 import AccountTransactionOverview from "./detail-view"
 import OwnAccountOverview from "./OwnAccountOverview"
 import AccountOverview from "./AccountOverview"
@@ -18,7 +18,7 @@ import '../assets/css/Account.scss'
 
 const RedirectLiability = withPathParams(props => {
     const [path, setPath] = useState(null)
-    props.pathContext.resolved = ({id}) => setPath('/accounts/liability/' + id)
+    props.pathContext.resolved = ({ id }) => setPath('/accounts/liability/' + id)
 
     if (path != null) {
         return <Navigate to={path} />

@@ -1,10 +1,10 @@
-import {Route} from "react-router-dom";
+import { Route } from "react-router-dom";
 import React from "react";
 
-import {withNavigation, withPathParams} from "../core/hooks";
+import { withNavigation, withPathParams } from "../core/hooks";
 
-import {ScheduledTransactionOverview} from "./schedule/ScheduledTransactionOverview";
-import {ScheduleTransactionForm} from "./schedule/ScheduleTransactionForm";
+import { ScheduledTransactionOverview } from "./schedule/ScheduledTransactionOverview";
+import { ScheduleTransactionForm } from "./schedule/ScheduleTransactionForm";
 import GlobalTransactionView from "./global-view"
 
 const ScheduledTransactionEditForm = withNavigation(withPathParams(ScheduleTransactionForm))

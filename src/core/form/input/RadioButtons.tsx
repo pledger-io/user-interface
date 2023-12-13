@@ -1,8 +1,8 @@
-import React, {FC} from "react";
+import React, { FC } from "react";
 
-import {Translation} from "../../localization";
-import {useInputField} from "./InputGroup";
-import {FieldType} from "../form-types";
+import { Translation } from "../../localization";
+import { useInputField } from "./InputGroup";
+import { FieldType } from "../form-types";
 
 type OptionProp = {
     label: string,
@@ -18,14 +18,14 @@ type RadioButtonsProps = FieldType & {
 
 export const RadioButtons: FC<RadioButtonsProps> = (props) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [field, _, onChange] = useInputField({onChange: props.onChange, field: props})
+    const [field, _, onChange] = useInputField({ onChange: props.onChange, field: props })
 
     return (
         <div className='RadioButton'>
             {props.options.map(option => (
                 <label key={option.value}
                        htmlFor={`option-${option.value}`}
-                       onClick={() => onChange({persist: () => {}, currentTarget: {value: option.value}})}
+                       onClick={() => onChange({ persist: () => {}, currentTarget: { value: option.value } })}
                        className={`${option.variant} ${field?.value === option.value ? 'selected' : ''}`}>
                     <input type='radio'
                            value={option.value}

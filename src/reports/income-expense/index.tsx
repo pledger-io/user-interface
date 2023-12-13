@@ -8,18 +8,18 @@ import {
     Statistical,
     Translations
 } from "../../core";
-import React, {useEffect, useState} from "react";
-import {useNavigate, useParams} from "react-router-dom";
-import {Currency} from "../../core/types";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { Currency } from "../../core/types";
 import YearBalanceChart from "./year-balance-chart";
-import {CurrencyRepository} from "../../core/RestAPI";
+import { CurrencyRepository } from "../../core/RestAPI";
 import AccountBalance from "./account-balance";
 import TopAccountTable from "./top-account";
 
 function IncomeExpenseView() {
     const [currencySymbol, setCurrencySymbol] = useState('')
     const [range, setRange] = useState(Dates.Ranges.currentYear())
-    const {year = range.year(), currency = 'EUR'} = useParams()
+    const { year = range.year(), currency = 'EUR' } = useParams()
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -30,7 +30,7 @@ function IncomeExpenseView() {
             .then((c : Currency) => setCurrencySymbol(c.symbol))
     }, [currency])
 
-    const onDateChanged = ({newYear = year, newCurrency = currency}) => {
+    const onDateChanged = ({ newYear = year, newCurrency = currency }) => {
         navigate(`/reports/income-expense/${newYear}/${newCurrency}`)
     }
 
@@ -40,9 +40,9 @@ function IncomeExpenseView() {
             <BreadCrumbItem label='page.reports.default.title'/>
             <BreadCrumbMenu className='flex justify-end'>
                 <Dropdown.Currency currency={ currency }
-                                   onChange={ (currency: Currency) => onDateChanged({newCurrency: currency.code})}/>
+                                   onChange={ (currency: Currency) => onDateChanged({ newCurrency: currency.code })}/>
                 <Dropdown.Year year={ parseInt(year) }
-                               onChange={ year => onDateChanged({newYear: year}) }/>
+                               onChange={ year => onDateChanged({ newYear: year }) }/>
             </BreadCrumbMenu>
         </BreadCrumbs>
 

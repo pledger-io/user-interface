@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from 'prop-types';
-import {AttachmentRepository} from "./RestAPI";
-import {mdiTrayArrowUp} from "@mdi/js";
-import {Buttons, Notifications, When} from "./index";
+import { AttachmentRepository } from "./RestAPI";
+import { mdiTrayArrowUp } from "@mdi/js";
+import { Buttons, Notifications, When } from "./index";
 
 import UploadSVG from '../assets/ic-upload-file.svg'
 
@@ -36,7 +36,7 @@ const validDrop = (event, max, accepts) => {
     return true
 }
 
-const UploadAttachment = ({accepts = '*/*', label, onUpload, max = 1}) => {
+const UploadAttachment = ({ accepts = '*/*', label, onUpload, max = 1 }) => {
     const [dropActive, setDropActive] = useState(false)
     const [valid, setValid]           = useState(false)
     const [uniqueId]                  = useState('attachment-' + (++uploadCounter))
@@ -83,7 +83,7 @@ UploadAttachment.propTypes = {
 }
 
 
-const ImageAttachment = ({fileCode}) => {
+const ImageAttachment = ({ fileCode }) => {
     const [data, setData] = useState('')
 
     useEffect(() => {

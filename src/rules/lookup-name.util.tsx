@@ -1,8 +1,8 @@
-import {Account, BudgetExpense, Category, Contract, Identifier, RuleField} from "../core/types";
+import { Account, BudgetExpense, Category, Contract, Identifier, RuleField } from "../core/types";
 import AccountRepository from "../core/repositories/account-repository";
 import CategoryRepository from "../core/repositories/category-repository";
 import ContractRepository from "../core/repositories/contract-repository";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import BudgetRepository from "../core/repositories/budget.repository";
 
 async function lookup_entity<T>(type: RuleField, id: Identifier) : Promise<T> {
@@ -43,7 +43,7 @@ async function lookup_name(type: RuleField, id: Identifier) : Promise<string> {
 }
 
 
-function EntityNameComponent({type, id}: { type: RuleField, id: Identifier }) {
+function EntityNameComponent({ type, id }: { type: RuleField, id: Identifier }) {
     const [label, setLabel] = useState<string>('Loading...')
 
     useEffect(() => {

@@ -1,7 +1,7 @@
 import HistoryButton from "./HistoryButton"
-import {fireEvent, render} from "@testing-library/react";
-import {routerWrapped} from "../../setupTests";
-import {mdiAccount} from "@mdi/js";
+import { fireEvent, render } from "@testing-library/react";
+import { routerWrapped } from "../../setupTests";
+import { mdiAccount } from "@mdi/js";
 
 describe(HistoryButton, () => {
 
@@ -15,7 +15,7 @@ describe(HistoryButton, () => {
     })
 
     it("click on the back button", () => {
-        const {getByRole} = render(
+        const { getByRole } = render(
             routerWrapped(<HistoryButton label='common.test' icon={mdiAccount}/>))
         const button = getByRole('button')
 

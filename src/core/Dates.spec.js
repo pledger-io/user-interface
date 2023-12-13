@@ -1,4 +1,4 @@
-import {Range, Ranges} from "./Dates";
+import { Range, Ranges } from "./Dates";
 
 describe('Ranges', () => {
     beforeEach(() => {

@@ -1,5 +1,5 @@
-import {Identifiable} from "../types";
-import {Range} from "../Dates";
+import { Identifiable } from "../types";
+import { Range } from "../Dates";
 
 export type DataPoint = number | {
     x: number | string

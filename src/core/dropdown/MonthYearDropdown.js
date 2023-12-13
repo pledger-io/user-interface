@@ -1,16 +1,16 @@
-import {useState} from "react";
-import {Button, ButtonBar} from "../buttons";
-import {mdiMenuDown} from "@mdi/js";
+import { useState } from "react";
+import { Button, ButtonBar } from "../buttons";
+import { mdiMenuDown } from "@mdi/js";
 import DatePicker from "react-datepicker";
 import PropTypes from "prop-types";
 
-const MonthYearDropdown = ({selected: {year, month}, onChange, minDate, maxDate}) => {
+const MonthYearDropdown = ({ selected: { year, month }, onChange, minDate, maxDate }) => {
     const [yearOpen, setYearOpen]   = useState(false)
     const [monthOpen, setMonthOpen] = useState(false)
 
     const closeBoth     = ()    => setYearOpen(false) || setMonthOpen(false)
-    const onYearSelect  = date  => closeBoth() || onChange({year: date.getFullYear(), month: month})
-    const onMonthSelect = date  => closeBoth() || onChange({year: date.getFullYear(), month: date.getMonth() + 1})
+    const onYearSelect  = date  => closeBoth() || onChange({ year: date.getFullYear(), month: month })
+    const onMonthSelect = date  => closeBoth() || onChange({ year: date.getFullYear(), month: date.getMonth() + 1 })
     const onOpenMonth   = ()    => closeBoth() || setMonthOpen(!monthOpen)
     const onOpenYear    = ()    => closeBoth() || setYearOpen(!yearOpen)
 

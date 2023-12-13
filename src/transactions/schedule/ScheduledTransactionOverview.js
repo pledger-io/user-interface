@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from 'prop-types'
 import {
     BreadCrumbItem,
@@ -13,14 +13,14 @@ import {
     Translations,
     When
 } from "../../core";
-import {TransactionScheduleRepository} from "../../core/RestAPI";
-import {EntityShapes} from "../../config";
-import {NavLink} from "react-router-dom";
-import {mdiDotsVertical, mdiSquareEditOutline, mdiTrashCanOutline} from "@mdi/js";
-import {ScheduleTransactionDialog} from "./ScheduleTransactionDialog";
+import { TransactionScheduleRepository } from "../../core/RestAPI";
+import { EntityShapes } from "../../config";
+import { NavLink } from "react-router-dom";
+import { mdiDotsVertical, mdiSquareEditOutline, mdiTrashCanOutline } from "@mdi/js";
+import { ScheduleTransactionDialog } from "./ScheduleTransactionDialog";
 
 
-const ScheduledTransactionRow = ({schedule, deleteCallback}) => {
+const ScheduledTransactionRow = ({ schedule, deleteCallback }) => {
 
     const onDelete = () => TransactionScheduleRepository.delete(schedule)
         .then(() => Notifications.Service.success('page.budget.schedule.delete.success'))

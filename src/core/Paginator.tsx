@@ -1,14 +1,14 @@
-import React, {FC} from "react";
-import {mdiChevronLeft, mdiChevronRight} from "@mdi/js";
+import React, { FC } from "react";
+import { mdiChevronLeft, mdiChevronRight } from "@mdi/js";
 import Icon from "@mdi/react";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 type PageButtonProp = {
     page: number,
     currentPage: number
 }
 
-const PageButton: FC<PageButtonProp> = ({page = 0, currentPage = 0}) => {
+const PageButton: FC<PageButtonProp> = ({ page = 0, currentPage = 0 }) => {
     if ((page + 1) === currentPage) {
         return <div className='flex items-center p-1 h-full border-[1px] border-blue-600 bg-blue-500 text-white'
                     data-testid='page-current'
@@ -31,7 +31,7 @@ type PaginatorProp = {
     pageSize?: number      // The size of each page of records
 }
 
-export const Paginator: FC<PaginatorProp> = ({page = 1, records = 1, pageSize = 10}) => {
+export const Paginator: FC<PaginatorProp> = ({ page = 1, records = 1, pageSize = 10 }) => {
     const pages = (Math.ceil(records / pageSize)) || 1
     const links = [...new Array(pages).keys()]
         .map(current => <PageButton key={current} page={current} currentPage={page}/>)

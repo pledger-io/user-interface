@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from "react";
-import {BreadCrumbItem, BreadCrumbMenu, BreadCrumbs, Dates, Dropdown, Layout} from "../../core";
-import {useNavigate, useParams} from "react-router-dom";
-import {CurrencyRepository} from "../../core/RestAPI";
+import React, { useEffect, useState } from "react";
+import { BreadCrumbItem, BreadCrumbMenu, BreadCrumbs, Dates, Dropdown, Layout } from "../../core";
+import { useNavigate, useParams } from "react-router-dom";
+import { CurrencyRepository } from "../../core/RestAPI";
 import CategoryRepository from "../../core/repositories/category-repository";
 
 import MonthlySpendingComponent from "./MonthlySpendingComponent";
@@ -14,7 +14,7 @@ const CategoryReportView = () => {
     const [categories, setCategories]           = useState()
     const [range, setRange]                     = useState(Dates.Ranges.currentYear)
     const [currencySymbol, setCurrencySymbol]   = useState('')
-    const {currency = 'EUR', year}              = useParams()
+    const { currency = 'EUR', year }              = useParams()
 
     const navigate = useNavigate()
 
@@ -27,10 +27,10 @@ const CategoryReportView = () => {
     }, [year])
     useEffect(() => {
         CurrencyRepository.get(currency)
-            .then(({symbol}) => setCurrencySymbol(symbol))
+            .then(({ symbol }) => setCurrencySymbol(symbol))
     }, [currency])
 
-    const onDateChanged = ({newYear = year, newCurrency = currency}) => navigate(`/reports/monthly-category/${newYear}/${newCurrency}`)
+    const onDateChanged = ({ newYear = year, newCurrency = currency }) => navigate(`/reports/monthly-category/${newYear}/${newCurrency}`)
 
     if (!categories) return <Layout.Loading />
     return (
@@ -41,8 +41,8 @@ const CategoryReportView = () => {
                 <BreadCrumbItem message={`${range.year()}`} />
                 <BreadCrumbItem message={currencySymbol} />
                 <BreadCrumbMenu className='flex justify-end'>
-                    <Dropdown.Currency currency={currency} onChange={currency => onDateChanged({newCurrency: currency.code})} />
-                    <Dropdown.Year year={range.year()} onChange={year => onDateChanged({newYear: year})}/>
+                    <Dropdown.Currency currency={currency} onChange={currency => onDateChanged({ newCurrency: currency.code })} />
+                    <Dropdown.Year year={range.year()} onChange={year => onDateChanged({ newYear: year })}/>
                 </BreadCrumbMenu>
             </BreadCrumbs>
 

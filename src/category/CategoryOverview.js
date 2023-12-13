@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import CategoryRepository from "../core/repositories/category-repository";
-import {mdiPlus, mdiSquareEditOutline, mdiTrashCanOutline} from "@mdi/js";
+import { mdiPlus, mdiSquareEditOutline, mdiTrashCanOutline } from "@mdi/js";
 import {
     BreadCrumbItem,
     BreadCrumbs,
@@ -12,11 +12,11 @@ import {
     Pagination,
     Translations
 } from "../core";
-import {EntityShapes} from "../config";
+import { EntityShapes } from "../config";
 import PropTypes from "prop-types";
-import {useQueryParam} from "../core/hooks";
+import { useQueryParam } from "../core/hooks";
 
-const CategoryRow = ({category, deleteCallback = () => undefined}) => {
+const CategoryRow = ({ category, deleteCallback = () => undefined }) => {
 
     const onDelete = _ => CategoryRepository.delete(category)
         .then(() => Notifications.Service.success('page.category.delete.success'))
@@ -46,7 +46,7 @@ CategoryRow.propTypes = {
 
 export const CategoryOverview = () => {
     const [categories, setCategories]   = useState([])
-    const [page]                        = useQueryParam({key: 'page', initialValue: "1"})
+    const [page]                        = useQueryParam({ key: 'page', initialValue: "1" })
     const [pagination, setPagination]   = useState({})
 
     const load = React.useCallback(() => {

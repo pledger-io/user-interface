@@ -1,8 +1,8 @@
-import {Contract} from "../../core/types";
-import {FC} from "react";
-import {NavLink} from "react-router-dom";
-import {Attachment, Buttons, Dialog, Dropdown, Formats, Notifications, Resolver, Translations} from "../../core";
-import {mdiCalendarCheck, mdiDotsVertical, mdiSquareEditOutline, mdiTrashCanOutline} from "@mdi/js";
+import { Contract } from "../../core/types";
+import { FC } from "react";
+import { NavLink } from "react-router-dom";
+import { Attachment, Buttons, Dialog, Dropdown, Formats, Notifications, Resolver, Translations } from "../../core";
+import { mdiCalendarCheck, mdiDotsVertical, mdiSquareEditOutline, mdiTrashCanOutline } from "@mdi/js";
 import ContractRepository from "../../core/repositories/contract-repository";
 import ScheduleContract from "../schedule";
 import UploadContract from "./upload-contract";
@@ -13,7 +13,7 @@ type ContractRowProps = {
 }
 
 const ContractRow: FC<ContractRowProps> = ({ contract , onChanges }) => {
-    const dropDownActions = {close: () => undefined}
+    const dropDownActions = { close: () => undefined }
 
     const onDelete = () => {
         ContractRepository.delete(contract.id)

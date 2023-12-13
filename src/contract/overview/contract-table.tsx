@@ -1,13 +1,13 @@
-import {Translations} from "../../core";
-import {FC} from "react";
-import {Contract} from "../../core/types";
+import { Translations } from "../../core";
+import { FC } from "react";
+import { Contract } from "../../core/types";
 import ContractRow from "./contract-table-row";
 
 type ContractTableProps = {
     contracts: Contract[],
     onChanges?: () => any
 }
-const ContractTable: FC<ContractTableProps> = ({contracts = [], onChanges}) => {
+const ContractTable: FC<ContractTableProps> = ({ contracts = [], onChanges }) => {
     return <table className='Table'>
         <thead>
         <tr>

@@ -1,11 +1,11 @@
-import {BreadCrumbItem, BreadCrumbs, Buttons, Layout, Notifications} from "../../core";
-import React, {useEffect} from "react";
-import {mdiArrowDown, mdiArrowUp, mdiDelete, mdiPlus} from "@mdi/js";
+import { BreadCrumbItem, BreadCrumbs, Buttons, Layout, Notifications } from "../../core";
+import React, { useEffect } from "react";
+import { mdiArrowDown, mdiArrowUp, mdiDelete, mdiPlus } from "@mdi/js";
 import RuleRepository from "../../core/repositories/rule-repository";
-import {RuleGroup} from "../../core/types";
+import { RuleGroup } from "../../core/types";
 import RuleListComponent from "./rule-list.component";
 import GroupAddDialog from "./group-add.dialog";
-import {ConfirmPopup} from "../../core/popups";
+import { ConfirmPopup } from "../../core/popups";
 
 
 const RulesOverview = () => {

@@ -1,9 +1,9 @@
-import React, {FC} from "react";
-import {Buttons, Dialog, Resolver} from "../../core";
-import {Entity, Form, SubmitButton} from "../../core/form";
-import {mdiPageNext} from "@mdi/js";
-import {useNavigate} from "react-router-dom";
-import {Account} from "../../core/types";
+import React, { FC } from "react";
+import { Buttons, Dialog, Resolver } from "../../core";
+import { Entity, Form, SubmitButton } from "../../core/form";
+import { mdiPageNext } from "@mdi/js";
+import { useNavigate } from "react-router-dom";
+import { Account } from "../../core/types";
 
 type NewTransactionDialogProps = {
     variant: 'success' | 'warning' | 'info',

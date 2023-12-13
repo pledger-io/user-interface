@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
-import {useAutocomplete} from "../Autocomplete";
-import {InputGroup} from "../input/InputGroup";
+import { useAutocomplete } from "../Autocomplete";
+import { InputGroup } from "../input/InputGroup";
 import restAPI from "../../repositories/rest-api";
 
 const BudgetAutocompleteRow = budget => {

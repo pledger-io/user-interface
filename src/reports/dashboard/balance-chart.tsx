@@ -1,10 +1,10 @@
-import {Layout} from "../../core";
-import React, {useEffect, useState} from "react";
-import {Range} from "../../core/Dates";
-import {BalanceSeries} from "../../core/graphs/balance-series";
-import {ChartData} from "chart.js";
-import {Chart} from "react-chartjs-2";
-import {DefaultChartConfig} from "../../config/global-chart-config";
+import { Layout } from "../../core";
+import React, { useEffect, useState } from "react";
+import { Range } from "../../core/Dates";
+import { BalanceSeries } from "../../core/graphs/balance-series";
+import { ChartData } from "chart.js";
+import { Chart } from "react-chartjs-2";
+import { DefaultChartConfig } from "../../config/global-chart-config";
 
 const BalanceChart = ({ range } : {range: Range}) => {
     const [balanceSeries, setBalanceSeries] = useState<ChartData | undefined>()

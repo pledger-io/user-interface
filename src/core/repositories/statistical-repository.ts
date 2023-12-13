@@ -1,5 +1,5 @@
 import RestApi from "./rest-api";
-import {Balance, Identifiable} from "../types";
+import { Balance, Identifiable } from "../types";
 
 export type BalanceRequestFilter = {
     onlyIncome: boolean,

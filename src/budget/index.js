@@ -1,4 +1,4 @@
-import {Route} from "react-router-dom";
+import { Route } from "react-router-dom";
 import React from "react";
 import BudgetOverview from "./overview/budget.overview";
 import CreateBudgetView from "./create/create.view";

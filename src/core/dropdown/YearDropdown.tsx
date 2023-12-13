@@ -1,6 +1,6 @@
-import {useState} from "react";
-import {Button} from "../buttons";
-import {mdiMenuDown} from "@mdi/js";
+import { useState } from "react";
+import { Button } from "../buttons";
+import { mdiMenuDown } from "@mdi/js";
 import DatePicker from "react-datepicker";
 
 type YearDropdownProps = {
@@ -10,7 +10,7 @@ type YearDropdownProps = {
     onChange?: (_: number) => void
 }
 
-const YearDropdown = ({year = 1970, onChange = _ => undefined}: YearDropdownProps) => {
+const YearDropdown = ({ year = 1970, onChange = _ => undefined }: YearDropdownProps) => {
     const [yearOpen, setYearOpen] = useState<boolean>(false)
     const onSelect = (date: Date) => {
         setYearOpen(false)

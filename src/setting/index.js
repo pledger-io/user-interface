@@ -1,7 +1,7 @@
-import {Route} from "react-router-dom";
-import {CurrencyOverview} from "./currency/CurrencyOverview";
-import {CurrencyForm} from "./currency/CurrencyForm";
-import {SettingOverviewComponent} from "./SettingOverview";
+import { Route } from "react-router-dom";
+import { CurrencyOverview } from "./currency/CurrencyOverview";
+import { CurrencyForm } from "./currency/CurrencyForm";
+import { SettingOverviewComponent } from "./SettingOverview";
 
 export const SettingRoutes = [
     <Route key='currency-overview' path='/settings/currencies' element={<CurrencyOverview />}/>,

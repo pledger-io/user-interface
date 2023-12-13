@@ -1,6 +1,6 @@
 import Icon from "@mdi/react";
-import {mdiLoading} from "@mdi/js";
-import {FC, ReactNode} from "react";
+import { mdiLoading } from "@mdi/js";
+import { FC, ReactNode } from "react";
 
 type LoadingProps = {
     condition?: boolean,

@@ -1,8 +1,8 @@
-import {FC, useContext} from "react";
+import { FC, useContext } from "react";
 
-import {Button} from "../../buttons";
-import {FormContext} from "../Form";
-import {ButtonProps} from "../../buttons/Button";
+import { Button } from "../../buttons";
+import { FormContext } from "../Form";
+import { ButtonProps } from "../../buttons/Button";
 
 type SubmitButtonProps = ButtonProps & {
 

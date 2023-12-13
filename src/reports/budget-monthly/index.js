@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import {
     BreadCrumbItem,
     BreadCrumbMenu,
@@ -9,7 +9,7 @@ import {
     Progressbar,
     Statistical
 } from "../../core";
-import {useNavigate, useParams} from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import MonthlyTableComponent from "./budget-table";
 import MonthlyPerBudgetTableComponent from "./monthly-budget-table";
@@ -21,7 +21,7 @@ import BudgetRepository from "../../core/repositories/budget.repository";
 
 export const BudgetReportView = () => {
     const [range, setRange] = useState(() => Dates.Ranges.currentYear())
-    const {currency = 'EUR', year = new Date().getFullYear()} = useParams()
+    const { currency = 'EUR', year = new Date().getFullYear() } = useParams()
     const [budgets, setBudgets] = useState([])
 
     const navigate = useNavigate()
@@ -49,8 +49,8 @@ export const BudgetReportView = () => {
             <BreadCrumbItem message={`${range.year()}`}/>
             <BreadCrumbMenu className='flex justify-end'>
                 <Dropdown.Currency currency={currency}
-                                   onChange={currency => onDateChanged({newCurrency: currency.code})}/>
-                <Dropdown.Year year={range.year()} onChange={year => onDateChanged({newYear: year})}/>
+                                   onChange={currency => onDateChanged({ newCurrency: currency.code })}/>
+                <Dropdown.Year year={range.year()} onChange={year => onDateChanged({ newYear: year })}/>
             </BreadCrumbMenu>
         </BreadCrumbs>
 
@@ -74,7 +74,7 @@ export const BudgetReportView = () => {
     </div>
 }
 
-const YearlyBudgetIncomeComponent = ({range, budgets = []}) => {
+const YearlyBudgetIncomeComponent = ({ range, budgets = [] }) => {
     const [yearlyIncome, setYearlyIncome] = useState(0)
     const [yearlyExpected, setYearlyExpected] = useState(0)
 
@@ -99,7 +99,7 @@ const YearlyBudgetIncomeComponent = ({range, budgets = []}) => {
     </>
 }
 
-const YearlyBudgetExpenseComponent = ({budgets = [], range}) => {
+const YearlyBudgetExpenseComponent = ({ budgets = [], range }) => {
     const [yearlyExpenses, setYearlyExpenses] = useState(0)
     const [yearlyExpected, setYearlyExpected] = useState(0)
 
@@ -124,7 +124,7 @@ const YearlyBudgetExpenseComponent = ({budgets = [], range}) => {
             expenses: allExpenses,
             onlyIncome: false,
             dateRange: range.toBackend()
-        }).then(({balance}) => setYearlyExpenses(Math.abs(balance)))
+        }).then(({ balance }) => setYearlyExpenses(Math.abs(balance)))
           .catch(console.error)
     }, [budgets, range])
 

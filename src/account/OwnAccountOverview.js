@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import {
     BreadCrumbItem,
     BreadCrumbs,
@@ -11,16 +11,16 @@ import {
     Statistical,
     Translations
 } from "../core";
-import {mdiCheck, mdiDotsVertical, mdiPlus, mdiSquareEditOutline, mdiTrashCanOutline} from "@mdi/js";
-import {Link} from "react-router-dom";
+import { mdiCheck, mdiDotsVertical, mdiPlus, mdiSquareEditOutline, mdiTrashCanOutline } from "@mdi/js";
+import { Link } from "react-router-dom";
 import AccountRepository from "../core/repositories/account-repository";
-import {ReconcileOverview} from "./ReconcileOverview";
-import {EntityShapes} from "../config";
+import { ReconcileOverview } from "./ReconcileOverview";
+import { EntityShapes } from "../config";
 import PropTypes from "prop-types";
 
 import '../assets/css/AccountOverview.scss'
 
-const AccountRow = ({account, deleteCallback}) => {
+const AccountRow = ({ account, deleteCallback }) => {
 
     const dropDownActions = {}
     const onDelete = () => AccountRepository.delete(account.id)

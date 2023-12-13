@@ -1,13 +1,13 @@
-import {FC, useEffect, useState} from "react";
+import { FC, useEffect, useState } from "react";
 
-import {Account, Pagination, Transaction} from "../../core/types";
-import {Range} from "../../core/Dates";
+import { Account, Pagination, Transaction } from "../../core/types";
+import { Range } from "../../core/Dates";
 import AccountRepository from "../../core/repositories/account-repository";
-import {useQueryParam} from "../../core/hooks";
-import {Formats, Layout} from "../../core";
+import { useQueryParam } from "../../core/hooks";
+import { Formats, Layout } from "../../core";
 import TransactionItem from "../../transactions/transaction-item";
-import {Paginator} from "../../core/Paginator";
-import {groupTransactionByYear, YearlyTransactions} from "../../core/reducers";
+import { Paginator } from "../../core/Paginator";
+import { groupTransactionByYear, YearlyTransactions } from "../../core/reducers";
 
 type LiabilityTransactionListProps = {
     account: Account,
@@ -15,7 +15,7 @@ type LiabilityTransactionListProps = {
 }
 
 const LiabilityTransactionList: FC<LiabilityTransactionListProps> = ({ account, range }) => {
-    const [page] = useQueryParam({key: 'page', initialValue: "1"})
+    const [page] = useQueryParam({ key: 'page', initialValue: "1" })
     const [transactions, setTransactions] = useState<YearlyTransactions>()
     const [pagination, setPagination] = useState<Pagination>()
 

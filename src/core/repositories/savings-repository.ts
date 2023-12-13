@@ -1,5 +1,5 @@
 import RestApi from "./rest-api";
-import {Account, Identifier, SavingGoal} from "../types";
+import { Account, Identifier, SavingGoal } from "../types";
 
 const SavingsRepository = (api => {
     return {

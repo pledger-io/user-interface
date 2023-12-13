@@ -1,9 +1,9 @@
 import React from 'react'
-import {PathParams, withNavigation, withPathParams} from "../../core/hooks";
-import {BreadCrumbItem, BreadCrumbs, Buttons, Layout, Translations} from "../../core";
-import {Entity, Form, Input, SubmitButton} from "../../core/form";
-import {TransactionService} from "./TransactionService";
-import {mdiCancel, mdiContentSave} from "@mdi/js";
+import { PathParams, withNavigation, withPathParams } from "../../core/hooks";
+import { BreadCrumbItem, BreadCrumbs, Buttons, Layout, Translations } from "../../core";
+import { Entity, Form, Input, SubmitButton } from "../../core/form";
+import { TransactionService } from "./TransactionService";
+import { mdiCancel, mdiContentSave } from "@mdi/js";
 
 class LiabilityPayment extends React.Component {
     static contextType = PathParams
@@ -18,8 +18,8 @@ class LiabilityPayment extends React.Component {
     constructor(props, context) {
         super(props, context);
 
-        this.context.resolved = ({id, transactionId}) => {
-            TransactionService.fetchAccount({id})
+        this.context.resolved = ({ id, transactionId }) => {
+            TransactionService.fetchAccount({ id })
                 .then(account => this.setState({
                     account: account,
                     transaction: {
@@ -30,7 +30,7 @@ class LiabilityPayment extends React.Component {
                     }
                 }))
 
-            TransactionService.fetchTransaction({id, transactionId})
+            TransactionService.fetchTransaction({ id, transactionId })
                 .then(transaction => this.setState({
                     transaction: transaction
                 }))
@@ -38,14 +38,14 @@ class LiabilityPayment extends React.Component {
     }
 
     process(entity) {
-        const {account, transaction: {id}} = this.state
-        const {navigate} = this.props
+        const { account, transaction: { id } } = this.state
+        const { navigate } = this.props
 
         TransactionService.persist(account, entity, navigate, id)
     }
 
     render() {
-        const {account, transaction = null} = this.state
+        const { account, transaction = null } = this.state
         if (transaction === null) {
             return ''
         }

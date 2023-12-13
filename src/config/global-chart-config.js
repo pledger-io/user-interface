@@ -1,7 +1,13 @@
+import Chart from 'chart.js/auto';
+import 'chartjs-adapter-spacetime';
+
+Chart; // eslint-disable-line no-unused-expressions
+
 const deepMerge = (left, right) => {
     const result = {};
 
     for (const key in right) {
+        // eslint-disable-next-line no-prototype-builtins
         if (right.hasOwnProperty(key)) {
             if (right[key] instanceof Function) {
                 result[key] = right[key];
@@ -14,6 +20,7 @@ const deepMerge = (left, right) => {
     }
 
     for (const key in left) {
+        // eslint-disable-next-line no-prototype-builtins
         if (left.hasOwnProperty(key)) {
             if (left[key] instanceof Function) {
                 result[key] = left[key];

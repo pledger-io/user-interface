@@ -2,7 +2,7 @@ import RestAPI from "./rest-api";
 
 const AccountRepository = (api => {
     return {
-        search: ({types = [], page = 1}) => api.post('accounts', {
+        search: ({ types = [], page = 1 }) => api.post('accounts', {
             accountTypes: types,
             page: page
         }),

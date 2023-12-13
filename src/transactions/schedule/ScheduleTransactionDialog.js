@@ -1,9 +1,9 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 
-import {Entity, Form, Input, SubmitButton} from '../../core/form'
-import {Buttons, Dialog, Message, Notifications, Translations} from "../../core";
-import {mdiCalendarCheck, mdiContentSave} from "@mdi/js";
-import {TransactionScheduleRepository} from "../../core/RestAPI";
+import { Entity, Form, Input, SubmitButton } from '../../core/form'
+import { Buttons, Dialog, Message, Notifications, Translations } from "../../core";
+import { mdiCalendarCheck, mdiContentSave } from "@mdi/js";
+import { TransactionScheduleRepository } from "../../core/RestAPI";
 
 import '../../assets/css/ScheduleTransactionDialog.scss'
 import PropTypes from "prop-types";
@@ -27,7 +27,7 @@ const createScheduleEntity = entity => {
     }
 }
 
-export const ScheduleTransactionDialog = ({transaction, onCreated = () => {}, iconStyle = false}) => {
+export const ScheduleTransactionDialog = ({ transaction, onCreated = () => {}, iconStyle = false }) => {
     const [type, setType] = useState(transaction?.type.code.toLowerCase() || 'credit')
 
     const dialogHandler = {
@@ -107,9 +107,9 @@ export const ScheduleTransactionDialog = ({transaction, onCreated = () => {}, ic
                                         onChange={setType}
                                         value={type}
                                         options={[
-                                            {label: 'common.transfer', value:'transfer', variant: 'primary'},
-                                            {label: 'common.credit', value:'credit', variant: 'warning'},
-                                            {label: 'common.debit', value:'debit', variant: 'success'}]}/>
+                                            { label: 'common.transfer', value:'transfer', variant: 'primary' },
+                                            { label: 'common.credit', value:'credit', variant: 'warning' },
+                                            { label: 'common.debit', value:'debit', variant: 'success' }]}/>
                 </fieldset>
             </Dialog.Dialog>
         </Form>

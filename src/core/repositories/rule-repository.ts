@@ -1,6 +1,6 @@
 import RestApi from "./rest-api";
-import {Identifier, Rule, RuleGroup, Unique} from "../types";
-import {Resolver} from "../index";
+import { Identifier, Rule, RuleGroup, Unique } from "../types";
+import { Resolver } from "../index";
 
 function entities_unique<T extends Unique>(entities: T[]) {
     return entities.map(e => {
@@ -22,7 +22,7 @@ function rule_unique(rule: Rule): Rule {
 const RuleRepository = (api => {
     return {
         groups: () : Promise<RuleGroup[]>                       => api.get('transaction-rules/groups'),
-        createGroup: (name: string)                             => api.put('transaction-rules/groups/', {name}),
+        createGroup: (name: string)                             => api.put('transaction-rules/groups/', { name }),
         deleteGroup: (group: string)                            => api.delete(`transaction-rules/groups/${group}`),
         groupUp: (group: string)                                => api.get(`transaction-rules/groups/${group}/move-up`),
         groupDown: (group: string)                              => api.get(`transaction-rules/groups/${group}/move-down`),

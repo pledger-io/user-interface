@@ -1,19 +1,19 @@
-import {useNavigate, useParams} from "react-router-dom";
-import React, {useEffect, useState} from "react";
-import {mdiCallSplit, mdiCancel, mdiContentSave} from "@mdi/js";
+import { useNavigate, useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { mdiCallSplit, mdiCancel, mdiContentSave } from "@mdi/js";
 
-import {BreadCrumbItem, BreadCrumbs, Buttons, Layout, Notifications, Resolver} from "../../../core";
-import {TransactionRepository} from "../../../core/RestAPI";
+import { BreadCrumbItem, BreadCrumbs, Buttons, Layout, Notifications, Resolver } from "../../../core";
+import { TransactionRepository } from "../../../core/RestAPI";
 import AccountRepository from "../../../core/repositories/account-repository";
 
-import {Form, SubmitButton} from "../../../core/form";
+import { Form, SubmitButton } from "../../../core/form";
 import GenericFieldsetComponent from "./GenericFieldsetComponent";
 import MetadataFieldsetComponent from "./MetadataFieldsetComponent";
 
 import '../../../assets/css/TransactionForm.scss'
 
 const TransactionForm = () => {
-    const {type, transactionType, id, transactionId} = useParams()
+    const { type, transactionType, id, transactionId } = useParams()
     const [account, setAccount] = useState({})
     const [transaction, setTransaction] = useState()
     const navigate = useNavigate()
@@ -31,9 +31,9 @@ const TransactionForm = () => {
                 .then(t => setTransaction({
                     ...t,
                     metadata: {
-                        contract: t.metadata.contract ? {id: -1, name: t.metadata.contract} : undefined,
-                        category: t.metadata.category ? {id: -1, name: t.metadata.category} : undefined,
-                        budget: t.metadata.budget ? {id: -1, name: t.metadata.budget} : undefined,
+                        contract: t.metadata.contract ? { id: -1, name: t.metadata.contract } : undefined,
+                        category: t.metadata.category ? { id: -1, name: t.metadata.category } : undefined,
+                        budget: t.metadata.budget ? { id: -1, name: t.metadata.budget } : undefined,
                         tags: t.metadata.tags
                     }
                 }))
@@ -104,14 +104,14 @@ const TransactionForm = () => {
 const processSubmit = (id, entity, currency, navigate) => {
     const transaction = {
         description: entity.description,
-        source: {id: entity.from.id, name: entity.from.name},
-        destination: {id: entity.to.id, name: entity.to.name},
+        source: { id: entity.from.id, name: entity.from.name },
+        destination: { id: entity.to.id, name: entity.to.name },
         amount: entity.amount,
         currency: currency,
         date: entity.date,
-        budget: entity.budget ? {id: -1, name: entity.budget.name} : null,
-        category: entity.category ? {id: -1, name: entity.category.name} : null,
-        contract: entity.contract ? {id: -1, name: entity.contract.name} : null,
+        budget: entity.budget ? { id: -1, name: entity.budget.name } : null,
+        category: entity.category ? { id: -1, name: entity.category.name } : null,
+        contract: entity.contract ? { id: -1, name: entity.contract.name } : null,
         tags: entity.tags,
     }
 

@@ -1,7 +1,7 @@
-import React, {FC, useState} from "react";
-import {Account, Transaction} from "../core/types";
-import {Buttons, Dialog, Formats, Layout, Resolver, Translations} from "../core";
-import {NavLink} from "react-router-dom";
+import React, { FC, useState } from "react";
+import { Account, Transaction } from "../core/types";
+import { Buttons, Dialog, Formats, Layout, Resolver, Translations } from "../core";
+import { NavLink } from "react-router-dom";
 import {
     mdiArrowRight,
     mdiChevronLeftBox,
@@ -11,7 +11,7 @@ import {
     mdiTrashCanOutline
 } from "@mdi/js";
 import TransactionSplitDialog from "./TransactionSplitDialog";
-import {ScheduleTransactionDialog} from "./schedule/ScheduleTransactionDialog";
+import { ScheduleTransactionDialog } from "./schedule/ScheduleTransactionDialog";
 import Icon from "@mdi/react";
 
 type TransactionItemProps = {
@@ -78,7 +78,7 @@ const TransactionItem: FC<TransactionItemProps> = ({ transaction, className = ''
     </div>
 }
 
-const ActionExpander = ({transaction, onDelete} : {transaction: Transaction, onDelete: () => void }) => {
+const ActionExpander = ({ transaction, onDelete } : {transaction: Transaction, onDelete: () => void }) => {
     const [expanded, setExpanded] = useState(false)
 
     return <div className='!flex justify-start items-stretch gap-2'>

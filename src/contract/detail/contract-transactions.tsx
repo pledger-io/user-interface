@@ -1,9 +1,9 @@
-import {Contract, Pagination as PaginationType, Transaction} from "../../core/types";
-import React, {FC, useEffect, useState} from "react";
-import {useQueryParam} from "../../core/hooks";
-import {Formats, Layout, Pagination} from "../../core";
+import { Contract, Pagination as PaginationType, Transaction } from "../../core/types";
+import React, { FC, useEffect, useState } from "react";
+import { useQueryParam } from "../../core/hooks";
+import { Formats, Layout, Pagination } from "../../core";
 import ContractRepository from "../../core/repositories/contract-repository";
-import {groupTransactionByYear, YearlyTransactions} from "../../core/reducers";
+import { groupTransactionByYear, YearlyTransactions } from "../../core/reducers";
 import TransactionItem from "../../transactions/transaction-item";
 
 type ContractTransactionsProps = {
@@ -13,12 +13,12 @@ type ContractTransactionsProps = {
 const ContractTransactions: FC<ContractTransactionsProps> = ({ contract }) => {
     const [transactions, setTransactions] = useState<YearlyTransactions | undefined>(undefined)
     const [pagination, setPagination] = useState<PaginationType>({} as PaginationType)
-    const [page] = useQueryParam({key: 'page', initialValue: "1"})
+    const [page] = useQueryParam({ key: 'page', initialValue: "1" })
 
     useEffect(() => {
         setTransactions(undefined)
         ContractRepository.transactions(contract.id, parseInt(page) - 1)
-            .then(({content, info}) => {
+            .then(({ content, info }) => {
                 setTransactions(content.reduce(groupTransactionByYear, {}))
                 setPagination(info)
             })

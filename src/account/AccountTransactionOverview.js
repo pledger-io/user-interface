@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from "react";
-import {mdiCartPlus, mdiCashPlus, mdiSwapHorizontal} from "@mdi/js";
+import React, { useEffect, useState } from "react";
+import { mdiCartPlus, mdiCashPlus, mdiSwapHorizontal } from "@mdi/js";
 import {
     BreadCrumbItem,
     BreadCrumbMenu,
@@ -14,10 +14,10 @@ import {
 } from "../core";
 
 import '../assets/css/TransactionOverview.scss'
-import {useNavigate, useParams} from "react-router-dom";
-import {useQueryParam} from "../core/hooks";
+import { useNavigate, useParams } from "react-router-dom";
+import { useQueryParam } from "../core/hooks";
 import AccountRepository from "../core/repositories/account-repository";
-import {TransactionTable} from "../transactions/table-view";
+import { TransactionTable } from "../transactions/table-view";
 
 const TYPE_MAPPING = {
     expense: 'creditor',
@@ -25,10 +25,10 @@ const TYPE_MAPPING = {
     own: 'accounts'
 }
 
-const AccountTransactionComponent = ({account, range}) => {
+const AccountTransactionComponent = ({ account, range }) => {
     const [transactions, setTransactions] = useState(undefined)
     const [pagination, setPagination] = useState({})
-    const [page] = useQueryParam({key: 'page', initialValue: "1"})
+    const [page] = useQueryParam({ key: 'page', initialValue: "1" })
 
     useEffect(() => {
         setTransactions(undefined)
@@ -64,11 +64,11 @@ const AccountTransactionComponent = ({account, range}) => {
 
 const AccountTransactionOverview = () => {
     const navigate = useNavigate()
-    const {id, type, year, month} = useParams()
+    const { id, type, year, month } = useParams()
     const [account, setAccount] = useState({})
     const [range, setRange] = useState(Dates.Ranges.currentMonth())
 
-    const onDateChange = ({year, month}) => navigate(`/accounts/${type}/${id}/transactions/${year}/${month}`)
+    const onDateChange = ({ year, month }) => navigate(`/accounts/${type}/${id}/transactions/${year}/${month}`)
 
     useEffect(() => {
         AccountRepository.get(id).then(setAccount)
@@ -89,7 +89,7 @@ const AccountTransactionOverview = () => {
                 <BreadCrumbMenu>
                     <Dropdown.YearMonth
                         onChange={onDateChange}
-                        selected={{month: range.month(), year: range.year()}}/>
+                        selected={{ month: range.month(), year: range.year() }}/>
                 </BreadCrumbMenu>
             </BreadCrumbs>
 

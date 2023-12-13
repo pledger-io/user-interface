@@ -4,7 +4,7 @@ import RestApi from "./repositories/rest-api";
 const SettingRepository = (api => {
     return {
         list: () => api.get('settings'),
-        update: (id, value) => api.post(`settings/${id}`, {value})
+        update: (id, value) => api.post(`settings/${id}`, { value })
     }
 })(RestApi)
 
@@ -16,11 +16,11 @@ const AttachmentRepository = (api => {
             return api.post('attachment', formData)
         },
         download: fileCode => new Promise((resolved, reject) => {
-            api.get(`attachment/${fileCode}`, {responseType: 'blob'})
+            api.get(`attachment/${fileCode}`, { responseType: 'blob' })
                 .then(rawData => {
                     const fileReader = new FileReader();
                     fileReader.onloadend = () => {
-                        const {result} = fileReader
+                        const { result } = fileReader
                         resolved(result)
                     }
                     fileReader.readAsDataURL(rawData);
@@ -44,7 +44,7 @@ const CurrencyRepository = (api => {
     return {
         list: () => api.get('settings/currencies'),
         get: code => api.get(`settings/currencies/${code}`),
-        change: (code, enabled) => api.patch(`settings/currencies/${code}`, {enabled: enabled})
+        change: (code, enabled) => api.patch(`settings/currencies/${code}`, { enabled: enabled })
     }
 })(RestApi)
 
@@ -53,7 +53,7 @@ const TransactionScheduleRepository = (api => {
         list: () => api.get('schedule/transaction'),
         create: schedule => api.put('schedule/transaction', schedule),
         get: id => api.get(`schedule/transaction/${id}`),
-        delete: ({id}) => api.delete(`schedule/transaction/${id}`),
+        delete: ({ id }) => api.delete(`schedule/transaction/${id}`),
         update: (id, schedule) => api.patch(`schedule/transaction/${id}`, schedule)
     }
 })(RestApi)

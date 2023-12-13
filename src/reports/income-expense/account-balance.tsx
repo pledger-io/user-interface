@@ -1,9 +1,9 @@
-import {Formats, Translations} from "../../core";
-import React, {useEffect} from "react";
-import {Account} from "../../core/types";
+import { Formats, Translations } from "../../core";
+import React, { useEffect } from "react";
+import { Account } from "../../core/types";
 import AccountRepository from "../../core/repositories/account-repository";
 import StatisticalRepository from "../../core/repositories/statistical-repository";
-import {Loading} from "../../core/layout";
+import { Loading } from "../../core/layout";
 
 type AccountBalanceProp = {
     year: number,

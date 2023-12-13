@@ -1,12 +1,12 @@
-import {Range} from "../../core/Dates";
-import {useEffect, useState} from "react";
-import {Dates, Translations} from "../../core";
+import { Range } from "../../core/Dates";
+import { useEffect, useState } from "react";
+import { Dates, Translations } from "../../core";
 import StatisticalRepository from "../../core/repositories/statistical-repository";
-import {ChartDataset} from "chart.js/dist/types";
-import {ChartData} from "chart.js";
-import {Chart} from "react-chartjs-2";
-import {Loading} from "../../core/layout";
-import {DefaultChartConfig, Service} from "../../config/global-chart-config";
+import { ChartDataset } from "chart.js/dist/types";
+import { ChartData } from "chart.js";
+import { Chart } from "react-chartjs-2";
+import { Loading } from "../../core/layout";
+import { DefaultChartConfig, Service } from "../../config/global-chart-config";
 
 type YearBalanceChartProps = {
     year: number,
@@ -14,7 +14,7 @@ type YearBalanceChartProps = {
     currency: string
 }
 
-const YearBalanceChart = ({year, currencySymbol, currency} : YearBalanceChartProps) => {
+const YearBalanceChart = ({ year, currencySymbol, currency } : YearBalanceChartProps) => {
     const [months, setMonths] = useState<Range[]>()
     const [chartData, setChartData] = useState<ChartData>()
 

@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from 'prop-types';
 
 import DatePicker from "react-datepicker";
-import {InputGroup, InputValidationErrors, useInputField} from "./InputGroup";
+import { InputGroup, InputValidationErrors, useInputField } from "./InputGroup";
 
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -16,7 +16,7 @@ const DateFormats = {
  * A date selection component for forms.
  */
 export const DateInput = (props) => {
-    const [field, errors, onChange] = useInputField({onChange: props.onChange, field: props})
+    const [field, errors, onChange] = useInputField({ onChange: props.onChange, field: props })
     const [selected, setSelected]   = useState(new Date())
 
     const onDateChanged = date => {
@@ -24,7 +24,7 @@ export const DateInput = (props) => {
         setSelected(date)
         onChange({
             persist: () => {},
-            currentTarget: {value: isoDate}
+            currentTarget: { value: isoDate }
         })
     }
 
@@ -58,7 +58,7 @@ DateInput.propTypes = {
 }
 
 export const MonthPicker = (props) => {
-    const [field, errors, onChange] = useInputField({onChange: props.onChange, field: props})
+    const [field, errors, onChange] = useInputField({ onChange: props.onChange, field: props })
     const [selected, setSelected]   = useState(new Date())
 
     const onDateChanged = date => {
@@ -66,7 +66,7 @@ export const MonthPicker = (props) => {
         setSelected(date)
         onChange({
             persist: () => {},
-            currentTarget: {value: isoDate}
+            currentTarget: { value: isoDate }
         })
     }
 
@@ -95,7 +95,7 @@ export const MonthPicker = (props) => {
 }
 
 export const DateRangeInput = (props) => {
-    const [field, errors, onChange] = useInputField({onChange: props.onChange, field: props})
+    const [field, errors, onChange] = useInputField({ onChange: props.onChange, field: props })
 
     const [startDate, setStartDate] = useState()
     const [endDate, setEndDate]     = useState()
@@ -113,7 +113,7 @@ export const DateRangeInput = (props) => {
         })
     }, [startDate, endDate, onChange])
     useEffect(() => {
-        const {start, end} = props.value
+        const { start, end } = props.value
         if (start && end) setEndDate(new Date(end)) || setStartDate(new Date(start))
     }, [props.value])
 

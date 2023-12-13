@@ -1,7 +1,7 @@
-import {FC, useEffect, useState} from "react";
-import {BreadCrumbItem, BreadCrumbs, Layout, Translations} from "../../core";
-import {Contract} from "../../core/types";
-import {useParams} from "react-router-dom";
+import { FC, useEffect, useState } from "react";
+import { BreadCrumbItem, BreadCrumbs, Layout, Translations } from "../../core";
+import { Contract } from "../../core/types";
+import { useParams } from "react-router-dom";
 import ContractRepository from "../../core/repositories/contract-repository";
 import ContractTransactions from "./contract-transactions";
 

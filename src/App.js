@@ -1,21 +1,21 @@
-import {BrowserRouter, Navigate, Outlet, Route, Routes} from "react-router-dom";
-import {Sidebar} from "./core/Sidebar";
-import {Layout, Notifications} from "./core";
+import { BrowserRouter, Navigate, Outlet, Route, Routes } from "react-router-dom";
+import { Sidebar } from "./core/Sidebar";
+import { Layout, Notifications } from "./core";
 
 // Routes import
-import {AccountRoutes} from "./account";
-import {CategoryRoutes} from "./category";
-import {SettingRoutes} from "./setting";
-import {ReportRoutes} from "./reports";
-import {TransactionRoutes} from "./transactions";
-import {RulesRoutes} from "./rules";
+import { AccountRoutes } from "./account";
+import { CategoryRoutes } from "./category";
+import { SettingRoutes } from "./setting";
+import { ReportRoutes } from "./reports";
+import { TransactionRoutes } from "./transactions";
+import { RulesRoutes } from "./rules";
 
 import './assets/css/Main.scss'
 import './assets/css/Theme.scss'
-import {lazy, Suspense, useState} from "react";
-import {ContractRoutes} from "./contract";
-import {BudgetRoutes} from "./budget";
-import {ProfileRoutes} from "./profile";
+import { lazy, Suspense, useState } from "react";
+import { ContractRoutes } from "./contract";
+import { BudgetRoutes } from "./budget";
+import { ProfileRoutes } from "./profile";
 
 const LoginCard = lazy(() => import("./security/LoginCard"));
 const RegisterCard = lazy(() => import("./security/RegisterCard"));

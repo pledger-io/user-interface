@@ -1,7 +1,7 @@
-import {FC} from "react";
-import {mdiDownload} from "@mdi/js";
-import {Buttons} from "../index";
-import {AttachmentRepository} from "../RestAPI";
+import { FC } from "react";
+import { mdiDownload } from "@mdi/js";
+import { Buttons } from "../index";
+import { AttachmentRepository } from "../RestAPI";
 
 type DownloadButtonProps = {
     title: string,
@@ -21,7 +21,7 @@ const DownloadButton: FC<DownloadButtonProps> = ({ title, fileCode, fileName }) 
                 }
 
                 // convert data-uri blog to a Blob
-                const blob = new Blob([buffer], {type: 'application/octet-stream'})
+                const blob = new Blob([buffer], { type: 'application/octet-stream' })
                 const dataUri = window.URL.createObjectURL(blob)
 
                 const hiddenClicker = document.createElement('a')

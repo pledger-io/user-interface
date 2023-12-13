@@ -1,6 +1,6 @@
-import {Formats, Layout, Translations} from "../../core";
+import { Formats, Layout, Translations } from "../../core";
 import Icon from "@mdi/react";
-import React, {FC, useEffect, useState} from "react";
+import React, { FC, useEffect, useState } from "react";
 
 type SummaryComponentProps = {
     title: string,
@@ -10,7 +10,7 @@ type SummaryComponentProps = {
     previousPromise?: Promise<number>
 }
 
-const SummaryComponent: FC<SummaryComponentProps> = ({ title, icon, currency, currentPromise, previousPromise}) => {
+const SummaryComponent: FC<SummaryComponentProps> = ({ title, icon, currency, currentPromise, previousPromise }) => {
     const [current, setCurrent] = useState(0)
     const [previous, setPrevious] = useState(0)
     const [comparisonClass, setComparisonClass]    = useState('same')

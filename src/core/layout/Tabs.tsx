@@ -1,5 +1,5 @@
-import {FC, ReactNode} from "react";
-import {Button} from "../buttons";
+import { FC, ReactNode } from "react";
+import { Button } from "../buttons";
 
 export type TabButton = {
     id: string,

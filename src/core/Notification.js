@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 
 import '../assets/css/NotificationCenter.scss'
-import {Translation} from "./localization";
+import { Translation } from "./localization";
 import PropTypes from "prop-types";
 
 const NotificationService = (() => {
@@ -30,7 +30,7 @@ const NotificationService = (() => {
     }
 })()
 
-const Notification = ({style, message}) => {
+const Notification = ({ style, message }) => {
     return (
         <div className={`Notification ${style}`}>
             <Translation label={message} />

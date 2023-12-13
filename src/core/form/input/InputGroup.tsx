@@ -1,8 +1,8 @@
-import React, {ChangeEventHandler, FC, ReactNode, useContext, useEffect} from "react";
+import React, { ChangeEventHandler, FC, ReactNode, useContext, useEffect } from "react";
 
-import {HelpTranslation, Translation} from "../../localization";
-import {FormContext} from "../Form";
-import {FieldType, FormContextType, InputChangeFunc} from "../form-types";
+import { HelpTranslation, Translation } from "../../localization";
+import { FormContext } from "../Form";
+import { FieldType, FormContextType, InputChangeFunc } from "../form-types";
 
 type InputGroupProps = {
     id: string,                 // The identifier of the field in the entity
@@ -32,11 +32,11 @@ type useInputFieldProps = {
     field: any,
     onChange?: (_: string) => void,
 }
-export const useInputField = ({onChange, field}: useInputFieldProps) : [FieldType, string[], InputChangeFunc<any>] => {
+export const useInputField = ({ onChange, field }: useInputFieldProps) : [FieldType, string[], InputChangeFunc<any>] => {
     const formContext = useContext(FormContext) as FormContextType
 
     useEffect(() => {
-        if (!formContext.fields.hasOwnProperty(field.id)) {
+        if (!formContext.fields[field.id]) {
             console.info(`\tRegister form field %c${field.id}%c.`, 'color: blue', '')
             formContext.addField({
                 field: field,
@@ -47,7 +47,7 @@ export const useInputField = ({onChange, field}: useInputFieldProps) : [FieldTyp
     }, [field.id])
     useEffect(() => {
         if (field.value) console.debug(`\tUpdating field %c${field.id}%c value to '%c${JSON.stringify(field.value)}%c'.`, 'color: blue', '', 'color: purple', '')
-        if (formContext.fields.hasOwnProperty(field.id))
+        if (formContext.fields[field.id])
             formContext.addField({
                 field: {
                     ...formContext.fields[field.id],
@@ -78,7 +78,7 @@ type InputValidationErrorsProps = {
 /**
  * For rendering any input validation failures.
  */
-export const InputValidationErrors: FC<InputValidationErrorsProps> = ({errors, field}) => {
+export const InputValidationErrors: FC<InputValidationErrorsProps> = ({ errors, field }) => {
     const formContext = useContext(FormContext)
 
     return <>

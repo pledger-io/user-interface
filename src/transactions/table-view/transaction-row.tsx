@@ -1,6 +1,6 @@
-import React, {FC, useEffect, useState} from "react";
-import {Account, Transaction} from "../../core/types";
-import {Attachments, Buttons, Dialog, Formats, Resolver, Translations} from "../../core";
+import React, { FC, useEffect, useState } from "react";
+import { Account, Transaction } from "../../core/types";
+import { Attachments, Buttons, Dialog, Formats, Resolver, Translations } from "../../core";
 import Icon from "@mdi/react";
 import {
     mdiArrowLeftThin,
@@ -11,9 +11,9 @@ import {
     mdiTable, mdiTrashCanOutline
 } from "@mdi/js";
 import TransactionOverviewUrl from "../transaction-overview-url";
-import {Dropdown} from "../../core/dropdown";
+import { Dropdown } from "../../core/dropdown";
 import TransactionSplitDialog from "../TransactionSplitDialog";
-import {ScheduleTransactionDialog} from "../schedule/ScheduleTransactionDialog";
+import { ScheduleTransactionDialog } from "../schedule/ScheduleTransactionDialog";
 
 const ICON_TYPE_LOOKUP = {
     DEBIT: mdiArrowLeftThin,
@@ -31,7 +31,7 @@ export const TransactionRow: FC<TransactionRowProps> = ({ account, transaction }
     const [opposite, setOpposite] = useState<Account>()
     const [displayAmount, setDisplayAmount] = useState(0)
 
-    const dropDownActions = {close: () => undefined}
+    const dropDownActions = { close: () => undefined }
 
     useEffect(() => {
         const sourceManaged = Resolver.Account.isManaged(transaction.source)

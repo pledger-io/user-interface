@@ -1,7 +1,7 @@
 import * as Translations from "../localization";
-import React, {FC, ReactNode} from "react";
+import React, { FC, ReactNode } from "react";
 
-import {Buttons} from "../index";
+import { Buttons } from "../index";
 
 type CardProps = {
     title?: string,                             // The translation text key for the title of the card
@@ -18,7 +18,7 @@ type CardProps = {
  * @returns {JSX.Element}
  * @constructor
  */
-const Card: FC<CardProps> = ({title, actions, buttons, children, className = '', message}): JSX.Element => {
+const Card: FC<CardProps> = ({ title, actions, buttons, children, className = '', message }): JSX.Element => {
     const hasHeader = (title || actions || message) !== undefined
 
     return (

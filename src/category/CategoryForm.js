@@ -1,14 +1,14 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import CategoryRepository from "../core/repositories/category-repository";
-import {Form, Input, Styles, SubmitButton} from '../core/form'
-import {BreadCrumbItem, BreadCrumbs, Buttons, Layout, Message, Notifications} from "../core";
-import {mdiCancel, mdiContentSave} from "@mdi/js";
-import {useNavigate, useParams} from "react-router-dom";
+import { Form, Input, Styles, SubmitButton } from '../core/form'
+import { BreadCrumbItem, BreadCrumbs, Buttons, Layout, Message, Notifications } from "../core";
+import { mdiCancel, mdiContentSave } from "@mdi/js";
+import { useNavigate, useParams } from "react-router-dom";
 
 export const CategoryForm = () => {
     const [category, setCategory]   = useState({})
     const [exception, setException] = useState()
-    const {id}                      = useParams()
+    const { id }                      = useParams()
     const navigate                  = useNavigate()
 
     useEffect(() => {

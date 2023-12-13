@@ -1,7 +1,7 @@
-import {RuleCondition, RuleField, RuleOperator} from "../../core/types";
-import {useInputField} from "../../core/form/input/InputGroup";
-import {Buttons, Resolver, Translations} from "../../core";
-import {mdiDelete, mdiPlusBox} from "@mdi/js";
+import { RuleCondition, RuleField, RuleOperator } from "../../core/types";
+import { useInputField } from "../../core/form/input/InputGroup";
+import { Buttons, Resolver, Translations } from "../../core";
+import { mdiDelete, mdiPlusBox } from "@mdi/js";
 import React from "react";
 
 const PossibleConditions = [
@@ -31,7 +31,7 @@ function lookupCondition(condition: RuleCondition) {
 
 const ConditionFieldComponent = (props: any) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [field, _, onChange] = useInputField({onChange: (_) => void 0, field: props})
+    const [field, _, onChange] = useInputField({ onChange: (_) => void 0, field: props })
 
     const onAddCondition = () => {
         const updatedValue = [...field.value, {
@@ -41,12 +41,12 @@ const ConditionFieldComponent = (props: any) => {
             condition: ''
         }]
 
-        onChange({persist: () => {}, currentTarget: {value: updatedValue}})
+        onChange({ persist: () => {}, currentTarget: { value: updatedValue } })
     }
 
     const onDeleteCondition = (uuid: string) => {
         const updatedValue = field.value.filter((c: RuleCondition) => c.uuid !== uuid)
-        onChange({persist: () => {}, currentTarget: {value: updatedValue}})
+        onChange({ persist: () => {}, currentTarget: { value: updatedValue } })
     }
 
     const onConditionChange = (uuid: string, value: string) => {
@@ -54,7 +54,7 @@ const ConditionFieldComponent = (props: any) => {
             if (c.uuid === uuid) return { ...c, condition: value }
             return c
         })
-        onChange({persist: () => {}, currentTarget: {value: updatedValue}})
+        onChange({ persist: () => {}, currentTarget: { value: updatedValue } })
     }
 
     const onFieldChange = (uuid: string, value: string) => {
@@ -67,7 +67,7 @@ const ConditionFieldComponent = (props: any) => {
             }
             return c
         })
-        onChange({persist: () => {}, currentTarget: {value: updatedValue}})
+        onChange({ persist: () => {}, currentTarget: { value: updatedValue } })
     }
 
     if (!field) return <></>

@@ -1,12 +1,12 @@
-import {FC, useEffect, useState} from "react";
-import {useDateRange} from "../hooks";
-import {Layout} from "../index";
-import {isArray} from "chart.js/helpers";
-import {Account} from "../types";
+import { FC, useEffect, useState } from "react";
+import { useDateRange } from "../hooks";
+import { Layout } from "../index";
+import { isArray } from "chart.js/helpers";
+import { Account } from "../types";
 import StatisticalRepository from "../repositories/statistical-repository";
-import {Chart} from "react-chartjs-2";
-import {ChartData} from "chart.js";
-import {defaultGraphColors} from "../../config/global-chart-config";
+import { Chart } from "react-chartjs-2";
+import { ChartData } from "chart.js";
+import { defaultGraphColors } from "../../config/global-chart-config";
 
 type CategorizedPieChartProps = {
     id: string
@@ -34,10 +34,10 @@ const CategorizedPieChart: FC<CategorizedPieChartProps> = ({ id, split, incomeOn
         StatisticalRepository.split(split, searchCommand)
             .then(series => {
                 setPieSeries({
-                    labels: series.map(({partition}) => partition || 'Uncategorized'),
+                    labels: series.map(({ partition }) => partition || 'Uncategorized'),
                     datasets: [
                         {
-                            data: series.map(({balance}) => Math.abs(balance))
+                            data: series.map(({ balance }) => Math.abs(balance))
                         }
                     ]
                 })

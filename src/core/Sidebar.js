@@ -1,11 +1,11 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import Icon from '@mdi/react'
 import config from '../config/sidebar-config.js'
-import {Translation} from "./localization";
-import {mdiChevronDown, mdiChevronLeft, mdiClose, mdiLogoutVariant, mdiMenu} from "@mdi/js";
-import {NavLink, useNavigate} from "react-router-dom";
+import { Translation } from "./localization";
+import { mdiChevronDown, mdiChevronLeft, mdiClose, mdiLogoutVariant, mdiMenu } from "@mdi/js";
+import { NavLink, useNavigate } from "react-router-dom";
 import SecurityRepository from "./repositories/security-repository";
-import {Buttons} from "./index";
+import { Buttons } from "./index";
 
 import logo from '../assets/logo.png'
 import '../assets/css/Sidebar.scss'
@@ -13,7 +13,7 @@ import PropTypes from "prop-types";
 import ProfilePicture from "../profile/profile-picture.component";
 
 
-export const Sidebar = ({logoutCallback}) => {
+export const Sidebar = ({ logoutCallback }) => {
     const [open, setOpen] = useState(() => {
         return window.document.body.clientWidth > 500
     })
@@ -26,7 +26,7 @@ export const Sidebar = ({logoutCallback}) => {
         <div className={'sidebar ' + (open ? '' : 'closed')}>
             <div className='brand'>
                 <img src={logo} alt='logo'/>
-                <span>Pledger<span style={{color: 'var(--app-text-muted-color)'}}>.io</span></span>
+                <span>Pledger<span style={{ color: 'var(--app-text-muted-color)' }}>.io</span></span>
                 <span className='toggle' onClick={onToggleClick}>
                     <Icon path={open ? mdiClose : mdiMenu}
                           size={ 1 }/>
@@ -60,7 +60,7 @@ Sidebar.propTypes = {
 }
 
 
-const ExpandableSection = ({label, icon, links}) => {
+const ExpandableSection = ({ label, icon, links }) => {
     const [expanded, setExpanded] = useState(false)
     const onClick = () => setExpanded(!expanded)
 
@@ -97,7 +97,7 @@ ExpandableSection.propTypes = {
 /**
  * Add a buttons that is specific to the sidebar.
  */
-const SidebarButton = ({href, icon, label}) => {
+const SidebarButton = ({ href, icon, label }) => {
     return (
         <NavLink to={href} className='button'>
             <Icon path={icon}

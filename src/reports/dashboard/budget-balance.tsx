@@ -1,12 +1,12 @@
-import {Layout, Translations} from "../../core";
-import React, {useEffect, useState} from "react";
-import {Loading} from "../../core/layout";
-import {Chart} from "react-chartjs-2";
-import {Range} from "../../core/Dates";
-import {ChartData} from "chart.js";
-import {Budget, BudgetExpense} from "../../core/types";
+import { Layout, Translations } from "../../core";
+import React, { useEffect, useState } from "react";
+import { Loading } from "../../core/layout";
+import { Chart } from "react-chartjs-2";
+import { Range } from "../../core/Dates";
+import { ChartData } from "chart.js";
+import { Budget, BudgetExpense } from "../../core/types";
 import StatisticalRepository from "../../core/repositories/statistical-repository";
-import {DefaultChartConfig, Service} from "../../config/global-chart-config";
+import { DefaultChartConfig, Service } from "../../config/global-chart-config";
 import BudgetRepository from "../../core/repositories/budget.repository";
 
 const percentageOfYear = 90 / 365
@@ -20,7 +20,7 @@ function BudgetBalance({ range } : {range : Range}) {
                 const expenses = budget.expenses
 
                 setBudgetSeries({
-                    labels: expenses.map(({name}) => name),
+                    labels: expenses.map(({ name }) => name),
                     datasets: [
                         {
                             label: await Translations.LocalizationService.get('graph.series.budget.expected'),
@@ -34,7 +34,7 @@ function BudgetBalance({ range } : {range : Range}) {
                                     StatisticalRepository.balance({
                                         dateRange: range.toBackend(),
                                         onlyIncome: false,
-                                        expenses: [{id: expense.id}]
+                                        expenses: [{ id: expense.id }]
                                     })))).map(balance => Math.abs(balance.balance)),
                             backgroundColor: '#7fc6a5'
                         }

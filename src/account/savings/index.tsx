@@ -1,7 +1,7 @@
-import {BreadCrumbItem, BreadCrumbs, Layout} from "../../core";
-import React, {useEffect, useState} from "react";
-import {Account} from "../../core/types";
-import {useParams} from "react-router-dom";
+import { BreadCrumbItem, BreadCrumbs, Layout } from "../../core";
+import React, { useEffect, useState } from "react";
+import { Account } from "../../core/types";
+import { useParams } from "react-router-dom";
 import AccountRepository from "../../core/repositories/account-repository";
 import SavingSummaryComponent from "./saving-goal.component";
 import SavingGoalTableComponent from "./saving-goal-table.component";
@@ -9,7 +9,7 @@ import TransactionListComponent from "./transaction-list.component";
 
 function SavingAccountOverview() {
     const [account, setAccount] = useState<Account>()
-    const {id} = useParams()
+    const { id } = useParams()
 
     useEffect(() => {
         AccountRepository.get(id)

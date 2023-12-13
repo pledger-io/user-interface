@@ -1,14 +1,14 @@
-import React, {useEffect, useState} from "react";
-import {Rule} from "../../core/types";
+import React, { useEffect, useState } from "react";
+import { Rule } from "../../core/types";
 import RuleRepository from "../../core/repositories/rule-repository";
-import {Buttons, Dialog, Layout, Notifications, Translations} from "../../core";
-import {EntityNameComponent} from "../lookup-name.util";
+import { Buttons, Dialog, Layout, Notifications, Translations } from "../../core";
+import { EntityNameComponent } from "../lookup-name.util";
 import Icon from "@mdi/react";
-import {mdiCheck, mdiClose, mdiDotsVertical, mdiSquareEditOutline, mdiTrashCanOutline} from "@mdi/js";
-import {Dropdown} from "../../core/dropdown";
+import { mdiCheck, mdiClose, mdiDotsVertical, mdiSquareEditOutline, mdiTrashCanOutline } from "@mdi/js";
+import { Dropdown } from "../../core/dropdown";
 
 
-const RuleListComponent = ({group} : {group: string}) => {
+const RuleListComponent = ({ group } : {group: string}) => {
     const [rules, setRules] = useState<Rule[]>()
 
     useEffect(() => {
@@ -16,7 +16,7 @@ const RuleListComponent = ({group} : {group: string}) => {
             .then(rules => setRules(rules.sort((a, b) => a.sort - b.sort)))
     }, [group])
 
-    const dropDownActions = {close: () => undefined}
+    const dropDownActions = { close: () => undefined }
     const onDelete = (rule: Rule) => RuleRepository.deleteRule(group, rule.id)
             .then(() => setRules(rules?.filter(r => r.id !== rule.id)))
             .then(() => Notifications.Service.success('page.settings.rules.delete.success'))

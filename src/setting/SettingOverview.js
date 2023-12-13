@@ -1,8 +1,8 @@
-import {BreadCrumbItem, BreadCrumbs, Buttons, Dialog, Layout, Translations} from "../core";
-import React, {useEffect, useState} from "react";
-import {SettingRepository} from "../core/RestAPI";
-import {mdiContentSave, mdiPencilBoxOutline} from "@mdi/js";
-import {Form, Input, SubmitButton} from "../core/form";
+import { BreadCrumbItem, BreadCrumbs, Buttons, Dialog, Layout, Translations } from "../core";
+import React, { useEffect, useState } from "react";
+import { SettingRepository } from "../core/RestAPI";
+import { mdiContentSave, mdiPencilBoxOutline } from "@mdi/js";
+import { Form, Input, SubmitButton } from "../core/form";
 
 export const SettingOverviewComponent = () => {
     const [settings, setSettings]   = useState([])

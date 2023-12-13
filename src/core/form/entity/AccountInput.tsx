@@ -1,8 +1,8 @@
-import React, {FC} from "react";
-import {useAutocomplete} from "../Autocomplete";
+import React, { FC } from "react";
+import { useAutocomplete } from "../Autocomplete";
 import restAPI from "../../repositories/rest-api";
-import {Account} from "../../types";
-import {FieldType} from "../form-types";
+import { Account } from "../../types";
+import { FieldType } from "../form-types";
 
 const AccountAutocompleteRow = (account: Account) => {
     return (

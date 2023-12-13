@@ -1,6 +1,6 @@
-import {FC} from "react";
-import {InputGroup, InputValidationErrors, useInputField} from "./InputGroup";
-import {FieldType} from "../form-types";
+import { FC } from "react";
+import { InputGroup, InputValidationErrors, useInputField } from "./InputGroup";
+import { FieldType } from "../form-types";
 
 type TextInputProps = FieldType & {
     type: 'number' | 'text' | 'password',
@@ -15,7 +15,7 @@ type TextInputProps = FieldType & {
 }
 
 export const TextInput: FC<TextInputProps> = (props) => {
-    const [field, errors, onChange] = useInputField({onChange: props.onChange, field: props})
+    const [field, errors, onChange] = useInputField({ onChange: props.onChange, field: props })
 
     if (!field) return <>props.id</>
     return (

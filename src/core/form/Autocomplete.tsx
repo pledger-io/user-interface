@@ -1,6 +1,6 @@
-import {InputGroup, InputValidationErrors, useInputField} from "./input/InputGroup";
-import React, {ChangeEventHandler, KeyboardEventHandler, ReactNode, useRef, useState} from "react";
-import {Identifiable} from "../types";
+import { InputGroup, InputValidationErrors, useInputField } from "./input/InputGroup";
+import React, { ChangeEventHandler, KeyboardEventHandler, ReactNode, useRef, useState } from "react";
+import { Identifiable } from "../types";
 
 const MIN_CHARS = 2
 
@@ -11,14 +11,14 @@ type useAutocompleteParams<T extends Identifiable> = {
 }
 type InputChangeHandler = ChangeEventHandler<HTMLInputElement>
 
-export const useAutocomplete = function <T extends Identifiable>({autoCompleteCallback, entityRender, entityLabel}: useAutocompleteParams<T>, props: any) {
-    const [field, errors, onChange] = useInputField({onChange: undefined, field: props})
+export const useAutocomplete = function <T extends Identifiable>({ autoCompleteCallback, entityRender, entityLabel }: useAutocompleteParams<T>, props: any) {
+    const [field, errors, onChange] = useInputField({ onChange: undefined, field: props })
     const [options, setOptions] = useState<Array<T>>([])
     const [selected, setSelected] = useState(-1)
     const inputRef = useRef<HTMLInputElement>(null)
 
     const changeHandler = (selected: T) => {
-        onChange({currentTarget: {value: selected}, persist: () => undefined})
+        onChange({ currentTarget: { value: selected }, persist: () => undefined })
         setSelected(-1)
         setOptions([])
         if (inputRef.current) inputRef.current.value = entityLabel(selected)
@@ -29,7 +29,7 @@ export const useAutocomplete = function <T extends Identifiable>({autoCompleteCa
         const actualKeyValue = String.fromCharCode(e.which).match(/(\w|\s)/g)
         if ((actualKeyValue || e.key === 'Backspace' || e.key === 'Delete') && field.value) {
             // reset the value on new key presses
-            onChange({currentTarget: {value: undefined}, persist: (_: any) => undefined})
+            onChange({ currentTarget: { value: undefined }, persist: (_: any) => undefined })
         }
 
         if (options.length > 0) {
@@ -68,7 +68,7 @@ export const useAutocomplete = function <T extends Identifiable>({autoCompleteCa
             }
         }
     }
-    const onAutocomplete: InputChangeHandler = ({currentTarget: {value}}) => {
+    const onAutocomplete: InputChangeHandler = ({ currentTarget: { value } }) => {
         if (value.length > MIN_CHARS)
             autoCompleteCallback(value)
                 .then(setOptions)
@@ -85,7 +85,7 @@ export const useAutocomplete = function <T extends Identifiable>({autoCompleteCa
             <div className='AccountInput'>
                 <input type='text'
                        ref={inputRef}
-                       style={{width: '-webkit-max-content'}}
+                       style={{ width: '-webkit-max-content' }}
                        onKeyDown={onKeyDown}
                        onKeyUp={onKeyUp}
                        onChange={onAutocomplete}

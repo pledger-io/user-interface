@@ -1,5 +1,5 @@
-import {InputGroup, useInputField} from "./InputGroup";
-import {FieldType} from "../form-types";
+import { InputGroup, useInputField } from "./InputGroup";
+import { FieldType } from "../form-types";
 
 
 type RadioInputProps = FieldType & {
@@ -16,7 +16,7 @@ type RadioInputProps = FieldType & {
 
 
 const RadioInput = (props: RadioInputProps) => {
-    const [field, errors, onChange] = useInputField({onChange: props.onChange, field: props})
+    const [field, errors, onChange] = useInputField({ onChange: props.onChange, field: props })
 
     if (!field) return <>props.id</>
     return <>

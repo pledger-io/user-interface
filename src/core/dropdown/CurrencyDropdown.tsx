@@ -1,8 +1,8 @@
-import {useEffect, useState} from "react";
-import {CurrencyRepository} from "../RestAPI";
-import {Button} from "../buttons";
-import {mdiMenuDown} from "@mdi/js";
-import {Currency} from "../types";
+import { useEffect, useState } from "react";
+import { CurrencyRepository } from "../RestAPI";
+import { Button } from "../buttons";
+import { mdiMenuDown } from "@mdi/js";
+import { Currency } from "../types";
 
 type CurrencyDropdownProps = {
     // The currently selected currency
@@ -11,7 +11,7 @@ type CurrencyDropdownProps = {
     onChange: (_: Currency) => void
 }
 
-const CurrencyDropdown = ({currency, onChange = _ => undefined} : CurrencyDropdownProps) => {
+const CurrencyDropdown = ({ currency, onChange = _ => undefined } : CurrencyDropdownProps) => {
     const [currencyOpen, setCurrencyOpen] = useState(false)
     const [currencies, setCurrencies] = useState<Currency[]>([])
 

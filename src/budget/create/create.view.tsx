@@ -1,9 +1,9 @@
-import {BreadCrumbItem, BreadCrumbs, Layout, Message, Notifications} from "../../core";
-import {Form, Input, SubmitButton} from "../../core/form";
-import {mdiContentSave} from "@mdi/js";
+import { BreadCrumbItem, BreadCrumbs, Layout, Message, Notifications } from "../../core";
+import { Form, Input, SubmitButton } from "../../core/form";
+import { mdiContentSave } from "@mdi/js";
 import React from "react";
 import BudgetRepository from "../../core/repositories/budget.repository";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const CreateBudgetView = () => {
     const navigate = useNavigate()

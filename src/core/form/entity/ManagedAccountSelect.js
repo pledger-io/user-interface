@@ -1,14 +1,14 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 
-import {InputGroup, useInputField} from "../input/InputGroup";
+import { InputGroup, useInputField } from "../input/InputGroup";
 import PropTypes from "prop-types";
-import {Loading} from "../../layout";
+import { Loading } from "../../layout";
 
 import AccountRepository from "../../repositories/account-repository";
-import {SelectOption} from "../input";
+import { SelectOption } from "../input";
 
 export const ManagedAccountSelect = props => {
-    const [field, errors, onChange]         = useInputField({onChange: props.onChange, field: props})
+    const [field, errors, onChange]         = useInputField({ onChange: props.onChange, field: props })
     const [selectedValue, setSelectedValue] = useState()
     const [accounts, setAccounts]           = useState([])
 
@@ -26,7 +26,7 @@ export const ManagedAccountSelect = props => {
         setSelectedValue(selectedAccount.id)
         onChange({
             persist: () => {},
-            currentTarget: {value: selectedAccount}
+            currentTarget: { value: selectedAccount }
         })
         if (props.onChange) props.onChange(selectedAccount)
     }

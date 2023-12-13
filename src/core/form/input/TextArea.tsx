@@ -1,7 +1,7 @@
-import React, {FC} from "react";
+import React, { FC } from "react";
 
-import {InputGroup, InputValidationErrors, useInputField} from "./InputGroup";
-import {FieldType} from "../form-types";
+import { InputGroup, InputValidationErrors, useInputField } from "./InputGroup";
+import { FieldType } from "../form-types";
 
 type TextAreaProps = FieldType & {
     title?: string,
@@ -13,7 +13,7 @@ type TextAreaProps = FieldType & {
  * A text area that is bound to the form context it is in.
  */
 export const TextArea: FC<TextAreaProps> = (props) => {
-    const [field, errors, onChange] = useInputField({onChange: props.onChange, field: props})
+    const [field, errors, onChange] = useInputField({ onChange: props.onChange, field: props })
 
     if (!field) return <>props.id</>
     return (

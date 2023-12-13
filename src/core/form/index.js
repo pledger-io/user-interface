@@ -1,5 +1,5 @@
-import {Form} from "./Form";
-import {SubmitButton} from "./input/SubmitButton";
+import { Form } from "./Form";
+import { SubmitButton } from "./input/SubmitButton";
 
 import * as Input from './input'
 import * as Entity from './entity'

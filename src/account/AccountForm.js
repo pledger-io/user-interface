@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 
-import {Entity, Form, Input, SubmitButton} from '../core/form'
-import {Attachments, BreadCrumbItem, BreadCrumbs, Buttons, Layout, Message, Notifications, Translations} from "../core";
-import {mdiCancel, mdiContentSave} from "@mdi/js";
-import {useNavigate, useParams} from "react-router-dom";
+import { Entity, Form, Input, SubmitButton } from '../core/form'
+import { Attachments, BreadCrumbItem, BreadCrumbs, Buttons, Layout, Message, Notifications, Translations } from "../core";
+import { mdiCancel, mdiContentSave } from "@mdi/js";
+import { useNavigate, useParams } from "react-router-dom";
 import AccountRepository from "../core/repositories/account-repository";
 
 import '../assets/css/AccountForm.scss'
@@ -20,9 +20,9 @@ class AccountModel {
     }
 }
 
-const AccountForm = ({type}) => {
-    const {id}                      = useParams()
-    const [account, setAccount]     = useState(new AccountModel({type: type, account: {}}))
+const AccountForm = ({ type }) => {
+    const { id }                      = useParams()
+    const [account, setAccount]     = useState(new AccountModel({ type: type, account: {} }))
     const [exception, setException] = useState(null)
     const navigate                  = useNavigate();
 

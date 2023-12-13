@@ -1,17 +1,16 @@
-import React, {useEffect, useState} from "react";
-import {Dates, Layout, Statistical, Translations} from "../../core";
-import {Budget} from "../../core/types";
-import {ChartData} from "chart.js";
-import {DateRange} from "../../core/form/input";
-import {Chart} from "react-chartjs-2";
-import {DefaultChartConfig, Service} from "../../config/global-chart-config";
+import React, { useEffect, useState } from "react";
+import { Dates, Layout, Statistical, Translations } from "../../core";
+import { Budget } from "../../core/types";
+import { ChartData } from "chart.js";
+import { Chart } from "react-chartjs-2";
+import { DefaultChartConfig, Service } from "../../config/global-chart-config";
 
 type BudgetYearlyExpenseProps = {
     year: number,
     budgets: Budget[]
 }
 
-const YearlyIncomeGraphComponent = ({year = 1970, budgets = []} : BudgetYearlyExpenseProps) => {
+const YearlyIncomeGraphComponent = ({ year = 1970, budgets = [] } : BudgetYearlyExpenseProps) => {
     const [chartData, setChartData] = useState<ChartData | undefined>()
 
     useEffect(() => {
@@ -28,12 +27,12 @@ const YearlyIncomeGraphComponent = ({year = 1970, budgets = []} : BudgetYearlyEx
                     datasets: [
                         {
                             label: await Translations.LocalizationService.get('graph.series.budget.expected'),
-                            data: budgets.map(({income}) => income),
+                            data: budgets.map(({ income }) => income),
                             borderColor: '#f0c77c',
                             backgroundColor: '#f0c77c'
                         },
                         {
-                            data: data.map(({balance}) => balance),
+                            data: data.map(({ balance }) => balance),
                             label: await Translations.LocalizationService.get('graph.series.budget.actual'),
                             borderColor: '#6996b2',
                             backgroundColor: '#6996b2'

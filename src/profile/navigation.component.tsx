@@ -1,5 +1,5 @@
-import {Translations} from "../core";
-import {NavLink} from "react-router-dom";
+import { Translations } from "../core";
+import { NavLink } from "react-router-dom";
 
 const NavigationComponent = () => {
 

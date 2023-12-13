@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from 'prop-types';
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 // Export all core classes and functions
 import * as Dialog from './popups'
@@ -21,7 +21,7 @@ import '../assets/css/Message.scss'
 
 class BreadCrumbs extends React.Component {
     render() {
-        const {children} = this.props;
+        const { children } = this.props;
         return (
             <ol className='Breadcrumb'>
                 {children}
@@ -42,7 +42,7 @@ class BreadCrumbItem extends React.Component {
     }
 
     render() {
-        const {message, label, href} = this.props;
+        const { message, label, href } = this.props;
         let text = label ? <Translations.Translation label={label}/> : message;
         if (href) {
             text = <Link to={href}>{text}</Link>
@@ -58,7 +58,7 @@ class BreadCrumbItem extends React.Component {
 
 class BreadCrumbMenu extends React.Component {
     render() {
-        const {children, className} = this.props
+        const { children, className } = this.props
         return <li className={`Menu ${className}`}>{children}</li>
     }
 }
@@ -74,7 +74,7 @@ export class Message extends React.Component {
     }
 
     render() {
-        const {label, variant, message} = this.props;
+        const { label, variant, message } = this.props;
         const className = 'Message ' + variant;
 
         if (label) {
@@ -91,12 +91,12 @@ export class Message extends React.Component {
     }
 }
 
-const Progressbar = ({total = 1, current = 0, className = ''}) => {
+const Progressbar = ({ total = 1, current = 0, className = '' }) => {
     const percentage = Math.min(100, Math.round(current / total * 100))
 
     return <>
         <div className={`Progressbar ${className}`} title={`${percentage}%`}>
-            <div className='fg-color' style={{width: `${percentage}%`}} />
+            <div className='fg-color' style={{ width: `${percentage}%` }} />
         </div>
     </>
 }
@@ -113,7 +113,7 @@ class When extends React.Component {
         condition: PropTypes.bool
     }
     render() {
-        const {condition, children} = this.props;
+        const { condition, children } = this.props;
 
         if (condition) {
             return children;
@@ -132,17 +132,17 @@ const ACCOUNT_TYPE_CONVERSION_MAP = {
 }
 const Resolver = {
     Account: {
-        resolveUrl({id, type}) {
+        resolveUrl({ id, type }) {
             const frontEndType = ACCOUNT_TYPE_CONVERSION_MAP[type] || 'own'
             return `/accounts/${frontEndType}/${id}`
         },
-        isDebtor({type}) {
+        isDebtor({ type }) {
             return type === 'debtor'
         },
-        isCreditor({type}) {
+        isCreditor({ type }) {
             return type === 'creditor'
         },
-        isManaged({type}) {
+        isManaged({ type }) {
             return ['debtor', 'creditor', 'reconcile', 'debt', 'loan', 'mortgage']
                 .indexOf(type) > -1
         },
@@ -156,16 +156,16 @@ const Resolver = {
         }
     },
     Transaction: {
-        isCredit({type}) {
+        isCredit({ type }) {
             return type?.code === 'CREDIT'
         },
-        isDebit({type}) {
+        isDebit({ type }) {
             return type?.code === 'DEBIT'
         },
-        isTransfer({type}) {
+        isTransfer({ type }) {
             return type?.code === 'TRANSFER'
         },
-        resolveUrl({id, source}) {
+        resolveUrl({ id, source }) {
             return `${Resolver.Account.resolveUrl(source)}/transaction/${id}`
         }
     },

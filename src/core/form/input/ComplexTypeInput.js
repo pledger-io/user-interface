@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React from "react";
-import {mdiDelete, mdiTablePlus} from "@mdi/js";
+import { mdiDelete, mdiTablePlus } from "@mdi/js";
 
-import {Buttons, Translations} from "../../index";
-import {FormContext} from "../Form";
+import { Buttons, Translations } from "../../index";
+import { FormContext } from "../Form";
 
 function createUUID() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -42,9 +42,9 @@ export class ComplexTypeInput extends React.Component {
     }
 
     renderInput(entity, prop, type) {
-        const {id} = this.props
+        const { id } = this.props
         const onChange = value => {
-            const field = this.context.fields[id] || {value: []};
+            const field = this.context.fields[id] || { value: [] };
             const toUpdate = field.value.find(el => el._uuid === entity._uuid)
             toUpdate[prop] = value
 
@@ -58,26 +58,26 @@ export class ComplexTypeInput extends React.Component {
     }
 
     addEntity() {
-        const {blankEntity, id} = this.props
-        const field = this.context.fields[id] || {value: []};
+        const { blankEntity, id } = this.props
+        const field = this.context.fields[id] || { value: [] };
 
         field.value.push({
             _uuid: createUUID(),
-            ...blankEntity})
+            ...blankEntity })
 
         this.onChange(field.value)
     }
 
-    removeEntity({_uuid}) {
-        const {id} = this.props
-        const field = this.context.fields[id] || {value: []};
+    removeEntity({ _uuid }) {
+        const { id } = this.props
+        const field = this.context.fields[id] || { value: [] };
 
         this.onChange(field.value.filter(entity => entity._uuid !== _uuid))
     }
 
     onChange(value) {
-        const {id, onChange = _ => {}} = this.props
-        const field = this.context.fields[id] || {id: id, value: []};
+        const { id, onChange = _ => {} } = this.props
+        const field = this.context.fields[id] || { id: id, value: [] };
 
         onChange(value)
         this.context.onChange({
@@ -89,7 +89,7 @@ export class ComplexTypeInput extends React.Component {
     }
 
     render() {
-        const {id, headers, rowProducer} = this.props;
+        const { id, headers, rowProducer } = this.props;
         const field = this.context.fields[id] || {};
         const value = field.value || [];
 
@@ -110,7 +110,7 @@ export class ComplexTypeInput extends React.Component {
             <tbody>
             {value.map(entity =>
                 <tr key={entity._uuid}>
-                    {rowProducer({renderInput: (prop, type = 'text') => this.renderInput(entity, prop, type)})
+                    {rowProducer({ renderInput: (prop, type = 'text') => this.renderInput(entity, prop, type) })
                         .map((field, idx) => <td key={`${entity._uuid}_${idx}`}>{field}</td>)}
                     <td>
                         <Buttons.Button

@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import AccountRepository from "../../core/repositories/account-repository";
-import {Attachments, Formats, Layout, Translations} from "../../core";
-import {Account} from "../../core/types";
+import { Attachments, Formats, Layout, Translations } from "../../core";
+import { Account } from "../../core/types";
 
 type TopAccountTableProps = {
     year: number,
@@ -14,7 +14,7 @@ type TopAccount = {
     average: number
 }
 
-const TopAccountTable = ({year, type}: TopAccountTableProps) => {
+const TopAccountTable = ({ year, type }: TopAccountTableProps) => {
     const [accounts, setAccounts] = useState<TopAccount[] | undefined>()
 
     useEffect(() => {

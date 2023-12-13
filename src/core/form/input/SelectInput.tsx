@@ -1,8 +1,8 @@
-import React, {FC, ReactNode, useEffect, useState} from "react";
+import React, { FC, ReactNode, useEffect, useState } from "react";
 
-import {InputGroup, useInputField} from "./InputGroup";
-import {LocalizationService} from "../../localization";
-import {FieldType} from "../form-types";
+import { InputGroup, useInputField } from "./InputGroup";
+import { LocalizationService } from "../../localization";
+import { FieldType } from "../form-types";
 
 export type SelectInputProps = FieldType & {
     title?: string,
@@ -16,7 +16,7 @@ export type SelectInputProps = FieldType & {
  * The select component allows for creating a dropdown where the user can pick one of multiple entries.
  */
 export const SelectInput: FC<SelectInputProps> = (props) => {
-    const [field, errors, onChange] = useInputField({onChange: props.onChange, field: props})
+    const [field, errors, onChange] = useInputField({ onChange: props.onChange, field: props })
 
     if (!field) return <>props.id</>
     return (
@@ -49,7 +49,7 @@ type SelectOptionProps = {
 /**
  * An option in a Select component. A `message` or `label` should be provided, but not both.
  */
-export const SelectOption: FC<SelectOptionProps> = ({message, value, label}) => {
+export const SelectOption: FC<SelectOptionProps> = ({ message, value, label }) => {
     const [display, setDisplay] = useState('')
 
     useEffect(() => {

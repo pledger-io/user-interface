@@ -1,4 +1,4 @@
-import {LocalizationRepository} from "../RestAPI";
+import { LocalizationRepository } from "../RestAPI";
 
 type TranslationType = {
     $: Promise<string>,

@@ -1,8 +1,8 @@
-import {Range} from "../../core/Dates";
-import {Budget} from "../../core/types";
-import {useEffect, useState} from "react";
+import { Range } from "../../core/Dates";
+import { Budget } from "../../core/types";
+import { useEffect, useState } from "react";
 import BudgetRepository from "../../core/repositories/budget.repository";
-import {Formats, Layout, Translations} from "../../core";
+import { Formats, Layout, Translations } from "../../core";
 import ExpenseOverviewComponent from "./expense-overview.component";
 
 const BudgetDetailComponent = ({ range }: {range: Range}) => {

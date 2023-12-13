@@ -1,8 +1,8 @@
-import {Route} from "react-router-dom";
+import { Route } from "react-router-dom";
 import Dashboard from "./dashboard";
 import IncomeExpenseView from "./income-expense";
 import CategoryReportView from "./category-monthly";
-import {BudgetReportView} from "./budget-monthly";
+import { BudgetReportView } from "./budget-monthly";
 
 export const ReportRoutes = [
     <Route key='dashboard-report' path='/dashboard' element={<Dashboard />}/>,

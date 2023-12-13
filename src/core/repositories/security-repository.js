@@ -10,13 +10,13 @@ class TokenResponse {
 
 const SecurityRepository = (api => {
     return {
-        authenticate: (username, password) => api.post('security/authenticate', {username: username, password: password})
+        authenticate: (username, password) => api.post('security/authenticate', { username: username, password: password })
             .then(serverResponse => {
                 const token = new TokenResponse(serverResponse)
                 sessionStorage.setItem('refresh-token', token.refreshToken);
                 sessionStorage.setItem('token', token.accessToken);
             }),
-        register: (username, password) => api.put(`security/create-account`, {username, password}),
+        register: (username, password) => api.put(`security/create-account`, { username, password }),
         logout: () => {
             sessionStorage.removeItem('token');
             sessionStorage.removeItem('refresh-token');

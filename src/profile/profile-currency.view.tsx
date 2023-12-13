@@ -1,12 +1,12 @@
-import {Layout, Notifications, Translations} from "../core";
+import { Layout, Notifications, Translations } from "../core";
 import NavigationComponent from "./navigation.component";
-import {Form, Input, SubmitButton} from "../core/form";
+import { Form, Input, SubmitButton } from "../core/form";
 import RestAPI from "../core/repositories/rest-api";
-import {mdiContentSave} from "@mdi/js";
+import { mdiContentSave } from "@mdi/js";
 import ProfileRepository from "../core/repositories/profile.repository";
-import {Currency} from "../core/types";
-import {useEffect, useState} from "react";
-import {CurrencyRepository} from "../core/RestAPI";
+import { Currency } from "../core/types";
+import { useEffect, useState } from "react";
+import { CurrencyRepository } from "../core/RestAPI";
 
 const ProfileCurrencyView = () => {
     const [currencies, setCurrencies] = useState<Currency[]>()
@@ -20,7 +20,7 @@ const ProfileCurrencyView = () => {
 
     const current = (RestAPI.user() as any).currency
     const onSubmit = (form: any) => {
-        ProfileRepository.patch({currency: form.currency})
+        ProfileRepository.patch({ currency: form.currency })
             .then(() => Notifications.Service.success('page.user.profile.currency.success'))
             .catch(() => Notifications.Service.warning('page.user.profile.currency.error'))
     }
@@ -37,7 +37,7 @@ const ProfileCurrencyView = () => {
 
                     <Form entity='Profile' onSubmit={ onSubmit }>
                         <Input.Radio id='currency'
-                                     options={ currencies.map(c => ({value: c.code, message: c.name})) }
+                                     options={ currencies.map(c => ({ value: c.code, message: c.name })) }
                                     value={ current } />
 
                         <SubmitButton label='common.action.save'

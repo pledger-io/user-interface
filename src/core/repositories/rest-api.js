@@ -33,7 +33,7 @@ const RestAPI = (() => {
     const handle = response => new Promise((resolved, error) =>
         response
             .then(httpResponse => resolved(httpResponse.data))
-            .catch(({response}) => {
+            .catch(({ response }) => {
                 if (response.status === 401) {
                     window.dispatchEvent(new Event('credentials-expired'))
                     window.location.reload()

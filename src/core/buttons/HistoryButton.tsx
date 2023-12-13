@@ -1,5 +1,5 @@
-import {useNavigate} from "react-router-dom";
-import React, {FC} from "react";
+import { useNavigate } from "react-router-dom";
+import React, { FC } from "react";
 import Button from "./Button";
 
 type HistoryButtonProps = {
@@ -9,7 +9,7 @@ type HistoryButtonProps = {
     label: string
 }
 
-const HistoryButton: FC<HistoryButtonProps> = ({icon, label}) => {
+const HistoryButton: FC<HistoryButtonProps> = ({ icon, label }) => {
     const navigate = useNavigate()
 
     return <Button icon={icon}

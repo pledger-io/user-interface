@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from 'prop-types';
 import {
     Attachments,
@@ -15,13 +15,13 @@ import {
     Translations,
     When
 } from "../../core";
-import {mdiDotsVertical, mdiPlus, mdiSquareEditOutline, mdiTrashCanOutline} from "@mdi/js";
-import {Link} from "react-router-dom";
-import {useQueryParam} from "../../core/hooks";
-import {EntityShapes} from "../../config";
+import { mdiDotsVertical, mdiPlus, mdiSquareEditOutline, mdiTrashCanOutline } from "@mdi/js";
+import { Link } from "react-router-dom";
+import { useQueryParam } from "../../core/hooks";
+import { EntityShapes } from "../../config";
 import AccountRepository from "../../core/repositories/account-repository";
 
-const AccountRow = ({account, deleteCallback}) => {
+const AccountRow = ({ account, deleteCallback }) => {
     const onDelete = () => AccountRepository.delete(account.id)
         .then(() => Notifications.Service.success('page.accounts.liability.delete.success'))
         .then(deleteCallback)
@@ -73,7 +73,7 @@ AccountRow.propTypes = {
 }
 
 const LiabilityOverview = () => {
-    const [page]                             = useQueryParam({key: 'page', initialValue: "1"})
+    const [page]                             = useQueryParam({ key: 'page', initialValue: "1" })
     const [accounts, setAccounts]            = useState([])
     const [pagination, setPagination]        = useState({})
 

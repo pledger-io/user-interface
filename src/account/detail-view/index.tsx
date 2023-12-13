@@ -1,12 +1,12 @@
-import React, {FC, useEffect, useState} from "react";
-import {BreadCrumbItem, BreadCrumbMenu, BreadCrumbs, Buttons, Dates, Dropdown, Layout, Resolver} from "../../core";
-import {Account} from "../../core/types";
-import {useNavigate, useParams} from "react-router-dom";
+import React, { FC, useEffect, useState } from "react";
+import { BreadCrumbItem, BreadCrumbMenu, BreadCrumbs, Buttons, Dates, Dropdown, Layout, Resolver } from "../../core";
+import { Account } from "../../core/types";
+import { useNavigate, useParams } from "react-router-dom";
 import AccountRepository from "../../core/repositories/account-repository";
 import TransactionList from "./transaction-list";
 import CategorizedPieChart from "../../core/graphs/categorized-pie-chart";
 import BalanceChart from "../../core/graphs/balance-chart";
-import {mdiCartPlus, mdiCashPlus, mdiSwapHorizontal} from "@mdi/js";
+import { mdiCartPlus, mdiCashPlus, mdiSwapHorizontal } from "@mdi/js";
 
 const TYPE_MAPPING = {
     expense: 'creditor',
@@ -19,7 +19,7 @@ type AccountType = keyof typeof TYPE_MAPPING
 const AccountDetailView: FC = () => {
     const [account, setAccount] = useState<Account | undefined>(undefined)
     const [range, setRange] = useState(Dates.Ranges.currentMonth())
-    const {id, type, year, month} = useParams()
+    const { id, type, year, month } = useParams()
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -31,9 +31,10 @@ const AccountDetailView: FC = () => {
     }, [year, month])
 
     const isOwnType = type === 'own'
-    const onDateChange = ({year, month} : {month: number, year: number}) =>
+    const onDateChange = ({ year, month } : {month: number, year: number}) =>
         navigate(`/accounts/${type}/${id}/transactions/${year}/${month}`)
 
+    const maxDate = Dates.Ranges.currentMonth().shiftDays(300).start
     return <>
         <BreadCrumbs>
             <BreadCrumbItem label='page.nav.settings'/>
@@ -44,7 +45,9 @@ const AccountDetailView: FC = () => {
             <BreadCrumbMenu>
                 <Dropdown.YearMonth
                     onChange={ onDateChange }
-                    selected={ {month: range.month(), year: range.year()} }/>
+                    minDate={ account?.history?.firstTransaction ? new Date(account.history.firstTransaction) : new Date() }
+                    maxDate={ maxDate }
+                    selected={ { month: range.month(), year: range.year() } }/>
             </BreadCrumbMenu>
         </BreadCrumbs>
 
