@@ -46,7 +46,7 @@ function BudgetBalance({ range } : {range : Range}) {
 
     return <>
         <Layout.Card title='page.dashboard.budgets.balance'>
-            { budgetSeries === undefined && <Loading /> }
+            { !budgetSeries && <Loading /> }
             { budgetSeries &&
                 <Chart type='bar'
                        id='dashboard-budgets-graph'

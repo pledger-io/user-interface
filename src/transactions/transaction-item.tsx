@@ -30,7 +30,7 @@ const TransactionItem: FC<TransactionItemProps> = ({ transaction, className = ''
     const onDelete = () => void 0
 
     return <div className={`${className} flex content-between gap-3 mb-1 pb-1 border-b-[1px] border-gray-100 last:border-none`}>
-        <span className='text-[.9em] w-[12em]'>
+        <span className='text-[.9em] w-[12em] hidden md:block'>
             { transaction.metadata.budget &&
                 <div className='text-gray-400'>
                     { transaction.metadata.budget }

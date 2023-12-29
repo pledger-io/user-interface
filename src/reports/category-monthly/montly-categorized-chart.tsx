@@ -6,6 +6,7 @@ import { ChartDataset } from "chart.js/dist/types";
 import { Category } from "../../core/types";
 import { Chart } from "react-chartjs-2";
 import { DefaultChartConfig, Service } from "../../config/global-chart-config";
+import StatisticalRepository from "../../core/repositories/statistical-repository";
 
 type CategoryGraphProps = {
     categories: Category[],
@@ -25,38 +26,33 @@ const CategoryGraph = ({ categories, year, currencySymbol }: CategoryGraphProps)
         if (!months) return
 
         const incomePromise = new Promise<ChartDataset[]>((resolve, fail) =>
-            Promise.all(months.map(m =>
-                Statistical.Service.balance({
-                    dateRange: {
-                        start: m.startString(),
-                        end: m.endString()
-                    },
-                    onlyIncome: true,
-                    categories: categories
-                })))
+            StatisticalRepository.monthly({
+                dateRange: Dates.Ranges.forYear(year).toBackend(),
+                onlyIncome: true,
+                categories: categories
+            })
                 .then(async income => {
                     resolve([{
                         label: await Translations.LocalizationService.get('graph.series.income'),
                         backgroundColor: '#7fc6a5',
-                        data: income.map(({ balance }) => balance)
-                    }])
-                })
+                        // @ts-ignore
+                        data: income.map(({ date, amount }) => ({ x: date, y: amount }))
+                }])
+            })
                 .catch(fail)
         )
         const expensePromise = new Promise<ChartDataset[]>((resolve, fail) =>
-            Promise.all(months.map(m => Statistical.Service.balance({
-                dateRange: {
-                    start: m.startString(),
-                    end: m.endString()
-                },
+            StatisticalRepository.monthly({
+                dateRange: Dates.Ranges.forYear(year).toBackend(),
                 onlyIncome: false,
                 categories: categories
-            })))
-                .then(async responses => {
+            })
+                .then(async income => {
                     resolve([{
                         label: await Translations.LocalizationService.get('graph.series.expenses'),
                         backgroundColor: '#dc3545',
-                        data: responses.map(({ balance }) => balance)
+                        // @ts-ignore
+                        data: income.map(({ date, amount }) => ({ x: date, y: Math.abs(amount) }))
                     }])
                 })
                 .catch(fail)
@@ -65,11 +61,10 @@ const CategoryGraph = ({ categories, year, currencySymbol }: CategoryGraphProps)
         Promise.all([incomePromise, expensePromise])
             .then(([income, expense]) => {
                 setChartData({
-                    labels: months.map(m => m.start),
                     datasets: [...income, ...expense]
                 })
             })
-    }, [categories, months])
+    }, [categories, year])
 
     if (!chartData) return <Layout.Loading />
     return (

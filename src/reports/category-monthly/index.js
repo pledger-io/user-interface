@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { CurrencyRepository } from "../../core/RestAPI";
 import CategoryRepository from "../../core/repositories/category-repository";
 
-import MonthlySpendingComponent from "./MonthlySpendingComponent";
+import MonthlySpendingComponent from "./monthly-spending.component";
 import CategorizedMonthlySpendingComponent from "./CategorizedMonthlySpendingComponent";
 
 import '../../assets/css/CategorieReportView.scss'
@@ -14,7 +14,7 @@ const CategoryReportView = () => {
     const [categories, setCategories]           = useState()
     const [range, setRange]                     = useState(Dates.Ranges.currentYear)
     const [currencySymbol, setCurrencySymbol]   = useState('')
-    const { currency = 'EUR', year }              = useParams()
+    const { currency = 'EUR', year= new Date().getFullYear() }              = useParams()
 
     const navigate = useNavigate()
 

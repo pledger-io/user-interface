@@ -27,7 +27,7 @@ const CategoriesBalance = ({ range } : {range: Range}) => {
                                     onlyIncome: false,
                                     categories: [{ id: c.id }]
                                 }))))
-                            .map(b => b.balance)
+                            .map(b => Math.abs(b.balance))
                     }]
                 })
             })

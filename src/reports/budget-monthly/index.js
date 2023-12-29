@@ -31,7 +31,7 @@ export const BudgetReportView = () => {
             setRange(Dates.Ranges.forYear(parseInt(year)))
 
             Promise.all([...new Array(12).keys()]
-                .map(month => BudgetRepository.forMonth(year, month + 1)))
+                .map(month => BudgetRepository.budgetMonth(year, month + 1)))
                 .then(setBudgets)
                 .catch(console.error)
         }

@@ -18,11 +18,16 @@ export type BalanceRequestFilter = {
 type BalancePartition = Balance & {
     partition: string
 }
+type DateBalance = {
+    date: string,
+    amount: number
+}
 
 const StatisticalRepository = (api => {
     return {
         balance: (filter: BalanceRequestFilter): Promise<Balance>                              => api.post('statistics/balance', filter),
-        daily: (filter: BalanceRequestFilter)                                                  => api.post('statistics/balance/daily', filter),
+        daily: (filter: BalanceRequestFilter): Promise<DateBalance[]>                          => api.post('statistics/balance/daily', filter),
+        monthly: (filter: BalanceRequestFilter): Promise<DateBalance[]>                        => api.post('statistics/balance/monthly', filter),
         split: (splitBy: string, filter: BalanceRequestFilter): Promise<BalancePartition[]>    => api.post(`statistics/balance/partitioned/${encodeURI(splitBy)}`, filter)
     }
 })(RestApi)
