@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Dates, Layout, Statistical, Translations } from "../../core";
+import { Dates, Layout, Translations } from "../../core";
 import { ChartData } from "chart.js";
 import { Range } from "../../core/Dates";
 import { ChartDataset } from "chart.js/dist/types";
