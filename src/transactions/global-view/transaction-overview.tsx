@@ -52,12 +52,16 @@ const TransactionOverview: FC<TransactionOverviewProps> = ({ range, transfers })
         }
     })
 
+    const isLoaded = transactions
+    const hasTransactions = transactions && Object.keys(transactions).length > 0
+    const showPagination = pagination && pagination?.records > pagination?.pageSize
+
     return <>
         { !transfers && <TransactionFilters onChange={ onFilterChange }/> }
 
-        { !transactions && <Layout.Loading/> }
+        { !isLoaded && <Layout.Loading/> }
 
-        { transactions && Object.keys(transactions).map(key => {
+        { hasTransactions && Object.keys(transactions).map(key => {
             const date = new Date(key)
             const expense = transactions[key]
                 .filter(t => Resolver.Transaction.isCredit(t))
@@ -81,8 +85,9 @@ const TransactionOverview: FC<TransactionOverviewProps> = ({ range, transfers })
                     </div>
                     { !transfers && <>
                         <div className='flex-1 justify-end flex gap-16 font-bold'>
-                            <Formats.Money money={ income } />
-                            <Formats.Money money={ expense } />
+                            { income !== 0 && <Formats.Money money={ income } /> }
+                            { expense !== 0 && <Formats.Money money={ expense } /> }
+                            { expense === 0 && <div/> }
                         </div>
                     </>}
                 </div>
@@ -92,7 +97,7 @@ const TransactionOverview: FC<TransactionOverviewProps> = ({ range, transfers })
             </div>
         })}
 
-        { transactions && <Paginator page={ parseInt(page) }
+        { showPagination && <Paginator page={ parseInt(page) }
                    records={ pagination?.records }
                    pageSize={ pagination?.pageSize }/> }
     </>

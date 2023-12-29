@@ -17,6 +17,7 @@ const ExpenseOverviewComponent = ({ budget, year, month } : {budget : Budget, ye
     const [computedExpenses, setComputedExpenses] = useState<ComputedExpense[]>()
 
     useEffect(() => {
+        setComputedExpenses(undefined)
         Promise.all(
             budget.expenses
                 .map(expense =>

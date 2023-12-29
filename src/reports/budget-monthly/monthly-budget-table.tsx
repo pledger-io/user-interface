@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from "react";
-import { Dates, Formats, Statistical, Translations } from "../../core";
+import { Dates, Formats, Layout, Statistical, Translations } from "../../core";
 import { Budget, BudgetExpense } from "../../core/types";
 import { Range } from "../../core/Dates";
 
@@ -55,6 +55,7 @@ const MonthlyBudgetTableRow: FC<MonthlyBudgetTableRowProps> = ({ months, expense
     const [expenses, setExpenses] = useState<number[]>([])
 
     useEffect(() => {
+        setExpenses([])
         Promise.all(months.map(month => Statistical.Service.balance({
             expenses: [expense],
             dateRange: month.toBackend(),
@@ -65,9 +66,13 @@ const MonthlyBudgetTableRow: FC<MonthlyBudgetTableRowProps> = ({ months, expense
             .then(setExpenses)
     }, [expense, months, currency])
 
-    return <tr key={expense.id}>
-        <td>{expense.name}</td>
-        {months.map((_, idx) => <td key={idx}><Formats.Money money={expenses[idx]} currency={currency}/></td>)}
+    return <tr key={ expense.id }>
+        <td>{ expense.name }</td>
+        { months.map((_, idx) =>
+            <td key={ idx }>
+                { expenses[idx] === undefined && <Layout.Loading/> }
+                { expenses[idx] && <Formats.Money money={expenses[idx]} currency={currency}/> }
+            </td>) }
     </tr>
 }
 
