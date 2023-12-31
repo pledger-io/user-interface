@@ -191,3 +191,9 @@ a {
     }
   }
 }
+
+@media (max-width: $media-max-width) {
+  .mobile-hidden {
+    display: none;
+  }
+}

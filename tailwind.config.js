@@ -4,20 +4,20 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'primary': '#0d6efd',
-        'dark-primary': '#084bb4',
-        'secondary': '#c7c5c5',
-        'dark-secondary': '#7c7c7c',
-        'warning': '#ef394e',
-        'dark-warning': '#af2735',
-        'success': '#24dc24',
-        'dark-success': '#157347',
-        'info': '#0dcaf0',
-        'dark-info': '#0a8ab8',
+        'primary': 'var(--primary-color)',
+        'dark-primary': 'var(--dark-primary-color)',
+        'secondary': 'var(--secondary-color)',
+        'dark-secondary': 'var(--dark-secondary-color)',
+        'warning': 'var(--warning-color)',
+        'dark-warning': 'var(--dark-warning-color)',
+        'success': 'var(--success-color)',
+        'dark-success': 'var(--dark-success-color)',
+        'info': 'var(--info-color)',
+        'dark-info': 'var(--dark-info-color)',
 
-
-        'header': '#f0f3f5',
-        'separator': '#d3c9c9'
+        'header': 'var(--card-header-background)',
+        'separator': 'var(--app-border-color)',
+        'background': 'var(--app-background-color)',
       },
       borderRadius: {
         '': '.25rem',

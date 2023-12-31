@@ -18,16 +18,21 @@ import * as Layout from './layout'
 
 import '../assets/css/BreadCrumbs.scss'
 import '../assets/css/Message.scss'
+import Icon from "@mdi/react";
+import { mdiMenu } from "@mdi/js";
 
 class BreadCrumbs extends React.Component {
     render() {
         const { children } = this.props;
-        return (
+        return <>
             <ol className='Breadcrumb'>
+                <div className='hamburger-menu'>
+                    <Icon path={mdiMenu} size={.8}/>
+                </div>
                 {children}
                 <li className='DropDown'/>
             </ol>
-        )
+        </>
     }
 }
 

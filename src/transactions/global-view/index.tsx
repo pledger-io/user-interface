@@ -29,7 +29,9 @@ const TransactionGlobalView = ({ transfers } : { transfers: boolean }) => {
         </BreadCrumbs>
 
         { !transfers && <>
-            <Layout.Grid type='column' minWidth='20em'>
+            <Layout.Grid type='column'
+                         className='mobile-hidden'
+                         minWidth='20em'>
                 <Layout.Card title='page.transactions.expense.category'>
                     <CategorizedPieChart id='category-expense'
                                          split='category'

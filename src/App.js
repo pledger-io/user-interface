@@ -1,5 +1,5 @@
 import { BrowserRouter, Navigate, Outlet, Route, Routes } from "react-router-dom";
-import { Sidebar } from "./core/Sidebar";
+import Sidebar from "./core/sidebar";
 import { Layout, Notifications } from "./core";
 
 // Routes import
