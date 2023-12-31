@@ -15,58 +15,10 @@ import * as Attachment from './attachment/index'
 import * as Dates from './Dates'
 import * as Dropdown from './dropdown'
 import * as Layout from './layout'
+import { BreadCrumbs, BreadCrumbItem, BreadCrumbMenu } from "./breadcrumb";
 
 import '../assets/css/BreadCrumbs.scss'
 import '../assets/css/Message.scss'
-import Icon from "@mdi/react";
-import { mdiMenu } from "@mdi/js";
-
-class BreadCrumbs extends React.Component {
-    render() {
-        const { children } = this.props;
-        return <>
-            <ol className='Breadcrumb'>
-                <div className='hamburger-menu'>
-                    <Icon path={mdiMenu} size={.8}/>
-                </div>
-                {children}
-                <li className='DropDown'/>
-            </ol>
-        </>
-    }
-}
-
-class BreadCrumbItem extends React.Component {
-    static propTypes = {
-        // The message to display in the breadcrumb
-        message: PropTypes.string,
-        // The translated item to display in the breadcrumb, if set `message` is ignored
-        label: PropTypes.string,
-        // Any `url` to a page, will make this breadcrumb a clickable item
-        href: PropTypes.string
-    }
-
-    render() {
-        const { message, label, href } = this.props;
-        let text = label ? <Translations.Translation label={label}/> : message;
-        if (href) {
-            text = <Link to={href}>{text}</Link>
-        }
-
-        return (
-            <li className='Item'>
-                {text}
-            </li>
-        )
-    }
-}
-
-class BreadCrumbMenu extends React.Component {
-    render() {
-        const { children, className } = this.props
-        return <li className={`Menu ${className}`}>{children}</li>
-    }
-}
 
 export class Message extends React.Component {
     static propTypes = {

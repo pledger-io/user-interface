@@ -17,7 +17,7 @@ module.exports = {
 
         'header': 'var(--card-header-background)',
         'separator': 'var(--app-border-color)',
-        'background': 'var(--app-background-color)',
+        'background': 'var(--app-background)',
       },
       borderRadius: {
         '': '.25rem',
