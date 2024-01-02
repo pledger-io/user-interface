@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from 'prop-types';
-import { Link } from "react-router-dom";
 
 // Export all core classes and functions
 import * as Dialog from './popups'
