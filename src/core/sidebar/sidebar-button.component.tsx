@@ -8,7 +8,7 @@ const SidebarButtonComponent = (props: { config: SidebarButton }) => {
     const { href, icon, label } = props.config
 
     return <NavLink to={ href }
-                    className={({ isActive, isPending }) =>
+                    className={({ isActive }) =>
                            `flex flex-row items-center
                             pl-4 py-2 gap-1
                             ${ isActive ? 'bg-[var(--sidebar-sub-background)] font-bold' : '' }
