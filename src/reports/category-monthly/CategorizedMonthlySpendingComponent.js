@@ -1,4 +1,4 @@
-import { Dates, Formats, Layout, Statistical, Translations } from "../../core";
+import { Dates, Formats, Layout, Translations } from "../../core";
 import React, { useEffect, useState } from "react";
 import StatisticalRepository from "../../core/repositories/statistical-repository";
 
@@ -30,7 +30,7 @@ const CategorizedMonthlySpendingComponent = ({ categories, year }) => {
             <thead>
             <tr>
                 <th><Translations.Translation label='Category.label'/></th>
-                {months.map(month => <th key={month.month()}><Translations.Translation label={`common.month.${month.month()}`}/></th>)}
+                { months.map(month => <th key={month.month()}><Translations.Translation label={`common.month.${month.month()}`}/></th>) }
             </tr>
             </thead>
             <tbody>
