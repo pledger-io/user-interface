@@ -1,4 +1,4 @@
-import { Layout, Message, Notifications, Translations } from "../core";
+import { BreadCrumbItem, BreadCrumbs, Layout, Message, Notifications, Translations } from "../core";
 import NavigationComponent from "./navigation.component";
 import { Form, Input, SubmitButton } from "../core/form";
 import RestAPI from "../core/repositories/rest-api";
@@ -16,6 +16,11 @@ const ProfileThemeView = () => {
     }
 
     return <>
+        <BreadCrumbs>
+            <BreadCrumbItem label='page.title.user.profile' />
+            <BreadCrumbItem label='page.user.profile.theme' />
+        </BreadCrumbs>
+
         <Layout.Card title='page.title.user.profile'>
             <div className='flex gap-4'>
                 <div className='w-30'>

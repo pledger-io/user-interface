@@ -11,7 +11,6 @@ import {
   mdiCogs,
   mdiCurrencyUsd,
   mdiFileDocumentEdit,
-  mdiFileUploadOutline,
   mdiFormatListBulletedSquare,
   mdiHandCoinOutline,
   mdiMonitorDashboard,

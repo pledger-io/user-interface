@@ -16,6 +16,7 @@ import { lazy, Suspense, useState } from "react";
 import { ContractRoutes } from "./contract";
 import { BudgetRoutes } from "./budget";
 import { ProfileRoutes } from "./profile";
+import MobileSidebar from "./core/sidebar/mobile-sidebar";
 
 const LoginCard = lazy(() => import("./security/LoginCard"));
 const RegisterCard = lazy(() => import("./security/RegisterCard"));
@@ -42,6 +43,7 @@ function App() {
             <Suspense>
                 <BrowserRouter>
                     <Sidebar logoutCallback={() => setAuthenticate(false)}/>
+                    <MobileSidebar logoutCallback={() => setAuthenticate(false)}/>
                     <main className='Main'>
                         <Notifications.NotificationCenter />
                         <Routes>

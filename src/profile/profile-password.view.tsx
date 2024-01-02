@@ -1,4 +1,4 @@
-import { Layout, Message, Notifications, Translations } from "../core";
+import { BreadCrumbItem, BreadCrumbs, Layout, Message, Notifications, Translations } from "../core";
 import NavigationComponent from "./navigation.component";
 import { Form, Input, SubmitButton } from "../core/form";
 import ProfileRepository from "../core/repositories/profile.repository";
@@ -11,6 +11,11 @@ const ProfilePasswordView = () => {
     }
 
     return <>
+        <BreadCrumbs>
+            <BreadCrumbItem label='page.title.user.profile' />
+            <BreadCrumbItem label='page.header.user.password'/>
+        </BreadCrumbs>
+
         <Layout.Card title='page.title.user.profile'>
             <div className='flex gap-4'>
                 <div className='w-30'>

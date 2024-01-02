@@ -5,13 +5,16 @@ import * as Translations from "./localization";
 import { Link } from "react-router-dom";
 
 export const BreadCrumbs = ({ children }: PropsWithChildren) => {
+    const onMenuClick = () => window.dispatchEvent(new CustomEvent('hamburger-menu-click'));
+
     return <>
         <ol className='relative flex flex-wrap gap-1 border-b-separator
                        mx-[-2rem]
                        border-b-[1px] py-2 px-2 bg-background'>
-            <div className='block md:hidden cursor-pointer'>
-                <Icon path={mdiMenu} size={.8}/>
-            </div>
+            <li className='block md:hidden cursor-pointer'
+                onClick={ onMenuClick }>
+                <Icon path={ mdiMenu } size={ .8 }/>
+            </li>
             { children }
             <li className='DropDown'/>
         </ol>

@@ -1,4 +1,4 @@
-import { Formats, Layout, Translations } from "../core";
+import { BreadCrumbItem, BreadCrumbs, Formats, Layout, Translations } from "../core";
 import NavigationComponent from "./navigation.component";
 import { useEffect, useState } from "react";
 import ProfileRepository from "../core/repositories/profile.repository";
@@ -20,6 +20,11 @@ const ProfileSessionsView = () => {
     }, []);
 
     return <>
+        <BreadCrumbs>
+            <BreadCrumbItem label='page.title.user.profile' />
+            <BreadCrumbItem label='page.title.user.session.active' />
+        </BreadCrumbs>
+
         <Layout.Card title='page.title.user.profile'>
             <div className='flex gap-4'>
                 <div className='w-30'>

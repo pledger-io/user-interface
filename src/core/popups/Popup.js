@@ -16,8 +16,7 @@ const Popup = forwardRef(({ title, className, actions, children }, ref) => {
         return <></>
     }
 
-    return (
-        <span className={`Popup ${className}`}>
+    return <span className={`Popup ${className}`}>
             <div className='Dialog'>
                 <header>
                     <Translation label={title}/>
@@ -34,7 +33,6 @@ const Popup = forwardRef(({ title, className, actions, children }, ref) => {
                 </footer>}
             </div>
         </span>
-    )
 })
 Popup.propTypes = {
     // The components that will be added to the footer of the popup
