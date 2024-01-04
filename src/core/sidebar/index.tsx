@@ -43,6 +43,7 @@ const Sidebar = ({ logoutCallback } : SidebarProps) => {
                         case 'divider': return <SidebarDivider key={ idx } item={ section } />
                         case 'button': return <SidebarButtonComponent key={ idx } config={ section as SidebarButton } />
                         case 'section': return <SidebarSectionComponent config={ section as SidebarSection } key={ idx } />
+                        default: return null
                     }
                 })
             }

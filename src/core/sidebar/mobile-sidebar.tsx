@@ -42,6 +42,8 @@ const MobileSidebar = ({ logoutCallback } : SidebarProps) => {
                                 return <SidebarButtonComponent key={idx} config={section as SidebarButton}/>
                             case 'section':
                                 return <SidebarSectionComponent config={section as SidebarSection} key={idx}/>
+                            default:
+                                return null
                         }
                     })
                 }

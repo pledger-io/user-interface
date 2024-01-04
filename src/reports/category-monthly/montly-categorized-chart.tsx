@@ -64,7 +64,7 @@ const CategoryGraph = ({ categories, year, currencySymbol }: CategoryGraphProps)
                     datasets: [...income, ...expense]
                 })
             })
-    }, [categories, year])
+    }, [categories, year]) // eslint-disable-line react-hooks/exhaustive-deps
 
     if (!chartData) return <Layout.Loading />
     return (
