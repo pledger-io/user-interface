@@ -18,9 +18,7 @@ const Translation: FC<TranslationProps> = ({ label, className = '' }) => {
         LocalizationService.get(label).then(setLocalized)
     }, [label]);
 
-    return <span className={ `Translation ${className}` }>
-        { localized }
-    </span>
+    return <span className={ `Translation ${className}` } dangerouslySetInnerHTML={ { __html: localized } } />
 }
 
 export default Translation

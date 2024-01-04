@@ -78,7 +78,7 @@ const TransactionItem: FC<TransactionItemProps> = ({ transaction, className = ''
     </div>
 }
 
-const ActionExpander = ({ transaction, onDelete } : {transaction: Transaction, onDelete: () => void }) => {
+const ActionExpander = ({ transaction, onDelete } : { transaction: Transaction, onDelete: () => void }) => {
     const [expanded, setExpanded] = useState(false)
 
     return <div className='!flex justify-start items-stretch gap-2'>

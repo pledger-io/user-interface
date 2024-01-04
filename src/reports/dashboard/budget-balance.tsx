@@ -11,7 +11,7 @@ import BudgetRepository from "../../core/repositories/budget.repository";
 
 const percentageOfYear = 90 / 365
 
-function BudgetBalance({ range } : {range : Range}) {
+function BudgetBalance({ range } : { range : Range }) {
     const [budgetSeries, setBudgetSeries] = useState<ChartData | undefined | null>()
 
     useEffect(() => {

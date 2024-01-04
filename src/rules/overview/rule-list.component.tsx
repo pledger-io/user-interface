@@ -8,7 +8,7 @@ import { mdiCheck, mdiClose, mdiDotsVertical, mdiSquareEditOutline, mdiTrashCanO
 import { Dropdown } from "../../core/dropdown";
 
 
-const RuleListComponent = ({ group } : {group: string}) => {
+const RuleListComponent = ({ group } : { group: string }) => {
     const [rules, setRules] = useState<Rule[]>()
 
     useEffect(() => {

@@ -31,7 +31,7 @@ const AccountDetailView: FC = () => {
     }, [year, month])
 
     const isOwnType = type === 'own'
-    const onDateChange = ({ year, month } : {month: number, year: number}) =>
+    const onDateChange = ({ year, month } : { month: number, year: number }) =>
         navigate(`/accounts/${type}/${id}/transactions/${year}/${month}`)
 
     const maxDate = Dates.Ranges.currentMonth().shiftDays(300).start

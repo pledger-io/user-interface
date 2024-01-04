@@ -9,7 +9,7 @@ import StatisticalRepository from "../../core/repositories/statistical-repositor
 import { Chart } from "react-chartjs-2";
 import { DefaultChartConfig } from "../../config/global-chart-config";
 
-const CategoriesBalance = ({ range } : {range: Range}) => {
+const CategoriesBalance = ({ range } : { range: Range }) => {
     const [categorySeries, setCategorySeries] = useState<ChartData | undefined>()
 
     useEffect(() => {

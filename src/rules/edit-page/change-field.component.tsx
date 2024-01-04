@@ -8,7 +8,7 @@ import { mdiDelete } from "@mdi/js";
 export type ChangeProperty = keyof RuleChange
 export type ChangeValueHandler = (_uuid: string, _field: ChangeProperty, _value: string) => void
 
-const ChangeFieldComponent = (props: {change : RuleChange, onChangeDelete: (_:RuleChange) => void, onValueChange: ChangeValueHandler}) => {
+const ChangeFieldComponent = (props: { change : RuleChange, onChangeDelete: (_:RuleChange) => void, onValueChange: ChangeValueHandler }) => {
     const { change, onChangeDelete, onValueChange } = props
     const [entity, setEntity] = useState<any>()
 

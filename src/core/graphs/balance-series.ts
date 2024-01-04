@@ -14,7 +14,7 @@ export const BalanceSeries = async (filter : BalanceSeriesFilter): Promise<Chart
         dateRange: filter.dateRange.toBackend()
     } as any
 
-    const points : {x: any, y: number}[] = []
+    const points : { x: any, y: number }[] = []
 
     const startBalance = await balanceWithAdjustedRange(filter, Ranges.forRange("1970-01-01", filter.dateRange.startString()))
     const dailyBalance = await StatisticalRepository.daily(adjustedFilter)

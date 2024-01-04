@@ -17,7 +17,7 @@ export type FieldType = {
 }
 
 export type InputChangeFunc<T> = (value: T) => void
-export type AddFieldFunc = (instruction: {field: FieldType, value?: any}) => void
+export type AddFieldFunc = (instruction: { field: FieldType, value?: any }) => void
 export type OnValueChangeFunc = (event: ChangeEvent, field: FieldType) => void
 
 export type FormContextType = {

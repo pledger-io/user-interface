@@ -13,7 +13,7 @@ type ComputedExpense = {
     }
 }
 
-const ExpenseOverviewComponent = ({ budget, year, month } : {budget : Budget, year: number, month: number}) => {
+const ExpenseOverviewComponent = ({ budget, year, month } : { budget : Budget, year: number, month: number }) => {
     const [computedExpenses, setComputedExpenses] = useState<ComputedExpense[]>()
 
     useEffect(() => {

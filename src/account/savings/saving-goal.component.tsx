@@ -2,7 +2,7 @@ import { Formats, Statistical, Translations } from "../../core";
 import React from "react";
 import { Account } from "../../core/types";
 
-const SavingSummaryComponent = ({ savingAccount } : {savingAccount : Account}) => {
+const SavingSummaryComponent = ({ savingAccount } : { savingAccount : Account }) => {
     const requiredSavings = (savingAccount?.savingGoals || [])
         .map(s => s.reserved)
         .reduce((previous, current) => previous + current, 0)

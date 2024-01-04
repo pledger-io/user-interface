@@ -5,7 +5,7 @@ import BudgetRepository from "../../core/repositories/budget.repository";
 import { Formats, Layout, Translations } from "../../core";
 import ExpenseOverviewComponent from "./expense-overview.component";
 
-const BudgetDetailComponent = ({ range }: {range: Range}) => {
+const BudgetDetailComponent = ({ range }: { range: Range }) => {
     const [budget, setBudget] = useState<Budget>()
 
     useEffect(() => {

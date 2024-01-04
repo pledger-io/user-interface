@@ -1,5 +1,5 @@
 
-const Tag = ({ label, color = "blue" } : {label: string, color?: string}) => {
+const Tag = ({ label, color = "blue" } : { label: string, color?: string }) => {
     return <>
         { /* bg-blue-100 bg-gray-100 */ }
         { /* text-blue-400 text-gray-400 */ }
