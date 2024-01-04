@@ -6,21 +6,21 @@ definitions:
         caches:
           - node
         script:
-          - npm install
+          - yarn install
     - step: &test-react
         name: Test React App
         image: node:19
         caches:
           - node
         script:
-          - npm test
+          - yarn run test
     - step: &build-react
         name: Build React App
         image: node:19
         caches:
           - node
         script:
-          - npm run build
+          - yarn run build
         artifacts:
           - build/**
     - step: &build-java
