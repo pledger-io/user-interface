@@ -11,7 +11,7 @@ type CurrencyDropdownProps = {
     onChange: (_: Currency) => void
 }
 
-const CurrencyDropdown = ({ currency, onChange = _ => undefined } : CurrencyDropdownProps) => {
+const CurrencyDropdown = ({ currency, onChange = _ => undefined }: CurrencyDropdownProps) => {
     const [currencyOpen, setCurrencyOpen] = useState(false)
     const [currencies, setCurrencies] = useState<Currency[]>([])
 
@@ -26,23 +26,24 @@ const CurrencyDropdown = ({ currency, onChange = _ => undefined } : CurrencyDrop
     }, [])
 
     return (
-        <div className="CurrencyDropdown">
+        <div className="relative">
             <Button variant='text'
-                            onClick={() => setCurrencyOpen(!currencyOpen)}
-                            icon={mdiMenuDown}
-                            iconPos={'after'}
-                            message={currency} />
+                    onClick={ () => setCurrencyOpen(!currencyOpen) }
+                    icon={ mdiMenuDown }
+                    className={ 'inline-flex m-0' }
+                    iconPos={ 'after' }
+                    message={ currency }/>
 
-            <div className='Expanded'>
-                {currencyOpen && (
+            <div className='absolute w-[10em] right-0 z-40'>
+                { currencyOpen && (
                     currencies
                         .map(currency =>
-                            <Button message={`${currency.name} (${currency.symbol})`}
-                                            onClick={() => onSelect(currency)}
-                                            key={currency.code}
-                                            variant='primary'
-                                            variantType='outline' />)
-                )}
+                            <Button message={ `${ currency.name } (${ currency.symbol })` }
+                                    onClick={ () => onSelect(currency) }
+                                    key={ currency.code }
+                                    variant='secondary'
+                                    className='w-full rounded-none'/>)
+                ) }
             </div>
         </div>
     )

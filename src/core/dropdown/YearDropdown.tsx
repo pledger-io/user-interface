@@ -18,19 +18,20 @@ const YearDropdown = ({ year = 1970, onChange = _ => undefined }: YearDropdownPr
     }
 
     return (
-        <div className='YearDropdown'>
+        <div className='relative'>
             <Button variant='text'
-                            onClick={() => setYearOpen(!yearOpen)}
-                            icon={mdiMenuDown}
-                            iconPos={'after'}
-                            message={'' + year} />
+                    onClick={ () => setYearOpen(!yearOpen) }
+                    icon={ mdiMenuDown }
+                    className='inline-flex m-0'
+                    iconPos={ 'after' }
+                    message={ '' + year }/>
 
-            <div className='Expanded'>
-                {yearOpen && (<DatePicker showYearPicker
-                                          dateFormat='yyyy'
-                                          inline
-                                          selected={new Date(year, 0, 1)}
-                                          onChange={(date : Date) => onSelect(date)}/>)}
+            <div className='absolute w-[15em] right-0 z-40'>
+                { yearOpen && (<DatePicker showYearPicker
+                                           dateFormat='yyyy'
+                                           inline
+                                           selected={ new Date(year, 0, 1) }
+                                           onChange={ (date: Date) => onSelect(date) }/>) }
             </div>
         </div>
     )

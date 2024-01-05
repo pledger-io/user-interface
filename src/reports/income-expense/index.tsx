@@ -38,11 +38,13 @@ function IncomeExpenseView() {
         <BreadCrumbs>
             <BreadCrumbItem label='page.title.reports.default'/>
             <BreadCrumbItem label='page.reports.default.title'/>
-            <BreadCrumbMenu className='flex justify-end'>
-                <Dropdown.Currency currency={ currency }
-                                   onChange={ (currency: Currency) => onDateChanged({ newCurrency: currency.code })}/>
-                <Dropdown.Year year={ parseInt(year) }
-                               onChange={ year => onDateChanged({ newYear: year }) }/>
+            <BreadCrumbMenu>
+                <div className='inline-flex'>
+                    <Dropdown.Currency currency={ currency }
+                                       onChange={ (currency: Currency) => onDateChanged({ newCurrency: currency.code })}/>
+                    <Dropdown.Year year={ parseInt(year) }
+                                   onChange={ year => onDateChanged({ newYear: year }) }/>
+                </div>
             </BreadCrumbMenu>
         </BreadCrumbs>
 
