@@ -1,6 +1,6 @@
 import React, { FC, useState } from "react";
 import { Account, Transaction } from "../core/types";
-import { Buttons, Dialog, Formats, Layout, Resolver, Translations } from "../core";
+import { Buttons, Dialog, Formats, Layout, Notifications, Resolver, Translations } from "../core";
 import { NavLink } from "react-router-dom";
 import {
     mdiArrowRight,
@@ -13,6 +13,7 @@ import {
 import TransactionSplitDialog from "./TransactionSplitDialog";
 import { ScheduleTransactionDialog } from "./schedule/ScheduleTransactionDialog";
 import Icon from "@mdi/react";
+import { TransactionRepository } from "../core/RestAPI";
 
 type TransactionItemProps = {
     transaction: Transaction,
@@ -31,14 +32,21 @@ function determineAmount(transaction: Transaction, account?: Account) {
 }
 
 const TransactionItem: FC<TransactionItemProps> = ({ transaction, className = '' , account }) => {
+    const [deleted, setDeleted] = useState(false)
 
     const isSource = !account || account.id === transaction.source.id
     const sourceAccount = isSource ? transaction.source : transaction.destination
     const otherAccount = isSource ? transaction.destination : transaction.source
     const amount = determineAmount(transaction, account)
 
-    const onDelete = () => void 0
+    const onDelete = () => {
+        TransactionRepository.delete(transaction.source.id, transaction.id)
+            .then(() => Notifications.Service.success('page.transactions.delete.success'))
+            .then(() => setDeleted(true))
+            .catch(() => Notifications.Service.warning('page.transactions.delete.failed'))
+    }
 
+    if (deleted) return null
     return <div className={`${className} flex content-between gap-3 mb-1 pb-1 border-b-[1px] border-gray-100 last:border-none`}>
         <span className='text-[.9em] w-[12em] hidden md:block'>
             { transaction.metadata.budget &&
