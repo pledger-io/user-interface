@@ -20,12 +20,22 @@ type TransactionItemProps = {
     className?: string
 }
 
+function determineAmount(transaction: Transaction, account?: Account) {
+    if (account) {
+        const isSource = !account || account.id === transaction.source.id
+        return isSource ? (-transaction.amount) : transaction.amount
+    }
+
+    const sourceManaged = Resolver.Account.isManaged(transaction.source)
+    return sourceManaged ? transaction.amount : -transaction.amount
+}
+
 const TransactionItem: FC<TransactionItemProps> = ({ transaction, className = '' , account }) => {
 
     const isSource = !account || account.id === transaction.source.id
     const sourceAccount = isSource ? transaction.source : transaction.destination
     const otherAccount = isSource ? transaction.destination : transaction.source
-    const amount = isSource ? (-transaction.amount) : transaction.amount
+    const amount = determineAmount(transaction, account)
 
     const onDelete = () => void 0
 
