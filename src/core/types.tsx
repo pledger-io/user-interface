@@ -41,6 +41,7 @@ export type Account = AccountRef & {
 export type Category = Identifiable & {
     label: string,
     description: string
+    lastUsed: string
 }
 
 export type Currency = Identifiable & {
