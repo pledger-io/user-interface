@@ -35,8 +35,7 @@ const RestAPI = (() => {
             .then(httpResponse => resolved(httpResponse.data))
             .catch(({ response }) => {
                 if (response.status === 401) {
-                    sessionStorage.removeItem('token');
-                    sessionStorage.removeItem('refresh-token')
+                    window.dispatchEvent(new Event('credentials-expired'))
                 }
                 else error(response?.data?.message || response.statusText)
             }))

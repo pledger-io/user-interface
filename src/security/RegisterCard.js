@@ -30,6 +30,7 @@ const RegisterCard = () => {
                     <div className='form'>
                         <Input.Text id='username'
                                     title='UserAccount.username'
+                                    autocomplete='username'
                                     type='text'
                                     required/>
                         <Input.Password />

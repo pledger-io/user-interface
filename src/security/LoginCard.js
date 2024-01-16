@@ -38,10 +38,12 @@ const LoginCard = ({ callback }) => {
                     <div className='form'>
                         <Input.Text id='username'
                                     title='UserAccount.username'
+                                    autocomplete='username'
                                     type='text'
                                     required/>
                         <Input.Text id='password'
                                     title='UserAccount.password'
+                                    autocomplete='current-password'
                                     type='password'
                                     required/>
                     </div>

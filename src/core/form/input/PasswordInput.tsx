@@ -36,6 +36,7 @@ export const PasswordInput: FC<PasswordInputProps> = (props) => {
                 <input type='password'
                        id='password'
                        name='password'
+                       autoComplete='new-password'
                        onChange={onChange}/>
             </InputGroup>
             <div className='py-4 px-2 my-3 mx-2 rounded border-solid border-[1px] border-separator shadow-xl'>

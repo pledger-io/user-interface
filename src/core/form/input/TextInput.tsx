@@ -4,6 +4,7 @@ import { FieldType } from "../form-types";
 
 type TextInputProps = FieldType & {
     type: 'number' | 'text' | 'password',
+    autocomplete?: string,
     title?: string,
     help?: string,
     minLength?: number
@@ -27,6 +28,7 @@ export const TextInput: FC<TextInputProps> = (props) => {
                     valid={field.touched ? errors.length === 0 : undefined }>
             <input id={field.id}
                    name={field.id}
+                   autoComplete={props.autocomplete}
                    defaultValue={field.value || props.value}
                    required={props.required}
                    pattern={props.pattern}

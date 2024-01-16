@@ -60,7 +60,7 @@ function App() {
 
     return (
         <Suspense>
-            <BrowserRouter>
+            <BrowserRouter basename='/ui'>
                 <Routes>
                     <Route exact path='/' element={<Navigate to='/login'/>}/>
                     <Route path='/login' element={<LoginCard callback={() => setAuthenticate(true)} />}/>
