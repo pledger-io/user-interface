@@ -41,7 +41,7 @@ function App() {
     if (sessionStorage.getItem('token')) {
         return (
             <Suspense>
-                <BrowserRouter>
+                <BrowserRouter basename='/ui'>
                     <Sidebar logoutCallback={() => setAuthenticate(false)}/>
                     <MobileSidebar logoutCallback={() => setAuthenticate(false)}/>
                     <main className='Main'>
