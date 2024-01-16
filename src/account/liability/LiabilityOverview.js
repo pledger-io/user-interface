@@ -73,19 +73,25 @@ AccountRow.propTypes = {
 }
 
 const LiabilityOverview = () => {
-    const [page]                             = useQueryParam({ key: 'page', initialValue: "1" })
-    const [accounts, setAccounts]            = useState([])
-    const [pagination, setPagination]        = useState({})
+    const [page] = useQueryParam({ key: 'page', initialValue: "1" })
+    const [accounts, setAccounts] = useState()
+    const [pagination, setPagination] = useState({})
 
     const reload = () => {
+        setAccounts(undefined)
         AccountRepository.search({
             types: ['loan', 'mortgage', 'debt'],
             page: parseInt(page)
-        }).then(resultPage => setAccounts(resultPage.content) || setPagination(resultPage.info))
+        }).then(resultPage => {
+            setAccounts(resultPage.content || [])
+            setPagination(resultPage.info)
+        })
     }
 
     useEffect(reload, [page])
 
+    const isLoaded = accounts
+    const hasContent = isLoaded && accounts.length > 0
     return (
         <div className='LiabilityOverview'>
             <BreadCrumbs>
@@ -114,12 +120,20 @@ const LiabilityOverview = () => {
                     </tr>
                     </thead>
                     <tbody>
-                        {accounts.map(a => <AccountRow key={a.id} account={a} deleteCallback={reload}/>)}
+                        { !isLoaded && <tr><td colSpan='5'><Layout.Loading /></td></tr> }
+                        { !hasContent && isLoaded &&
+                            <tr>
+                                <td colSpan='5' className='text-center text-gray-500'>
+                                    <Translations.Translation label='common.overview.noresults'/>
+                                </td>
+                            </tr> }
+                        { hasContent && accounts.map(a => <AccountRow key={a.id} account={a} deleteCallback={reload}/>) }
                     </tbody>
                 </table>
 
-                <Pagination.Paginator page={parseInt(page)} records={pagination.records}
-                                      pageSize={pagination.pageSize}/>
+                { hasContent && <Pagination.Paginator page={parseInt(page)}
+                                      records={pagination.records}
+                                      pageSize={pagination.pageSize}/> }
             </Layout.Card>
         </div>
     )

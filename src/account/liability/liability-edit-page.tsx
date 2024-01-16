@@ -27,10 +27,10 @@ class AccountModel {
         this.interest = account?.interest?.interest * 100
         this.interestPeriodicity = account.interest?.periodicity
         this.description = account.description
-        this.currency = account.account.currency
-        this.iban = account.account.iban
-        this.bic = account.account.bic
-        this.number = account.account.number
+        this.currency = account?.account?.currency
+        this.iban = account?.account?.iban
+        this.bic = account?.account?.bic
+        this.number = account?.account?.number
         this.type = account.type
     }
 }
