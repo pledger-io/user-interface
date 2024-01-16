@@ -22,7 +22,7 @@ class AccountModel {
 
 const AccountForm = ({ type }) => {
     const { id }                      = useParams()
-    const [account, setAccount]     = useState(new AccountModel({ type: type, account: {} }))
+    const [account, setAccount]     = useState(new AccountModel({ type: type !== 'accounts' ? type : undefined, account: {} }))
     const [exception, setException] = useState(null)
     const navigate                  = useNavigate();
 
