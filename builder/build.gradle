@@ -8,6 +8,10 @@ repositories {
 
 ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
 
+signing {
+  sign publishing.publications.mavenJava
+}
+
 project(':') {
     processResources {
         from('../build') {
