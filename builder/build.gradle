@@ -8,10 +8,6 @@ repositories {
 
 ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
 
-signing {
-  sign publishing.publications.mavenJava
-}
-
 project(':') {
     processResources {
         from('../build') {
@@ -62,6 +58,10 @@ project(':') {
                 }
             }
         }
+    }
+
+    signing {
+        sign publishing.publications.mavenJava
     }
 
     archivesBaseName = "pledger-ui"
