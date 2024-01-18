@@ -60,5 +60,9 @@ project(':') {
         }
     }
 
+    signing {
+        sign publishing.publications.mavenJava
+    }
+
     archivesBaseName = "pledger-ui"
 }
