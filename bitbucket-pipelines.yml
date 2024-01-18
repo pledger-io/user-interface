@@ -56,3 +56,12 @@ pipelines:
           - step: *test-react
       - step: *build-java
       - step: *sign-publish
+    release/*:
+      - step: *node-prepare
+      - parallel:
+          - step: *build-react
+          - step: *test-react
+      - step: *build-java
+      - step:
+          <<: *sign-publish
+          trigger: manual
