@@ -44,7 +44,7 @@ definitions:
           - yum install openssl11 gnupg -y
           - openssl11 aes-256-cbc -a -k "$SIGNING_PWD" -in private-key.gpg.enc -out private-key.gpg -d
           - gpg --import private-key.gpg
-          - printf "signing.keyId=$GPG_KEY\nsigning.password=$GPG_PASSWORD\nsigning.secretKeyRingFile=$BITBUCKET_CLONE_DIR/private-key.gpg" > ~/.gradle/gradle.properties
+          - printf "signing.keyId=$GPG_KEY\nsigning.password=$GPG_PASSWORD\nsigning.secretKeyRingFile=$BITBUCKET_CLONE_DIR/builder/private-key.gpg" > ~/.gradle/gradle.properties
           - bash ./gradlew publish
 
 pipelines:
