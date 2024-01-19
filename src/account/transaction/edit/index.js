@@ -117,7 +117,7 @@ const processSubmit = (id, entity, currency, navigate) => {
 
     const promises = []
     if (isNaN(id)) {
-        promises.push(TransactionRepository.create(transaction))
+        promises.push(TransactionRepository.create(transaction.source.id, transaction))
     } else {
         promises.push(TransactionRepository.update(id, transaction))
     }
