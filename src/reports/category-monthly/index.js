@@ -5,7 +5,7 @@ import { CurrencyRepository } from "../../core/RestAPI";
 import CategoryRepository from "../../core/repositories/category-repository";
 
 import MonthlySpendingComponent from "./monthly-spending.component";
-import CategorizedMonthlySpendingComponent from "./CategorizedMonthlySpendingComponent";
+import CategorizedMonthlySpendingComponent from "./categorized-monthly-spending.component";
 
 import '../../assets/css/CategorieReportView.scss'
 import CategoryGraph from "./montly-categorized-chart";

@@ -14,7 +14,7 @@ const MonthlySpendingComponent = ({ categories, range } : MonthlySpendingCompone
     const [expense, setExpense] = useState<number[]>()
 
     useEffect(() => {
-        if (!categories || !range) return
+        if (!range) return
 
         setIncome(undefined)
         StatisticalRepository.monthly({
