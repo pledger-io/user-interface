@@ -26,8 +26,8 @@ export const useAutocomplete = function <T extends Identifiable>({ autoCompleteC
     }
 
     const onKeyDown: KeyboardEventHandler = e => {
-        const actualKeyValue = String.fromCharCode(e.which).match(/(\w|\s)/g)
-        if ((actualKeyValue || e.key === 'Backspace' || e.key === 'Delete') && field.value) {
+        if ((/^[\w\s]$/i.test(e.key) || e.key === 'Backspace' || e.key === 'Delete') && field.value) {
+            console.trace(`Resetting value for ${field.id} due to value ${e.key}.`)
             // reset the value on new key presses
             onChange({ currentTarget: { value: undefined }, persist: (_: any) => undefined })
         }
