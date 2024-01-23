@@ -39,7 +39,7 @@ const TopAccountTable = ({ year, type }: TopAccountTableProps) => {
 
             { accounts && accounts.map(account => (
                 <tr key={account.account.id}>
-                    <td><Attachments.Image fileCode={account.account.iconFileCode}/></td>
+                    <td width={ 50 }><Attachments.Image fileCode={account.account.iconFileCode}/></td>
                     <td>{account.account.name}</td>
                     <td><Formats.Money money={account.total * -1} currency={account.account.account.currency}/></td>
                     <td><Formats.Money money={account.average * -1} currency={account.account.account.currency}/></td>
