@@ -53,9 +53,10 @@ const AccountDetailView: FC = () => {
 
         { isOwnType && <>
             <Layout.Card title='common.account.balance'>
-                <BalanceChart id='dashboard-balance-graph'
-                                     accounts={ account }
-                                     allMoney={ true }/>
+                { account && <BalanceChart id='dashboard-balance-graph'
+                                           accounts={ account }
+                                           allMoney={ true }/> }
+                { !account && <Layout.Loading /> }
             </Layout.Card>
 
             <Layout.Grid type='column' minWidth='20em'>
