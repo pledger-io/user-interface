@@ -18,10 +18,15 @@ module.exports = {
         'header': 'var(--card-header-background)',
         'separator': 'var(--app-border-color)',
         'background': 'var(--app-background)',
+        'muted': 'var(--app-text-muted-color)',
       },
       borderRadius: {
         '': '.25rem',
         'lg': '.5rem'
+      },
+      fontSize: {
+        'xs': '.7rem',
+        'sm': '.8rem',
       }
     },
   },

@@ -7,9 +7,9 @@ import { FieldType } from "../form-types";
 const AccountAutocompleteRow = (account: Account) => {
     return (
         <span>
-            {account.name}
-            <span className='iban'>{account.account.iban}</span>
-            <div className='Summary'>{account.description}</div>
+            { account.name }
+            <span className='ml-2 text-sm text-muted'>{ account.account.iban }</span>
+            <div className='text-muted pl-1 text-sm'>{ account.description }</div>
         </span>
     )
 }
