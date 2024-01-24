@@ -5,7 +5,7 @@ import { withPathParams } from "../core/hooks";
 import TransactionForm from "./transaction/edit";
 import { LiabilityPaymentForm } from "./transaction/LiabilityPayment";
 import AccountTransactionOverview from "./detail-view"
-import OwnAccountOverview from "./OwnAccountOverview"
+import OwnAccountOverview from "./own-accounts"
 import AccountOverview from "./AccountOverview"
 import AccountForm from "./AccountForm"
 

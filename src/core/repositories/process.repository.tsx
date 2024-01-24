@@ -1,18 +1,41 @@
 import RestAPI from "./rest-api";
 
-export type JobId = 'ImportUserProfile'
-export type JobInstance = {
+export type ProcessIdentifier = 'ImportUserProfile' | 'AccountReconcile'
+export type ProcessState = 'ACTIVE' | 'COMPLETED' | 'SUSPENDED'
+export type BusinessKey = string
+export type ProcessInstance = {
     id: string
-    process: string
-    businessKey: string
-    state: string
+    process: string                         // The id of the process definition.
+    businessKey: BusinessKey                // The business key of the process instance
+    state: ProcessState                     // The state of the process instance.
     suspended: boolean
+    dates: {
+        start: string                       // The date/time when this process instance was started.
+        end: string                         // The date/time when this process instance was ended.
+    }
+}
+export type ProcessVariable = {
+    id: string
+    name: string
+    value: any
+}
+export type ProcessStart = {
+    businessKey?: BusinessKey            // The business key of the process instance
 }
 
 const ProcessRepository = (api => {
+    function start<T extends ProcessStart>(definitionId: ProcessIdentifier, data: T): Promise<ProcessInstance> {
+        return api.put(`/runtime-process/${definitionId}/start`, data)
+    }
 
     return {
-        start: (jobId: JobId, data: any): Promise<JobInstance>      => api.post(`/runtime-process/${jobId}/start`, data),
+        history: (definitionId: ProcessIdentifier): Promise<ProcessInstance[]> =>
+            api.get(`/runtime-process/${definitionId}`),
+        historyForKey: (definitionId: ProcessIdentifier, businessKey: BusinessKey): Promise<ProcessInstance[]> =>
+            api.get(`/runtime-process/${definitionId}/${businessKey}`),
+        variables: (definitionId: ProcessIdentifier, businessKey: BusinessKey, instanceId: string): Promise<ProcessVariable[]> =>
+            api.get(`/runtime-process/${definitionId}/${businessKey}/${instanceId}/variables`),
+        start: start,
     }
 })(RestAPI)
 
