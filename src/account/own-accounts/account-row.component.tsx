@@ -4,7 +4,7 @@ import { mdiDotsVertical, mdiSquareEditOutline, mdiTrashCanOutline } from "@mdi/
 import React from "react";
 import AccountRepository from "../../core/repositories/account-repository";
 import { Account } from "../../core/types";
-import ReconcileActivityComponent from "./reconcile-activity.component";
+import ReconcileButtonsComponent from "./reconcile/reconcile-buttons.component";
 
 type AccountRowProps = {
     account: Account,
@@ -55,7 +55,7 @@ const AccountRowComponent = ({ account, deleteCallback }: AccountRowProps) => {
                                      onConfirm={ onDelete }>
                     <Translations.Translation label='page.accounts.delete.confirm'/>
                 </Dialog.ConfirmPopup>
-                <ReconcileActivityComponent account={ account } />
+                <ReconcileButtonsComponent account={ account } />
             </Dropdown.Dropdown>
         </td>
     </tr>

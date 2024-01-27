@@ -19,6 +19,13 @@ export type ProcessVariable = {
     name: string
     value: any
 }
+export type ProcessTask = {
+    id: string
+    name: string
+    created: string
+    form: string
+    definition: string
+}
 export type ProcessStart = {
     businessKey?: BusinessKey            // The business key of the process instance
 }
@@ -30,11 +37,17 @@ const ProcessRepository = (api => {
 
     return {
         history: (definitionId: ProcessIdentifier): Promise<ProcessInstance[]> =>
-            api.get(`/runtime-process/${definitionId}`),
+            api.get(`runtime-process/${definitionId}`),
         historyForKey: (definitionId: ProcessIdentifier, businessKey: BusinessKey): Promise<ProcessInstance[]> =>
-            api.get(`/runtime-process/${definitionId}/${businessKey}`),
+            api.get(`runtime-process/${definitionId}/${businessKey}`),
+        delete: (definitionId: ProcessIdentifier, businessKey: BusinessKey, instanceId: string): Promise<void> =>
+            api.delete(`runtime-process/${definitionId}/${businessKey}/${instanceId}`),
         variables: (definitionId: ProcessIdentifier, businessKey: BusinessKey, instanceId: string): Promise<ProcessVariable[]> =>
-            api.get(`/runtime-process/${definitionId}/${businessKey}/${instanceId}/variables`),
+            api.get(`runtime-process/${definitionId}/${businessKey}/${instanceId}/variables`),
+        tasks: (definitionId: ProcessIdentifier, businessKey: BusinessKey, instanceId: string): Promise<ProcessTask[]> =>
+            api.get(`runtime-process/${definitionId}/${businessKey}/${instanceId}/tasks`),
+        completeTask: (definitionId: ProcessIdentifier, businessKey: BusinessKey, instanceId: string, taskId: string): Promise<void> =>
+            api.delete(`runtime-process/${definitionId}/${businessKey}/${instanceId}/tasks/${taskId}`),
         start: start,
     }
 })(RestAPI)

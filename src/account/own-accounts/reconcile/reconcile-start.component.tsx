@@ -1,20 +1,13 @@
-import ProcessRepository, { BusinessKey, ProcessStart } from "../../core/repositories/process.repository";
-import { Account, Identifier } from "../../core/types";
-import { Buttons, Notifications } from "../../core";
-import { Form, Input, SubmitButton } from "../../core/form";
-import { Dialog } from "../../core/popups";
+import ProcessRepository, { BusinessKey } from "../../../core/repositories/process.repository";
+import { Account } from "../../../core/types";
+import { Buttons, Notifications } from "../../../core";
+import { Form, Input, SubmitButton } from "../../../core/form";
+import { Dialog } from "../../../core/popups";
+import { ReconcileStart } from "./types";
 import { mdiCheck, mdiContentSave } from "@mdi/js";
 import React from "react";
 
-type ReconcileStart = ProcessStart & {
-    accountId: Identifier
-    openBalance: number
-    endBalance: number
-    startDate: string
-    endDate: string
-}
-
-const ReconcilePopup = ({ account }: { account : Account }) => {
+const ReconcilePopup = ({ account, afterCreate }: { account : Account, afterCreate : () => void }) => {
     const dialogActions = { close: () => undefined }
     const onSubmit = (data: any) => {
         const processData : ReconcileStart = {
@@ -23,12 +16,13 @@ const ReconcilePopup = ({ account }: { account : Account }) => {
             openBalance: data.openBalance,
             endBalance: data.endBalance,
             startDate: `${data.year}-01-01`,
-            endDate: `${data.year}-12-31`,
+            endDate: `${parseInt(data.year) + 1}-01-01`,
         }
 
         ProcessRepository.start('AccountReconcile', processData)
             .then(() => Notifications.Service.success('page.accounts.reconcile.success'))
             .then(() => dialogActions.close())
+            .then(() => setTimeout(afterCreate, 500))
             .catch(() => Notifications.Service.warning('page.accounts.reconcile.error'))
     }
 
