@@ -9,7 +9,7 @@ export type ProcessInstance = {
     businessKey: BusinessKey                // The business key of the process instance
     state: ProcessState                     // The state of the process instance.
     suspended: boolean
-    dates: {
+    dates?: {
         start: string                       // The date/time when this process instance was started.
         end: string                         // The date/time when this process instance was ended.
     }

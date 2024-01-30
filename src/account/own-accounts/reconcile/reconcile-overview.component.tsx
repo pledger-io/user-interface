@@ -1,12 +1,8 @@
-import { ConfirmPopup, Dialog } from "../../../core/popups";
-import { mdiBagChecked, mdiDelete, mdiHammer, mdiRedo } from "@mdi/js";
-import { Buttons, Formats, Layout, Message, Notifications, Translations } from "../../../core";
+import { Dialog } from "../../../core/popups";
+import { mdiBagChecked } from "@mdi/js";
+import { Buttons, Layout, Message, Translations } from "../../../core";
 import React, { useEffect, useState } from "react";
-import ProcessRepository, {
-    BusinessKey,
-    ProcessInstance,
-    ProcessVariable
-} from "../../../core/repositories/process.repository";
+import ProcessRepository, { BusinessKey, ProcessInstance } from "../../../core/repositories/process.repository";
 import ReconcileRowComponent from "./reconcile-row.component";
 import { Identifier } from "../../../core/types";
 

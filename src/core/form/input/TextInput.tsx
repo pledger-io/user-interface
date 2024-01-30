@@ -36,6 +36,7 @@ export const TextInput: FC<TextInputProps> = (props) => {
                    onChange={onChange}
                    minLength={props.minLength}
                    maxLength={props.maxLength}
+                   data-testid={`${props.id}-input`}
                    type={props.type}/>
 
             {field.touched && <InputValidationErrors field={field} errors={errors} />}

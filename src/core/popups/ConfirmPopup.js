@@ -21,6 +21,7 @@ const ConfirmPopup = (props) => {
                    <Buttons.Button label='common.action.confirm'
                                    key='confirm'
                                    variant='warning'
+                                   dataTestId={'confirm-button'}
                                    onClick={onConfirmClick}
                                    icon={mdiRadioboxBlank}/>,
                    <Buttons.Button label='common.action.cancel'

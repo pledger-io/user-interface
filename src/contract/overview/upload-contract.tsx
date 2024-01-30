@@ -53,6 +53,7 @@ const UploadContract:FC<UploadContractProps> = ({ id, onChanges }) => {
                            actions={ [
                                <SubmitButton key={ 'submit' }
                                              label='common.action.save'
+                                             dataTestId='submit-button'
                                              disabled={ !attachment }
                                              icon={ mdiContentSave }/>
                            ] }

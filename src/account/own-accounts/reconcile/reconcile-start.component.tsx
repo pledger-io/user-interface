@@ -32,10 +32,15 @@ const ReconcilePopup = ({ account, afterCreate }: { account : Account, afterCrea
                     className='Large'
                     control={ dialogActions }
                     actions={ [
-                        <SubmitButton label='common.action.save' icon={ mdiContentSave }/>,
+                        <SubmitButton label='common.action.save'
+                                      icon={ mdiContentSave }
+                                      dataTestId={`reconcile-submit-button-${ account.id }`}/>,
                     ] }
                     openButton={
-                        <Buttons.Button label='page.reports.default.reconcile' className='!py-2' icon={ mdiCheck }/>
+                        <Buttons.Button label='page.reports.default.reconcile'
+                                        className='!py-2'
+                                        icon={ mdiCheck }
+                                        dataTestId={`reconcile-open-button-${ account.id }`}/>
                     }>
 
                 <Input.Text title='page.accounts.reconcile.account'

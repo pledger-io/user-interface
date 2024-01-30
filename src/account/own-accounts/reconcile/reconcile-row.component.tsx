@@ -97,9 +97,16 @@ const ReconcileRowComponent = ({ process, onRemoved } : { process : ProcessInsta
                                                 endBalance={ desiredStartBalance }
                                                 accountId={ parseInt(process.businessKey) }
                                                 onComplete={ onRemoved } />
-                <Buttons.Button variant='icon' icon={ mdiRedo } className='text-success' onClick={ onRetry }/>
+                <Buttons.Button variant='icon'
+                                icon={ mdiRedo }
+                                className='text-success'
+                                onClick={ onRetry }
+                                dataTestId={`retry-button-${ process.id }`}/>
                 <ConfirmPopup title='page.accounts.reconcile.delete.confirm'
-                              openButton={ <Buttons.Button variant='icon' icon={ mdiDelete } className='text-warning' /> }
+                              openButton={ <Buttons.Button variant='icon'
+                                                           icon={ mdiDelete }
+                                                           dataTestId={`remove-row-${ process.id }`}
+                                                           className='text-warning' /> }
                               onConfirm={ onDelete }>
                     <Translations.Translation label='page.accounts.reconcile.delete.confirm' />
                 </ConfirmPopup>

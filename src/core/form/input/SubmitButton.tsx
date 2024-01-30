@@ -22,7 +22,6 @@ export const SubmitButton: FC<SubmitButtonProps> = (props) => {
     return <Button {...props}
                    disabled={hasErrors}
                    variant='primary'
-                   dataTestId='submit-button'
                    type='submit'/>
 }
 

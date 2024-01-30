@@ -31,6 +31,7 @@ export const AmountInput = (props) => {
                        max={props.max}
                        readOnly={props.readonly}
                        onChange={onChange}
+                       data-testid={`${props.id}-input`}
                        type='number' />
             </div>
         </InputGroup>
