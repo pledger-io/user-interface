@@ -20,7 +20,7 @@ const ReconcileOverviewComponent = ({ accountId, onRemoved } : { accountId : Ide
         if (reconcileActivity && reconcileActivity.length === 0) {
             onRemoved()
         }
-    }, [reconcileActivity])
+    }, [reconcileActivity, onRemoved])
 
     return <>
         <Dialog title='page.accounts.reconcile.active'
