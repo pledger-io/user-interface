@@ -2,21 +2,21 @@ definitions:
   steps:
     - step: &node-prepare
         name: Prepare node environment
-        image: node:19
+        image: node:21
         caches:
           - node
         script:
           - yarn install
     - step: &test-react
         name: Test React App
-        image: node:19
+        image: node:21
         caches:
           - node
         script:
           - yarn run test
     - step: &build-react
         name: Build React App
-        image: node:19
+        image: node:21
         caches:
           - node
         script:
