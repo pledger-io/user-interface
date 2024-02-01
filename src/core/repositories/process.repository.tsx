@@ -32,7 +32,7 @@ export type ProcessStart = {
 
 const ProcessRepository = (api => {
     function start<T extends ProcessStart>(definitionId: ProcessIdentifier, data: T): Promise<ProcessInstance> {
-        return api.put(`/runtime-process/${definitionId}/start`, data)
+        return api.put(`runtime-process/${definitionId}/start`, data)
     }
 
     return {
