@@ -14,6 +14,15 @@ definitions:
           - node
         script:
           - yarn run test
+    - step: &sonarqube
+        name: SonarQube
+        script:
+          - pipe: sonarsource/sonarcloud-scan:2.0.0
+            variables:
+              SONAR_TOKEN: ${SONAR_TOKEN}
+              EXTRA_ARGS: '-Dsonar.sources=src -Dsonar.projectKey="Pledger:UI" -Dsonar.projectName="Pledger UI" -Dsonar.organization=jongsoft'
+        services:
+          - docker
     - step: &build-react
         name: Build React App
         image: node:21
@@ -54,6 +63,7 @@ pipelines:
       - parallel:
           - step: *build-react
           - step: *test-react
+          - step: *sonarqube
       - step: *build-java
       - step: *sign-publish
     release/*:
