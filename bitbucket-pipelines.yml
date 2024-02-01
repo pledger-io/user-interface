@@ -21,8 +21,6 @@ definitions:
             variables:
               SONAR_TOKEN: ${SONAR_TOKEN}
               EXTRA_ARGS: '-Dsonar.sources=src -Dsonar.projectKey="Pledger:UI" -Dsonar.projectName="Pledger UI" -Dsonar.organization=jongsoft'
-        services:
-          - docker
     - step: &build-react
         name: Build React App
         image: node:21
