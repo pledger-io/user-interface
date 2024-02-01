@@ -21,6 +21,7 @@ definitions:
             variables:
               SONAR_TOKEN: ${SONAR_TOKEN}
               EXTRA_ARGS: '-Dsonar.sources=src -Dsonar.projectKey="Pledger:UI" -Dsonar.projectName="Pledger UI" -Dsonar.organization=jongsoft'
+              SONAR_SCANNER_OPTS: -Xmx512m
     - step: &build-react
         name: Build React App
         image: node:21
@@ -55,13 +56,19 @@ definitions:
           - bash ./gradlew publish
 
 pipelines:
+  pull-requests:
+    '**':
+      - step: *node-prepare
+      - parallel:
+          - step: *build-react
+          - step: *test-react
+          - step: *sonarqube
   branches:
     master:
       - step: *node-prepare
       - parallel:
           - step: *build-react
           - step: *test-react
-          - step: *sonarqube
       - step: *build-java
       - step: *sign-publish
     release/*:
