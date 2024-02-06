@@ -1,17 +1,19 @@
 import { InputGroup, InputValidationErrors, useInputField } from "./input/InputGroup";
 import React, { ChangeEventHandler, KeyboardEventHandler, ReactNode, useRef, useState } from "react";
 import { Identifiable } from "../types";
+import { Button } from "../buttons";
 
 const MIN_CHARS = 2
 
 type useAutocompleteParams<T extends Identifiable> = {
     autoCompleteCallback: (_ : string) => Promise<Array<T>>,
     entityRender: (_ : T) => ReactNode | ReactNode[],
-    entityLabel: (_ : T) => string
+    entityLabel: (_ : T) => string,
+    onCreateCallback?: (_ : string) => Promise<T>
 }
 type InputChangeHandler = ChangeEventHandler<HTMLInputElement>
 
-export const useAutocomplete = function <T extends Identifiable>({ autoCompleteCallback, entityRender, entityLabel }: useAutocompleteParams<T>, props: any) {
+export const useAutocomplete = function <T extends Identifiable>({ autoCompleteCallback, entityRender, entityLabel, onCreateCallback }: useAutocompleteParams<T>, props: any) {
     const [field, errors, onChange] = useInputField({ onChange: undefined, field: props })
     const [options, setOptions] = useState<Array<T>>([])
     const [selected, setSelected] = useState(-1)
@@ -74,36 +76,45 @@ export const useAutocomplete = function <T extends Identifiable>({ autoCompleteC
                 .then(setOptions)
     }
 
+    const hasAutocomplete = options.length > 0
+    const hasCreate = onCreateCallback && inputRef.current?.value && inputRef.current?.value.length > MIN_CHARS
     if (!field) return props.id
     return (
-        <InputGroup id={props.id}
-                    required={props.required}
-                    title={props.title}
-                    help={props.help}
-                    className={props.className}
-                    valid={field.touched ? errors.length === 0 : undefined }>
+        <InputGroup id={ props.id }
+                    required={ props.required }
+                    title={ props.title }
+                    help={ props.help }
+                    className={ props.className }
+                    valid={ field.touched ? errors.length === 0 : undefined }>
             <div className='AccountInput'>
                 <input type='text'
-                       ref={inputRef}
-                       style={{ width: '-webkit-max-content' }}
-                       onKeyDown={onKeyDown}
-                       onKeyUp={onKeyUp}
-                       onChange={onAutocomplete}
-                       defaultValue={entityLabel(field.value)}/>
+                       ref={ inputRef }
+                       style={ { width: '-webkit-max-content' } }
+                       onKeyDown={ onKeyDown }
+                       onKeyUp={ onKeyUp }
+                       onChange={ onAutocomplete }
+                       defaultValue={ entityLabel(field.value) }/>
 
-                {options.length > 0 &&
+                { hasAutocomplete &&
                     <div className='AutoComplete'>
-                        {options.map((option, idx) =>
-                            <div key={option.id}
-                                 className={`Result ${idx === selected ? ' selected' : ''}`}
-                                 onClick={() => changeHandler(option)}>
-                                {entityRender(option)}
-                            </div>)}
+                        { options.map((option, idx) =>
+                            <div key={ option.id }
+                                 className={ `Result ${ idx === selected ? ' selected' : '' }` }
+                                 onClick={ () => changeHandler(option) }>
+                                { entityRender(option) }
+                            </div>) }
+                    </div>
+                }
+
+                { hasCreate &&
+                    <div className='Create'>
+                        <Button label={'common.action.create'}
+                                onClick={ () => onCreateCallback(inputRef.current?.value || '').then(changeHandler) }/>
                     </div>
                 }
             </div>
 
-            {field.touched && <InputValidationErrors field={field} errors={errors} />}
+            { field.touched && <InputValidationErrors field={ field } errors={ errors }/> }
         </InputGroup>
     )
 }
