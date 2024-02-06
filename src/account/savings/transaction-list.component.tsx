@@ -12,8 +12,12 @@ const TransactionListComponent = ({ account } : { account : Account }) => {
     const [pagination, setPagination] = useState<PaginationType>()
 
     useEffect(() => {
-        setTransactions(undefined)
+        if (!account.history.firstTransaction || !account.history.lastTransaction) {
+            setTransactions({})
+            return
+        }
 
+        setTransactions(undefined)
         const range = Dates.Ranges.forRange(account.history.firstTransaction, account.history.lastTransaction)
         AccountRepository.transactions(account.id, range, page)
             .then(result => {

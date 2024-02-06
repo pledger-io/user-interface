@@ -27,6 +27,7 @@ const EditSavingGoalComponent = ({ account, savingGoal = undefined, onChanged = 
                 .then(control.close)
         }
     }
+    const minDate = new Date()
 
     return <>
         <Form onSubmit={onSubmit} entity='SavingGoal'>
@@ -53,6 +54,7 @@ const EditSavingGoalComponent = ({ account, savingGoal = undefined, onChanged = 
 
                 <Input.Date id='targetDate'
                             required={ true }
+                            minDate={ minDate }
                             value={ savingGoal?.targetDate }
                             title='SavingGoal.targetDate' />
             </Dialog.Dialog>

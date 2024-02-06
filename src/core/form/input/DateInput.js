@@ -42,6 +42,7 @@ export const DateInput = (props) => {
             <DatePicker required={props.required}
                         selected={selected}
                         readOnly={props.readonly}
+                        minDate={props.minDate}
                         showYearDropdown
                         dateFormat={DateFormats[localStorage.getItem('language')]}
                         onChange={onDateChanged}/>
@@ -54,7 +55,8 @@ DateInput.propTypes = {
     ...InputGroup.propTypes,
     value: PropTypes.string,
     // Indicator if the field is in read only mode
-    readonly: PropTypes.bool
+    readonly: PropTypes.bool,
+    minDate: PropTypes.instanceOf(Date)
 }
 
 export const MonthPicker = (props) => {
