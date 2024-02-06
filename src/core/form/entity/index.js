@@ -2,7 +2,7 @@ import { AccountInput } from "./AccountInput";
 import { AccountTypeInput } from "./AccountTypeInput";
 import { BudgetInput } from "./BudgetInput";
 import { CurrencyInput } from "./CurrencyInput";
-import { CategoryInput } from "./CategoryInput";
+import { CategoryInput } from "./category-input";
 import { ManagedAccountSelect } from "./ManagedAccountSelect";
 import { ContractInput } from "./ContractInput";
 

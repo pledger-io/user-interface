@@ -77,7 +77,9 @@ export const useAutocomplete = function <T extends Identifiable>({ autoCompleteC
     }
 
     const hasAutocomplete = options.length > 0
-    const hasCreate = onCreateCallback && inputRef.current?.value && inputRef.current?.value.length > MIN_CHARS
+    const hasCreate = onCreateCallback
+        && inputRef.current?.value && inputRef.current?.value.length > MIN_CHARS
+        && !field.value
     if (!field) return props.id
     return (
         <InputGroup id={ props.id }
