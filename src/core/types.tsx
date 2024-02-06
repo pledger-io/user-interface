@@ -33,6 +33,7 @@ export type Account = AccountRef & {
         firstTransaction: string,
         lastTransaction: string
     }
+    type: any
     description: string,
     iconFileCode: string,
     savingGoals: SavingGoal[],
