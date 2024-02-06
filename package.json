@@ -1,6 +1,6 @@
 {
   "name": "pledger-ui",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "private": true,
   "proxy": "http://dev.ota.pledger.io/",
   "homepage": "/ui",
