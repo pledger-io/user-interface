@@ -7,7 +7,7 @@
   "dependencies": {
     "@mdi/js": "^7.4.47",
     "@mdi/react": "^1.6.1",
-    "axios": "^1.6.2",
+    "axios": "^1.6.5",
     "chart.js": "^4.4.0",
     "chartjs-adapter-spacetime": "^1.0.1",
     "cra-template": "1.2.0",
