@@ -10,7 +10,7 @@ import {
   mdiChartPie,
   mdiCogs,
   mdiCurrencyUsd,
-  mdiFileDocumentEdit,
+  mdiFileDocumentEdit, mdiFileUploadOutline,
   mdiFormatListBulletedSquare,
   mdiHandCoinOutline,
   mdiMonitorDashboard,
@@ -159,12 +159,12 @@ const config = [
     icon: mdiChartBar,
     label: 'page.nav.settings.categories'
   },
-  // {
-  //   type: 'button',
-  //   href: '/import',
-  //   icon: mdiFileUploadOutline,
-  //   label: 'page.nav.settings.import'
-  // }
+  {
+    type: 'button',
+    href: '/upload',
+    icon: mdiFileUploadOutline,
+    label: 'page.nav.settings.import'
+  }
 ];
 
 export default config;

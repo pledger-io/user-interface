@@ -146,3 +146,16 @@ export type Rule = Identifiable & {
     conditions: RuleCondition[]
     changes: RuleChange[]
 }
+
+export type ImportJob = Identifiable & {
+    slug: string,
+    created: string,
+    finished: string,
+    balance: {
+        income: number,
+        expense: number
+    },
+    config: {
+        name: string
+    }
+}

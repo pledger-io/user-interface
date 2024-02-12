@@ -19,7 +19,7 @@ type SidebarProps = {
 
 const Sidebar = ({ logoutCallback } : SidebarProps) => {
     const onLogout = () => {
-        SecurityRepository.logout()
+        dispatchEvent(new CustomEvent('credentials-expired'))
         logoutCallback()
     }
 

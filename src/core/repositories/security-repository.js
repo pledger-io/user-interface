@@ -24,6 +24,10 @@ const SecurityRepository = (api => {
     }
 })(RestAPI)
 
-window.addEventListener('credentials-expired', _ => SecurityRepository.logout())
+window.addEventListener('credentials-expired', _ => {
+    console.log('Credentials expired')
+    SecurityRepository.logout()
+    window.location.reload()
+})
 
 export default SecurityRepository
