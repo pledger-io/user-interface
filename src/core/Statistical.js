@@ -10,7 +10,7 @@ import { Loading } from "./layout";
  * The balance component can display a computed balance on a given search command. Where the search command can
  * be setup using the properties of the component.
  */
-const BalanceComponent = ({ accounts = [], categories = [], expenses = [],  income, currency, range }) => {
+const BalanceComponent = ({ accounts = [], categories = [], expenses = [],  income, currency, range, importSlug }) => {
     const [balance, setBalance] = useState(null)
 
     useEffect(() => {
@@ -20,7 +20,8 @@ const BalanceComponent = ({ accounts = [], categories = [], expenses = [],  inco
             expenses: expenses,
             onlyIncome: income,
             currency: currency,
-            categories: categories
+            categories: categories,
+            importSlug: importSlug
         }
         if (range) {
             filter.dateRange = {
@@ -44,7 +45,8 @@ BalanceComponent.propTypes = {
     // The currency to fetch the balance in
     currency: PropTypes.string,
     // An optional date range for the balance
-    range: PropTypes.object
+    range: PropTypes.object,
+    importSlug: PropTypes.string
 }
 
 export {

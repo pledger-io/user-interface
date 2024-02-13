@@ -12,7 +12,8 @@ export type BalanceRequestFilter = {
     accounts?: Identifiable[],
     categories?: Identifiable[],
     contracts?: Identifiable[],
-    expenses?: Identifiable[],
+    expenses?: Identifiable[]
+    importSlug?: string
 }
 
 type BalancePartition = Balance & {
