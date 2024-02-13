@@ -1,7 +1,7 @@
 import { ImportJob } from "../../core/types";
 import { Buttons, Dialog, Formats, Translations } from "../../core";
 import Icon from "@mdi/react";
-import { mdiCheck, mdiTrashCanOutline } from "@mdi/js";
+import { mdiCheck, mdiProgressCheck, mdiTrashCanOutline } from "@mdi/js";
 import React from "react";
 import ImportJobRepository from "../../core/repositories/import-job.repository";
 
@@ -14,7 +14,7 @@ const OverviewRowComponent = ({ importJob }: { importJob: ImportJob }) => {
             .catch(console.error)
     }
 
-    const hasFinished = importJob.finished !== null
+    const hasFinished = importJob.finished
     if (deleted) return null
     return <>
         <tr>
@@ -38,7 +38,8 @@ const OverviewRowComponent = ({ importJob }: { importJob: ImportJob }) => {
             <td className="hidden md:table-cell">{ importJob.config.name }</td>
             <td className='text-center'><Formats.Date date={ importJob.created }/></td>
             <td>
-                { hasFinished && <Icon path={ mdiCheck} size={ 1 } className='text-success mx-auto'/> }
+                { hasFinished && <Icon path={ mdiCheck } size={ 1 } className='text-success mx-auto'/> }
+                { !hasFinished && <Icon path={ mdiProgressCheck } size={ 1 } className='text-primary mx-auto'/> }
             </td>
         </tr>
     </>
