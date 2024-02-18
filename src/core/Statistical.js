@@ -32,7 +32,7 @@ const BalanceComponent = ({ accounts = [], categories = [], expenses = [],  inco
 
         StatisticalRepository.balance(filter)
             .then(balanceResponse => setBalance(balanceResponse.balance))
-    }, [accounts, income, currency, range, categories, expenses])
+    }, [accounts, income, currency, range, categories, expenses, importSlug])
 
     if (balance == null) return <Loading />
     return <span className='Statistical-Balance'><Money money={balance} currency={currency} /></span>

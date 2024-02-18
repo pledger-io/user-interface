@@ -12,6 +12,7 @@ const BatchOverview = () => {
         </BreadCrumbs>
 
         <Layout.Card actions={ [<Buttons.Button icon={ mdiPlus }
+                                                key='new'
                                                 href='/upload/create'
                                                 label='page.settings.import.new'/>] }
                      title='page.nav.settings.import'>

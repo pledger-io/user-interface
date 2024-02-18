@@ -23,7 +23,7 @@ export const InputGroup: FC<InputGroupProps> = ({ id, help, title, required = fa
                     {help ? <HelpTranslation label={ help } className='font-normal text-end pr-1' /> : ''}
                 </label>
             )}
-            <div>{ children }</div>
+            <div className='flex-1'>{ children }</div>
         </div>
     )
 }

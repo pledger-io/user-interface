@@ -2,7 +2,7 @@
   "name": "pledger-ui",
   "version": "1.2.0",
   "private": true,
-  "proxy": "http://dev.ota.pledger.io/",
+  "proxy": "http://localhost:8080/",
   "homepage": "/ui",
   "dependencies": {
     "@mdi/js": "^7.4.47",

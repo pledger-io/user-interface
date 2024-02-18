@@ -5,6 +5,7 @@ import { CurrencyInput } from "./CurrencyInput";
 import { CategoryInput } from "./category-input";
 import { ManagedAccountSelect } from "./ManagedAccountSelect";
 import { ContractInput } from "./ContractInput";
+import ImportConfigInput from "./import-config-input";
 
 // Ensure the exports are properly linked to the included documentation
 export {
@@ -14,5 +15,6 @@ export {
     CategoryInput as Category,
     ContractInput as Contract,
     CurrencyInput as Currency,
-    ManagedAccountSelect as ManagedAccount
+    ManagedAccountSelect as ManagedAccount,
+    ImportConfigInput as ImportConfig,
 }

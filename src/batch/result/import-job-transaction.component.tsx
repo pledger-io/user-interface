@@ -1,7 +1,7 @@
 import { useQueryParam } from "../../core/hooks";
 import React, { useEffect, useState } from "react";
-import { groupTransactionByDay, groupTransactionByYear, YearlyTransactions } from "../../core/reducers";
-import { Pagination, Transaction } from "../../core/types";
+import { groupTransactionByYear, YearlyTransactions } from "../../core/reducers";
+import { Pagination } from "../../core/types";
 import ImportJobRepository from "../../core/repositories/import-job.repository";
 import { Formats, Layout, Resolver, Translations } from "../../core";
 import TransactionItem from "../../transactions/transaction-item";

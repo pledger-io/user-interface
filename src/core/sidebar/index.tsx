@@ -1,4 +1,3 @@
-
 import logo from '../../assets/logo.png'
 import config from '../../config/sidebar-config.js'
 import React from "react";
@@ -10,7 +9,6 @@ import SidebarDivider from "./divider";
 import SidebarButtonComponent from "./sidebar-button.component";
 import { SidebarButton, SidebarSection } from "./sidebar.types";
 import SidebarSectionComponent from "./sidebar-section.component";
-import SecurityRepository from "../repositories/security-repository";
 
 
 type SidebarProps = {

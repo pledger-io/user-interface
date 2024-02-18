@@ -147,6 +147,11 @@ export type Rule = Identifiable & {
     changes: RuleChange[]
 }
 
+export type BatchConfig = Identifiable & {
+    name: string
+    file: string
+}
+
 export type ImportJob = Identifiable & {
     slug: string,
     created: string,

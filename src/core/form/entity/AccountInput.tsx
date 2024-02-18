@@ -18,7 +18,7 @@ const AccountAutocompleteRow = (account: Account) => {
 
 type AccountInputProps = FieldType & {
     value?: Account,
-    type: 'DEBTOR' | 'CREDITOR',
+    type?: 'DEBTOR' | 'CREDITOR',
     title?: string,
     className?: string,
     inputOnly?: boolean,
@@ -35,7 +35,7 @@ export const AccountInput: FC<AccountInputProps> = (props) => {
             type: props.type })
 
     return useAutocomplete<Account>({
-            autoCompleteCallback: value => restAPI.get(`accounts/auto-complete?type=${props.type}&token=${value}`),
+            autoCompleteCallback: value => restAPI.get(`accounts/auto-complete?${props.type ? `type=${props.type}&` : ''}token=${value}`),
             entityRender: AccountAutocompleteRow,
             entityLabel: account => account?.name,
             onCreateCallback: onCreateCallback

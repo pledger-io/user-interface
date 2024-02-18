@@ -53,7 +53,7 @@ const OverviewTableComponent = () => {
                 </td>
             </tr> }
 
-            { !isLoading && batchImports.map((importJob, index) =>
+            { !isLoading && batchImports.map((importJob) =>
                 <OverviewRowComponent importJob={ importJob } key={ importJob.slug }/>) }
 
             </tbody>
