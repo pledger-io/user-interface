@@ -8,9 +8,9 @@ import AccountRepository from "../../repositories/account-repository";
 import { SelectOption } from "../input";
 
 export const ManagedAccountSelect = props => {
-    const [field, errors, onChange]         = useInputField({ onChange: props.onChange, field: props })
+    const [field, errors, onChange] = useInputField({ onChange: props.onChange, field: props })
     const [selectedValue, setSelectedValue] = useState()
-    const [accounts, setAccounts]           = useState([])
+    const [accounts, setAccounts] = useState([])
 
     useEffect(() => {
         AccountRepository.own()
@@ -40,6 +40,7 @@ export const ManagedAccountSelect = props => {
                     className={props.className}
                     valid={field.touched ? errors.length === 0 : undefined }>
             <select id={props.id} onChange={valueSelected} value={selectedValue}>
+                {props.required && <option disabled={ field.value }>-</option>}
                 {accounts.map(account => <SelectOption key={account.id}
                                                        value={account.id}
                                                        message={account.name}/>)}

@@ -118,8 +118,7 @@ const ConfigureSettingsComponent = ({ task }: { task: ProcessTask }) => {
 
             <Entity.ManagedAccount id='accountId'
                                    required={ true }
-                                   title='ImportConfig.Json.account'
-                                   value={ configuration.accountId }/>
+                                   title='ImportConfig.Json.account' />
 
             <Input.Select id='delimiter'
                           title='ImportConfig.Json.delimiter'
