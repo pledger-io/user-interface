@@ -39,8 +39,8 @@ export const CategoryInput = (props: CategoryInputProps) => {
     }).then(mapCategoryToAutocomplete)
 
     return useAutocomplete({
-        autoCompleteCallback: value => restAPI.get(`categories/auto-complete?token=${value}`)
-            .then((categories: Category[]) => categories.map(mapCategoryToAutocomplete)),
+        autoCompleteCallback: value => restAPI.get<Category[]>(`categories/auto-complete?token=${value}`)
+            .then((categories) => categories.map(mapCategoryToAutocomplete)),
         entityLabel: category => category?.name,
         entityRender: CategoryAutocompleteRow,
         onCreateCallback: onCreateCallback

@@ -6,6 +6,13 @@ type ProfilePatch = {
     password?: string;
 }
 
+type Session = {
+    description: string
+    validFrom: string
+    validUntil: string
+    token: string
+}
+
 function toBlob(data: string, type: string = 'application/json') {
     const ab = atob(data.split(',')[1])
     const buffer = new ArrayBuffer(ab.length)
@@ -34,7 +41,7 @@ const ProfileRepository = (api => {
     return {
         patch: (data: ProfilePatch) => api.patch('profile', data),
         get2Factor: () : Promise<string | ArrayBuffer | null> => new Promise((resolved, reject) => {
-            api.get('profile/multi-factor/qr-code', { responseType: 'blob' })
+            api.get<Blob>('profile/multi-factor/qr-code', { responseType: 'blob' })
                 .then(rawData => {
                     const fileReader = new FileReader();
                     fileReader.onloadend = () => {
@@ -46,14 +53,14 @@ const ProfileRepository = (api => {
         }),
         enableMfa: (verificationCode: string)               => api.post('profile/multi-factor/enable', { verificationCode }),
         disableMfa: ()                                      => api.post('profile/multi-factor/disable', {}),
-        sessions: ()                                        => api.get('profile/sessions'),
+        sessions: ()                                        => api.get<Session[]>('profile/sessions'),
         exportTransactions: ()                              => new Promise((accept, fail) => {
-            api.get('transactions/export', { responseType: 'blob' })
+            api.get<Blob>('transactions/export', { responseType: 'blob' })
                 .then(fileReader(accept,f=> toBlob(f.result as string, 'text/plain')))
                 .catch(fail)
             }),
         exportProfile: ()                                   => new Promise((accept, fail) => {
-            api.get('profile/export', { responseType: 'blob' })
+            api.get<Blob>('profile/export', { responseType: 'blob' })
                 .then(fileReader(accept,f=> toBlob(f.result as string)))
                 .catch(fail)
         })

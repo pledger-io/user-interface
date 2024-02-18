@@ -27,7 +27,7 @@ const RuleRepository = (api => {
         groupUp: (group: string)                                => api.get(`transaction-rules/groups/${group}/move-up`),
         groupDown: (group: string)                              => api.get(`transaction-rules/groups/${group}/move-down`),
         rules: (group: string): Promise<Rule[]>                 => api.get(`transaction-rules/groups/${group}`),
-        rule: (group: string, id: Identifier)                   => api.get(`transaction-rules/groups/${group}/${id}`).then(rule_unique),
+        rule: (group: string, id: Identifier)                   => api.get<Rule>(`transaction-rules/groups/${group}/${id}`).then(rule_unique),
         updateRule: (group: string, id: Identifier, rule: any)  => api.post(`transaction-rules/groups/${group}/${id}`, rule),
         createRule: (group: string, rule: any)                  => api.put(`transaction-rules/groups/${group}`, rule),
         deleteRule: (group: string, id: Identifier)             => api.delete(`transaction-rules/groups/${group}/${id}`),

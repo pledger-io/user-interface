@@ -2,11 +2,13 @@ import { FC, useEffect, useState } from "react";
 import { BreadCrumbItem, BreadCrumbs, Buttons, Layout } from "../../core";
 import { mdiClockTimeTwoOutline, mdiHistory, mdiPlus } from "@mdi/js";
 import ContractTable from "./contract-table";
-import ContractRepository from "../../core/repositories/contract-repository";
+import ContractRepository, { ContractList } from "../../core/repositories/contract-repository";
+
+type TabSection = 'active' | 'terminated'
 
 const ContractOverview: FC<void> = () => {
-    const [contracts, setContracts] = useState()
-    const [tabSection, setTabSection] = useState('active')
+    const [contracts, setContracts] = useState<ContractList>()
+    const [tabSection, setTabSection] = useState<TabSection>('active')
 
     useEffect(() => {
         ContractRepository.list()
@@ -28,7 +30,7 @@ const ContractOverview: FC<void> = () => {
                                              label='page.budget.contracts.add' />
                          ]}
             >
-                <Layout.Tabs onChange={setTabSection}
+                <Layout.Tabs onChange={ section => setTabSection(section as TabSection) }
                              activeTab={tabSection}
                              buttons={[
                                  { id: 'active', title: 'page.budget.contracts.active', icon: mdiClockTimeTwoOutline },

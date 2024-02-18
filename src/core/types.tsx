@@ -112,6 +112,11 @@ export type Budget = {
     expenses: BudgetExpense[]
 }
 
+export type PagedResponse<T> = {
+    content: T[],
+    info: Pagination
+}
+
 export type Pagination = {
     records: number,
     pageSize: number,
