@@ -1,11 +1,12 @@
 import { Upload } from "../../core/Attachment";
 import { Entity, Form, Input, SubmitButton } from "../../core/form";
-import { mdiSkipNext } from "@mdi/js";
+import { mdiCheckDecagram, mdiSkipNext } from "@mdi/js";
 import { useState } from "react";
 import ImportJobRepository from "../../core/repositories/import-job.repository";
 import ProcessRepository from "../../core/repositories/process.repository";
-import { Notifications } from "../../core";
+import { Notifications, Translations } from "../../core";
 import { useNavigate } from "react-router-dom";
+import Icon from "@mdi/react";
 
 const UploadTransactionsComponent = () => {
     const [uploadToken, setUploadToken] = useState<string>('')
@@ -33,12 +34,22 @@ const UploadTransactionsComponent = () => {
                 title='Import.config'
                 required />
 
-            <div className='w-[10em] mx-auto mt-5'>
+            <div className={ `w-[10em] mx-auto mt-5` }>
                 <Upload
+                    required
                     label="ImportConfig.content"
                     onUpload={ ({ fileCode }) => setUploadToken(fileCode) }
                     accepts="text/csv" />
             </div>
+
+            { uploadToken && <div className='mt-2 flex justify-center'>
+                    <span>
+                        <Icon path={ mdiCheckDecagram }
+                              size={ 1 }
+                              className='text-green-500 mr-2'/>
+                    </span>
+                <Translations.Translation label='common.upload.file.success'/>
+            </div> }
 
             <div className='flex justify-end'>
                 <SubmitButton icon={ mdiSkipNext }

@@ -36,7 +36,7 @@ const validDrop = (event, max, accepts) => {
     return true
 }
 
-const UploadAttachment = ({ accepts = '*/*', label, onUpload, max = 1 }) => {
+const UploadAttachment = ({ accepts = '*/*', label, onUpload, max = 1, required = false }) => {
     const [dropActive, setDropActive] = useState(false)
     const [valid, setValid]           = useState(false)
     const [uniqueId]                  = useState('attachment-' + (++uploadCounter))
@@ -57,6 +57,7 @@ const UploadAttachment = ({ accepts = '*/*', label, onUpload, max = 1 }) => {
             <input type='file'
                    id={uniqueId}
                    accept={accepts}
+                   required={ required }
                    onChange={event => this.selected(event)}/>
             <When condition={max === 1}>
                 <img src={UploadSVG} alt='Attachment'/>
@@ -79,7 +80,9 @@ UploadAttachment.propTypes = {
     // the maximum number of files to support
     max: PropTypes.number,
     // Callback that will be called after an upload succeeded, once per file uploaded
-    onUpload: PropTypes.func
+    onUpload: PropTypes.func,
+    // Whether the upload is required or not
+    required: PropTypes.bool
 }
 
 
