@@ -2,16 +2,22 @@ import { Attachments, BreadCrumbItem, BreadCrumbs, Layout, Message, Notification
 import NavigationComponent from "./navigation.component";
 import ProcessRepository, { ProcessStart } from "../core/repositories/process.repository";
 import { Form } from "../core/form";
+import { useState } from "react";
+import Icon from "@mdi/react";
+import { mdiCheckDecagram } from "@mdi/js";
 
 type ProfileImportStart = ProcessStart & {
     storageToken: string
 }
 
 const ProfileConfigImportView = () => {
+    const [importing, setImporting] = useState(false)
 
     const onUploadComplete = ({ fileCode } : any) => {
+        setImporting(true)
         ProcessRepository.start('ImportUserProfile', { storageToken: fileCode } as ProfileImportStart)
             .then(() => Notifications.Service.success('page.user.profile.import.success'))
+            .then(() => setImporting(false))
             .catch(() => Notifications.Service.warning('page.user.profile.import.error'))
     }
 
@@ -38,6 +44,15 @@ const ProfileConfigImportView = () => {
                                                 onUpload={ onUploadComplete }/>
                         </div>
                     </Form>
+
+                    { importing && <div className='mt-2 flex justify-center'>
+                    <span>
+                        <Icon path={ mdiCheckDecagram }
+                              size={ 1 }
+                              className='text-green-500 mr-2'/>
+                    </span>
+                        <Translations.Translation label='common.upload.file.success'/>
+                    </div> }
                 </div>
             </div>
         </Layout.Card>

@@ -49,6 +49,14 @@ const UploadAttachment = ({ accepts = '*/*', label, onUpload, max = 1, required 
         .then(response => (onUpload || (_ => console.warn(`No upload handler set, attachmentId=${response}.`)))(response))
         .catch(() => Notifications.Service.warning('common.upload.file.failed')))
 
+    const onChangeHandler = (files) => {
+        for (let i = 0; i < files.length; i++) {
+            AttachmentRepository.upload(files[i])
+                .then(response => (onUpload || (_ => console.warn(`No upload handler set, attachmentId=${response}.`)))(response))
+                .catch(() => Notifications.Service.warning('common.upload.file.failed'))
+        }
+    }
+
     return (
         <div className='UploadAttachment'
              onDrop={onFileDrop}
@@ -58,7 +66,7 @@ const UploadAttachment = ({ accepts = '*/*', label, onUpload, max = 1, required 
                    id={uniqueId}
                    accept={accepts}
                    required={ required }
-                   onChange={event => this.selected(event)}/>
+                   onChange={event => onChangeHandler(event.target.files) }/>
             <When condition={max === 1}>
                 <img src={UploadSVG} alt='Attachment'/>
 

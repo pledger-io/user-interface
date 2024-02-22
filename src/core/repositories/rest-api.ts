@@ -15,8 +15,8 @@ const axiosInstance = axios.create({
             headers['Accept-Language'] = localStorage.getItem('language')
         }
 
-        if (!headers['content-type'] || headers['content-type'] === 'application/json') {
-            headers['content-type'] = 'application/json'
+        if (!headers['Content-Type'] || headers['Content-Type'] === 'application/json') {
+            headers['Content-Type'] = 'application/json'
             return JSON.stringify(data)
         }
         return data

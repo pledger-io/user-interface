@@ -13,7 +13,7 @@ const AttachmentRepository = (api => {
         upload: blob => {
             const formData = new FormData()
             formData.append('upload', blob, blob.name)
-            return api.post('attachment', formData)
+            return api.post('attachment', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
         },
         download: fileCode => new Promise((resolved, reject) => {
             api.get(`attachment/${fileCode}`, { responseType: 'blob' })
