@@ -1,6 +1,5 @@
 import ProcessRepository, {
     ProcessTask,
-    TaskVariable,
     TaskVariables
 } from "../../core/repositories/process.repository";
 import { useEffect, useState } from "react";

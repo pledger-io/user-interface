@@ -10,8 +10,6 @@ import ConfigureSettingsComponent from "./configure-settings.component";
 import AccountMappingComponent from "./account-mapping.component";
 import { useNavigate } from "react-router-dom";
 
-type ImportJobTask = 'task_configure' | 'confirm_mappings'
-
 const AnalyzeTaskComponent = ({ process }: { process: ProcessInstance }) => {
     const [tasks, setTasks] = useState<ProcessTask>()
 
@@ -69,6 +67,7 @@ const AnalyzeTransactions = ({ importJob }: { importJob: ImportJob }) => {
             .catch(() => Notifications.Service.warning('page.user.profile.import.error'))
     }
 
+    // tslint:disable-next-line:react-hooks/exhaustive-deps
     useEffect(loadProcess, [importJob])
 
     if (!process) return null

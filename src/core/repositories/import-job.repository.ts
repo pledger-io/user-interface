@@ -1,5 +1,5 @@
 import RestAPI from "./rest-api";
-import { BatchConfig, ImportJob, PagedResponse, Pagination, Transaction } from "../types";
+import { BatchConfig, ImportJob, PagedResponse, Transaction } from "../types";
 
 type PageRequest = {
     page: number
