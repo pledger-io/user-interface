@@ -4,7 +4,6 @@ import { Buttons, Dialog, Formats, Layout, Notifications, Resolver, Translations
 import { NavLink } from "react-router-dom";
 import {
     mdiAlert,
-    mdiAlertBox,
     mdiArrowRight,
     mdiChevronLeftBox,
     mdiChevronRightBox,
