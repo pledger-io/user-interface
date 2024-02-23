@@ -3,6 +3,8 @@ import { Account, Transaction } from "../core/types";
 import { Buttons, Dialog, Formats, Layout, Notifications, Resolver, Translations } from "../core";
 import { NavLink } from "react-router-dom";
 import {
+    mdiAlert,
+    mdiAlertBox,
     mdiArrowRight,
     mdiChevronLeftBox,
     mdiChevronRightBox,
@@ -58,6 +60,9 @@ const TransactionItem: FC<TransactionItemProps> = ({ transaction, className = ''
                     { transaction.metadata.category }
                 </div> }
         </span>
+        { transaction.metadata.failureCode && <span className='text-warning my-auto'>
+            <Icon path={ mdiAlert } size={ 1 }/>
+        </span> }
         <span className='flex flex-col flex-1'>
             <span className='text-[.9em]'>{ transaction.description }</span>
             { transaction.metadata.tags && <div className='flex gap-1'>

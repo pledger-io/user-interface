@@ -6,7 +6,7 @@ const config = {
 
 const axiosInstance = axios.create({
     baseURL: config.root,
-    timeout: 10000,
+    timeout: 1200000,
     transformRequest: (data, headers) => {
         if (sessionStorage.getItem('token')) {
             headers.Authorization = 'Bearer ' + sessionStorage.getItem('token')

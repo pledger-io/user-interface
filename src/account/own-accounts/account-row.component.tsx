@@ -23,6 +23,7 @@ const AccountRowComponent = ({ account, deleteCallback }: AccountRowProps) => {
         accountLink = `/accounts/savings/${account.id}/transactions`
     }
 
+    const accountArray = [account]
     return <tr onMouseLeave={ () => dropDownActions.close() }>
         <td>
             <h2><Link to={ accountLink }>{ account.name }</Link></h2>
@@ -41,7 +42,7 @@ const AccountRowComponent = ({ account, deleteCallback }: AccountRowProps) => {
             { account.account.iban && `${ account.account.iban }` }
             { !account.account.iban && account.account.number && `${ account.account.number }` }
         </td>
-        <td><Statistical.Balance accounts={ [account] } currency={ account.account.currency }/></td>
+        <td><Statistical.Balance accounts={ accountArray } currency={ account.account.currency }/></td>
         <td>
             <Dropdown.Dropdown icon={ mdiDotsVertical } actions={ dropDownActions }>
                 <Buttons.Button label='common.action.edit'

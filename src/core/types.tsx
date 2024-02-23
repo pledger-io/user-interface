@@ -74,7 +74,8 @@ export type Transaction = {
         category?: string
         budget?: string,
         contract?: string,
-        tags?: string[]
+        tags?: string[],
+        failureCode?: string,
     }
     currency: string,
     amount: number,
