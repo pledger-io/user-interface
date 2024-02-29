@@ -27,7 +27,9 @@ const axiosInstance = axios.create({
             return null
         }
 
-        if (headers['content-type'] === 'application/json') {
+        const isJson = headers['content-type'] === 'application/json'
+            && headers['content-disposition'] === undefined
+        if (isJson && typeof data === 'string' && data.length > 0) {
             return JSON.parse(data)
         }
 

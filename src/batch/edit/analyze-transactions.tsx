@@ -67,8 +67,7 @@ const AnalyzeTransactions = ({ importJob }: { importJob: ImportJob }) => {
             .catch(() => Notifications.Service.warning('page.user.profile.import.error'))
     }
 
-    // tslint:disable-next-line:react-hooks/exhaustive-deps
-    useEffect(loadProcess, [importJob])
+    useEffect(loadProcess, [importJob]) // eslint-disable-line react-hooks/exhaustive-deps
 
     if (!process) return null
     return <>
