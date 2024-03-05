@@ -38,7 +38,7 @@ In this repository you will find the React based front-end for Pledger.io.
 
 To build the application the following needs to be present on your local PC:
 
-* NodeJS
+* Node.js
 * GIT for completing the checkout
 
 You can build the application using the Gradle command:
@@ -59,8 +59,9 @@ After running the front-end can be accessed using the end-point:
 
     http://localhost:3000/
 
-## License
-Copyright 2023 Jong Soft Development
+## Licence
+
+Copyright 2024 Jong Soft Development
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 associated documentation files (the "Software"), to deal in the Software without restriction, including
