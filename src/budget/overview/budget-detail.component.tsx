@@ -1,18 +1,74 @@
 import { Range } from "../../core/Dates";
-import { Budget } from "../../core/types";
-import { useEffect, useState } from "react";
+import { ApiError, Budget } from "../../core/types";
+import React, { useEffect, useState } from "react";
 import BudgetRepository from "../../core/repositories/budget.repository";
-import { Formats, Layout, Translations } from "../../core";
+import { Buttons, Dialog, Formats, Layout, Message, Notifications, Translations } from "../../core";
 import ExpenseOverviewComponent from "./expense-overview.component";
+import { Form, Input, SubmitButton } from "../../core/form";
+import { mdiContentSave, mdiPlus } from "@mdi/js";
+import { AxiosError } from "axios";
+
+const AddExpenseDialog = ({ onChange }: { onChange : () => void }) => {
+    const editControl = { close: () => undefined }
+    const [error, setError] = useState<string | undefined>()
+
+    const onSubmit = (values: any) => {
+        const patch = {
+            name: values.name,
+            amount: values.expected
+        }
+
+        BudgetRepository.expense(patch)
+            .then(() => Notifications.Service.success('page.budget.group.expense.added'))
+            .then(editControl.close)
+            .then(onChange)
+            .catch((error: AxiosError) => {
+                const apiError: ApiError = error.response?.data as ApiError
+                setError(apiError._embedded?.errors[0]?.message || apiError.message)
+            })
+    }
+
+    return <Form entity='Budget' onSubmit={ onSubmit }>
+        <Dialog.Dialog title='page.title.budget.group.expense.add'
+                       className='Large'
+                       control={ editControl }
+                       actions={ [
+                           <SubmitButton label='common.action.save'
+                                         icon={ mdiContentSave }
+                                         key='update-button'/>,
+                       ] }
+                       openButton={ <Buttons.Button label='page.budget.group.action.addExpense' icon={ mdiPlus }/> }>
+
+            { error && <Message message={ error } variant='warning' /> }
+
+            <Input.Text id='name'
+                        required
+                        type='text'
+                        title='Budget.Expense.name'/>
+            <Input.Amount id='expected'
+                          min={ 1 }
+                          required
+                          title='page.budget.group.expense.budgeted'/>
+        </Dialog.Dialog>
+    </Form>
+}
+
+const currentMonth = {
+    year: new Date().getFullYear(),
+    month: new Date().getMonth() + 1,
+    isSame: (year: number, month: number) => year === currentMonth.year && month === currentMonth.month
+}
+
 
 const BudgetDetailComponent = ({ range }: { range: Range }) => {
     const [budget, setBudget] = useState<Budget>()
 
-    useEffect(() => {
+    const loadBudget = () => {
         BudgetRepository.budgetMonth(range.year(), range.month())
             .then(setBudget)
             .catch(console.error)
-    }, [range]);
+    }
+    useEffect(loadBudget, [range]);
 
     if (!budget) return <Layout.Loading />
     return <>
@@ -42,7 +98,12 @@ const BudgetDetailComponent = ({ range }: { range: Range }) => {
 
         <ExpenseOverviewComponent budget={ budget }
                                   year={ range.year() }
-                                  month={ range.month() }/>
+                                  month={ range.month() }
+                                  onChanges={ loadBudget }/>
+
+        <div className='flex justify-end'>
+            { currentMonth.isSame(range.year(), range.month()) && <AddExpenseDialog onChange={ loadBudget } /> }
+        </div>
     </>
 }
 

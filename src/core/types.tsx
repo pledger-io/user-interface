@@ -170,3 +170,13 @@ export type ImportJob = Identifiable & {
         name: string
     }
 }
+
+export type ApiError = {
+    message: string
+    _embedded: {
+        errors: {
+            field?: string
+            message: string
+        }[]
+    }
+}
