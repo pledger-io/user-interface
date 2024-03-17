@@ -1,0 +1,25 @@
+name: Build Node.js
+
+on: [workflow_call]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set Node.js 21.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 21.x
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+      - name: Run test suite
+        run: yarn run test
+      - name: Build application
+        run: yarn run build
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifact
+          path: |
+            build/**

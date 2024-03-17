@@ -1,0 +1,36 @@
+name: Release build
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  packages: write
+
+jobs:
+  build:
+    uses: ./.github/workflows/build-node.yml
+  bundle:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure Java version
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          architecture: x64
+      - name: Create JAR bundle
+        run: |
+          cd builder
+          ./gradlew jar
+      - name: Publish artifacts
+        run: |
+          cd builder
+          NEW_VERSION=$(echo "${GITHUB_REF}" | cut -d "/" -f3)
+          echo "New version: ${NEW_VERSION}"
+          echo "Github username: ${GITHUB_ACTOR}"
+          ./gradlew -Pversion=${NEW_VERSION} publish -x check
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
