@@ -1,15 +1,12 @@
 # Pledger.io - Front end application
 
-![Sonatype Nexus (Releases)](https://img.shields.io/nexus/r/com.jongsoft.finance/pledger-ui?server=https%3A%2F%2Foss.sonatype.org)
-![Sonatype Nexus (Snapshots)](https://img.shields.io/nexus/s/com.jongsoft.finance/pledger-ui?server=https%3A%2F%2Foss.sonatype.org)
-![Bitbucket Pipelines](https://img.shields.io/bitbucket/pipelines/jongsoftdev/user-interface/master)
+![Latest release](https://img.shields.io/github/v/release/pledger-io/user-interface?display_name=release&label=Stable)
+![Build](https://github.com/pledger-io/user-interface/actions/workflows/default.yml/badge.svg)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 -----------------------
 
 **[Read the documentation](https://www.pledger.io)**
-
-[Report Bug](https://jongsoftdev.atlassian.net/issues/?jql=issuetype%20%3D%20Bug%20AND%20project%20%3D%20FIN%20AND%20resolution%20%3D%20Unresolved%20ORDER%20BY%20priority%20DESC) - [Request Feature](https://jongsoftdev.atlassian.net/browse/FIN-23?jql=issuetype%20%3D%20Story%20AND%20project%20%3D%20FIN%20AND%20resolution%20%3D%20Unresolved%20ORDER%20BY%20priority%20DESC)
 
 -----------------------
 
@@ -28,8 +25,8 @@ Pledger.io has the following features:
 ## Get started
 
 **Note:** the backend-end application can be found in the
-[fintrack-application](https://bitbucket.org/jongsoftdev/fintrack-application) repository.
-The [deployment](https://bitbucket.org/jongsoftdev/fintrack-deployment) build will bundle this front-end with the
+[rest-application](https://github.com/pledger-io/rest-application) repository.
+The [build-tooling](https://github.com/pledger-io/build-tooling) build will bundle this front-end with the
 backend system.
 
 In this repository you will find the React based front-end for Pledger.io.
