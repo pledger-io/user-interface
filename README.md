@@ -1,7 +1,6 @@
 # Pledger.io - Front end application
 
-![Sonatype Nexus (Releases)](https://img.shields.io/nexus/r/com.jongsoft.finance/pledger-ui?server=https%3A%2F%2Foss.sonatype.org)
-![Sonatype Nexus (Snapshots)](https://img.shields.io/nexus/s/com.jongsoft.finance/pledger-ui?server=https%3A%2F%2Foss.sonatype.org)
+![Latest release](https://img.shields.io/github/v/release/pledger-io/user-interface?display_name=release&label=Stable)
 ![Build](https://github.com/pledger-io/user-interface/actions/workflows/default.yml/badge.svg)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
