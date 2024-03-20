@@ -33,12 +33,13 @@ export const AccountInput: FC<AccountInputProps> = (props) => {
             name: name,
             currency: (RestAPI.user() as any).currency,
             type: props.type })
+    const { inputOnly = false } = props
 
     return useAutocomplete<Account>({
             autoCompleteCallback: value => restAPI.get(`accounts/auto-complete?${props.type ? `type=${props.type}&` : ''}token=${value}`),
             entityRender: AccountAutocompleteRow,
             entityLabel: account => account?.name,
-            onCreateCallback: onCreateCallback
+            onCreateCallback: inputOnly ? undefined : onCreateCallback
         },
         props)
 }
