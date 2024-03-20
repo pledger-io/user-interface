@@ -48,6 +48,7 @@ const ChangeFieldComponent = (props: { change : RuleChange, onChangeDelete: (_:R
                                    id={`chang_${change.uuid}_change`}
                                    className='!m-0 flex-1 [&>label]:!hidden'
                                    title='dd'
+                                   inputOnly={ true }
                                    type='DEBTOR' /> }
 
             { change.field === 'TO_ACCOUNT'
@@ -56,6 +57,7 @@ const ChangeFieldComponent = (props: { change : RuleChange, onChangeDelete: (_:R
                                    id={`chang_${change.uuid}_change`}
                                    className='!m-0 flex-1 [&>label]:!hidden'
                                    title='dd'
+                                   inputOnly={ true }
                                    type='CREDITOR' /> }
 
 
@@ -64,6 +66,7 @@ const ChangeFieldComponent = (props: { change : RuleChange, onChangeDelete: (_:R
                                     onChange={ (value: Category) => onValueChange(change.uuid, 'change', value.id as string) }
                                     id={ `chang_${change.uuid}_change` }
                                     className='!m-0 flex-1 [&>label]:!hidden'
+                                    inputOnly={ true }
                                     title='dd'/>}
 
             { change.field === 'BUDGET' && <Entity.Budget value={ entity }

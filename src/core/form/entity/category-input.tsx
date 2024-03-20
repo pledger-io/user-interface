@@ -1,6 +1,3 @@
-import PropTypes from 'prop-types';
-
-import { InputGroup } from "../input/InputGroup";
 import { useAutocomplete } from "../Autocomplete";
 import restAPI from "../../repositories/rest-api";
 import { Identifiable, Category } from "../../types";
@@ -22,7 +19,14 @@ const CategoryAutocompleteRow = (category: AutocompleteCategory) => {
 }
 
 type CategoryInputProps = FieldType & {
-    value?: Category,
+    value?: {
+        name: string,
+        id: string
+    },
+    inputOnly?: boolean,
+    onChange?: (_: Category) => void
+    title?: string,
+    className?: string
 }
 
 function mapCategoryToAutocomplete(category: Category): AutocompleteCategory {
@@ -37,20 +41,13 @@ export const CategoryInput = (props: CategoryInputProps) => {
     const onCreateCallback = (name: string) => CategoryRepository.create({
         name: name
     }).then(mapCategoryToAutocomplete)
+    const { inputOnly = false } = props
 
     return useAutocomplete({
         autoCompleteCallback: value => restAPI.get<Category[]>(`categories/auto-complete?token=${value}`)
             .then((categories) => categories.map(mapCategoryToAutocomplete)),
         entityLabel: category => category?.name,
         entityRender: CategoryAutocompleteRow,
-        onCreateCallback: onCreateCallback
+        onCreateCallback: inputOnly ? undefined : onCreateCallback
     }, props)
-}
-CategoryInput.propTypes = {
-    ...InputGroup.propTypes,
-    value: PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        name: PropTypes.string.isRequired
-    }),
-    onChange: PropTypes.func
 }

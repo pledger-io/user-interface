@@ -46,7 +46,7 @@ const TransactionFilters: FC<TransactionFiltersProps> = ({ onChange }) => {
                     <Entity.Account id='account'
                                     title='page.transactions.filter.account'
                                     className='flex-1'
-                                    type='CREDITOR'/>
+                                    inputOnly={ true }/>
                     <Input.Text id='description'
                                 type='text'
                                 className='flex-1'
@@ -59,6 +59,7 @@ const TransactionFilters: FC<TransactionFiltersProps> = ({ onChange }) => {
                 <div className='flex px-2 gap-2 flex-1'>
                     <Entity.Category id='category'
                                      className='flex-1'
+                                     inputOnly={ true }
                                      title='page.transactions.filter.category'/>
                     <Entity.Budget id='budget'
                                    className='flex-1'
