@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import BudgetRepository, { ComputedExpense } from "../../core/repositories/budget.repository";
 import { mdiContentSave, mdiDotsVertical, mdiSquareEditOutline } from "@mdi/js";
 import { Form, Input, SubmitButton } from "../../core/form";
+import { AxiosError } from "axios";
 
 type ExpenseOverviewRowProps = {
     expense: BudgetExpense,
@@ -40,7 +41,7 @@ const ExpenseOverviewRowComponent = ({ expense, year, month, onChanges } : Expen
             .then(() => Notifications.Service.success('page.budget.group.expense.updated'))
             .then(editControl.close)
             .then(onChanges)
-            .catch(console.error)
+            .catch((error: AxiosError) => Notifications.Service.exception(error))
     }
 
     const dropDownActions = { close: () => undefined }
@@ -78,6 +79,7 @@ const ExpenseOverviewRowComponent = ({ expense, year, month, onChanges } : Expen
                                                                 variant='primary'
                                                                 icon={ mdiSquareEditOutline } />}
                                    >
+
                         <Input.Text id='name'
                                     type='text'
                                     readonly
