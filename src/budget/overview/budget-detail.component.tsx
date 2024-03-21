@@ -1,8 +1,8 @@
 import { Range } from "../../core/Dates";
-import { ApiError, Budget } from "../../core/types";
+import { Budget } from "../../core/types";
 import React, { useEffect, useState } from "react";
 import BudgetRepository from "../../core/repositories/budget.repository";
-import { Buttons, Dialog, Formats, Layout, Message, Notifications, Translations } from "../../core";
+import { Buttons, Dialog, Formats, Layout, Notifications, Translations } from "../../core";
 import ExpenseOverviewComponent from "./expense-overview.component";
 import { Form, Input, SubmitButton } from "../../core/form";
 import { mdiContentSave, mdiPlus } from "@mdi/js";
@@ -10,7 +10,6 @@ import { AxiosError } from "axios";
 
 const AddExpenseDialog = ({ onChange }: { onChange : () => void }) => {
     const editControl = { close: () => undefined }
-    const [error, setError] = useState<string | undefined>()
 
     const onSubmit = (values: any) => {
         const patch = {
@@ -22,10 +21,7 @@ const AddExpenseDialog = ({ onChange }: { onChange : () => void }) => {
             .then(() => Notifications.Service.success('page.budget.group.expense.added'))
             .then(editControl.close)
             .then(onChange)
-            .catch((error: AxiosError) => {
-                const apiError: ApiError = error.response?.data as ApiError
-                setError(apiError._embedded?.errors[0]?.message || apiError.message)
-            })
+            .catch((error: AxiosError) => Notifications.Service.exception(error))
     }
 
     return <Form entity='Budget' onSubmit={ onSubmit }>
@@ -38,8 +34,6 @@ const AddExpenseDialog = ({ onChange }: { onChange : () => void }) => {
                                          key='update-button'/>,
                        ] }
                        openButton={ <Buttons.Button label='page.budget.group.action.addExpense' icon={ mdiPlus }/> }>
-
-            { error && <Message message={ error } variant='warning' /> }
 
             <Input.Text id='name'
                         required

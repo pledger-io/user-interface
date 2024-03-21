@@ -178,5 +178,10 @@ export type ApiError = {
             field?: string
             message: string
         }[]
+    },
+    _links: {
+        help?: {
+            href: string
+        }[]
     }
 }
