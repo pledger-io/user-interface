@@ -1,6 +1,6 @@
 plugins {
-    id("maven-publish")
     id("java")
+    id("maven-publish")
 }
 
 tasks.processResources {
@@ -12,9 +12,8 @@ tasks.processResources {
 publishing {
     publications {
         create<MavenPublication>("maven") {
+            logger.lifecycle("Publishing with version $version")
             groupId = "com.jongsoft.finance"
-            artifactId = "pledger-ui"
-            version = System.getProperty("version")
             from(components["java"])
         }
     }
