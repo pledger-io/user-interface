@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import '../assets/css/NotificationCenter.scss'
 import { Translation } from "./localization";
