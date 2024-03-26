@@ -1,3 +1,5 @@
+rootProject.name = "pledger-ui"
+
 pluginManagement {
     plugins {
         id("java")
@@ -12,12 +14,5 @@ dependencyResolutionManagement {
     @Suppress("UnstableApiUsage") // It's gradle, any of their APIs can be considered unstable
     repositories {
         mavenCentral()
-    }
-
-    versionCatalogs {
-        create("mn") {
-            val micronautVersion: String by settings
-            from("io.micronaut.platform:micronaut-platform:${micronautVersion}")
-        }
     }
 }
