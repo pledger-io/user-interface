@@ -22,15 +22,12 @@ jobs:
           distribution: 'temurin'
           architecture: x64
       - name: Create JAR bundle
-        run: |
-          cd builder
-          ./gradlew jar
+        run: ./builder/gradlew -b builder/build.gradle.kts jar
       - name: Publish artifacts
         run: |
-          cd builder
           NEW_VERSION=$(echo "${GITHUB_REF}" | cut -d "/" -f3)
           echo "New version: ${NEW_VERSION}"
           echo "Github username: ${GITHUB_ACTOR}"
-          ./gradlew -Pversion=${NEW_VERSION} publish -x check
+          ./builder/gradlew -b builder/build.gradle.kts -Pversion=${NEW_VERSION} publish -x check
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
