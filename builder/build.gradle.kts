@@ -9,8 +9,8 @@ tasks.processResources {
     }
 }
 
-var user: String = project.properties["gpr.user"] as String?: System.getenv("GITHUB_ACTOR")
-var key: String = project.properties["gpr.key"] as String?: System.getenv("GITHUB_ACTOR")
+var user: String = findProperty("gpr.user") as String?: System.getenv("GITHUB_ACTOR")
+var key: String = findProperty("gpr.key") as String?: System.getenv("GITHUB_TOKEN")
 
 publishing {
     publications {
