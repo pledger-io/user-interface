@@ -21,6 +21,11 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
           architecture: x64
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifact
+          path: build
       - name: Create JAR bundle
         run: ./builder/gradlew -b builder/build.gradle.kts jar
       - name: Publish artifacts
