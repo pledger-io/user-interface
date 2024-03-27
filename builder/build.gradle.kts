@@ -23,8 +23,8 @@ publishing {
             name = "GitHubPackages"
             url = uri("https://maven.pkg.github.com/pledger-io/user-interface")
             credentials {
-                username = System.getenv("GITHUB_ACTOR")
-                password = System.getenv("GITHUB_TOKEN")
+                username = providers.gradleProperty("gpr.user").get() ?: System.getenv("GITHUB_ACTOR")
+                password = providers.gradleProperty("gpr.key").get() ?: System.getenv("GITHUB_TOKEN")
             }
         }
     }
