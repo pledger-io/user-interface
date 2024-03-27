@@ -9,9 +9,6 @@ tasks.processResources {
     }
 }
 
-var user: String = findProperty("gpr.user") as String?: System.getenv("GITHUB_ACTOR")
-var key: String = findProperty("gpr.key") as String?: System.getenv("GITHUB_TOKEN")
-
 publishing {
     publications {
         create<MavenPublication>("maven") {
@@ -26,8 +23,8 @@ publishing {
             name = "GitHubPackages"
             url = uri("https://maven.pkg.github.com/pledger-io/user-interface")
             credentials {
-                username = user
-                password = key
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
             }
         }
     }
