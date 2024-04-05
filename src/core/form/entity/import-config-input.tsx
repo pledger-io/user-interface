@@ -19,6 +19,7 @@ const ImportConfigInput = (props: ImportConfigInputProps) => {
     const [importConfigs, setImportConfigs] = useState<BatchConfig[]>([])
     const [field, errors, onChange] = useInputField({ onChange: props.onChange, field: props })
     const inputRef = React.useRef<HTMLInputElement>(null)
+    const typeRef = React.useRef<HTMLSelectElement>(null)
     const dialogControl = { close: () => void 0 }
 
     useEffect(() => {
@@ -29,6 +30,7 @@ const ImportConfigInput = (props: ImportConfigInputProps) => {
 
     const onCreate = ({ fileCode } : any) => {
         ImportJobRepository.createImportConfig({
+            type: typeRef.current?.value || 'CSVImportProvider',
             fileCode: fileCode,
             name: inputRef.current?.value || 'Unknown config'
         })
@@ -58,6 +60,10 @@ const ImportConfigInput = (props: ImportConfigInputProps) => {
                         control={ dialogControl }
                         openButton={ <Button label='page.settings.import.config.new'/> }>
                     <Message label='page.settings.import.config.explain'/>
+
+                    <select id='type' ref={ typeRef } className='w-full mt-5'>
+                        <option value='CSVImportProvider'>CSV</option>
+                    </select>
 
                     <input type='text' className='w-full mt-5' placeholder='Name' ref={ inputRef }/>
 
