@@ -27,7 +27,7 @@ const OverviewRowComponent = ({ importJob }: { importJob: ImportJob }) => {
                     <Translations.Translation label='page.import.delete.confirm'/>
                 </Dialog.ConfirmPopup>
             </td>
-            <td>
+            <td className='max-w-32 overflow-x-hidden overflow-ellipsis md:max-w-full'>
                 { hasFinished && <Buttons.Button href={ `/upload/${ importJob.slug }/result` }
                                                  variant='text'
                                                  message={ importJob.slug }/> }

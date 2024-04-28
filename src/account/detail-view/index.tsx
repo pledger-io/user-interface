@@ -59,7 +59,7 @@ const AccountDetailView: FC = () => {
                 { !account && <Layout.Loading /> }
             </Layout.Card>
 
-            <Layout.Grid type='column' minWidth='20em'>
+            <Layout.Grid type='column' minWidth='20em' className='hidden md:grid'>
                 <Layout.Card title='page.transactions.expense.category'>
                     <CategorizedPieChart id='category-expenses'
                                                 incomeOnly={ false }
@@ -82,22 +82,22 @@ const AccountDetailView: FC = () => {
         </> }
 
         <Layout.Card title='page.title.transactions.overview'>
-            { account && <Buttons.ButtonBar className='pb-2'>
+            { account && <Buttons.ButtonBar className='pb-2 justify-center md:justify-end'>
                 { (!Resolver.Account.isManaged(account) || Resolver.Account.isCreditor(account))
                     && <Buttons.Button label='page.transactions.debit.add'
                                        href={ `${Resolver.Account.resolveUrl(account)}/transactions/add/debit`}
                                        variant='success'
-                                       className={Resolver.Account.isDebtor(account) ? 'Hidden' : ''}
+                                       className={Resolver.Account.isDebtor(account) ? 'Hidden' : 'text-xs md:text-[1em]'}
                                        icon={mdiCashPlus}/> }
                 { (!Resolver.Account.isManaged(account) || Resolver.Account.isDebtor(account))
                     && <Buttons.Button label='page.transactions.credit.add'
                                 href={`${Resolver.Account.resolveUrl(account)}/transactions/add/credit`}
-                                className={Resolver.Account.isCreditor(account) ? 'Hidden' : ''}
+                                className={Resolver.Account.isCreditor(account) ? 'Hidden' : 'text-xs md:text-[1em]'}
                                 variant='warning'
                                 icon={mdiCartPlus}/> }
                 { !Resolver.Account.isManaged(account) &&<Buttons.Button label='page.transactions.transfer.add'
                                 href={`${Resolver.Account.resolveUrl(account)}/transactions/add/transfer`}
-                                className={Resolver.Account.isManaged(account) ? 'Hidden' : ''}
+                                className={Resolver.Account.isManaged(account) ? 'Hidden' : 'text-xs md:text-[1em]'}
                                 variant='primary'
                                 icon={mdiSwapHorizontal}/> }
             </Buttons.ButtonBar> }

@@ -54,7 +54,7 @@ function IncomeExpenseView() {
                               currency={ currency } />
         </Layout.Card>
 
-        <div className='flex gap-4'>
+        <div className='block md:flex gap-4'>
             <Layout.Card title='page.reports.default.balances' className='flex-1'>
                 <AccountBalance year={ parseInt(year) } currency={ currency } />
             </Layout.Card>
@@ -87,7 +87,7 @@ function IncomeExpenseView() {
             </Layout.Card>
         </div>
 
-        <div className='flex gap-4'>
+        <div className='block md:flex gap-4'>
             <Layout.Card title='page.reports.default.top.debit' className='flex-1'>
                 <TopAccountTable year={ year } type={ 'debit' } />
             </Layout.Card>

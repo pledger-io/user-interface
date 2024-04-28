@@ -23,7 +23,7 @@ const ContractDetail: FC<void> = () => {
             { contract && <BreadCrumbItem message={ contract.name } /> }
         </BreadCrumbs>
 
-        <div className='flex gap-10'>
+        <div className='block md:flex gap-10'>
             <Layout.Card className=''>
                 <div className='grid grid-rows-3 grid-cols-2'>
                     <Translations.Translation className='font-bold text-right after:content-[":"] mr-5'

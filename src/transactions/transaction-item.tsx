@@ -49,7 +49,7 @@ const TransactionItem: FC<TransactionItemProps> = ({ transaction, className = ''
 
     if (deleted) return null
     return <div className={`${className} flex content-between gap-3 mb-1 pb-1 border-b-[1px] border-gray-100 last:border-none`}>
-        <span className='text-[.9em] w-[12em] hidden md:block'>
+        <span className='text-[.9em] md:w-[12em] w-[6em]'>
             { transaction.metadata.budget &&
                 <div className='text-gray-400'>
                     { transaction.metadata.budget }
@@ -69,21 +69,22 @@ const TransactionItem: FC<TransactionItemProps> = ({ transaction, className = ''
             </div> }
             <span className='text-gray-400 flex items-center gap-0.5'>
                 { !account && <>
-                    <NavLink to={ `/accounts/${sourceAccount.id}/transactions` } className='text-gray-400 underline'>
+                    <NavLink to={ `/accounts/${sourceAccount.id}/transactions` } className='text-gray-400 hover:text-blue-400'>
                         { sourceAccount.name }
                     </NavLink>
                     <Icon path={ mdiArrowRight } size={ .6 } className='inline-block' />
-                    <NavLink to={ `/accounts/${otherAccount.id}/transactions` } className='text-gray-400 underline'>
+                    <NavLink to={ `/accounts/${otherAccount.id}/transactions` } className='text-gray-400 hover:text-blue-400'>
                         { otherAccount.name }
                     </NavLink>
                 </> }
                 { account && <>
-                    <NavLink to={ `/accounts/${otherAccount.id}/transactions` } className='text-gray-400 underline'>
+                    <NavLink to={ `/accounts/${otherAccount.id}/transactions` } className='text-gray-400 hover:text-blue-400'>
                         { otherAccount.name }
                     </NavLink>
                 </> }
                 { transaction.metadata.contract &&
-                    <div className='text-cyan-500 text-[.8em] pt-[.2em] ml-4 flex gap-0.5 items-center' title='Contract'>
+                    <div className='hidden md:flex text-cyan-500 text-[.8em] pt-[.2em] ml-4 gap-0.5 items-center'
+                         title='Contract'>
                         <Icon path={mdiFileSign} size={.52} />
                         <span>{ transaction.metadata.contract }</span>
                     </div>

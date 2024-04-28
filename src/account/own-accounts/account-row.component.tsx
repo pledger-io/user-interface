@@ -38,7 +38,7 @@ const AccountRowComponent = ({ account, deleteCallback }: AccountRowProps) => {
             </div>
             <div className='mt-2 pl-1 text-muted text-sm'>{ account.description }</div>
         </td>
-        <td>
+        <td className='hidden md:table-cell'>
             { account.account.iban && `${ account.account.iban }` }
             { !account.account.iban && account.account.number && `${ account.account.number }` }
         </td>

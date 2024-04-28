@@ -58,7 +58,7 @@ const ExpenseOverviewRowComponent = ({ expense, year, month, onChanges } : Expen
                 <span>(<Formats.Money money={ computed.dailySpent }/>)</span>
             </div>
         </td>
-        <td>
+        <td className='hidden md:table-cell'>
             <div className='flex gap-2'>
                 <Formats.Money money={ computed.left }/>
                 <span>(<Formats.Money money={ computed.dailyLeft }/>)</span>

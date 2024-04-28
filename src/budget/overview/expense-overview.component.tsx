@@ -9,7 +9,7 @@ const ExpenseOverviewComponent = ({ budget, year, month, onChanges } : { budget 
             <tr>
                 <th><Translations.Translation label='Budget.Expense.name' /></th>
                 <th><Translations.Translation label='page.budget.group.expense.budgeted' /></th>
-                <th><Translations.Translation label='page.budget.group.expense.spent' /></th>
+                <th className='hidden md:table-cell'><Translations.Translation label='page.budget.group.expense.spent' /></th>
                 <th><Translations.Translation label='page.budget.group.expense.left' /></th>
                 <th className='w-7'/>
             </tr>
