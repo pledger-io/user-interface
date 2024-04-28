@@ -38,6 +38,7 @@ routes.push(...ProfileRoutes)
 routes.push(...BatchRoutes)
 
 function App() {
+    // @ts-ignore-next-line
     const [_, setAuthenticate] = useState(false)
 
     if (sessionStorage.getItem('token')) {
