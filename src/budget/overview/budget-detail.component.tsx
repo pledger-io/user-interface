@@ -71,7 +71,7 @@ const BudgetDetailComponent = ({ range }: { range: Range }) => {
                 <Translations.Translation label='page.budget.group.budget.period'
                                           className='font-bold mr-2 min-w-[10em] after:content-[":"]'/>
                 <span>
-                    <Translations.Translation label={`common.month.${range.month()}`} />
+                    <Translations.Translation label={`common.month.${range.month()}`} className='mr-1' />
                     { range.year() }
                 </span>
             </div>

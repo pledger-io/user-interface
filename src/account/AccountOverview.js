@@ -46,7 +46,7 @@ const AccountRow = ({ account, deleteCallback }) => {
                 </When>
                 <div className='Description Text Muted'>{account.description}</div>
             </td>
-            <td>
+            <td className='hidden md:table-cell'>
                 {account.account.iban && `${account.account.iban}`}
                 {!account.account.iban && account.account.number && `${account.account.number}`}
             </td>
@@ -109,7 +109,7 @@ const AccountOverview = ({ type }) => {
                         <tr>
                             <th width='30'/>
                             <th><Translations.Translation label='Account.name'/></th>
-                            <th width='160'><Translations.Translation label='Account.number'/></th>
+                            <th width='160' className='hidden md:table-cell'><Translations.Translation label='Account.number'/></th>
                             <th width='120'><Translations.Translation label='common.account.saldo'/></th>
                             <th width='20'/>
                         </tr>

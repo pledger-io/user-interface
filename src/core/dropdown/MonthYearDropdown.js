@@ -17,7 +17,7 @@ const MonthYearDropdown = ({ selected: { year, month }, onChange, minDate, maxDa
     const selectedDate = new Date(year, month - 1, 1)
 
     return (
-        <div className='YearMonthDropdown'>
+        <div className='YearMonthDropdown relative'>
             <ButtonBar>
                 <Button variant='text'
                                 onClick={onOpenMonth}
@@ -31,7 +31,7 @@ const MonthYearDropdown = ({ selected: { year, month }, onChange, minDate, maxDa
                                 message={'' + year} />
             </ButtonBar>
 
-            <div className='Expanded'>
+            <div className='Expanded absolute z-10 right-0'>
                 {yearOpen && (<DatePicker showYearPicker
                                           dateFormat='yyyy'
                                           minDate={minDate}

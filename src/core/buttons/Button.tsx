@@ -61,14 +61,14 @@ const Button: FC<ButtonProps> = ({
                         ${disabled ? 'pointer-events-none opacity-60' : ''}
                         ${specialVariant 
                             ? 'border-none hover:border-b-primary hover:underline text-primary'
-                            : `px-2 py-1 border-solid border-[1px] rounded border-${variant} bg-dark-${variant} text-white`
+                            : `px-1.5 md:px-2 py-0 md:py-1 border-solid border-[1px] rounded border-${variant} bg-dark-${variant} text-white`
                         }
                         ${className}`}
             disabled={disabled}>
-            {icon && iconPos !== 'after' && <Icon className='before' path={icon} size={.8}/>}
+            {icon && iconPos !== 'after' && <Icon className='before aspect-square w-[1em] md:w-[1.5em]' path={icon}/>}
             {label && <Translation label={label}/>}
             {!label && message}
-            {icon && iconPos === 'after' && <Icon className='after' path={icon} size={.8}/>}
+            {icon && iconPos === 'after' && <Icon className='after aspect-square w-[1em] md:w-[1.5em]' path={icon} />}
         </button>
     </>
 }

@@ -54,12 +54,12 @@ export const BudgetReportView = () => {
             </BreadCrumbMenu>
         </BreadCrumbs>
 
-        <Layout.Grid type='column' minWidth='35em'>
+        <Layout.Grid type='column' minWidth='25em'>
             <YearlyBudgetIncomeComponent range={range} budgets={budgets}/>
             <YearlyBudgetExpenseComponent range={range} budgets={budgets}/>
         </Layout.Grid>
 
-        <Layout.Grid type='column' minWidth='35em'>
+        <Layout.Grid type='column' minWidth='25em'>
             <YearlyIncomeGraphComponent year={parseInt(year)} budgets={budgets}/>
             <BudgetYearlyExpense year={parseInt(year)} budgets={budgets}/>
         </Layout.Grid>
@@ -93,7 +93,7 @@ const YearlyBudgetIncomeComponent = ({ range, budgets = [] }) => {
     return <>
         <Layout.Card title='page.reports.budget.incomePercent'>
             <Progressbar total={yearlyExpected}
-                         className='success'
+                         className='success !h-12'
                          current={yearlyIncome}/>
         </Layout.Card>
     </>
@@ -131,7 +131,7 @@ const YearlyBudgetExpenseComponent = ({ budgets = [], range }) => {
     return <>
         <Layout.Card title='page.reports.budget.expensePercent'>
             <Progressbar total={yearlyExpected}
-                         className='warning'
+                         className='warning !h-12'
                          current={yearlyExpenses}/>
         </Layout.Card>
     </>

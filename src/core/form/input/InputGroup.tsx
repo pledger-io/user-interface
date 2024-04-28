@@ -16,9 +16,9 @@ type InputGroupProps = {
 
 export const InputGroup: FC<InputGroupProps> = ({ id, help, title, required = false, valid, className = '', children }) => {
     return (
-        <div className={ `Input ${valid !== undefined ? (valid ? 'valid' : 'invalid') : ''} ${className}` }>
+        <div className={ `Input mb-2 block md:flex ${valid !== undefined ? (valid ? 'valid' : 'invalid') : ''} ${className}` }>
             {title && (
-                <label htmlFor={ id } className={`inline-flex items-center ${required ? 'font-bold' : ''}`}>
+                <label htmlFor={ id } className={`max-w-full md-max-w-[15vw] inline-flex items-center ${required ? 'font-bold' : ''}`}>
                     <Translation label={ title }/>
                     {help ? <HelpTranslation label={ help } className='font-normal text-end pr-1' /> : ''}
                 </label>

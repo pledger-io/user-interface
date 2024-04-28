@@ -40,7 +40,7 @@ const AccountRow = ({ account, deleteCallback }) => {
                 </When>
                 <div className='Text Muted'>{account.description}</div>
             </td>
-            <td>
+            <td className='hidden md:table-cell'>
                 <Formats.Percent percentage={account.interest.interest} decimals={2} />
                 (<Translations.Translation label={`Periodicity.${account.interest?.periodicity}`}/>)
             </td>
@@ -111,7 +111,7 @@ const LiabilityOverview = () => {
                     <tr>
                         <th width='30'/>
                         <th><Translations.Translation label='Account.name'/></th>
-                        <th width='150'>
+                        <th width='150' className='hidden md:table-cell'>
                             <Translations.Translation label='Account.interest'/>
                             (<Translations.Translation label='Account.interestPeriodicity'/>)
                         </th>

@@ -23,7 +23,7 @@ const LoginCard = lazy(() => import("./security/LoginCard"));
 const RegisterCard = lazy(() => import("./security/RegisterCard"));
 
 const routes = [
-    <Route exact path='/' element={<Navigate to='/dashboard'/>} key='index' />
+    <Route path='/' element={<Navigate to='/dashboard'/>} key='index' />
 ]
 routes.push(...AccountRoutes)
 routes.push(...CategoryRoutes)
@@ -46,7 +46,7 @@ function App() {
                 <BrowserRouter basename='/ui'>
                     <Sidebar logoutCallback={() => setAuthenticate(false)}/>
                     <MobileSidebar logoutCallback={() => setAuthenticate(false)}/>
-                    <main className='Main'>
+                    <main className='Main px-2 md:px-5 h-[100vh] flex flex-col overflow-y-auto'>
                         <Notifications.NotificationCenter />
                         <Routes>
                             {routes}
@@ -64,7 +64,7 @@ function App() {
         <Suspense>
             <BrowserRouter basename='/ui'>
                 <Routes>
-                    <Route exact path='/' element={<Navigate to='/login'/>}/>
+                    <Route path='/' element={<Navigate to='/login'/>}/>
                     <Route path='/login' element={<LoginCard callback={() => setAuthenticate(true)} />}/>
                     <Route path='/register' element={<RegisterCard />}/>
                     <Route path='/*' element={<Navigate to='/login'/>} />
