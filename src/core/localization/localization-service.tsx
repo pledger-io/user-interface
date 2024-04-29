@@ -1,23 +1,31 @@
 import { LocalizationRepository } from "../RestAPI";
 
-type TranslationType = {
-    $: Promise<string>,
-    resolved: (_: string) => void
-}
+type ResolveFn = (_: string) => void
 
-class TranslationItem implements TranslationType {
-    resolved: (_: string) => void = _ => void 0
-    $: Promise<string> = new Promise(resolve => {
-        this.resolved = function(localization) {
-            resolve(localization);
-        }
-    })
+export type TranslationType = {
+    then: (_: ResolveFn) => void,
+    resolved: (_: string) => void
 }
 
 const translations = new Map<string, TranslationType>()
 const computeIfAbsent = (key: string) : TranslationType => {
     if (!translations.has(key)) {
-        translations.set(key, new TranslationItem())
+        let resolver: ResolveFn
+        let lastValue: string
+
+        const resolved = (value: string) => {
+            lastValue = value
+            if (!resolver) setTimeout(() => resolved(lastValue), 50)
+            else resolver(lastValue)
+        }
+
+        translations.set(key, {
+            then: (resolve: ResolveFn) => {
+                resolver = resolve
+                if (lastValue) resolved(lastValue)
+            },
+            resolved: resolved
+        })
     }
 
     return translations.get(key) as TranslationType
@@ -25,13 +33,14 @@ const computeIfAbsent = (key: string) : TranslationType => {
 
 const LocalizationService = {
     load: (language: string) => {
+        localStorage.setItem('language', language)
         LocalizationRepository.get(language)
             .then((response: Map<string, string>) => {
                 Object.entries(response)
                     .forEach(([key, value]) => computeIfAbsent(key)?.resolved(value))
             })
     },
-    get: (key: string): Promise<string> => computeIfAbsent(key).$
+    get: (key: string): TranslationType => computeIfAbsent(key)
 }
 
 LocalizationService.load(localStorage.getItem('language') || 'en')

@@ -19,7 +19,7 @@ import { ProfileRoutes } from "./profile";
 import MobileSidebar from "./core/sidebar/mobile-sidebar";
 import { BatchRoutes } from "./batch";
 
-const LoginCard = lazy(() => import("./security/LoginCard"));
+const LoginCard = lazy(() => import("./security/login-card"));
 const RegisterCard = lazy(() => import("./security/RegisterCard"));
 
 const routes = [
