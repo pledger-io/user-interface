@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from 'prop-types';
 import {
-    Attachments,
+    Attachment,
     BreadCrumbItem,
     BreadCrumbs,
     Buttons,
@@ -29,7 +29,7 @@ const AccountRow = ({ account, deleteCallback }) => {
 
     return (
         <tr className='AccountRow'>
-            <td><Attachments.Image fileCode={account.iconFileCode}/></td>
+            <td><Attachment.Image fileCode={account.iconFileCode}/></td>
             <td>
                 <Link to={`./${account.id}`}>{account.name}</Link>
                 <When condition={account.history.lastTransaction !== null}>

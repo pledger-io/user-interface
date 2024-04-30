@@ -1,4 +1,4 @@
-import { Attachments, BreadCrumbItem, BreadCrumbs, Layout, Message, Notifications, Translations } from "../core";
+import { Attachment, BreadCrumbItem, BreadCrumbs, Layout, Message, Notifications, Translations } from "../core";
 import NavigationComponent from "./navigation.component";
 import ProcessRepository, { ProcessStart } from "../core/repositories/process.repository";
 import { Form } from "../core/form";
@@ -39,7 +39,7 @@ const ProfileConfigImportView = () => {
 
                     <Form entity='Profile' onSubmit={() => void 0} >
                         <div className='max-w-[10em] mx-auto'>
-                            <Attachments.Upload label='page.title.user.profile.import'
+                            <Attachment.Upload label='page.title.user.profile.import'
                                                 accepts='application/json'
                                                 onUpload={ onUploadComplete }/>
                         </div>

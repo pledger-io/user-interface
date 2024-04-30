@@ -1,4 +1,4 @@
-import { Upload } from "../../core/Attachment";
+import { Upload } from "../../core/attachment";
 import { Entity, Form, Input, SubmitButton } from "../../core/form";
 import { mdiCheckDecagram, mdiSkipNext } from "@mdi/js";
 import { useState } from "react";

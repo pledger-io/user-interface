@@ -2,7 +2,7 @@ import { Buttons, Dialog, Notifications, Translations } from "../../core";
 import { mdiContentSave, mdiUpload } from "@mdi/js";
 import { FC, useState } from "react";
 import { Attachment, Identifier } from "../../core/types";
-import { Upload } from "../../core/Attachment";
+import { Upload } from "../../core/attachment";
 import { AttachmentRepository } from "../../core/RestAPI";
 import ContractRepository from "../../core/repositories/contract-repository";
 import { Form, SubmitButton } from "../../core/form";

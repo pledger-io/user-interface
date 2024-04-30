@@ -6,7 +6,7 @@ import { BatchConfig } from "../../types";
 import { Button } from "../../buttons";
 import Dialog from "../../popups/Dialog";
 import { Message } from "../../index";
-import { Upload } from "../../Attachment";
+import { Upload } from "../../attachment";
 
 type ImportConfigInputProps = FieldType & {
     title?: string,
