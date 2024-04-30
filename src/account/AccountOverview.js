@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
-    Attachments,
+    Attachment,
     BreadCrumbItem,
     BreadCrumbs,
     Buttons,
@@ -34,7 +34,7 @@ const AccountRow = ({ account, deleteCallback }) => {
     return (
         <tr className='AccountRow' onMouseLeave={() => dropDownActions.close()}>
             <td>
-                {account.iconFileCode && <Attachments.Image fileCode={account.iconFileCode}/>}
+                {account.iconFileCode && <Attachment.Image fileCode={account.iconFileCode}/>}
             </td>
             <td>
                 <h2><NavLink to={`./${account.id}/transactions`}>{account.name}</NavLink></h2>

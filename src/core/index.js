@@ -9,7 +9,6 @@ import * as Pagination from './Paginator'
 import * as Statistical from './Statistical'
 import * as Translations from './localization'
 import * as Formats from './Formatters'
-import * as Attachments from './Attachment'
 import * as Attachment from './attachment/index'
 import * as Dates from './Dates'
 import * as Dropdown from './dropdown'
@@ -146,7 +145,6 @@ export {
     BreadCrumbItem,
     BreadCrumbMenu,
     Attachment,
-    Attachments,
     When,
     Dropdown,
     Formats,

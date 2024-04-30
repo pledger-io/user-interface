@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { Entity, Form, Input, SubmitButton } from '../core/form'
-import { Attachments, BreadCrumbItem, BreadCrumbs, Buttons, Layout, Message, Notifications, Translations } from "../core";
+import { Attachment, BreadCrumbItem, BreadCrumbs, Buttons, Layout, Message, Notifications, Translations } from "../core";
 import { mdiCancel, mdiContentSave } from "@mdi/js";
 import { useNavigate, useParams } from "react-router-dom";
 import AccountRepository from "../core/repositories/account-repository";
@@ -104,7 +104,7 @@ const AccountForm = ({ type }) => {
                                                     title='Account.type'
                                                     required/>)}
                         </div>
-                        <Attachments.Upload label='page.accounts.accounts.changeIcon'
+                        <Attachment.Upload label='page.accounts.accounts.changeIcon'
                                             accepts='image/*'
                                             onUpload={onPictureChange}/>
                     </fieldset>
