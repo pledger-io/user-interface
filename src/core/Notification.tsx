@@ -21,10 +21,10 @@ const NotificationService = (() => {
     }
     const handleException = (error: AxiosError) => {
         const apiError: ApiError = error.response?.data as ApiError
-        if (apiError._links.help) {
+        if (apiError?._links.help) {
             push(apiError._links.help[0].href, 'warning')
         } else {
-            console.error('Error intercepted', error)
+            notifyUser({ type: 'warning', message: (error.response as any).data.message })
         }
     }
 

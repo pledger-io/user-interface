@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { mdiAccountPlus, mdiLogin, mdiWeb } from "@mdi/js";
 
 import { Form, Input, SubmitButton } from '../core/form'
@@ -16,11 +15,9 @@ type LoginCallback = () => void
 
 const LoginCard = ({ callback }: { callback: LoginCallback }) => {
     const [failure, setFailure] = useState()
-    const navigate              = useNavigate()
 
     const onSubmit = (entity: LoginForm) => SecurityRepository.authenticate(entity.username, entity.password)
         .then(() => callback())
-        .then(() => navigate('/dashboard'))
         .catch(setFailure)
 
     return (

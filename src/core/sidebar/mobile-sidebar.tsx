@@ -8,7 +8,6 @@ import { NavLink } from "react-router-dom";
 import ProfilePicture from "../../profile/profile-picture.component";
 import { Buttons } from "../index";
 import { mdiCloseBox, mdiLogoutVariant } from "@mdi/js";
-import SecurityRepository from "../repositories/security-repository";
 
 
 type SidebarProps = {
@@ -17,10 +16,6 @@ type SidebarProps = {
 
 const MobileSidebar = ({ logoutCallback } : SidebarProps) => {
     const [isOpen, setIsOpen] = useState(false)
-    const onLogout = () => {
-        SecurityRepository.logout()
-        logoutCallback()
-    }
 
     useEffect(() => {
         const onMenuClick = () => setIsOpen(previous => !previous)
@@ -61,7 +56,7 @@ const MobileSidebar = ({ logoutCallback } : SidebarProps) => {
                                     className='border-none !text-white'  />
 
                     <Buttons.Button icon={ mdiLogoutVariant }
-                                    onClick={ onLogout }
+                                    onClick={ logoutCallback }
                                     variant='icon'
                                     className='px-2 text-[var(--sidebar-icon-color)]'/>
                 </footer>

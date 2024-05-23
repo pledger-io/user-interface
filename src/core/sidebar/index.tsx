@@ -16,11 +16,6 @@ type SidebarProps = {
 }
 
 const Sidebar = ({ logoutCallback } : SidebarProps) => {
-    const onLogout = () => {
-        dispatchEvent(new CustomEvent('credentials-expired'))
-        logoutCallback()
-    }
-
     return <>
         <div className='h-screen max-w-[218px] flex-col overflow-y-auto
                         hidden md:flex
@@ -55,7 +50,7 @@ const Sidebar = ({ logoutCallback } : SidebarProps) => {
                 </NavLink>
 
                 <Buttons.Button icon={ mdiLogoutVariant }
-                                onClick={ onLogout }
+                                onClick={ logoutCallback }
                                 variant='icon'
                                 className='px-2 text-[var(--sidebar-icon-color)]'/>
             </footer>
