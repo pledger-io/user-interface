@@ -8,7 +8,6 @@ import { NavLink } from "react-router-dom";
 import ProfilePicture from "../../profile/profile-picture.component";
 import { Buttons } from "../index";
 import { mdiCloseBox, mdiLogoutVariant } from "@mdi/js";
-import SecurityRepository from "../repositories/security-repository";
 
 
 type SidebarProps = {
