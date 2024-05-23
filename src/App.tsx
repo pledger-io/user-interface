@@ -12,20 +12,21 @@ import { RulesRoutes } from "./rules";
 
 import './assets/css/Main.scss'
 import './assets/css/Theme.scss'
-import { lazy, Suspense, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { ContractRoutes } from "./contract";
 import { BudgetRoutes } from "./budget";
 import { ProfileRoutes } from "./profile";
 import MobileSidebar from "./core/sidebar/mobile-sidebar";
 import { BatchRoutes } from "./batch";
+import TwoFactorCard from "./security/two-factor.card";
+import SecurityRepository from "./core/repositories/security-repository";
+import RestAPI from "./core/repositories/rest-api";
+import { AxiosError } from "axios";
 
 const LoginCard = lazy(() => import("./security/login-card"));
 const RegisterCard = lazy(() => import("./security/RegisterCard"));
 
-const routes = [
-    <Route path='/' element={<Navigate to='/dashboard'/>} key='index' />
-]
-routes.push(...AccountRoutes)
+const routes = [...AccountRoutes]
 routes.push(...CategoryRoutes)
 routes.push(...SettingRoutes)
 routes.push(...ReportRoutes)
@@ -38,18 +39,61 @@ routes.push(...ProfileRoutes)
 routes.push(...BatchRoutes)
 
 function App() {
-    const [_, setAuthenticate] = useState(false) //eslint-disable-line
+    const [isAuthenticated, setAuthenticate] = useState(false) //eslint-disable-line
+    const [twoFactorNeeded, setTwoFactor] = useState(false) //eslint-disable-line
 
-    if (sessionStorage.getItem('token')) {
+    const authenticated = () => {
+        RestAPI.profile()
+            .then(() => {
+                console.log('Profile loaded')
+                setAuthenticate(true)
+                setTwoFactor(false)
+            })
+            .catch((ex: AxiosError) => {
+                if (ex.response?.status === 403) {
+                    setTwoFactor(true)
+                }
+            })
+    }
+    const logout = () => {
+        SecurityRepository.logout()
+        setAuthenticate(false)
+    }
+
+    useEffect(() => {
+        console.log('App mounted')
+        if (sessionStorage.getItem('token')) {
+            authenticated()
+        }
+
+        window.addEventListener('credentials-expired', logout)
+    }, [])
+
+    if (twoFactorNeeded) {
         return (
             <Suspense>
                 <BrowserRouter basename='/ui'>
-                    <Sidebar logoutCallback={() => setAuthenticate(false)}/>
-                    <MobileSidebar logoutCallback={() => setAuthenticate(false)}/>
+                    <Notifications.NotificationCenter />
+                    <Routes>
+                        <Route key='two-factor' path="/two-factor" element={<TwoFactorCard callback={ authenticated }/>}/>
+                        <Route key='redirect' path='/*' element={<Navigate to='/two-factor'/>}/>
+                    </Routes>
+                </BrowserRouter>
+            </Suspense>
+        )
+    }
+
+    if (isAuthenticated) {
+        return (
+            <Suspense>
+                <BrowserRouter basename='/ui'>
+                    <Sidebar logoutCallback={ logout }/>
+                    <MobileSidebar logoutCallback={ logout }/>
                     <main className='Main px-2 md:px-5 h-[100vh] flex flex-col overflow-y-auto'>
                         <Notifications.NotificationCenter />
                         <Routes>
                             {routes}
+                            <Route path='/*' element={<Navigate to='/dashboard'/>}/>
                         </Routes>
                         <Suspense>
                             <Outlet />
@@ -65,7 +109,7 @@ function App() {
             <BrowserRouter basename='/ui'>
                 <Routes>
                     <Route path='/' element={<Navigate to='/login'/>}/>
-                    <Route path='/login' element={<LoginCard callback={() => setAuthenticate(true)} />}/>
+                    <Route path='/login' element={<LoginCard callback={ authenticated } />}/>
                     <Route path='/register' element={<RegisterCard />}/>
                     <Route path='/*' element={<Navigate to='/login'/>} />
                 </Routes>

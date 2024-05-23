@@ -16,18 +16,18 @@ const SecurityRepository = (api => {
                 sessionStorage.setItem('refresh-token', token.refreshToken);
                 sessionStorage.setItem('token', token.accessToken);
             }),
+        twoFactor: (code) => api.post('security/2-factor', { verificationCode: code })
+            .then(serverResponse => {
+                const token = new TokenResponse(serverResponse)
+                sessionStorage.setItem('refresh-token', token.refreshToken);
+                sessionStorage.setItem('token', token.accessToken);
+            }),
         register: (username, password) => api.put(`security/create-account`, { username, password }),
         logout: () => {
-            sessionStorage.removeItem('token');
-            sessionStorage.removeItem('refresh-token');
-        }
+                sessionStorage.removeItem('token');
+                sessionStorage.removeItem('refresh-token');
+            }
     }
 })(RestAPI)
-
-window.addEventListener('credentials-expired', _ => {
-    console.log('Credentials expired')
-    SecurityRepository.logout()
-    window.location.reload()
-})
 
 export default SecurityRepository

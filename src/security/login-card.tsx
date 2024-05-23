@@ -20,7 +20,6 @@ const LoginCard = ({ callback }: { callback: LoginCallback }) => {
 
     const onSubmit = (entity: LoginForm) => SecurityRepository.authenticate(entity.username, entity.password)
         .then(() => callback())
-        .then(() => navigate('/dashboard'))
         .catch(setFailure)
 
     return (

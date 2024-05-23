@@ -48,7 +48,8 @@ const RestAPI = (() => {
         return profile
     }
 
-    const handle = (response: Promise<AxiosResponse>) => response.then(response => response.data)
+    const handle = (response: Promise<AxiosResponse>) => response
+        .then(response => response.data)
 
     const api = {
         profile: () => api.get('profile').then(updateProfile),
@@ -60,8 +61,6 @@ const RestAPI = (() => {
         put:   <T,U>(uri: string, body: T, settings = {}): Promise<U>   => handle(axiosInstance.put(uri, body, settings)),
         delete: (uri: string, settings = {}): Promise<void>             => handle(axiosInstance.delete(uri, settings))
     }
-
-    if (sessionStorage.getItem('token')) api.profile().finally(() => {})
 
     return api
 })()
