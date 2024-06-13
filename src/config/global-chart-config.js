@@ -66,7 +66,17 @@ const GlobalChartConfig = {
             enabled: true,
             usePointStyle: true,
             position: 'nearest',
+            backgroundColor: 'white',
+            bodyColor: 'black',
+            titleColor: 'black',
+            borderColor: 'black',
+            borderWidth: .5,
             callbacks: {
+                title: (context) => context.label,
+                label: (context) => {
+                    const value = context.parsed?.y ?? context.parsed.value;
+                    return `${value}`
+                },
                 labelPointStyle: (_) => {
                     return {
                         pointStyle: 'triangle',
