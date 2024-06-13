@@ -49,7 +49,7 @@ const TransactionItem: FC<TransactionItemProps> = ({ transaction, className = ''
 
     if (deleted) return null
     return <div className={`${className} flex content-between gap-3 mb-1 pb-1 border-b-[1px] border-gray-100 last:border-none`}>
-        <span className='text-[.9em] md:w-[12em] w-[6em]'>
+        <span className='text-[.9em] md:text-[1em] md:w-[12em] w-[6em]'>
             { transaction.metadata.budget &&
                 <div className='text-gray-400'>
                     { transaction.metadata.budget }
@@ -63,7 +63,7 @@ const TransactionItem: FC<TransactionItemProps> = ({ transaction, className = ''
             <Icon path={ mdiAlert } size={ 1 }/>
         </span> }
         <span className='flex flex-col flex-1'>
-            <span className='text-[.9em]'>{ transaction.description }</span>
+            <span className='text-[.9em] md:text-[1em]'>{ transaction.description }</span>
             { transaction.metadata.tags && <div className='flex gap-1'>
                 { transaction.metadata.tags.map(t => <Layout.Tag key={ t } label={ t }/>) }
             </div> }
