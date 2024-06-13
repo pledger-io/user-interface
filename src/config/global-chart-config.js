@@ -189,28 +189,17 @@ const Service = {
 }
 
 export const defaultGraphColors = [
-    '#E0FFFF',
-    '#00CED1',
-    '#40E0D0',
-    '#48D1CC',
-    '#AFEEEE',
-    '#7FFFD4',
-    '#B0E0E6',
-    '#5F9EA0',
-    '#66CDAA',
-    '#3CB371',
-    '#20B2AA',
-    '#2F4F4F',
-    '#008080',
-    '#008B8B',
-    '#32CD32',
-    '#90EE90',
-    '#ADFF2F',
-    '#90EE90',
-    '#ADFF2F',
-    '#7FFF00',
-    '#7FFF00',
-    '#6B8E23',
+    'rgba(25, 25, 112, 0.8)', // Midnight Blue
+    'rgba(0, 0, 128, 0.8)', // Navy Blue
+    'rgba(0, 0, 139, 0.8)', // Dark Blue
+    'rgba(0, 0, 156, 0.8)', // Medium Blue
+    'rgba(0, 0, 205, 0.8)', // Medium Blue
+    'rgba(0, 0, 255, 0.8)', // Blue
+    'rgba(70, 130, 180, 0.8)', // Steel Blue
+    'rgba(100, 149, 237, 0.8)', // Cornflower Blue
+    'rgba(135, 206, 235, 0.8)', // Sky Blue
+    'rgba(135, 206, 250, 0.8)', // Light Sky Blue
+    'rgba(240, 248, 255, 0.8)', // Alice Blue
 ]
 
 export {
