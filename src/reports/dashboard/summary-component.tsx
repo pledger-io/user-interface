@@ -34,7 +34,7 @@ const SummaryComponent: FC<SummaryComponentProps> = ({ title, icon, currency, cu
     }, [current, previous])
 
     return <>
-        <Layout.Card>
+        <Layout.Card className='flex-1 !my-0'>
             <div className='flex flex-row justify-between'>
                 <div className='min-w-[100px] min-h-[125px]'>
                     <h1 className='text-2xl'>
@@ -45,10 +45,10 @@ const SummaryComponent: FC<SummaryComponentProps> = ({ title, icon, currency, cu
                     </span>
                     { previous !== null && (
                         <div className={`
-                            text-lg pl-7 bg-no-repeat flex items-center mt-2
+                            pl-7 bg-no-repeat flex items-center mt-2
                             whitespace-nowrap bg-left-bottom
-                            Comparison ${comparisonClass}`}>
-                            <Translations.Translation label={comparisonKey} />
+                            Comparison ${comparisonClass}`} style={ { lineHeight: '1.5rem' } }>
+                            <Translations.Translation label={comparisonKey} className='text-sm' />
                         </div>
                     )}
                 </div>
