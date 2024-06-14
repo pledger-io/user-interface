@@ -18,8 +18,10 @@ import BudgetYearlyExpense from "./budget-yearly-expense";
 
 import '../../assets/css/BudgetReportView.scss'
 import BudgetRepository from "../../core/repositories/budget.repository";
+import { CurrencyRepository } from "../../core/RestAPI";
 
 export const BudgetReportView = () => {
+    const [currencySymbol, setCurrencySymbol] = useState('')
     const [range, setRange] = useState(() => Dates.Ranges.currentYear())
     const { currency = 'EUR', year = new Date().getFullYear() } = useParams()
     const [budgets, setBudgets] = useState([])
@@ -36,6 +38,10 @@ export const BudgetReportView = () => {
                 .catch(console.error)
         }
     }, [year])
+    useEffect(() => {
+        CurrencyRepository.get(currency)
+            .then((c) => setCurrencySymbol(c.symbol))
+    }, [currency])
 
     const onDateChanged = ({
                                newYear = year,
@@ -60,8 +66,8 @@ export const BudgetReportView = () => {
         </Layout.Grid>
 
         <Layout.Grid type='column' minWidth='25em'>
-            <YearlyIncomeGraphComponent year={parseInt(year)} budgets={budgets}/>
-            <BudgetYearlyExpense year={parseInt(year)} budgets={budgets}/>
+            <YearlyIncomeGraphComponent year={parseInt(year)} budgets={budgets} currencySymbol={ currencySymbol } />
+            <BudgetYearlyExpense year={parseInt(year)} budgets={budgets} currencySymbol={ currencySymbol }/>
         </Layout.Grid>
 
         <Layout.Card>

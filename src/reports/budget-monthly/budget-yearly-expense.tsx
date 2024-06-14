@@ -8,10 +8,11 @@ import { DefaultChartConfig, Service } from "../../config/global-chart-config";
 
 type BudgetYearlyExpenseProps = {
     year: number,
-    budgets: Budget[]
+    budgets: Budget[],
+    currencySymbol: string
 }
 
-const BudgetYearlyExpense = ({ year, budgets } : BudgetYearlyExpenseProps) => {
+const BudgetYearlyExpense = ({ year, budgets, currencySymbol } : BudgetYearlyExpenseProps) => {
     const [chartData, setChartData] = useState<ChartData | undefined>()
 
     useEffect(() => {
@@ -62,6 +63,11 @@ const BudgetYearlyExpense = ({ year, budgets } : BudgetYearlyExpenseProps) => {
                                x: {
                                    time: {
                                        unit: 'month'
+                                   }
+                               },
+                               y: {
+                                   ticks: {
+                                       callback: (value: any) => `${currencySymbol}${value}`
                                    }
                                }
                            },

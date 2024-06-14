@@ -7,7 +7,8 @@ import { ChartData } from "chart.js";
 import { Category } from "../../core/types";
 import StatisticalRepository from "../../core/repositories/statistical-repository";
 import { Chart } from "react-chartjs-2";
-import { DefaultChartConfig } from "../../config/global-chart-config";
+import { DefaultChartConfig, Service as ChartService } from "../../config/global-chart-config";
+import RestAPI from "../../core/repositories/rest-api";
 
 const CategoriesBalance = ({ range } : { range: Range }) => {
     const [categorySeries, setCategorySeries] = useState<ChartData | undefined>()
@@ -34,13 +35,28 @@ const CategoriesBalance = ({ range } : { range: Range }) => {
             .catch(_ => setCategorySeries({ labels: [], datasets: [] }))
     }, [range])
 
+    const config = ChartService.mergeOptions(
+        DefaultChartConfig.bar,
+        {
+            scales: {
+                y: {
+                    ticks: {
+                        callback: (value: number) => {
+                            return `${(RestAPI.user() as any).defaultCurrency?.symbol}${value.toFixed(2)}`
+                        }
+                    }
+                }
+            }
+        }
+    )
+
     return <>
         <Layout.Card title='page.dashboard.categories.balance'>
             { !categorySeries && <Loading /> }
             { categorySeries &&
                 <Chart type='bar'
                        height={ 300 }
-                       options={ DefaultChartConfig.bar }
+                       options={ config }
                        data={ categorySeries }
                        id='dashboard-categories-graph' />
             }
