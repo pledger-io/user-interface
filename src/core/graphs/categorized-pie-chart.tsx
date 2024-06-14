@@ -5,7 +5,7 @@ import { isArray } from "chart.js/helpers";
 import { Account } from "../types";
 import StatisticalRepository from "../repositories/statistical-repository";
 import { Chart } from "react-chartjs-2";
-import { ChartData } from "chart.js";
+import { ChartData, Tooltip, TooltipPosition } from "chart.js";
 import { defaultGraphColors } from "../../config/global-chart-config";
 
 type CategorizedPieChartProps = {
@@ -15,8 +15,17 @@ type CategorizedPieChartProps = {
     accounts?: Account[] | Account
 }
 
+let lastPosition: TooltipPosition
+(Tooltip.positioners as any)['center'] = (_: any[], eventPosition: any) => {
+    const chartArea = eventPosition.chart?.chartArea
+    if (!chartArea) return lastPosition
+
+    lastPosition = { x: chartArea.right / 2 - 40, y: chartArea.bottom / 2 }
+    return lastPosition
+}
+
 const CategorizedPieChart: FC<CategorizedPieChartProps> = ({ id, split, incomeOnly, accounts = [] }) => {
-    const [pieSeries, setPieSeries] = useState<ChartData | undefined>(undefined)
+    const [pieSeries, setPieSeries] = useState<ChartData<'doughnut'> | undefined>(undefined)
     const [range] = useDateRange()
 
     useEffect(() => {
@@ -44,39 +53,46 @@ const CategorizedPieChart: FC<CategorizedPieChartProps> = ({ id, split, incomeOn
             })
     }, [split, incomeOnly, range]) // eslint-disable-line react-hooks/exhaustive-deps
 
+    const currency = accounts && !isArray(accounts) ? accounts.account.currency : '€'
+
     if (!pieSeries) return <Layout.Loading />
     return <>
         <Chart id={ id }
-               type='pie'
+               type='doughnut'
                height={ 300 }
                data={ pieSeries }
                options={
                   {
+                      cutout: '65%',
                       elements: {
                           arc: {
+                              hoverOffset: 15,
+                              borderWidth: .5,
                               backgroundColor: (context : any) => defaultGraphColors[context.dataIndex]
                           }
                       },
                       plugins: {
                           legend: {
-                              display: true,
-                              position: 'right'
+                              display: false,
                           },
                           tooltip: {
+                              backgroundColor: 'white',
+                              bodyColor: 'black',
+                              titleColor: 'black',
+                              cornerRadius: 0,
+                              caretSize: 0,
+                              position: 'center',
+                              bodyAlign: 'left',
                               callbacks: {
                                   title: (context : any) => context.label,
                                   label: (context: any) => {
-                                      if (accounts && !isArray(accounts)) {
-                                          return `${context.raw} ${accounts?.account?.currency}`
-                                      }
-
-                                      return context.raw
+                                      return ` ${currency}${context.raw}`
                                   }
                               }
                           }
                       },
                       maintainAspectRatio: false
-                  }}/>
+                  } as any }/>
     </>
 }
 

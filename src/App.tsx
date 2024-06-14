@@ -22,6 +22,7 @@ import TwoFactorCard from "./security/two-factor.card";
 import SecurityRepository from "./core/repositories/security-repository";
 import RestAPI from "./core/repositories/rest-api";
 import { AxiosError } from "axios";
+import { CurrencyRepository } from "./core/RestAPI";
 
 const LoginCard = lazy(() => import("./security/login-card"));
 const RegisterCard = lazy(() => import("./security/RegisterCard"));
@@ -45,9 +46,13 @@ function App() {
     const authenticated = () => {
         RestAPI.profile()
             .then(() => {
-                console.log('Profile loaded')
                 setAuthenticate(true)
                 setTwoFactor(false)
+                CurrencyRepository.list().then(() => {
+                    const profile: any = RestAPI.user()
+                    profile.defaultCurrency = CurrencyRepository.cached(profile.currency)
+                })
+
             })
             .catch((ex: AxiosError) => {
                 if (ex.response?.status === 403) {
@@ -102,6 +107,12 @@ function App() {
                 </BrowserRouter>
             </Suspense>
         );
+    }
+
+    if (sessionStorage.getItem('token')) {
+        return <div className='h-[100vh] w-full flex justify-center items-center'>
+                <Layout.Loading />
+        </div>
     }
 
     return (

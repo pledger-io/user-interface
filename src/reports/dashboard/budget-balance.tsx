@@ -6,8 +6,9 @@ import { Range } from "../../core/Dates";
 import { ChartData } from "chart.js";
 import { Budget, BudgetExpense } from "../../core/types";
 import StatisticalRepository from "../../core/repositories/statistical-repository";
-import { DefaultChartConfig, Service } from "../../config/global-chart-config";
+import { DefaultChartConfig, Service as ChartService } from "../../config/global-chart-config";
 import BudgetRepository from "../../core/repositories/budget.repository";
+import RestAPI from "../../core/repositories/rest-api";
 
 const percentageOfYear = 90 / 365
 
@@ -44,6 +45,27 @@ function BudgetBalance({ range } : { range : Range }) {
             .catch(_ => setBudgetSeries({ labels: [], datasets: [] }))
     }, [range])
 
+    const config = ChartService.mergeOptions(
+        DefaultChartConfig.bar,
+        {
+            scales: {
+                y: {
+                    ticks: {
+                        callback: (value: number) => {
+                            return `${(RestAPI.user() as any).defaultCurrency?.symbol}${value.toFixed(2)}`
+                        }
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    display: true
+                }
+            }
+        }
+    )
+
     return <>
         <Layout.Card title='page.dashboard.budgets.balance'>
             { !budgetSeries && <Loading /> }
@@ -51,14 +73,7 @@ function BudgetBalance({ range } : { range : Range }) {
                 <Chart type='bar'
                        id='dashboard-budgets-graph'
                        height={ 300 }
-                       options={ Service.mergeOptions(DefaultChartConfig.bar, {
-                           plugins: {
-                               legend: {
-                                   position: 'bottom',
-                                   display: true
-                               }
-                           }
-                          }) }
+                       options={ config }
                        data={ budgetSeries } />
             }
         </Layout.Card>

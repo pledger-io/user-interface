@@ -42,10 +42,20 @@ const TransactionRepository = (api => {
 })(RestApi)
 
 const CurrencyRepository = (api => {
+    let knownCurrencies = []
     return {
-        list: () => api.get('settings/currencies'),
+        list: () => api.get('settings/currencies').then(currencies => {
+            knownCurrencies = currencies
+            return currencies
+        }),
         get: code => api.get(`settings/currencies/${code}`),
         change: (code, enabled) => api.patch(`settings/currencies/${code}`, { enabled: enabled })
+            .then(response => {
+                const currency = knownCurrencies.find(currency => currency.code === code)
+                currency.enabled = enabled
+                return response
+            }),
+        cached: (code) => knownCurrencies.find(currency => currency.code === code)
     }
 })(RestApi)
 

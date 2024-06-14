@@ -3,20 +3,19 @@ import { Dates, Layout, Translations } from "../../core";
 import { ChartData } from "chart.js";
 import { Budget, BudgetExpense } from "../../core/types";
 import StatisticalRepository from "../../core/repositories/statistical-repository";
-import { Chart } from "react-chartjs-2";
-import { DefaultChartConfig, Service } from "../../config/global-chart-config";
+import BudgetChart from "./budget-chart";
 
 type BudgetYearlyExpenseProps = {
     year: number,
-    budgets: Budget[]
+    budgets: Budget[],
+    currencySymbol: string
 }
 
-const BudgetYearlyExpense = ({ year, budgets } : BudgetYearlyExpenseProps) => {
+const BudgetYearlyExpense = ({ year, budgets, currencySymbol } : BudgetYearlyExpenseProps) => {
     const [chartData, setChartData] = useState<ChartData | undefined>()
 
     useEffect(() => {
         if (budgets.length === 0) return
-        console.info(`BudgetYearlyExpense: ${year} ${budgets.length}`)
         setChartData(undefined)
 
         const uniqueExpenses = budgets.reduce((left, right) => [...left, ...right.expenses], new Array<BudgetExpense>())
@@ -54,25 +53,7 @@ const BudgetYearlyExpense = ({ year, budgets } : BudgetYearlyExpenseProps) => {
     return <>
         <Layout.Card title='page.reports.budget.expensePercent'>
             { !chartData && <Layout.Loading /> }
-            { chartData && <>
-                <Chart type='line'
-                       height={ 300 }
-                       options={ Service.mergeOptions(DefaultChartConfig.line,{
-                           scales: {
-                               x: {
-                                   time: {
-                                       unit: 'month'
-                                   }
-                               }
-                           },
-                           plugins: {
-                               legend: {
-                                   display: true
-                               }
-                           }
-                       }) }
-                       data={ chartData } />
-            </> }
+            { chartData && <BudgetChart dataSet={ chartData } currencySymbol={ currencySymbol } /> }
         </Layout.Card>
     </>
 }
