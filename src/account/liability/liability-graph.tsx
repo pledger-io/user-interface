@@ -4,8 +4,9 @@ import { Account } from "../../core/types";
 import { BalanceSeries } from "../../core/graphs/balance-series";
 import { Range } from "../../core/Dates";
 import { Chart } from "react-chartjs-2";
-import { DefaultChartConfig } from "../../config/global-chart-config";
+import { DefaultChartConfig, Service } from "../../config/global-chart-config";
 import { Loading } from "../../core/layout";
+import { CurrencyRepository } from "../../core/RestAPI";
 
 type LiabilityGraphProps = {
     range: Range,
@@ -29,12 +30,23 @@ function LiabilityGraph(props: LiabilityGraphProps) {
         }
     }, [range, account])
 
+    const currencySymbol = CurrencyRepository.cached(account.account.currency)?.symbol
     if (!balanceSeries) return <Loading />
     return <>
         <Chart height={ 100 }
                type={ 'line' }
                id='liability-balance-graph'
-               options={ { ...DefaultChartConfig.line, maintainAspectRatio: true } }
+               options={ Service.mergeOptions({
+                   scales: {
+                       y: {
+                           reverse: true,
+                           ticks: {
+                               callback: (value: any) => `${currencySymbol}${value}`
+                           }
+                       }
+                   },
+                   maintainAspectRatio: true
+               }, DefaultChartConfig.line) }
                data={ balanceSeries } />
     </>
 }

@@ -5,7 +5,10 @@ import { Loading } from "../layout";
 import { BalanceSeries } from "./balance-series";
 import { Chart } from "react-chartjs-2";
 import { ChartData } from "chart.js";
-import { DefaultChartConfig } from "../../config/global-chart-config";
+import { DefaultChartConfig, Service } from "../../config/global-chart-config";
+import RestAPI from "../repositories/rest-api";
+import { CurrencyRepository } from "../RestAPI";
+import { isArray } from "chart.js/helpers";
 
 type BalanceChartProps = {
     id: string
@@ -34,12 +37,25 @@ const BalanceChart: FC<BalanceChartProps> = ({ id, allMoney, accounts, height = 
         }
     }, [range, allMoney, accounts]);
 
+    let currencySymbol = (RestAPI.user() as any).defaultCurrency?.symbol
+    if (!isArray(accounts) && accounts)
+        currencySymbol = CurrencyRepository.cached(accounts.account.currency).symbol
+
     if (!balanceSeries) return <Loading />
     return <>
         <Chart height={ height }
                type={ 'line' }
                id={ id }
-               options={ DefaultChartConfig.line }
+               options={ Service.mergeOptions({
+                   scales: {
+                       y: {
+                           ticks: {
+                               callback: (value: any) => `${currencySymbol}${value}`
+                           }
+                       }
+                   }
+
+               }, DefaultChartConfig.line) }
                data={ balanceSeries } />
     </>
 }
