@@ -5,7 +5,7 @@ import { isArray } from "chart.js/helpers";
 import { Account } from "../types";
 import StatisticalRepository from "../repositories/statistical-repository";
 import { Chart } from "react-chartjs-2";
-import { ChartData, Tooltip, TooltipModel, TooltipPosition } from "chart.js";
+import { ChartData, Tooltip, TooltipPosition } from "chart.js";
 import { defaultGraphColors } from "../../config/global-chart-config";
 
 type CategorizedPieChartProps = {

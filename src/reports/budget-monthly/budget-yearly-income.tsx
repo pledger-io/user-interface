@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Dates, Layout, Statistical, Translations } from "../../core";
 import { Budget } from "../../core/types";
 import { ChartData } from "chart.js";
-import { Chart } from "react-chartjs-2";
-import { DefaultChartConfig, Service } from "../../config/global-chart-config";
+import BudgetChart from "./budget-chart";
 
 type BudgetYearlyExpenseProps = {
     year: number,
@@ -47,30 +46,7 @@ const YearlyIncomeGraphComponent = ({ year = 1970, budgets = [], currencySymbol 
     return <>
         <Layout.Card title='page.reports.budget.incomePercent'>
             { !chartData && <Layout.Loading /> }
-            { chartData && <>
-                <Chart type='line'
-                       height={ 300 }
-                       options={ Service.mergeOptions(DefaultChartConfig.line,{
-                           scales: {
-                               x: {
-                                   time: {
-                                       unit: 'month'
-                                   }
-                               },
-                               y: {
-                                   ticks: {
-                                       callback: (value: any) => `${currencySymbol}${value}`
-                                   }
-                               }
-                           },
-                           plugins: {
-                               legend: {
-                                   display: true
-                               }
-                           }
-                       }) }
-                       data={ chartData } />
-            </> }
+            { chartData && <BudgetChart dataSet={ chartData } currencySymbol={ currencySymbol } /> }
         </Layout.Card>
     </>
 }
