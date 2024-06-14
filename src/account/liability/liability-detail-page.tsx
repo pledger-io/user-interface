@@ -51,7 +51,7 @@ const LiabilityDetailView = () => {
                 <BreadCrumbItem label='page.nav.transactions'/>
             </BreadCrumbs>
 
-            <div className="flex gap-2">
+            <div className="flex gap-2 flex-wrap">
                 <Layout.Card className='flex-1'>
                     <h1 className='font-bold'>{ account.name }</h1>
                     <div className="flex">
