@@ -109,6 +109,12 @@ function App() {
         );
     }
 
+    if (sessionStorage.getItem('token')) {
+        return <div className='h-[100vh] w-full flex justify-center items-center'>
+                <Layout.Loading />
+        </div>
+    }
+
     return (
         <Suspense>
             <BrowserRouter basename='/ui'>
