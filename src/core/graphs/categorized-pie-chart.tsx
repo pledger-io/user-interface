@@ -42,6 +42,7 @@ const CategorizedPieChart: FC<CategorizedPieChartProps> = ({ id, split, incomeOn
 
         StatisticalRepository.split(split, searchCommand)
             .then(series => {
+                series = series.filter(({ balance }) => balance !== 0)
                 setPieSeries({
                     labels: series.map(({ partition }) => partition || 'Uncategorized'),
                     datasets: [
