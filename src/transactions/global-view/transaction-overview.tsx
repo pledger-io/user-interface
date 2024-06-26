@@ -6,8 +6,9 @@ import { Pagination } from "../../core/types";
 import TransactionFilters, { TransactionFilter } from "./transaction-filters";
 import { Paginator } from "../../core/Paginator";
 import { DailyTransactions, groupTransactionByDay } from "../../core/reducers";
-import { Formats, Layout, Resolver, Translations } from "../../core";
+import { Formats, Resolver, Translations } from "../../core";
 import TransactionItem from "../transaction-item";
+import Loading from "../../components/layout/loading.component";
 
 type TransactionOverviewProps = {
     range: Range,
@@ -59,7 +60,7 @@ const TransactionOverview: FC<TransactionOverviewProps> = ({ range, transfers })
     return <>
         { !transfers && <TransactionFilters onChange={ onFilterChange }/> }
 
-        { !isLoaded && <Layout.Loading/> }
+        { !isLoaded && <Loading /> }
 
         { hasTransactions && Object.keys(transactions).map(key => {
             const date = new Date(key)

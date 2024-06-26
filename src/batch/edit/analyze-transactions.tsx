@@ -5,10 +5,12 @@ import ProcessRepository, {
     ProcessTask
 } from "../../core/repositories/process.repository";
 import { useEffect, useState } from "react";
-import { Layout, Notifications, Translations } from "../../core";
+import { Notifications, Translations } from "../../core";
+import { useNavigate } from "react-router-dom";
+
 import ConfigureSettingsComponent from "./configure-settings.component";
 import AccountMappingComponent from "./account-mapping.component";
-import { useNavigate } from "react-router-dom";
+import Loading from "../../components/layout/loading.component";
 
 const AnalyzeTaskComponent = ({ process }: { process: ProcessInstance }) => {
     const [tasks, setTasks] = useState<ProcessTask>()
@@ -41,7 +43,7 @@ const AnalyzeTaskComponent = ({ process }: { process: ProcessInstance }) => {
             </span>
         </div>
 
-        { !tasks && <div className='text-center'><Layout.Loading /></div> }
+        { !tasks && <div className='text-center'><Loading /></div> }
 
         { tasks?.definition === 'task_configure' && <ConfigureSettingsComponent task={ tasks } /> }
         { tasks?.definition === 'confirm_mappings' && <AccountMappingComponent task={ tasks }/> }
@@ -67,7 +69,7 @@ const AnalyzeTransactions = ({ importJob }: { importJob: ImportJob }) => {
             .catch(() => Notifications.Service.warning('page.user.profile.import.error'))
     }
 
-    useEffect(loadProcess, [importJob]) // eslint-disable-line react-hooks/exhaustive-deps
+    useEffect(loadProcess, [importJob])
 
     if (!process) return null
     return <>

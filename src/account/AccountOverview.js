@@ -57,13 +57,13 @@ const AccountRow = ({ account, deleteCallback }) => {
                                     variant='primary'
                                     icon={mdiSquareEditOutline}
                                     href={`./${account.id}/edit`}/>
-                    <Dialog.ConfirmPopup title='common.action.delete'
-                                         openButton={<Buttons.Button label='common.action.delete'
+                    <Dialog.ConfirmComponent title='common.action.delete'
+                                             openButton={<Buttons.Button label='common.action.delete'
                                                                      variant='warning'
                                                                      icon={mdiTrashCanOutline}/>}
-                                         onConfirm={onDelete}>
+                                             onConfirm={onDelete}>
                         <Translations.Translation label='page.accounts.delete.confirm'/>
-                    </Dialog.ConfirmPopup>
+                    </Dialog.ConfirmComponent>
                 </Dropdown.Dropdown>
             </td>
         </tr>

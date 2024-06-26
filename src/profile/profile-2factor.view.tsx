@@ -1,10 +1,12 @@
-import { BreadCrumbItem, BreadCrumbs, Buttons, Layout, Message, Notifications, Translations } from "../core";
+import { BreadCrumbItem, BreadCrumbs, Buttons, Message, Notifications, Translations } from "../core";
 import NavigationComponent from "./navigation.component";
 import { Form, Input, SubmitButton } from "../core/form";
 import RestAPI from "../core/repositories/rest-api";
 import { mdiLockOff } from "@mdi/js";
 import ProfileRepository from "../core/repositories/profile.repository";
 import { useEffect, useState } from "react";
+import Card from "../components/layout/card.component";
+import Loading from "../components/layout/loading.component";
 
 const Profile2FactorView = () => {
     const [qrCode, setQrCode] = useState<string>()
@@ -33,7 +35,7 @@ const Profile2FactorView = () => {
             <BreadCrumbItem label='page.user.profile.twofactor' />
         </BreadCrumbs>
 
-        <Layout.Card title='page.title.user.profile'>
+        <Card title='page.title.user.profile'>
             <div className='flex gap-4'>
                 <div className='w-30'>
                     <NavigationComponent />
@@ -44,7 +46,7 @@ const Profile2FactorView = () => {
                     { !currentlyEnabled && <Form entity='Profile' onSubmit={ onSubmit }>
                         <div className='flex gap-5'>
                             <div>
-                                { !qrCode && <Layout.Loading /> }
+                                { !qrCode && <Loading /> }
                                 { qrCode && <img src={ qrCode } alt='QR code' /> }
                             </div>
                             <div className='flex-1'>
@@ -72,7 +74,7 @@ const Profile2FactorView = () => {
                     </> }
                 </div>
             </div>
-        </Layout.Card>
+        </Card>
     </>
 }
 

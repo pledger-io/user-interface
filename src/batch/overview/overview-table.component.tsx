@@ -1,10 +1,12 @@
-import { Layout, Translations } from "../../core";
+import { Translations } from "../../core";
 import { useEffect, useState } from "react";
 import { ImportJob, Pagination } from "../../core/types";
 import { useQueryParam } from "../../core/hooks";
 import ImportJobRepository from "../../core/repositories/import-job.repository";
-import OverviewRowComponent from "./overview-row.component";
 import { Paginator } from "../../core/Paginator";
+
+import OverviewRowComponent from "./overview-row.component";
+import Loading from "../../components/layout/loading.component";
 
 const OverviewTableComponent = () => {
     const [pagination, setPagination] = useState<Pagination>()
@@ -44,7 +46,7 @@ const OverviewTableComponent = () => {
             <tbody>
 
             { isLoading && <tr>
-                <td colSpan={ 5 } className="text-center"><Layout.Loading/></td>
+                <td colSpan={ 5 } className="text-center"><Loading/></td>
             </tr> }
 
             { !hasResults && <tr>

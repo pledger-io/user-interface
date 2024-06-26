@@ -2,17 +2,16 @@ import React from "react";
 import PropTypes from 'prop-types';
 
 // Export all core classes and functions
-import * as Dialog from './popups'
+import * as Dialog from '../components/layout/popup'
 import * as Notifications from './Notification'
-import * as Buttons from './buttons'
+import * as Buttons from '../components/layout/button'
 import * as Pagination from './Paginator'
 import * as Statistical from './Statistical'
 import * as Translations from './localization'
 import * as Formats from './Formatters'
 import * as Attachment from './attachment/index'
 import * as Dates from './Dates'
-import * as Dropdown from './dropdown'
-import * as Layout from './layout'
+import * as Dropdown from '../components/layout/dropdown'
 import { BreadCrumbs, BreadCrumbItem, BreadCrumbMenu } from "./breadcrumb";
 
 import '../assets/css/BreadCrumbs.scss'
@@ -151,5 +150,4 @@ export {
     Dates,
     Resolver,
     Progressbar,
-    Layout
 }

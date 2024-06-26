@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import SavingsRepository from "../../core/repositories/savings-repository";
-import { Buttons, Dialog, Dropdown, Formats, Layout, Notifications, Progressbar, Translations } from "../../core";
+import { Buttons, Dialog, Dropdown, Formats, Notifications, Progressbar, Translations } from "../../core";
 import { mdiDotsVertical, mdiPencilBoxOutline, mdiPiggyBankOutline, mdiTrashCanOutline } from "@mdi/js";
 import { Account, SavingGoal } from "../../core/types";
+
 import ReserveToGoalComponent from "./reserve-money.component";
 import EditSavingGoalComponent from "./saving-goal-form.component";
+import Loading from "../../components/layout/loading.component";
 
 type SavingGoalTableComponentProps = {
     account : Account
@@ -19,7 +21,7 @@ const SavingGoalTableComponent = ({ account } : SavingGoalTableComponentProps) =
         .then(() => setGoals(goals.filter(goal => goal.id !== toDelete.id)))
         .catch(() => Notifications.Service.warning('page.account.saving.goal.endingFail'))
 
-    if (!account) return <Layout.Loading />
+    if (!account) return <Loading />
     return <>
         <table className='Table SavingGoals'>
             <thead>
@@ -63,18 +65,18 @@ const SavingGoalTableComponent = ({ account } : SavingGoalTableComponentProps) =
                     <Dropdown.Dropdown icon={mdiDotsVertical}>
                         <EditSavingGoalComponent account={ account }
                                                  openButton={ <Buttons.Button label='page.account.saving.update'
-                                                                             icon={ mdiPencilBoxOutline }
-                                                                             variant='primary'/> }
+                                                                              icon={ mdiPencilBoxOutline }
+                                                                              variant='primary'/> }
                                                  savingGoal={ savingGoal }
                                                  onChanged={ onUpdated }/>
 
-                        <Dialog.ConfirmPopup title='page.account.saving.stop'
-                                             openButton={ <Buttons.Button label='page.account.saving.stop'
-                                                                         icon={ mdiTrashCanOutline }
-                                                                         variant='warning'/> }
-                                             onConfirm={ () => onDelete(savingGoal) }>
+                        <Dialog.Confirm title='page.account.saving.stop'
+                                                 openButton={ <Buttons.Button label='page.account.saving.stop'
+                                                                          icon={ mdiTrashCanOutline }
+                                                                          variant='warning'/> }
+                                                 onConfirm={ () => onDelete(savingGoal) }>
                             <Translations.Translation label='page.account.saving.stop.message'/>
-                        </Dialog.ConfirmPopup>
+                        </Dialog.Confirm>
                     </Dropdown.Dropdown>
                 </td>
             </tr>)}

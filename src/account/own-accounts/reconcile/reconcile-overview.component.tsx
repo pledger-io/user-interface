@@ -1,10 +1,12 @@
-import { Dialog } from "../../../core/popups";
+import { Dialog } from "../../../components/layout/popup";
 import { mdiBagChecked } from "@mdi/js";
-import { Buttons, Layout, Message, Translations } from "../../../core";
+import { Buttons, Message, Translations } from "../../../core";
 import React, { useEffect, useState } from "react";
 import ProcessRepository, { BusinessKey, ProcessInstance } from "../../../core/repositories/process.repository";
-import ReconcileRowComponent from "./reconcile-row.component";
 import { Identifier } from "../../../core/types";
+
+import ReconcileRowComponent from "./reconcile-row.component";
+import Loading from "../../../components/layout/loading.component";
 
 const ReconcileOverviewComponent = ({ accountId, onRemoved } : { accountId : Identifier, onRemoved : () => void }) => {
     const [reconcileActivity, setReconcileActivity] = useState<ProcessInstance[]>()
@@ -53,7 +55,7 @@ const ReconcileOverviewComponent = ({ accountId, onRemoved } : { accountId : Ide
                 </tr>
                 </thead>
                 <tbody>
-                { !reconcileActivity && <tr><td colSpan={ 6 }><Layout.Loading /></td></tr> }
+                { !reconcileActivity && <tr><td colSpan={ 6 }><Loading /></td></tr> }
                 { reconcileActivity && reconcileActivity.map(process =>
                     <ReconcileRowComponent process={ process } onRemoved={ loadReconcileActivity } />) }
                 </tbody>

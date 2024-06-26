@@ -1,10 +1,11 @@
-import { Attachment, BreadCrumbItem, BreadCrumbs, Layout, Message, Notifications, Translations } from "../core";
+import { Attachment, BreadCrumbItem, BreadCrumbs, Message, Notifications, Translations } from "../core";
 import NavigationComponent from "./navigation.component";
 import ProcessRepository, { ProcessStart } from "../core/repositories/process.repository";
 import { Form } from "../core/form";
 import { useState } from "react";
 import Icon from "@mdi/react";
 import { mdiCheckDecagram } from "@mdi/js";
+import Card from "../components/layout/card.component";
 
 type ProfileImportStart = ProcessStart & {
     storageToken: string
@@ -27,7 +28,7 @@ const ProfileConfigImportView = () => {
             <BreadCrumbItem label='page.user.profile.import' />
         </BreadCrumbs>
 
-        <Layout.Card title='page.title.user.profile'>
+        <Card title='page.title.user.profile'>
             <div className='flex gap-4'>
                 <div className='w-30'>
                     <NavigationComponent/>
@@ -55,7 +56,7 @@ const ProfileConfigImportView = () => {
                     </div> }
                 </div>
             </div>
-        </Layout.Card>
+        </Card>
     </>
 }
 

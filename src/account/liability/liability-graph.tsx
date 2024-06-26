@@ -5,8 +5,9 @@ import { BalanceSeries } from "../../core/graphs/balance-series";
 import { Range } from "../../core/Dates";
 import { Chart } from "react-chartjs-2";
 import { DefaultChartConfig, Service } from "../../config/global-chart-config";
-import { Loading } from "../../core/layout";
 import { CurrencyRepository } from "../../core/RestAPI";
+
+import Loading from "../../components/layout/loading.component";
 
 type LiabilityGraphProps = {
     range: Range,

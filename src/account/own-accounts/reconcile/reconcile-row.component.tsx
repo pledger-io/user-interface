@@ -4,16 +4,19 @@ import ProcessRepository, {
     ProcessVariable
 } from "../../../core/repositories/process.repository";
 import React, { useEffect, useState } from "react";
-import { Buttons, Formats, Layout, Notifications, Translations } from "../../../core";
+import { Buttons, Formats, Notifications, Translations } from "../../../core";
 import { mdiContentSaveSettings, mdiDelete, mdiHammer, mdiRedo } from "@mdi/js";
-import { ConfirmPopup, Dialog } from "../../../core/popups";
+import { Confirm, Dialog } from "../../../components/layout/popup";
 import { Form, Input, SubmitButton } from "../../../core/form";
 import { ReconcileStart } from "./types";
 import { Identifier } from "../../../core/types";
 
+import { PopupCallbacks } from "../../../components/layout/popup/popup.component";
+import Loading from "../../../components/layout/loading.component";
+
 const ReconcilePreviousYearComponent = ({ accountId, year, endBalance, onComplete } : { accountId: Identifier, year : number, endBalance: number, onComplete : () => void }) => {
 
-    const dialogActions = { close: () => undefined }
+    const dialogActions: PopupCallbacks = { close: () => {}, open: () => {} }
     const onFormSubmit = (data : any) => {
         const processData : ReconcileStart = {
             businessKey: accountId as BusinessKey,
@@ -66,7 +69,7 @@ const ReconcileRowComponent = ({ process, onRemoved } : { process : ProcessInsta
     }, [process])
 
     if (!variables) {
-        return <tr><td colSpan={ 6 }><Layout.Loading /></td></tr>
+        return <tr><td colSpan={ 6 }><Loading /></td></tr>
     }
 
     const onRetry = () => {
@@ -102,14 +105,14 @@ const ReconcileRowComponent = ({ process, onRemoved } : { process : ProcessInsta
                                 className='text-success'
                                 onClick={ onRetry }
                                 dataTestId={`retry-button-${ process.id }`}/>
-                <ConfirmPopup title='page.accounts.reconcile.delete.confirm'
-                              openButton={ <Buttons.Button variant='icon'
+                <Confirm title='page.accounts.reconcile.delete.confirm'
+                                  openButton={ <Buttons.Button variant='icon'
                                                            icon={ mdiDelete }
                                                            dataTestId={`remove-row-${ process.id }`}
                                                            className='text-warning' /> }
-                              onConfirm={ onDelete }>
+                                  onConfirm={ onDelete }>
                     <Translations.Translation label='page.accounts.reconcile.delete.confirm' />
-                </ConfirmPopup>
+                </Confirm>
             </td>
             <td>{ findValue('startDate').substring(0, 4) }</td>
             <td><Formats.Money money={ desiredStartBalance } /></td>

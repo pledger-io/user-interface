@@ -1,13 +1,15 @@
-import { BreadCrumbItem, BreadCrumbs, Buttons, Layout, Message, Notifications, Translations } from "../../core";
+import { BreadCrumbItem, BreadCrumbs, Buttons, Message, Notifications, Translations } from "../../core";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Rule } from "../../core/types";
 import { Form, Input, SubmitButton } from "../../core/form";
 import RuleRepository from "../../core/repositories/rule-repository";
-import ConditionFieldComponent from "./conditions.component";
-import ChangesComponent from "./changes.component";
 import { mdiCancel, mdiContentSave } from "@mdi/js";
 
+import ConditionFieldComponent from "./conditions.component";
+import ChangesComponent from "./changes.component";
+import Card from "../../components/layout/card.component";
+import Loading from "../../components/layout/loading.component";
 
 const EditPage = () => {
     const { id, group } = useParams()
@@ -53,14 +55,14 @@ const EditPage = () => {
         </BreadCrumbs>
 
         <Form entity='TransactionRule' onSubmit={ onSubmit }>
-            <Layout.Card title='page.nav.settings.rules.edit'
+            <Card title='page.nav.settings.rules.edit'
                          buttons={[
                              <SubmitButton key='save' label='common.action.save' icon={ mdiContentSave }/>,
                              <Buttons.BackButton key='cancel' label='common.action.cancel' icon={ mdiCancel }/>
                          ]}>
                 <Message label='page.settings.rules.help' variant='info'/>
 
-                { loading && <Layout.Loading /> }
+                { loading && <Loading /> }
 
                 { !loading && <fieldset>
                     <legend><Translations.Translation label='page.settings.rules.generic'/></legend>
@@ -107,7 +109,7 @@ const EditPage = () => {
 
                     <ChangesComponent id='changes' value={ rule?.changes || [] } />
                 </fieldset> }
-            </Layout.Card>
+            </Card>
         </Form>
     </>
 }

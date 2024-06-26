@@ -1,12 +1,10 @@
 import { FC, useContext } from "react";
 
-import { Button } from "../../buttons";
+import { Button } from "../../../components/layout/button";
 import { FormContext } from "../Form";
-import { ButtonProps } from "../../buttons/Button";
+import { ButtonProps } from "../../../components/layout/button/button.component";
 
-type SubmitButtonProps = ButtonProps & {
-
-}
+type SubmitButtonProps = ButtonProps
 
 /**
  * The submit button component allows for forms to be submitted to the

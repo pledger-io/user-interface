@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 
 import { Entity, Form, Input, SubmitButton } from '../../core/form'
-import { BreadCrumbItem, BreadCrumbs, Buttons, Layout, Notifications, Translations } from "../../core";
+import { BreadCrumbItem, BreadCrumbs, Buttons, Notifications, Translations } from "../../core";
 import { mdiCancel, mdiContentSave } from "@mdi/js";
 import AccountRepository from "../../core/repositories/account-repository";
 import { TransactionRepository } from "../../core/RestAPI";
 import { useNavigate, useParams } from "react-router-dom";
+import { Account } from "../../core/types";
+
+import Card from "../../components/layout/card.component";
 
 import '../../assets/css/LiabilityForm.scss'
-import { Account } from "../../core/types";
 
 class AccountModel {
 
@@ -102,7 +104,7 @@ const LiabilityForm = () => {
             </BreadCrumbs>
 
             <Form entity='Account' onSubmit={onSubmit}>
-                <Layout.Card title={editLabel}
+                <Card title={editLabel}
                       buttons={[
                           <SubmitButton key='save' label='common.action.save' icon={mdiContentSave}/>,
                           <Buttons.BackButton key='cancel' label='common.action.cancel' icon={mdiCancel}/>]}>
@@ -178,7 +180,7 @@ const LiabilityForm = () => {
                                     title='Account.description'
                                     value={ account.description } />
                     </fieldset>
-                </Layout.Card>
+                </Card>
             </Form>
         </div>
     )

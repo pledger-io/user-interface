@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from "react";
-import { BreadCrumbItem, BreadCrumbMenu, BreadCrumbs, Buttons, Dates, Dropdown, Layout, Resolver } from "../../core";
+import { BreadCrumbItem, BreadCrumbMenu, BreadCrumbs, Buttons, Dates, Dropdown, Resolver } from "../../core";
 import { Account } from "../../core/types";
 import { useNavigate, useParams } from "react-router-dom";
 import AccountRepository from "../../core/repositories/account-repository";
@@ -7,6 +7,10 @@ import TransactionList from "./transaction-list";
 import CategorizedPieChart from "../../core/graphs/categorized-pie-chart";
 import BalanceChart from "../../core/graphs/balance-chart";
 import { mdiCartPlus, mdiCashPlus, mdiSwapHorizontal } from "@mdi/js";
+
+import Card from "../../components/layout/card.component";
+import Loading from "../../components/layout/loading.component";
+import Grid from "../../components/layout/grid.component";
 
 const TYPE_MAPPING = {
     expense: 'creditor',
@@ -52,36 +56,36 @@ const AccountDetailView: FC = () => {
         </BreadCrumbs>
 
         { isOwnType && <>
-            <Layout.Card title='common.account.balance'>
+            <Card title='common.account.balance'>
                 { account && <BalanceChart id='dashboard-balance-graph'
                                            accounts={ account }
                                            allMoney={ true }/> }
-                { !account && <Layout.Loading /> }
-            </Layout.Card>
+                { !account && <Loading /> }
+            </Card>
 
-            <Layout.Grid type='column' minWidth='20em' className='hidden md:grid'>
-                <Layout.Card title='page.transactions.expense.category'>
+            <Grid type='column' minWidth='20em' className='hidden md:grid'>
+                <Card title='page.transactions.expense.category'>
                     <CategorizedPieChart id='category-expenses'
                                                 incomeOnly={ false }
                                                 accounts={ account }
                                                 split='category'/>
-                </Layout.Card>
-                <Layout.Card title='page.transactions.expense.budget'>
+                </Card>
+                <Card title='page.transactions.expense.budget'>
                     <CategorizedPieChart id='budget-expenses'
                                                 incomeOnly={ false }
                                                 accounts={ account }
                                                 split='budget'/>
-                </Layout.Card>
-                <Layout.Card title='page.transactions.income.category'>
+                </Card>
+                <Card title='page.transactions.income.category'>
                     <CategorizedPieChart id='category-income'
                                                 incomeOnly={ true }
                                                 accounts={ account }
                                                 split='category'/>
-                </Layout.Card>
-            </Layout.Grid>
+                </Card>
+            </Grid>
         </> }
 
-        <Layout.Card title='page.title.transactions.overview'>
+        <Card title='page.title.transactions.overview'>
             { account && <Buttons.ButtonBar className='pb-2 justify-center md:justify-end'>
                 { (!Resolver.Account.isManaged(account) || Resolver.Account.isCreditor(account))
                     && <Buttons.Button label='page.transactions.debit.add'
@@ -91,20 +95,20 @@ const AccountDetailView: FC = () => {
                                        icon={mdiCashPlus}/> }
                 { (!Resolver.Account.isManaged(account) || Resolver.Account.isDebtor(account))
                     && <Buttons.Button label='page.transactions.credit.add'
-                                href={`${Resolver.Account.resolveUrl(account)}/transactions/add/credit`}
-                                className={Resolver.Account.isCreditor(account) ? 'Hidden' : 'text-xs md:text-[1em]'}
-                                variant='warning'
-                                icon={mdiCartPlus}/> }
+                                       href={`${Resolver.Account.resolveUrl(account)}/transactions/add/credit`}
+                                       className={Resolver.Account.isCreditor(account) ? 'Hidden' : 'text-xs md:text-[1em]'}
+                                       variant='warning'
+                                       icon={mdiCartPlus}/> }
                 { !Resolver.Account.isManaged(account) &&<Buttons.Button label='page.transactions.transfer.add'
-                                href={`${Resolver.Account.resolveUrl(account)}/transactions/add/transfer`}
-                                className={Resolver.Account.isManaged(account) ? 'Hidden' : 'text-xs md:text-[1em]'}
-                                variant='primary'
-                                icon={mdiSwapHorizontal}/> }
+                                                                         href={`${Resolver.Account.resolveUrl(account)}/transactions/add/transfer`}
+                                                                         className={Resolver.Account.isManaged(account) ? 'Hidden' : 'text-xs md:text-[1em]'}
+                                                                         variant='primary'
+                                                                         icon={mdiSwapHorizontal}/> }
             </Buttons.ButtonBar> }
 
-            { !account && <Layout.Loading /> }
+            { !account && <Loading /> }
             { account && <TransactionList range={ range } account={ account }/> }
-        </Layout.Card>
+        </Card>
     </>
 }
 

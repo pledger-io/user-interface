@@ -53,13 +53,13 @@ const AccountRow = ({ account, deleteCallback }) => {
                                     variant='primary'
                                     icon={mdiSquareEditOutline}
                                     href={`./${account.id}/edit`}/>
-                    <Dialog.ConfirmPopup title='common.action.delete'
-                                         openButton={<Buttons.Button label='common.action.delete'
+                    <Dialog.ConfirmComponent title='common.action.delete'
+                                             openButton={<Buttons.Button label='common.action.delete'
                                                                      variant='warning'
                                                                      icon={mdiTrashCanOutline}/>}
-                                         onConfirm={onDelete}>
+                                             onConfirm={onDelete}>
                         <Translations.Translation label='page.accounts.delete.confirm'/>
-                    </Dialog.ConfirmPopup>
+                    </Dialog.ConfirmComponent>
                 </Dropdown.Dropdown>
             </td>
         </tr>
@@ -102,10 +102,10 @@ const LiabilityOverview = () => {
 
             <Layout.Card title='page.nav.accounts.liability'
                   actions={[<Buttons.Button label='page.title.accounts.liabilities.add'
-                                           key='add'
-                                           icon={mdiPlus}
-                                           href='./add'
-                                           variant='primary'/>]}>
+                                            key='add'
+                                            icon={mdiPlus}
+                                            href='./add'
+                                            variant='primary'/>]}>
                 <table className='Table'>
                     <thead>
                     <tr>

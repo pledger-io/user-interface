@@ -2,14 +2,17 @@ import { Range } from "../../core/Dates";
 import { Budget } from "../../core/types";
 import React, { useEffect, useState } from "react";
 import BudgetRepository from "../../core/repositories/budget.repository";
-import { Buttons, Dialog, Formats, Layout, Notifications, Translations } from "../../core";
+import { Buttons, Dialog, Formats, Notifications, Translations } from "../../core";
 import ExpenseOverviewComponent from "./expense-overview.component";
 import { Form, Input, SubmitButton } from "../../core/form";
 import { mdiContentSave, mdiPlus } from "@mdi/js";
 import { AxiosError } from "axios";
 
+import { PopupCallbacks } from "../../components/layout/popup/popup.component";
+import Loading from "../../components/layout/loading.component";
+
 const AddExpenseDialog = ({ onChange }: { onChange : () => void }) => {
-    const editControl = { close: () => undefined }
+    const editControl: PopupCallbacks = { close: () => undefined, open: () => undefined }
 
     const onSubmit = (values: any) => {
         const patch = {
@@ -64,7 +67,7 @@ const BudgetDetailComponent = ({ range }: { range: Range }) => {
     }
     useEffect(loadBudget, [range]);
 
-    if (!budget) return <Layout.Loading />
+    if (!budget) return <Loading />
     return <>
         <div className='flex flex-col'>
             <div className='flex'>

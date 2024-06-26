@@ -1,12 +1,13 @@
 import { FC, useEffect, useState } from "react";
 import { useDateRange } from "../hooks";
-import { Layout } from "../index";
 import { isArray } from "chart.js/helpers";
 import { Account } from "../types";
 import StatisticalRepository from "../repositories/statistical-repository";
 import { Chart } from "react-chartjs-2";
 import { ChartData, Tooltip, TooltipPosition } from "chart.js";
 import { defaultGraphColors } from "../../config/global-chart-config";
+
+import Loading from "../../components/layout/loading.component";
 
 type CategorizedPieChartProps = {
     id: string
@@ -52,11 +53,11 @@ const CategorizedPieChart: FC<CategorizedPieChartProps> = ({ id, split, incomeOn
                     ]
                 })
             })
-    }, [split, incomeOnly, range]) // eslint-disable-line react-hooks/exhaustive-deps
+    }, [split, incomeOnly, range])
 
     const currency = accounts && !isArray(accounts) ? accounts.account.currency : '€'
 
-    if (!pieSeries) return <Layout.Loading />
+    if (!pieSeries) return <Loading />
     return <>
         <Chart id={ id }
                type='doughnut'

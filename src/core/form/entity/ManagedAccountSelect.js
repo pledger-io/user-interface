@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 
 import { InputGroup, useInputField } from "../input/InputGroup";
 import PropTypes from "prop-types";
-import { Loading } from "../../layout";
 
 import AccountRepository from "../../repositories/account-repository";
 import { SelectOption } from "../input";
+
+import Loading from "../../../components/layout/loading.component";
 
 export const ManagedAccountSelect = props => {
     const [field, errors, onChange] = useInputField({ onChange: props.onChange, field: props })

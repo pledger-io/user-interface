@@ -52,13 +52,13 @@ const ScheduledTransactionRow = ({ schedule, deleteCallback }) => {
                                     variant='primary'
                                     icon={mdiSquareEditOutline}
                                     href={`./${schedule.id}/edit`}/>
-                    <Dialog.ConfirmPopup title='common.action.delete'
-                                         openButton={<Buttons.Button label='common.action.delete'
+                    <Dialog.ConfirmComponent title='common.action.delete'
+                                             openButton={<Buttons.Button label='common.action.delete'
                                                                      variant='warning'
                                                                      icon={mdiTrashCanOutline}/>}
-                                         onConfirm={onDelete}>
+                                             onConfirm={onDelete}>
                         <Translations.Translation label='page.budget.schedule.delete.confirm'/>
-                    </Dialog.ConfirmPopup>
+                    </Dialog.ConfirmComponent>
                 </Dropdown.Dropdown>
             </td>
         </tr>

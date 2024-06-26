@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Rule } from "../../core/types";
 import RuleRepository from "../../core/repositories/rule-repository";
-import { Buttons, Dialog, Layout, Notifications, Translations } from "../../core";
+import { Buttons, Dialog, Notifications, Translations } from "../../core";
 import { EntityNameComponent } from "../lookup-name.util";
 import Icon from "@mdi/react";
 import { mdiCheck, mdiClose, mdiDotsVertical, mdiSquareEditOutline, mdiTrashCanOutline } from "@mdi/js";
-import { Dropdown } from "../../core/dropdown";
+
+import Dropdown from "../../components/layout/dropdown/dropdown.component";
+import Loading from "../../components/layout/loading.component";
 
 
 const RuleListComponent = ({ group } : { group: string }) => {
@@ -22,7 +24,7 @@ const RuleListComponent = ({ group } : { group: string }) => {
             .then(() => Notifications.Service.success('page.settings.rules.delete.success'))
             .catch(() => Notifications.Service.warning('page.settings.rules.delete.error'))
 
-    if (!rules) return <Layout.Loading/>
+    if (!rules) return <Loading />
     return <table className='Table'>
         <thead>
         <tr>
@@ -81,14 +83,14 @@ const RuleListComponent = ({ group } : { group: string }) => {
                                         variantType='outline'
                                         icon={ mdiSquareEditOutline }
                                         href={ `/automation/schedule/rules/${ group }/${ rule.id }/edit` }/>
-                        <Dialog.ConfirmPopup title='common.action.delete'
-                                             openButton={<Buttons.Button label='common.action.delete'
+                        <Dialog.Confirm title='common.action.delete'
+                                                 openButton={<Buttons.Button label='common.action.delete'
                                                                          variant='warning'
                                                                          variantType='outline'
                                                                          icon={ mdiTrashCanOutline }/>}
-                                             onConfirm={ () => onDelete(rule) }>
+                                                 onConfirm={ () => onDelete(rule) }>
                             <Translations.Translation label='page.settings.rules.delete.confirm'/>
-                        </Dialog.ConfirmPopup>
+                        </Dialog.Confirm>
                     </Dropdown>
                 </td>
             </tr>

@@ -4,6 +4,7 @@ import { Buttons, Dialog } from "../../core";
 import { mdiPlusBox } from "@mdi/js";
 import React from "react";
 import { Account, SavingGoal } from "../../core/types";
+import { PopupCallbacks } from "../../components/layout/popup/popup.component";
 
 type ReserveToGoalComponentProps = {
     account: Account,
@@ -12,9 +13,7 @@ type ReserveToGoalComponentProps = {
 }
 
 const ReserveToGoalComponent = ({ account, savingGoal, onChanged } : ReserveToGoalComponentProps) => {
-    const control = {
-        close: () => undefined
-    }
+    const control: PopupCallbacks = { close: () => undefined, open: () => undefined }
 
     const onSubmit = (e: any) => SavingsRepository.assign(account.id, savingGoal.id, e.amount)
         .then(updatedAccount => onChanged(updatedAccount))
@@ -32,7 +31,7 @@ const ReserveToGoalComponent = ({ account, savingGoal, onChanged } : ReserveToGo
                                              key='addToSavingGoal'/>
                            ] }
                            openButton={ <Buttons.Button icon={ mdiPlusBox }
-                                                       variant='icon'/> }>
+                                                        variant='icon'/> }>
                 <Input.Text id='amount'
                             type='number'
                             required={ true }

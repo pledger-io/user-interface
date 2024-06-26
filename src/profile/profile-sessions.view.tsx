@@ -1,7 +1,9 @@
-import { BreadCrumbItem, BreadCrumbs, Formats, Layout, Translations } from "../core";
-import NavigationComponent from "./navigation.component";
+import { BreadCrumbItem, BreadCrumbs, Formats, Translations } from "../core";
 import { useEffect, useState } from "react";
 import ProfileRepository from "../core/repositories/profile.repository";
+
+import NavigationComponent from "./navigation.component";
+import Card from "../components/layout/card.component";
 
 type Session = {
     description: string
@@ -25,7 +27,7 @@ const ProfileSessionsView = () => {
             <BreadCrumbItem label='page.title.user.session.active' />
         </BreadCrumbs>
 
-        <Layout.Card title='page.title.user.profile'>
+        <Card title='page.title.user.profile'>
             <div className='flex gap-4'>
                 <div className='w-30'>
                     <NavigationComponent />
@@ -52,7 +54,7 @@ const ProfileSessionsView = () => {
 
                 </div>
             </div>
-        </Layout.Card>
+        </Card>
     </>
 }
 

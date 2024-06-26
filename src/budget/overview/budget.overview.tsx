@@ -1,9 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import BudgetRepository from "../../core/repositories/budget.repository";
-import { BreadCrumbItem, BreadCrumbMenu, BreadCrumbs, Dropdown, Layout } from "../../core";
+import { BreadCrumbItem, BreadCrumbMenu, BreadCrumbs, Dropdown } from "../../core";
 import { useDateRange } from "../../core/hooks";
+
 import BudgetDetailComponent from "./budget-detail.component";
+import Card from "../../components/layout/card.component";
 
 const BudgetOverview = () => {
     const [firstBudget, setFirstBudget] = useState<Date>()
@@ -32,9 +34,9 @@ const BudgetOverview = () => {
             </BreadCrumbMenu>
         </BreadCrumbs>
 
-        <Layout.Card title='page.budget.overview.title'>
+        <Card title='page.budget.overview.title'>
             <BudgetDetailComponent range={ range } />
-        </Layout.Card>
+        </Card>
     </>
 }
 

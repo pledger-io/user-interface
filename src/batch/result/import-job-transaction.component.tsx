@@ -3,9 +3,11 @@ import React, { useEffect, useState } from "react";
 import { groupTransactionByYear, YearlyTransactions } from "../../core/reducers";
 import { Pagination } from "../../core/types";
 import ImportJobRepository from "../../core/repositories/import-job.repository";
-import { Formats, Layout, Resolver, Translations } from "../../core";
+import { Formats, Resolver, Translations } from "../../core";
 import TransactionItem from "../../transactions/transaction-item";
 import { Paginator } from "../../core/Paginator";
+
+import Loading from "../../components/layout/loading.component";
 
 const ImportJobTransactionComponent = ({ slug }: { slug: string }) => {
     const [page] = useQueryParam({ key: 'page', initialValue: "1" })
@@ -32,7 +34,7 @@ const ImportJobTransactionComponent = ({ slug }: { slug: string }) => {
         <h1 className='mt-5 mb-2 text-lg font-bold'>
             <Translations.Translation label='page.title.transactions.overview' />
         </h1>
-        { !isLoaded && <Layout.Loading/> }
+        { !isLoaded && <Loading/> }
 
         { isLoaded && !hasTransactions && <div className='text-center text-gray-500'>
             <Translations.Translation label='common.overview.noresults' />

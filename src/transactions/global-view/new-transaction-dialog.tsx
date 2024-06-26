@@ -4,6 +4,7 @@ import { Entity, Form, SubmitButton } from "../../core/form";
 import { mdiPageNext } from "@mdi/js";
 import { useNavigate } from "react-router-dom";
 import { Account } from "../../core/types";
+import { PopupCallbacks } from "../../components/layout/popup/popup.component";
 
 type NewTransactionDialogProps = {
     variant: 'success' | 'warning' | 'info',
@@ -18,9 +19,7 @@ type FormType = {
 const NewTransactionDialog: FC<NewTransactionDialogProps> = ({ variant, icon, type }) => {
     const navigate = useNavigate()
     const onSelect = ({ account }: FormType) => navigate(`${Resolver.Account.resolveUrl(account)}/transactions/add/${type}`)
-    const control = {
-        open: () => {},
-    }
+    const control: PopupCallbacks = { open: () => {}, close: () => {} }
 
     return <>
         <Buttons.Button label={ `page.transactions.${type}.add` }

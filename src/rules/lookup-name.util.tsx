@@ -13,7 +13,7 @@ async function lookup_entity<T>(type: RuleField, id: Identifier) : Promise<T> {
         case 'CHANGE_TRANSFER_FROM':
             return await AccountRepository.get(id)
         case 'CATEGORY':
-            // @ts-ignore
+            // @ts-expect-error type is incorrect
             return await CategoryRepository.get(id)
         case 'BUDGET':
             return (await BudgetRepository.budgetMonth(new Date().getFullYear(), new Date().getMonth() + 1))

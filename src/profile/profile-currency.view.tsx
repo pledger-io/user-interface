@@ -1,4 +1,4 @@
-import { BreadCrumbItem, BreadCrumbs, Layout, Notifications, Translations } from "../core";
+import { BreadCrumbItem, BreadCrumbs, Notifications, Translations } from "../core";
 import NavigationComponent from "./navigation.component";
 import { Form, Input, SubmitButton } from "../core/form";
 import RestAPI from "../core/repositories/rest-api";
@@ -7,6 +7,9 @@ import ProfileRepository from "../core/repositories/profile.repository";
 import { Currency } from "../core/types";
 import { useEffect, useState } from "react";
 import { CurrencyRepository } from "../core/RestAPI";
+
+import Card from "../components/layout/card.component";
+import Loading from "../components/layout/loading.component";
 
 const ProfileCurrencyView = () => {
     const [currencies, setCurrencies] = useState<Currency[]>()
@@ -31,7 +34,7 @@ const ProfileCurrencyView = () => {
             <BreadCrumbItem label='page.user.profile.currency' />
         </BreadCrumbs>
 
-        <Layout.Card title='page.title.user.profile'>
+        <Card title='page.title.user.profile'>
             <div className='flex gap-4'>
                 <div className='w-30'>
                     <NavigationComponent />
@@ -39,7 +42,7 @@ const ProfileCurrencyView = () => {
                 <div className='flex-1'>
                     <h1 className='font-bold text-lg'><Translations.Translation label='page.user.profile.currency' /></h1>
 
-                    { !currencies && <Layout.Loading /> }
+                    { !currencies && <Loading /> }
                     { currencies && <Form entity='Profile' onSubmit={ onSubmit }>
                         <Input.Radio id='currency'
                                      options={ currencies.map(c => ({ value: c.code, message: c.name })) }
@@ -50,7 +53,7 @@ const ProfileCurrencyView = () => {
                     </Form> }
                 </div>
             </div>
-        </Layout.Card>
+        </Card>
     </>
 }
 

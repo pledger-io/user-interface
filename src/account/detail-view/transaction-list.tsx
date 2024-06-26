@@ -1,11 +1,13 @@
 import React, { FC, useEffect, useState } from "react";
 import { Account, Pagination } from "../../core/types";
-import { Dates, Formats, Layout, Resolver, Translations } from "../../core";
+import { Dates, Formats, Resolver, Translations } from "../../core";
 import { useQueryParam } from "../../core/hooks";
 import { groupTransactionByDay, YearlyTransactions } from "../../core/reducers";
 import AccountRepository from "../../core/repositories/account-repository";
 import { Paginator } from "../../core/Paginator";
 import TransactionItem from "../../transactions/transaction-item";
+
+import Loading from "../../components/layout/loading.component";
 
 type TransactionListProps = {
     account: Account,
@@ -33,7 +35,7 @@ const TransactionList: FC<TransactionListProps> = ({ account, range }) => {
     const isLoaded = transactions
     const hasTransactions = transactions && Object.keys(transactions).length > 0
     return <>
-        { !isLoaded && <Layout.Loading/> }
+        { !isLoaded && <Loading/> }
 
         { isLoaded && !hasTransactions && <div className='text-center text-gray-500'>
             <Translations.Translation label='common.overview.noresults' />

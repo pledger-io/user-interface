@@ -7,9 +7,11 @@ import { Paginator } from "../../core/Paginator";
 import { Entity, Form, SubmitButton } from "../../core/form";
 import { useQueryParam } from "../../core/hooks";
 import { mdiSkipNext } from "@mdi/js";
-import { Layout, Notifications } from "../../core";
+import { Notifications } from "../../core";
 import { Account } from "../../core/types";
 import { lookup_entity } from "../../rules/lookup-name.util";
+
+import Loading from "../../components/layout/loading.component";
 
 type AccountMapping = {
     name: string;
@@ -62,7 +64,7 @@ const AccountMappingComponent = ({ task }: { task: ProcessTask }) => {
                 const accountMappings = variables.variables.account_mappings.content
                 setAccountMappings(accountMappings || [])
             })
-    }, []); // eslint-disable-line
+    }, []);
 
     const onSubmit = (entity: any) => {
         const updatedMapping = []
@@ -91,7 +93,7 @@ const AccountMappingComponent = ({ task }: { task: ProcessTask }) => {
     }
 
     return <>
-        { processing && <div className='text-center'><Layout.Loading /></div> }
+        { processing && <div className='text-center'><Loading /></div> }
 
         { !processing && (
             <Form entity='' onSubmit={ onSubmit }>

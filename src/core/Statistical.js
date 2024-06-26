@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import StatisticalRepository from "./repositories/statistical-repository";
 import { Money } from "./Formatters";
 import { EntityShapes } from "../config";
-import { Loading } from "./layout";
+
+import Loading from "../components/layout/loading.component";
 
 /**
  * The balance component can display a computed balance on a given search command. Where the search command can

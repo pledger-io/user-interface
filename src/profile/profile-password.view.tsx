@@ -1,7 +1,9 @@
-import { BreadCrumbItem, BreadCrumbs, Layout, Message, Notifications, Translations } from "../core";
+import { BreadCrumbItem, BreadCrumbs, Message, Notifications, Translations } from "../core";
 import NavigationComponent from "./navigation.component";
 import { Form, Input, SubmitButton } from "../core/form";
 import ProfileRepository from "../core/repositories/profile.repository";
+
+import Card from "../components/layout/card.component";
 
 const ProfilePasswordView = () => {
     const onSubmit = (form: any) => {
@@ -16,7 +18,7 @@ const ProfilePasswordView = () => {
             <BreadCrumbItem label='page.header.user.password'/>
         </BreadCrumbs>
 
-        <Layout.Card title='page.title.user.profile'>
+        <Card title='page.title.user.profile'>
             <div className='flex gap-4'>
                 <div className='w-30'>
                     <NavigationComponent />
@@ -34,7 +36,7 @@ const ProfilePasswordView = () => {
                     </Form>
                 </div>
             </div>
-        </Layout.Card>
+        </Card>
     </>
 }
 

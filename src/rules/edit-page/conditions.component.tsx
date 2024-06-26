@@ -30,7 +30,6 @@ function lookupCondition(condition: RuleCondition) {
 }
 
 const ConditionFieldComponent = (props: any) => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [field, _, onChange] = useInputField({ onChange: (_) => void 0, field: props })
 
     const onAddCondition = () => {

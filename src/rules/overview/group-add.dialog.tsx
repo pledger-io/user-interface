@@ -1,16 +1,17 @@
-import { Dialog } from "../../core/popups";
+import { Dialog } from "../../components/layout/popup";
 import { mdiContentSave, mdiPlus } from "@mdi/js";
 import { Buttons, Notifications } from "../../core";
 import React from "react";
 import { Form, Input, SubmitButton } from "../../core/form";
 import RuleRepository from "../../core/repositories/rule-repository";
+import { PopupCallbacks } from "../../components/layout/popup/popup.component";
 
 type GroupAddDialogProps = {
     onAdd: () => void
 }
 
 const GroupAddDialog = (props: GroupAddDialogProps) => {
-    const dialogControl = { close: () => undefined }
+    const dialogControl: PopupCallbacks = { close: () => {}, open: () => {} }
     const onSubmit = (data: any) =>
         RuleRepository.createGroup(data.name)
             .then(props.onAdd)

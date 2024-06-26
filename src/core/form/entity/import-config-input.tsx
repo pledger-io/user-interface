@@ -3,10 +3,12 @@ import { InputGroup, useInputField } from "../input/InputGroup";
 import React, { useEffect, useState } from "react";
 import ImportJobRepository from "../../repositories/import-job.repository";
 import { BatchConfig } from "../../types";
-import { Button } from "../../buttons";
-import Dialog from "../../popups/Dialog";
+import { Button } from "../../../components/layout/button";
 import { Message } from "../../index";
 import { Upload } from "../../attachment";
+
+import Dialog from "../../../components/layout/popup/dialog.component";
+import { PopupCallbacks } from "../../../components/layout/popup/popup.component";
 
 type ImportConfigInputProps = FieldType & {
     title?: string,
@@ -20,7 +22,7 @@ const ImportConfigInput = (props: ImportConfigInputProps) => {
     const [field, errors, onChange] = useInputField({ onChange: props.onChange, field: props })
     const inputRef = React.useRef<HTMLInputElement>(null)
     const typeRef = React.useRef<HTMLSelectElement>(null)
-    const dialogControl = { close: () => void 0 }
+    const dialogControl: PopupCallbacks = { open: () => {}, close: () => {} }
 
     useEffect(() => {
         ImportJobRepository.getImportConfigs()

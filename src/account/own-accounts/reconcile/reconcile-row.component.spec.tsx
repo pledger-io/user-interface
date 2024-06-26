@@ -1,7 +1,6 @@
-import { render, fireEvent, waitFor } from '@testing-library/react';
+import { render, fireEvent, waitFor, act } from '@testing-library/react';
 import ReconcileRowComponent from './reconcile-row.component';
 import ProcessRepository, { ProcessInstance, ProcessVariable, ProcessTask } from "../../../core/repositories/process.repository";
-import { act } from 'react-dom/test-utils';
 import { routerWrapped } from "../../../setupTests";
 
 jest.mock("../../../core/repositories/process.repository");

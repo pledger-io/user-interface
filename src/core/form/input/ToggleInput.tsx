@@ -10,7 +10,6 @@ type ToggleInputProps = {
 }
 
 export const ToggleInput = (props: ToggleInputProps) => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [field, _, onChange] = useInputField({ onChange: props.onChange, field: props })
 
     const onToggle = () => {

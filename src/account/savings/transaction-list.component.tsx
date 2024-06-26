@@ -3,8 +3,10 @@ import { useQueryParam } from "../../core/hooks";
 import React, { useEffect, useState } from "react";
 import { groupTransactionByYear, YearlyTransactions } from "../../core/reducers";
 import AccountRepository from "../../core/repositories/account-repository";
-import { Dates, Formats, Layout, Pagination, Translations } from "../../core";
+import { Dates, Formats, Pagination, Translations } from "../../core";
 import TransactionItem from "../../transactions/transaction-item";
+
+import Loading from "../../components/layout/loading.component";
 
 const TransactionListComponent = ({ account } : { account : Account }) => {
     const [page] = useQueryParam({ key: 'page', initialValue: "1" })
@@ -33,7 +35,7 @@ const TransactionListComponent = ({ account } : { account : Account }) => {
     const hasTransactions = transactions && Object.keys(transactions).length > 0
     const showPagination = pagination && pagination?.records > pagination?.pageSize
     return <>
-        { !isLoaded && <Layout.Loading /> }
+        { !isLoaded && <Loading /> }
 
         { isLoaded && !hasTransactions &&
             <div className='text-center text-gray-500'>

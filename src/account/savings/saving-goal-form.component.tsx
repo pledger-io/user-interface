@@ -4,6 +4,7 @@ import { Dialog } from "../../core";
 import { mdiContentSave } from "@mdi/js";
 import React from "react";
 import { Account, SavingGoal } from "../../core/types";
+import { PopupCallbacks } from "../../components/layout/popup/popup.component";
 
 type EditSavingGoalComponentProps = {
     account: Account,
@@ -13,9 +14,7 @@ type EditSavingGoalComponentProps = {
 }
 
 const EditSavingGoalComponent = ({ account, savingGoal = undefined, onChanged = _ => {}, openButton } : EditSavingGoalComponentProps) => {
-    const control = {
-        close: () => undefined
-    }
+    const control: PopupCallbacks = { close: () => undefined, open: () => undefined }
     const onSubmit = (entity: any) => {
         if (savingGoal) {
             SavingsRepository.update(account.id, savingGoal.id, entity)

@@ -2,13 +2,14 @@ import ProcessRepository, { BusinessKey } from "../../../core/repositories/proce
 import { Account } from "../../../core/types";
 import { Buttons, Notifications } from "../../../core";
 import { Form, Input, SubmitButton } from "../../../core/form";
-import { Dialog } from "../../../core/popups";
+import { Dialog } from "../../../components/layout/popup";
 import { ReconcileStart } from "./types";
 import { mdiCheck, mdiContentSave } from "@mdi/js";
 import React from "react";
+import { PopupCallbacks } from "../../../components/layout/popup/popup.component";
 
 const ReconcilePopup = ({ account, afterCreate }: { account : Account, afterCreate : () => void }) => {
-    const dialogActions = { close: () => undefined }
+    const dialogActions: PopupCallbacks = { close: () => undefined, open: () => undefined }
     const onSubmit = (data: any) => {
         const processData : ReconcileStart = {
             businessKey: account.id as BusinessKey,

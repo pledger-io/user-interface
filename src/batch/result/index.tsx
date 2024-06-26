@@ -1,10 +1,13 @@
-import { BreadCrumbItem, BreadCrumbs, Layout } from "../../core";
+import { BreadCrumbItem, BreadCrumbs } from "../../core";
 import React, { useEffect } from "react";
 import { ImportJob } from "../../core/types";
 import { useParams } from "react-router-dom";
 import ImportJobRepository from "../../core/repositories/import-job.repository";
+
 import ImportJobSummaryComponent from "./import-job-summary.component";
 import ImportJobTransactionComponent from "./import-job-transaction.component";
+import Card from "../../components/layout/card.component";
+import Loading from "../../components/layout/loading.component";
 
 const ImportJobResultOverview = () => {
     const [importJob, setImportJob] = React.useState<ImportJob>()
@@ -25,13 +28,13 @@ const ImportJobResultOverview = () => {
             <BreadCrumbItem label='page.nav.settings.import.status'/>
         </BreadCrumbs>
 
-        <Layout.Card title='page.settings.import.details'>
-            { !importJob && <Layout.Loading /> }
+        <Card title='page.settings.import.details'>
+            { !importJob && <Loading /> }
 
             { importJob && <ImportJobSummaryComponent importJob={ importJob } /> }
 
             { importJob && <ImportJobTransactionComponent slug={ importJob.slug } /> }
-        </Layout.Card>
+        </Card>
     </>
 }
 

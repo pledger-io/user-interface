@@ -1,6 +1,6 @@
 import React, { FC, useState } from "react";
 import { Account, Transaction } from "../core/types";
-import { Buttons, Dialog, Formats, Layout, Notifications, Resolver, Translations } from "../core";
+import { Buttons, Dialog, Formats, Notifications, Resolver, Translations } from "../core";
 import { NavLink } from "react-router-dom";
 import {
     mdiAlert,
@@ -15,6 +15,7 @@ import TransactionSplitDialog from "./TransactionSplitDialog";
 import { ScheduleTransactionDialog } from "./schedule/ScheduleTransactionDialog";
 import Icon from "@mdi/react";
 import { TransactionRepository } from "../core/RestAPI";
+import Tag from "../components/layout/tag.component";
 
 type TransactionItemProps = {
     transaction: Transaction,
@@ -65,7 +66,7 @@ const TransactionItem: FC<TransactionItemProps> = ({ transaction, className = ''
         <span className='flex flex-col flex-1'>
             <span className='text-[.9em] md:text-[1em]'>{ transaction.description }</span>
             { transaction.metadata.tags && <div className='flex gap-1'>
-                { transaction.metadata.tags.map(t => <Layout.Tag key={ t } label={ t }/>) }
+                { transaction.metadata.tags.map(t => <Tag key={ t } label={ t }/>) }
             </div> }
             <span className='text-gray-400 flex items-center gap-0.5'>
                 { !account && <>
@@ -117,14 +118,14 @@ const ActionExpander = ({ transaction, onDelete } : { transaction: Transaction, 
                             variantType='outline'
                             icon={ mdiSquareEditOutline }
                             href={ `${Resolver.Transaction.resolveUrl(transaction)}/edit` }/>
-            <Dialog.ConfirmPopup title='common.action.delete'
-                                 openButton={<Buttons.Button variant='icon'
+            <Dialog.Confirm title='common.action.delete'
+                                     openButton={<Buttons.Button variant='icon'
                                                              label='common.action.delete'
                                                              className='text-warning'
                                                              icon={ mdiTrashCanOutline }/>}
-                                 onConfirm={ onDelete }>
+                                     onConfirm={ onDelete }>
                 <Translations.Translation label='page.transactions.delete.confirm'/>
-            </Dialog.ConfirmPopup>
+            </Dialog.Confirm>
         </div>
         { expanded && <Buttons.Button variant='icon'
                                       className='opacity-70 !text-gray-500'

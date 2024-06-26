@@ -1,9 +1,11 @@
-import { BreadCrumbItem, BreadCrumbs, Layout, Message, Notifications } from "../../core";
+import { BreadCrumbItem, BreadCrumbs, Message, Notifications } from "../../core";
 import { Form, Input, SubmitButton } from "../../core/form";
 import { mdiContentSave } from "@mdi/js";
 import React from "react";
 import BudgetRepository from "../../core/repositories/budget.repository";
 import { useNavigate } from "react-router-dom";
+
+import Card from "../../components/layout/card.component";
 
 const CreateBudgetView = () => {
     const navigate = useNavigate()
@@ -28,7 +30,7 @@ const CreateBudgetView = () => {
         </BreadCrumbs>
 
         <Form entity='Budget' onSubmit={ onSubmit }>
-            <Layout.Card title='page.nav.budget.initial.setup'
+            <Card title='page.nav.budget.initial.setup'
                          className='max-w-2xl mx-auto'
                          buttons={[
                              <SubmitButton key='save' label='page.budget.group.action.initial' icon={ mdiContentSave }/>,
@@ -43,7 +45,7 @@ const CreateBudgetView = () => {
                 <Input.Amount id='income'
                               required
                               title='Budget.expectedIncome' />
-            </Layout.Card>
+            </Card>
         </Form>
     </>
 }

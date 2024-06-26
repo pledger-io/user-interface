@@ -1,7 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
 import { Account } from "../types";
 import { useDateRange } from "../hooks";
-import { Loading } from "../layout";
 import { BalanceSeries } from "./balance-series";
 import { Chart } from "react-chartjs-2";
 import { ChartData } from "chart.js";
@@ -9,6 +8,8 @@ import { DefaultChartConfig, Service } from "../../config/global-chart-config";
 import RestAPI from "../repositories/rest-api";
 import { CurrencyRepository } from "../RestAPI";
 import { isArray } from "chart.js/helpers";
+
+import Loading from "../../components/layout/loading.component";
 
 type BalanceChartProps = {
     id: string

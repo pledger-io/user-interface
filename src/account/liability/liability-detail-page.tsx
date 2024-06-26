@@ -5,7 +5,6 @@ import {
     Buttons,
     Dates,
     Formats,
-    Layout,
     Resolver,
     Statistical,
     Translations
@@ -16,10 +15,13 @@ import { mdiCashPlus } from "@mdi/js";
 import { useParams } from "react-router-dom";
 import { Account, Transaction } from "../../core/types";
 import { Range } from "../../core/Dates";
+
 import LiabilityTransactionList from "./liability-transaction-list";
+import LiabilityGraph from "./liability-graph";
+import Card from "../../components/layout/card.component";
+import Loading from "../../components/layout/loading.component";
 
 import '../../assets/css/LiabiliryView.scss'
-import LiabilityGraph from "./liability-graph";
 
 const LiabilityDetailView = () => {
     const [account, setAccount] = useState<Account>()
@@ -40,7 +42,7 @@ const LiabilityDetailView = () => {
                 account.history.lastTransaction))
     }, [account])
 
-    if (!account || !range) return <Layout.Loading />
+    if (!account || !range) return <Loading />
     return (
         <div>
             <BreadCrumbs>
@@ -52,7 +54,7 @@ const LiabilityDetailView = () => {
             </BreadCrumbs>
 
             <div className="flex gap-2 flex-wrap">
-                <Layout.Card className='flex-1'>
+                <Card className='flex-1'>
                     <h1 className='font-bold'>{ account.name }</h1>
                     <div className="flex">
                         <label className='min-w-[8em]'><Translations.Translation label='Account.interest'/>:</label>
@@ -78,8 +80,8 @@ const LiabilityDetailView = () => {
                                                  currency={ account.account.currency }/>
                         </span>
                     </div>
-                </Layout.Card>
-                <Layout.Card className='flex-[2]'>
+                </Card>
+                <Card className='flex-[2]'>
                     <h1>
                         <Translations.Translation label='common.account.balance'/>
                     </h1>
@@ -92,10 +94,10 @@ const LiabilityDetailView = () => {
                     </h4>
 
                     <LiabilityGraph account={ account } range={ range } />
-                </Layout.Card>
+                </Card>
             </div>
 
-            <Layout.Card title='page.title.transactions.overview'>
+            <Card title='page.title.transactions.overview'>
                 <Buttons.Button label='page.account.liability.payment.add'
                                 href={`${Resolver.Account.resolveUrl(account)}/transactions/add`}
                                 variant='success'
@@ -103,7 +105,7 @@ const LiabilityDetailView = () => {
                                 icon={mdiCashPlus}/>
 
                 <LiabilityTransactionList account={ account } range={ range } />
-            </Layout.Card>
+            </Card>
         </div>
     )
 }

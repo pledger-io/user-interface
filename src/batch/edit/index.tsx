@@ -1,10 +1,12 @@
-import { BreadCrumbItem, BreadCrumbs, Layout } from "../../core";
+import { BreadCrumbItem, BreadCrumbs } from "../../core";
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import UploadTransactionsComponent from "./upload-transactions";
 import ImportJobRepository from "../../core/repositories/import-job.repository";
 import { ImportJob } from "../../core/types";
 import AnalyzeTransactions from "./analyze-transactions";
+
+import Card from "../../components/layout/card.component";
 
 const ImportJobFormView = () => {
     const { slug } = useParams();
@@ -25,11 +27,11 @@ const ImportJobFormView = () => {
             <BreadCrumbItem label='page.nav.settings.import.start'/>
         </BreadCrumbs>
 
-        <Layout.Card title='page.nav.settings.import'>
+        <Card title='page.nav.settings.import'>
             { !slug && <UploadTransactionsComponent /> }
 
             { importJob && <AnalyzeTransactions importJob={ importJob } /> }
-        </Layout.Card>
+        </Card>
     </>
 }
 

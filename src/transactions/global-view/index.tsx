@@ -1,17 +1,20 @@
 import { useNavigate } from "react-router-dom";
 import { useDateRange } from "../../core/hooks";
-import { BreadCrumbItem, BreadCrumbMenu, BreadCrumbs, Dropdown, Layout } from "../../core";
+import { BreadCrumbItem, BreadCrumbMenu, BreadCrumbs, Dropdown } from "../../core";
 import React from "react";
 import { mdiCashMinus, mdiCashPlus, mdiChevronDown, mdiSwapHorizontal } from "@mdi/js";
 import NewTransactionDialog from "./new-transaction-dialog";
 import TransactionOverview from "./transaction-overview";
 import CategorizedPieChart from "../../core/graphs/categorized-pie-chart";
 
+import Grid from "../../components/layout/grid.component";
+import Card from "../../components/layout/card.component";
+
 const TransactionGlobalView = ({ transfers } : { transfers: boolean }) => {
     const navigate = useNavigate()
     const [range] = useDateRange()
 
-    const onDateChange = (year: string, month: string) =>
+    const onDateChange = (year: number, month: number) =>
         navigate(`/transactions/${transfers ? 'transfers' : 'income-expense'}/${year}/${month}`)
 
     return <div className='TransactionOverview'>
@@ -29,28 +32,28 @@ const TransactionGlobalView = ({ transfers } : { transfers: boolean }) => {
         </BreadCrumbs>
 
         { !transfers && <>
-            <Layout.Grid type='column'
+            <Grid type='column'
                          className='hidden md:grid'
                          minWidth='20em'>
-                <Layout.Card title='page.transactions.expense.category'>
+                <Card title='page.transactions.expense.category'>
                     <CategorizedPieChart id='category-expense'
                                          split='category'
                                          incomeOnly={ false } />
-                </Layout.Card>
-                <Layout.Card title='page.transactions.expense.budget'>
+                </Card>
+                <Card title='page.transactions.expense.budget'>
                     <CategorizedPieChart id='budget-expense'
                                          split='budget'
                                          incomeOnly={ false } />
-                </Layout.Card>
-                <Layout.Card title='page.transactions.income.category'>
+                </Card>
+                <Card title='page.transactions.income.category'>
                     <CategorizedPieChart id='category-income'
                                          split='category'
                                          incomeOnly={ true } />
-                </Layout.Card>
-            </Layout.Grid>
+                </Card>
+            </Grid>
         </> }
 
-        <Layout.Card title='page.title.transactions.overview'
+        <Card title='page.title.transactions.overview'
                      actions={[
                          !transfers ? <Dropdown.Dropdown icon={ mdiChevronDown }
                                             key='add-debit-popup'
@@ -68,7 +71,7 @@ const TransactionGlobalView = ({ transfers } : { transfers: boolean }) => {
                          ]}>
 
             <TransactionOverview range={ range } transfers={ transfers } />
-        </Layout.Card>
+        </Card>
     </div>
 }
 

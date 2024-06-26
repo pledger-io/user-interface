@@ -19,21 +19,21 @@ const OverviewRowComponent = ({ importJob }: { importJob: ImportJob }) => {
     return <>
         <tr>
             <td className='align-middle text-center w-5'>
-                <Dialog.ConfirmPopup title='common.action.delete'
-                                     openButton={ <Buttons.Button variant='icon'
+                <Dialog.Confirm title='common.action.delete'
+                                         openButton={ <Buttons.Button variant='icon'
                                                                   className={ 'text-warning' }
                                                                   icon={ mdiTrashCanOutline }/> }
-                                     onConfirm={ onDelete }>
+                                         onConfirm={ onDelete }>
                     <Translations.Translation label='page.import.delete.confirm'/>
-                </Dialog.ConfirmPopup>
+                </Dialog.Confirm>
             </td>
             <td className='max-w-32 overflow-x-hidden overflow-ellipsis md:max-w-full'>
                 { hasFinished && <Buttons.Button href={ `/upload/${ importJob.slug }/result` }
                                                  variant='text'
                                                  message={ importJob.slug }/> }
                 { !hasFinished && <Buttons.Button href={ `/upload/${ importJob.slug }/analyze` }
-                                                 variant='text'
-                                                 message={ importJob.slug }/> }
+                                                  variant='text'
+                                                  message={ importJob.slug }/> }
             </td>
             <td className="hidden md:table-cell">{ importJob.config.name }</td>
             <td className='text-center'><Formats.Date date={ importJob.created }/></td>

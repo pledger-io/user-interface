@@ -1,7 +1,9 @@
-import { BreadCrumbItem, BreadCrumbs, Buttons, Layout, Translations } from "../core";
+import { BreadCrumbItem, BreadCrumbs, Buttons, Translations } from "../core";
 import NavigationComponent from "./navigation.component";
 import { mdiApplicationExport } from "@mdi/js";
 import ProfileRepository from "../core/repositories/profile.repository";
+
+import Card from "../components/layout/card.component";
 
 const ProfileExportView = () => {
 
@@ -24,7 +26,7 @@ const ProfileExportView = () => {
             <BreadCrumbItem label='page.user.profile.export'/>
         </BreadCrumbs>
 
-        <Layout.Card title='page.title.user.profile'>
+        <Card title='page.title.user.profile'>
             <div className='flex gap-4'>
                 <div className='w-30'>
                     <NavigationComponent/>
@@ -39,7 +41,7 @@ const ProfileExportView = () => {
                     </div>
                 </div>
             </div>
-        </Layout.Card>
+        </Card>
     </>
 }
 

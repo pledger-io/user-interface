@@ -1,4 +1,4 @@
-import { render, fireEvent, waitFor } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import ProcessRepository from "../../../core/repositories/process.repository";
 import { Notifications } from "../../../core";
 import { routerWrapped } from "../../../setupTests";

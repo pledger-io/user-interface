@@ -1,9 +1,11 @@
-import { BreadCrumbItem, BreadCrumbs, Layout, Message, Notifications, Translations } from "../core";
-import NavigationComponent from "./navigation.component";
+import { BreadCrumbItem, BreadCrumbs, Message, Notifications, Translations } from "../core";
 import { Form, Input, SubmitButton } from "../core/form";
 import RestAPI from "../core/repositories/rest-api";
 import { mdiContentSave } from "@mdi/js";
 import ProfileRepository from "../core/repositories/profile.repository";
+
+import NavigationComponent from "./navigation.component";
+import Card from "../components/layout/card.component";
 
 const ProfileThemeView = () => {
 
@@ -21,7 +23,7 @@ const ProfileThemeView = () => {
             <BreadCrumbItem label='page.user.profile.theme' />
         </BreadCrumbs>
 
-        <Layout.Card title='page.title.user.profile'>
+        <Card title='page.title.user.profile'>
             <div className='flex gap-4'>
                 <div className='w-30'>
                     <NavigationComponent />
@@ -44,7 +46,7 @@ const ProfileThemeView = () => {
                     </Form>
                 </div>
             </div>
-        </Layout.Card>
+        </Card>
     </>
 }
 

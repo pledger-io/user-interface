@@ -4,10 +4,12 @@ import { Account, Pagination, Transaction } from "../../core/types";
 import { Range } from "../../core/Dates";
 import AccountRepository from "../../core/repositories/account-repository";
 import { useQueryParam } from "../../core/hooks";
-import { Formats, Layout } from "../../core";
+import { Formats } from "../../core";
 import TransactionItem from "../../transactions/transaction-item";
 import { Paginator } from "../../core/Paginator";
 import { groupTransactionByYear, YearlyTransactions } from "../../core/reducers";
+
+import Loading from "../../components/layout/loading.component";
 
 type LiabilityTransactionListProps = {
     account: Account,
@@ -35,7 +37,7 @@ const LiabilityTransactionList: FC<LiabilityTransactionListProps> = ({ account, 
             .catch(console.log)
     }, [ page, account, range ]);
 
-    if (!transactions) return <Layout.Loading />
+    if (!transactions) return <Loading />
     return <>
         { transactions && Object.keys(transactions).sort().reverse().map(year => <>
             <div className='flex flex-col'>

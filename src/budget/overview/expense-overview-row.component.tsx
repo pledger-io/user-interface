@@ -1,10 +1,13 @@
-import { Buttons, Dialog, Dropdown, Formats, Layout, Notifications } from "../../core";
+import { Buttons, Dialog, Dropdown, Formats, Notifications } from "../../core";
 import { BudgetExpense } from "../../core/types";
 import React, { useEffect, useState } from "react";
 import BudgetRepository, { ComputedExpense } from "../../core/repositories/budget.repository";
 import { mdiContentSave, mdiDotsVertical, mdiSquareEditOutline } from "@mdi/js";
 import { Form, Input, SubmitButton } from "../../core/form";
 import { AxiosError } from "axios";
+
+import { PopupCallbacks } from "../../components/layout/popup/popup.component";
+import Loading from "../../components/layout/loading.component";
 
 type ExpenseOverviewRowProps = {
     expense: BudgetExpense,
@@ -27,9 +30,9 @@ const ExpenseOverviewRowComponent = ({ expense, year, month, onChanges } : Expen
         BudgetRepository.compute(expense.id, year, month)
             .then(response => setComputed(response[0]))
             .catch(console.error)
-    }, [month, year]); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [month, year]);
 
-    const editControl = { close: () => undefined }
+    const editControl: PopupCallbacks = { open: () => undefined, close: () => undefined }
     const onSubmit = (values: any) => {
         const patch = {
             expenseId: expense.id,
@@ -46,7 +49,7 @@ const ExpenseOverviewRowComponent = ({ expense, year, month, onChanges } : Expen
 
     const dropDownActions = { close: () => undefined }
     const isCurrentMonth = currentMonth.isSame(year, month)
-    if (!computed) return <tr><td colSpan={ 5 }><Layout.Loading /></td></tr>
+    if (!computed) return <tr><td colSpan={ 5 }><Loading /></td></tr>
     return <tr onMouseLeave={ () => dropDownActions.close() }>
         <td> { expense.name } </td>
         <td>
