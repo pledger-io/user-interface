@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import { mdiClockTimeTwoOutline, mdiHistory, mdiPlus } from "@mdi/js";
 
-import { BreadCrumbItem, BreadCrumbs, Buttons } from "../../core";
+import { Buttons } from "../../core";
 import ContractRepository, { ContractList } from "../../core/repositories/contract-repository";
 
 import ContractTable from "../../components/contract/contract-table";
 import Card from "../../components/layout/card.component";
 import Tabs from "../../components/layout/tab.component";
 import Loading from "../../components/layout/loading.component";
+import BreadCrumbs from "../../components/breadcrumb/breadcrumb.component";
+import BreadCrumbItem from "../../components/breadcrumb/breadcrumb-item.component";
 
 type TabSection = 'active' | 'terminated'
 

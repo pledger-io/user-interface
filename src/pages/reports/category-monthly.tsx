@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BreadCrumbItem, BreadCrumbMenu, BreadCrumbs, Dates, Dropdown } from "../../core";
+import { Dates, Dropdown } from "../../core";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { CurrencyRepository } from "../../core/RestAPI";
@@ -11,6 +11,9 @@ import CategorizedMonthlySpendingComponent from "../../components/reports/catego
 import CategoryGraph from "../../components/reports/category-monthly/montly-categorized-chart";
 import Card from "../../components/layout/card.component";
 import Loading from "../../components/layout/loading.component";
+import BreadCrumbs from "../../components/breadcrumb/breadcrumb.component";
+import BreadCrumbItem from "../../components/breadcrumb/breadcrumb-item.component";
+import BreadCrumbMenu from "../../components/breadcrumb/breadcrumb-menu.component";
 
 import '../../assets/css/CategorieReportView.scss'
 

@@ -13,11 +13,11 @@ import { lazy, Suspense } from "react";
 import SecurityRepository from "./core/repositories/security-repository";
 import RestAPI from "./core/repositories/rest-api";
 import { CurrencyRepository } from "./core/RestAPI";
-import { Notifications } from "./core";
 
 import Sidebar from "./core/sidebar";
 import MobileSidebar from "./core/sidebar/mobile-sidebar";
 import Loading from "./components/layout/loading.component";
+import NotificationCenter from "./components/notification";
 
 const router = createBrowserRouter([
     {
@@ -204,7 +204,7 @@ function AuthenticatedComponent() {
         <Sidebar logoutCallback={ logout }/>
         <MobileSidebar logoutCallback={ logout }/>
         <main className='Main px-2 md:px-5 h-[100vh] flex flex-col overflow-y-auto'>
-            <Notifications.NotificationCenter/>
+            <NotificationCenter/>
             <Suspense fallback={ <SuspenseLoading/> }>
                 <Outlet/>
             </Suspense>

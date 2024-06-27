@@ -1,12 +1,14 @@
 import React from "react";
 
-import { BreadCrumbItem, BreadCrumbs, Dates } from "../core";
+import { Dates } from "../core";
 
 import Summary from "../components/dashboard/summary";
 import BalanceChart from "../components/dashboard/balance-chart";
 import BudgetBalance from "../components/dashboard/budget-balance";
 import CategoriesBalance from "../components/dashboard/categories-balance";
 import Grid from "../components/layout/grid.component";
+import BreadCrumbs from "../components/breadcrumb/breadcrumb.component";
+import BreadCrumbItem from "../components/breadcrumb/breadcrumb-item.component";
 
 import '../components/dashboard/dashboard.scss'
 

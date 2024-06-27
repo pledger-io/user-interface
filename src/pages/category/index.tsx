@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useQueryParam } from "../../core/hooks";
 import CategoryRepository from "../../core/repositories/category-repository";
 import { Category, Pagination } from "../../core/types";
-import { BreadCrumbItem, BreadCrumbs } from "../../core";
 import { mdiPlus } from "@mdi/js";
 import CategoryRow from "../../components/category/category-row.component";
 import { Paginator } from "../../core/Paginator";
@@ -10,6 +9,8 @@ import Card from "../../components/layout/card.component";
 import Loading from "../../components/layout/loading.component";
 import { Button } from "../../components/layout/button";
 import Translation from "../../components/localization/translation.component";
+import BreadCrumbs from "../../components/breadcrumb/breadcrumb.component";
+import BreadCrumbItem from "../../components/breadcrumb/breadcrumb-item.component";
 
 const CategoryListing = () => {
     const [categories, setCategories] = useState<Category[]>()

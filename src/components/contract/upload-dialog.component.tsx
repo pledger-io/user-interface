@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import { mdiContentSave, mdiUpload } from "@mdi/js";
 
-import { Buttons, Dialog, Notifications } from "../../core";
+import { Buttons, Dialog } from "../../core";
 import { Upload } from "../../core/attachment";
 import { Attachment, Identifier } from "../../core/types";
 import { AttachmentRepository } from "../../core/RestAPI";
@@ -9,6 +9,7 @@ import ContractRepository from "../../core/repositories/contract-repository";
 import { Form, SubmitButton } from "../../core/form";
 
 import Translation from "../localization/translation.component";
+import NotificationService from "../../service/notification.service";
 
 type UploadContractProps = {
     id: Identifier,
@@ -29,7 +30,7 @@ const _: FC<UploadContractProps> = ({ id, onChanges }) => {
         if (attachment) {
             AttachmentRepository.delete(attachment.fileCode)
                 .then(() => setAttachment(a))
-                .catch(() => Notifications.Service.warning('page.budget.contracts.upload.failed'))
+                .catch(() => NotificationService.warning('page.budget.contracts.upload.failed'))
         } else {
             setAttachment(a)
         }
@@ -39,10 +40,10 @@ const _: FC<UploadContractProps> = ({ id, onChanges }) => {
             dialogControl.close()
         } else {
             ContractRepository.attach(id, attachment)
-                .then(() => Notifications.Service.success('page.budget.contracts.upload.success'))
+                .then(() => NotificationService.success('page.budget.contracts.upload.success'))
                 .then(() => dialogControl.close())
                 .then(() => onChanges && onChanges())
-                .catch(() => Notifications.Service.warning('page.budget.contracts.upload.failed'))
+                .catch(() => NotificationService.warning('page.budget.contracts.upload.failed'))
         }
     }
 

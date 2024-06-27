@@ -1,10 +1,11 @@
 import CategoryRepository from "../../core/repositories/category-repository";
-import { Buttons, Dialog, Formats, Notifications } from "../../core";
+import { Buttons, Dialog, Formats } from "../../core";
 import { mdiSquareEditOutline, mdiTrashCanOutline } from "@mdi/js";
 import React from "react";
 import { Category } from "../../core/types";
 
 import Translation from "../localization/translation.component";
+import NotificationService from "../../service/notification.service";
 
 type CategoryRowProps = {
     category: Category,
@@ -13,9 +14,9 @@ type CategoryRowProps = {
 
 const CategoryRow = ({ category, deleteCallback = () => undefined }: CategoryRowProps) => {
     const onDelete = () => CategoryRepository.delete(category)
-        .then(() => Notifications.Service.success('page.category.delete.success'))
+        .then(() => NotificationService.success('page.category.delete.success'))
         .then(() => deleteCallback())
-        .catch(() => Notifications.Service.warning('page.category.delete.failed'))
+        .catch(() => NotificationService.warning('page.category.delete.failed'))
 
     return (
         <tr>

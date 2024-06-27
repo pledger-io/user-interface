@@ -1,4 +1,4 @@
-import { BreadCrumbItem, BreadCrumbs, Buttons } from "../../../core";
+import { Buttons } from "../../../core";
 import React, { useEffect, useState } from "react";
 import { mdiPlus } from "@mdi/js";
 import AccountRepository from "../../../core/repositories/account-repository";
@@ -8,6 +8,8 @@ import AccountRowComponent from "../../../components/account/own-row.component";
 import Card from "../../../components/layout/card.component";
 import Loading from "../../../components/layout/loading.component";
 import Translation from "../../../components/localization/translation.component";
+import BreadCrumbs from "../../../components/breadcrumb/breadcrumb.component";
+import BreadCrumbItem from "../../../components/breadcrumb/breadcrumb-item.component";
 
 const OwnAccountsView = () => {
     const [accounts, setAccounts] = useState<Account[] | undefined>(undefined)

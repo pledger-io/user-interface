@@ -1,11 +1,12 @@
 import { FC } from "react";
-import { Buttons, Dialog, Notifications } from "../../core";
+import { Buttons, Dialog } from "../../core";
 import { Entity, Form, Input, SubmitButton } from "../../core/form";
 import { mdiCalendarPlus, mdiContentSave } from "@mdi/js";
 import { Account, Contract } from "../../core/types";
 import ContractRepository from "../../core/repositories/contract-repository";
 
 import Translation from "../localization/translation.component";
+import NotificationService from "../../service/notification.service";
 
 
 type ScheduleContractProps = {
@@ -39,9 +40,9 @@ const ScheduleContract: FC<ScheduleContractProps> = ({ contract }) => {
         }
 
         ContractRepository.schedule(contract.id, contractModel)
-            .then(() => Notifications.Service.success('page.contract.schedule.success'))
+            .then(() => NotificationService.success('page.contract.schedule.success'))
             .then(() => dialogControl.close())
-            .catch(() => Notifications.Service.warning('page.contract.schedule.error'));
+            .catch(() => NotificationService.warning('page.contract.schedule.error'));
     }
 
     return <>
@@ -68,7 +69,7 @@ const ScheduleContract: FC<ScheduleContractProps> = ({ contract }) => {
                               required={ true }/>
 
                 <div className='flex flex-row'>
-                    <Translations.Translation className='font-bold flex-1'
+                    <Translation className='font-bold flex-1'
                                               label='ScheduledTransaction.schedule'/>
                     <span className='flex'>
                         <Input.Text id='interval'

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 // Export all core classes and functions
 import * as Dialog from '../components/layout/popup'
-import * as Notifications from './Notification'
 import * as Buttons from '../components/layout/button'
 import * as Pagination from './Paginator'
 import * as Statistical from './Statistical'
@@ -11,7 +10,6 @@ import * as Formats from './Formatters'
 import * as Attachment from './attachment/index'
 import * as Dates from './Dates'
 import * as Dropdown from '../components/layout/dropdown'
-import { BreadCrumbs, BreadCrumbItem, BreadCrumbMenu } from "./breadcrumb";
 
 import '../assets/css/BreadCrumbs.scss'
 import '../assets/css/Message.scss'
@@ -134,13 +132,9 @@ const Resolver = {
 
 export {
     Buttons,
-    Notifications,
     Dialog,
     Pagination,
     Statistical,
-    BreadCrumbs,
-    BreadCrumbItem,
-    BreadCrumbMenu,
     Attachment,
     When,
     Dropdown,

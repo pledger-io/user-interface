@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { BreadCrumbItem, BreadCrumbs } from "../../core";
 import { Contract } from "../../core/types";
 import ContractRepository from "../../core/repositories/contract-repository";
 
@@ -9,6 +8,8 @@ import ContractTransactions from "../../components/contract/transaction-list.com
 import Card from "../../components/layout/card.component";
 import Loading from "../../components/layout/loading.component";
 import Translation from "../../components/localization/translation.component";
+import BreadCrumbItem from "../../components/breadcrumb/breadcrumb-item.component";
+import BreadCrumbs from "../../components/breadcrumb/breadcrumb.component";
 
 const ContractDetail = () => {
     const { id } = useParams()

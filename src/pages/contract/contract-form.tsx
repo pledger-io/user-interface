@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { mdiCancel, mdiContentSave } from "@mdi/js";
 
-import { BreadCrumbItem, BreadCrumbs, Buttons, Notifications } from "../../core";
+import { Notifications } from "../../core";
 import { Contract } from "../../core/types";
 import { Entity, Form, Input, SubmitButton } from "../../core/form";
 import ContractRepository from "../../core/repositories/contract-repository";
@@ -10,6 +10,8 @@ import ContractRepository from "../../core/repositories/contract-repository";
 import Loading from "../../components/layout/loading.component";
 import Card from "../../components/layout/card.component";
 import { BackButton } from "../../components/layout/button";
+import BreadCrumbs from "../../components/breadcrumb/breadcrumb.component";
+import BreadCrumbItem from "../../components/breadcrumb/breadcrumb-item.component";
 
 const ContractEdit = () => {
     const { id } = useParams()

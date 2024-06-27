@@ -1,7 +1,4 @@
 import {
-    BreadCrumbItem,
-    BreadCrumbMenu,
-    BreadCrumbs,
     Dates,
     Dropdown,
     Statistical
@@ -16,6 +13,9 @@ import AccountBalance from "../../components/reports/income-expense/account-bala
 import TopAccountTable from "../../components/reports/income-expense/top-account";
 import Card from "../../components/layout/card.component";
 import Translation from "../../components/localization/translation.component";
+import BreadCrumbs from "../../components/breadcrumb/breadcrumb.component";
+import BreadCrumbItem from "../../components/breadcrumb/breadcrumb-item.component";
+import BreadCrumbMenu from "../../components/breadcrumb/breadcrumb-menu.component";
 
 
 function IncomeExpenseView() {

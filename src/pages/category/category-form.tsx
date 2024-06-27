@@ -4,11 +4,13 @@ import { mdiCancel, mdiContentSave } from "@mdi/js";
 
 import CategoryRepository from "../../core/repositories/category-repository";
 import { Form, Input, SubmitButton } from '../../core/form'
-import { BreadCrumbItem, BreadCrumbs, Message, Notifications } from "../../core";
+import { Message, Notifications } from "../../core";
 import { Category } from "../../core/types";
 
 import Card from "../../components/layout/card.component";
 import { BackButton } from "../../components/layout/button";
+import BreadCrumbItem from "../../components/breadcrumb/breadcrumb-item.component";
+import BreadCrumbs from "../../components/breadcrumb/breadcrumb.component";
 
 const CategoryForm = () => {
     const [category, setCategory] = useState<Category>({ } as Category)
