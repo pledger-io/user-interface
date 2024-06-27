@@ -4,10 +4,11 @@ import { mdiCancel, mdiContentSave } from "@mdi/js";
 
 import CategoryRepository from "../../core/repositories/category-repository";
 import { Form, Input, SubmitButton } from '../../core/form'
-import { BreadCrumbItem, BreadCrumbs, Buttons, Message, Notifications } from "../../core";
+import { BreadCrumbItem, BreadCrumbs, Message, Notifications } from "../../core";
 import { Category } from "../../core/types";
 
 import Card from "../../components/layout/card.component";
+import { BackButton } from "../../components/layout/button";
 
 const CategoryForm = () => {
     const [category, setCategory] = useState<Category>({ } as Category)
@@ -49,7 +50,7 @@ const CategoryForm = () => {
                 <Card title='page.settings.categories.add'
                       buttons={[
                           <SubmitButton key='save' label='common.action.save' icon={mdiContentSave}/>,
-                          <Buttons.BackButton key='cancel' label='common.action.cancel' icon={mdiCancel}/>]}>
+                          <BackButton key='cancel' label='common.action.cancel' icon={mdiCancel}/>]}>
                     {exception && <Message message={exception} variant='warning'/>}
                     <Message label='page.settings.category.help' variant='info'/>
                     <Input.Text id='name'

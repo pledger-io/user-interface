@@ -4,8 +4,7 @@ import {
     BreadCrumbs,
     Dates,
     Dropdown,
-    Statistical,
-    Translations
+    Statistical
 } from "../../core";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -16,6 +15,7 @@ import YearBalanceChart from "../../components/reports/income-expense/year-balan
 import AccountBalance from "../../components/reports/income-expense/account-balance";
 import TopAccountTable from "../../components/reports/income-expense/top-account";
 import Card from "../../components/layout/card.component";
+import Translation from "../../components/localization/translation.component";
 
 
 function IncomeExpenseView() {
@@ -64,21 +64,21 @@ function IncomeExpenseView() {
                 <table className='w-full [&>tbody>tr>td]:pb-2'>
                     <tbody>
                     <tr>
-                        <td><Translations.Translation label='common.in'/></td>
+                        <td><Translation label='common.in'/></td>
                         <td className='text-right w-28'>
                             <Statistical.Balance currency={ currency }
                                                  income={ true }
                                                  range={ range }/></td>
                     </tr>
                     <tr>
-                        <td><Translations.Translation label='common.out'/></td>
+                        <td><Translation label='common.out'/></td>
                         <td className='text-right'>
                             <Statistical.Balance currency={ currency }
                                                  income={ false }
                                                  range={ range }/></td>
                     </tr>
                     <tr>
-                        <td className='text-right italic font-bold'><Translations.Translation label='common.difference'/>:</td>
+                        <td className='text-right italic font-bold'><Translation label='common.difference'/>:</td>
                         <td className='text-right border-t-2'>
                             <Statistical.Balance currency={ currency }
                                                  range={ range }/>

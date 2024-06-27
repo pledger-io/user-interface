@@ -7,7 +7,6 @@ import * as Notifications from './Notification'
 import * as Buttons from '../components/layout/button'
 import * as Pagination from './Paginator'
 import * as Statistical from './Statistical'
-import * as Translations from './localization'
 import * as Formats from './Formatters'
 import * as Attachment from './attachment/index'
 import * as Dates from './Dates'
@@ -139,7 +138,6 @@ export {
     Dialog,
     Pagination,
     Statistical,
-    Translations,
     BreadCrumbs,
     BreadCrumbItem,
     BreadCrumbMenu,

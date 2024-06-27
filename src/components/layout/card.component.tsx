@@ -1,7 +1,7 @@
-import * as Translations from "../../core/localization";
 import React, { Attributes, FC, ReactNode } from "react";
 
-import { Buttons } from "../../core";
+import Translation from "../localization/translation.component";
+import ButtonBar from "./button/button-bar.component";
 
 type CardProps = Attributes & {
     title?: string,                             // The translation text key for the title of the card
@@ -27,7 +27,7 @@ const Card: FC<CardProps> = ({ title, actions, buttons, children, className = ''
                 <header className='bg-header py-2 px-4 flex items-center justify-between
                                    font-bold text-lg rounded-t-lg
                                    border-b-solid border-b-[1px] border-bottom-separator'>
-                    {title && <Translations.Translation label={title}/>}
+                    {title && <Translation label={title}/>}
                     {message !== undefined && <div>{ message }</div> }
                     {actions && <div className='font-normal text-sm'>{ actions }</div>}
                 </header>
@@ -37,7 +37,7 @@ const Card: FC<CardProps> = ({ title, actions, buttons, children, className = ''
             </article>
             {buttons &&
                 <footer className='bg-header py-2 px-4 text-right rounded-b-lg'>
-                    <Buttons.ButtonBar>{buttons}</Buttons.ButtonBar>
+                    <ButtonBar>{buttons}</ButtonBar>
                 </footer>}
         </div>
     )

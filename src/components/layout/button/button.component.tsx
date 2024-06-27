@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import Icon from "@mdi/react";
 import React, { Attributes, FC } from "react";
 
-import Translation from "../../../core/localization/translation";
+import Translation from "../../localization/translation.component";
 import { StyleVariant } from "../../../core/types";
 
 const specialVariant = ['icon', 'text']

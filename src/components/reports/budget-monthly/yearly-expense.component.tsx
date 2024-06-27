@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Dates, Translations } from "../../../core";
+import { Dates } from "../../../core";
 import { ChartData } from "chart.js";
 import { Budget, BudgetExpense } from "../../../core/types";
 import StatisticalRepository from "../../../core/repositories/statistical-repository";
+
+import LocalizationService from "../../../service/localization.service";
 
 import BudgetChart from "./chart.component";
 import Card from "../../layout/card.component";
@@ -36,13 +38,13 @@ const BudgetYearlyExpense = ({ year, budgets, currencySymbol } : BudgetYearlyExp
                     labels: Dates.Ranges.months(year).map(m => m.start),
                     datasets: [
                         {
-                            label: await Translations.LocalizationService.get('graph.series.budget.expected'),
+                            label: await LocalizationService.get('graph.series.budget.expected'),
                             data: budgets.map(({ expenses }) => expenses.reduce((total, { expected }) => total + expected, 0)),
                             borderColor: '#f0c77c',
                             backgroundColor: '#f0c77c'
                         },
                         {
-                            label: await Translations.LocalizationService.get('graph.series.budget.actual'),
+                            label: await LocalizationService.get('graph.series.budget.actual'),
                             data: expenses.map(({ balance }) => Math.abs(balance)),
                             borderColor: '#de7370',
                             backgroundColor: '#de7370'

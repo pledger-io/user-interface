@@ -1,4 +1,3 @@
-import { Translations } from "../../core";
 import React, { useEffect, useState } from "react";
 import CategoryRepository from "../../core/repositories/category-repository";
 import { Range } from "../../core/Dates";
@@ -8,6 +7,8 @@ import StatisticalRepository from "../../core/repositories/statistical-repositor
 import { Chart } from "react-chartjs-2";
 import { DefaultChartConfig, Service as ChartService } from "../../config/global-chart-config";
 import RestAPI from "../../core/repositories/rest-api";
+
+import LocalizationService from "../../service/localization.service";
 
 import Card from "../layout/card.component";
 import Loading from "../layout/loading.component";
@@ -21,7 +22,7 @@ const CategoriesBalance = ({ range } : { range: Range }) => {
                 setCategorySeries({
                     labels: categories.map(c => c.label),
                     datasets: [{
-                        label: await Translations.LocalizationService.get('graph.series.category'),
+                        label: await LocalizationService.get('graph.series.category'),
                         backgroundColor: '#9abdd2',
                         data: (await Promise.all(
                             categories.map(c =>

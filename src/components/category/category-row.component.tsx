@@ -1,8 +1,10 @@
 import CategoryRepository from "../../core/repositories/category-repository";
-import { Buttons, Dialog, Formats, Notifications, Translations } from "../../core";
+import { Buttons, Dialog, Formats, Notifications } from "../../core";
 import { mdiSquareEditOutline, mdiTrashCanOutline } from "@mdi/js";
 import React from "react";
 import { Category } from "../../core/types";
+
+import Translation from "../localization/translation.component";
 
 type CategoryRowProps = {
     category: Category,
@@ -23,7 +25,7 @@ const CategoryRow = ({ category, deleteCallback = () => undefined }: CategoryRow
                                                                   variant='icon'
                                                                   className='warning'/> }
                                          onConfirm={ onDelete }>
-                    <Translations.Translation label='page.category.delete.confirm'/>
+                    <Translation label='page.category.delete.confirm'/>
                 </Dialog.Confirm>
                 <Buttons.Button icon={ mdiSquareEditOutline }
                                 variant='icon'

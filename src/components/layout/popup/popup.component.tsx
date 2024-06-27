@@ -1,7 +1,8 @@
 import { ForwardedRef, forwardRef, PropsWithChildren, useImperativeHandle, useState } from "react";
-import { Translation } from "../../../core/localization";
 import { Buttons } from "../../../core";
 import { mdiClose } from "@mdi/js";
+
+import Translation from "../../localization/translation.component";
 
 export type PopupProps = PropsWithChildren & {
     actions?: any

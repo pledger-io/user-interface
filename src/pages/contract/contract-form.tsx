@@ -9,6 +9,7 @@ import ContractRepository from "../../core/repositories/contract-repository";
 
 import Loading from "../../components/layout/loading.component";
 import Card from "../../components/layout/card.component";
+import { BackButton } from "../../components/layout/button";
 
 const ContractEdit = () => {
     const { id } = useParams()
@@ -50,7 +51,7 @@ const ContractEdit = () => {
                 <Card title={ editLabel }
                              buttons={[
                                  <SubmitButton key='save' label='common.action.save' icon={ mdiContentSave }/>,
-                                 <Buttons.BackButton key='cancel' label='common.action.cancel' icon={ mdiCancel }/>]}>
+                                 <BackButton key='cancel' label='common.action.cancel' icon={ mdiCancel }/>]}>
 
                     <Input.Text id='name'
                                 value={ contract?.name }

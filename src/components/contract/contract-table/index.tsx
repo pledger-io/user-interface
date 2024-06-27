@@ -1,9 +1,9 @@
 import { FC } from "react";
 
-import { Translations } from "../../../core";
 import { Contract } from "../../../core/types";
 
 import ContractRow from "./row.component";
+import Translation from "../../localization/translation.component";
 
 type ContractTableProps = {
     contracts: Contract[],
@@ -13,10 +13,10 @@ const ContractTable: FC<ContractTableProps> = ({ contracts = [], onChanges }) =>
     return <table className='Table'>
         <thead>
         <tr>
-            <th><Translations.Translation label='Contract.name' /></th>
-            <th><Translations.Translation label='Contract.company' /></th>
-            <th><Translations.Translation label='Contract.start' /></th>
-            <th><Translations.Translation label='Contract.end' /></th>
+            <th><Translation label='Contract.name' /></th>
+            <th><Translation label='Contract.company' /></th>
+            <th><Translation label='Contract.start' /></th>
+            <th><Translation label='Contract.end' /></th>
             <th/>
         </tr>
         </thead>

@@ -1,8 +1,9 @@
-import { Formats, Translations } from "../../core";
+import { Formats } from "../../core";
 import Icon from "@mdi/react";
 import React, { FC, useEffect, useState } from "react";
 
 import Card from "../layout/card.component";
+import Translation from "../localization/translation.component";
 
 type SummaryComponentProps = {
     title: string,
@@ -41,7 +42,7 @@ const SummaryComponent: FC<SummaryComponentProps> = ({ title, icon, currency, cu
             <div className='flex flex-row justify-between'>
                 <div className='min-w-[100px] min-h-[125px]'>
                     <h1 className='text-2xl'>
-                        <Translations.Translation label={title} />
+                        <Translation label={title} />
                     </h1>
                     <span className='text-3xl'>
                         <Formats.Money money={current} currency={currency} />
@@ -51,7 +52,7 @@ const SummaryComponent: FC<SummaryComponentProps> = ({ title, icon, currency, cu
                             pl-7 bg-no-repeat flex items-center mt-2
                             whitespace-nowrap bg-left-bottom
                             Comparison ${comparisonClass}`} style={ { lineHeight: '1.5rem' } }>
-                            <Translations.Translation label={comparisonKey} className='text-sm' />
+                            <Translation label={comparisonKey} className='text-sm' />
                         </div>
                     )}
                 </div>

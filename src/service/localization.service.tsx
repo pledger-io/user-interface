@@ -1,4 +1,4 @@
-import { LocalizationRepository } from "../RestAPI";
+import { LocalizationRepository } from "../core/RestAPI";
 
 type ResolveFn = (_: string) => void
 

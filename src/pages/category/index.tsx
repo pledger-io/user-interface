@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useQueryParam } from "../../core/hooks";
 import CategoryRepository from "../../core/repositories/category-repository";
 import { Category, Pagination } from "../../core/types";
-import { BreadCrumbItem, BreadCrumbs, Buttons, Translations } from "../../core";
+import { BreadCrumbItem, BreadCrumbs } from "../../core";
 import { mdiPlus } from "@mdi/js";
 import CategoryRow from "../../components/category/category-row.component";
 import { Paginator } from "../../core/Paginator";
 import Card from "../../components/layout/card.component";
 import Loading from "../../components/layout/loading.component";
+import { Button } from "../../components/layout/button";
+import Translation from "../../components/localization/translation.component";
 
 const CategoryListing = () => {
     const [categories, setCategories] = useState<Category[]>()
@@ -37,16 +39,16 @@ const CategoryListing = () => {
             </BreadCrumbs>
 
             <Card title='page.nav.settings.categories' actions={ [
-                <Buttons.Button label='page.settings.categories.add' variant='primary' icon={ mdiPlus } href='./add'
-                                key='add'/>
+                <Button label='page.settings.categories.add' variant='primary' icon={ mdiPlus } href='./add'
+                        key='add'/>
             ] }>
                 <table className='Table'>
                     <thead>
                     <tr>
                         <th className='w-[60px]'/>
-                        <th><Translations.Translation label='Category.label'/></th>
-                        <th><Translations.Translation label='Category.description'/></th>
-                        <th><Translations.Translation label='Category.lastActivity'/></th>
+                        <th><Translation label='Category.label'/></th>
+                        <th><Translation label='Category.description'/></th>
+                        <th><Translation label='Category.lastActivity'/></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -62,7 +64,7 @@ const CategoryListing = () => {
                     { isLoaded && !hasContent &&
                         <tr>
                             <td colSpan={ 4 } className='text-center text-gray-500'>
-                                <Translations.Translation label='common.overview.noresults'/>
+                                <Translation label='common.overview.noresults'/>
                             </td>
                         </tr> }
                     </tbody>

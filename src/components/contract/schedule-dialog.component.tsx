@@ -1,9 +1,11 @@
 import { FC } from "react";
-import { Buttons, Dialog, Notifications, Translations } from "../../core";
+import { Buttons, Dialog, Notifications } from "../../core";
 import { Entity, Form, Input, SubmitButton } from "../../core/form";
 import { mdiCalendarPlus, mdiContentSave } from "@mdi/js";
 import { Account, Contract } from "../../core/types";
 import ContractRepository from "../../core/repositories/contract-repository";
+
+import Translation from "../localization/translation.component";
 
 
 type ScheduleContractProps = {
@@ -54,7 +56,7 @@ const ScheduleContract: FC<ScheduleContractProps> = ({ contract }) => {
                            control={ dialogControl }>
 
                 <div className='border-1 text-gray-400 mb-3'>
-                    <Translations.Translation label='page.budget.schedule.explained'/>
+                    <Translation label='page.budget.schedule.explained'/>
                 </div>
 
                 <Entity.ManagedAccount id='from'

@@ -1,12 +1,13 @@
 import { Contract } from "../../../core/types";
 import { FC } from "react";
 import { NavLink } from "react-router-dom";
-import { Attachment, Buttons, Dialog, Dropdown, Formats, Notifications, Resolver, Translations } from "../../../core";
+import { Attachment, Buttons, Dialog, Dropdown, Formats, Notifications, Resolver } from "../../../core";
 import { mdiCalendarCheck, mdiDotsVertical, mdiSquareEditOutline, mdiTrashCanOutline } from "@mdi/js";
 import ContractRepository from "../../../core/repositories/contract-repository";
 
 import ScheduleContract from "../schedule-dialog.component";
 import UploadContract from "../upload-dialog.component";
+import Translation from "../../localization/translation.component";
 
 type ContractRowProps = {
     contract: Contract,
@@ -69,7 +70,7 @@ const ContractRow: FC<ContractRowProps> = ({ contract , onChanges }) => {
                                                                       variant='warning'
                                                                       icon={ mdiTrashCanOutline }/> }
                                              onConfirm={ onDelete }>
-                        <Translations.Translation label='page.budget.contracts.delete.confirm'/>
+                        <Translation label='page.budget.contracts.delete.confirm'/>
                     </Dialog.Confirm>
                 </Dropdown.Dropdown>
             }

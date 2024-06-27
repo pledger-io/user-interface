@@ -1,9 +1,10 @@
-import { Dates, Formats, Translations } from "../../../core";
+import { Dates, Formats } from "../../../core";
 import React, { useEffect, useState } from "react";
 import StatisticalRepository from "../../../core/repositories/statistical-repository";
 import { Category } from "../../../core/types";
 
 import Loading from "../../layout/loading.component";
+import Translation from "../../localization/translation.component";
 
 type CategorizedMonthlySpendingComponentProps = {
     categories: Category[],
@@ -49,10 +50,10 @@ const CategorizedMonthlySpendingComponent = ({ categories, year }: CategorizedMo
         <table className='Table'>
             <thead>
             <tr>
-                <th><Translations.Translation label='Category.label'/></th>
+                <th><Translation label='Category.label'/></th>
                 { months.map(month =>
                     <th key={month.month()}>
-                        <Translations.Translation label={`common.month.${month.month()}`}/>
+                        <Translation label={`common.month.${month.month()}`}/>
                     </th>)
                 }
             </tr>

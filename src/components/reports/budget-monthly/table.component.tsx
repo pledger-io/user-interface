@@ -1,7 +1,9 @@
 import React, { FC, useEffect, useState } from "react";
-import { Dates, Formats, Statistical, Translations } from "../../../core";
+import { Dates, Formats, Statistical } from "../../../core";
 import { Range } from "../../../core/Dates";
 import { Budget } from "../../../core/types";
+
+import Translation from "../../localization/translation.component";
 
 type BudgetTableProps = {
     budgets: Budget[],
@@ -31,11 +33,11 @@ const BudgetTable: FC<BudgetTableProps> = ({ budgets, year, currency }) => {
         <table className='Table MonthlyView'>
             <thead>
             <tr>
-                <th><Translations.Translation label='common.month'/></th>
-                <th><Translations.Translation label='Transaction.budget'/></th>
-                <th><Translations.Translation label='graph.series.budget.actual'/></th>
-                <th><Translations.Translation label='common.difference'/></th>
-                <th><Translations.Translation label='common.percentage'/></th>
+                <th><Translation label='common.month'/></th>
+                <th><Translation label='Transaction.budget'/></th>
+                <th><Translation label='graph.series.budget.actual'/></th>
+                <th><Translation label='common.difference'/></th>
+                <th><Translation label='common.percentage'/></th>
             </tr>
             </thead>
             <tbody>
@@ -44,7 +46,7 @@ const BudgetTable: FC<BudgetTableProps> = ({ budgets, year, currency }) => {
                 const percentageOfExpected = monthlyExpenses[idx] / expectedExpenses
                 return <tr key={month.month()} className={percentageOfExpected > 1 ? 'warning' : 'success'}>
                     <td>
-                        <Translations.Translation label={ `common.month.${month.month()}` } />
+                        <Translation label={ `common.month.${month.month()}` } />
                     </td>
                     <td>
                         <Formats.Money money={ expectedExpenses }
@@ -64,7 +66,7 @@ const BudgetTable: FC<BudgetTableProps> = ({ budgets, year, currency }) => {
                     </td>
                 </tr>
             }) }
-            { budgets.length === 0 && <tr><td className='text-center' colSpan={ 5 }><Translations.Translation label='common.overview.noresults' /></td></tr> }
+            { budgets.length === 0 && <tr><td className='text-center' colSpan={ 5 }><Translation label='common.overview.noresults' /></td></tr> }
             </tbody>
         </table>
     </>

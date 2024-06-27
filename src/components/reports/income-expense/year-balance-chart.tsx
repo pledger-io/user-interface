@@ -1,6 +1,6 @@
 import { Range } from "../../../core/Dates";
 import { useEffect, useState } from "react";
-import { Dates, Translations } from "../../../core";
+import { Dates } from "../../../core";
 import StatisticalRepository from "../../../core/repositories/statistical-repository";
 import { ChartDataset } from "chart.js/dist/types";
 import { ChartData } from "chart.js";
@@ -8,6 +8,7 @@ import { Chart } from "react-chartjs-2";
 import { DefaultChartConfig, Service } from "../../../config/global-chart-config";
 
 import Loading from "../../layout/loading.component";
+import LocalizationService from "../../../service/localization.service";
 
 type YearBalanceChartProps = {
     year: number,
@@ -39,8 +40,8 @@ const YearBalanceChart = ({ year, currencySymbol, currency } : YearBalanceChartP
                     onlyIncome: true
                 })))
                 .then(async income => {
-                    const incomeLabel = await Translations.LocalizationService.get('graph.series.income')
-                    const rollingAverageLabel = await Translations.LocalizationService.get('graph.series.income.sma')
+                    const incomeLabel = await LocalizationService.get('graph.series.income')
+                    const rollingAverageLabel = await LocalizationService.get('graph.series.income.sma')
                     resolve([
                         {
                             label: incomeLabel,
@@ -73,8 +74,8 @@ const YearBalanceChart = ({ year, currencySymbol, currency } : YearBalanceChartP
                     onlyIncome: false
                 })))
                 .then(async expense => {
-                    const expenseLabel = await Translations.LocalizationService.get('graph.series.expenses')
-                    const rollingAverageLabel = await Translations.LocalizationService.get('graph.series.expenses.sma')
+                    const expenseLabel = await LocalizationService.get('graph.series.expenses')
+                    const rollingAverageLabel = await LocalizationService.get('graph.series.expenses.sma')
 
                     resolve([
                         {

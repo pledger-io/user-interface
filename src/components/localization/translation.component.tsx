@@ -1,6 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import LocalizationService from "./localization-service";
-
+import LocalizationService from "../../service/localization.service";
 
 type TranslationProps = {
     label: string

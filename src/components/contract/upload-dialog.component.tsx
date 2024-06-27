@@ -1,12 +1,14 @@
 import { FC, useState } from "react";
 import { mdiContentSave, mdiUpload } from "@mdi/js";
 
-import { Buttons, Dialog, Notifications, Translations } from "../../core";
+import { Buttons, Dialog, Notifications } from "../../core";
 import { Upload } from "../../core/attachment";
 import { Attachment, Identifier } from "../../core/types";
 import { AttachmentRepository } from "../../core/RestAPI";
 import ContractRepository from "../../core/repositories/contract-repository";
 import { Form, SubmitButton } from "../../core/form";
+
+import Translation from "../localization/translation.component";
 
 type UploadContractProps = {
     id: Identifier,
@@ -61,7 +63,7 @@ const _: FC<UploadContractProps> = ({ id, onChanges }) => {
                                              icon={ mdiContentSave }/>
                            ] }
                            title='page.budget.contracts.action.uploadContract'>
-                <Translations.Translation className='border-1 text-gray-400 block mb-3'
+                <Translation className='border-1 text-gray-400 block mb-3'
                                           label='page.budget.contracts.upload.explained'/>
 
                 <div className='max-w-[10em] mx-auto'>

@@ -1,9 +1,10 @@
 import React, { FC, useEffect, useState } from "react";
-import { Dates, Formats, Statistical, Translations } from "../../../core";
+import { Dates, Formats, Statistical } from "../../../core";
 import { Budget, BudgetExpense } from "../../../core/types";
 import { Range } from "../../../core/Dates";
 
 import Loading from "../../layout/loading.component";
+import Translation from "../../localization/translation.component";
 
 type MonthlyPerBudgetTableProps = {
     budgets: Budget[],
@@ -28,10 +29,10 @@ const MonthlyPerBudgetTableComponent: FC<MonthlyPerBudgetTableProps> = ({ budget
         <table className='Table'>
             <thead>
             <tr>
-                <th><Translations.Translation label='Budget.Expense.name'/></th>
+                <th><Translation label='Budget.Expense.name'/></th>
                 { months.map(month =>
                     <th key={ month.month() }>
-                        <Translations.Translation label={ `common.month.${ month.month() }` }/>
+                        <Translation label={ `common.month.${ month.month() }` }/>
                     </th>) }
             </tr>
             </thead>
@@ -41,7 +42,7 @@ const MonthlyPerBudgetTableComponent: FC<MonthlyPerBudgetTableProps> = ({ budget
                                        months={ months }
                                        currency={ currency }
                                        expense={ expense } />) }
-            { expenses.length === 0 && <tr><td className='text-center' colSpan={ 1 + months.length }><Translations.Translation label='common.overview.noresults' /></td></tr> }
+            { expenses.length === 0 && <tr><td className='text-center' colSpan={ 1 + months.length }><Translation label='common.overview.noresults' /></td></tr> }
             </tbody>
         </table>
     </>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Dates, Translations } from "../../../core";
+import { Dates } from "../../../core";
 import { ChartData } from "chart.js";
 import { Range } from "../../../core/Dates";
 import { ChartDataset } from "chart.js/dist/types";
@@ -7,6 +7,8 @@ import { Category } from "../../../core/types";
 import { Chart } from "react-chartjs-2";
 import { DefaultChartConfig, Service } from "../../../config/global-chart-config";
 import StatisticalRepository from "../../../core/repositories/statistical-repository";
+
+import LocalizationService from "../../../service/localization.service";
 
 import Loading from "../../layout/loading.component";
 
@@ -35,7 +37,7 @@ const CategoryGraph = ({ categories, year, currencySymbol }: CategoryGraphProps)
             })
                 .then(async income => {
                     resolve([{
-                        label: await Translations.LocalizationService.get('graph.series.income'),
+                        label: await LocalizationService.get('graph.series.income'),
                         backgroundColor: '#7fc6a5',
                         // @ts-expect-error mapping issues
                         data: income.map(({ date, amount }) => ({ x: date, y: amount }))
@@ -51,7 +53,7 @@ const CategoryGraph = ({ categories, year, currencySymbol }: CategoryGraphProps)
             })
                 .then(async income => {
                     resolve([{
-                        label: await Translations.LocalizationService.get('graph.series.expenses'),
+                        label: await LocalizationService.get('graph.series.expenses'),
                         backgroundColor: '#dc3545',
                         // @ts-expect-error mapping issues
                         data: income.map(({ date, amount }) => ({ x: date, y: Math.abs(amount) }))

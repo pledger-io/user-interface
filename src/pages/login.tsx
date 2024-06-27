@@ -2,11 +2,14 @@ import React, { useState } from "react";
 import { mdiAccountPlus, mdiLogin, mdiWeb } from "@mdi/js";
 
 import { Form, Input, SubmitButton } from '../core/form'
-import { Buttons, Dropdown, Message, Translations } from "../core";
+import { Message } from "../core";
 import SecurityRepository from "../core/repositories/security-repository";
 import { useQueryParam } from "../core/hooks";
 import { useNavigate } from "react-router-dom";
 import Card from "../components/layout/card.component";
+import LocalizationService from "../service/localization.service";
+import { Dropdown } from "../components/layout/dropdown";
+import { Button } from "../components/layout/button";
 
 type LoginForm = {
     username: string,
@@ -28,22 +31,22 @@ function Login() {
             <Card title='page.login.title'
                   className='min-w-[30rem]'
                   actions={ [
-                      <Dropdown.Dropdown icon={ mdiWeb }
+                      <Dropdown icon={ mdiWeb }
                                          className='[&>div]:bg-white [&>div]:px-4 [&>div]:rounded [&>div]:border-separator [&>div]:border-[1px]'
                                          key='language-dropdown'>
                           <button className='!rounded-t Flag us hover:opacity-80 border-b-[1px]'
                                   type='button'
-                                  onClick={ () => Translations.LocalizationService.load('en') }>English
+                                  onClick={ () => LocalizationService.load('en') }>English
                           </button>
                           <button className='Flag de hover:opacity-80 border-b-[1px]'
                                   type='button'
-                                  onClick={ () => Translations.LocalizationService.load('de') }>Deutsch
+                                  onClick={ () => LocalizationService.load('de') }>Deutsch
                           </button>
                           <button className='Flag nl !pl-5 !rounded-b hover:opacity-80'
                                   type='button'
-                                  onClick={ () => Translations.LocalizationService.load('nl') }>Nederlands
+                                  onClick={ () => LocalizationService.load('nl') }>Nederlands
                           </button>
-                      </Dropdown.Dropdown>] }
+                      </Dropdown>] }
                   buttons={ [
                       <SubmitButton key='login' label='page.login.login' icon={ mdiLogin }/>] }>
 
@@ -63,7 +66,7 @@ function Login() {
                 </div>
 
                 <div className='flex justify-end'>
-                    <Buttons.Button
+                    <Button
                         href={ `/register?from=${ from }` }
                         icon={ mdiAccountPlus }
                         label='page.login.register'

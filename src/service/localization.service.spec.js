@@ -1,6 +1,5 @@
 import axios from "axios";
-
-import LocalizationService from "./localization-service";
+import LocalizationService from "./localization.service";
 
 const timesOut = async (promise, ms) => {
     const awaiting = Promise.race([promise, new Promise((_, reject) => {

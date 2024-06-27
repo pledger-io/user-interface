@@ -1,10 +1,11 @@
-import { Formats, Translations } from "../../../core";
+import { Formats } from "../../../core";
 import React, { useEffect } from "react";
 import { Account } from "../../../core/types";
 import AccountRepository from "../../../core/repositories/account-repository";
 import StatisticalRepository from "../../../core/repositories/statistical-repository";
 
 import Loading from "../../layout/loading.component";
+import Translation from "../../localization/translation.component";
 
 type AccountBalanceProp = {
     year: number,
@@ -59,17 +60,17 @@ const AccountBalanceComponent = ({ year, currency } : AccountBalanceProp) => {
         <table className='Table'>
             <thead>
             <tr>
-                <th><Translations.Translation label='Account.name'/></th>
-                <th><Translations.Translation label='page.reports.default.startBalance'/></th>
-                <th><Translations.Translation label='page.reports.default.endBalance'/></th>
-                <th><Translations.Translation label='common.difference'/></th>
+                <th><Translation label='Account.name'/></th>
+                <th><Translation label='page.reports.default.startBalance'/></th>
+                <th><Translation label='page.reports.default.endBalance'/></th>
+                <th><Translation label='common.difference'/></th>
             </tr>
             </thead>
             <tbody>
             { !accounts && <tr><td colSpan={ 4 }><Loading /></td></tr> }
 
             { accounts && accounts.length === 0 && <tr>
-                <td colSpan={ 4 }><Translations.Translation label='common.results.nodata'/></td>
+                <td colSpan={ 4 }><Translation label='common.results.nodata'/></td>
             </tr> }
 
             { accounts && accounts.map(account =>

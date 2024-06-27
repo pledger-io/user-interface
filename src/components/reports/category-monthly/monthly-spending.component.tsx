@@ -1,10 +1,11 @@
-import { Formats, Translations } from "../../../core";
+import { Formats } from "../../../core";
 import React, { useEffect, useState } from "react";
 import { Category } from "../../../core/types";
 import { Range } from "../../../core/Dates";
 import StatisticalRepository from "../../../core/repositories/statistical-repository";
 
 import Loading from "../../layout/loading.component";
+import Translation from "../../localization/translation.component";
 
 type MonthlySpendingComponentProps = {
     categories: Category[],
@@ -46,15 +47,15 @@ const MonthlySpendingComponent = ({ categories, range } : MonthlySpendingCompone
         <table className='Table'>
             <thead>
             <tr>
-                <th><Translations.Translation label='common.month' /></th>
-                <th><Translations.Translation label='page.reports.category.income' /></th>
-                <th><Translations.Translation label='page.reports.category.expense' /></th>
+                <th><Translation label='common.month' /></th>
+                <th><Translation label='page.reports.category.income' /></th>
+                <th><Translation label='page.reports.category.expense' /></th>
             </tr>
             </thead>
             <tbody>
             { [...new Array(12).keys()]
                 .map(month => <tr key={ month }>
-                    <td><Translations.Translation label={ `common.month.${ month + 1 }` } /></td>
+                    <td><Translation label={ `common.month.${ month + 1 }` } /></td>
                     <td><Formats.Money money={ income[month] } /></td>
                     <td><Formats.Money money={ expense[month] } /></td>
                 </tr>) }
