@@ -1,12 +1,13 @@
-import { Form, Input, SubmitButton } from "../core/form";
-import { Message, Notifications } from "../core";
+import { Form, Input, SubmitButton } from "../components/form";
+import { Message } from "../core";
 import { mdiCheck } from "@mdi/js";
 import SecurityRepository from "../core/repositories/security-repository";
 import { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
-import { useQueryParam } from "../core/hooks";
+import useQueryParam from "../hooks/query-param.hook";
 
 import Card from "../components/layout/card.component";
+import NotificationService from "../service/notification.service";
 
 const TwoFactor = () => {
     const navigate = useNavigate();
@@ -14,7 +15,7 @@ const TwoFactor = () => {
     const onSubmit = (entity: any) => {
         SecurityRepository.twoFactor(entity.code)
             .then(() => navigate(from))
-            .catch((error: AxiosError) => Notifications.Service.exception(error))
+            .catch((error: AxiosError) => NotificationService.exception(error))
     }
 
     return <>

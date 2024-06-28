@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { mdiAccountPlus, mdiLogin, mdiWeb } from "@mdi/js";
 
-import { Form, Input, SubmitButton } from '../core/form'
+import { Form, Input, SubmitButton } from '../components/form'
 import { Message } from "../core";
 import SecurityRepository from "../core/repositories/security-repository";
-import { useQueryParam } from "../core/hooks";
+import useQueryParam from "../hooks/query-param.hook";
 import { useNavigate } from "react-router-dom";
 import Card from "../components/layout/card.component";
 import LocalizationService from "../service/localization.service";

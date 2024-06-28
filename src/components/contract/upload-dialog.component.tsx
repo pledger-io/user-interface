@@ -6,7 +6,7 @@ import { Upload } from "../../core/attachment";
 import { Attachment, Identifier } from "../../core/types";
 import { AttachmentRepository } from "../../core/RestAPI";
 import ContractRepository from "../../core/repositories/contract-repository";
-import { Form, SubmitButton } from "../../core/form";
+import { Form, SubmitButton } from "../form";
 
 import Translation from "../localization/translation.component";
 import NotificationService from "../../service/notification.service";

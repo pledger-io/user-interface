@@ -1,7 +1,7 @@
 import { FC, ReactNode } from "react";
 
 type ButtonBarProps = {
-    children: ReactNode[],
+    children: ReactNode[] | ReactNode
     className?: string
 }
 const ButtonBar: FC<ButtonBarProps> = ({ children, className }) => {

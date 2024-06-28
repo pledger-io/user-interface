@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { mdiCancel, mdiContentSave } from "@mdi/js";
 
-import { Notifications } from "../../core";
 import { Contract } from "../../core/types";
-import { Entity, Form, Input, SubmitButton } from "../../core/form";
+import { Entity, Form, Input, SubmitButton } from "../../components/form";
 import ContractRepository from "../../core/repositories/contract-repository";
 
 import Loading from "../../components/layout/loading.component";
@@ -12,6 +11,7 @@ import Card from "../../components/layout/card.component";
 import { BackButton } from "../../components/layout/button";
 import BreadCrumbs from "../../components/breadcrumb/breadcrumb.component";
 import BreadCrumbItem from "../../components/breadcrumb/breadcrumb-item.component";
+import NotificationService from "../../service/notification.service";
 
 const ContractEdit = () => {
     const { id } = useParams()
@@ -30,14 +30,14 @@ const ContractEdit = () => {
     const onSubmit = (entity: any) => {
         if (id) {
             ContractRepository.update(id, entity)
-                .then(() => Notifications.Service.success('page.budget.contracts.updated.success'))
+                .then(() => NotificationService.success('page.budget.contracts.updated.success'))
                 .then(() => navigate(-1))
-                .catch(() => Notifications.Service.success('page.budget.contracts.updated.failed'))
+                .catch(() => NotificationService.success('page.budget.contracts.updated.failed'))
         } else {
             ContractRepository.create(entity)
-                .then(() => Notifications.Service.success('page.budget.contracts.created.success'))
+                .then(() => NotificationService.success('page.budget.contracts.created.success'))
                 .then(() => navigate(-1))
-                .catch(() => Notifications.Service.success('page.budget.contracts.created.failed'))
+                .catch(() => NotificationService.success('page.budget.contracts.created.failed'))
         }
     }
 

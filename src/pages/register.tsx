@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 
-import { Form, Input, SubmitButton } from "../core/form";
+import { Form, Input, SubmitButton } from "../components/form";
 import { Message } from "../core";
 import { mdiAccountPlus, mdiLogin } from "@mdi/js";
 import { useNavigate } from "react-router-dom";
 import SecurityRepository from "../core/repositories/security-repository";
 
 import '../assets/css/RegisterCard.scss'
-import { useQueryParam } from "../core/hooks";
+import useQueryParam from "../hooks/query-param.hook";
 
 import Card from "../components/layout/card.component";
 import Button from "../components/layout/button/button.component";

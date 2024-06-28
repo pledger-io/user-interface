@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { Buttons, Dialog } from "../../core";
-import { Entity, Form, Input, SubmitButton } from "../../core/form";
+import { Entity, Form, Input, SubmitButton } from "../form";
 import { mdiCalendarPlus, mdiContentSave } from "@mdi/js";
 import { Account, Contract } from "../../core/types";
 import ContractRepository from "../../core/repositories/contract-repository";

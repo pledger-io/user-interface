@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { mdiCancel, mdiContentSave } from "@mdi/js";
+import { SubmitButton, Form } from "../../components/form";
+import NotificationService from "../../service/notification.service";
 
 import CategoryRepository from "../../core/repositories/category-repository";
-import { Form, Input, SubmitButton } from '../../core/form'
-import { Message, Notifications } from "../../core";
+import { Message } from "../../core";
 import { Category } from "../../core/types";
 
 import Card from "../../components/layout/card.component";
@@ -25,19 +26,19 @@ const CategoryForm = () => {
     const onSubmit = (entity: any) => {
         if (id)
             CategoryRepository.update(id, entity)
-                .then(() => Notifications.Service.success('page.category.create.success'))
+                .then(() => NotificationService.success('page.category.create.success'))
                 .then(() => navigate(-1))
                 .catch(e => {
                     setException(e)
-                    Notifications.Service.warning('page.category.create.failed')
+                    NotificationService.warning('page.category.create.failed')
                 })
         else
             CategoryRepository.create(entity)
-                .then(() => Notifications.Service.success('page.category.update.success'))
+                .then(() => NotificationService.success('page.category.update.success'))
                 .then(() => navigate(-1))
                 .catch(e => {
                     setException(e)
-                    Notifications.Service.warning('page.category.update.failed')
+                    NotificationService.warning('page.category.update.failed')
                 })
     }
 

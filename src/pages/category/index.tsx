@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useQueryParam } from "../../core/hooks";
+import useQueryParam from "../../hooks/query-param.hook";
 import CategoryRepository from "../../core/repositories/category-repository";
 import { Category, Pagination } from "../../core/types";
 import { mdiPlus } from "@mdi/js";
 import CategoryRow from "../../components/category/category-row.component";
-import { Paginator } from "../../core/Paginator";
+import { Paginator } from "../../components/layout/paginator.component";
 import Card from "../../components/layout/card.component";
 import Loading from "../../components/layout/loading.component";
 import { Button } from "../../components/layout/button";

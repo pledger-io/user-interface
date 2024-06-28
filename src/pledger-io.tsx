@@ -14,10 +14,18 @@ import SecurityRepository from "./core/repositories/security-repository";
 import RestAPI from "./core/repositories/rest-api";
 import { CurrencyRepository } from "./core/RestAPI";
 
-import Sidebar from "./core/sidebar";
-import MobileSidebar from "./core/sidebar/mobile-sidebar";
+import Sidebar from "./components/sidebar";
+import MobileSidebar from "./components/sidebar/mobile-sidebar";
 import Loading from "./components/layout/loading.component";
 import NotificationCenter from "./components/notification";
+
+import account from "./pages/account/routes";
+import automation from "./pages/automation/routes";
+import category from "./pages/category/routes";
+import contract from "./pages/contract/routes";
+import reports from "./pages/reports/routes";
+import transactions from "./pages/transaction/routes";
+import upload from "./pages/upload/routes";
 
 const router = createBrowserRouter([
     {
@@ -49,114 +57,13 @@ const router = createBrowserRouter([
                 path: 'dashboard',
                 Component: lazy(() => import('./pages/dashboard'))
             },
-            {
-                id: 'accounts',
-                path: 'accounts',
-                children: [
-                    {
-                        id: 'owned-accounts',
-                        path: 'own'
-                    },
-                    {
-                        id: 'liability-accounts',
-                        path: 'liability'
-                    },
-                    {
-                        id: 'other-accounts',
-                        path: ':type',
-                        loader: ({ params }) => {
-                            return {
-                                type: params.type === 'expense'
-                                    ? 'creditor'
-                                    : 'debtor'
-                            }
-                        }
-                    }
-                ]
-            },
-            {
-                id: 'reports',
-                path: 'reports',
-                children: [
-                    {
-                        id: 'budget-balance',
-                        path: 'monthly-budget',
-                        Component: lazy(() => import('./pages/reports/budget-monthly'))
-                    },
-                    {
-                        id: 'budget-balance-monthly',
-                        path: 'monthly-budget/:year/:currency',
-                        Component: lazy(() => import('./pages/reports/budget-monthly'))
-                    },
-                    {
-                        id: 'income-expense',
-                        path: 'income-expense',
-                        Component: lazy(() => import('./pages/reports/income-expense'))
-                    },
-                    {
-                        id: 'income-expense-monthly',
-                        path: 'income-expense/:year/:currency',
-                        Component: lazy(() => import('./pages/reports/income-expense'))
-                    },
-                    {
-                        id: 'category-balance',
-                        path: 'monthly-category',
-                        Component: lazy(() => import('./pages/reports/category-monthly'))
-                    },
-                    {
-                        id: 'category-balance-monthly',
-                        path: 'monthly-category/:year/:currency',
-                        Component: lazy(() => import('./pages/reports/category-monthly'))
-                    },
-                ]
-            },
-            {
-                id: 'categories',
-                path: 'categories',
-                children: [
-                    {
-                        id: 'category-list',
-                        path: '',
-                        Component: lazy(() => import('./pages/category')),
-                    },
-                    {
-                        id: 'category-add',
-                        path: 'add',
-                        Component: lazy(() => import('./pages/category/category-form'))
-                    },
-                    {
-                        id: 'category-edit',
-                        path: ':id/edit',
-                        Component: lazy(() => import('./pages/category/category-form'))
-                    }
-                ]
-            },
-            {
-                id: 'contracts',
-                path: 'contracts',
-                children: [
-                    {
-                        id: 'contract-list',
-                        path: '',
-                        Component: lazy(() => import('./pages/contract')),
-                    },
-                    {
-                        id: 'contract-add',
-                        path: 'create',
-                        Component: lazy(() => import('./pages/contract/contract-form'))
-                    },
-                    {
-                        id: 'contract-edit',
-                        path: ':id/edit',
-                        Component: lazy(() => import('./pages/contract/contract-form'))
-                    },
-                    {
-                        id: 'contract-view',
-                        path: ':id',
-                        Component: lazy(() => import('./pages/contract/contract-details'))
-                    }
-                ]
-            },
+            account,
+            automation,
+            category,
+            contract,
+            reports,
+            transactions,
+            upload,
             {
                 id: 'catch-all',
                 path: '*',

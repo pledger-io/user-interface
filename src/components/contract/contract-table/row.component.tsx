@@ -1,9 +1,10 @@
 import { Contract } from "../../../core/types";
 import { FC } from "react";
 import { NavLink } from "react-router-dom";
-import { Attachment, Buttons, Dialog, Dropdown, Formats, Notifications, Resolver } from "../../../core";
+import { Attachment, Buttons, Dialog, Dropdown, Formats, Resolver } from "../../../core";
 import { mdiCalendarCheck, mdiDotsVertical, mdiSquareEditOutline, mdiTrashCanOutline } from "@mdi/js";
 import ContractRepository from "../../../core/repositories/contract-repository";
+import NotificationService from "../../../service/notification.service";
 
 import ScheduleContract from "../schedule-dialog.component";
 import UploadContract from "../upload-dialog.component";
@@ -19,14 +20,14 @@ const ContractRow: FC<ContractRowProps> = ({ contract , onChanges }) => {
 
     const onDelete = () => {
         ContractRepository.delete(contract.id)
-            .then(() => Notifications.Service.success('page.budget.contracts.delete.success'))
+            .then(() => NotificationService.success('page.budget.contracts.delete.success'))
             .then(() => onChanges && onChanges())
-            .catch(() => Notifications.Service.warning('page.budget.contracts.delete.failed'))
+            .catch(() => NotificationService.warning('page.budget.contracts.delete.failed'))
     }
     const onWarnClick = () => {
         ContractRepository.warn(contract.id)
-            .then(() => Notifications.Service.success('page.title.budget.contracts.warn.success'))
-            .catch(() => Notifications.Service.warning('page.title.budget.contracts.warn.failed'))
+            .then(() => NotificationService.success('page.title.budget.contracts.warn.success'))
+            .catch(() => NotificationService.warning('page.title.budget.contracts.warn.failed'))
     }
 
     return <tr key={ contract.id }

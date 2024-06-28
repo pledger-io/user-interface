@@ -4,7 +4,7 @@ import { Chart } from "react-chartjs-2";
 import { ChartData } from "chart.js";
 
 import { Range } from "../../core/Dates";
-import { BalanceSeries } from "../../core/graphs/balance-series";
+import { BalanceSeries } from "../graphs/balance-series";
 import { DefaultChartConfig, Service as ChartService } from "../../config/global-chart-config";
 import RestAPI from "../../core/repositories/rest-api";
 

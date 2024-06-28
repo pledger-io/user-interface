@@ -1,10 +1,11 @@
-import { Buttons, Notifications, When } from "../index";
+import { Buttons, When } from "../index";
 import React, { DragEventHandler, useState } from "react";
 import { AttachmentRepository } from "../RestAPI";
 import { mdiTrayArrowUp } from "@mdi/js";
 
 import UploadSVG from "../../assets/ic-upload-file.svg";
 import { Attachment } from "../types";
+import NotificationService from "../../service/notification.service";
 
 function matchingType(accepted: string, presented: string) {
     accepted = accepted || '*/*'
@@ -20,7 +21,7 @@ let uploadCounter = 0
 
 const validDrop = (event: React.DragEvent, max: number | null, accepts: string) => {
     if (event.dataTransfer.items.length > (max || 1)) {
-        Notifications.Service.warning('common.upload.files.tooMany')
+        NotificationService.warning('common.upload.files.tooMany')
         return false;
     }
 
@@ -29,7 +30,7 @@ const validDrop = (event: React.DragEvent, max: number | null, accepts: string) 
         .length > 0
 
     if (invalidFiles) {
-        Notifications.Service.warning('common.upload.files.unsupported')
+        NotificationService.warning('common.upload.files.unsupported')
         return false;
     }
 
@@ -70,7 +71,7 @@ const UploadAttachment = ({ accepts = '*/*', label, onUpload, max = 1, required 
 
     const upload = (files: DataTransferItem[]) => files.forEach(file => AttachmentRepository.upload(file.getAsFile())
         .then(response => (onUpload || (_ => console.warn(`No upload handler set, attachmentId=${response}.`)))(response))
-        .catch(() => Notifications.Service.warning('common.upload.file.failed')))
+        .catch(() => NotificationService.warning('common.upload.file.failed')))
 
     const onChangeHandler = (files: FileList | null) => {
         if (!files) {
@@ -80,7 +81,7 @@ const UploadAttachment = ({ accepts = '*/*', label, onUpload, max = 1, required 
         for (let i = 0; i < files.length; i++) {
             AttachmentRepository.upload(files[i])
                 .then(response => (onUpload || (_ => console.warn(`No upload handler set, attachmentId=${response}.`)))(response))
-                .catch(() => Notifications.Service.warning('common.upload.file.failed'))
+                .catch(() => NotificationService.warning('common.upload.file.failed'))
         }
     }
 

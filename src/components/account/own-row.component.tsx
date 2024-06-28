@@ -7,7 +7,7 @@ import { Account } from "../../core/types";
 
 import NotificationService from "../../service/notification.service";
 
-import ReconcileButtonsComponent from "../../account/own-accounts/reconcile/reconcile-buttons.component";
+import ReconcileButtonsComponent from "./reconcile/reconcile-buttons.component";
 import Translation from "../localization/translation.component";
 
 type AccountRowProps = {

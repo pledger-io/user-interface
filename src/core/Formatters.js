@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
-import { useLocalStorage } from "./hooks";
+import useLocalStorage from "../hooks/local-storage.hook";
 
 /**
  * Formats a date in accordance with the format that corresponds with the locale of the user.
+ * @param {string} date - The ISO date string
  */
 const FormattedDate = ({ date }) => {
     const [language] = useLocalStorage('language', 'en');
@@ -15,10 +16,6 @@ const FormattedDate = ({ date }) => {
     }
 
     return <></>
-}
-FormattedDate.propTypes = {
-    // The ISO date string
-    date: PropTypes.string
 }
 
 const FormattedDateTime = ({ date }) => {
@@ -43,6 +40,8 @@ const FormattedDateTime = ({ date }) => {
 
 /**
  * Formats a decimal value as a money output with the currency prepended, pending on the locale.
+ * @param {number} [money] - The money value to be formatted
+ * @param {string} [currency] - The currency to display the money in
  */
 const FormattedMoney = ({ money = 0.0, currency = sessionStorage.getItem('currency') || 'EUR' }) => {
     const [language]  = useLocalStorage('language', 'en');
@@ -56,13 +55,6 @@ const FormattedMoney = ({ money = 0.0, currency = sessionStorage.getItem('curren
         <span data-testid="money" className={className}>{formatter.format(money)}</span>
     )
 }
-FormattedMoney.propTypes = {
-    // The actual money value
-    money: PropTypes.number,
-    // The currency to display the money in
-    currency: PropTypes.string
-}
-
 
 /**
  * Formats a decimal value ad a percentage, with by default 2 decimals.

@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 // Export all core classes and functions
 import * as Dialog from '../components/layout/popup'
 import * as Buttons from '../components/layout/button'
-import * as Pagination from './Paginator'
 import * as Statistical from './Statistical'
 import * as Formats from './Formatters'
 import * as Attachment from './attachment/index'
@@ -13,6 +12,7 @@ import * as Dropdown from '../components/layout/dropdown'
 
 import '../assets/css/BreadCrumbs.scss'
 import '../assets/css/Message.scss'
+import Translation from "../components/localization/translation.component";
 
 export class Message extends React.Component {
     static propTypes = {
@@ -31,7 +31,7 @@ export class Message extends React.Component {
         if (label) {
             return (
                 <div className={className}>
-                    <Translations.Translation label={label}/>
+                    <Translation label={label}/>
                 </div>
             )
         }
@@ -133,7 +133,6 @@ const Resolver = {
 export {
     Buttons,
     Dialog,
-    Pagination,
     Statistical,
     Attachment,
     When,

@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { mdiHelpCircleOutline } from "@mdi/js";
 import Icon from "@mdi/react";
-import Translation from "./translation";
+import Translation from "./translation.component";
 
 type HelpTranslationProps = {
     label: string,

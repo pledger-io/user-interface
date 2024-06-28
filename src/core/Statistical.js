@@ -1,17 +1,22 @@
 import React, { useEffect, useState } from "react";
-import PropTypes from 'prop-types';
 
 import StatisticalRepository from "./repositories/statistical-repository";
 import { Money } from "./Formatters";
-import { EntityShapes } from "../config";
 
 import Loading from "../components/layout/loading.component";
 
 /**
  * The balance component can display a computed balance on a given search command. Where the search command can
  * be setup using the properties of the component.
+ * @param [accounts] A list of accounts to filter on
+ * @param [categories] A list of categories to filter on
+ * @param [expenses] A list of expenses to filter on
+ * @param {boolean} [income] Should income / expenses be displayed (or if absent both)
+ * @param {string} [currency] The currency to fetch the balance in
+ * @param [range] An optional date range for the balance
+ * @param {string} [importSlug] An optional import slug to filter on
  */
-const BalanceComponent = ({ accounts = [], categories = [], expenses = [],  income, currency, range, importSlug }) => {
+const BalanceComponent = ({ accounts = [], categories = [], expenses = [],  income , currency, range, importSlug }) => {
     const [balance, setBalance] = useState(null)
 
     useEffect(() => {
@@ -37,17 +42,6 @@ const BalanceComponent = ({ accounts = [], categories = [], expenses = [],  inco
 
     if (balance == null) return <Loading />
     return <span className='Statistical-Balance'><Money money={balance} currency={currency} /></span>
-}
-BalanceComponent.propTypes = {
-    // A list of accounts to filter on
-    accounts: PropTypes.arrayOf(EntityShapes.AccountIdentifier),
-    // Should income / expenses be displayed (or if absent both)
-    income: PropTypes.bool,
-    // The currency to fetch the balance in
-    currency: PropTypes.string,
-    // An optional date range for the balance
-    range: PropTypes.object,
-    importSlug: PropTypes.string
 }
 
 export {

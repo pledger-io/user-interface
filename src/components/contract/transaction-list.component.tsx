@@ -1,12 +1,13 @@
-import { Contract, Pagination as PaginationType, Transaction } from "../../core/types";
 import React, { FC, useEffect, useState } from "react";
-import { useQueryParam } from "../../core/hooks";
-import { Formats, Pagination } from "../../core";
-import ContractRepository from "../../core/repositories/contract-repository";
+import { Formats } from "../../core";
 import { groupTransactionByYear, YearlyTransactions } from "../../core/reducers";
-import TransactionItem from "../../transactions/transaction-item";
+import ContractRepository from "../../core/repositories/contract-repository";
+import { Contract, Pagination as PaginationType, Transaction } from "../../core/types";
+import useQueryParam from "../../hooks/query-param.hook";
 
 import Loading from "../layout/loading.component";
+import { Paginator } from "../layout/paginator.component";
+import TransactionItem from "../transaction/transaction-detail.component";
 
 type ContractTransactionsProps = {
     contract: Contract
@@ -50,9 +51,9 @@ const ContractTransactions: FC<ContractTransactionsProps> = ({ contract }) => {
             </div>
         ) }
 
-        { showPagination && <Pagination.Paginator page={ parseInt(page) }
-                                                  records={ pagination.records }
-                                                  pageSize={ pagination.pageSize }/> }
+        { showPagination && <Paginator page={ parseInt(page) }
+                                       records={ pagination.records }
+                                       pageSize={ pagination.pageSize }/> }
     </>
 }
 
