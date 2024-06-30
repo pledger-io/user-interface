@@ -1,4 +1,5 @@
 import '../../assets/css/AccountForm.scss'
+import { mdiCancel, mdiContentSave } from "@mdi/js";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import BreadCrumbItem from "../../components/breadcrumb/breadcrumb-item.component";
@@ -7,12 +8,22 @@ import { Entity, Form, Input, SubmitButton } from "../../components/form";
 import { BackButton } from "../../components/layout/button";
 import Card from "../../components/layout/card.component";
 import Translation from "../../components/localization/translation.component";
-import { Attachment, Message } from "../../core";
+import { Attachment } from "../../core";
+import Message from "../../components/layout/message.component";
 import AccountRepository from "../../core/repositories/account-repository";
+import { Account } from "../../core/types";
 import NotificationService from "../../service/notification.service";
 
 class AccountModel {
-    constructor(account) {
+    name: string
+    description: string
+    currency: string
+    iban: string
+    bic: string
+    number: string
+    type: string
+
+    constructor(account: Account) {
         this.name = account.name
         this.description = account.description
         this.currency = account.account.currency
@@ -23,28 +34,25 @@ class AccountModel {
     }
 }
 
-const AccountForm = ({ type }) => {
+const AccountForm = ({ type }: { type: string }) => {
     const { id } = useParams()
-    const [account, setAccount] = useState(new AccountModel({
+    const [account, setAccount] = useState<AccountModel>(new AccountModel({
         type: type !== 'accounts' ? type : undefined,
         account: {}
-    }))
+    } as Account))
     const [exception, setException] = useState(null)
     const navigate = useNavigate();
 
-    const overviewHref = isNaN(parseInt(id)) ? './../' : './../../'
-    const addEditBreadcrumb = isNaN(parseInt(id)) ? 'page.title.accounts.add' : 'page.title.accounts.edit'
+    const overviewHref = isNaN(parseInt(id as string)) ? './../' : './../../'
+    const addEditBreadcrumb = isNaN(parseInt(id as string)) ? 'page.title.accounts.add' : 'page.title.accounts.edit'
 
-    const onSubmit = entity => {
-        if (isNaN(id)) {
+    const onSubmit = (entity: any) => {
+        if (isNaN(parseInt(id as string))) {
             AccountRepository.create(entity)
                 .then(() => NotificationService.success('page.account.creation.success'))
                 .then(() => navigate(-1))
                 .catch(exception => {
-                    this.setState({
-                        ...this.state,
-                        exception: exception
-                    })
+                    setException(exception)
                     NotificationService.warning('page.account.creation.failed')
                 })
         } else {
@@ -52,20 +60,17 @@ const AccountForm = ({ type }) => {
                 .then(() => NotificationService.success('page.account.update.success'))
                 .then(() => navigate(-1))
                 .catch(exception => {
-                    this.setState({
-                        ...this.state,
-                        exception: exception
-                    })
+                    setException(exception)
                     NotificationService.warning('page.account.update.failed')
                 })
         }
     }
-    const onPictureChange = attachment => AccountRepository.icon(id, attachment.fileCode)
+    const onPictureChange = (attachment: any) => AccountRepository.icon(id, attachment.fileCode)
         .then(() => NotificationService.success(''))
         .catch(() => NotificationService.warning('common.upload.file.failed'))
 
     useEffect(() => {
-        if (!isNaN(id))
+        if (!isNaN(parseInt(id as string)))
             AccountRepository.get(id)
                 .then(a => new AccountModel(a))
                 .then(setAccount)

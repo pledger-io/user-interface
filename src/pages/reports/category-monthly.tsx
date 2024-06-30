@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Dates, Dropdown } from "../../core";
+import { Currency, Year } from "../../components/layout/dropdown";
+import { Dates } from "../../core";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { CurrencyRepository } from "../../core/RestAPI";
@@ -48,8 +49,8 @@ const CategoryReportView = () => {
                 <BreadCrumbItem message={`${range.year()}`} />
                 <BreadCrumbItem message={currencySymbol} />
                 <BreadCrumbMenu className='flex justify-end'>
-                    <Dropdown.Currency currency={currency} onChange={currency => onDateChanged({ newCurrency: currency.code })} />
-                    <Dropdown.Year year={range.year()} onChange={year => onDateChanged({ newYear: `${year}` })}/>
+                    <Currency currency={currency} onChange={currency => onDateChanged({ newCurrency: currency.code })} />
+                    <Year year={range.year()} onChange={year => onDateChanged({ newYear: `${year}` })}/>
                 </BreadCrumbMenu>
             </BreadCrumbs>
 

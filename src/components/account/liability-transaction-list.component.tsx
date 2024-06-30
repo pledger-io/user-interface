@@ -4,7 +4,7 @@ import { Account, Pagination, Transaction } from "../../core/types";
 import { Range } from "../../core/Dates";
 import AccountRepository from "../../core/repositories/account-repository";
 import useQueryParam from "../../hooks/query-param.hook";
-import { Formats } from "../../core";
+import MoneyComponent from "../format/money.component";
 import TransactionItem from "../transaction/transaction-detail.component";
 import { Paginator } from "../layout/paginator.component";
 import { groupTransactionByYear, YearlyTransactions } from "../../core/reducers";
@@ -46,7 +46,7 @@ const LiabilityTransactionList: FC<LiabilityTransactionListProps> = ({ account, 
                         { year }
                     </h1>
                     <span className='flex-1 text-right font-bold'>
-                        <Formats.Money money={ transactions[year].reduce((accumulator: number, transaction: Transaction) => accumulator + transaction.amount, 0) }
+                        <MoneyComponent money={ transactions[year].reduce((accumulator: number, transaction: Transaction) => accumulator + transaction.amount, 0) }
                                        currency={ account.account.currency }/>
                     </span>
                 </div>

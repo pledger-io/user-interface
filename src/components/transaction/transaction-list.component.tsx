@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useState } from "react";
 import { Resolver } from "../../core";
 import { Range } from "../../core/Dates";
+import MoneyComponent from "../format/money.component";
 import { Paginator } from "../layout/paginator.component";
 import { DailyTransactions, groupTransactionByDay } from "../../core/reducers";
 import { TransactionRepository } from "../../core/RestAPI";
@@ -87,8 +88,8 @@ const TransactionOverview: FC<TransactionOverviewProps> = ({ range, transfers })
                     </div>
                     { !transfers && <>
                         <div className='flex-1 justify-end flex gap-16 font-bold'>
-                            { income !== 0 && <Formats.Money money={ income } /> }
-                            { expense !== 0 && <Formats.Money money={ expense } /> }
+                            { income !== 0 && <MoneyComponent money={ income } /> }
+                            { expense !== 0 && <MoneyComponent money={ expense } /> }
                             { expense === 0 && <div/> }
                         </div>
                     </>}

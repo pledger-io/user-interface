@@ -1,8 +1,8 @@
-import { ForwardedRef, forwardRef, PropsWithChildren, useImperativeHandle, useState } from "react";
-import { Buttons } from "../../../core";
 import { mdiClose } from "@mdi/js";
+import { ForwardedRef, forwardRef, PropsWithChildren, useImperativeHandle, useState } from "react";
 
 import Translation from "../../localization/translation.component";
+import { Button, ButtonBar } from "../button";
 
 export type PopupProps = PropsWithChildren & {
     actions?: any
@@ -27,21 +27,21 @@ const Popup = forwardRef(({ title, className, actions, children }: PopupProps, r
         return <></>
     }
 
-    return <span className={`Popup ${className}`}>
+    return <span className={ `Popup ${ className }` }>
             <div className='Dialog'>
                 <header>
-                    <Translation label={title}/>
-                    <Buttons.Button icon={mdiClose}
-                                    onClick={() => setClosed(true)}
-                                    variant='icon'
-                                    className='secondary close'/>
+                    <Translation label={ title }/>
+                    <Button icon={ mdiClose }
+                            onClick={ () => setClosed(true) }
+                            variant='icon'
+                            className='secondary close'/>
                 </header>
-                <section>{children}</section>
-                {actions && <footer>
-                    <Buttons.ButtonBar>
-                        {actions}
-                    </Buttons.ButtonBar>
-                </footer>}
+                <section>{ children }</section>
+                { actions && <footer>
+                    <ButtonBar>
+                        { actions }
+                    </ButtonBar>
+                </footer> }
             </div>
         </span>
 })

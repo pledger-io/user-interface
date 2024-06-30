@@ -1,6 +1,6 @@
-import { Buttons } from "../../../core";
 import { mdiCancel, mdiRadioboxBlank } from "@mdi/js";
 import React, { LegacyRef, ReactElement, useRef } from "react";
+import { Button } from "../button";
 
 import Popup, { PopupCallbacks, PopupProps } from "./popup.component";
 
@@ -21,21 +21,21 @@ const ConfirmComponent = (props: ConfirmProps) => {
     const onCloseClick = () => dialogRef.current?.close()
 
     return <>
-        <Buttons.Button {...openButton.props} onClick={ onOpenClick }/>
-        <Popup ref={dialogRef}
-               {...(props as PopupProps)}
-               actions={[
-                   <Buttons.Button label='common.action.confirm'
-                                   key='confirm'
-                                   variant='warning'
-                                   dataTestId={'confirm-button'}
-                                   onClick={onConfirmClick}
-                                   icon={mdiRadioboxBlank}/>,
-                   <Buttons.Button label='common.action.cancel'
-                                   key='cancel'
-                                   variant='secondary'
-                                   onClick={onCloseClick}
-                                   icon={mdiCancel}/>]}>{children}</Popup>
+        <Button { ...openButton.props } onClick={ onOpenClick }/>
+        <Popup ref={ dialogRef }
+               { ...(props as PopupProps) }
+               actions={ [
+                   <Button label='common.action.confirm'
+                           key='confirm'
+                           variant='warning'
+                           dataTestId={ 'confirm-button' }
+                           onClick={ onConfirmClick }
+                           icon={ mdiRadioboxBlank }/>,
+                   <Button label='common.action.cancel'
+                           key='cancel'
+                           variant='secondary'
+                           onClick={ onCloseClick }
+                           icon={ mdiCancel }/>] }>{ children }</Popup>
     </>
 }
 

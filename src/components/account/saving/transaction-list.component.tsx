@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Dates, Formats } from "../../../core";
+import { Dates } from "../../../core";
 import { groupTransactionByYear, YearlyTransactions } from "../../../core/reducers";
 import AccountRepository from "../../../core/repositories/account-repository";
 import { Account, Pagination as PaginationType, Transaction } from "../../../core/types";
 import useQueryParam from "../../../hooks/query-param.hook";
+import MoneyComponent from "../../format/money.component";
 
 import Loading from "../../layout/loading.component";
 import { Paginator } from "../../layout/paginator.component";
@@ -52,7 +53,7 @@ const TransactionListComponent = ({ account }: { account: Account }) => {
                         { year }
                     </h1>
                     <span className='flex-1 text-right font-bold'>
-                        <Formats.Money
+                        <MoneyComponent
                             money={ transactions[year].reduce((accumulator: number, transaction: Transaction) => accumulator - transaction.amount, 0) }
                             currency={ account.account.currency }/>
                     </span>

@@ -49,23 +49,23 @@ const LiabilityOverview = () => {
                 <table className='Table'>
                     <thead>
                     <tr>
-                        <th width='30'/>
+                        <th className='w-[30px]' />
                         <th><Translation label='Account.name'/></th>
-                        <th width='150' className='hidden md:table-cell'>
+                        <th className='hidden md:table-cell w-[150px]'>
                             <Translation label='Account.interest'/>
                             (<Translation label='Account.interestPeriodicity'/>)
                         </th>
-                        <th width='120'><Translation label='common.account.saldo'/></th>
-                        <th width='25'/>
+                        <th className='w-[120px]'><Translation label='common.account.saldo'/></th>
+                        <th className='w-[25px]'/>
                     </tr>
                     </thead>
                     <tbody>
                     { !isLoaded && <tr>
-                        <td colSpan='5'><Loading/></td>
+                        <td colSpan={ 5 }><Loading/></td>
                     </tr> }
                     { !hasContent && isLoaded &&
                         <tr>
-                            <td colSpan='5' className='text-center text-gray-500'>
+                            <td colSpan={ 5 } className='text-center text-gray-500'>
                                 <Translation label='common.overview.noresults'/>
                             </td>
                         </tr> }

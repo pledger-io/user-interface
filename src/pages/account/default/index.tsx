@@ -1,9 +1,11 @@
 import { mdiDotsVertical, mdiPlus, mdiSquareEditOutline, mdiTrashCanOutline } from "@mdi/js";
 import PropTypes from "prop-types";
-import React, { useEffect, useState } from "react";
+import React, { Attributes, useEffect, useState } from "react";
 import { NavLink, useLoaderData } from "react-router-dom";
+import BalanceComponent from "../../../components/balance.component";
 import BreadCrumbItem from "../../../components/breadcrumb/breadcrumb-item.component";
 import BreadCrumbs from "../../../components/breadcrumb/breadcrumb.component";
+import DateComponent from "../../../components/format/date.component";
 import { Button } from "../../../components/layout/button";
 import Card from "../../../components/layout/card.component";
 import { Dropdown } from "../../../components/layout/dropdown";
@@ -13,15 +15,19 @@ import ConfirmComponent from "../../../components/layout/popup/confirm.component
 import { PopupCallbacks } from "../../../components/layout/popup/popup.component";
 import Translation from "../../../components/localization/translation.component";
 import { EntityShapes } from "../../../config";
-import { Attachment, Statistical, When } from "../../../core";
+import { Attachment, When } from "../../../core";
 import AccountRepository from "../../../core/repositories/account-repository";
 
 import '../../../assets/css/AccountOverview.scss'
-import { Pagination } from "../../../core/types";
+import { Account, Pagination } from "../../../core/types";
 import useQueryParam from "../../../hooks/query-param.hook";
 import NotificationService from "../../../service/notification.service";
 
-const AccountRow = ({ account, deleteCallback }) => {
+type AccountRowProps = Attributes & {
+    account: Account
+    deleteCallback: () => void
+}
+const AccountRow = ({ account, deleteCallback }: AccountRowProps) => {
 
     const dropDownActions: PopupCallbacks = { close: () => null, open: () => null }
     const onDelete = () => AccountRepository.delete(account.id)
@@ -39,7 +45,7 @@ const AccountRow = ({ account, deleteCallback }) => {
                 <When condition={ account.history.lastTransaction !== null }>
                     <div className='Summary'>
                         <label><Translation label='Account.lastActivity'/></label>
-                        <Date date={ account.history.lastTransaction }/>
+                        <DateComponent date={ account.history.lastTransaction }/>
                     </div>
                 </When>
                 <div className='Description Text Muted'>{ account.description }</div>
@@ -48,7 +54,7 @@ const AccountRow = ({ account, deleteCallback }) => {
                 { account.account.iban && `${ account.account.iban }` }
                 { !account.account.iban && account.account.number && `${ account.account.number }` }
             </td>
-            <td><Statistical.Balance accounts={ [account] } currency={ account.account.currency }/></td>
+            <td><BalanceComponent accounts={ [account] } currency={ account.account.currency }/></td>
             <td>
                 <Dropdown icon={ mdiDotsVertical } actions={ dropDownActions }>
                     <Button label='common.action.edit'
@@ -73,7 +79,7 @@ AccountRow.propTypes = {
 }
 
 const AccountOverview = () => {
-    const [accounts, setAccounts] = useState(undefined)
+    const [accounts, setAccounts] = useState<Account[] | undefined>(undefined)
     const [page] = useQueryParam({ key: 'page', initialValue: "1" })
     const [pagination, setPagination] = useState<Pagination>()
     const type = useLoaderData()
@@ -83,7 +89,10 @@ const AccountOverview = () => {
         AccountRepository.search({
             types: [type],
             page: parseInt(page)
-        }).then(response => setAccounts(response.content) || setPagination(response.info))
+        }).then(response => {
+            setAccounts(response.content)
+            setPagination(response.info)
+        })
     }
 
     useEffect(reload, [page, type])
@@ -106,11 +115,11 @@ const AccountOverview = () => {
                     <table className='Table AccountTable'>
                         <thead>
                         <tr>
-                            <th width='30'/>
+                            <th className='w-[30px]'/>
                             <th><Translation label='Account.name'/></th>
-                            <th width='160' className='hidden md:table-cell'><Translation label='Account.number'/></th>
-                            <th width='120'><Translation label='common.account.saldo'/></th>
-                            <th width='20'/>
+                            <th className='hidden md:table-cell w-[160px]'><Translation label='Account.number'/></th>
+                            <th className='w-[120px]'><Translation label='common.account.saldo'/></th>
+                            <th className='w-[20px]'/>
                         </tr>
                         </thead>
                         <tbody>

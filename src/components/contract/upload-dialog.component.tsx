@@ -1,12 +1,13 @@
 import { FC, useState } from "react";
 import { mdiContentSave, mdiUpload } from "@mdi/js";
 
-import { Buttons, Dialog } from "../../core";
 import { Upload } from "../../core/attachment";
 import { Attachment, Identifier } from "../../core/types";
 import { AttachmentRepository } from "../../core/RestAPI";
 import ContractRepository from "../../core/repositories/contract-repository";
 import { Form, SubmitButton } from "../form";
+import { Button } from "../layout/button";
+import { Dialog } from "../layout/popup";
 
 import Translation from "../localization/translation.component";
 import NotificationService from "../../service/notification.service";
@@ -48,24 +49,24 @@ const _: FC<UploadContractProps> = ({ id, onChanges }) => {
     }
 
     return <>
-        <Buttons.Button label='page.budget.contracts.action.uploadContract'
-                        variant='secondary'
-                        dataTestId='upload-button'
-                        onClick={ () => dialogControl.open() }
-                        icon={ mdiUpload }/>
+        <Button label='page.budget.contracts.action.uploadContract'
+                variant='secondary'
+                dataTestId='upload-button'
+                onClick={ () => dialogControl.open() }
+                icon={ mdiUpload }/>
 
         <Form entity='Contract' onSubmit={ onSubmit }>
-            <Dialog.Dialog control={ dialogControl }
-                           actions={ [
-                               <SubmitButton key={ 'submit' }
-                                             label='common.action.save'
-                                             dataTestId='submit-button'
-                                             disabled={ !attachment }
-                                             icon={ mdiContentSave }/>
-                           ] }
-                           title='page.budget.contracts.action.uploadContract'>
+            <Dialog control={ dialogControl }
+                    actions={ [
+                        <SubmitButton key={ 'submit' }
+                                      label='common.action.save'
+                                      dataTestId='submit-button'
+                                      disabled={ !attachment }
+                                      icon={ mdiContentSave }/>
+                    ] }
+                    title='page.budget.contracts.action.uploadContract'>
                 <Translation className='border-1 text-gray-400 block mb-3'
-                                          label='page.budget.contracts.upload.explained'/>
+                             label='page.budget.contracts.upload.explained'/>
 
                 <div className='max-w-[10em] mx-auto'>
                     <Upload onUpload={ onUpload }
@@ -73,7 +74,7 @@ const _: FC<UploadContractProps> = ({ id, onChanges }) => {
                             max={ 1 }
                             label='page.budget.contracts.action.uploadContract'/>
                 </div>
-            </Dialog.Dialog>
+            </Dialog>
         </Form>
     </>
 }

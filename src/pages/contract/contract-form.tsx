@@ -63,7 +63,7 @@ const ContractEdit = () => {
 
                     <Entity.Account id='company'
                                     title='Contract.company'
-                                    type='CREDITOR'
+                                    type='creditor'
                                     required
                                     value={ contract?.company }/>
 

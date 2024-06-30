@@ -16,9 +16,9 @@ type GenericDetailsComponentProps = {
 const GenericDetailsComponent = ({ transaction, account }: GenericDetailsComponentProps) => {
     const formContext = useContext(FormContext)
 
-    const onSplitTotalChanged = total => formContext.onChange({
+    const onSplitTotalChanged = (total: number) => formContext.onChange({
             currentTarget: { value: total }, persist: () => {}
-        } as ChangeEvent,
+        } as any,
         formContext.fields['amount'])
 
     return <>

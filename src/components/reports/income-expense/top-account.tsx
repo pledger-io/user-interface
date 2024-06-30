@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import AccountRepository from "../../../core/repositories/account-repository";
-import { Attachment, Formats } from "../../../core";
+import { Attachment } from "../../../core";
 import { Account } from "../../../core/types";
+import MoneyComponent from "../../format/money.component";
 
 import Loading from "../../layout/loading.component";
 import Translation from "../../localization/translation.component";
@@ -44,8 +45,8 @@ const TopAccountTable = ({ year, type }: TopAccountTableProps) => {
                 <tr key={account.account.id}>
                     <td width={ 50 }><Attachment.Image fileCode={account.account.iconFileCode}/></td>
                     <td>{account.account.name}</td>
-                    <td><Formats.Money money={account.total * -1} currency={account.account.account.currency}/></td>
-                    <td><Formats.Money money={account.average * -1} currency={account.account.account.currency}/></td>
+                    <td><MoneyComponent money={account.total * -1} currency={account.account.account.currency}/></td>
+                    <td><MoneyComponent money={account.average * -1} currency={account.account.account.currency}/></td>
                 </tr>
             ))}
             </tbody>

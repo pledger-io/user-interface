@@ -1,9 +1,9 @@
 import React, { FC, useEffect, useState } from "react";
-import { Formats } from "../../core";
 import { groupTransactionByYear, YearlyTransactions } from "../../core/reducers";
 import ContractRepository from "../../core/repositories/contract-repository";
 import { Contract, Pagination as PaginationType, Transaction } from "../../core/types";
 import useQueryParam from "../../hooks/query-param.hook";
+import MoneyComponent from "../format/money.component";
 
 import Loading from "../layout/loading.component";
 import { Paginator } from "../layout/paginator.component";
@@ -38,7 +38,7 @@ const ContractTransactions: FC<ContractTransactionsProps> = ({ contract }) => {
                         { year }
                     </h1>
                     <span className='flex-1 text-right font-bold'>
-                        <Formats.Money
+                        <MoneyComponent
                             money={ transactions[year].reduce((accumulator: number, transaction: Transaction) => accumulator - transaction.amount, 0) }
                             currency={ contract.company.account.currency }/>
                     </span>

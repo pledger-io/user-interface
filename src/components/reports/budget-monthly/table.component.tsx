@@ -1,7 +1,10 @@
 import React, { FC, useEffect, useState } from "react";
-import { Dates, Formats, Statistical } from "../../../core";
+import { Dates } from "../../../core";
 import { Range } from "../../../core/Dates";
+import StatisticalRepository from "../../../core/repositories/statistical-repository";
 import { Budget } from "../../../core/types";
+import MoneyComponent from "../../format/money.component";
+import PercentageComponent from "../../format/percentage.component";
 
 import Translation from "../../localization/translation.component";
 
@@ -18,7 +21,7 @@ const BudgetTable: FC<BudgetTableProps> = ({ budgets, year, currency }) => {
     useEffect(() => {
         const ranges = Dates.Ranges.months(year)
 
-        Promise.all(ranges.map(month => Statistical.Service.balance({
+        Promise.all(ranges.map(month => StatisticalRepository.balance({
             onlyIncome: false,
             dateRange: month.toBackend()
         })))
@@ -44,29 +47,31 @@ const BudgetTable: FC<BudgetTableProps> = ({ budgets, year, currency }) => {
             { budgets.length > 0 && months.map((month, idx) => {
                 const expectedExpenses = budgets[idx].expenses.reduce((total, e) => total + e.expected, 0)
                 const percentageOfExpected = monthlyExpenses[idx] / expectedExpenses
-                return <tr key={month.month()} className={percentageOfExpected > 1 ? 'warning' : 'success'}>
+                return <tr key={ month.month() } className={ percentageOfExpected > 1 ? 'warning' : 'success' }>
                     <td>
-                        <Translation label={ `common.month.${month.month()}` } />
+                        <Translation label={ `common.month.${ month.month() }` }/>
                     </td>
                     <td>
-                        <Formats.Money money={ expectedExpenses }
+                        <MoneyComponent money={ expectedExpenses }
                                        currency={ currency }/>
                     </td>
                     <td>
-                        <Formats.Money money={ monthlyExpenses[idx] }
+                        <MoneyComponent money={ monthlyExpenses[idx] }
                                        currency={ currency }/>
                     </td>
                     <td>
-                        <Formats.Money money={ expectedExpenses - monthlyExpenses[idx] }
-                                       currency={ currency } />
+                        <MoneyComponent money={ expectedExpenses - monthlyExpenses[idx] }
+                                       currency={ currency }/>
                     </td>
                     <td className={ percentageOfExpected > 1 ? 'warning' : 'success' }>
-                        <Formats.Percent percentage={ percentageOfExpected }
-                                         decimals={ 2 } />
+                        <PercentageComponent percentage={ percentageOfExpected }
+                                             decimals={ 2 }/>
                     </td>
                 </tr>
             }) }
-            { budgets.length === 0 && <tr><td className='text-center' colSpan={ 5 }><Translation label='common.overview.noresults' /></td></tr> }
+            { budgets.length === 0 && <tr>
+                <td className='text-center' colSpan={ 5 }><Translation label='common.overview.noresults'/></td>
+            </tr> }
             </tbody>
         </table>
     </>

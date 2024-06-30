@@ -1,9 +1,10 @@
 import { FC } from "react";
-import { Buttons, Dialog } from "../../core";
 import { Entity, Form, Input, SubmitButton } from "../form";
 import { mdiCalendarPlus, mdiContentSave } from "@mdi/js";
 import { Account, Contract } from "../../core/types";
 import ContractRepository from "../../core/repositories/contract-repository";
+import { Button } from "../layout/button";
+import { Dialog } from "../layout/popup";
 
 import Translation from "../localization/translation.component";
 import NotificationService from "../../service/notification.service";
@@ -46,11 +47,11 @@ const ScheduleContract: FC<ScheduleContractProps> = ({ contract }) => {
     }
 
     return <>
-        <Buttons.Button icon={ mdiCalendarPlus }
+        <Button icon={ mdiCalendarPlus }
                         onClick={ () => dialogControl.open() }
                         label={ 'page.contract.action.schedule' }/>
         <Form entity='Contract' onSubmit={ onSubmit }>
-            <Dialog.Dialog title={ 'page.title.schedule.transaction.add' }
+            <Dialog title={ 'page.title.schedule.transaction.add' }
                            actions={ [
                                <SubmitButton key='submit' label='common.action.save' icon={ mdiContentSave }/>
                            ] }
@@ -83,7 +84,7 @@ const ScheduleContract: FC<ScheduleContractProps> = ({ contract }) => {
                         </Input.Select>
                     </span>
                 </div>
-            </Dialog.Dialog>
+            </Dialog>
         </Form>
     </>
 }

@@ -1,8 +1,10 @@
 import CategoryRepository from "../../core/repositories/category-repository";
-import { Buttons, Dialog, Formats } from "../../core";
 import { mdiSquareEditOutline, mdiTrashCanOutline } from "@mdi/js";
 import React from "react";
 import { Category } from "../../core/types";
+import DateComponent from "../format/date.component";
+import { Button } from "../layout/button";
+import { Confirm } from "../layout/popup";
 
 import Translation from "../localization/translation.component";
 import NotificationService from "../../service/notification.service";
@@ -21,21 +23,21 @@ const CategoryRow = ({ category, deleteCallback = () => undefined }: CategoryRow
     return (
         <tr>
             <td className='flex'>
-                <Dialog.Confirm title='common.action.delete'
-                                         openButton={ <Buttons.Button icon={ mdiTrashCanOutline }
+                <Confirm title='common.action.delete'
+                                         openButton={ <Button icon={ mdiTrashCanOutline }
                                                                   variant='icon'
                                                                   className='warning'/> }
                                          onConfirm={ onDelete }>
                     <Translation label='page.category.delete.confirm'/>
-                </Dialog.Confirm>
-                <Buttons.Button icon={ mdiSquareEditOutline }
+                </Confirm>
+                <Button icon={ mdiSquareEditOutline }
                                 variant='icon'
                                 className='primary'
                                 href={ `${ category.id }/edit` }/>
             </td>
             <td>{ category.label }</td>
             <td>{ category.description }</td>
-            <td><Formats.Date date={ category.lastUsed }/></td>
+            <td><DateComponent date={ category.lastUsed }/></td>
         </tr>
     )
 }

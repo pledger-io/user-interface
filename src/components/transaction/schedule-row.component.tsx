@@ -1,11 +1,12 @@
 import { mdiDotsVertical, mdiSquareEditOutline, mdiTrashCanOutline } from "@mdi/js";
 import React, { Attributes } from "react";
 import { NavLink } from "react-router-dom";
+import DateComponent from "../../components/format/date.component";
 import { Resolver, When } from "../../core";
 
 import { TransactionScheduleRepository } from "../../core/RestAPI";
 import NotificationService from "../../service/notification.service";
-import { Date, Money } from "../../core/Formatters";
+import MoneyComponent from "../format/money.component";
 import { Button } from "../layout/button";
 import { Dropdown } from "../layout/dropdown";
 
@@ -36,12 +37,12 @@ const ScheduledTransactionRow = ({ schedule, deleteCallback }: ScheduledTransact
             </td>
             <td>
                 <When condition={schedule.range.start != null}>
-                    <Date date={schedule.range.start}/> - <Formats.Date date={schedule.range.end}/>
+                    <DateComponent date={schedule.range.start}/> - <DateComponent date={schedule.range.end}/>
                 </When>
             </td>
             <td><NavLink to={Resolver.Account.resolveUrl(schedule.source) + '/transactions'}>{schedule.source.name}</NavLink></td>
             <td><NavLink to={Resolver.Account.resolveUrl(schedule.destination) + '/transactions'}>{schedule.destination.name}</NavLink></td>
-            <td><Money money={schedule.amount} currency={schedule.source.currency}/></td>
+            <td><MoneyComponent money={schedule.amount} currency={schedule.source.currency}/></td>
             <td>
                 <Dropdown icon={mdiDotsVertical}
                                    actions={dropDownActions}>

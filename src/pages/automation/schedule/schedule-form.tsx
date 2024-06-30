@@ -8,7 +8,7 @@ import { BackButton } from "../../../components/layout/button";
 import Card from "../../../components/layout/card.component";
 import Loading from "../../../components/layout/loading.component";
 import Translation from "../../../components/localization/translation.component";
-import { Message } from "../../../core";
+import Message from "../../../components/layout/message.component";
 
 import { TransactionScheduleRepository } from "../../../core/RestAPI";
 import NotificationService from "../../../service/notification.service";
@@ -19,9 +19,9 @@ export const ScheduleForm = () => {
     const { id } = useParams()
     const [exception, setException] = useState()
     const navigate = useNavigate()
-    const schedule = useLoaderData()
+    const schedule: any = useLoaderData()
 
-    const onSubmit = entity => {
+    const onSubmit = (entity: any) => {
         TransactionScheduleRepository.update(id, {
             name: entity.name,
             description: entity.description,

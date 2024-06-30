@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import { Form, Input, SubmitButton } from "../components/form";
-import { Message } from "../core";
+import Message from "../components/layout/message.component";
 import { mdiAccountPlus, mdiLogin } from "@mdi/js";
 import { useNavigate } from "react-router-dom";
 import SecurityRepository from "../core/repositories/security-repository";

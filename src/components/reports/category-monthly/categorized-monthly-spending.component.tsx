@@ -1,7 +1,8 @@
-import { Dates, Formats } from "../../../core";
+import { Dates } from "../../../core";
 import React, { useEffect, useState } from "react";
 import StatisticalRepository from "../../../core/repositories/statistical-repository";
 import { Category } from "../../../core/types";
+import MoneyComponent from "../../format/money.component";
 
 import Loading from "../../layout/loading.component";
 import Translation from "../../localization/translation.component";
@@ -33,7 +34,7 @@ const CategoryRowComponent = ({ category, year }: { category: Category, year: nu
             <td>{ category.label }</td>
             { spending && months.map(month =>
                 <td key={ month.month() }>
-                    <Formats.Money money={ spending[month.month()] }/>
+                    <MoneyComponent money={ spending[month.month()] }/>
                 </td>) }
             { !spending && <td colSpan={ 12 } className='text-center'>
                 <Loading/>

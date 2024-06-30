@@ -43,7 +43,7 @@ function BudgetBalance({ range } : { range : Range }) {
                             backgroundColor: '#7fc6a5'
                         }
                     ]
-                })
+                } as ChartData)
             })
             .catch(_ => setBudgetSeries({ labels: [], datasets: [] }))
     }, [range])

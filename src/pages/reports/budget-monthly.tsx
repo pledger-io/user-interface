@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { Currency, Year } from "../../components/layout/dropdown";
 
-import { Dates, Dropdown, } from "../../core";
+import { Dates } from "../../core";
 import { Budget } from "../../core/types";
 import BudgetRepository from "../../core/repositories/budget.repository";
 import { CurrencyRepository } from "../../core/RestAPI";
@@ -51,9 +52,9 @@ const BudgetReportView = () => {
             <BreadCrumbItem label='page.reports.budget.title'/>
             <BreadCrumbItem message={ `${ range.year() }` }/>
             <BreadCrumbMenu className='flex justify-end'>
-                <Dropdown.Currency currency={ currency }
+                <Currency currency={ currency }
                                    onChange={ currency => onDateChanged({ newCurrency: currency.code }) }/>
-                <Dropdown.Year year={ range.year() } onChange={ year => onDateChanged({ newYear: `${ year }` }) }/>
+                <Year year={ range.year() } onChange={ year => onDateChanged({ newYear: `${ year }` }) }/>
             </BreadCrumbMenu>
         </BreadCrumbs>
 

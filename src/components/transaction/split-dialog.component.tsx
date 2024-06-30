@@ -1,8 +1,8 @@
 import React, { CSSProperties } from "react";
 
 import { mdiTable } from "@mdi/js";
-import { Money } from "../../core/Formatters";
 import { Transaction } from "../../core/types";
+import MoneyComponent from "../format/money.component";
 import { Button } from "../layout/button";
 import { Dialog } from "../layout/popup";
 import Translation from "../localization/translation.component";
@@ -24,7 +24,7 @@ type TransactionSplitDialogProps = {
     iconStyle?: boolean
 }
 
-const TransactionSplitDialog = ({ transaction: { split, currency, amount }, iconStyle = false }) => {
+const TransactionSplitDialog = ({ transaction: { split, currency, amount }, iconStyle = false }: TransactionSplitDialogProps) => {
 
     return (
         <Dialog title='page.transactions.detail.title'
@@ -39,15 +39,15 @@ const TransactionSplitDialog = ({ transaction: { split, currency, amount }, icon
                 </tr>
                 </thead>
                 <tbody>
-                { split.map((row, idx: number) => (
+                { split.map((row: any, idx: number) => (
                     <tr key={ idx }>
                         <td>{ row.description }</td>
-                        <td style={ priceStyle }><Money money={ row.amount } currency={ currency }/></td>
+                        <td style={ priceStyle }><MoneyComponent money={ row.amount } currency={ currency }/></td>
                     </tr>
                 )) }
                 <tr>
                     <td style={ totalStyle }>Total:</td>
-                    <td style={ totalRowStyle }><Money money={ amount } currency={ currency }/></td>
+                    <td style={ totalRowStyle }><MoneyComponent money={ amount } currency={ currency }/></td>
                 </tr>
                 </tbody>
             </table>

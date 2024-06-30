@@ -2,45 +2,11 @@ import React from "react";
 import PropTypes from 'prop-types';
 
 // Export all core classes and functions
-import * as Dialog from '../components/layout/popup'
-import * as Buttons from '../components/layout/button'
-import * as Statistical from './Statistical'
-import * as Formats from './Formatters'
 import * as Attachment from './attachment/index'
 import * as Dates from './Dates'
-import * as Dropdown from '../components/layout/dropdown'
 
 import '../assets/css/BreadCrumbs.scss'
 import '../assets/css/Message.scss'
-import Translation from "../components/localization/translation.component";
-
-export class Message extends React.Component {
-    static propTypes = {
-        // The translation key to display, if set then `message` is ignored
-        label: PropTypes.string,
-        // The styling of the message
-        variant: PropTypes.oneOf(['warning', 'info']),
-        // The message to display
-        message: PropTypes.string
-    }
-
-    render() {
-        const { label, variant, message } = this.props;
-        const className = 'Message ' + variant;
-
-        if (label) {
-            return (
-                <div className={className}>
-                    <Translation label={label}/>
-                </div>
-            )
-        }
-
-        return (
-            <div className={className}>{message}</div>
-        )
-    }
-}
 
 const Progressbar = ({ total = 1, current = 0, className = '' }) => {
     const percentage = Math.min(100, Math.round(current / total * 100))
@@ -131,13 +97,8 @@ const Resolver = {
 }
 
 export {
-    Buttons,
-    Dialog,
-    Statistical,
     Attachment,
     When,
-    Dropdown,
-    Formats,
     Dates,
     Resolver,
     Progressbar,

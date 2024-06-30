@@ -6,7 +6,7 @@ const AccountForm = () => {
     const type = useRouteLoaderData('other-accounts')
 
     if (!type) return <Loading/>
-    return <ActualForm type={ type }/>
+    return <ActualForm type={ type as string }/>
 }
 
 export default AccountForm

@@ -1,6 +1,6 @@
-import { Formats } from "../../core";
 import Icon from "@mdi/react";
 import React, { FC, useEffect, useState } from "react";
+import MoneyComponent from "../format/money.component";
 
 import Card from "../layout/card.component";
 import Translation from "../localization/translation.component";
@@ -37,15 +37,14 @@ const SummaryComponent: FC<SummaryComponentProps> = ({ title, icon, currency, cu
     }, [current, previous])
 
     return <>
-        <
-            Card className='flex-1 !my-0'>
+        <Card className='flex-1 !my-0'>
             <div className='flex flex-row justify-between'>
                 <div className='min-w-[100px] min-h-[125px]'>
                     <h1 className='text-2xl'>
                         <Translation label={title} />
                     </h1>
                     <span className='text-3xl'>
-                        <Formats.Money money={current} currency={currency} />
+                        <MoneyComponent money={current} currency={currency} />
                     </span>
                     { previous !== null && (
                         <div className={`

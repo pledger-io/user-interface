@@ -11,7 +11,7 @@ import ScheduledTransactionRow from "../../../components/transaction/schedule-ro
 import { TransactionScheduleRepository } from "../../../core/RestAPI";
 
 const ScheduledTransactionOverview = () => {
-    const [schedules, setSchedules] = useState(undefined)
+    const [schedules, setSchedules] = useState<any[] | undefined>(undefined)
 
     const loadSchedules = () => TransactionScheduleRepository.list().then(setSchedules)
     useEffect(() => {
@@ -37,13 +37,13 @@ const ScheduledTransactionOverview = () => {
                             <th><Translation label='ScheduledTransaction.source'/></th>
                             <th><Translation label='ScheduledTransaction.destination'/></th>
                             <th><Translation label='ScheduledTransaction.amount'/></th>
-                            <th width='20'/>
+                            <th/>
                         </tr>
                         </thead>
                         <tbody>
                         { schedules && schedules
-                            .filter(schedule => schedule.source && schedule.destination)
-                            .map(schedule => <ScheduledTransactionRow schedule={ schedule }
+                            .filter((schedule: any) => schedule.source && schedule.destination)
+                            .map((schedule: any) => <ScheduledTransactionRow schedule={ schedule }
                                                                       deleteCallback={ loadSchedules }
                                                                       key={ schedule.id }/>) }
                         </tbody>

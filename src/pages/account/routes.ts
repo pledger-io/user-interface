@@ -18,7 +18,7 @@ const routes = {
                     Component: lazy(() => import('./own/index')),
                 },
                 {
-                    id: 'own-add',
+                    id: 'owned-add',
                     path: 'add',
                     Component: lazy(() => import('./own/account-form')),
                 },
@@ -46,7 +46,7 @@ const routes = {
                     Component: lazy(() => import('./saving')),
                 },
                 {
-                    id: 'savings-transaction-list',
+                    id: 'savings-transaction-list-monthly',
                     path: ':year/:month',
                     Component: lazy(() => import('./saving')),
                 }
@@ -78,7 +78,7 @@ const routes = {
                     Component: lazy(() => import('./default/index')),
                 },
                 {
-                    id: 'own-add',
+                    id: 'other-add',
                     path: 'add',
                     Component: lazy(() => import('./default/account-form')),
                 },

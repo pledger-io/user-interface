@@ -1,18 +1,17 @@
 import { mdiDotsVertical, mdiSquareEditOutline, mdiTrashCanOutline } from "@mdi/js";
 import React, { Attributes } from "react";
 import { Link } from "react-router-dom";
-import { When } from "../../core";
 import ImageAttachment from "../../core/attachment/image-attachment";
-import { Percent } from "../../core/Formatters";
 import AccountRepository from "../../core/repositories/account-repository";
-import { Balance } from "../../core/Statistical";
 import { Account } from "../../core/types";
 import NotificationService from "../../service/notification.service";
+import BalanceComponent from "../balance.component";
+import PercentageComponent from "../format/percentage.component";
 import { Button } from "../layout/button";
 import { Dropdown } from "../layout/dropdown";
 import ConfirmComponent from "../layout/popup/confirm.component";
 import Translation from "../localization/translation.component";
-import { Date as FormattedDate } from "../../core/Formatters"
+import Date from "../../components/format/date.component";
 
 type AccountRowProps = Attributes & {
     account: Account;
@@ -30,20 +29,20 @@ const AccountRow = ({ account, deleteCallback }: AccountRowProps) => {
             <td><ImageAttachment fileCode={ account.iconFileCode }/></td>
             <td>
                 <Link to={ `./${ account.id }` }>{ account.name }</Link>
-                <When condition={ account.history.lastTransaction !== null }>
+                {  account.history.lastTransaction &&
                     <div className='Text Muted'>
                         <Translation label='Account.lastActivity'/>
-                        <FormattedDate date={ account.history.lastTransaction }/>
+                        <Date date={ account.history.lastTransaction }/>
                     </div>
-                </When>
+                }
                 <div className='Text Muted'>{ account.description }</div>
             </td>
             <td className='hidden md:table-cell'>
-                <Percent percentage={ account.interest.interest } decimals={ 2 }/>
+                <PercentageComponent percentage={ account.interest.interest } decimals={ 2 }/>
                 (<Translation label={ `Periodicity.${ account.interest?.periodicity }` }/>)
             </td>
             <td>
-                <Balance accounts={ [account] } currency={ account.account.currency }/>
+                <BalanceComponent accounts={ [account] } currency={ account.account.currency }/>
             </td>
             <td>
                 <Dropdown icon={ mdiDotsVertical }>

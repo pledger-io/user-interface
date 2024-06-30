@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react'
+import BalanceComponent from "../../../components/balance.component";
 import BreadCrumbItem from "../../../components/breadcrumb/breadcrumb-item.component";
 import BreadCrumbs from "../../../components/breadcrumb/breadcrumb.component";
+import MoneyComponent from "../../../components/format/money.component";
+import PercentageComponent from "../../../components/format/percentage.component";
 import { Button } from "../../../components/layout/button";
 import Translation from "../../../components/localization/translation.component";
 import { Dates, Resolver } from "../../../core";
-import { Money, Percent } from "../../../core/Formatters";
-
 
 import AccountRepository from "../../../core/repositories/account-repository";
 import { mdiCashPlus } from "@mdi/js";
 import { useParams } from "react-router-dom";
-import { Balance } from "../../../core/Statistical";
 import { Account, Transaction } from "../../../core/types";
 import { Range } from "../../../core/Dates";
 
@@ -40,7 +40,7 @@ const LiabilityDetailView = () => {
                 account.history.lastTransaction))
     }, [account])
 
-    if (!account || !range) return <Loading />
+    if (!account || !range) return <Loading/>
     return (
         <div>
             <BreadCrumbs>
@@ -56,26 +56,27 @@ const LiabilityDetailView = () => {
                     <h1 className='font-bold'>{ account.name }</h1>
                     <div className="flex">
                         <label className='min-w-[8em]'><Translation label='Account.interest'/>:</label>
-                        <span className='flex-1'><Percent percentage={ account.interest?.interest }/></span>
+                        <span className='flex-1'><PercentageComponent percentage={ account.interest?.interest }/></span>
                     </div>
                     <div className="flex">
                         <label className='min-w-[8em]'><Translation label='Account.interestPeriodicity'/>:</label>
-                        <span className='flex-1'><Translation label={ `Periodicity.${account.interest?.periodicity}` }/></span>
+                        <span className='flex-1'><Translation
+                            label={ `Periodicity.${ account.interest?.periodicity }` }/></span>
                     </div>
                     <div className="flex">
                         <label className='min-w-[8em]'>
                             <Translation label='page.accounts.liability.startBalance'/>:
                         </label>
                         <span className='flex-1 [&>*]:!text-warning'>
-                            <Money money={ openingTransaction?.amount } currency={ account.account.currency } />
+                            <MoneyComponent money={ openingTransaction?.amount } currency={ account.account.currency }/>
                         </span>
                     </div>
                     <div className="flex">
                         <label className='min-w-[8em]'><Translation label='page.accounts.liability.paid'/>:</label>
                         <span className='flex-1'>
-                            <Balance accounts={ [{ id: account.id }] }
-                                                 income={ true }
-                                                 currency={ account.account.currency }/>
+                            <BalanceComponent accounts={ [{ id: account.id }] }
+                                              income={ true }
+                                              currency={ account.account.currency }/>
                         </span>
                     </div>
                 </Card>
@@ -84,25 +85,25 @@ const LiabilityDetailView = () => {
                         <Translation label='common.account.balance'/>
                     </h1>
                     <h4>
-                        <Translation label={ `common.month.${range.start?.getMonth() + 1}` } />
+                        <Translation label={ `common.month.${ range.start?.getMonth() + 1 }` }/>
                         { range.start?.getFullYear() }
                         -
-                        <Translation label={ `common.month.${range.end?.getMonth() + 1}` } />
+                        <Translation label={ `common.month.${ range.end?.getMonth() + 1 }` }/>
                         { range.end?.getFullYear() }
                     </h4>
 
-                    <LiabilityGraph account={ account } range={ range } />
+                    <LiabilityGraph account={ account } range={ range }/>
                 </Card>
             </div>
 
             <Card title='page.title.transactions.overview'>
                 <Button label='page.account.liability.payment.add'
-                                href={`${Resolver.Account.resolveUrl(account)}/transactions/add`}
-                                variant='success'
-                                className={Resolver.Account.isDebtor(account) ? 'Hidden' : ''}
-                                icon={mdiCashPlus}/>
+                        href={ `${ Resolver.Account.resolveUrl(account) }/transactions/add` }
+                        variant='success'
+                        className={ Resolver.Account.isDebtor(account) ? 'Hidden' : '' }
+                        icon={ mdiCashPlus }/>
 
-                <LiabilityTransactionList account={ account } range={ range } />
+                <LiabilityTransactionList account={ account } range={ range }/>
             </Card>
         </div>
     )

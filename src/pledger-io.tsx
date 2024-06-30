@@ -21,8 +21,10 @@ import NotificationCenter from "./components/notification";
 
 import account from "./pages/account/routes";
 import automation from "./pages/automation/routes";
+import budget from "./pages/budget/routes";
 import category from "./pages/category/routes";
 import contract from "./pages/contract/routes";
+import profile from "./pages/profile/routes";
 import reports from "./pages/reports/routes";
 import transactions from "./pages/transaction/routes";
 import upload from "./pages/upload/routes";
@@ -59,8 +61,10 @@ const router = createBrowserRouter([
             },
             account,
             automation,
+            budget,
             category,
             contract,
+            profile,
             reports,
             transactions,
             upload,

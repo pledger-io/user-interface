@@ -9,7 +9,7 @@ import { Entity, Form, SubmitButton } from "../form";
 import useQueryParam from "../../hooks/query-param.hook";
 import { mdiSkipNext } from "@mdi/js";
 import { Account } from "../../core/types";
-import { lookup_entity } from "../../rules/lookup-name.util";
+import { lookup_entity } from "../lookup-name.util";
 
 import Loading from "../layout/loading.component";
 

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 
 import Dialog from "../../../components/layout/popup/dialog.component";
-import { Message } from "../../../core";
+import Message from "../../layout/message.component";
 import { Upload } from "../../../core/attachment";
 import ImportJobRepository from "../../../core/repositories/import-job.repository";
 import { BatchConfig } from "../../../core/types";

@@ -3,8 +3,8 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import logo from '../../assets/logo.png'
 import config from '../../config/sidebar-config.js'
-import { Buttons } from "../../core";
-import ProfilePicture from "../../profile/profile-picture.component";
+import { Button } from "../layout/button";
+import ProfilePicture from "../profile/profile-picture.component";
 import SidebarDivider from "./divider.component";
 import SidebarButtonComponent from "./sidebar-button.component";
 import SidebarSectionComponent from "./sidebar-section.component";
@@ -15,7 +15,7 @@ type SidebarProps = {
     logoutCallback: () => void
 }
 
-const Sidebar = ({ logoutCallback } : SidebarProps) => {
+const Sidebar = ({ logoutCallback }: SidebarProps) => {
     return <>
         <div className='h-screen max-w-[218px] flex-col overflow-y-auto
                         hidden md:flex
@@ -33,10 +33,14 @@ const Sidebar = ({ logoutCallback } : SidebarProps) => {
             {
                 config.map((section, idx) => {
                     switch (section.type) {
-                        case 'divider': return <SidebarDivider key={ idx } item={ section } />
-                        case 'button': return <SidebarButtonComponent key={ idx } config={ section as SidebarButton } />
-                        case 'section': return <SidebarSectionComponent config={ section as SidebarSection } key={ idx } />
-                        default: return null
+                        case 'divider':
+                            return <SidebarDivider key={ idx } item={ section }/>
+                        case 'button':
+                            return <SidebarButtonComponent key={ idx } config={ section as SidebarButton }/>
+                        case 'section':
+                            return <SidebarSectionComponent config={ section as SidebarSection } key={ idx }/>
+                        default:
+                            return null
                     }
                 })
             }
@@ -49,10 +53,10 @@ const Sidebar = ({ logoutCallback } : SidebarProps) => {
                                     className='bg-[var(--sidebar-title-color)] rounded'/>
                 </NavLink>
 
-                <Buttons.Button icon={ mdiLogoutVariant }
-                                onClick={ logoutCallback }
-                                variant='icon'
-                                className='px-2 text-[var(--sidebar-icon-color)]'/>
+                <Button icon={ mdiLogoutVariant }
+                        onClick={ logoutCallback }
+                        variant='icon'
+                        className='px-2 text-[var(--sidebar-icon-color)]'/>
             </footer>
         </div>
     </>

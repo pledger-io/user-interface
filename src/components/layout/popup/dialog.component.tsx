@@ -1,6 +1,6 @@
-import { LegacyRef, ReactElement, useEffect, useRef } from "react";
-import { Buttons } from "../../../core";
 import { mdiCancel } from "@mdi/js";
+import { LegacyRef, ReactElement, useEffect, useRef } from "react";
+import { Button } from "../button";
 
 import Popup, { PopupCallbacks, PopupProps } from "./popup.component";
 
@@ -25,14 +25,14 @@ export const Dialog = ({ control, openButton, title, actions = [], className = '
     const open = () => dialogRef.current?.open()
     const close = () => dialogRef.current?.close()
 
-    const actionsWithClose = [...actions, <Buttons.Button key='cancel'
-                                                          label='common.action.cancel'
-                                                          variant='secondary'
-                                                          onClick={ close }
-                                                          icon={ mdiCancel }/>]
+    const actionsWithClose = [...actions, <Button key='cancel'
+                                                  label='common.action.cancel'
+                                                  variant='secondary'
+                                                  onClick={ close }
+                                                  icon={ mdiCancel }/>]
 
     return <>
-        { openButton && <Buttons.Button { ...openButton.props } onClick={ open }/> }
+        { openButton && <Button { ...openButton.props } onClick={ open }/> }
         <Popup title={ title }
                className={ className }
                ref={ dialogRef }

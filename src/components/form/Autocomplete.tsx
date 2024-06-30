@@ -9,7 +9,7 @@ type useAutocompleteParams<T extends Identifiable> = {
     autoCompleteCallback: (_ : string) => Promise<Array<T>>,
     entityRender: (_ : T) => ReactNode | ReactNode[],
     entityLabel: (_ : T) => string,
-    onCreateCallback?: (_ : string) => Promise<T>
+    onCreateCallback?: (_ : string) => Promise<T> | undefined
 }
 type InputChangeHandler = ChangeEventHandler<HTMLInputElement>
 
@@ -111,7 +111,7 @@ export const useAutocomplete = function <T extends Identifiable>({ autoCompleteC
                 { hasCreate &&
                     <div className='Create'>
                         <Button label={'common.action.create'}
-                                onClick={ () => onCreateCallback(inputRef.current?.value || '').then(changeHandler) }/>
+                                onClick={ () => onCreateCallback(inputRef.current?.value || '')?.then(changeHandler) }/>
                     </div>
                 }
             </div>

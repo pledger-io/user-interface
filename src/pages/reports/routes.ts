@@ -6,32 +6,32 @@ const routes = {
     path: 'reports',
     children: [
         {
-            id: 'budget-balance',
+            id: 'report-budget-balance',
             path: 'monthly-budget',
             Component: lazy(() => import('./budget-monthly'))
         },
         {
-            id: 'budget-balance-monthly',
+            id: 'report-budget-balance-monthly',
             path: 'monthly-budget/:year/:currency',
             Component: lazy(() => import('./budget-monthly'))
         },
         {
-            id: 'income-expense',
+            id: 'report-income-expense',
             path: 'income-expense',
             Component: lazy(() => import('./income-expense'))
         },
         {
-            id: 'income-expense-monthly',
+            id: 'report-income-expense-monthly',
             path: 'income-expense/:year/:currency',
             Component: lazy(() => import('./income-expense'))
         },
         {
-            id: 'category-balance',
+            id: 'report-category-balance',
             path: 'monthly-category',
             Component: lazy(() => import('./category-monthly'))
         },
         {
-            id: 'category-balance-monthly',
+            id: 'report-category-balance-monthly',
             path: 'monthly-category/:year/:currency',
             Component: lazy(() => import('./category-monthly'))
         },

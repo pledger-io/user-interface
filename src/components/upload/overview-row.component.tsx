@@ -1,9 +1,9 @@
 import { mdiCheck, mdiProgressCheck, mdiTrashCanOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import React, { Attributes } from "react";
-import { Formats } from "../../core";
 import ImportJobRepository from "../../core/repositories/import-job.repository";
 import { ImportJob } from "../../core/types";
+import DateComponent from "../format/date.component";
 import { Button } from "../layout/button";
 import { Confirm } from "../layout/popup";
 import Translation from "../localization/translation.component";
@@ -39,7 +39,7 @@ const OverviewRowComponent = ({ importJob }: Attributes & { importJob: ImportJob
                                           message={ importJob.slug }/> }
             </td>
             <td className="hidden md:table-cell">{ importJob.config.name }</td>
-            <td className='text-center'><Formats.Date date={ importJob.created }/></td>
+            <td className='text-center'><DateComponent date={ importJob.created }/></td>
             <td>
                 { hasFinished && <Icon path={ mdiCheck } size={ 1 } className='text-success mx-auto'/> }
                 { !hasFinished && <Icon path={ mdiProgressCheck } size={ 1 } className='text-primary mx-auto'/> }

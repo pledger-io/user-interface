@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Formats, Resolver } from "../../core";
+import { Resolver } from "../../core";
 import { groupTransactionByYear, YearlyTransactions } from "../../core/reducers";
 import ImportJobRepository from "../../core/repositories/import-job.repository";
 import { Pagination } from "../../core/types";
 import useQueryParam from "../../hooks/query-param.hook";
+import MoneyComponent from "../format/money.component";
 
 import Loading from "../layout/loading.component";
 import { Paginator } from "../layout/paginator.component";
@@ -55,8 +56,8 @@ const ImportJobTransactionComponent = ({ slug }: { slug: string }) => {
                         { year }
                     </h1>
                     <span className='flex-1 justify-end flex gap-16 font-bold'>
-                        { income !== 0 && <Formats.Money money={ income }/> }
-                        { expense !== 0 && <Formats.Money money={ expense }/> }
+                        { income !== 0 && <MoneyComponent money={ income }/> }
+                        { expense !== 0 && <MoneyComponent money={ expense }/> }
                         { expense === 0 && <div/> }
                     </span>
                 </div>

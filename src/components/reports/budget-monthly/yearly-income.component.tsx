@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Dates, Statistical } from "../../../core";
+import { Dates } from "../../../core";
+import StatisticalRepository from "../../../core/repositories/statistical-repository";
 import { Budget } from "../../../core/types";
 import { ChartData } from "chart.js";
 
@@ -22,7 +23,7 @@ const YearlyIncomeGraphComponent = ({ year = 1970, budgets = [], currencySymbol 
         if (budgets.length === 0) return
 
         Promise.all(Dates.Ranges.months(year)
-                .map(m => Statistical.Service.balance({
+                .map(m => StatisticalRepository.balance({
                     dateRange: m.toBackend(),
                     onlyIncome: true
                 })))
@@ -43,7 +44,7 @@ const YearlyIncomeGraphComponent = ({ year = 1970, budgets = [], currencySymbol 
                             backgroundColor: '#6996b2'
                         }
                     ]
-                })
+                } as ChartData)
             })
             .catch(console.error)
     }, [year, budgets]);

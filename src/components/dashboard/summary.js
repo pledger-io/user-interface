@@ -1,7 +1,7 @@
 import SummaryComponent from "./summary-component";
 import { mdiAbacus, mdiContactlessPaymentCircle, mdiScaleBalance, mdiSwapVerticalCircle } from "@mdi/js";
-import { Statistical } from "../../core";
 import React from "react";
+import StatisticalRepository from "../../core/repositories/statistical-repository";
 
 const Summary = ({ range, compareRange }) => {
     const baseCommand = {
@@ -24,11 +24,11 @@ const Summary = ({ range, compareRange }) => {
                     title='page.dashboard.income'
                     icon={mdiSwapVerticalCircle}
                     currentPromise={
-                        Statistical.Service.balance({ ...baseCommand, onlyIncome: true })
+                        StatisticalRepository.balance({ ...baseCommand, onlyIncome: true })
                             .then(({ balance }) => balance)
                     }
                     previousPromise={
-                        Statistical.Service.balance({ ...compareBaseCommand, onlyIncome: true })
+                        StatisticalRepository.balance({ ...compareBaseCommand, onlyIncome: true })
                             .then(({ balance }) => balance)
                     }
                     currency='EUR' />
@@ -37,11 +37,11 @@ const Summary = ({ range, compareRange }) => {
                     title='page.dashboard.expense'
                     icon={mdiContactlessPaymentCircle}
                     currentPromise={
-                        Statistical.Service.balance({ ...baseCommand, onlyIncome: false })
+                        StatisticalRepository.balance({ ...baseCommand, onlyIncome: false })
                             .then(({ balance }) => Math.abs(balance))
                     }
                     previousPromise={
-                        Statistical.Service.balance({ ...compareBaseCommand, onlyIncome: false })
+                        StatisticalRepository.balance({ ...compareBaseCommand, onlyIncome: false })
                             .then(({ balance }) => Math.abs(balance))
                     }
                     currency='EUR' />
@@ -52,11 +52,11 @@ const Summary = ({ range, compareRange }) => {
                     title='page.dashboard.balance'
                     icon={mdiScaleBalance}
                     currentPromise={
-                        Statistical.Service.balance({ dateRange: { start: '1970-01-01', end: range.endString() }, allMoney: true })
+                        StatisticalRepository.balance({ dateRange: { start: '1970-01-01', end: range.endString() }, allMoney: true })
                             .then(({ balance }) => balance)
                     }
                     previousPromise={
-                        Statistical.Service.balance({ dateRange: { start: '1970-01-01', end: compareRange.endString() }, allMoney: true })
+                        StatisticalRepository.balance({ dateRange: { start: '1970-01-01', end: compareRange.endString() }, allMoney: true })
                             .then(({ balance }) => balance)
                     }
                     currency='EUR' />

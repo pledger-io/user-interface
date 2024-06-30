@@ -1,15 +1,14 @@
-import { useEffect, useState } from "react";
 import { mdiClockTimeTwoOutline, mdiHistory, mdiPlus } from "@mdi/js";
-
-import { Buttons } from "../../core";
-import ContractRepository, { ContractList } from "../../core/repositories/contract-repository";
+import { useEffect, useState } from "react";
+import BreadCrumbItem from "../../components/breadcrumb/breadcrumb-item.component";
+import BreadCrumbs from "../../components/breadcrumb/breadcrumb.component";
 
 import ContractTable from "../../components/contract/contract-table";
+import { Button } from "../../components/layout/button";
 import Card from "../../components/layout/card.component";
-import Tabs from "../../components/layout/tab.component";
 import Loading from "../../components/layout/loading.component";
-import BreadCrumbs from "../../components/breadcrumb/breadcrumb.component";
-import BreadCrumbItem from "../../components/breadcrumb/breadcrumb-item.component";
+import Tabs from "../../components/layout/tab.component";
+import ContractRepository, { ContractList } from "../../core/repositories/contract-repository";
 
 type TabSection = 'active' | 'terminated'
 
@@ -31,12 +30,11 @@ const ContractOverview = () => {
 
             <Card title='page.budget.contracts.title'
                   actions={ [
-                      <Buttons.Button href='/contracts/create'
-                                      icon={ mdiPlus }
-                                      key='create-button'
-                                      label='page.budget.contracts.add'/>
-                  ] }
-            >
+                      <Button href='/contracts/create'
+                              icon={ mdiPlus }
+                              key='create-button'
+                              label='page.budget.contracts.add'/>
+                  ] }>
                 <Tabs onChange={ section => setTabSection(section as TabSection) }
                       activeTab={ tabSection }
                       buttons={ [

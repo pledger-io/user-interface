@@ -1,7 +1,9 @@
 import React, { FC, useEffect, useState } from "react";
-import { Dates, Formats, Statistical } from "../../../core";
+import { Dates } from "../../../core";
+import StatisticalRepository from "../../../core/repositories/statistical-repository";
 import { Budget, BudgetExpense } from "../../../core/types";
 import { Range } from "../../../core/Dates";
+import MoneyComponent from "../../format/money.component";
 
 import Loading from "../../layout/loading.component";
 import Translation from "../../localization/translation.component";
@@ -59,7 +61,7 @@ const MonthlyBudgetTableRow: FC<MonthlyBudgetTableRowProps> = ({ months, expense
 
     useEffect(() => {
         setExpenses([])
-        Promise.all(months.map(month => Statistical.Service.balance({
+        Promise.all(months.map(month => StatisticalRepository.balance({
             expenses: [expense],
             dateRange: month.toBackend(),
             onlyIncome: false,
@@ -74,7 +76,7 @@ const MonthlyBudgetTableRow: FC<MonthlyBudgetTableRowProps> = ({ months, expense
         { months.map((_, idx) =>
             <td key={ idx }>
                 { expenses[idx] === undefined && <Loading/> }
-                { expenses[idx] && <Formats.Money money={expenses[idx]} currency={currency}/> }
+                { expenses[idx] && <MoneyComponent money={expenses[idx]} currency={currency}/> }
             </td>) }
     </tr>
 }

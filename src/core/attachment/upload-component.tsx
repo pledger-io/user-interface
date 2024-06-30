@@ -1,11 +1,12 @@
-import { Buttons, When } from "../index";
-import React, { DragEventHandler, useState } from "react";
-import { AttachmentRepository } from "../RestAPI";
 import { mdiTrayArrowUp } from "@mdi/js";
+import React, { DragEventHandler, useState } from "react";
 
 import UploadSVG from "../../assets/ic-upload-file.svg";
-import { Attachment } from "../types";
+import { Button } from "../../components/layout/button";
 import NotificationService from "../../service/notification.service";
+import { When } from "../index";
+import { AttachmentRepository } from "../RestAPI";
+import { Attachment } from "../types";
 
 function matchingType(accepted: string, presented: string) {
     accepted = accepted || '*/*'
@@ -45,10 +46,10 @@ type UploadAttachmentProps = {
     required?: boolean
 }
 
-const UploadAttachment = ({ accepts = '*/*', label, onUpload, max = 1, required = false } : UploadAttachmentProps) => {
+const UploadAttachment = ({ accepts = '*/*', label, onUpload, max = 1, required = false }: UploadAttachmentProps) => {
     const [dropActive, setDropActive] = useState(false)
-    const [valid, setValid]           = useState(false)
-    const [uniqueId]                  = useState('attachment-' + (++uploadCounter))
+    const [valid, setValid] = useState(false)
+    const [uniqueId] = useState('attachment-' + (++uploadCounter))
 
     const onFileOver: DragEventHandler = event => {
         event.preventDefault()
@@ -70,7 +71,7 @@ const UploadAttachment = ({ accepts = '*/*', label, onUpload, max = 1, required 
     }
 
     const upload = (files: DataTransferItem[]) => files.forEach(file => AttachmentRepository.upload(file.getAsFile())
-        .then(response => (onUpload || (_ => console.warn(`No upload handler set, attachmentId=${response}.`)))(response))
+        .then(response => (onUpload || (_ => console.warn(`No upload handler set, attachmentId=${ response }.`)))(response))
         .catch(() => NotificationService.warning('common.upload.file.failed')))
 
     const onChangeHandler = (files: FileList | null) => {
@@ -80,7 +81,7 @@ const UploadAttachment = ({ accepts = '*/*', label, onUpload, max = 1, required 
 
         for (let i = 0; i < files.length; i++) {
             AttachmentRepository.upload(files[i])
-                .then(response => (onUpload || (_ => console.warn(`No upload handler set, attachmentId=${response}.`)))(response))
+                .then(response => (onUpload || (_ => console.warn(`No upload handler set, attachmentId=${ response }.`)))(response))
                 .catch(() => NotificationService.warning('common.upload.file.failed'))
         }
     }
@@ -91,17 +92,17 @@ const UploadAttachment = ({ accepts = '*/*', label, onUpload, max = 1, required 
              onDragLeave={ onFileOver }
              onDragOver={ onFileOut }>
             <input type='file'
-                   id={uniqueId}
-                   accept={accepts}
+                   id={ uniqueId }
+                   accept={ accepts }
                    required={ required }
-                   onChange={event => onChangeHandler(event.target.files) }/>
-            <When condition={max === 1}>
-                <img src={UploadSVG} alt='Attachment'/>
+                   onChange={ event => onChangeHandler(event.target.files) }/>
+            <When condition={ max === 1 }>
+                <img src={ UploadSVG } alt='Attachment'/>
 
-                <Buttons.Button label={label}
-                                icon={mdiTrayArrowUp}
-                                onClick={ () => document.getElementById(uniqueId)?.click() }
-                                variant='text'/>
+                <Button label={ label }
+                        icon={ mdiTrayArrowUp }
+                        onClick={ () => document.getElementById(uniqueId)?.click() }
+                        variant='text'/>
             </When>
         </div>
     )

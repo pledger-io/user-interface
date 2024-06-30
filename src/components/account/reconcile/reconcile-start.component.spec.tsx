@@ -1,6 +1,6 @@
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import ProcessRepository from "../../../core/repositories/process.repository";
-import { Notifications } from "../../../core";
+import NotificationService from "../../../service/notification.service";
 import { routerWrapped } from "../../../setupTests";
 import ReconcilePopup from "./reconcile-start.component";
 import { Account } from "../../../core/types";
@@ -18,7 +18,7 @@ describe('ReconcilePopup', () => {
 
     it('submits the form successfully', async () => {
         ProcessRepository.start = jest.fn().mockResolvedValue({});
-        Notifications.Service.success = jest.fn();
+        NotificationService.success = jest.fn();
 
         const { getByTestId } = render(
             routerWrapped(<ReconcilePopup account={ mockAccount } afterCreate={ mockAfterCreate }/>));
@@ -33,7 +33,7 @@ describe('ReconcilePopup', () => {
         fireEvent.click(getByTestId(`reconcile-submit-button-${ mockAccount.id }`));
 
         await waitFor(() => expect(ProcessRepository.start).toHaveBeenCalled());
-        expect(Notifications.Service.success).toHaveBeenCalled();
+        expect(NotificationService.success).toHaveBeenCalled();
     });
 
 });

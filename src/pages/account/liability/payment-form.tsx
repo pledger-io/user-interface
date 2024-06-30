@@ -1,6 +1,7 @@
 import React from 'react'
 import { mdiCancel, mdiContentSave } from "@mdi/js";
 import { useLoaderData, useNavigate, useRouteLoaderData } from "react-router-dom";
+import { Category, Transaction } from "../../../core/types";
 import { TransactionService } from "../../../service/TransactionService";
 import BreadCrumbItem from "../../../components/breadcrumb/breadcrumb-item.component";
 import BreadCrumbs from "../../../components/breadcrumb/breadcrumb.component";
@@ -10,15 +11,16 @@ import Card from "../../../components/layout/card.component";
 import Translation from "../../../components/localization/translation.component";
 
 const LiabilityPayment = () => {
-    const account = useRouteLoaderData('liability')
-    const transaction = useLoaderData()
+    const account: any = useRouteLoaderData('liability')
+    const transaction: any = useLoaderData()
     const navigate = useNavigate()
 
-    const onSubmit = (entity) => {
+    const onSubmit = (entity: any) => {
         const { id } = transaction
         TransactionService.persist(account, entity, navigate, id)
     }
 
+    const model = transaction as Transaction
     return <>
         <BreadCrumbs>
             <BreadCrumbItem label='page.nav.settings'/>
@@ -43,7 +45,7 @@ const LiabilityPayment = () => {
                                 required/>
 
                     <Entity.ManagedAccount id='from'
-                                           value={ transaction.source?.id }
+                                           value={ model.source?.id }
                                            required
                                            title='Transaction.source'/>
 
@@ -56,13 +58,13 @@ const LiabilityPayment = () => {
                                 required/>
 
                     <Input.Amount id='amount'
-                                  value={ transaction?.amount }
+                                  value={ model?.amount }
                                   title='Transaction.amount'
-                                  currency={ transaction?.currency || account?.account?.currency }
+                                  currency={ model?.currency || account?.account?.currency }
                                   required/>
 
                     <Input.Date id='date'
-                                value={ transaction?.dates?.transaction }
+                                value={ model?.dates?.transaction }
                                 title='Transaction.date'
                                 required/>
                 </fieldset>
@@ -71,11 +73,11 @@ const LiabilityPayment = () => {
                     <legend><Translation label='page.transaction.add.link'/></legend>
 
                     <Entity.Category id='category'
-                                     value={ transaction?.metadata?.category }
+                                     value={ {label: model.metadata?.category} as Category }
                                      title='Transaction.category'/>
 
                     <Input.Tags title='Transaction.tags'
-                                value={ transaction?.metadata?.tags }
+                                value={ model?.metadata?.tags }
                                 id='tags'/>
                 </fieldset>
             </Card>

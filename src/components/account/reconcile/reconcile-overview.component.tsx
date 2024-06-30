@@ -1,6 +1,6 @@
 import { mdiBagChecked } from "@mdi/js";
 import React, { useEffect, useState } from "react";
-import { Message } from "../../../core";
+import Message from "../../../components/layout/message.component";
 import ProcessRepository, { BusinessKey, ProcessInstance } from "../../../core/repositories/process.repository";
 import { Identifier } from "../../../core/types";
 import { Button } from "../../layout/button";

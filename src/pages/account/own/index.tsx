@@ -1,4 +1,4 @@
-import { Buttons } from "../../../core";
+import { Button } from "../../../components/layout/button";
 import React, { useEffect, useState } from "react";
 import { mdiPlus } from "@mdi/js";
 import AccountRepository from "../../../core/repositories/account-repository";
@@ -29,7 +29,7 @@ const OwnAccountsView = () => {
         </BreadCrumbs>
 
         <Card title='page.nav.accounts.accounts' actions={
-            [<Buttons.Button label='page.account.accounts.add'
+            [<Button label='page.account.accounts.add'
                              key='add'
                              icon={ mdiPlus }
                              href='/accounts/own/add'

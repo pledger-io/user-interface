@@ -17,7 +17,7 @@ const AccountAutocompleteRow = (account: Account) => {
 
 type AccountInputProps = FieldType & {
     value?: Account,
-    type?: 'DEBTOR' | 'CREDITOR',
+    type?: 'debtor' | 'creditor',
     title?: string,
     className?: string,
     inputOnly?: boolean,

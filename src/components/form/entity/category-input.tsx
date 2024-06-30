@@ -19,10 +19,6 @@ const CategoryAutocompleteRow = (category: AutocompleteCategory) => {
 }
 
 type CategoryInputProps = FieldType & {
-    value?: {
-        name: string,
-        id: string
-    },
     inputOnly?: boolean,
     onChange?: (_: Category) => void
     title?: string,
@@ -43,10 +39,10 @@ export const CategoryInput = (props: CategoryInputProps) => {
     }).then(mapCategoryToAutocomplete)
     const { inputOnly = false } = props
 
-    return useAutocomplete({
+    return useAutocomplete<AutocompleteCategory>({
         autoCompleteCallback: value => restApi.get<Category[]>(`categories/auto-complete?token=${value}`)
             .then((categories) => categories.map(mapCategoryToAutocomplete)),
-        entityLabel: category => category?.name,
+        entityLabel: (category: AutocompleteCategory) => category?.name,
         entityRender: CategoryAutocompleteRow,
         onCreateCallback: inputOnly ? undefined : onCreateCallback
     }, props)

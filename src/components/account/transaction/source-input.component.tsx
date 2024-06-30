@@ -9,7 +9,7 @@ type SourceInputComponentProps = {
 const SourceInputComponent = ({ transaction: { source, type } } : SourceInputComponentProps) => {
     if (type.code.toLowerCase() === 'debit') {
         return <Entity.Account id='from'
-                               type='DEBTOR'
+                               type='debtor'
                                value={ source }
                                required
                                title='Transaction.source'/>

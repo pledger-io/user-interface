@@ -1,8 +1,8 @@
-import { Formats } from "../../../core";
 import React, { useEffect, useState } from "react";
 import { Category } from "../../../core/types";
 import { Range } from "../../../core/Dates";
 import StatisticalRepository from "../../../core/repositories/statistical-repository";
+import MoneyComponent from "../../format/money.component";
 
 import Loading from "../../layout/loading.component";
 import Translation from "../../localization/translation.component";
@@ -56,8 +56,8 @@ const MonthlySpendingComponent = ({ categories, range } : MonthlySpendingCompone
             { [...new Array(12).keys()]
                 .map(month => <tr key={ month }>
                     <td><Translation label={ `common.month.${ month + 1 }` } /></td>
-                    <td><Formats.Money money={ income[month] } /></td>
-                    <td><Formats.Money money={ expense[month] } /></td>
+                    <td><MoneyComponent money={ income[month] } /></td>
+                    <td><MoneyComponent money={ expense[month] } /></td>
                 </tr>) }
             </tbody>
         </table>

@@ -16,7 +16,7 @@ const routes = {
             Component: lazy(() => import('./upload-form'))
         },
         {
-            id: 'upload-create',
+            id: 'upload-results',
             path:':slug/result',
             Component: lazy(() => import('./upload-detail'))
         },

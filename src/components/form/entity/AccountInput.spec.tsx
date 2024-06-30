@@ -12,7 +12,7 @@ describe('AccountInput', () => {
     });
 
     it('should render without crashing', async () => {
-        render(formWrapped(<AccountInput id='account' type='DEBTOR' onChange={ mockOnChange }/>));
+        render(formWrapped(<AccountInput id='account' type='debtor' onChange={ mockOnChange }/>));
     });
 
 });

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Progressbar, Statistical } from "../../../core";
+import { Progressbar } from "../../../core";
+import StatisticalRepository from "../../../core/repositories/statistical-repository";
 import { Budget } from "../../../core/types";
 import { Range } from "../../../core/Dates";
 
@@ -32,7 +33,7 @@ const YearlyBudgetExpenseComponent = ({ budgets = [], range }: YearlyBudgetExpen
                 }
             })
 
-        Statistical.Service.balance({
+        StatisticalRepository.balance({
             expenses: allExpenses,
             onlyIncome: false,
             dateRange: range.toBackend()

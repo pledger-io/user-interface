@@ -1,6 +1,6 @@
 import { mdiCalendarCheck, mdiContentSave } from "@mdi/js";
 import React, { Attributes, useState } from "react";
-import { Message } from "../../core";
+import Message from "../../components/layout/message.component";
 
 import { TransactionScheduleRepository } from "../../core/RestAPI";
 import { Transaction } from "../../core/types";
@@ -11,7 +11,7 @@ import { Dialog } from "../layout/popup";
 import { PopupCallbacks } from "../layout/popup/popup.component";
 import Translation from "../localization/translation.component";
 
-const createScheduleEntity = entity => {
+const createScheduleEntity = (entity: any) => {
     return {
         name: entity.name,
         amount: entity.amount,
@@ -40,7 +40,7 @@ const ScheduleTransactionDialog = ({ transaction, onCreated = () => {}, iconStyl
     const [type, setType] = useState(transaction?.type.code.toLowerCase() || 'credit')
 
     const dialogHandler: PopupCallbacks = { close: () => {}, open: () => {} }
-    const onSubmit = entity => TransactionScheduleRepository.create(createScheduleEntity(entity))
+    const onSubmit = (entity: any) => TransactionScheduleRepository.create(createScheduleEntity(entity))
         .then(() => NotificationService.success('popup.schedule.transaction.create.success'))
         .then(() => onCreated && onCreated())
         .then(() => dialogHandler.close())

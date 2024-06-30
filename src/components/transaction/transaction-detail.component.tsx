@@ -11,10 +11,10 @@ import Icon from "@mdi/react";
 import React, { Attributes, FC, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Resolver } from "../../core";
-import { Money } from "../../core/Formatters";
 import { TransactionRepository } from "../../core/RestAPI";
 import { Account, Transaction } from "../../core/types";
 import NotificationService from "../../service/notification.service";
+import MoneyComponent from "../format/money.component";
 import { Button } from "../layout/button";
 import { Confirm } from "../layout/popup";
 import Tag from "../layout/tag.component";
@@ -101,7 +101,7 @@ const TransactionItem: FC<TransactionItemProps> = ({ transaction, className = ''
             </span>
         </span>
         <span className=''>
-            <Money money={ amount }
+            <MoneyComponent money={ amount }
                    currency={ transaction.currency }/>
         </span>
     </div>

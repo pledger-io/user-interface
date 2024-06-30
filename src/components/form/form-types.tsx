@@ -8,12 +8,14 @@ export type ValidatorType = {
 
 export type FieldType = {
     id: string,
+    title?: string,
     value?: string | any,
     required?: boolean,
     pattern?: string,
     min?: number,
     touched?: boolean,
-    validators?: ValidatorType[]
+    validators?: ValidatorType[],
+    className?: string,
 }
 
 export type InputChangeFunc<T> = (value: T) => void

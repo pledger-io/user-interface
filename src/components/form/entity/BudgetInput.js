@@ -1,7 +1,4 @@
-import PropTypes from 'prop-types';
-
 import { useAutocomplete } from "../Autocomplete";
-import { InputGroup } from "../input/InputGroup";
 import restApi from "../../../core/repositories/rest-api";
 
 const BudgetAutocompleteRow = budget => {
@@ -19,12 +16,4 @@ export const BudgetInput = (props) => {
         entityLabel: budget => budget?.name,
         entityRender: BudgetAutocompleteRow
     }, props)
-}
-BudgetInput.propTypes = {
-    ...InputGroup.propTypes,
-    value: PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        name: PropTypes.string.isRequired
-    }),
-    onChange: PropTypes.func
 }

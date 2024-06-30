@@ -1,10 +1,11 @@
 import React, { FC, useEffect, useState } from "react";
 import TransactionItem from "../../components/transaction/transaction-detail.component";
-import { Dates, Formats, Resolver } from "../../core";
+import { Dates, Resolver } from "../../core";
 import { groupTransactionByDay, YearlyTransactions } from "../../core/reducers";
 import AccountRepository from "../../core/repositories/account-repository";
 import { Account, Pagination } from "../../core/types";
 import useQueryParam from "../../hooks/query-param.hook";
+import MoneyComponent from "../format/money.component";
 
 import Loading from "../layout/loading.component";
 import { Paginator } from "../layout/paginator.component";
@@ -65,8 +66,8 @@ const TransactionList: FC<TransactionListProps> = ({ account, range }) => {
                         </span>
                     </div>
                     <div className='flex-1 justify-end flex gap-16 font-bold'>
-                        { income > 0 && <Formats.Money money={ income } /> }
-                        <Formats.Money money={ expense } />
+                        { income > 0 && <MoneyComponent money={ income } /> }
+                        <MoneyComponent money={ expense } />
                     </div>
                 </div>
                 { transactions[key].map(transaction =>

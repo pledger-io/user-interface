@@ -1,8 +1,8 @@
-import { Formats } from "../../../core";
 import React, { useEffect } from "react";
 import { Account } from "../../../core/types";
 import AccountRepository from "../../../core/repositories/account-repository";
 import StatisticalRepository from "../../../core/repositories/statistical-repository";
+import MoneyComponent from "../../format/money.component";
 
 import Loading from "../../layout/loading.component";
 import Translation from "../../localization/translation.component";
@@ -76,9 +76,9 @@ const AccountBalanceComponent = ({ year, currency } : AccountBalanceProp) => {
             { accounts && accounts.map(account =>
                 <tr key={ account.account.id }>
                     <td>{ account.account.name }</td>
-                    <td><Formats.Money money={account.startBalance} currency={currency}/></td>
-                    <td><Formats.Money money={account.endBalance} currency={currency}/></td>
-                    <td><Formats.Money money={account.endBalance - account.startBalance} currency={currency}/></td>
+                    <td><MoneyComponent money={account.startBalance} currency={currency}/></td>
+                    <td><MoneyComponent money={account.endBalance} currency={currency}/></td>
+                    <td><MoneyComponent money={account.endBalance - account.startBalance} currency={currency}/></td>
                 </tr>)
             }
             </tbody>

@@ -1,6 +1,5 @@
 import { mdiContentSaveSettings, mdiDelete, mdiHammer, mdiRedo } from "@mdi/js";
 import React, { useEffect, useState } from "react";
-import { Formats } from "../../../core";
 import ProcessRepository, {
     BusinessKey,
     ProcessInstance,
@@ -9,6 +8,7 @@ import ProcessRepository, {
 import { Identifier } from "../../../core/types";
 import NotificationService from "../../../service/notification.service";
 import { Form, Input, SubmitButton } from "../../form";
+import MoneyComponent from "../../format/money.component";
 import { Button } from "../../layout/button";
 import Loading from "../../layout/loading.component";
 import { Confirm, Dialog } from "../../layout/popup";
@@ -17,17 +17,26 @@ import { PopupCallbacks } from "../../layout/popup/popup.component";
 import Translation from "../../localization/translation.component";
 import { ReconcileStart } from "./types";
 
-const ReconcilePreviousYearComponent = ({ accountId, year, endBalance, onComplete } : { accountId: Identifier, year : number, endBalance: number, onComplete : () => void }) => {
+const ReconcilePreviousYearComponent = ({ accountId, year, endBalance, onComplete }: {
+    accountId: Identifier,
+    year: number,
+    endBalance: number,
+    onComplete: () => void
+}) => {
 
-    const dialogActions: PopupCallbacks = { close: () => {}, open: () => {} }
-    const onFormSubmit = (data : any) => {
-        const processData : ReconcileStart = {
+    const dialogActions: PopupCallbacks = {
+        close: () => {
+        }, open: () => {
+        }
+    }
+    const onFormSubmit = (data: any) => {
+        const processData: ReconcileStart = {
             businessKey: accountId as BusinessKey,
             accountId: accountId,
             openBalance: data.openBalance,
             endBalance: endBalance,
-            startDate: `${year}-01-01`,
-            endDate: `${year + 1}-01-01`,
+            startDate: `${ year }-01-01`,
+            endDate: `${ year + 1 }-01-01`,
         }
 
         ProcessRepository.start('AccountReconcile', processData)
@@ -42,28 +51,28 @@ const ReconcilePreviousYearComponent = ({ accountId, year, endBalance, onComplet
             <Dialog title='page.accounts.reconcile.previous'
                     openButton={
                         <Button variant='icon' icon={ mdiHammer }
-                                        className='text-primary'/>
+                                className='text-primary'/>
                     }
                     actions={ [
                         <SubmitButton label='common.action.save' icon={ mdiContentSaveSettings }/>,
                     ] }
                     control={ dialogActions }>
 
-                <Input.Text id='year' title='common.year' type='text' value={ year } readonly />
+                <Input.Text id='year' title='common.year' type='text' value={ year } readonly/>
                 <Input.Amount id='openBalance'
                               title='page.accounts.reconcile.openBalance'
-                              required={ true } />
+                              required={ true }/>
 
                 <Input.Amount id='endBalance'
                               value={ endBalance }
                               title='page.accounts.reconcile.endBalance'
-                              readonly />
+                              readonly/>
             </Dialog>
         </Form>
     </>
 }
 
-const ReconcileRowComponent = ({ process, onRemoved } : { process : ProcessInstance, onRemoved : () => void }) => {
+const ReconcileRowComponent = ({ process, onRemoved }: { process: ProcessInstance, onRemoved: () => void }) => {
     const [variables, setVariables] = useState<ProcessVariable[]>()
 
     useEffect(() => {
@@ -72,7 +81,9 @@ const ReconcileRowComponent = ({ process, onRemoved } : { process : ProcessInsta
     }, [process])
 
     if (!variables) {
-        return <tr><td colSpan={ 6 }><Loading /></td></tr>
+        return <tr>
+            <td colSpan={ 6 }><Loading/></td>
+        </tr>
     }
 
     const onRetry = () => {
@@ -102,26 +113,26 @@ const ReconcileRowComponent = ({ process, onRemoved } : { process : ProcessInsta
                 <ReconcilePreviousYearComponent year={ year - 1 }
                                                 endBalance={ desiredStartBalance }
                                                 accountId={ parseInt(process.businessKey) }
-                                                onComplete={ onRemoved } />
+                                                onComplete={ onRemoved }/>
                 <Button variant='icon'
-                                icon={ mdiRedo }
-                                className='text-success'
-                                onClick={ onRetry }
-                                dataTestId={`retry-button-${ process.id }`}/>
+                        icon={ mdiRedo }
+                        className='text-success'
+                        onClick={ onRetry }
+                        dataTestId={ `retry-button-${ process.id }` }/>
                 <Confirm title='page.accounts.reconcile.delete.confirm'
-                                  openButton={ <Buttons.Button variant='icon'
-                                                           icon={ mdiDelete }
-                                                           dataTestId={`remove-row-${ process.id }`}
-                                                           className='text-warning' /> }
-                                  onConfirm={ onDelete }>
-                    <Translation label='page.accounts.reconcile.delete.confirm' />
+                         openButton={ <Button variant='icon'
+                                              icon={ mdiDelete }
+                                              dataTestId={ `remove-row-${ process.id }` }
+                                              className='text-warning'/> }
+                         onConfirm={ onDelete }>
+                    <Translation label='page.accounts.reconcile.delete.confirm'/>
                 </Confirm>
             </td>
             <td>{ findValue('startDate').substring(0, 4) }</td>
-            <td><Formats.Money money={ desiredStartBalance } /></td>
-            <td><Formats.Money money={ computedStartBalance } /></td>
-            <td><Formats.Money money={ findValue('endBalance') } /></td>
-            <td><Formats.Money money={ findValue('computedEndBalance') } /></td>
+            <td><MoneyComponent money={ desiredStartBalance }/></td>
+            <td><MoneyComponent money={ computedStartBalance }/></td>
+            <td><MoneyComponent money={ findValue('endBalance') }/></td>
+            <td><MoneyComponent money={ findValue('computedEndBalance') }/></td>
             <td></td>
         </tr>
     </>

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { mdiCancel, mdiContentSave } from "@mdi/js";
-import { SubmitButton, Form } from "../../components/form";
+import { SubmitButton, Form, Input } from "../../components/form";
 import NotificationService from "../../service/notification.service";
 
 import CategoryRepository from "../../core/repositories/category-repository";
-import { Message } from "../../core";
+import Message from "../../components/layout/message.component";
 import { Category } from "../../core/types";
 
 import Card from "../../components/layout/card.component";

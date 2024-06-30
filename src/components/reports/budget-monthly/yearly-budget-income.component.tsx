@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Progressbar, Statistical } from "../../../core";
+import { Progressbar } from "../../../core";
 import { Range } from "../../../core/Dates";
+import StatisticalRepository from "../../../core/repositories/statistical-repository";
 import { Budget } from "../../../core/types";
 
 import Card from "../../layout/card.component";
@@ -15,7 +16,7 @@ const YearlyBudgetIncomeComponent = ({ range, budgets = [] } : YearlyBudgetIncom
     const [yearlyExpected, setYearlyExpected] = useState(0)
 
     useEffect(() => {
-        Statistical.Service.balance({
+        StatisticalRepository.balance({
                 onlyIncome: true,
                 dateRange: range.toBackend()
             }

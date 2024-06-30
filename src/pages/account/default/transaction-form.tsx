@@ -1,7 +1,7 @@
 import '../../../assets/css/TransactionForm.scss'
 import { mdiCallSplit, mdiCancel, mdiContentSave } from "@mdi/js";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams, useRouteLoaderData } from "react-router-dom";
+import { NavigateFunction, useNavigate, useParams, useRouteLoaderData } from "react-router-dom";
 import GenericFieldsetComponent from "../../../components/account/transaction/generic-fieldset.component";
 import MetadataFieldsetComponent from "../../../components/account/transaction/metadata-fieldset.component";
 import BreadCrumbItem from "../../../components/breadcrumb/breadcrumb-item.component";
@@ -19,7 +19,7 @@ const TransactionForm = () => {
     const { type, transactionType, id, transactionId } = useParams()
     const [transaction, setTransaction] = useState<Transaction>()
     const navigate = useNavigate()
-    const account = useRouteLoaderData('other-detail')
+    const account: any = useRouteLoaderData('other-detail')
 
     useEffect(() => {
         // load transaction defaults
@@ -49,14 +49,17 @@ const TransactionForm = () => {
         }
     }, [transactionType, transactionId, account])
 
-    const onSubmit = e => processSubmit(transactionId, e, account.account.currency, navigate)
-    const initialSplit = () => setTransaction(old => ({
-        ...old,
-        split: [{
-            description: old?.description,
-            amount: old?.amount
-        }]
-    } as Transaction))
+    const onSubmit = (e: any) => processSubmit(transactionId as string, e, account.account.currency, navigate)
+    const initialSplit = () => setTransaction(old => {
+        const existing = old as Transaction
+        return {
+            ...(existing as Transaction),
+            split: [{
+                description: old?.description,
+                amount: old?.amount
+            }]
+        } as any
+    })
 
     const backendType = Resolver.Account.convertToBackendType(type)
     if (!transaction || !account) return <Loading/>
@@ -98,7 +101,7 @@ const TransactionForm = () => {
     </>
 }
 
-const processSubmit = (id, entity, currency, navigate) => {
+const processSubmit = (id: string, entity: any, currency: string, navigate: NavigateFunction) => {
     const transaction = {
         description: entity.description,
         source: { id: entity.from.id, name: entity.from.name },
@@ -113,7 +116,7 @@ const processSubmit = (id, entity, currency, navigate) => {
     }
 
     const promises = []
-    if (isNaN(id)) {
+    if (isNaN(parseInt(id))) {
         promises.push(TransactionRepository.create(transaction.source.id, transaction))
     } else {
         promises.push(TransactionRepository.update(id, transaction))
@@ -126,12 +129,12 @@ const processSubmit = (id, entity, currency, navigate) => {
     }
 
     Promise.all(promises)
-        .then(() => NotificationService.success(replaceAction('page.transaction.{action}.success', id)))
+        .then(() => NotificationService.success(replaceAction('page.transaction.{action}.success', parseInt(id))))
         .then(() => navigate(-1))
-        .catch(() => NotificationService.warning(replaceAction('page.transaction.{action}.failed', id)))
+        .catch(() => NotificationService.warning(replaceAction('page.transaction.{action}.failed', parseInt(id))))
 }
 
-function replaceAction(text, id = null) {
+function replaceAction(text: string, id = NaN) {
     const action = isNaN(id) ? 'add' : 'update'
     return text.replaceAll('{action}', action)
 }

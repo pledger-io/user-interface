@@ -32,7 +32,7 @@ const routes = {
                     Component: lazy(() => import('./liability-detail')),
                 },
                 {
-                    id: 'liability-add',
+                    id: 'liability-edit',
                     path: 'edit',
                     Component: lazy(() => import('./liability-form')),
                 },
@@ -48,7 +48,7 @@ const routes = {
                     }
                 },
                 {
-                    id: 'liability-transaction-add',
+                    id: 'liability-transaction-edit',
                     path: 'transactions/:transactionId/edit',
                     Component: lazy(() => import('./payment-form')),
                     loader: async ({ params }) => {

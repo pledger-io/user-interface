@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import SavingsRepository from "../../../core/repositories/savings-repository";
-import { Formats, Progressbar } from "../../../core";
+import { Progressbar } from "../../../core";
 import { mdiDotsVertical, mdiPencilBoxOutline, mdiPiggyBankOutline, mdiTrashCanOutline } from "@mdi/js";
 import { Account, SavingGoal } from "../../../core/types";
 import NotificationService from "../../../service/notification.service";
+import MoneyComponent from "../../format/money.component";
 import { Button } from "../../layout/button";
 import { Dropdown } from "../../layout/dropdown";
 import { Confirm } from "../../layout/popup";
@@ -57,15 +58,15 @@ const SavingGoalTableComponent = ({ account }: SavingGoalTableComponentProps) =>
                                             account={ account }/>
                 </td>
                 <td>
-                    <Formats.Money money={ savingGoal.goal }
+                    <MoneyComponent money={ savingGoal.goal }
                                    currency={ account.account.currency }/>
                 </td>
                 <td>
-                    <Formats.Money money={ savingGoal.goal - savingGoal.reserved }
+                    <MoneyComponent money={ savingGoal.goal - savingGoal.reserved }
                                    currency={ account.account.currency }/>
                 </td>
                 <td>
-                    <Formats.Money money={ (savingGoal.goal - savingGoal.reserved) / savingGoal.monthsLeft }
+                    <MoneyComponent money={ (savingGoal.goal - savingGoal.reserved) / savingGoal.monthsLeft }
                                    currency={ account.account.currency }/>
                 </td>
                 <td>

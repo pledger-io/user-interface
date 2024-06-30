@@ -1,11 +1,15 @@
 import { Link } from "react-router-dom";
-import { Buttons, Dialog, Dropdown, Formats, Statistical } from "../../core";
 import { mdiDotsVertical, mdiSquareEditOutline, mdiTrashCanOutline } from "@mdi/js";
 import React from "react";
 import AccountRepository from "../../core/repositories/account-repository";
 import { Account } from "../../core/types";
 
 import NotificationService from "../../service/notification.service";
+import BalanceComponent from "../balance.component";
+import DateComponent from "../format/date.component";
+import { Button } from "../layout/button";
+import { Dropdown } from "../layout/dropdown";
+import { Confirm } from "../layout/popup";
 
 import ReconcileButtonsComponent from "./reconcile/reconcile-buttons.component";
 import Translation from "../localization/translation.component";
@@ -38,7 +42,7 @@ const AccountRowComponent = ({ account, deleteCallback }: AccountRowProps) => {
             </div>
             <div className='text-muted pl-1 text-sm'>
                 <label className='font-bold mr-1'><Translation label='Account.lastActivity'/>:</label>
-                <Formats.Date date={ account.history.lastTransaction }/>
+                <DateComponent date={ account.history.lastTransaction }/>
             </div>
             <div className='mt-2 pl-1 text-muted text-sm'>{ account.description }</div>
         </td>
@@ -46,22 +50,22 @@ const AccountRowComponent = ({ account, deleteCallback }: AccountRowProps) => {
             { account.account.iban && `${ account.account.iban }` }
             { !account.account.iban && account.account.number && `${ account.account.number }` }
         </td>
-        <td><Statistical.Balance accounts={ accountArray } currency={ account.account.currency }/></td>
+        <td><BalanceComponent accounts={ accountArray } currency={ account.account.currency }/></td>
         <td>
-            <Dropdown.Dropdown icon={ mdiDotsVertical } actions={ dropDownActions }>
-                <Buttons.Button label='common.action.edit'
+            <Dropdown icon={ mdiDotsVertical } actions={ dropDownActions }>
+                <Button label='common.action.edit'
                                 variant='primary'
                                 icon={ mdiSquareEditOutline }
                                 href={ `./${ account.id }/edit` }/>
-                <Dialog.Confirm title='common.action.delete'
-                                         openButton={ <Buttons.Button label='common.action.delete'
+                <Confirm title='common.action.delete'
+                                         openButton={ <Button label='common.action.delete'
                                                                   variant='warning'
                                                                   icon={ mdiTrashCanOutline }/> }
                                          onConfirm={ onDelete }>
                     <Translation label='page.accounts.delete.confirm'/>
-                </Dialog.Confirm>
+                </Confirm>
                 <ReconcileButtonsComponent account={ account } />
-            </Dropdown.Dropdown>
+            </Dropdown>
         </td>
     </tr>
 }
