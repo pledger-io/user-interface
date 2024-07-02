@@ -53,7 +53,7 @@ const CategorizedPieChart: FC<CategorizedPieChartProps> = ({ id, split, incomeOn
                     ]
                 })
             })
-    }, [split, incomeOnly, range])
+    }, [split, incomeOnly, range.start, range.end])
 
     const currency = accounts && !isArray(accounts) ? accounts.account.currency : '€'
 

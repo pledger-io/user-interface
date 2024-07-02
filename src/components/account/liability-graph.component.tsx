@@ -26,30 +26,28 @@ function LiabilityGraph(props: LiabilityGraphProps) {
                 allMoney: true,
                 accounts: [account]
             }).then(result => setBalanceSeries({
-                datasets: [ result ]
+                datasets: [result]
             }))
         }
     }, [range, account])
 
     const currencySymbol = CurrencyRepository.cached(account.account.currency)?.symbol
-    if (!balanceSeries) return <Loading />
-    return <>
-        <Chart height={ 100 }
-               type={ 'line' }
-               id='liability-balance-graph'
-               options={ Service.mergeOptions({
-                   scales: {
-                       y: {
-                           reverse: true,
-                           ticks: {
-                               callback: (value: any) => `${currencySymbol}${value}`
-                           }
-                       }
-                   },
-                   maintainAspectRatio: true
-               }, DefaultChartConfig.line) }
-               data={ balanceSeries } />
-    </>
+    if (!balanceSeries) return <Loading/>
+    return <Chart height={ 100 }
+                  type={ 'line' }
+                  id='liability-balance-graph'
+                  options={ Service.mergeOptions({
+                      scales: {
+                          y: {
+                              reverse: true,
+                              ticks: {
+                                  callback: (value: any) => `${ currencySymbol }${ value }`
+                              }
+                          }
+                      },
+                      maintainAspectRatio: true
+                  }, DefaultChartConfig.line) }
+                  data={ balanceSeries }/>
 }
 
 export default LiabilityGraph

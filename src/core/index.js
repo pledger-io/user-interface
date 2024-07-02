@@ -83,7 +83,7 @@ const Resolver = {
             return type?.code === 'TRANSFER'
         },
         resolveUrl({ id, source }) {
-            return `${Resolver.Account.resolveUrl(source)}/transaction/${id}`
+            return `${Resolver.Account.resolveUrl(source)}/transactions/${id}`
         }
     },
     uuid: () => {

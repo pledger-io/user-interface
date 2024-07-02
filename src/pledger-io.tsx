@@ -70,7 +70,7 @@ const router = createBrowserRouter([
             upload,
             {
                 id: 'catch-all',
-                path: '*',
+                path: '/*',
                 loader: () => redirect('/dashboard')
             }
         ]
@@ -127,8 +127,15 @@ function RootErrorBoundary() {
     const error = useRouteError()
     const navigate = useNavigate()
 
-    if (!isRouteErrorResponse(error) && (error as any).status === 401) {
+    console.log('error', error)
+
+    if (!isRouteErrorResponse(error) && (error as any).response.status === 403) {
+        // todo this does not work. Need to figure out a way to do a proper route redirect
         navigate('/two-factor')
+        return <></>
+    } else if (!isRouteErrorResponse(error) && (error as any).response.status === 401) {
+        SecurityRepository.logout()
+        window.location.reload()
         return <></>
     }
 

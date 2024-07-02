@@ -31,7 +31,7 @@ const YearDropdown = ({ year = 1970, onChange = _ => undefined }: YearDropdownPr
                 { yearOpen && (<DatePicker showYearPicker
                                            dateFormat='yyyy'
                                            inline
-                                           selected={ new Date(year | 1970, 0, 1) }
+                                           selected={ new Date(year, 0, 1) }
                                            onChange={ onSelect }/>) }
             </div>
         </div>

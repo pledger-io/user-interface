@@ -1,7 +1,7 @@
 import { mdiDotsVertical, mdiPlus, mdiSquareEditOutline, mdiTrashCanOutline } from "@mdi/js";
 import PropTypes from "prop-types";
 import React, { Attributes, useEffect, useState } from "react";
-import { NavLink, useLoaderData } from "react-router-dom";
+import { NavLink, useLoaderData, useRouteLoaderData } from "react-router-dom";
 import BalanceComponent from "../../../components/balance.component";
 import BreadCrumbItem from "../../../components/breadcrumb/breadcrumb-item.component";
 import BreadCrumbs from "../../../components/breadcrumb/breadcrumb.component";
@@ -82,7 +82,7 @@ const AccountOverview = () => {
     const [accounts, setAccounts] = useState<Account[] | undefined>(undefined)
     const [page] = useQueryParam({ key: 'page', initialValue: "1" })
     const [pagination, setPagination] = useState<Pagination>()
-    const type = useLoaderData()
+    const type = useRouteLoaderData('other-accounts')
 
     const reload = () => {
         setAccounts(undefined)

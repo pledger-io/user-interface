@@ -57,19 +57,13 @@ const routes = {
             path: ':type',
             loader: ({ params }) => {
                 if (params.type == 'expense') {
-                    return {
-                        default: 'creditor'
-                    }
+                    return 'creditor'
                 }
                 if (params.type == 'revenue') {
-                    return {
-                        default: 'debtor'
-                    }
+                    return 'debtor'
                 }
 
-                return {
-                    default: params.type
-                }
+                return params.type
             },
             children: [
                 {
@@ -86,9 +80,7 @@ const routes = {
                     id: 'other-detail',
                     path: ':id',
                     loader: async ({ params }) => {
-                        return {
-                            default: await AccountRepository.get(params.id)
-                        }
+                        return await AccountRepository.get(params.id)
                     },
                     children: [
                         {
@@ -117,7 +109,7 @@ const routes = {
                                 },
                                 {
                                     id: 'edit-transaction',
-                                    path: ':id/edit',
+                                    path: ':transactionId/edit',
                                     Component: lazy(() => import('./default/transaction-form')),
                                 }
                             ]
