@@ -27,6 +27,7 @@ import contract from "./pages/contract/routes";
 import profile from "./pages/profile/routes";
 import reports from "./pages/reports/routes";
 import transactions from "./pages/transaction/routes";
+import settings from "./pages/setting/routes";
 import upload from "./pages/upload/routes";
 
 const router = createBrowserRouter([
@@ -67,6 +68,7 @@ const router = createBrowserRouter([
             profile,
             reports,
             transactions,
+            settings,
             upload,
             {
                 id: 'catch-all',
