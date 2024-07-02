@@ -1,0 +1,90 @@
+import React, { ChangeEventHandler, FC, ReactNode, useContext, useEffect } from "react";
+import Translation from "../../localization/translation.component";
+import HelpTranslation from "../../localization/help.component";
+
+import { FormContext } from "../Form";
+import { FieldType, FormContextType, InputChangeFunc } from "../form-types";
+
+type InputGroupProps = {
+    id: string,                 // The identifier of the field in the entity
+    help?: string,              // A text label used for the title of this input (the label)
+    title?: string,             // A text label used for any addition help text for this input
+    required?: boolean          // Indicator if the field is required,
+    valid?: boolean,
+    className?: string,
+    children: ReactNode | ReactNode[]
+}
+
+export const InputGroup: FC<InputGroupProps> = ({ id, help, title, required = false, valid, className = '', children }) => {
+    return (
+        <div className={ `Input mb-2 block md:flex ${valid !== undefined ? (valid ? 'valid' : 'invalid') : ''} ${className}` }>
+            {title && (
+                <label htmlFor={ id } className={`max-w-full md-max-w-[15vw] inline-flex items-center ${required ? 'font-bold' : ''}`}>
+                    <Translation label={ title }/>
+                    {help ? <HelpTranslation label={ help } className='font-normal text-end pr-1' /> : ''}
+                </label>
+            )}
+            <div className='flex-1'>{ children }</div>
+        </div>
+    )
+}
+
+type useInputFieldProps = {
+    field: any,
+    onChange?: (_: string) => void,
+}
+export const useInputField = ({ onChange, field }: useInputFieldProps) : [FieldType, string[], InputChangeFunc<any>] => {
+    const formContext = useContext(FormContext) as FormContextType
+
+    useEffect(() => {
+        if (!formContext.fields[field.id]) {
+            console.info(`\tRegister form field %c${field.id}%c.`, 'color: blue', '')
+            formContext.addField({
+                field: field,
+                value: field.value || ''
+            })
+        }
+    }, [field.id])
+    useEffect(() => {
+        if (field.value) console.debug(`\tUpdating field %c${field.id}%c value to '%c${JSON.stringify(field.value)}%c'.`, 'color: blue', '', 'color: purple', '')
+        if (formContext.fields[field.id])
+            formContext.addField({
+                field: {
+                    ...formContext.fields[field.id],
+                    value: field.value || ''
+                }
+            })
+    }, [field.value])
+
+
+    const onChangedEvent: ChangeEventHandler = event => {
+        formContext.onChange(event, formContext.fields[field.id])
+        if (onChange) onChange((event.currentTarget as HTMLInputElement).value)
+    }
+
+    return [
+        formContext.fields[field.id],
+        formContext.errors[field.id] || [],
+        onChangedEvent
+    ]
+}
+
+type InputValidationErrorsProps = {
+    errors: string[],
+    field: any
+}
+
+/**
+ * For rendering any input validation failures.
+ */
+export const InputValidationErrors: FC<InputValidationErrorsProps> = ({ errors, field }) => {
+    const formContext = useContext(FormContext)
+
+    return <>
+        { errors.map((error: string, idx: number) => <>
+            <span className='validation' key={idx}>
+                <Translation key={idx} label={`${formContext.entity}.${field.id}.${error}`}/>
+            </span>
+        </>) }
+    </>
+}

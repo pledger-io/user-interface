@@ -55,6 +55,8 @@ const CurrencyRepository = (api => {
                 currency.enabled = enabled
                 return response
             }),
+        create: (model) => api.put(`settings/currencies`, model),
+        update: (code, model) => api.post(`settings/currencies/${code}`, model),
         cached: (code) => knownCurrencies.find(currency => currency.code === code)
     }
 })(RestApi)

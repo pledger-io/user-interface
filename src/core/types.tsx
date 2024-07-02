@@ -50,6 +50,7 @@ export type Currency = Identifiable & {
     code: string,
     name: string,
     symbol: string,
+    numberDecimals?: number
 }
 
 export type Contract = Identifiable & {

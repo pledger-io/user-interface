@@ -142,7 +142,7 @@ const config = [
     label: 'page.nav.settings.options',
     links: [
       {
-        href: '/settings',
+        href: '/settings/configure',
         label: 'page.header.application.settings',
         icon: mdiCogs
       },
