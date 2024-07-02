@@ -40,7 +40,7 @@ const routes = {
                     id: 'liability-transaction-add',
                     path: 'transactions/add',
                     Component: lazy(() => import('./payment-form')),
-                    loader: ({ params }) => {
+                    loader: () => {
                         return {
                             transaction: {
                             }

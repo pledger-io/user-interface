@@ -16,7 +16,7 @@ import { Account, Transaction } from "../../../core/types";
 import NotificationService from "../../../service/notification.service";
 
 const TransactionForm = () => {
-    const { type, transactionType, id, transactionId } = useParams()
+    const { type, transactionType, transactionId } = useParams()
     const [transaction, setTransaction] = useState<Transaction>()
     const navigate = useNavigate()
     const account: any = useRouteLoaderData('other-detail')
