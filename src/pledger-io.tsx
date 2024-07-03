@@ -131,11 +131,11 @@ function RootErrorBoundary() {
 
     console.log('error', error)
 
-    if (!isRouteErrorResponse(error) && (error as any).response.status === 403) {
+    if (!isRouteErrorResponse(error) && (error as any)?.response?.status === 403) {
         // todo this does not work. Need to figure out a way to do a proper route redirect
         navigate('/two-factor')
         return <></>
-    } else if (!isRouteErrorResponse(error) && (error as any).response.status === 401) {
+    } else if (!isRouteErrorResponse(error) && (error as any)?.response?.status === 401) {
         SecurityRepository.logout()
         window.location.reload()
         return <></>
