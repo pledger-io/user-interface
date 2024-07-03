@@ -27,27 +27,28 @@ const MonthlyPerBudgetTableComponent: FC<MonthlyPerBudgetTableProps> = ({ budget
         setExpenses(unique)
     }, [budgets])
 
-    return <>
-        <table className='Table'>
-            <thead>
-            <tr>
-                <th><Translation label='Budget.Expense.name'/></th>
-                { months.map(month =>
-                    <th key={ month.month() }>
-                        <Translation label={ `common.month.${ month.month() }` }/>
-                    </th>) }
-            </tr>
-            </thead>
-            <tbody>
-            { expenses.map(expense =>
-                <MonthlyBudgetTableRow key={ expense.id }
-                                       months={ months }
-                                       currency={ currency }
-                                       expense={ expense } />) }
-            { expenses.length === 0 && <tr><td className='text-center' colSpan={ 1 + months.length }><Translation label='common.overview.noresults' /></td></tr> }
-            </tbody>
-        </table>
-    </>
+    return <table className='Table'>
+        <thead>
+        <tr>
+            <th><Translation label='Budget.Expense.name'/></th>
+            { months.map(month =>
+                <th key={ month.month() }>
+                    <Translation label={ `common.month.${ month.month() }` }/>
+                </th>) }
+        </tr>
+        </thead>
+        <tbody>
+        { expenses.map(expense =>
+            <MonthlyBudgetTableRow key={ expense.id }
+                                   months={ months }
+                                   currency={ currency }
+                                   expense={ expense }/>) }
+        { expenses.length === 0 && <tr>
+            <td className='text-center' colSpan={ 1 + months.length }><Translation label='common.overview.noresults'/>
+            </td>
+        </tr> }
+        </tbody>
+    </table>
 }
 
 type MonthlyBudgetTableRowProps = {

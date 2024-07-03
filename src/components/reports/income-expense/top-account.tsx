@@ -41,7 +41,7 @@ const TopAccountTable = ({ year, type }: TopAccountTableProps) => {
 
             { accounts && accounts.length === 0 && <tr><td colSpan={ 4 } className='text-center muted'><Translation label='common.overview.noresults'/></td></tr> }
 
-            { accounts && accounts.map(account => (
+            { accounts?.map(account => (
                 <tr key={account.account.id}>
                     <td width={ 50 }><Attachment.Image fileCode={account.account.iconFileCode}/></td>
                     <td>{account.account.name}</td>

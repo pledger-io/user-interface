@@ -26,7 +26,7 @@ const ConfirmComponent = (props: ConfirmProps) => {
     return <>
         <Button { ...openButton.props } onClick={ onOpenClick }/>
         <Popup ref={ dialogRef }
-               { ...(props as PopupProps) }
+               { ...props }
                actions={ [
                    <Button label='common.action.confirm'
                            key='confirm'

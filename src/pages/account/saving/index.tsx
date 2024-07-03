@@ -41,8 +41,8 @@ function SavingAccountOverview() {
         <Card title='page.account.savings.transactions'>
             { account && <div className='flex justify-end'>
                 <Button label='page.transactions.transfer.add'
-                                href={ `${ Resolver.Account.resolveUrl(account as any) }/transactions/add/transfer` }
-                                className={ Resolver.Account.isManaged(account as any) ? 'Hidden' : '' }
+                                href={ `${ Resolver.Account.resolveUrl(account) }/transactions/add/transfer` }
+                                className={ Resolver.Account.isManaged(account) ? 'Hidden' : '' }
                                 variant='primary'
                                 icon={ mdiSwapHorizontal }/>
             </div> }

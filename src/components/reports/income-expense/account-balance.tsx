@@ -56,34 +56,34 @@ const AccountBalanceComponent = ({ year, currency } : AccountBalanceProp) => {
             }).catch(console.error)
     }, [currency, year])
 
-    return <>
-        <table className='Table'>
-            <thead>
-            <tr>
-                <th><Translation label='Account.name'/></th>
-                <th><Translation label='page.reports.default.startBalance'/></th>
-                <th><Translation label='page.reports.default.endBalance'/></th>
-                <th><Translation label='common.difference'/></th>
-            </tr>
-            </thead>
-            <tbody>
-            { !accounts && <tr><td colSpan={ 4 }><Loading /></td></tr> }
+    return <table className='Table'>
+        <thead>
+        <tr>
+            <th><Translation label='Account.name'/></th>
+            <th><Translation label='page.reports.default.startBalance'/></th>
+            <th><Translation label='page.reports.default.endBalance'/></th>
+            <th><Translation label='common.difference'/></th>
+        </tr>
+        </thead>
+        <tbody>
+        { !accounts && <tr>
+            <td colSpan={ 4 }><Loading/></td>
+        </tr> }
 
-            { accounts && accounts.length === 0 && <tr>
-                <td colSpan={ 4 }><Translation label='common.results.nodata'/></td>
-            </tr> }
+        { accounts && accounts.length === 0 && <tr>
+            <td colSpan={ 4 }><Translation label='common.results.nodata'/></td>
+        </tr> }
 
-            { accounts && accounts.map(account =>
-                <tr key={ account.account.id }>
-                    <td>{ account.account.name }</td>
-                    <td><MoneyComponent money={account.startBalance} currency={currency}/></td>
-                    <td><MoneyComponent money={account.endBalance} currency={currency}/></td>
-                    <td><MoneyComponent money={account.endBalance - account.startBalance} currency={currency}/></td>
-                </tr>)
-            }
-            </tbody>
-        </table>
-    </>
+        { accounts?.map(account =>
+            <tr key={ account.account.id }>
+                <td>{ account.account.name }</td>
+                <td><MoneyComponent money={ account.startBalance } currency={ currency }/></td>
+                <td><MoneyComponent money={ account.endBalance } currency={ currency }/></td>
+                <td><MoneyComponent money={ account.endBalance - account.startBalance } currency={ currency }/></td>
+            </tr>)
+        }
+        </tbody>
+    </table>
 }
 
 export default AccountBalanceComponent

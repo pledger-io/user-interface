@@ -1,9 +1,15 @@
+import { Range } from "../../core/Dates";
 import SummaryComponent from "./summary-component";
 import { mdiAbacus, mdiContactlessPaymentCircle, mdiScaleBalance, mdiSwapVerticalCircle } from "@mdi/js";
 import React from "react";
-import StatisticalRepository from "../../core/repositories/statistical-repository";
+import StatisticalRepository, { BalanceRequestFilter } from "../../core/repositories/statistical-repository";
 
-const Summary = ({ range, compareRange }) => {
+type SummaryProps = {
+    range: Range,
+    compareRange: Range
+}
+
+const Summary = ({ range, compareRange }: SummaryProps) => {
     const baseCommand = {
         dateRange: {
             start: range.startString(),
@@ -21,27 +27,27 @@ const Summary = ({ range, compareRange }) => {
         <div className="flex-1 flex-wrap flex gap-2">
             <SummaryComponent
                 title='page.dashboard.income'
-                icon={mdiSwapVerticalCircle}
+                icon={ mdiSwapVerticalCircle }
                 currentPromise={
-                    StatisticalRepository.balance({...baseCommand, onlyIncome: true})
-                        .then(({balance}) => balance)
+                    StatisticalRepository.balance({ ...baseCommand, onlyIncome: true })
+                        .then(({ balance }) => balance)
                 }
                 previousPromise={
-                    StatisticalRepository.balance({...compareBaseCommand, onlyIncome: true})
-                        .then(({balance}) => balance)
+                    StatisticalRepository.balance({ ...compareBaseCommand, onlyIncome: true })
+                        .then(({ balance }) => balance)
                 }
                 currency='EUR'/>
 
             <SummaryComponent
                 title='page.dashboard.expense'
-                icon={mdiContactlessPaymentCircle}
+                icon={ mdiContactlessPaymentCircle }
                 currentPromise={
-                    StatisticalRepository.balance({...baseCommand, onlyIncome: false})
-                        .then(({balance}) => Math.abs(balance))
+                    StatisticalRepository.balance({ ...baseCommand, onlyIncome: false })
+                        .then(({ balance }) => Math.abs(balance))
                 }
                 previousPromise={
-                    StatisticalRepository.balance({...compareBaseCommand, onlyIncome: false})
-                        .then(({balance}) => Math.abs(balance))
+                    StatisticalRepository.balance({ ...compareBaseCommand, onlyIncome: false })
+                        .then(({ balance }) => Math.abs(balance))
                 }
                 currency='EUR'/>
         </div>
@@ -49,27 +55,27 @@ const Summary = ({ range, compareRange }) => {
         <div className="flex-1 flex-wrap flex gap-2">
             <SummaryComponent
                 title='page.dashboard.balance'
-                icon={mdiScaleBalance}
+                icon={ mdiScaleBalance }
                 currentPromise={
                     StatisticalRepository.balance({
-                        dateRange: {start: '1970-01-01', end: range.endString()},
+                        dateRange: { start: '1970-01-01', end: range.endString() },
                         allMoney: true
-                    })
-                        .then(({balance}) => balance)
+                    } as BalanceRequestFilter)
+                        .then(({ balance }) => balance)
                 }
                 previousPromise={
                     StatisticalRepository.balance({
-                        dateRange: {start: '1970-01-01', end: compareRange.endString()},
+                        dateRange: { start: '1970-01-01', end: compareRange.endString() },
                         allMoney: true
-                    })
-                        .then(({balance}) => balance)
+                    } as BalanceRequestFilter)
+                        .then(({ balance }) => balance)
                 }
                 currency='EUR'/>
 
             <SummaryComponent
                 title='page.dashboard.budget'
                 currency='EUR'
-                icon={mdiAbacus}/>
+                icon={ mdiAbacus }/>
         </div>
     </div>
 }

@@ -47,7 +47,7 @@ const OwnAccountsView = () => {
                 <tbody>
                 { !accounts && <tr><td colSpan={ 4 }><Loading /></td></tr> }
                 { accounts && !accounts.length && <tr><td colSpan={ 4 } className='text-center text-muted'><Translation label='common.overview.noresults'/></td></tr> }
-                { accounts && accounts.map(a => <AccountRowComponent key={ a.id } account={ a } deleteCallback={ loadAccounts }/>) }
+                { accounts?.map(a => <AccountRowComponent key={ a.id } account={ a } deleteCallback={ loadAccounts }/>) }
                 </tbody>
             </table>
         </Card>

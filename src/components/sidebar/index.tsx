@@ -16,8 +16,7 @@ type SidebarProps = {
 }
 
 const Sidebar = ({ logoutCallback }: SidebarProps) => {
-    return <>
-        <div className='h-screen max-w-[218px] flex-col overflow-y-auto
+    return <div className='h-screen max-w-[218px] flex-col overflow-y-auto
                         hidden md:flex
                         text-white bg-[var(--sidebar-background)]'>
             <div className='py-1 px-3 mb-5 flex flex-row items-center
@@ -59,7 +58,6 @@ const Sidebar = ({ logoutCallback }: SidebarProps) => {
                         className='px-2 text-[var(--sidebar-icon-color)]'/>
             </footer>
         </div>
-    </>
 }
 
 export default Sidebar

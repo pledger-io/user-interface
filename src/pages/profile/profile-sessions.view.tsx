@@ -47,7 +47,7 @@ const ProfileSessionsView = () => {
                         </tr>
                         </thead>
                         <tbody>
-                        { sessions.map((session, index) => <tr key={index}>
+                        { sessions?.map((session) => <tr key={ session.token }>
                             <td>{ session.description }</td>
                             <td><DateTimeComponent date={ session.validFrom } /></td>
                             <td><DateTimeComponent date={ session.validUntil } /></td>

@@ -10,7 +10,7 @@ const useLocalStorage = (key: string, initialValue: string | (() => string)) => 
         if (existing) return existing
 
         if (initialValue instanceof Function) return initialValue()
-        return initialValue as string
+        return initialValue
     })
 
     useEffect(() => {

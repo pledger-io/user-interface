@@ -43,7 +43,7 @@ const _ = () => {
 
         <GroupAddDialog onAdd={ () => RuleRepository.groups().then(setGroups) }/>
 
-        { groups && groups.map((group, idx) =>
+        { groups?.map((group, idx) =>
             <Card message={ group.name }
                   key={ group.name }
                   actions={ [
