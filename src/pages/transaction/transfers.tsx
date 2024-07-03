@@ -33,6 +33,7 @@ const TransactionGlobalView = () => {
         <Card title='page.title.transactions.overview'
               actions={ [
                   <NewTransactionDialog type='transfer'
+                                        key={ 'new-transfer' }
                                         icon={ mdiSwapHorizontal }
                                         variant='info'/>] }>
             <TransactionOverview range={ range } transfers={ true }/>

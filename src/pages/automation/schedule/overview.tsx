@@ -41,8 +41,8 @@ const ScheduledTransactionOverview = () => {
                         </tr>
                         </thead>
                         <tbody>
-                        { schedules && schedules
-                            .filter((schedule: any) => schedule.source && schedule.destination)
+                        { schedules
+                            ?.filter((schedule: any) => schedule.source && schedule.destination)
                             .map((schedule: any) => <ScheduledTransactionRow schedule={ schedule }
                                                                       deleteCallback={ loadSchedules }
                                                                       key={ schedule.id }/>) }

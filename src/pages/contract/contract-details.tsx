@@ -47,12 +47,11 @@ const ContractDetail = () => {
                 </div>
             </Card>
 
-            { contract?.description && <>
+            { contract?.description &&
                 <Card className='flex-1'>
                     <h5 className='font-bold'><Translation label='Contract.description'/></h5>
                     { contract?.description }
-                </Card>
-            </> }
+                </Card> }
         </div>
 
         <Card title='page.title.budget.contracts.transactions'>

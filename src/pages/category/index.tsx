@@ -32,51 +32,49 @@ const CategoryListing = () => {
 
     const isLoaded = categories
     const hasContent = isLoaded && categories.length > 0
-    return <>
-        <div className="CategoryOverview">
-            <BreadCrumbs>
-                <BreadCrumbItem label='page.nav.settings'/>
-                <BreadCrumbItem label='page.nav.settings.categories'/>
-            </BreadCrumbs>
+    return <div className="CategoryOverview">
+        <BreadCrumbs>
+            <BreadCrumbItem label='page.nav.settings'/>
+            <BreadCrumbItem label='page.nav.settings.categories'/>
+        </BreadCrumbs>
 
-            <Card title='page.nav.settings.categories' actions={ [
-                <Button label='page.settings.categories.add' variant='primary' icon={ mdiPlus } href='./add'
-                        key='add'/>
-            ] }>
-                <table className='Table'>
-                    <thead>
+        <Card title='page.nav.settings.categories' actions={ [
+            <Button label='page.settings.categories.add' variant='primary' icon={ mdiPlus } href='./add'
+                    key='add'/>
+        ] }>
+            <table className='Table'>
+                <thead>
+                <tr>
+                    <th className='w-[60px]'/>
+                    <th><Translation label='Category.label'/></th>
+                    <th><Translation label='Category.description'/></th>
+                    <th><Translation label='Category.lastActivity'/></th>
+                </tr>
+                </thead>
+                <tbody>
+                { !isLoaded && <tr>
+                    <td colSpan={ 4 } className='text-center'>
+                        <Loading/>
+                    </td>
+                </tr> }
+                { hasContent && categories.map(c =>
+                    <CategoryRow deleteCallback={ load }
+                                 category={ c }
+                                 key={ c.id }/>) }
+                { isLoaded && !hasContent &&
                     <tr>
-                        <th className='w-[60px]'/>
-                        <th><Translation label='Category.label'/></th>
-                        <th><Translation label='Category.description'/></th>
-                        <th><Translation label='Category.lastActivity'/></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    { !isLoaded && <tr>
-                        <td colSpan={ 4 } className='text-center'>
-                            <Loading/>
+                        <td colSpan={ 4 } className='text-center text-gray-500'>
+                            <Translation label='common.overview.noresults'/>
                         </td>
                     </tr> }
-                    { hasContent && categories.map(c =>
-                        <CategoryRow deleteCallback={ load }
-                                     category={ c }
-                                     key={ c.id }/>) }
-                    { isLoaded && !hasContent &&
-                        <tr>
-                            <td colSpan={ 4 } className='text-center text-gray-500'>
-                                <Translation label='common.overview.noresults'/>
-                            </td>
-                        </tr> }
-                    </tbody>
-                </table>
+                </tbody>
+            </table>
 
-                { hasContent && <Paginator page={ parseInt(page) }
-                                           records={ pagination?.records }
-                                           pageSize={ pagination?.pageSize }/> }
-            </Card>
-        </div>
-    </>
+            { hasContent && <Paginator page={ parseInt(page) }
+                                       records={ pagination?.records }
+                                       pageSize={ pagination?.pageSize }/> }
+        </Card>
+    </div>
 }
 
 export default CategoryListing

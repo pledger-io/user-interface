@@ -53,7 +53,7 @@ const TransactionForm = () => {
     const initialSplit = () => setTransaction(old => {
         const existing = old as Transaction
         return {
-            ...(existing as Transaction),
+            ...existing,
             split: [{
                 description: old?.description,
                 amount: old?.amount
@@ -63,42 +63,40 @@ const TransactionForm = () => {
 
     const backendType = Resolver.Account.convertToBackendType(type)
     if (!transaction || !account) return <Loading/>
-    return <>
-        <div className='TransactionForm'>
-            <BreadCrumbs>
-                <BreadCrumbItem label='page.nav.settings'/>
-                <BreadCrumbItem label='page.nav.accounts'/>
-                <BreadCrumbItem label={ `page.nav.accounts.${ backendType }` }
-                                href={ `/accounts/${ type }` }/>
-                <BreadCrumbItem message={ account?.name }/>
-                <BreadCrumbItem label='page.nav.transactions'
-                                href={ Resolver.Account.resolveUrl(account) + '/transactions' }/>
-                <BreadCrumbItem label='common.action.edit'/>
-            </BreadCrumbs>
+    return <div className='TransactionForm'>
+        <BreadCrumbs>
+            <BreadCrumbItem label='page.nav.settings'/>
+            <BreadCrumbItem label='page.nav.accounts'/>
+            <BreadCrumbItem label={ `page.nav.accounts.${ backendType }` }
+                            href={ `/accounts/${ type }` }/>
+            <BreadCrumbItem message={ account?.name }/>
+            <BreadCrumbItem label='page.nav.transactions'
+                            href={ Resolver.Account.resolveUrl(account) + '/transactions' }/>
+            <BreadCrumbItem label='common.action.edit'/>
+        </BreadCrumbs>
 
-            <Form onSubmit={ onSubmit } entity='Transaction'>
-                <Card title='page.transactions.add'
-                      buttons={ [
-                          <SubmitButton key='save' label='common.action.save' icon={ mdiContentSave }/>,
-                          <BackButton key='cancel' label='common.action.cancel' icon={ mdiCancel }/>] }>
+        <Form onSubmit={ onSubmit } entity='Transaction'>
+            <Card title='page.transactions.add'
+                  buttons={ [
+                      <SubmitButton key='save' label='common.action.save' icon={ mdiContentSave }/>,
+                      <BackButton key='cancel' label='common.action.cancel' icon={ mdiCancel }/>] }>
 
-                    <GenericFieldsetComponent transaction={ transaction } account={ account as Account }/>
+                <GenericFieldsetComponent transaction={ transaction } account={ account as Account }/>
 
-                    <MetadataFieldsetComponent transaction={ transaction }/>
+                <MetadataFieldsetComponent transaction={ transaction }/>
 
-                    { transactionId && !transaction.split && <>
-                        <fieldset className='Buttons'>
-                            <Button label='page.transaction.action.split'
-                                    icon={ mdiCallSplit }
-                                    variant='primary'
-                                    variantType='outline'
-                                    onClick={ initialSplit }/>
-                        </fieldset>
-                    </> }
-                </Card>
-            </Form>
-        </div>
-    </>
+                { transactionId && !transaction.split && <>
+                    <fieldset className='Buttons'>
+                        <Button label='page.transaction.action.split'
+                                icon={ mdiCallSplit }
+                                variant='primary'
+                                variantType='outline'
+                                onClick={ initialSplit }/>
+                    </fieldset>
+                </> }
+            </Card>
+        </Form>
+    </div>
 }
 
 const processSubmit = (id: string, entity: any, currency: string, navigate: NavigateFunction) => {
