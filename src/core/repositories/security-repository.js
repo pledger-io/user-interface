@@ -10,6 +10,9 @@ class TokenResponse {
 
 const SecurityRepository = (api => {
     return {
+        isAuthenticated: () => {
+            return sessionStorage.getItem('token') != null
+        },
         authenticate: (username, password) => api.post('security/authenticate', { username: username, password: password })
             .then(serverResponse => {
                 const token = new TokenResponse(serverResponse)
