@@ -43,26 +43,26 @@ const MobileSidebar = ({ logoutCallback }: SidebarProps) => {
                 })
             }
 
-            <footer
-                className='mx-[-1rem] mb-[-.9rem] mt-5 flex items-center justify-between bg-[var(--sidebar-sub-background)]'>
-                <NavLink to='/user/profile/theme' className='px-2 py-1'>
-                    <ProfilePicture size={ 40 }
-                                    className='bg-[var(--sidebar-title-color)] rounded'/>
-                </NavLink>
+                <footer
+                    className='mx-[-1rem] mb-[-.9rem] mt-5 flex items-center justify-between bg-[var(--sidebar-sub-background)]'>
+                    <NavLink to='/user/profile/theme' className='px-2 py-1'>
+                        <ProfilePicture size={ 40 }
+                                        className='bg-[var(--sidebar-title-color)] rounded'/>
+                    </NavLink>
 
-                <Button label='common.action.close'
-                        icon={ mdiCloseBox }
-                        onClick={ () => setIsOpen(false) }
-                        variant='primary'
-                        className='border-none !text-white'/>
+                    <Button label='common.action.close'
+                            icon={ mdiCloseBox }
+                            onClick={ () => setIsOpen(false) }
+                            variant='primary'
+                            className='border-none !text-white'/>
 
-                <Button icon={ mdiLogoutVariant }
-                        onClick={ logoutCallback }
-                        variant='icon'
-                        className='px-2 text-[var(--sidebar-icon-color)]'/>
-            </footer>
+                    <Button icon={ mdiLogoutVariant }
+                            onClick={ logoutCallback }
+                            variant='icon'
+                            className='px-2 text-[var(--sidebar-icon-color)]'/>
+                </footer>
+            </div>
         </div>
-    </div>
 }
 
 export default MobileSidebar

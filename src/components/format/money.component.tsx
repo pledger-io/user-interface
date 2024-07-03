@@ -14,7 +14,7 @@ const _ = ({ money = 0.0, currency = sessionStorage.getItem('currency') ?? 'EUR'
     })
 
     return (
-        <span data-testid="money" className={ className }>{ formatter.format(money) }</span>
+        <span data-testid="money" className={className}>{formatter.format(money)}</span>
     )
 }
 
