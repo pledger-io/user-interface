@@ -13,7 +13,5 @@ export const HiddenInput: FC<HiddenInputProps> = (props) => {
     const [field] = useInputField({ onChange: props.onChange, field: props })
 
     if (!field) return <>props.id</>
-    return <>
-        <input type='hidden' id={props.id} name={props.id} value={(field as FieldType).value}/>
-    </>
+    return <input type='hidden' id={ props.id } name={ props.id } value={ field.value }/>
 }

@@ -25,7 +25,7 @@ const ContractRow: FC<ContractRowProps> = ({ contract, onChanges }) => {
     const onDelete = () => {
         ContractRepository.delete(contract.id)
             .then(() => NotificationService.success('page.budget.contracts.delete.success'))
-            .then(() => onChanges && onChanges())
+            .then(() => onChanges?.())
             .catch(() => NotificationService.warning('page.budget.contracts.delete.failed'))
     }
     const onWarnClick = () => {

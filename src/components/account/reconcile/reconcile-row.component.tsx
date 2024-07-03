@@ -46,30 +46,28 @@ const ReconcilePreviousYearComponent = ({ accountId, year, endBalance, onComplet
             .catch(() => NotificationService.warning('page.accounts.reconcile.error'))
     }
 
-    return <>
-        <Form entity='Account' onSubmit={ onFormSubmit }>
-            <Dialog title='page.accounts.reconcile.previous'
-                    openButton={
-                        <Button variant='icon' icon={ mdiHammer }
-                                className='text-primary'/>
-                    }
-                    actions={ [
-                        <SubmitButton label='common.action.save' icon={ mdiContentSaveSettings }/>,
-                    ] }
-                    control={ dialogActions }>
+    return <Form entity='Account' onSubmit={ onFormSubmit }>
+        <Dialog title='page.accounts.reconcile.previous'
+                openButton={
+                    <Button variant='icon' icon={ mdiHammer }
+                            className='text-primary'/>
+                }
+                actions={ [
+                    <SubmitButton key='save-btn' label='common.action.save' icon={ mdiContentSaveSettings }/>,
+                ] }
+                control={ dialogActions }>
 
-                <Input.Text id='year' title='common.year' type='text' value={ year } readonly/>
-                <Input.Amount id='openBalance'
-                              title='page.accounts.reconcile.openBalance'
-                              required={ true }/>
+            <Input.Text id='year' title='common.year' type='text' value={ year } readonly/>
+            <Input.Amount id='openBalance'
+                          title='page.accounts.reconcile.openBalance'
+                          required={ true }/>
 
-                <Input.Amount id='endBalance'
-                              value={ endBalance }
-                              title='page.accounts.reconcile.endBalance'
-                              readonly/>
-            </Dialog>
-        </Form>
-    </>
+            <Input.Amount id='endBalance'
+                          value={ endBalance }
+                          title='page.accounts.reconcile.endBalance'
+                          readonly/>
+        </Dialog>
+    </Form>
 }
 
 const ReconcileRowComponent = ({ process, onRemoved }: { process: ProcessInstance, onRemoved: () => void }) => {
@@ -107,35 +105,34 @@ const ReconcileRowComponent = ({ process, onRemoved }: { process: ProcessInstanc
     const year = parseInt(findValue('startDate')?.substring(0, 4))
     const computedStartBalance = parseFloat(findValue('computedStartBalance'))
     const desiredStartBalance = parseFloat(findValue('openBalance'))
-    return <>
-        <tr>
-            <td className='flex gap-0.5'>
-                <ReconcilePreviousYearComponent year={ year - 1 }
-                                                endBalance={ desiredStartBalance }
-                                                accountId={ parseInt(process.businessKey) }
-                                                onComplete={ onRemoved }/>
-                <Button variant='icon'
-                        icon={ mdiRedo }
-                        className='text-success'
-                        onClick={ onRetry }
-                        dataTestId={ `retry-button-${ process.id }` }/>
-                <Confirm title='page.accounts.reconcile.delete.confirm'
-                         openButton={ <Button variant='icon'
-                                              icon={ mdiDelete }
-                                              dataTestId={ `remove-row-${ process.id }` }
-                                              className='text-warning'/> }
-                         onConfirm={ onDelete }>
-                    <Translation label='page.accounts.reconcile.delete.confirm'/>
-                </Confirm>
-            </td>
-            <td>{ findValue('startDate').substring(0, 4) }</td>
-            <td><MoneyComponent money={ desiredStartBalance }/></td>
-            <td><MoneyComponent money={ computedStartBalance }/></td>
-            <td><MoneyComponent money={ findValue('endBalance') }/></td>
-            <td><MoneyComponent money={ findValue('computedEndBalance') }/></td>
-            <td></td>
-        </tr>
-    </>
+    return <tr>
+        <td className='flex gap-0.5'>
+            <ReconcilePreviousYearComponent year={ year - 1 }
+                                            endBalance={ desiredStartBalance }
+                                            accountId={ parseInt(process.businessKey) }
+                                            onComplete={ onRemoved }/>
+            <Button variant='icon'
+                    icon={ mdiRedo }
+                    className='text-success'
+                    onClick={ onRetry }
+                    dataTestId={ `retry-button-${ process.id }` }/>
+            <Confirm title='page.accounts.reconcile.delete.confirm'
+                     openButton={ <Button variant='icon'
+                                          key={ `remove-row-${ process.id }` }
+                                          icon={ mdiDelete }
+                                          dataTestId={ `remove-row-${ process.id }` }
+                                          className='text-warning'/> }
+                     onConfirm={ onDelete }>
+                <Translation label='page.accounts.reconcile.delete.confirm'/>
+            </Confirm>
+        </td>
+        <td>{ findValue('startDate').substring(0, 4) }</td>
+        <td><MoneyComponent money={ desiredStartBalance }/></td>
+        <td><MoneyComponent money={ computedStartBalance }/></td>
+        <td><MoneyComponent money={ findValue('endBalance') }/></td>
+        <td><MoneyComponent money={ findValue('computedEndBalance') }/></td>
+        <td></td>
+    </tr>
 }
 
 export default ReconcileRowComponent

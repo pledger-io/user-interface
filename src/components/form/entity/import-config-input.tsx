@@ -42,45 +42,42 @@ const ImportConfigInput = (props: ImportConfigInputProps) => {
     }
 
     if (!field) return null
-    return <>
-        <InputGroup id={ props.id }
-                    required={ props.required }
-                    title={ props.title }
-                    help={ props.help }
-                    className={ props.className }
-                    valid={ field.touched ? errors.length === 0 : undefined }>
+    return <InputGroup id={ props.id }
+                       required={ props.required }
+                       title={ props.title }
+                       help={ props.help }
+                       className={ props.className }
+                       valid={ field.touched ? errors.length === 0 : undefined }>
 
-            <div className='flex gap-1'>
-                <select id={ props.id } onChange={ onChange } className='flex-1'>
-                    <option disabled={ field.value }>-</option>
-                    {
-                        importConfigs.map(config =>
-                            <option key={ config.file } value={ config.name }>{ config.name }</option>)
-                    }
+        <div className='flex gap-1'>
+            <select id={ props.id } onChange={ onChange } className='flex-1'>
+                <option disabled={ field.value }>-</option>
+                {
+                    importConfigs.map(config =>
+                        <option key={ config.file } value={ config.name }>{ config.name }</option>)
+                }
+            </select>
+
+            <Dialog title='page.settings.import.config.new'
+                    control={ dialogControl }
+                    openButton={ <Button label='page.settings.import.config.new'/> }>
+                <Message label='page.settings.import.config.explain'/>
+
+                <select id='type' ref={ typeRef } className='w-full mt-5'>
+                    <option value='CSVImportProvider'>CSV</option>
                 </select>
 
-                <Dialog title='page.settings.import.config.new'
-                        control={ dialogControl }
-                        openButton={ <Button label='page.settings.import.config.new'/> }>
-                    <Message label='page.settings.import.config.explain'/>
+                <input type='text' className='w-full mt-5' placeholder='Name' ref={ inputRef }/>
 
-                    <select id='type' ref={ typeRef } className='w-full mt-5'>
-                        <option value='CSVImportProvider'>CSV</option>
-                    </select>
-
-                    <input type='text' className='w-full mt-5' placeholder='Name' ref={ inputRef }/>
-
-                    <div className='w-[10em] mx-auto mt-5'>
-                        <Upload
-                            onUpload={ onCreate }
-                            label="ImportConfig.content"
-                            accepts="application/json"/>
-                    </div>
-                </Dialog>
-            </div>
-        </InputGroup>
-
-    </>
+                <div className='w-[10em] mx-auto mt-5'>
+                    <Upload
+                        onUpload={ onCreate }
+                        label="ImportConfig.content"
+                        accepts="application/json"/>
+                </div>
+            </Dialog>
+        </div>
+    </InputGroup>
 }
 
 export default ImportConfigInput

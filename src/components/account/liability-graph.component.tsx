@@ -14,7 +14,7 @@ type LiabilityGraphProps = {
     account: Account
 }
 
-function LiabilityGraph(props: LiabilityGraphProps) {
+function LiabilityGraph(props: Readonly<LiabilityGraphProps>) {
     const [balanceSeries, setBalanceSeries] = useState<ChartData | undefined>(undefined)
     const { range, account } = props
 

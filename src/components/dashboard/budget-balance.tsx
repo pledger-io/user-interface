@@ -15,7 +15,7 @@ import Card from "../layout/card.component";
 
 const percentageOfYear = 90 / 365
 
-function BudgetBalance({ range } : { range : Range }) {
+function BudgetBalance({ range } : Readonly<{ range : Range }>) {
     const [budgetSeries, setBudgetSeries] = useState<ChartData | undefined | null>()
 
     useEffect(() => {
@@ -69,18 +69,16 @@ function BudgetBalance({ range } : { range : Range }) {
         }
     )
 
-    return <>
-        <Card title='page.dashboard.budgets.balance'>
-            { !budgetSeries && <Loading /> }
-            { budgetSeries &&
-                <Chart type='bar'
-                       id='dashboard-budgets-graph'
-                       height={ 300 }
-                       options={ config }
-                       data={ budgetSeries } />
-            }
-        </Card>
-    </>
+    return <Card title='page.dashboard.budgets.balance'>
+        { !budgetSeries && <Loading/> }
+        { budgetSeries &&
+            <Chart type='bar'
+                   id='dashboard-budgets-graph'
+                   height={ 300 }
+                   options={ config }
+                   data={ budgetSeries }/>
+        }
+    </Card>
 }
 
 export default BudgetBalance

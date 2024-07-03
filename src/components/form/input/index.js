@@ -1,16 +1,15 @@
-import { DateInput, DateRangeInput, MonthPicker } from "./DateInput";
-import { HiddenInput } from "./HiddenInput";
-import { TextInput } from "./TextInput";
-import { TextArea } from "./TextArea";
-import { SelectInput } from "./SelectInput";
-import { SelectOption } from "./SelectInput";
-import { PasswordInput } from "./PasswordInput";
-import { RadioButtons } from "./RadioButtons";
-import { ToggleInput } from "./ToggleInput";
-import { AmountInput } from "./AmountInput";
+import {DateInput, DateRangeInput, MonthPicker} from "./DateInput";
+import {HiddenInput} from "./HiddenInput";
+import {TextInput} from "./TextInput";
+import {TextArea} from "./TextArea";
+import {SelectInput, SelectOption} from "./SelectInput";
+import {PasswordInput} from "./PasswordInput";
+import {RadioButtons} from "./RadioButtons";
+import {ToggleInput} from "./ToggleInput";
+import {AmountInput} from "./AmountInput";
 import RadioInput from "./RadioInput";
-import { TagInput } from "./TagInput";
-import { ComplexTypeInput } from "./ComplexTypeInput";
+import {TagInput} from "./TagInput";
+import {ComplexTypeInput} from "./ComplexTypeInput";
 
 export {
     DateInput as Date,

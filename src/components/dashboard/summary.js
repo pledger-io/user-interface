@@ -17,57 +17,61 @@ const Summary = ({ range, compareRange }) => {
         }
     }
 
-    return <>
-        <div className="flex flex-wrap gap-2 mt-4">
-            <div className="flex-1 flex-wrap flex gap-2">
-                <SummaryComponent
-                    title='page.dashboard.income'
-                    icon={mdiSwapVerticalCircle}
-                    currentPromise={
-                        StatisticalRepository.balance({ ...baseCommand, onlyIncome: true })
-                            .then(({ balance }) => balance)
-                    }
-                    previousPromise={
-                        StatisticalRepository.balance({ ...compareBaseCommand, onlyIncome: true })
-                            .then(({ balance }) => balance)
-                    }
-                    currency='EUR' />
+    return <div className="flex flex-wrap gap-2 mt-4">
+        <div className="flex-1 flex-wrap flex gap-2">
+            <SummaryComponent
+                title='page.dashboard.income'
+                icon={mdiSwapVerticalCircle}
+                currentPromise={
+                    StatisticalRepository.balance({...baseCommand, onlyIncome: true})
+                        .then(({balance}) => balance)
+                }
+                previousPromise={
+                    StatisticalRepository.balance({...compareBaseCommand, onlyIncome: true})
+                        .then(({balance}) => balance)
+                }
+                currency='EUR'/>
 
-                <SummaryComponent
-                    title='page.dashboard.expense'
-                    icon={mdiContactlessPaymentCircle}
-                    currentPromise={
-                        StatisticalRepository.balance({ ...baseCommand, onlyIncome: false })
-                            .then(({ balance }) => Math.abs(balance))
-                    }
-                    previousPromise={
-                        StatisticalRepository.balance({ ...compareBaseCommand, onlyIncome: false })
-                            .then(({ balance }) => Math.abs(balance))
-                    }
-                    currency='EUR' />
-            </div>
-
-            <div className="flex-1 flex-wrap flex gap-2">
-                <SummaryComponent
-                    title='page.dashboard.balance'
-                    icon={mdiScaleBalance}
-                    currentPromise={
-                        StatisticalRepository.balance({ dateRange: { start: '1970-01-01', end: range.endString() }, allMoney: true })
-                            .then(({ balance }) => balance)
-                    }
-                    previousPromise={
-                        StatisticalRepository.balance({ dateRange: { start: '1970-01-01', end: compareRange.endString() }, allMoney: true })
-                            .then(({ balance }) => balance)
-                    }
-                    currency='EUR' />
-
-                <SummaryComponent
-                    title='page.dashboard.budget'
-                    currency='EUR'
-                    icon={mdiAbacus}/>
-            </div>
+            <SummaryComponent
+                title='page.dashboard.expense'
+                icon={mdiContactlessPaymentCircle}
+                currentPromise={
+                    StatisticalRepository.balance({...baseCommand, onlyIncome: false})
+                        .then(({balance}) => Math.abs(balance))
+                }
+                previousPromise={
+                    StatisticalRepository.balance({...compareBaseCommand, onlyIncome: false})
+                        .then(({balance}) => Math.abs(balance))
+                }
+                currency='EUR'/>
         </div>
-    </>
+
+        <div className="flex-1 flex-wrap flex gap-2">
+            <SummaryComponent
+                title='page.dashboard.balance'
+                icon={mdiScaleBalance}
+                currentPromise={
+                    StatisticalRepository.balance({
+                        dateRange: {start: '1970-01-01', end: range.endString()},
+                        allMoney: true
+                    })
+                        .then(({balance}) => balance)
+                }
+                previousPromise={
+                    StatisticalRepository.balance({
+                        dateRange: {start: '1970-01-01', end: compareRange.endString()},
+                        allMoney: true
+                    })
+                        .then(({balance}) => balance)
+                }
+                currency='EUR'/>
+
+            <SummaryComponent
+                title='page.dashboard.budget'
+                currency='EUR'
+                icon={mdiAbacus}/>
+        </div>
+    </div>
 }
 
 export default Summary

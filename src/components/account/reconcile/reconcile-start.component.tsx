@@ -28,41 +28,40 @@ const ReconcilePopup = ({ account, afterCreate }: { account: Account, afterCreat
             .catch(() => NotificationService.warning('page.accounts.reconcile.error'))
     }
 
-    return <>
-        <Form entity='Account' onSubmit={ onSubmit }>
-            <Dialog title='page.accounts.reconcile.create'
-                    className='Large'
-                    control={ dialogActions }
-                    actions={ [
-                        <SubmitButton label='common.action.save'
-                                      icon={ mdiContentSave }
-                                      dataTestId={ `reconcile-submit-button-${ account.id }` }/>,
-                    ] }
-                    openButton={
-                        <Button label='page.reports.default.reconcile'
-                                className='!py-2'
-                                icon={ mdiCheck }
-                                dataTestId={ `reconcile-open-button-${ account.id }` }/>
-                    }>
+    return <Form entity='Account' onSubmit={ onSubmit }>
+        <Dialog title='page.accounts.reconcile.create'
+                className='Large'
+                control={ dialogActions }
+                actions={ [
+                    <SubmitButton label='common.action.save'
+                                  icon={ mdiContentSave }
+                                  dataTestId={ `reconcile-submit-button-${ account.id }` }/>,
+                ] }
+                openButton={
+                    <Button label='page.reports.default.reconcile'
+                            key='reconcile'
+                            className='!py-2'
+                            icon={ mdiCheck }
+                            dataTestId={ `reconcile-open-button-${ account.id }` }/>
+                }>
 
-                <Input.Text title='page.accounts.reconcile.account'
-                            id='name'
-                            type='text'
-                            readonly
-                            value={ account.name }/>
+            <Input.Text title='page.accounts.reconcile.account'
+                        id='name'
+                        type='text'
+                        readonly
+                        value={ account.name }/>
 
-                <Input.Text title='common.year'
-                            id='year'
-                            type='text'/>
+            <Input.Text title='common.year'
+                        id='year'
+                        type='text'/>
 
-                <Input.Amount title='page.accounts.reconcile.openBalance'
-                              id='openBalance'/>
+            <Input.Amount title='page.accounts.reconcile.openBalance'
+                          id='openBalance'/>
 
-                <Input.Amount title='page.accounts.reconcile.endBalance'
-                              id='endBalance'/>
-            </Dialog>
-        </Form>
-    </>
+            <Input.Amount title='page.accounts.reconcile.endBalance'
+                          id='endBalance'/>
+        </Dialog>
+    </Form>
 }
 
 export default ReconcilePopup

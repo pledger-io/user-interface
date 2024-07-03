@@ -47,7 +47,7 @@ const SavingGoalTableComponent = ({ account }: SavingGoalTableComponentProps) =>
                 </td>
             </tr> }
 
-            { goals && goals.map(savingGoal => <tr key={ savingGoal.id }>
+            { goals?.map(savingGoal => <tr key={ savingGoal.id }>
                 <td>{ savingGoal.name }</td>
                 <td className='grid grid-cols-10'>
                     <div className='col-span-9'>

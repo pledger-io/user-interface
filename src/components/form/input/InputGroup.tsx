@@ -16,17 +16,17 @@ type InputGroupProps = {
 }
 
 export const InputGroup: FC<InputGroupProps> = ({ id, help, title, required = false, valid, className = '', children }) => {
-    return (
-        <div className={ `Input mb-2 block md:flex ${valid !== undefined ? (valid ? 'valid' : 'invalid') : ''} ${className}` }>
-            {title && (
-                <label htmlFor={ id } className={`max-w-full md-max-w-[15vw] inline-flex items-center ${required ? 'font-bold' : ''}`}>
-                    <Translation label={ title }/>
-                    {help ? <HelpTranslation label={ help } className='font-normal text-end pr-1' /> : ''}
-                </label>
-            )}
-            <div className='flex-1'>{ children }</div>
-        </div>
-    )
+    return <div
+        className={ `Input mb-2 block md:flex ${ valid !== undefined ? (valid ? 'valid' : 'invalid') : '' } ${ className }` }>
+        { title && (
+            <label htmlFor={ id }
+                   className={ `max-w-full md-max-w-[15vw] inline-flex items-center ${ required ? 'font-bold' : '' }` }>
+                <Translation label={ title }/>
+                { help ? <HelpTranslation label={ help } className='font-normal text-end pr-1'/> : '' }
+            </label>
+        ) }
+        <div className='flex-1'>{ children }</div>
+    </div>
 }
 
 type useInputFieldProps = {
@@ -81,10 +81,9 @@ export const InputValidationErrors: FC<InputValidationErrorsProps> = ({ errors, 
     const formContext = useContext(FormContext)
 
     return <>
-        { errors.map((error: string, idx: number) => <>
+        { errors.map((error: string, idx: number) =>
             <span className='validation' key={idx}>
                 <Translation key={idx} label={`${formContext.entity}.${field.id}.${error}`}/>
-            </span>
-        </>) }
+            </span>) }
     </>
 }

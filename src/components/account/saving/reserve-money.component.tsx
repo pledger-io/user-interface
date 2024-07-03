@@ -20,26 +20,24 @@ const ReserveToGoalComponent = ({ account, savingGoal, onChanged } : ReserveToGo
         .then(updatedAccount => onChanged(updatedAccount))
         .then(control.close)
 
-    return <>
-        <Form onSubmit={ onSubmit } entity='SavingGoal'>
-            <Dialog className='AddToSavings'
-                           title='dialog.savings.assign.to.goal'
-                           control={ control }
-                           actions={ [
-                               <SubmitButton label='dialog.savings.assign.action'
-                                             icon={ mdiPlusBox }
-                                             variant='success'
-                                             key='addToSavingGoal'/>
-                           ] }
-                           openButton={ <Button icon={ mdiPlusBox }
-                                                        variant='icon'/> }>
-                <Input.Text id='amount'
-                            type='number'
-                            required={ true }
-                            min={ 0 } />
-            </Dialog>
-        </Form>
-    </>
+    return <Form onSubmit={ onSubmit } entity='SavingGoal'>
+        <Dialog className='AddToSavings'
+                title='dialog.savings.assign.to.goal'
+                control={ control }
+                actions={ [
+                    <SubmitButton label='dialog.savings.assign.action'
+                                  icon={ mdiPlusBox }
+                                  variant='success'
+                                  key='addToSavingGoal'/>
+                ] }
+                openButton={ <Button icon={ mdiPlusBox }
+                                     variant='icon'/> }>
+            <Input.Text id='amount'
+                        type='number'
+                        required={ true }
+                        min={ 0 }/>
+        </Dialog>
+    </Form>
 }
 
 export default ReserveToGoalComponent

@@ -31,37 +31,36 @@ const EditSavingGoalComponent = ({
     }
     const minDate = new Date()
 
-    return <>
-        <Form onSubmit={ onSubmit } entity='SavingGoal'>
-            <Dialog title='page.account.savings.new'
-                    className='Large'
-                    control={ control }
-                    actions={ [
-                        <SubmitButton icon={ mdiContentSave }
-                                      label='common.action.save'/>
-                    ] }
-                    openButton={ openButton }>
+    return <Form onSubmit={ onSubmit } entity='SavingGoal'>
+        <Dialog title='page.account.savings.new'
+                className='Large'
+                control={ control }
+                actions={ [
+                    <SubmitButton icon={ mdiContentSave }
+                                  key='submit-btn'
+                                  label='common.action.save'/>
+                ] }
+                openButton={ openButton }>
 
-                <Input.Text id='name'
-                            type='text'
-                            required={ true }
-                            value={ savingGoal?.name }
-                            title='SavingGoal.name'/>
+            <Input.Text id='name'
+                        type='text'
+                        required={ true }
+                        value={ savingGoal?.name }
+                        title='SavingGoal.name'/>
 
-                <Input.Amount id='goal'
-                              currency={ account.account.currency }
-                              value={ savingGoal?.goal || 0 }
-                              required={ true }
-                              title='SavingGoal.goal'/>
+            <Input.Amount id='goal'
+                          currency={ account.account.currency }
+                          value={ savingGoal?.goal ?? 0 }
+                          required={ true }
+                          title='SavingGoal.goal'/>
 
-                <Input.Date id='targetDate'
-                            required={ true }
-                            minDate={ minDate }
-                            value={ savingGoal?.targetDate }
-                            title='SavingGoal.targetDate'/>
-            </Dialog>
-        </Form>
-    </>
+            <Input.Date id='targetDate'
+                        required={ true }
+                        minDate={ minDate }
+                        value={ savingGoal?.targetDate }
+                        title='SavingGoal.targetDate'/>
+        </Dialog>
+    </Form>
 }
 
 export default EditSavingGoalComponent

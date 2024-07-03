@@ -36,29 +36,27 @@ const SummaryComponent: FC<SummaryComponentProps> = ({ title, icon, currency, cu
         }
     }, [current, previous])
 
-    return <>
-        <Card className='flex-1 !my-0'>
-            <div className='flex flex-row justify-between'>
-                <div className='min-w-[100px] min-h-[125px]'>
-                    <h1 className='text-2xl'>
-                        <Translation label={title} />
-                    </h1>
-                    <span className='text-3xl'>
-                        <MoneyComponent money={current} currency={currency} />
+    return <Card className='flex-1 !my-0'>
+        <div className='flex flex-row justify-between'>
+            <div className='min-w-[100px] min-h-[125px]'>
+                <h1 className='text-2xl'>
+                    <Translation label={ title }/>
+                </h1>
+                <span className='text-3xl'>
+                        <MoneyComponent money={ current } currency={ currency }/>
                     </span>
-                    { previous !== null && (
-                        <div className={`
+                { previous !== null && (
+                    <div className={ `
                             pl-7 bg-no-repeat flex items-center mt-2
                             whitespace-nowrap bg-left-bottom
-                            Comparison ${comparisonClass}`} style={ { lineHeight: '1.5rem' } }>
-                            <Translation label={comparisonKey} className='text-sm' />
-                        </div>
-                    )}
-                </div>
-                {icon && <Icon path={icon} className='w-[125px]'/>}
+                            Comparison ${ comparisonClass }` } style={ { lineHeight: '1.5rem' } }>
+                        <Translation label={ comparisonKey } className='text-sm'/>
+                    </div>
+                ) }
             </div>
-        </Card>
-    </>
+            { icon && <Icon path={ icon } className='w-[125px]'/> }
+        </div>
+    </Card>
 }
 
 export default SummaryComponent

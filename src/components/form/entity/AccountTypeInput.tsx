@@ -16,9 +16,7 @@ export const AccountTypeInput: FC<SelectInputProps> = (props) => {
 
     console.log(props.value)
 
-    return <>
-        <SelectInput {...props}>
-            {accountTypes.map(type => <SelectOption key={type} value={type} label={`AccountType.${type}`}/>)}
-        </SelectInput>
-    </>
+    return <SelectInput { ...props }>
+        { accountTypes.map(type => <SelectOption key={ type } value={ type } label={ `AccountType.${ type }` }/>) }
+    </SelectInput>
 }

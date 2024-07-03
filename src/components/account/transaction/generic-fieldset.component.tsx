@@ -21,34 +21,32 @@ const GenericDetailsComponent = ({ transaction, account }: GenericDetailsCompone
         } as any,
         formContext.fields['amount'])
 
-    return <>
-        <fieldset>
-            <legend><Translation label='page.transaction.add.details'/></legend>
+    return <fieldset>
+        <legend><Translation label='page.transaction.add.details'/></legend>
 
-            <Input.Text id='description'
-                        type='text'
-                        value={ transaction.description }
-                        title='Transaction.description'
-                        required/>
+        <Input.Text id='description'
+                    type='text'
+                    value={ transaction.description }
+                    title='Transaction.description'
+                    required/>
 
-            <SourceInputComponent transaction={ transaction }/>
-            <DestinationInputComponent transaction={ transaction }/>
+        <SourceInputComponent transaction={ transaction }/>
+        <DestinationInputComponent transaction={ transaction }/>
 
-            <Input.Amount id='amount'
-                          value={ transaction.amount }
-                          title='Transaction.amount'
-                          currency={ transaction.currency || account.account?.currency }
-                          readonly={ transaction.split !== undefined }
-                          required/>
+        <Input.Amount id='amount'
+                      value={ transaction.amount }
+                      title='Transaction.amount'
+                      currency={ transaction.currency || account.account?.currency }
+                      readonly={ transaction.split !== undefined }
+                      required/>
 
-            { transaction.split && <SplitEditor transaction={ transaction } totalChanged={ onSplitTotalChanged }/> }
+        { transaction.split && <SplitEditor transaction={ transaction } totalChanged={ onSplitTotalChanged }/> }
 
-            <Input.Date id='date'
-                        value={ transaction.dates?.transaction }
-                        title='Transaction.date'
-                        required/>
-        </fieldset>
-    </>
+        <Input.Date id='date'
+                    value={ transaction.dates?.transaction }
+                    title='Transaction.date'
+                    required/>
+    </fieldset>
 }
 
 export default GenericDetailsComponent

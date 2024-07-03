@@ -53,18 +53,16 @@ const CategoriesBalance = ({ range } : { range: Range }) => {
         }
     )
 
-    return <>
-        <Card title='page.dashboard.categories.balance'>
-            { !categorySeries && <Loading /> }
-            { categorySeries &&
-                <Chart type='bar'
-                       height={ 300 }
-                       options={ config }
-                       data={ categorySeries }
-                       id='dashboard-categories-graph' />
-            }
-        </Card>
-    </>
+    return <Card title='page.dashboard.categories.balance'>
+        { !categorySeries && <Loading/> }
+        { categorySeries &&
+            <Chart type='bar'
+                   height={ 300 }
+                   options={ config }
+                   data={ categorySeries }
+                   id='dashboard-categories-graph'/>
+        }
+    </Card>
 }
 
 export default CategoriesBalance

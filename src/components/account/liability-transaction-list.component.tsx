@@ -39,24 +39,27 @@ const LiabilityTransactionList: FC<LiabilityTransactionListProps> = ({ account, 
 
     if (!transactions) return <Loading />
     return <>
-        { transactions && Object.keys(transactions).sort().reverse().map(year => <>
-            <div className='flex flex-col'>
-                <div className='border-b-[1px] pb-1 mb-1 flex'>
-                    <h1 className='font-bold flex-1'>
-                        { year }
-                    </h1>
-                    <span className='flex-1 text-right font-bold'>
-                        <MoneyComponent money={ transactions[year].reduce((accumulator: number, transaction: Transaction) => accumulator + transaction.amount, 0) }
-                                       currency={ account.account.currency }/>
+        { transactions && Object.keys(transactions)
+            .sort((l, r) => l.localeCompare(r))
+            .reverse()
+            .map(year =>
+                <div className='flex flex-col'>
+                    <div className='border-b-[1px] pb-1 mb-1 flex'>
+                        <h1 className='font-bold flex-1'>
+                            { year }
+                        </h1>
+                        <span className='flex-1 text-right font-bold'>
+                        <MoneyComponent
+                            money={ transactions[year].reduce((accumulator: number, transaction: Transaction) => accumulator + transaction.amount, 0) }
+                            currency={ account.account.currency }/>
                     </span>
-                </div>
+                    </div>
 
-                { transactions[year].map(transaction =>
-                    <TransactionItem key={ transaction.id }
-                                     account={ account }
-                                     transaction={ transaction }/>)}
-            </div>
-        </>) }
+                    { transactions[year].map(transaction =>
+                        <TransactionItem key={ transaction.id }
+                                         account={ account }
+                                         transaction={ transaction }/>) }
+                </div>) }
 
         { showPagination && <Paginator page={ parseInt(page) }
                    records={ pagination?.records }

@@ -26,47 +26,45 @@ const ReconcileOverviewComponent = ({ accountId, onRemoved }: { accountId: Ident
         }
     }, [reconcileActivity, onRemoved])
 
-    return <>
-        <Dialog title='page.accounts.reconcile.active'
-                className='Large'
-                openButton={
-                    <Button label='page.accounts.reconcile.active' icon={ mdiBagChecked }/>
-                }>
+    return <Dialog title='page.accounts.reconcile.active'
+                   className='Large'
+                   openButton={
+                       <Button label='page.accounts.reconcile.active' icon={ mdiBagChecked }/>
+                   }>
 
-            <Message label='page.accounts.reconcile.active.explained'/>
+        <Message label='page.accounts.reconcile.active.explained'/>
 
-            <table className='Table'>
-                <thead>
-                <tr>
-                    <th rowSpan={ 2 } className='w-4'/>
-                    <th rowSpan={ 2 }>
-                        <Translation label='common.year'/>
-                    </th>
-                    <th colSpan={ 2 }>
-                        <Translation label='common.start'/>
-                    </th>
-                    <th colSpan={ 2 }>
-                        <Translation label='common.end'/>
-                    </th>
-                </tr>
-                <tr>
-                    <th><Translation label='common.expected'/></th>
-                    <th><Translation label='common.actual'/></th>
-                    <th><Translation label='common.expected'/></th>
-                    <th><Translation label='common.actual'/></th>
-                </tr>
-                </thead>
-                <tbody>
-                { !reconcileActivity && <tr>
-                    <td colSpan={ 6 }><Loading/></td>
-                </tr> }
-                { reconcileActivity && reconcileActivity.map(process =>
-                    <ReconcileRowComponent process={ process } onRemoved={ loadReconcileActivity }/>) }
-                </tbody>
-            </table>
+        <table className='Table'>
+            <thead>
+            <tr>
+                <th rowSpan={ 2 } className='w-4'/>
+                <th rowSpan={ 2 }>
+                    <Translation label='common.year'/>
+                </th>
+                <th colSpan={ 2 }>
+                    <Translation label='common.start'/>
+                </th>
+                <th colSpan={ 2 }>
+                    <Translation label='common.end'/>
+                </th>
+            </tr>
+            <tr>
+                <th><Translation label='common.expected'/></th>
+                <th><Translation label='common.actual'/></th>
+                <th><Translation label='common.expected'/></th>
+                <th><Translation label='common.actual'/></th>
+            </tr>
+            </thead>
+            <tbody>
+            { !reconcileActivity && <tr>
+                <td colSpan={ 6 }><Loading/></td>
+            </tr> }
+            { reconcileActivity?.map(process =>
+                <ReconcileRowComponent key={ process.id } process={ process } onRemoved={ loadReconcileActivity }/>) }
+            </tbody>
+        </table>
 
-        </Dialog>
-    </>
+    </Dialog>
 }
 
 export default ReconcileOverviewComponent

@@ -43,7 +43,7 @@ const _: FC<UploadContractProps> = ({ id, onChanges }) => {
             ContractRepository.attach(id, attachment)
                 .then(() => NotificationService.success('page.budget.contracts.upload.success'))
                 .then(() => dialogControl.close())
-                .then(() => onChanges && onChanges())
+                .then(() => onChanges?.())
                 .catch(() => NotificationService.warning('page.budget.contracts.upload.failed'))
         }
     }

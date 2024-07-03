@@ -24,31 +24,29 @@ const BalanceChart = ({ range } : { range: Range }) => {
         }))
     }, [range])
 
-    return <>
-        <Card title='page.dashboard.accounts.balance'>
-            { !balanceSeries && <Loading /> }
+    return <Card title='page.dashboard.accounts.balance'>
+        { !balanceSeries && <Loading/> }
 
-            { balanceSeries && <div className='relative h-[25em]'>
-                <Chart type='line'
-                       id='dashboard-balance-graph'
-                       options={ ChartService.mergeOptions(
-                           DefaultChartConfig.line,
-                           {
-                               scales: {
-                                   y: {
-                                       ticks: {
-                                           callback: (value: number) => {
-                                               return `${(RestAPI.user() as any).defaultCurrency?.symbol}${value.toFixed(2)}`
-                                           }
+        { balanceSeries && <div className='relative h-[25em]'>
+            <Chart type='line'
+                   id='dashboard-balance-graph'
+                   options={ ChartService.mergeOptions(
+                       DefaultChartConfig.line,
+                       {
+                           scales: {
+                               y: {
+                                   ticks: {
+                                       callback: (value: number) => {
+                                           return `${ (RestAPI.user() as any).defaultCurrency?.symbol }${ value.toFixed(2) }`
                                        }
                                    }
                                }
                            }
-                       ) }
-                       data={ balanceSeries } /></div>
-            }
-        </Card>
-    </>
+                       }
+                   ) }
+                   data={ balanceSeries }/></div>
+        }
+    </Card>
 }
 
 export default BalanceChart
