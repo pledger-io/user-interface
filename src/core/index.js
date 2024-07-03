@@ -87,7 +87,7 @@ const Resolver = {
         }
     },
     uuid: () => {
-        return window.crypto !== undefined ? window.crypto.randomUUID() : Date.now()
+        return window.crypto !== undefined ? window.crypto.randomUUID() : '' + Date.now()
     }
 }
 
