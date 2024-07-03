@@ -25,46 +25,44 @@ const MobileSidebar = ({ logoutCallback }: SidebarProps) => {
     }, [])
 
     if (!isOpen) return <></>
-    return <>
-        <div
-            className='fixed md:hidden left-0 top-[38px] z-[1055] h-full w-full bg-[#00000099] flex items-center justify-center'>
-            <div className='mx-auto w-fit min-w-[20em] bg-[var(--sidebar-background)] p-4 rounded-2xl overflow-hidden'>
-                {
-                    config.map((section, idx) => {
-                        switch (section.type) {
-                            case 'divider':
-                                return <SidebarDivider key={ idx } item={ section }/>
-                            case 'button':
-                                return <SidebarButtonComponent key={ idx } config={ section as SidebarButton }/>
-                            case 'section':
-                                return <SidebarSectionComponent config={ section as SidebarSection } key={ idx }/>
-                            default:
-                                return null
-                        }
-                    })
-                }
+    return <div
+        className='fixed md:hidden left-0 top-[38px] z-[1055] h-full w-full bg-[#00000099] flex items-center justify-center'>
+        <div className='mx-auto w-fit min-w-[20em] bg-[var(--sidebar-background)] p-4 rounded-2xl overflow-hidden'>
+            {
+                config.map((section, idx) => {
+                    switch (section.type) {
+                        case 'divider':
+                            return <SidebarDivider key={ idx } item={ section }/>
+                        case 'button':
+                            return <SidebarButtonComponent key={ idx } config={ section as SidebarButton }/>
+                        case 'section':
+                            return <SidebarSectionComponent config={ section as SidebarSection } key={ idx }/>
+                        default:
+                            return null
+                    }
+                })
+            }
 
-                <footer
-                    className='mx-[-1rem] mb-[-.9rem] mt-5 flex items-center justify-between bg-[var(--sidebar-sub-background)]'>
-                    <NavLink to='/user/profile/theme' className='px-2 py-1'>
-                        <ProfilePicture size={ 40 }
-                                        className='bg-[var(--sidebar-title-color)] rounded'/>
-                    </NavLink>
+            <footer
+                className='mx-[-1rem] mb-[-.9rem] mt-5 flex items-center justify-between bg-[var(--sidebar-sub-background)]'>
+                <NavLink to='/user/profile/theme' className='px-2 py-1'>
+                    <ProfilePicture size={ 40 }
+                                    className='bg-[var(--sidebar-title-color)] rounded'/>
+                </NavLink>
 
-                    <Button label='common.action.close'
-                            icon={ mdiCloseBox }
-                            onClick={ () => setIsOpen(false) }
-                            variant='primary'
-                            className='border-none !text-white'/>
+                <Button label='common.action.close'
+                        icon={ mdiCloseBox }
+                        onClick={ () => setIsOpen(false) }
+                        variant='primary'
+                        className='border-none !text-white'/>
 
-                    <Button icon={ mdiLogoutVariant }
-                            onClick={ logoutCallback }
-                            variant='icon'
-                            className='px-2 text-[var(--sidebar-icon-color)]'/>
-                </footer>
-            </div>
+                <Button icon={ mdiLogoutVariant }
+                        onClick={ logoutCallback }
+                        variant='icon'
+                        className='px-2 text-[var(--sidebar-icon-color)]'/>
+            </footer>
         </div>
-    </>
+    </div>
 }
 
 export default MobileSidebar

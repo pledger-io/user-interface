@@ -55,12 +55,10 @@ const BudgetYearlyExpense = ({ year, budgets, currencySymbol } : BudgetYearlyExp
             .catch(console.error)
     }, [year, budgets]);
 
-    return <>
-        <Card title='page.reports.budget.expensePercent'>
-            { !chartData && <Loading /> }
-            { chartData && <BudgetChart dataSet={ chartData } currencySymbol={ currencySymbol } /> }
-        </Card>
-    </>
+    return <Card title='page.reports.budget.expensePercent'>
+        { !chartData && <Loading/> }
+        { chartData && <BudgetChart dataSet={ chartData } currencySymbol={ currencySymbol }/> }
+    </Card>
 }
 
 export default BudgetYearlyExpense

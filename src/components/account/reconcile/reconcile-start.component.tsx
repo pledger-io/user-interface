@@ -35,6 +35,7 @@ const ReconcilePopup = ({ account, afterCreate }: { account: Account, afterCreat
                 actions={ [
                     <SubmitButton label='common.action.save'
                                   icon={ mdiContentSave }
+                                  key='submit-btn'
                                   dataTestId={ `reconcile-submit-button-${ account.id }` }/>,
                 ] }
                 openButton={

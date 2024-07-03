@@ -41,13 +41,11 @@ const YearlyBudgetExpenseComponent = ({ budgets = [], range }: YearlyBudgetExpen
             .catch(console.error)
     }, [budgets, range])
 
-    return <>
-        <Card title='page.reports.budget.expensePercent'>
-            <Progressbar total={yearlyExpected}
-                         className='warning !h-12'
-                         current={yearlyExpenses}/>
-        </Card>
-    </>
+    return <Card title='page.reports.budget.expensePercent'>
+        <Progressbar total={ yearlyExpected }
+                     className='warning !h-12'
+                     current={ yearlyExpenses }/>
+    </Card>
 }
 
 export default YearlyBudgetExpenseComponent

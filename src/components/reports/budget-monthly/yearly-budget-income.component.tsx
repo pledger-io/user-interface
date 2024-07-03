@@ -27,13 +27,11 @@ const YearlyBudgetIncomeComponent = ({ range, budgets = [] } : YearlyBudgetIncom
         setYearlyExpected(budgets.reduce((left, right) => left + right.income, 0))
     }, [budgets])
 
-    return <>
-        <Card title='page.reports.budget.incomePercent'>
-            <Progressbar total={yearlyExpected}
-                         className='success !h-12'
-                         current={yearlyIncome}/>
-        </Card>
-    </>
+    return <Card title='page.reports.budget.incomePercent'>
+        <Progressbar total={ yearlyExpected }
+                     className='success !h-12'
+                     current={ yearlyIncome }/>
+    </Card>
 }
 
 export default YearlyBudgetIncomeComponent

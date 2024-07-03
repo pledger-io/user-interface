@@ -32,49 +32,47 @@ const BudgetTable: FC<BudgetTableProps> = ({ budgets, year, currency }) => {
         setMonths(ranges)
     }, [year])
 
-    return <>
-        <table className='Table MonthlyView'>
-            <thead>
-            <tr>
-                <th><Translation label='common.month'/></th>
-                <th><Translation label='Transaction.budget'/></th>
-                <th><Translation label='graph.series.budget.actual'/></th>
-                <th><Translation label='common.difference'/></th>
-                <th><Translation label='common.percentage'/></th>
+    return <table className='Table MonthlyView'>
+        <thead>
+        <tr>
+            <th><Translation label='common.month'/></th>
+            <th><Translation label='Transaction.budget'/></th>
+            <th><Translation label='graph.series.budget.actual'/></th>
+            <th><Translation label='common.difference'/></th>
+            <th><Translation label='common.percentage'/></th>
+        </tr>
+        </thead>
+        <tbody>
+        { budgets.length > 0 && months.map((month, idx) => {
+            const expectedExpenses = budgets[idx].expenses.reduce((total, e) => total + e.expected, 0)
+            const percentageOfExpected = monthlyExpenses[idx] / expectedExpenses
+            return <tr key={ month.month() } className={ percentageOfExpected > 1 ? 'warning' : 'success' }>
+                <td>
+                    <Translation label={ `common.month.${ month.month() }` }/>
+                </td>
+                <td>
+                    <MoneyComponent money={ expectedExpenses }
+                                    currency={ currency }/>
+                </td>
+                <td>
+                    <MoneyComponent money={ monthlyExpenses[idx] }
+                                    currency={ currency }/>
+                </td>
+                <td>
+                    <MoneyComponent money={ expectedExpenses - monthlyExpenses[idx] }
+                                    currency={ currency }/>
+                </td>
+                <td className={ percentageOfExpected > 1 ? 'warning' : 'success' }>
+                    <PercentageComponent percentage={ percentageOfExpected }
+                                         decimals={ 2 }/>
+                </td>
             </tr>
-            </thead>
-            <tbody>
-            { budgets.length > 0 && months.map((month, idx) => {
-                const expectedExpenses = budgets[idx].expenses.reduce((total, e) => total + e.expected, 0)
-                const percentageOfExpected = monthlyExpenses[idx] / expectedExpenses
-                return <tr key={ month.month() } className={ percentageOfExpected > 1 ? 'warning' : 'success' }>
-                    <td>
-                        <Translation label={ `common.month.${ month.month() }` }/>
-                    </td>
-                    <td>
-                        <MoneyComponent money={ expectedExpenses }
-                                       currency={ currency }/>
-                    </td>
-                    <td>
-                        <MoneyComponent money={ monthlyExpenses[idx] }
-                                       currency={ currency }/>
-                    </td>
-                    <td>
-                        <MoneyComponent money={ expectedExpenses - monthlyExpenses[idx] }
-                                       currency={ currency }/>
-                    </td>
-                    <td className={ percentageOfExpected > 1 ? 'warning' : 'success' }>
-                        <PercentageComponent percentage={ percentageOfExpected }
-                                             decimals={ 2 }/>
-                    </td>
-                </tr>
-            }) }
-            { budgets.length === 0 && <tr>
-                <td className='text-center' colSpan={ 5 }><Translation label='common.overview.noresults'/></td>
-            </tr> }
-            </tbody>
-        </table>
-    </>
+        }) }
+        { budgets.length === 0 && <tr>
+            <td className='text-center' colSpan={ 5 }><Translation label='common.overview.noresults'/></td>
+        </tr> }
+        </tbody>
+    </table>
 }
 
 export default BudgetTable

@@ -43,7 +43,7 @@ const LiabilityTransactionList: FC<LiabilityTransactionListProps> = ({ account, 
             .sort((l, r) => l.localeCompare(r))
             .reverse()
             .map(year =>
-                <div className='flex flex-col'>
+                <div className='flex flex-col' key={ year }>
                     <div className='border-b-[1px] pb-1 mb-1 flex'>
                         <h1 className='font-bold flex-1'>
                             { year }

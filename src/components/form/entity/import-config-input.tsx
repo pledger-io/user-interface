@@ -18,7 +18,7 @@ type ImportConfigInputProps = FieldType & {
     className?: string,
     onChange?: (_: string) => void
 }
-const ImportConfigInput = (props: ImportConfigInputProps) => {
+const ImportConfigInput = (props: Readonly<ImportConfigInputProps>) => {
     const [importConfigs, setImportConfigs] = useState<BatchConfig[]>([])
     const [field, errors, onChange] = useInputField({ onChange: props.onChange, field: props })
     const inputRef = React.useRef<HTMLInputElement>(null)
