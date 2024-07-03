@@ -4,5 +4,5 @@
     "config:recommended"
   ],
   "addLabels": ["dependencies"],
-  "assignees": ["@gjong"]
+  "assignees": ["gjong"]
 }
