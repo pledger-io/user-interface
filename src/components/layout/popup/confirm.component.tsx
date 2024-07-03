@@ -17,7 +17,10 @@ const ConfirmComponent = (props: ConfirmProps) => {
     const { openButton, onConfirm = () => undefined, children } = props
 
     const onOpenClick = () => dialogRef.current?.open()
-    const onConfirmClick = () => dialogRef.current?.close() || onConfirm()
+    const onConfirmClick = () => {
+        onConfirm()
+        dialogRef.current?.close()
+    }
     const onCloseClick = () => dialogRef.current?.close()
 
     return <>

@@ -1,9 +1,22 @@
 import { render, fireEvent, waitFor, act } from '@testing-library/react';
+import React from "react";
 import ReconcileRowComponent from './reconcile-row.component';
-import ProcessRepository, { ProcessInstance, ProcessVariable, ProcessTask } from "../../../core/repositories/process.repository";
+import ProcessRepository, {
+    ProcessInstance,
+    ProcessVariable,
+    ProcessTask
+} from "../../../core/repositories/process.repository";
 import { routerWrapped } from "../../../setupTests";
 
 jest.mock("../../../core/repositories/process.repository");
+
+function tableWrapped(children: any) {
+    return routerWrapped(<table>
+        <tbody>
+        { children }
+        </tbody>
+    </table>)
+}
 
 describe('ReconcileRowComponent', () => {
     const mockOnRemoved = jest.fn();
@@ -33,7 +46,7 @@ describe('ReconcileRowComponent', () => {
 
     it('should load process variables on mount', async () => {
         jest.spyOn(ProcessRepository, 'variables').mockResolvedValue(Promise.resolve(mockVariables));
-        render(routerWrapped(<ReconcileRowComponent process={mockProcess} onRemoved={mockOnRemoved}/>));
+        render(tableWrapped(<ReconcileRowComponent process={ mockProcess } onRemoved={ mockOnRemoved }/>));
 
         await waitFor(() => expect(ProcessRepository.variables).toHaveBeenCalledWith('AccountReconcile', mockProcess.businessKey, mockProcess.id));
     });
@@ -43,10 +56,11 @@ describe('ReconcileRowComponent', () => {
         jest.spyOn(ProcessRepository, 'completeTask').mockResolvedValue(Promise.resolve());
         jest.spyOn(ProcessRepository, 'variables').mockResolvedValue(Promise.resolve(mockVariables));
 
-        const { getByTestId } = render(routerWrapped(<ReconcileRowComponent process={mockProcess} onRemoved={mockOnRemoved}/>));
+        const { getByTestId } = render(routerWrapped(<ReconcileRowComponent process={ mockProcess }
+                                                                            onRemoved={ mockOnRemoved }/>));
         await waitFor(() => expect(ProcessRepository.variables).toHaveBeenCalledWith('AccountReconcile', mockProcess.businessKey, mockProcess.id));
 
-        const retryButton = getByTestId(`retry-button-${mockProcess.id}`);
+        const retryButton = getByTestId(`retry-button-${ mockProcess.id }`);
 
         act(() => {
             fireEvent.click(retryButton);
@@ -59,8 +73,12 @@ describe('ReconcileRowComponent', () => {
         jest.spyOn(ProcessRepository, 'variables').mockResolvedValue(Promise.resolve(mockVariables));
         jest.spyOn(ProcessRepository, 'delete').mockResolvedValue(Promise.resolve());
 
-        const { getByTestId } = render(routerWrapped(<ReconcileRowComponent process={mockProcess} onRemoved={mockOnRemoved}/>));
+        const { getByTestId } = render(tableWrapped(<ReconcileRowComponent process={ mockProcess }
+                                                                           onRemoved={ mockOnRemoved }/>));
         await waitFor(() => expect(getByTestId(`remove-row-${ mockProcess.id }`)).toBeInTheDocument());
+
+        expect(ProcessRepository.delete).not.toHaveBeenCalled();
+        expect(ProcessRepository.variables).toHaveBeenCalledWith('AccountReconcile', mockProcess.businessKey, mockProcess.id);
 
         const deleteButton = getByTestId(`remove-row-${ mockProcess.id }`);
         act(() => {
@@ -73,6 +91,7 @@ describe('ReconcileRowComponent', () => {
             fireEvent.click(confirmButton);
         });
 
-        await waitFor(() => expect(mockOnRemoved).toHaveBeenCalled());
-    });
+        await waitFor(() => expect(ProcessRepository.delete).toHaveBeenCalledWith('AccountReconcile', mockProcess.businessKey, mockProcess.id));
+        expect(mockOnRemoved).toHaveBeenCalled();
+    })
 });
