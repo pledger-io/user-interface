@@ -1,8 +1,8 @@
 import React, { FC, useEffect, useState } from "react";
-import { Dates } from "../../../core";
-import { Range } from "../../../core/Dates";
+import DateRange from "../../../types/date-range.type";
 import StatisticalRepository from "../../../core/repositories/statistical-repository";
 import { Budget } from "../../../core/types";
+import DateRangeService from "../../../service/date-range.service";
 import MoneyComponent from "../../format/money.component";
 import PercentageComponent from "../../format/percentage.component";
 
@@ -15,11 +15,11 @@ type BudgetTableProps = {
 }
 
 const BudgetTable: FC<BudgetTableProps> = ({ budgets, year, currency }) => {
-    const [months, setMonths] = useState<Range[]>([])
+    const [months, setMonths] = useState<DateRange[]>([])
     const [monthlyExpenses, setMonthlyExpenses] = useState<number[]>([])
 
     useEffect(() => {
-        const ranges = Dates.Ranges.months(year)
+        const ranges = DateRangeService.months(year)
 
         Promise.all(ranges.map(month => StatisticalRepository.balance({
             onlyIncome: false,

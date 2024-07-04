@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
 import { Resolver } from "../../core";
-import { Range } from "../../core/Dates";
+import DateRange from "../../types/date-range.type";
 import MoneyComponent from "../format/money.component";
 import { Paginator } from "../layout/paginator.component";
 import { DailyTransactions, groupTransactionByDay } from "../../core/reducers";
@@ -13,7 +13,7 @@ import Translation from "../localization/translation.component";
 import TransactionFilters, { TransactionFilter } from "./list-filters.component";
 
 type TransactionOverviewProps = {
-    range: Range,
+    range: DateRange,
     transfers: boolean
 }
 

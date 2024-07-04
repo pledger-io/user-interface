@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Progressbar } from "../../../core";
-import { Range } from "../../../core/Dates";
+import DateRange from "../../../types/date-range.type";
 import StatisticalRepository from "../../../core/repositories/statistical-repository";
 import { Budget } from "../../../core/types";
 
 import Card from "../../layout/card.component";
 
 type YearlyBudgetIncomeComponentProps = {
-    range: Range,
+    range: DateRange,
     budgets: Budget[]
 }
 

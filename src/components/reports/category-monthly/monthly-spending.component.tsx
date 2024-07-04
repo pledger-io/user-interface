@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Category } from "../../../core/types";
-import { Range } from "../../../core/Dates";
+import DateRange from "../../../types/date-range.type";
 import StatisticalRepository from "../../../core/repositories/statistical-repository";
 import MoneyComponent from "../../format/money.component";
 
@@ -9,7 +9,7 @@ import Translation from "../../localization/translation.component";
 
 type MonthlySpendingComponentProps = {
     categories: Category[],
-    range: Range
+    range: DateRange
 }
 
 const MonthlySpendingComponent = ({ categories, range } : MonthlySpendingComponentProps) => {

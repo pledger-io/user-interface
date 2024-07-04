@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Currency, Year } from "../../components/layout/dropdown";
 
-import { Dates } from "../../core";
 import { Budget } from "../../core/types";
 import BudgetRepository from "../../core/repositories/budget.repository";
 import { CurrencyRepository } from "../../core/RestAPI";
@@ -20,16 +19,17 @@ import '../../assets/css/BudgetReportView.scss'
 import BreadCrumbs from "../../components/breadcrumb/breadcrumb.component";
 import BreadCrumbItem from "../../components/breadcrumb/breadcrumb-item.component";
 import BreadCrumbMenu from "../../components/breadcrumb/breadcrumb-menu.component";
+import DateRangeService from "../../service/date-range.service";
 
 const BudgetReportView = () => {
     const [currencySymbol, setCurrencySymbol] = useState('')
-    const [range, setRange] = useState(() => Dates.Ranges.currentYear())
+    const [range, setRange] = useState(() => DateRangeService.currentYear())
     const { currency = 'EUR', year = "" + new Date().getFullYear() } = useParams()
     const [budgets, setBudgets] = useState<Budget[]>([])
     const navigate = useNavigate()
 
     useEffect(() => {
-        setRange(Dates.Ranges.forYear(parseInt(year)))
+        setRange(DateRangeService.forYear(parseInt(year)))
 
         Promise.all([...new Array(12).keys()]
             .map(month => BudgetRepository.budgetMonth(parseInt(year), month + 1)))

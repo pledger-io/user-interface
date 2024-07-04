@@ -1,9 +1,10 @@
 import { ChartDataset } from "chart.js/dist/types";
-import { BalanceSeriesFilter } from "./chart-types";
-import { Range, Ranges } from "../../core/Dates";
+import DateRange from "../../types/date-range.type";
 import StatisticalRepository from "../../core/repositories/statistical-repository";
 import { Balance } from "../../core/types";
+import DateRangeService from "../../service/date-range.service";
 import LocalizationService from "../../service/localization.service";
+import { BalanceSeriesFilter } from "./chart-types";
 
 export const BalanceSeries = async (filter : BalanceSeriesFilter): Promise<ChartDataset> => {
     const label = await LocalizationService.get(filter.title)
@@ -16,9 +17,9 @@ export const BalanceSeries = async (filter : BalanceSeriesFilter): Promise<Chart
 
     const points : { x: any, y: number }[] = []
 
-    const startBalance = await balanceWithAdjustedRange(filter, Ranges.forRange("1970-01-01", filter.dateRange.startString()))
+    const startBalance = await balanceWithAdjustedRange(filter, DateRangeService.forRange("1970-01-01", filter.dateRange.startString()))
     const dailyBalance = await StatisticalRepository.daily(adjustedFilter)
-    const endBalance = await balanceWithAdjustedRange(filter, Ranges.forRange("1970-01-01", filter.dateRange.endString()))
+    const endBalance = await balanceWithAdjustedRange(filter, DateRangeService.forRange("1970-01-01", filter.dateRange.endString()))
 
     // Add start only if dailyBalance does not contain start
     if (!dailyBalance.find((p: any) => p.date === filter.dateRange.startString())) {
@@ -42,7 +43,7 @@ export const BalanceSeries = async (filter : BalanceSeriesFilter): Promise<Chart
 }
 
 // changes the date range in the filter and calls BalanceService.balance
-const balanceWithAdjustedRange = (filter: BalanceSeriesFilter, range: Range) : Promise<Balance> => {
+const balanceWithAdjustedRange = (filter: BalanceSeriesFilter, range: DateRange) : Promise<Balance> => {
     const adjustedFilter = {
         ...filter,
         onlyIncome: filter.onlyIncome || false,

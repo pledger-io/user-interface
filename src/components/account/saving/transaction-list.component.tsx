@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Dates } from "../../../core";
 import { groupTransactionByYear, YearlyTransactions } from "../../../core/reducers";
 import AccountRepository from "../../../core/repositories/account-repository";
 import { Account, Pagination as PaginationType, Transaction } from "../../../core/types";
 import useQueryParam from "../../../hooks/query-param.hook";
+import DateRangeService from "../../../service/date-range.service";
 import MoneyComponent from "../../format/money.component";
 
 import Loading from "../../layout/loading.component";
@@ -23,7 +23,7 @@ const TransactionListComponent = ({ account }: { account: Account }) => {
         }
 
         setTransactions(undefined)
-        const range = Dates.Ranges.forRange(account.history.firstTransaction, account.history.lastTransaction)
+        const range = DateRangeService.forRange(account.history.firstTransaction, account.history.lastTransaction)
         AccountRepository.transactions(account.id, range, page)
             .then(result => {
                 const transactions = (result.content || [])

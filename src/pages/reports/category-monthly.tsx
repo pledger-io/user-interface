@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Currency, Year } from "../../components/layout/dropdown";
-import { Dates } from "../../core";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { CurrencyRepository } from "../../core/RestAPI";
@@ -17,10 +16,11 @@ import BreadCrumbItem from "../../components/breadcrumb/breadcrumb-item.componen
 import BreadCrumbMenu from "../../components/breadcrumb/breadcrumb-menu.component";
 
 import '../../assets/css/CategorieReportView.scss'
+import DateRangeService from "../../service/date-range.service";
 
 const CategoryReportView = () => {
     const [categories, setCategories] = useState<Category[]>()
-    const [range, setRange] = useState(Dates.Ranges.currentYear)
+    const [range, setRange] = useState(DateRangeService.currentYear)
     const [currencySymbol, setCurrencySymbol] = useState('')
     const { currency = 'EUR', year = "" + new Date().getFullYear() } = useParams()
 
@@ -31,7 +31,7 @@ const CategoryReportView = () => {
             .then(setCategories)
     }, [])
     useEffect(() => {
-        if (year) setRange(Dates.Ranges.forYear(parseInt(year)))
+        if (year) setRange(DateRangeService.forYear(parseInt(year)))
     }, [year])
     useEffect(() => {
         CurrencyRepository.get(currency)

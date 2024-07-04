@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Chart } from "react-chartjs-2";
-import { Range } from "../../core/Dates";
+import DateRange from "../../types/date-range.type";
 import { ChartData } from "chart.js";
 import { Budget, BudgetExpense } from "../../core/types";
 import StatisticalRepository from "../../core/repositories/statistical-repository";
@@ -15,7 +15,7 @@ import Card from "../layout/card.component";
 
 const percentageOfYear = 90 / 365
 
-function BudgetBalance({ range } : Readonly<{ range : Range }>) {
+function BudgetBalance({ range } : Readonly<{ range : DateRange }>) {
     const [budgetSeries, setBudgetSeries] = useState<ChartData | undefined | null>()
 
     useEffect(() => {

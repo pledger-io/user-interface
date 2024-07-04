@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Chart } from "react-chartjs-2";
 import { ChartData } from "chart.js";
 
-import { Range } from "../../core/Dates";
+import DateRange from "../../types/date-range.type";
 import { BalanceSeries } from "../graphs/balance-series";
 import { DefaultChartConfig, Service as ChartService } from "../../config/global-chart-config";
 import RestAPI from "../../core/repositories/rest-api";
@@ -11,7 +11,7 @@ import RestAPI from "../../core/repositories/rest-api";
 import Card from "../layout/card.component";
 import Loading from "../layout/loading.component";
 
-const BalanceChart = ({ range } : { range: Range }) => {
+const BalanceChart = ({ range } : { range: DateRange }) => {
     const [balanceSeries, setBalanceSeries] = useState<ChartData | undefined>()
 
     useEffect(() => {

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { ChartData } from "chart.js";
 import { Account } from "../../core/types";
 import { BalanceSeries } from "../graphs/balance-series";
-import { Range } from "../../core/Dates";
+import DateRange from "../../types/date-range.type";
 import { Chart } from "react-chartjs-2";
 import { DefaultChartConfig, Service } from "../../config/global-chart-config";
 import { CurrencyRepository } from "../../core/RestAPI";
@@ -10,7 +10,7 @@ import { CurrencyRepository } from "../../core/RestAPI";
 import Loading from "../layout/loading.component";
 
 type LiabilityGraphProps = {
-    range: Range,
+    range: DateRange,
     account: Account
 }
 

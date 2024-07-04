@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from "react";
 
 import { Account, Pagination, Transaction } from "../../core/types";
-import { Range } from "../../core/Dates";
+import DateRange from "../../types/date-range.type";
 import AccountRepository from "../../core/repositories/account-repository";
 import useQueryParam from "../../hooks/query-param.hook";
 import MoneyComponent from "../format/money.component";
@@ -13,7 +13,7 @@ import Loading from "../layout/loading.component";
 
 type LiabilityTransactionListProps = {
     account: Account,
-    range: Range
+    range: DateRange
 }
 
 const LiabilityTransactionList: FC<LiabilityTransactionListProps> = ({ account, range }) => {

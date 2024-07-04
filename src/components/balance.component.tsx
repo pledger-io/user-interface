@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Range } from "../core/Dates";
+import DateRange from "../types/date-range.type";
 import StatisticalRepository from "../core/repositories/statistical-repository";
 import { Identifiable } from "../core/types";
 import MoneyComponent from "./format/money.component";
@@ -11,7 +11,7 @@ type Props = {
     expenses?: Identifiable[]
     income?: boolean
     currency?: string
-    range?: Range
+    range?: DateRange
     importSlug?: string
 }
 

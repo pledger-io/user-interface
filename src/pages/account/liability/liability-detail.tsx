@@ -6,13 +6,13 @@ import MoneyComponent from "../../../components/format/money.component";
 import PercentageComponent from "../../../components/format/percentage.component";
 import { Button } from "../../../components/layout/button";
 import Translation from "../../../components/localization/translation.component";
-import { Dates, Resolver } from "../../../core";
+import { Resolver } from "../../../core";
 
 import AccountRepository from "../../../core/repositories/account-repository";
 import { mdiCashPlus } from "@mdi/js";
 import { useParams } from "react-router-dom";
 import { Account, Transaction } from "../../../core/types";
-import { Range } from "../../../core/Dates";
+import DateRange from "../../../types/date-range.type";
 
 import LiabilityTransactionList from "../../../components/account/liability-transaction-list.component";
 import LiabilityGraph from "../../../components/account/liability-graph.component";
@@ -20,11 +20,12 @@ import Card from "../../../components/layout/card.component";
 import Loading from "../../../components/layout/loading.component";
 
 import '../../../assets/css/LiabiliryView.scss'
+import DateRangeService from "../../../service/date-range.service";
 
 const LiabilityDetailView = () => {
     const [account, setAccount] = useState<Account>()
     const [openingTransaction, setOpeningTransaction] = useState<Transaction>()
-    const [range, setRange] = useState<Range>()
+    const [range, setRange] = useState<DateRange>()
     const { id } = useParams()
 
     useEffect(() => {
@@ -35,7 +36,7 @@ const LiabilityDetailView = () => {
 
     useEffect(() => {
         if (account)
-            setRange(Dates.Ranges.forRange(
+            setRange(DateRangeService.forRange(
                 account.history.firstTransaction,
                 account.history.lastTransaction))
     }, [account])
@@ -85,11 +86,11 @@ const LiabilityDetailView = () => {
                         <Translation label='common.account.balance'/>
                     </h1>
                     <h4>
-                        <Translation label={ `common.month.${ range.start?.getMonth() + 1 }` }/>
-                        { range.start?.getFullYear() }
+                        <Translation label={ `common.month.${ range.month() }` }/>
+                        { range.year() }
                         -
-                        <Translation label={ `common.month.${ range.end?.getMonth() + 1 }` }/>
-                        { range.end?.getFullYear() }
+                        <Translation label={ `common.month.${ range.endMonth() }` }/>
+                        { range.endYear() }
                     </h4>
 
                     <LiabilityGraph account={ account } range={ range }/>

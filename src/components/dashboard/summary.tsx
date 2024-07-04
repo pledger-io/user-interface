@@ -1,12 +1,12 @@
-import { Range } from "../../core/Dates";
+import DateRange from "../../types/date-range.type";
 import SummaryComponent from "./summary-component";
 import { mdiAbacus, mdiContactlessPaymentCircle, mdiScaleBalance, mdiSwapVerticalCircle } from "@mdi/js";
 import React from "react";
 import StatisticalRepository, { BalanceRequestFilter } from "../../core/repositories/statistical-repository";
 
 type SummaryProps = {
-    range: Range,
-    compareRange: Range
+    range: DateRange,
+    compareRange: DateRange
 }
 
 const Summary = ({ range, compareRange }: SummaryProps) => {

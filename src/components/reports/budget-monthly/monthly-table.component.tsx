@@ -1,8 +1,8 @@
 import React, { FC, useEffect, useState } from "react";
-import { Dates } from "../../../core";
+import DateRange from "../../../types/date-range.type";
 import StatisticalRepository from "../../../core/repositories/statistical-repository";
 import { Budget, BudgetExpense } from "../../../core/types";
-import { Range } from "../../../core/Dates";
+import DateRangeService from "../../../service/date-range.service";
 import MoneyComponent from "../../format/money.component";
 
 import Loading from "../../layout/loading.component";
@@ -14,12 +14,12 @@ type MonthlyPerBudgetTableProps = {
     currency: string
 }
 
-const MonthlyPerBudgetTableComponent: FC<MonthlyPerBudgetTableProps> = ({ budgets, year, currency }) => {
-    const [months, setMonths] = useState<Range[]>([])
+const MonthlyPerBudgetTableComponent = ({ budgets, year, currency }: MonthlyPerBudgetTableProps) => {
+    const [months, setMonths] = useState<DateRange[]>([])
     const [expenses, setExpenses] = useState<BudgetExpense[]>([])
 
     useEffect(() => {
-        setMonths(Dates.Ranges.months(year))
+        setMonths(DateRangeService.months(year))
     }, [year])
     useEffect(() => {
         const reduced = budgets.reduce((expenses: BudgetExpense[], budget) => [...expenses, ...budget.expenses], [])
@@ -52,7 +52,7 @@ const MonthlyPerBudgetTableComponent: FC<MonthlyPerBudgetTableProps> = ({ budget
 }
 
 type MonthlyBudgetTableRowProps = {
-    months: Range[],
+    months: DateRange[],
     expense: BudgetExpense,
     currency: string
 }

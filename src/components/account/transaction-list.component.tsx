@@ -1,11 +1,12 @@
 import React, { FC, useEffect, useState } from "react";
 import TransactionItem from "../../components/transaction/transaction-detail.component";
-import { Dates, Resolver } from "../../core";
+import { Resolver } from "../../core";
 import { groupTransactionByDay, YearlyTransactions } from "../../core/reducers";
 import AccountRepository from "../../core/repositories/account-repository";
 import { Account, Pagination } from "../../core/types";
 import useQueryParam from "../../hooks/query-param.hook";
 import MoneyComponent from "../format/money.component";
+import DateRange from "../../types/date-range.type";
 
 import Loading from "../layout/loading.component";
 import { Paginator } from "../layout/paginator.component";
@@ -13,7 +14,7 @@ import Translation from "../localization/translation.component";
 
 type TransactionListProps = {
     account: Account,
-    range: Dates.Range
+    range: DateRange
 }
 
 const TransactionList: FC<TransactionListProps> = ({ account, range }) => {

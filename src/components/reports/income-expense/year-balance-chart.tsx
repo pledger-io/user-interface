@@ -1,11 +1,11 @@
-import { Range } from "../../../core/Dates";
+import DateRange from "../../../types/date-range.type";
 import { useEffect, useState } from "react";
-import { Dates } from "../../../core";
 import StatisticalRepository from "../../../core/repositories/statistical-repository";
 import { ChartDataset } from "chart.js/dist/types";
 import { ChartData } from "chart.js";
 import { Chart } from "react-chartjs-2";
 import { DefaultChartConfig, Service } from "../../../config/global-chart-config";
+import DateRangeService from "../../../service/date-range.service";
 
 import Loading from "../../layout/loading.component";
 import LocalizationService from "../../../service/localization.service";
@@ -17,14 +17,14 @@ type YearBalanceChartProps = {
 }
 
 const YearBalanceChart = ({ year, currencySymbol, currency } : YearBalanceChartProps) => {
-    const [months, setMonths] = useState<Range[]>()
+    const [months, setMonths] = useState<DateRange[]>()
     const [chartData, setChartData] = useState<ChartData>()
 
     useEffect(() => {
-        const yearMonths = Dates.Ranges.months(year)
+        const yearMonths = DateRangeService.months(year)
         const additionalMonths = [...Array(4).keys()]
             .map(x => 12 - 4 + x + 1)
-            .map(month => Dates.Ranges.forMonth(year - 1, month))
+            .map(month => DateRangeService.forMonth(year - 1, month))
 
         setMonths([...additionalMonths, ...yearMonths])
     }, [year]);
@@ -106,7 +106,7 @@ const YearBalanceChart = ({ year, currencySymbol, currency } : YearBalanceChartP
             .then(([income, expense]) => {
                 setChartData({
                     labels: months.filter((x, idx) => idx >= 4)
-                        .map(month => month.start),
+                        .map(month => month.startDate()),
                     datasets: [...income, ...expense]
                 })
             })
