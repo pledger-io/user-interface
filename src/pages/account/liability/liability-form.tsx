@@ -11,7 +11,7 @@ import Card from "../../../components/layout/card.component";
 import Translation from "../../../components/localization/translation.component";
 import AccountRepository from "../../../core/repositories/account-repository";
 import { TransactionRepository } from "../../../core/RestAPI";
-import { Account } from "../../../core/types";
+import { Account } from "../../../types/types";
 import NotificationService from "../../../service/notification.service";
 
 import '../../../assets/css/LiabilityForm.scss'

@@ -1,7 +1,7 @@
 import React from 'react'
 import { mdiCancel, mdiContentSave } from "@mdi/js";
 import { useLoaderData, useNavigate, useRouteLoaderData } from "react-router-dom";
-import { Category, Transaction } from "../../../core/types";
+import { Category, Transaction } from "../../../types/types";
 import { TransactionService } from "../../../service/TransactionService";
 import BreadCrumbItem from "../../../components/breadcrumb/breadcrumb-item.component";
 import BreadCrumbs from "../../../components/breadcrumb/breadcrumb.component";

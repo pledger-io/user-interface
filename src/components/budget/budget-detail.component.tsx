@@ -1,5 +1,5 @@
 import DateRange from "../../types/date-range.type";
-import { Budget } from "../../core/types";
+import { Budget } from "../../types/types";
 import React, { useEffect, useState } from "react";
 import BudgetRepository from "../../core/repositories/budget.repository";
 import NotificationService from "../../service/notification.service";

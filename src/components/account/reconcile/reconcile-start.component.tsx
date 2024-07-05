@@ -1,7 +1,7 @@
 import { mdiCheck, mdiContentSave } from "@mdi/js";
 import React from "react";
 import ProcessRepository, { BusinessKey } from "../../../core/repositories/process.repository";
-import { Account } from "../../../core/types";
+import { Account } from "../../../types/types";
 import NotificationService from "../../../service/notification.service";
 import { Form, Input, SubmitButton } from "../../form";
 import { Button } from "../../layout/button";

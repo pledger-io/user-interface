@@ -12,7 +12,7 @@ import React, { Attributes, FC, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Resolver } from "../../core";
 import { TransactionRepository } from "../../core/RestAPI";
-import { Account, Transaction } from "../../core/types";
+import { Account, Transaction } from "../../types/types";
 import NotificationService from "../../service/notification.service";
 import MoneyComponent from "../format/money.component";
 import { Button } from "../layout/button";

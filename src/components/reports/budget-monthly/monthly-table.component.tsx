@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from "react";
 import DateRange from "../../../types/date-range.type";
 import StatisticalRepository from "../../../core/repositories/statistical-repository";
-import { Budget, BudgetExpense } from "../../../core/types";
+import { Budget, BudgetExpense } from "../../../types/types";
 import DateRangeService from "../../../service/date-range.service";
 import MoneyComponent from "../../format/money.component";
 

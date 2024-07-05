@@ -3,7 +3,7 @@ import React, { Attributes } from "react";
 import { Link } from "react-router-dom";
 import ImageAttachment from "../../core/attachment/image-attachment";
 import AccountRepository from "../../core/repositories/account-repository";
-import { Account } from "../../core/types";
+import { Account } from "../../types/types";
 import NotificationService from "../../service/notification.service";
 import BalanceComponent from "../balance.component";
 import PercentageComponent from "../format/percentage.component";

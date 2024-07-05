@@ -6,7 +6,7 @@ import { Button } from "../../components/layout/button";
 import NotificationService from "../../service/notification.service";
 import { When } from "../index";
 import { AttachmentRepository } from "../RestAPI";
-import { Attachment } from "../types";
+import { Attachment } from "../../types/types";
 
 function matchingType(accepted: string, presented: string) {
     accepted = accepted || '*/*'

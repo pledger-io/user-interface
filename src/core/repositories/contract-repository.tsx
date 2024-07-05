@@ -1,5 +1,5 @@
 import RestApi from "./rest-api";
-import { Attachment, Contract, Identifier, PagedResponse, Transaction } from "../types";
+import { Attachment, Contract, Identifier, PagedResponse, Transaction } from "../../types/types";
 
 export type ContractList = {
     active: Contract[],

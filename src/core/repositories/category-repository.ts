@@ -1,5 +1,5 @@
 import RestApi from "./rest-api";
-import { Category, Identifier, PagedResponse } from "../types";
+import { Category, Identifier, PagedResponse } from "../../types/types";
 
 export type CategoryPage = PagedResponse<Category>
 

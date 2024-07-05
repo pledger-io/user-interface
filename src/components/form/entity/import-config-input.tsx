@@ -5,7 +5,7 @@ import Dialog from "../../../components/layout/popup/dialog.component";
 import Message from "../../layout/message.component";
 import { Upload } from "../../../core/attachment";
 import ImportJobRepository from "../../../core/repositories/import-job.repository";
-import { BatchConfig } from "../../../core/types";
+import { BatchConfig } from "../../../types/types";
 import { Button } from "../../layout/button";
 import { PopupCallbacks } from "../../layout/popup/popup.component";
 import { FieldType } from "../form-types";

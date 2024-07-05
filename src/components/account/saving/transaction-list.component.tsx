@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { groupTransactionByYear, YearlyTransactions } from "../../../core/reducers";
+import { groupTransactionByYear, YearlyTransactions } from "../../../reducers";
 import AccountRepository from "../../../core/repositories/account-repository";
-import { Account, Pagination as PaginationType, Transaction } from "../../../core/types";
+import { Account, Pagination as PaginationType, Transaction } from "../../../types/types";
 import useQueryParam from "../../../hooks/query-param.hook";
 import DateRangeService from "../../../service/date-range.service";
 import MoneyComponent from "../../format/money.component";

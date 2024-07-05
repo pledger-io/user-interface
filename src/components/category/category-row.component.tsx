@@ -1,7 +1,7 @@
 import CategoryRepository from "../../core/repositories/category-repository";
 import { mdiSquareEditOutline, mdiTrashCanOutline } from "@mdi/js";
 import React from "react";
-import { Category } from "../../core/types";
+import { Category } from "../../types/types";
 import DateComponent from "../format/date.component";
 import { Button } from "../layout/button";
 import { Confirm } from "../layout/popup";

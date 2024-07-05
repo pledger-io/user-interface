@@ -3,7 +3,7 @@ import Icon from "@mdi/react";
 import React, { Attributes, FC } from "react";
 
 import Translation from "../../localization/translation.component";
-import { StyleVariant } from "../../../core/types";
+import { StyleVariant } from "../../../types/types";
 
 const specialVariant = ['icon', 'text']
 type SpecializedVariant = (typeof specialVariant)[number]

@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import { CurrencyRepository } from "../../core/RestAPI";
 import CategoryRepository from "../../core/repositories/category-repository";
-import { Category } from "../../core/types";
+import { Category } from "../../types/types";
 
 import MonthlySpendingComponent from "../../components/reports/category-monthly/monthly-spending.component";
 import CategorizedMonthlySpendingComponent from "../../components/reports/category-monthly/categorized-monthly-spending.component";

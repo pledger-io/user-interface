@@ -4,7 +4,7 @@ import UploadTransactionsComponent from "../../components/upload/upload-transact
 import BreadCrumbItem from "../../components/breadcrumb/breadcrumb-item.component";
 import BreadCrumbs from "../../components/breadcrumb/breadcrumb.component";
 import ImportJobRepository from "../../core/repositories/import-job.repository";
-import { ImportJob } from "../../core/types";
+import { ImportJob } from "../../types/types";
 import AnalyzeTransactions from "../../components/upload/analyze-transactions";
 
 import Card from "../../components/layout/card.component";

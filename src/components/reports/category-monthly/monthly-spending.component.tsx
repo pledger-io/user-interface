@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Category } from "../../../core/types";
+import { Category } from "../../../types/types";
 import DateRange from "../../../types/date-range.type";
 import StatisticalRepository from "../../../core/repositories/statistical-repository";
 import MoneyComponent from "../../format/money.component";

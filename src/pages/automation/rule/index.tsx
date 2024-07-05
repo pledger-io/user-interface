@@ -6,7 +6,7 @@ import { Button } from "../../../components/layout/button";
 import Card from "../../../components/layout/card.component";
 import Confirm from "../../../components/layout/popup/confirm.component";
 import RuleRepository from "../../../core/repositories/rule-repository";
-import { RuleGroup } from "../../../core/types";
+import { RuleGroup } from "../../../types/types";
 import GroupAddDialog from "../../../components/transaction/rule/group-add.dialog";
 import RuleListComponent from "../../../components/transaction/rule/rule-list.component";
 import NotificationService from "../../../service/notification.service";

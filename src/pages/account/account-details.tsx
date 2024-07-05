@@ -15,7 +15,7 @@ import Grid from "../../components/layout/grid.component";
 import Loading from "../../components/layout/loading.component";
 import { Resolver } from "../../core";
 import AccountRepository from "../../core/repositories/account-repository";
-import { Account } from "../../core/types";
+import { Account } from "../../types/types";
 import DateRangeService from "../../service/date-range.service";
 
 const TYPE_MAPPING = {

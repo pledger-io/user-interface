@@ -1,5 +1,5 @@
 import React from "react";
-import { Transaction } from "../../../core/types";
+import { Transaction } from "../../../types/types";
 import { Entity } from "../../form";
 
 const DestinationInputComponent = ({ transaction: { destination, type } }: { transaction: Transaction }) => {

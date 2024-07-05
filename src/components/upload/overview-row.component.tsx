@@ -2,7 +2,7 @@ import { mdiCheck, mdiProgressCheck, mdiTrashCanOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import React, { Attributes } from "react";
 import ImportJobRepository from "../../core/repositories/import-job.repository";
-import { ImportJob } from "../../core/types";
+import { ImportJob } from "../../types/types";
 import DateComponent from "../format/date.component";
 import { Button } from "../layout/button";
 import { Confirm } from "../layout/popup";

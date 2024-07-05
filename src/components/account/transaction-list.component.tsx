@@ -1,9 +1,9 @@
 import React, { FC, useEffect, useState } from "react";
 import TransactionItem from "../../components/transaction/transaction-detail.component";
 import { Resolver } from "../../core";
-import { groupTransactionByDay, YearlyTransactions } from "../../core/reducers";
+import { groupTransactionByDay, YearlyTransactions } from "../../reducers";
 import AccountRepository from "../../core/repositories/account-repository";
-import { Account, Pagination } from "../../core/types";
+import { Account, Pagination } from "../../types/types";
 import useQueryParam from "../../hooks/query-param.hook";
 import MoneyComponent from "../format/money.component";
 import DateRange from "../../types/date-range.type";

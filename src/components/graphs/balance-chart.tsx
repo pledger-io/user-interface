@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from "react";
-import { Account } from "../../core/types";
+import { Account } from "../../types/types";
 import useDateRange from "../../hooks/date-range.hook";
 import { BalanceSeries } from "./balance-series";
 import { Chart } from "react-chartjs-2";

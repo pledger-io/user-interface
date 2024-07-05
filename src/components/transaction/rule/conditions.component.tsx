@@ -1,4 +1,4 @@
-import { RuleCondition, RuleField, RuleOperator } from "../../../core/types";
+import { RuleCondition, RuleField, RuleOperator } from "../../../types/types";
 import { useInputField } from "../../form/input/InputGroup";
 import { Resolver } from "../../../core";
 import { mdiDelete, mdiPlusBox } from "@mdi/js";

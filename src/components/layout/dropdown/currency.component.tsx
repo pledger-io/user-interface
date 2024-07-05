@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { CurrencyRepository } from "../../../core/RestAPI";
 import { Button } from "../button";
 import { mdiMenuDown } from "@mdi/js";
-import { Currency } from "../../../core/types";
+import { Currency } from "../../../types/types";
 
 type CurrencyDropdownProps = {
     // The currently selected currency

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Currency, Year } from "../../components/layout/dropdown";
 
-import { Budget } from "../../core/types";
+import { Budget } from "../../types/types";
 import BudgetRepository from "../../core/repositories/budget.repository";
 import { CurrencyRepository } from "../../core/RestAPI";
 

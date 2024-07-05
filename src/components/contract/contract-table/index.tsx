@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import { Contract } from "../../../core/types";
+import { Contract } from "../../../types/types";
 
 import ContractRow from "./row.component";
 import Translation from "../../localization/translation.component";

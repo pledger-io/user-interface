@@ -2,7 +2,7 @@ import { mdiCheck, mdiClose, mdiDotsVertical, mdiSquareEditOutline, mdiTrashCanO
 import Icon from "@mdi/react";
 import React, { useEffect, useState } from "react";
 import RuleRepository from "../../../core/repositories/rule-repository";
-import { Rule } from "../../../core/types";
+import { Rule } from "../../../types/types";
 import { EntityNameComponent } from "../../lookup-name.util";
 import NotificationService from "../../../service/notification.service";
 import { Button } from "../../layout/button";

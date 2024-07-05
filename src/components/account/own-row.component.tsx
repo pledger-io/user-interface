@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { mdiDotsVertical, mdiSquareEditOutline, mdiTrashCanOutline } from "@mdi/js";
 import React from "react";
 import AccountRepository from "../../core/repositories/account-repository";
-import { Account } from "../../core/types";
+import { Account } from "../../types/types";
 
 import NotificationService from "../../service/notification.service";
 import BalanceComponent from "../balance.component";

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import SavingsRepository from "../../../core/repositories/savings-repository";
 import { Progressbar } from "../../../core";
 import { mdiDotsVertical, mdiPencilBoxOutline, mdiPiggyBankOutline, mdiTrashCanOutline } from "@mdi/js";
-import { Account, SavingGoal } from "../../../core/types";
+import { Account, SavingGoal } from "../../../types/types";
 import NotificationService from "../../../service/notification.service";
 import MoneyComponent from "../../format/money.component";
 import { Button } from "../../layout/button";

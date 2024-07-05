@@ -19,7 +19,7 @@ import { Attachment, When } from "../../../core";
 import AccountRepository from "../../../core/repositories/account-repository";
 
 import '../../../assets/css/AccountOverview.scss'
-import { Account, Pagination } from "../../../core/types";
+import { Account, Pagination } from "../../../types/types";
 import useQueryParam from "../../../hooks/query-param.hook";
 import NotificationService from "../../../service/notification.service";
 

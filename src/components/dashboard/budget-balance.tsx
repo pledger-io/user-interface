@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Chart } from "react-chartjs-2";
 import DateRange from "../../types/date-range.type";
 import { ChartData } from "chart.js";
-import { Budget, BudgetExpense } from "../../core/types";
+import { Budget, BudgetExpense } from "../../types/types";
 import StatisticalRepository from "../../core/repositories/statistical-repository";
 import { DefaultChartConfig, Service as ChartService } from "../../config/global-chart-config";
 import BudgetRepository from "../../core/repositories/budget.repository";

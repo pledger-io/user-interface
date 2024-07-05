@@ -6,7 +6,7 @@ import NotificationService from "../../service/notification.service";
 
 import CategoryRepository from "../../core/repositories/category-repository";
 import Message from "../../components/layout/message.component";
-import { Category } from "../../core/types";
+import { Category } from "../../types/types";
 
 import Card from "../../components/layout/card.component";
 import { BackButton } from "../../components/layout/button";

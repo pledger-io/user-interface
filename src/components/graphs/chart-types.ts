@@ -1,4 +1,4 @@
-import { Identifiable } from "../../core/types";
+import { Identifiable } from "../../types/types";
 import DateRange from "../../types/date-range.type";
 
 export type BalanceSeriesFilter = {

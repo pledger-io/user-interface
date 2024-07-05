@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import DateRange from "../types/date-range.type";
 import StatisticalRepository from "../core/repositories/statistical-repository";
-import { Identifiable } from "../core/types";
+import { Identifiable } from "../types/types";
 import MoneyComponent from "./format/money.component";
 import Loading from "./layout/loading.component";
 

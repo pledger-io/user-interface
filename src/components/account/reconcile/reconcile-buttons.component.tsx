@@ -1,6 +1,6 @@
 import ProcessRepository, { BusinessKey, ProcessInstance } from "../../../core/repositories/process.repository";
 import React, { useEffect, useState } from "react";
-import { Account } from "../../../core/types";
+import { Account } from "../../../types/types";
 import ReconcilePopup from "./reconcile-start.component";
 import ReconcileOverviewComponent from "./reconcile-overview.component";
 

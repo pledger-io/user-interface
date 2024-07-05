@@ -11,7 +11,7 @@ import Translation from "../../components/localization/translation.component";
 import { Attachment } from "../../core";
 import Message from "../../components/layout/message.component";
 import AccountRepository from "../../core/repositories/account-repository";
-import { Account } from "../../core/types";
+import { Account } from "../../types/types";
 import NotificationService from "../../service/notification.service";
 
 class AccountModel {

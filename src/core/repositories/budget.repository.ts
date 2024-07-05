@@ -1,5 +1,5 @@
 import RestAPI from "./rest-api";
-import { Budget, Identifier } from "../types";
+import { Budget, Identifier } from "../../types/types";
 
 export type ComputedExpense = {
     spent: number

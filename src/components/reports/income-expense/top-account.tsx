@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AccountRepository from "../../../core/repositories/account-repository";
 import { Attachment } from "../../../core";
-import { Account } from "../../../core/types";
+import { Account } from "../../../types/types";
 import MoneyComponent from "../../format/money.component";
 
 import Loading from "../../layout/loading.component";

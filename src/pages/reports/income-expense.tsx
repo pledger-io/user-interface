@@ -13,7 +13,7 @@ import TopAccountTable from "../../components/reports/income-expense/top-account
 
 import YearBalanceChart from "../../components/reports/income-expense/year-balance-chart";
 import { CurrencyRepository } from "../../core/RestAPI";
-import { Currency } from "../../core/types";
+import { Currency } from "../../types/types";
 import DateRangeService from "../../service/date-range.service";
 
 

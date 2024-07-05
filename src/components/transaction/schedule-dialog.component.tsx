@@ -3,7 +3,7 @@ import React, { Attributes, useState } from "react";
 import Message from "../../components/layout/message.component";
 
 import { TransactionScheduleRepository } from "../../core/RestAPI";
-import { Transaction } from "../../core/types";
+import { Transaction } from "../../types/types";
 import NotificationService from "../../service/notification.service";
 import { Entity, Form, Input, SubmitButton } from "../form";
 import { Button } from "../layout/button";

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import StatisticalRepository from "../../../core/repositories/statistical-repository";
-import { Budget } from "../../../core/types";
+import { Budget } from "../../../types/types";
 import { ChartData } from "chart.js";
 import DateRangeService from "../../../service/date-range.service";
 

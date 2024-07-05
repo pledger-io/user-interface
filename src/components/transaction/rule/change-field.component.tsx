@@ -1,4 +1,4 @@
-import { Account, BudgetExpense, Category, Contract, RuleChange } from "../../../core/types";
+import { Account, BudgetExpense, Category, Contract, RuleChange } from "../../../types/types";
 import React, { useEffect, useState } from "react";
 import { lookup_entity } from "../../lookup-name.util";
 import { Entity, Input } from "../../form";

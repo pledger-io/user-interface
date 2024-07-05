@@ -1,5 +1,5 @@
 import { Attributes } from "react";
-import { Contract } from "../../../core/types";
+import { Contract } from "../../../types/types";
 
 import { useAutocomplete } from "../Autocomplete";
 import { FieldType } from "../form-types";

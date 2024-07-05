@@ -1,5 +1,5 @@
 import { AxiosError } from "axios";
-import { ApiError } from "../core/types";
+import { ApiError } from "../types/types";
 import { Resolver } from "../core";
 
 export type NotificationEvent = {

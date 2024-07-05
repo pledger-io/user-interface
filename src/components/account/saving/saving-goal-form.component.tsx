@@ -1,7 +1,7 @@
 import { mdiContentSave } from "@mdi/js";
 import React from "react";
 import SavingsRepository from "../../../core/repositories/savings-repository";
-import { Account, SavingGoal } from "../../../core/types";
+import { Account, SavingGoal } from "../../../types/types";
 import { Form, Input, SubmitButton } from "../../form";
 import { Dialog } from "../../layout/popup";
 import { PopupCallbacks } from "../../layout/popup/popup.component";

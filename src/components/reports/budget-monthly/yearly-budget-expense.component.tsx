@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Progressbar } from "../../../core";
 import StatisticalRepository from "../../../core/repositories/statistical-repository";
-import { Budget } from "../../../core/types";
+import { Budget } from "../../../types/types";
 import DateRange from "../../../types/date-range.type";
 
 import Card from "../../layout/card.component";

@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from "react";
-import { groupTransactionByYear, YearlyTransactions } from "../../core/reducers";
+import { groupTransactionByYear, YearlyTransactions } from "../../reducers";
 import ContractRepository from "../../core/repositories/contract-repository";
-import { Contract, Pagination as PaginationType, Transaction } from "../../core/types";
+import { Contract, Pagination as PaginationType, Transaction } from "../../types/types";
 import useQueryParam from "../../hooks/query-param.hook";
 import MoneyComponent from "../format/money.component";
 

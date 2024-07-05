@@ -2,7 +2,7 @@ import { mdiBagChecked } from "@mdi/js";
 import React, { useEffect, useState } from "react";
 import Message from "../../../components/layout/message.component";
 import ProcessRepository, { BusinessKey, ProcessInstance } from "../../../core/repositories/process.repository";
-import { Identifier } from "../../../core/types";
+import { Identifier } from "../../../types/types";
 import { Button } from "../../layout/button";
 import Loading from "../../layout/loading.component";
 import { Dialog } from "../../layout/popup";

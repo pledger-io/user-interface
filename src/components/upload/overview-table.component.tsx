@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ImportJob, Pagination } from "../../core/types";
+import { ImportJob, Pagination } from "../../types/types";
 import useQueryParam from "../../hooks/query-param.hook";
 import ImportJobRepository from "../../core/repositories/import-job.repository";
 import { Paginator } from "../layout/paginator.component";

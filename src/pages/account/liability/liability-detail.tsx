@@ -11,7 +11,7 @@ import { Resolver } from "../../../core";
 import AccountRepository from "../../../core/repositories/account-repository";
 import { mdiCashPlus } from "@mdi/js";
 import { useParams } from "react-router-dom";
-import { Account, Transaction } from "../../../core/types";
+import { Account, Transaction } from "../../../types/types";
 import DateRange from "../../../types/date-range.type";
 
 import LiabilityTransactionList from "../../../components/account/liability-transaction-list.component";

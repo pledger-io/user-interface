@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ChartData } from "chart.js";
-import { Account } from "../../core/types";
+import { Account } from "../../types/types";
 import { BalanceSeries } from "../graphs/balance-series";
 import DateRange from "../../types/date-range.type";
 import { Chart } from "react-chartjs-2";

@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Account, Transaction } from "../../../core/types";
+import { Account, Transaction } from "../../../types/types";
 import { Input } from "../../form";
 import { FormContext } from "../../form/Form";
 import Translation from "../../localization/translation.component";

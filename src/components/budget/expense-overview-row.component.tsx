@@ -2,7 +2,7 @@ import { mdiContentSave, mdiDotsVertical, mdiSquareEditOutline } from "@mdi/js";
 import { AxiosError } from "axios";
 import React, { useEffect, useState } from "react";
 import BudgetRepository, { ComputedExpense } from "../../core/repositories/budget.repository";
-import { BudgetExpense } from "../../core/types";
+import { BudgetExpense } from "../../types/types";
 import NotificationService from "../../service/notification.service";
 import { Form, Input, SubmitButton } from "../form";
 import MoneyComponent from "../format/money.component";

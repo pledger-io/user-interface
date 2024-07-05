@@ -1,7 +1,7 @@
 import { ChartDataset } from "chart.js/dist/types";
 import DateRange from "../../types/date-range.type";
 import StatisticalRepository from "../../core/repositories/statistical-repository";
-import { Balance } from "../../core/types";
+import { Balance } from "../../types/types";
 import DateRangeService from "../../service/date-range.service";
 import LocalizationService from "../../service/localization.service";
 import { BalanceSeriesFilter } from "./chart-types";
