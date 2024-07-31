@@ -9641,9 +9641,9 @@ sourcemap-codec@^1.4.8:
   integrity sha512-9NykojV5Uih4lgo5So5dtw+f0JgJX30KCNI8gwhz2J9A15wD0Ml6tjHKwf6fTSa6fAdVBdZeNOs9eJ71qCk8vA==
 
 spacetime@^7.6.0:
-  version "7.6.0"
-  resolved "https://registry.yarnpkg.com/spacetime/-/spacetime-7.6.0.tgz#582fc6c9119cddeb42a43b5dded45721c158da01"
-  integrity sha512-pQ1K7XNmmcFGRtF2LzXkfgQ02+NbV6W9v+0UmxnPe0xVByqFDbKkKI1uangS+9ZG5Ey2HeFh74EL9rKE7V/k9A==
+  version "7.6.1"
+  resolved "https://registry.yarnpkg.com/spacetime/-/spacetime-7.6.1.tgz#60610e4b41e47225216614e62a7073c680b47adf"
+  integrity sha512-LeqAU4HKi0DyJzhp6qHAGklipM81WvGDXVGlwXEZ1hHJCZUT4JhduBwovdnRvtqUPjDaI4DT2C/ZlsIXodSF8w==
 
 spdy-transport@^3.0.0:
   version "3.0.0"
