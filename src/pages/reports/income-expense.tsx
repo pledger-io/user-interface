@@ -12,19 +12,19 @@ import AccountBalance from "../../components/reports/income-expense/account-bala
 import TopAccountTable from "../../components/reports/income-expense/top-account";
 
 import YearBalanceChart from "../../components/reports/income-expense/year-balance-chart";
-import { Dates } from "../../core";
 import { CurrencyRepository } from "../../core/RestAPI";
-import { Currency } from "../../core/types";
+import { Currency } from "../../types/types";
+import DateRangeService from "../../service/date-range.service";
 
 
 function IncomeExpenseView() {
     const [currencySymbol, setCurrencySymbol] = useState('')
-    const [range, setRange] = useState(Dates.Ranges.currentYear())
+    const [range, setRange] = useState(DateRangeService.currentYear())
     const { year = range.year(), currency = 'EUR' } = useParams()
     const navigate = useNavigate()
 
     useEffect(() => {
-        setRange(Dates.Ranges.forYear(parseInt(year)))
+        if (year) setRange(DateRangeService.forYear(parseInt(year as string)))
     }, [year])
     useEffect(() => {
         CurrencyRepository.get(currency)
@@ -35,6 +35,7 @@ function IncomeExpenseView() {
         navigate(`/reports/income-expense/${ newYear }/${ newCurrency }`)
     }
 
+    const parsedYear = parseInt(year as string)
     return <>
         <BreadCrumbs>
             <BreadCrumbItem label='page.title.reports.default'/>
@@ -43,21 +44,21 @@ function IncomeExpenseView() {
                 <div className='inline-flex'>
                     <CurrencyDropdown currency={ currency }
                                       onChange={ (currency: Currency) => onDateChanged({ newCurrency: currency.code }) }/>
-                    <YearDropdown year={ parseInt(year) }
+                    <YearDropdown year={ parsedYear }
                                   onChange={ year => onDateChanged({ newYear: year }) }/>
                 </div>
             </BreadCrumbMenu>
         </BreadCrumbs>
 
         <Card title='page.reports.default.title'>
-            <YearBalanceChart year={ year }
+            <YearBalanceChart year={ parsedYear }
                               currencySymbol={ currencySymbol }
                               currency={ currency }/>
         </Card>
 
         <div className='block md:flex gap-4'>
             <Card title='page.reports.default.balances' className='flex-1'>
-                <AccountBalance year={ parseInt(year) } currency={ currency }/>
+                <AccountBalance year={ parsedYear } currency={ currency }/>
             </Card>
             <Card title='page.reports.default.title' className='flex-1'>
                 <table className='w-full [&>tbody>tr>td]:pb-2'>
@@ -90,10 +91,10 @@ function IncomeExpenseView() {
 
         <div className='block md:flex gap-4'>
             <Card title='page.reports.default.top.debit' className='flex-1'>
-                <TopAccountTable year={ year } type={ 'debit' }/>
+                <TopAccountTable year={ parsedYear } type={ 'debit' }/>
             </Card>
             <Card title='page.reports.default.top.credit' className='flex-1'>
-                <TopAccountTable year={ year } type={ 'creditor' }/>
+                <TopAccountTable year={ parsedYear } type={ 'creditor' }/>
             </Card>
         </div>
     </>

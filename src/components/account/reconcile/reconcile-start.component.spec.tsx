@@ -3,7 +3,7 @@ import ProcessRepository from "../../../core/repositories/process.repository";
 import NotificationService from "../../../service/notification.service";
 import { routerWrapped } from "../../../setupTests";
 import ReconcilePopup from "./reconcile-start.component";
-import { Account } from "../../../core/types";
+import { Account } from "../../../types/types";
 
 jest.mock("../../../core/repositories/process.repository");
 jest.mock("../../../core");

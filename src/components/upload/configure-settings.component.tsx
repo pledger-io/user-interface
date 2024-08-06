@@ -8,7 +8,7 @@ import NotificationService from "../../service/notification.service";
 import { Entity, Form, Input, SubmitButton } from "../form";
 import { InputGroup, useInputField } from "../form/input/InputGroup";
 import { mdiDelete, mdiPlusBox, mdiSkipNext } from "@mdi/js";
-import { Identifier } from "../../core/types";
+import { Identifier } from "../../types/types";
 import { Button } from "../layout/button";
 import Translation from "../localization/translation.component";
 

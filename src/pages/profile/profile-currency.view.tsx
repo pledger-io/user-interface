@@ -6,7 +6,7 @@ import { Form, Input, SubmitButton } from "../../components/form";
 import RestAPI from "../../core/repositories/rest-api";
 import { mdiContentSave } from "@mdi/js";
 import ProfileRepository from "../../core/repositories/profile.repository";
-import { Currency } from "../../core/types";
+import { Currency } from "../../types/types";
 import { useEffect, useState } from "react";
 import { CurrencyRepository } from "../../core/RestAPI";
 

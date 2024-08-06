@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { Contract } from "../../core/types";
+import { Contract } from "../../types/types";
 import ContractRepository from "../../core/repositories/contract-repository";
 
 import ContractTransactions from "../../components/contract/transaction-list.component";

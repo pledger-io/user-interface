@@ -2,7 +2,7 @@ import { Button } from "../../../components/layout/button";
 import React, { useEffect, useState } from "react";
 import { mdiPlus } from "@mdi/js";
 import AccountRepository from "../../../core/repositories/account-repository";
-import { Account } from "../../../core/types";
+import { Account } from "../../../types/types";
 
 import AccountRowComponent from "../../../components/account/own-row.component";
 import Card from "../../../components/layout/card.component";

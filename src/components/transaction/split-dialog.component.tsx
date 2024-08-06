@@ -1,7 +1,7 @@
 import React, { CSSProperties } from "react";
 
 import { mdiTable } from "@mdi/js";
-import { Transaction } from "../../core/types";
+import { Transaction } from "../../types/types";
 import MoneyComponent from "../format/money.component";
 import { Button } from "../layout/button";
 import { Dialog } from "../layout/popup";

@@ -8,7 +8,7 @@ import { Paginator } from "../layout/paginator.component";
 import { Entity, Form, SubmitButton } from "../form";
 import useQueryParam from "../../hooks/query-param.hook";
 import { mdiSkipNext } from "@mdi/js";
-import { Account } from "../../core/types";
+import { Account } from "../../types/types";
 import { lookup_entity } from "../lookup-name.util";
 
 import Loading from "../layout/loading.component";

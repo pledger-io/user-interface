@@ -1,6 +1,6 @@
 import { InputGroup, InputValidationErrors, useInputField } from "./input/InputGroup";
 import React, { ChangeEventHandler, KeyboardEventHandler, ReactNode, useRef, useState } from "react";
-import { Identifiable } from "../../core/types";
+import { Identifiable } from "../../types/types";
 import { Button } from "../../components/layout/button";
 
 const MIN_CHARS = 2

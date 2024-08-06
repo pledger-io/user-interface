@@ -1,4 +1,4 @@
-import { Account, BudgetExpense, Category, Contract, Identifier, RuleField } from "../core/types";
+import { Account, BudgetExpense, Category, Contract, Identifier, RuleField } from "../types/types";
 import AccountRepository from "../core/repositories/account-repository";
 import CategoryRepository from "../core/repositories/category-repository";
 import ContractRepository from "../core/repositories/contract-repository";

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Dates } from "../../../core";
 import { ChartData } from "chart.js";
-import { Range } from "../../../core/Dates";
+import DateRange from "../../../types/date-range.type";
 import { ChartDataset } from "chart.js/dist/types";
-import { Category } from "../../../core/types";
+import { Category } from "../../../types/types";
 import { Chart } from "react-chartjs-2";
 import { DefaultChartConfig, Service } from "../../../config/global-chart-config";
 import StatisticalRepository from "../../../core/repositories/statistical-repository";
+import DateRangeService from "../../../service/date-range.service";
 
 import LocalizationService from "../../../service/localization.service";
 
@@ -20,10 +20,10 @@ type CategoryGraphProps = {
 
 const CategoryGraph = ({ categories, year, currencySymbol }: CategoryGraphProps) => {
     const [chartData, setChartData] = useState<ChartData>()
-    const [months, setMonths] = useState<Range[]>()
+    const [months, setMonths] = useState<DateRange[]>()
 
     useEffect(() => {
-        setMonths(Dates.Ranges.months(year))
+        setMonths(DateRangeService.months(year))
     }, [year]);
 
     useEffect(() => {
@@ -31,7 +31,7 @@ const CategoryGraph = ({ categories, year, currencySymbol }: CategoryGraphProps)
 
         const incomePromise = new Promise<ChartDataset[]>((resolve, fail) =>
             StatisticalRepository.monthly({
-                dateRange: Dates.Ranges.forYear(year).toBackend(),
+                dateRange: DateRangeService.forYear(year).toBackend(),
                 onlyIncome: true,
                 categories: categories
             })
@@ -47,7 +47,7 @@ const CategoryGraph = ({ categories, year, currencySymbol }: CategoryGraphProps)
         )
         const expensePromise = new Promise<ChartDataset[]>((resolve, fail) =>
             StatisticalRepository.monthly({
-                dateRange: Dates.Ranges.forYear(year).toBackend(),
+                dateRange: DateRangeService.forYear(year).toBackend(),
                 onlyIncome: false,
                 categories: categories
             })

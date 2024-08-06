@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import useQueryParam from "../../hooks/query-param.hook";
 import CategoryRepository from "../../core/repositories/category-repository";
-import { Category, Pagination } from "../../core/types";
+import { Category, Pagination } from "../../types/types";
 import { mdiPlus } from "@mdi/js";
 import CategoryRow from "../../components/category/category-row.component";
 import { Paginator } from "../../components/layout/paginator.component";

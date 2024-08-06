@@ -9,7 +9,7 @@ import Loading from "../../../components/layout/loading.component";
 import Translation from "../../../components/localization/translation.component";
 import { Paginator } from "../../../components/layout/paginator.component";
 import AccountRepository from "../../../core/repositories/account-repository";
-import { Account, Pagination } from "../../../core/types";
+import { Account, Pagination } from "../../../types/types";
 import useQueryParam from "../../../hooks/query-param.hook";
 
 const LiabilityOverview = () => {

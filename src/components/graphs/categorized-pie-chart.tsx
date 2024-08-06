@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import useDateRange from "../../hooks/date-range.hook";
 import { isArray } from "chart.js/helpers";
-import { Account } from "../../core/types";
+import { Account } from "../../types/types";
 import StatisticalRepository from "../../core/repositories/statistical-repository";
 import { Chart } from "react-chartjs-2";
 import { ChartData, Tooltip, TooltipPosition } from "chart.js";
@@ -53,7 +53,7 @@ const CategorizedPieChart: FC<CategorizedPieChartProps> = ({ id, split, incomeOn
                     ]
                 })
             })
-    }, [split, incomeOnly, range.start, range.end])
+    }, [split, incomeOnly, range.toString()])
 
     const currency = accounts && !isArray(accounts) ? accounts.account.currency : '€'
 

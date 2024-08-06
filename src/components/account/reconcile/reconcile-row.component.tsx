@@ -5,7 +5,7 @@ import ProcessRepository, {
     ProcessInstance,
     ProcessVariable
 } from "../../../core/repositories/process.repository";
-import { Identifier } from "../../../core/types";
+import { Identifier } from "../../../types/types";
 import NotificationService from "../../../service/notification.service";
 import { Form, Input, SubmitButton } from "../../form";
 import MoneyComponent from "../../format/money.component";

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Account } from "../../../core/types";
+import { Account } from "../../../types/types";
 import AccountRepository from "../../../core/repositories/account-repository";
 import StatisticalRepository from "../../../core/repositories/statistical-repository";
 import MoneyComponent from "../../format/money.component";

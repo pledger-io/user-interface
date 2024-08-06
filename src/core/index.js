@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 // Export all core classes and functions
 import * as Attachment from './attachment/index'
-import * as Dates from './Dates'
 
 import '../assets/css/BreadCrumbs.scss'
 import '../assets/css/Message.scss'
@@ -94,7 +93,6 @@ const Resolver = {
 export {
     Attachment,
     When,
-    Dates,
     Resolver,
     Progressbar,
 }

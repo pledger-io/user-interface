@@ -4,7 +4,7 @@ import BreadCrumbItem from "../../../components/breadcrumb/breadcrumb-item.compo
 import BreadCrumbs from "../../../components/breadcrumb/breadcrumb.component";
 import { BackButton } from "../../../components/layout/button";
 import Card from "../../../components/layout/card.component";
-import { Currency } from "../../../core/types";
+import { Currency } from "../../../types/types";
 
 import { Form, Input, SubmitButton } from "../../../components/form";
 import { useNavigate, useParams } from "react-router-dom";

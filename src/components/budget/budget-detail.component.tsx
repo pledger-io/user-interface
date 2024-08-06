@@ -1,5 +1,5 @@
-import { Range } from "../../core/Dates";
-import { Budget } from "../../core/types";
+import DateRange from "../../types/date-range.type";
+import { Budget } from "../../types/types";
 import React, { useEffect, useState } from "react";
 import BudgetRepository from "../../core/repositories/budget.repository";
 import NotificationService from "../../service/notification.service";
@@ -61,7 +61,7 @@ const currentMonth = {
 }
 
 
-const BudgetDetailComponent = ({ range }: { range: Range }) => {
+const BudgetDetailComponent = ({ range }: { range: DateRange }) => {
     const [budget, setBudget] = useState<Budget>()
 
     const loadBudget = () => {

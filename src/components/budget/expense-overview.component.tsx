@@ -1,4 +1,4 @@
-import { Budget } from "../../core/types";
+import { Budget } from "../../types/types";
 import Translation from "../localization/translation.component";
 import ExpenseOverviewRowComponent from "./expense-overview-row.component";
 

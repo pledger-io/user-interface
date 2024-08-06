@@ -1,4 +1,4 @@
-import { ImportJob } from "../../core/types";
+import { ImportJob } from "../../types/types";
 import BalanceComponent from "../balance.component";
 import DateComponent from "../format/date.component";
 import Translation from "../localization/translation.component";

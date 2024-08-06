@@ -1,7 +1,5 @@
 import React from "react";
 
-import { Dates } from "../core";
-
 import Summary from "../components/dashboard/summary";
 import BalanceChart from "../components/dashboard/balance-chart";
 import BudgetBalance from "../components/dashboard/budget-balance";
@@ -11,10 +9,11 @@ import BreadCrumbs from "../components/breadcrumb/breadcrumb.component";
 import BreadCrumbItem from "../components/breadcrumb/breadcrumb-item.component";
 
 import '../components/dashboard/dashboard.scss'
+import DateRangeService from "../service/date-range.service";
 
 const DASHBOARD_DAYS = 90
 
-const range = Dates.Ranges.previousDays(DASHBOARD_DAYS)
+const range = DateRangeService.previousDays(DASHBOARD_DAYS)
 const compareRange = range.before(DASHBOARD_DAYS)
 
 const Dashboard = () => {

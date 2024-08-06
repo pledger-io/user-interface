@@ -1,7 +1,7 @@
 import SavingsRepository from "../../../core/repositories/savings-repository";
 import { mdiPlusBox } from "@mdi/js";
 import React from "react";
-import { Account, SavingGoal } from "../../../core/types";
+import { Account, SavingGoal } from "../../../types/types";
 import { Form, Input, SubmitButton } from "../../form";
 import { Button } from "../../layout/button";
 import { Dialog } from "../../layout/popup";

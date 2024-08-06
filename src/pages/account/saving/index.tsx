@@ -11,7 +11,7 @@ import { Button } from "../../../components/layout/button";
 import Card from "../../../components/layout/card.component";
 import { Resolver } from "../../../core";
 import AccountRepository from "../../../core/repositories/account-repository";
-import { Account } from "../../../core/types";
+import { Account } from "../../../types/types";
 
 function SavingAccountOverview() {
     const [account, setAccount] = useState<Account>()

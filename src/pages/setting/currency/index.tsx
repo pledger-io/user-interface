@@ -9,7 +9,7 @@ import { Button } from "../../../components/layout/button";
 import Card from "../../../components/layout/card.component";
 import Translation from "../../../components/localization/translation.component";
 import { CurrencyRepository } from "../../../core/RestAPI";
-import { Currency } from "../../../core/types";
+import { Currency } from "../../../types/types";
 import NotificationService from "../../../service/notification.service";
 
 const CurrencyRow = ({ currency }: { currency: Currency }) => {

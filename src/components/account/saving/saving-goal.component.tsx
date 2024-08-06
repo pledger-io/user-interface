@@ -1,5 +1,5 @@
 import React from "react";
-import { Account } from "../../../core/types";
+import { Account } from "../../../types/types";
 import BalanceComponent from "../../balance.component";
 import MoneyComponent from "../../format/money.component";
 import Translation from "../../localization/translation.component";

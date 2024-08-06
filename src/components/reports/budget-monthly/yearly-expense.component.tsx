@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Dates } from "../../../core";
 import { ChartData } from "chart.js";
-import { Budget, BudgetExpense } from "../../../core/types";
+import { Budget, BudgetExpense } from "../../../types/types";
 import StatisticalRepository from "../../../core/repositories/statistical-repository";
+import DateRangeService from "../../../service/date-range.service";
 
 import LocalizationService from "../../../service/localization.service";
 
@@ -27,7 +27,7 @@ const BudgetYearlyExpense = ({ year, budgets, currencySymbol } : BudgetYearlyExp
             .map(({ id }) => id)
             .filter((value, index, self) => self.indexOf(value) === index)
 
-        Promise.all(Dates.Ranges.months(year)
+        Promise.all(DateRangeService.months(year)
             .map(month => StatisticalRepository.balance({
                 dateRange: month.toBackend(),
                 onlyIncome: false,
@@ -35,7 +35,7 @@ const BudgetYearlyExpense = ({ year, budgets, currencySymbol } : BudgetYearlyExp
             })))
             .then(async expenses => {
                 setChartData({
-                    labels: Dates.Ranges.months(year).map(m => m.start),
+                    labels: DateRangeService.months(year).map(m => m.startDate()),
                     datasets: [
                         {
                             label: await LocalizationService.get('graph.series.budget.expected'),

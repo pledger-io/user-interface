@@ -1,4 +1,4 @@
-import { Contract } from "../../../core/types";
+import { Contract } from "../../../types/types";
 import { FC } from "react";
 import { NavLink } from "react-router-dom";
 import { Attachment, Resolver } from "../../../core";

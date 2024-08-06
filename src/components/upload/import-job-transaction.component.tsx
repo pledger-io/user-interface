@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Resolver } from "../../core";
-import { groupTransactionByYear, YearlyTransactions } from "../../core/reducers";
+import { groupTransactionByYear, YearlyTransactions } from "../../reducers";
 import ImportJobRepository from "../../core/repositories/import-job.repository";
-import { Pagination } from "../../core/types";
+import { Pagination } from "../../types/types";
 import useQueryParam from "../../hooks/query-param.hook";
 import MoneyComponent from "../format/money.component";
 

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import CategoryRepository from "../../core/repositories/category-repository";
-import { Range } from "../../core/Dates";
+import DateRange from "../../types/date-range.type";
 import { ChartData } from "chart.js";
-import { Category } from "../../core/types";
+import { Category } from "../../types/types";
 import StatisticalRepository from "../../core/repositories/statistical-repository";
 import { Chart } from "react-chartjs-2";
 import { DefaultChartConfig, Service as ChartService } from "../../config/global-chart-config";
@@ -13,7 +13,7 @@ import LocalizationService from "../../service/localization.service";
 import Card from "../layout/card.component";
 import Loading from "../layout/loading.component";
 
-const CategoriesBalance = ({ range } : { range: Range }) => {
+const CategoriesBalance = ({ range } : { range: DateRange }) => {
     const [categorySeries, setCategorySeries] = useState<ChartData | undefined>()
 
     useEffect(() => {

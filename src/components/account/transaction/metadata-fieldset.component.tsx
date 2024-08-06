@@ -1,6 +1,6 @@
 import { Resolver } from "../../../core";
 import React from "react";
-import { Transaction } from "../../../core/types";
+import { Transaction } from "../../../types/types";
 import { Entity, Input } from "../../form";
 import Translation from "../../localization/translation.component";
 

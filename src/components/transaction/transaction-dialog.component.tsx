@@ -2,7 +2,7 @@ import { mdiPageNext } from "@mdi/js";
 import React, { FC } from "react";
 import { useNavigate } from "react-router-dom";
 import { Resolver } from "../../core";
-import { Account } from "../../core/types";
+import { Account } from "../../types/types";
 import { Entity, Form, SubmitButton } from "../form";
 import { Button } from "../layout/button";
 import { Dialog } from "../layout/popup";

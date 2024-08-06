@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Identifiable } from "../../core/types";
+import { Identifiable } from "../../types/types";
 import { Entity, Form, Input } from "../form";
 import { mdiFilter } from "@mdi/js";
 import { Button } from "../layout/button";

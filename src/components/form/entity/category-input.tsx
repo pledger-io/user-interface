@@ -1,6 +1,6 @@
 import CategoryRepository from "../../../core/repositories/category-repository";
 import restApi from "../../../core/repositories/rest-api";
-import { Category, Identifiable } from "../../../core/types";
+import { Category, Identifiable } from "../../../types/types";
 import { useAutocomplete } from "../Autocomplete";
 import { FieldType } from "../form-types";
 

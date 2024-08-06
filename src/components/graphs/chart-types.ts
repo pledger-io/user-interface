@@ -1,9 +1,9 @@
-import { Identifiable } from "../../core/types";
-import { Range } from "../../core/Dates";
+import { Identifiable } from "../../types/types";
+import DateRange from "../../types/date-range.type";
 
 export type BalanceSeriesFilter = {
     title: string,
-    dateRange: Range
+    dateRange: DateRange
     onlyIncome?: boolean,
     allMoney?: boolean,
     accounts?: Identifiable[],

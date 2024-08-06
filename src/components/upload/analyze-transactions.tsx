@@ -5,7 +5,7 @@ import ProcessRepository, {
     ProcessInstance,
     ProcessTask
 } from "../../core/repositories/process.repository";
-import { ImportJob } from "../../core/types";
+import { ImportJob } from "../../types/types";
 import NotificationService from "../../service/notification.service";
 import Loading from "../layout/loading.component";
 import Translation from "../localization/translation.component";

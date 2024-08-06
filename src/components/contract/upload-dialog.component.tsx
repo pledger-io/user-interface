@@ -2,7 +2,7 @@ import { FC, useState } from "react";
 import { mdiContentSave, mdiUpload } from "@mdi/js";
 
 import { Upload } from "../../core/attachment";
-import { Attachment, Identifier } from "../../core/types";
+import { Attachment, Identifier } from "../../types/types";
 import { AttachmentRepository } from "../../core/RestAPI";
 import ContractRepository from "../../core/repositories/contract-repository";
 import { Form, SubmitButton } from "../form";

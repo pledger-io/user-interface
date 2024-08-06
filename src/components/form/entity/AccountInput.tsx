@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import AccountRepository from "../../../core/repositories/account-repository";
 import RestAPI from "../../../core/repositories/rest-api";
-import { Account } from "../../../core/types";
+import { Account } from "../../../types/types";
 import { useAutocomplete } from "../Autocomplete";
 import { FieldType } from "../form-types";
 

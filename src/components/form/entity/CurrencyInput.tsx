@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
 import restApi from "../../../core/repositories/rest-api";
-import { Currency } from "../../../core/types";
+import { Currency } from "../../../types/types";
 
 import { SelectInput, SelectInputProps, SelectOption } from "../input/SelectInput";
 

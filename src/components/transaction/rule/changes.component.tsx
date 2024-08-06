@@ -1,7 +1,7 @@
 import { mdiPlusBox } from "@mdi/js";
 import React from "react";
 import { Resolver } from "../../../core";
-import { RuleChange, RuleCondition } from "../../../core/types";
+import { RuleChange, RuleCondition } from "../../../types/types";
 import { useInputField } from "../../form/input/InputGroup";
 import { Button } from "../../layout/button";
 import ChangeFieldComponent, { ChangeProperty, ChangeValueHandler } from "./change-field.component";

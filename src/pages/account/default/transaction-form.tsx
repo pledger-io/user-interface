@@ -12,7 +12,7 @@ import Card from "../../../components/layout/card.component";
 import Loading from "../../../components/layout/loading.component";
 import { Resolver } from "../../../core";
 import { TransactionRepository } from "../../../core/RestAPI";
-import { Account, Transaction } from "../../../core/types";
+import { Account, Transaction } from "../../../types/types";
 import NotificationService from "../../../service/notification.service";
 
 const TransactionForm = () => {

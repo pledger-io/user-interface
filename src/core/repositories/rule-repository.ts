@@ -1,5 +1,5 @@
 import RestApi from "./rest-api";
-import { Identifier, Rule, RuleGroup, Unique } from "../types";
+import { Identifier, Rule, RuleGroup, Unique } from "../../types/types";
 import { Resolver } from "../index";
 
 function entities_unique<T extends Unique>(entities: T[]) {

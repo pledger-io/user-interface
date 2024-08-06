@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { mdiCancel, mdiContentSave } from "@mdi/js";
 
-import { Contract } from "../../core/types";
+import { Contract } from "../../types/types";
 import { Entity, Form, Input, SubmitButton } from "../../components/form";
 import ContractRepository from "../../core/repositories/contract-repository";
 

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import BreadCrumbItem from "../../components/breadcrumb/breadcrumb-item.component";
 import BreadCrumbs from "../../components/breadcrumb/breadcrumb.component";
-import { ImportJob } from "../../core/types";
+import { ImportJob } from "../../types/types";
 import { useParams } from "react-router-dom";
 import ImportJobRepository from "../../core/repositories/import-job.repository";
 

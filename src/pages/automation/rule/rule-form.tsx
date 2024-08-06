@@ -5,7 +5,7 @@ import Translation from "../../../components/localization/translation.component"
 import Message from "../../../components/layout/message.component";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Rule } from "../../../core/types";
+import { Rule } from "../../../types/types";
 import { Form, Input, SubmitButton } from "../../../components/form";
 import RuleRepository from "../../../core/repositories/rule-repository";
 import { mdiCancel, mdiContentSave } from "@mdi/js";

@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { Link } from "react-router-dom";
 
 import { Resolver } from "../../core";
-import { Account, Transaction } from "../../core/types";
+import { Account, Transaction } from "../../types/types";
 
 type TransactionUrlProps = {
     account: Account,

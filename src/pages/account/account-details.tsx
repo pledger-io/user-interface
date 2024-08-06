@@ -13,9 +13,10 @@ import Card from "../../components/layout/card.component";
 import { YearMonth } from "../../components/layout/dropdown";
 import Grid from "../../components/layout/grid.component";
 import Loading from "../../components/layout/loading.component";
-import { Dates, Resolver } from "../../core";
+import { Resolver } from "../../core";
 import AccountRepository from "../../core/repositories/account-repository";
-import { Account } from "../../core/types";
+import { Account } from "../../types/types";
+import DateRangeService from "../../service/date-range.service";
 
 const TYPE_MAPPING = {
     expense: 'creditor',
@@ -27,7 +28,7 @@ type AccountType = keyof typeof TYPE_MAPPING
 
 const AccountDetailView: FC = () => {
     const [account, setAccount] = useState<Account | undefined>(undefined)
-    const [range, setRange] = useState(Dates.Ranges.currentMonth())
+    const [range, setRange] = useState(DateRangeService.currentMonth())
     const { id, type, year, month } = useParams()
     const navigate = useNavigate()
 
@@ -36,14 +37,14 @@ const AccountDetailView: FC = () => {
             .then(setAccount)
     }, [id])
     useEffect(() => {
-        if (year && month) setRange(Dates.Ranges.forMonth(year, month))
+        if (year && month) setRange(DateRangeService.forMonth(parseInt(year), parseInt(month)))
     }, [year, month])
 
     const isOwnType = type === 'own'
     const onDateChange = ({ year, month } : { month: number, year: number }) =>
         navigate(`/accounts/${type}/${id}/transactions/${year}/${month}`)
 
-    const maxDate = Dates.Ranges.currentMonth().shiftDays(300).start
+    const maxDate = DateRangeService.currentMonth().shiftDays(300).startDate()
     return <>
         <BreadCrumbs>
             <BreadCrumbItem label='page.nav.settings'/>
