@@ -89,6 +89,20 @@ const CategoryGraph = ({ categories, year, currencySymbol }: CategoryGraphProps)
                                callback: (value : any) => `${currencySymbol}${value}`
                            }
                        }
+                   },
+                   plugins: {
+                       tooltip: {
+                           callbacks: {
+                               title: (context: any) => {
+                                   const date = new Date(context[0].parsed.x)
+                                   return date.toLocaleString(localStorage.getItem('language') || 'en', { month: 'long' })
+                               },
+                               label: (context: any) => {
+                                   const value = context.parsed.y.toFixed(2)
+                                   return `${context.dataset.label}: ${currencySymbol}${value}`
+                               }
+                           }
+                       }
                    }
                }) }/>
     )

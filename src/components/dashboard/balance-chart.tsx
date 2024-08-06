@@ -41,6 +41,21 @@ const BalanceChart = ({ range } : { range: DateRange }) => {
                                        }
                                    }
                                }
+                           },
+                           plugins: {
+                               tooltip: {
+                                   callbacks: {
+                                       title: (context: any) => {
+                                           console.log(context)
+                                           return context[0].dataset.label + ': ' + new Intl.DateTimeFormat(localStorage.getItem('language') || 'en')
+                                               .format(context[0].parsed.x)
+                                       },
+                                       label: (context: any) => {
+                                           const value = context.parsed.y.toFixed(2)
+                                           return `${ (RestAPI.user() as any).defaultCurrency?.symbol }${ value }`
+                                       }
+                                   }
+                               }
                            }
                        }
                    ) }

@@ -64,6 +64,15 @@ function BudgetBalance({ range } : Readonly<{ range : DateRange }>) {
                 legend: {
                     position: 'bottom',
                     display: true
+                },
+                tooltip: {
+                    callbacks: {
+                        label: (context: any) => {
+                            const label = context.dataset.label || ''
+                            const value = context.parsed.y.toFixed(2)
+                            return `${label}: ${(RestAPI.user() as any).defaultCurrency?.symbol}${value}`
+                        }
+                    }
                 }
             }
         }

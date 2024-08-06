@@ -22,6 +22,18 @@ const BudgetChart = ({ dataSet, currencySymbol = '' } : { dataSet: ChartData, cu
                        plugins: {
                            legend: {
                                display: true
+                           },
+                           tooltip: {
+                               callbacks: {
+                                   title: (context: any) => {
+                                       const date = new Date(context[0].parsed.x)
+                                       return date.toLocaleString(localStorage.getItem('language') || 'en', { month: 'long' })
+                                   },
+                                   label: (context: any) => {
+                                       const value = context.parsed.y.toFixed(2)
+                                       return `${context.dataset.label}: ${currencySymbol}${value}`
+                                   }
+                               }
                            }
                        }
                    }) }

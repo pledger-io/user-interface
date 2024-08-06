@@ -49,6 +49,16 @@ const CategoriesBalance = ({ range } : { range: DateRange }) => {
                         }
                     }
                 }
+            },
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: (context: any) => {
+                            const value = context.parsed.y.toFixed(2)
+                            return `${(RestAPI.user() as any).defaultCurrency?.symbol}${value}`
+                        }
+                    }
+                }
             }
         }
     )
