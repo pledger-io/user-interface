@@ -46,7 +46,6 @@ const BalanceChart = ({ range } : { range: DateRange }) => {
                                tooltip: {
                                    callbacks: {
                                        title: (context: any) => {
-                                           console.log(context)
                                            return context[0].dataset.label + ': ' + new Intl.DateTimeFormat(localStorage.getItem('language') || 'en')
                                                .format(context[0].parsed.x)
                                        },

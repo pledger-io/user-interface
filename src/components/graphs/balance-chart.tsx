@@ -47,16 +47,30 @@ const BalanceChart: FC<BalanceChartProps> = ({ id, allMoney, accounts, height = 
         <Chart height={ height }
                type={ 'line' }
                id={ id }
-               options={ Service.mergeOptions({
+               options={ Service.mergeOptions(DefaultChartConfig.line,{
                    scales: {
                        y: {
                            ticks: {
                                callback: (value: any) => `${currencySymbol}${value}`
                            }
                        }
+                   },
+                   plugins: {
+                       tooltip: {
+                           callbacks: {
+                               title: (context: any) => {
+                                   return context[0].dataset.label + ': ' + new Intl.DateTimeFormat(localStorage.getItem('language') || 'en')
+                                       .format(context[0].parsed.x)
+                               },
+                               label: (context: any) => {
+                                   const value = context.parsed.y.toFixed(2)
+                                   return `${ (RestAPI.user() as any).defaultCurrency?.symbol }${ value }`
+                               }
+                           }
+                       }
                    }
 
-               }, DefaultChartConfig.line) }
+               }) }
                data={ balanceSeries } />
     </>
 }
