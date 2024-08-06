@@ -1,6 +1,7 @@
 import React from 'react'
 import { mdiCancel, mdiContentSave } from "@mdi/js";
 import { useLoaderData, useNavigate, useRouteLoaderData } from "react-router-dom";
+import Loading from "../../../components/layout/loading.component";
 import { Category, Transaction } from "../../../types/types";
 import { TransactionService } from "../../../service/TransactionService";
 import BreadCrumbItem from "../../../components/breadcrumb/breadcrumb-item.component";
@@ -17,16 +18,20 @@ const LiabilityPayment = () => {
 
     const onSubmit = (entity: any) => {
         const { id } = transaction
-        TransactionService.persist(account, entity, navigate, id)
+        TransactionService.persist(account, {
+            ...entity,
+            to: account
+        }, navigate, id)
     }
 
+    if (!account) return <Loading/>
     const model = transaction as Transaction
     return <>
         <BreadCrumbs>
             <BreadCrumbItem label='page.nav.settings'/>
-            <BreadCrumbItem label='pae.nav.accounts'/>
+            <BreadCrumbItem label='page.nav.accounts'/>
             <BreadCrumbItem label='page.nav.accounts.liability'/>
-            <BreadCrumbItem message={ account?.name }/>
+            <BreadCrumbItem message={ account.name }/>
             <BreadCrumbItem label='page.nav.transactions'/>
             <BreadCrumbItem label='common.action.edit' />
         </BreadCrumbs>
@@ -52,7 +57,7 @@ const LiabilityPayment = () => {
                     <Input.Hidden id='to' value={ transaction.destination }/>
                     <Input.Text id='_none'
                                 type='text'
-                                value={ account?.name }
+                                value={ account.name }
                                 title='Transaction.to'
                                 readonly
                                 required/>

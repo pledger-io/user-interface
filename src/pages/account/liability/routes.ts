@@ -21,9 +21,7 @@ const routes = {
             id: 'liability',
             path: ':id',
             loader: async ({ params }) => {
-                return {
-                    account: await AccountRepository.get(params.id)
-                }
+                return await AccountRepository.get(params.id)
             },
             children: [
                 {
@@ -43,6 +41,7 @@ const routes = {
                     loader: () => {
                         return {
                             transaction: {
+                                id: NaN
                             }
                         }
                     }
@@ -52,9 +51,7 @@ const routes = {
                     path: 'transactions/:transactionId/edit',
                     Component: lazy(() => import('./payment-form')),
                     loader: async ({ params }) => {
-                        return {
-                            transaction: await TransactionRepository.get(params.id, params.transactionId)
-                        }
+                        return await TransactionRepository.get(params.id, params.transactionId)
                     }
                 }
             ]
