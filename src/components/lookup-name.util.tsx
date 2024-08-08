@@ -15,6 +15,7 @@ async function lookup_entity<T>(type: RuleField, id: Identifier) : Promise<T> {
         case 'CATEGORY':
             // @ts-expect-error type is incorrect
             return await CategoryRepository.get(id)
+                .then((c: Category) => ({ ...c, name: c.label }))
         case 'BUDGET':
             return (await BudgetRepository.budgetMonth(new Date().getFullYear(), new Date().getMonth() + 1))
                 .expenses.filter((e : BudgetExpense) => e.id === id)[0] as T

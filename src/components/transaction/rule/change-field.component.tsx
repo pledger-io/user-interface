@@ -1,5 +1,6 @@
 import { Account, BudgetExpense, Category, Contract, RuleChange } from "../../../types/types";
 import React, { useEffect, useState } from "react";
+import Loading from "../../layout/loading.component";
 import { lookup_entity } from "../../lookup-name.util";
 import { Entity, Input } from "../../form";
 import { mdiDelete } from "@mdi/js";
@@ -25,6 +26,7 @@ const ChangeFieldComponent = (props: {
         }
     }, [change])
 
+    if (change.change && !entity) return <Loading />
     return <>
         <div className='flex gap-1 mb-2 items-start'>
             <select id={ `chang_${ change.uuid }_field` }
@@ -69,7 +71,7 @@ const ChangeFieldComponent = (props: {
 
 
             { change.field === 'CATEGORY'
-                && <Entity.Category value={ { label: entity?.label, id: entity?.id } as Category }
+                && <Entity.Category value={ { id: -1, name: entity.label } }
                                     onChange={ (value: Category) => onValueChange(change.uuid, 'change', value.id as string) }
                                     id={ `chang_${ change.uuid }_change` }
                                     className='!m-0 flex-1 [&>label]:!hidden'
