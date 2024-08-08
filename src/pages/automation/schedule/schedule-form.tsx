@@ -15,7 +15,7 @@ import NotificationService from "../../../service/notification.service";
 
 import '../../../assets/css/ScheduleTransactionForm.scss'
 
-export const ScheduleForm = () => {
+const _ = () => {
     const { id } = useParams()
     const [exception, setException] = useState()
     const navigate = useNavigate()
@@ -93,3 +93,5 @@ export const ScheduleForm = () => {
         </div>
     )
 }
+
+export default _

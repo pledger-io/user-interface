@@ -14,11 +14,9 @@ const routes = {
         {
             id: 'edit-scheduled-transaction',
             path: ':id/edit',
-            Component: lazy(() => import('./overview')),
+            Component: lazy(() => import('./schedule-form')),
             loader: async ({ params }) => {
-                return {
-                    default: await TransactionScheduleRepository.get(params.id)
-                }
+                return await TransactionScheduleRepository.get(params.id)
             }
         },
     ]
