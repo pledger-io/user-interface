@@ -5,10 +5,7 @@ import { mdiDelete, mdiTablePlus } from "@mdi/js";
 import { FormContext } from "../Form";
 import {Button} from "../../layout/button";
 import Translation from "../../localization/translation.component";
-
-function createUUID() {
-    return crypto.randomUUID()
-}
+import { Resolver } from "../../../core";
 
 export class ComplexTypeInput extends React.Component {
     static contextType = FormContext
@@ -28,13 +25,15 @@ export class ComplexTypeInput extends React.Component {
 
     registerField() {
         this.context.addField({
-            field: this.props,
-            value: this.props.value?.map(el => {
-                return {
-                    ...el,
-                    _uuid: createUUID()
-                }
-            })
+            field: {
+                ...this.props,
+                value: this.props.value?.map(el => {
+                    return {
+                        ...el,
+                        _uuid: Resolver.uuid(),
+                    }
+                })
+            }
         })
     }
 
@@ -59,7 +58,7 @@ export class ComplexTypeInput extends React.Component {
         const field = this.context.fields[id] || { value: [] };
 
         field.value.push({
-            _uuid: createUUID(),
+            _uuid: Resolver.uuid(),
             ...blankEntity })
 
         this.onChange(field.value)
