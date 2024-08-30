@@ -2042,9 +2042,9 @@
     "@sinonjs/commons" "^1.7.0"
 
 "@stylistic/eslint-plugin@^2.3.0":
-  version "2.7.1"
-  resolved "https://registry.yarnpkg.com/@stylistic/eslint-plugin/-/eslint-plugin-2.7.1.tgz#6dc8c1efcc12de4fe400b520325641c108a40eb8"
-  integrity sha512-JqnHom8CP14oOgPhwTPbn0QgsBJwgNySQSe00V9GQQDlY1tEqZUlK4jM2DIOJ5nE+oXoy51vZWHnHkfZ6rEruw==
+  version "2.7.2"
+  resolved "https://registry.yarnpkg.com/@stylistic/eslint-plugin/-/eslint-plugin-2.7.2.tgz#627dc1383214dab01150c9bd114d66335c2c2f5c"
+  integrity sha512-3DVLU5HEuk2pQoBmXJlzvrxbKNpu2mJ0SRqz5O/CJjyNCr12ZiPcYMEtuArTyPOk5i7bsAU44nywh1rGfe3gKQ==
   dependencies:
     "@types/eslint" "^9.6.1"
     "@typescript-eslint/utils" "^8.3.0"
