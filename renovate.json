@@ -3,7 +3,16 @@
   "extends": [
     "config:recommended"
   ],
+  "packageRules": [
+    {
+      "groupName": "Patch version bumps",
+      "matchUpdateTypes": ["patch"]
+    },
+    {
+      "groupName": "Minor version bumps",
+      "matchUpdateTypes": ["minor"]
+    }
+  ],
   "addLabels": ["dependencies"],
-  "assignees": ["gjong"],
-  "automerge": true
+  "assignees": ["gjong"]
 }
