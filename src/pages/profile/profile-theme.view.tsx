@@ -41,7 +41,8 @@ const ProfileThemeView = () => {
                         <Input.Radio id='theme'
                                      options={[
                                          { value: 'dark', message: 'Dark' },
-                                         { value: 'navy', message: 'Navy' }
+                                         { value: 'navy', message: 'Navy' },
+                                         { value: 'light', message: 'Light' }
                                      ]}
                                     value={ currentTheme } />
 
