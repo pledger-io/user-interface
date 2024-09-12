@@ -52,4 +52,21 @@ body {
     --wizard-step-color: #6c757d;
     --link-color: #007bff;
   }
+
+  &.light {
+    --app-body-background: rgb(253, 253, 253);
+    --app-background: #fff;
+    --app-border-color: rgba(184, 184, 184, 0.67);
+    --app-header-background: rgba(165, 198, 228, 0.61);
+    --app-header-text: #858484;
+    --sidebar-color: #fff;
+    --sidebar-icon-color: rgba(152, 191, 227, 0.79);
+    --sidebar-background: #fafafa;
+    --sidebar-title-color: rgba(4, 55, 92, 0.61);
+    --sidebar-sub-background: rgba(165, 198, 228, 0.61);
+    --card-header-background: rgba(152, 191, 227, 0.53);
+    --card-header-color: #7a90df;
+    --wizard-step-color: #6c757d;
+    --link-color: #012445;
+  }
 }
