@@ -19,6 +19,10 @@ import MobileSidebar from "./components/sidebar/mobile-sidebar";
 import Loading from "./components/layout/loading.component";
 import NotificationCenter from "./components/notification";
 
+import LoginPage from "./pages/login";
+import RegisterPage from "./pages/register";
+import TwoFactorPage from "./pages/two-factor";
+
 import account from "./pages/account/routes";
 import automation from "./pages/automation/routes";
 import budget from "./pages/budget/routes";
@@ -34,19 +38,19 @@ const router = createBrowserRouter([
     {
         id: 'login',
         path: '/login',
-        Component: lazy(() => import('./pages/login')),
+        Component: LoginPage,
         loader: anonymousLoader
     },
     {
         id: 'register',
         path: '/register',
-        Component: lazy(() => import('./pages/register')),
+        Component: RegisterPage,
         loader: anonymousLoader
     },
     {
         id: 'two-factor',
         path: '/two-factor',
-        Component: lazy(() => import('./pages/two-factor')),
+        Component: TwoFactorPage,
     },
     {
         id: 'pledger',
@@ -89,7 +93,6 @@ function anonymousLoader({ request }: LoaderFunctionArgs) {
         return redirect(from);
     }
     return null;
-
 }
 
 async function authenticatedLoader({ request }: LoaderFunctionArgs) {

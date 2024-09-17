@@ -12,6 +12,7 @@ import Translation from "../localization/translation.component";
 import AccountMappingComponent from "./account-mapping.component";
 
 import ConfigureSettingsComponent from "./configure-settings.component";
+import CreateMissingAccount from "./create-missing-account";
 
 const AnalyzeTaskComponent = ({ process }: { process: ProcessInstance }) => {
     const [tasks, setTasks] = useState<ProcessTask>()
@@ -48,6 +49,7 @@ const AnalyzeTaskComponent = ({ process }: { process: ProcessInstance }) => {
 
         { tasks?.definition === 'task_configure' && <ConfigureSettingsComponent task={ tasks }/> }
         { tasks?.definition === 'confirm_mappings' && <AccountMappingComponent task={ tasks }/> }
+        { tasks?.definition === 'user_create_account' && <CreateMissingAccount task={ tasks } /> }
     </>
 }
 

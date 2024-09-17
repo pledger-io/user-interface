@@ -92,7 +92,7 @@ const ConditionFieldComponent = (props: any) => {
                         id={ `cond[${ condition.uuid }].field` }>
                     { PossibleConditions.map(possible =>
                         <option value={ possible.value } key={ possible.value }>
-                            <Translation label={ `TransactionRule.Condition.${ possible.value }` }/>
+                            <Translation noHtml={ true } label={ `TransactionRule.Condition.${ possible.value }` }/>
                         </option>
                     ) }
                 </select>

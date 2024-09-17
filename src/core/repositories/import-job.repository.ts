@@ -16,6 +16,8 @@ const ImportJobRepository = (api => {
         delete: (slug: string)                          => api.delete(`import/${slug}`),
         transactions: (slug: string, page: number)      => api.post<PageRequest,TransactionPage>(`import/${slug}/transactions`, { page }),
 
+        runTransactionRules: (slug: string)             => api.post(`import/${slug}/transactions/run-rule-automation`, {}),
+
         getImportConfigs: (): Promise<BatchConfig[]>    => api.get('import/config'),
         createImportConfig: (config: any)               => api.put<any, any>('import/config', config),
     }

@@ -1,3 +1,4 @@
+import { Resolver } from "../../core";
 import { InputGroup, InputValidationErrors, useInputField } from "./input/InputGroup";
 import React, { ChangeEventHandler, KeyboardEventHandler, ReactNode, useRef, useState } from "react";
 import { Identifiable } from "../../types/types";
@@ -95,6 +96,9 @@ export const useAutocomplete = function <T extends Identifiable>({ autoCompleteC
                        onKeyDown={ onKeyDown }
                        onKeyUp={ onKeyUp }
                        onChange={ onAutocomplete }
+                       autoComplete={ Resolver.uuid() }
+                       autoCapitalize='off'
+                       autoCorrect='off'
                        defaultValue={ entityLabel(field.value) }/>
 
                 { hasAutocomplete &&

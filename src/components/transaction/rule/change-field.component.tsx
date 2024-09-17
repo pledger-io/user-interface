@@ -20,11 +20,13 @@ const ChangeFieldComponent = (props: {
 
     useEffect(() => {
         if (change.change) {
-            lookup_entity(change.field, change.change)
-                .then(setEntity)
-                .catch(() => setEntity(undefined))
+            if (change.change !== entity?.id) {
+                lookup_entity(change.field, change.change)
+                    .then(setEntity)
+                    .catch(e => setEntity(null))
+            }
         }
-    }, [change])
+    }, [change.change, change.field])
 
     if (change.change && !entity) return <Loading />
     return <>
@@ -32,16 +34,14 @@ const ChangeFieldComponent = (props: {
             <select id={ `chang_${ change.uuid }_field` }
                     onChange={ (event) => onValueChange(change.uuid, 'field', event.currentTarget.value) }
                     defaultValue={ change.field }>
-                <option value="SOURCE_ACCOUNT"><Translation label='TransactionRule.Column.SOURCE_ACCOUNT'/></option>
-                <option value="TO_ACCOUNT"><Translation label='TransactionRule.Column.TO_ACCOUNT'/></option>
-                <option value="CATEGORY"><Translation label='TransactionRule.Column.CATEGORY'/></option>
-                <option value="CHANGE_TRANSFER_TO"><Translation label='TransactionRule.Column.CHANGE_TRANSFER_TO'/>
-                </option>
-                <option value="CHANGE_TRANSFER_FROM"><Translation label='TransactionRule.Column.CHANGE_TRANSFER_FROM'/>
-                </option>
-                <option value="BUDGET"><Translation label='TransactionRule.Column.BUDGET'/></option>
-                <option value="CONTRACT"><Translation label='TransactionRule.Column.CONTRACT'/></option>
-                <option value="TAGS"><Translation label='TransactionRule.Column.TAGS'/></option>
+                <option value="SOURCE_ACCOUNT"><Translation label='TransactionRule.Column.SOURCE_ACCOUNT' noHtml={ true }/></option>
+                <option value="TO_ACCOUNT"><Translation label='TransactionRule.Column.TO_ACCOUNT' noHtml={ true }/></option>
+                <option value="CATEGORY"><Translation label='TransactionRule.Column.CATEGORY' noHtml={ true }/></option>
+                <option value="CHANGE_TRANSFER_TO"><Translation label='TransactionRule.Column.CHANGE_TRANSFER_TO' noHtml={ true }/></option>
+                <option value="CHANGE_TRANSFER_FROM"><Translation label='TransactionRule.Column.CHANGE_TRANSFER_FROM' noHtml={ true }/></option>
+                <option value="BUDGET"><Translation label='TransactionRule.Column.BUDGET' noHtml={ true }/></option>
+                <option value="CONTRACT"><Translation label='TransactionRule.Column.CONTRACT' noHtml={ true }/></option>
+                <option value="TAGS"><Translation label='TransactionRule.Column.TAGS' noHtml={ true }/></option>
             </select>
 
             { (change.field === 'CHANGE_TRANSFER_TO' || change.field === 'CHANGE_TRANSFER_FROM')
@@ -71,18 +71,19 @@ const ChangeFieldComponent = (props: {
 
 
             { change.field === 'CATEGORY'
-                && <Entity.Category value={ { id: -1, name: entity.label } }
+                && <Entity.Category value={ { id: -1, name: entity?.label } }
                                     onChange={ (value: Category) => onValueChange(change.uuid, 'change', value.id as string) }
                                     id={ `chang_${ change.uuid }_change` }
                                     className='!m-0 flex-1 [&>label]:!hidden'
                                     inputOnly={ true }
                                     title='dd'/> }
 
-            { change.field === 'BUDGET' && <Entity.Budget value={ entity }
-                                                          onChange={ (value: BudgetExpense) => onValueChange(change.uuid, 'change', value.id as string) }
-                                                          id={ `chang_${ change.uuid }_change` }
-                                                          className='!m-0 flex-1 [&>label]:!hidden'
-                                                          title='dd'/> }
+            { change.field === 'BUDGET'
+                && <Entity.Budget value={ entity }
+                                  onChange={ (value: BudgetExpense) => onValueChange(change.uuid, 'change', value.id as string) }
+                                  id={ `chang_${ change.uuid }_change` }
+                                  className='!m-0 flex-1 [&>label]:!hidden'
+                                  title='dd'/> }
 
             { change.field === 'CONTRACT'
                 && <Entity.Contract value={ entity }
