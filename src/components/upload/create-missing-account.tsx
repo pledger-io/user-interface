@@ -9,6 +9,8 @@ import ProcessRepository, {
 import NotificationService from "../../service/notification.service";
 import { AccountRef, Identifier } from "../../types/types";
 import { Entity, Form, Input, SubmitButton } from "../form";
+import MoneyComponent from "../format/money.component";
+import Loading from "../layout/loading.component";
 import Message from "../layout/message.component";
 import Translation from "../localization/translation.component";
 
@@ -16,15 +18,23 @@ type AccountCreated = TaskVariable & {
     value: Identifier
 }
 
+type TransactionDetails = {
+    amount: number,
+    type: string,
+    description: string,
+    transactionDate: string,
+    opposingName: string
+}
+
 const _ = ({ task }: { task: ProcessTask }) => {
-    const [accountName, setAccountName] = useState<string>('')
+    const [transaction, setTransaction] = useState<TransactionDetails>()
     const [assetAccount, setAssetAccount] = useState<boolean>(true)
 
     useEffect(() => {
-        ProcessRepository.taskVariables('import_job', task.id, 'accountName')
-            .then(variables => {
-                const { variables: { accountName: { value } } } = variables
-                setAccountName(value)
+        ProcessRepository.taskVariables('import_job', task.id, 'transaction')
+            .then(({variables}) => {
+                const transaction: TransactionDetails = variables.transaction.value
+                setTransaction(transaction)
             })
     }, [task]);
 
@@ -61,8 +71,19 @@ const _ = ({ task }: { task: ProcessTask }) => {
             .catch(() => NotificationService.warning('page.user.profile.import.error'))
     }
 
+    if (!transaction) return <Loading />
     return <>
         <Message variant='info' label='page.user.profile.import.account.lookup.info'/>
+
+        <div className='max-w-[40em] mx-auto grid grid-cols-4 border-[1px] p-2 mb-4'>
+            <div className='col-span-4 text-center font-extrabold'><Translation label='page.transaction.add.details'/></div>
+            <div className='font-bold'><Translation label='page.account.accounts.accountdetails'/>:</div>
+            <div className='col-span-3'>{ transaction.opposingName }</div>
+            <div className='font-bold'><Translation label='Transaction.description'/>:</div>
+            <div className='col-span-3'>{ transaction.description }</div>
+            <div className='font-bold'><Translation label='Transaction.amount'/>:</div>
+            <div className='col-span-3'><MoneyComponent money={ transaction.amount }/></div>
+        </div>
 
         <Form entity='' onSubmit={ continueWithAccount }>
             <fieldset className='max-w-[40em] mx-auto'>
@@ -82,7 +103,7 @@ const _ = ({ task }: { task: ProcessTask }) => {
             <fieldset className='max-w-[40em] mx-auto'>
                 <legend><Translation label='page.title.accounts.add'/></legend>
                 <Input.Text id='name'
-                            value={ accountName }
+                            value={ transaction.opposingName }
                             title='Account.name'
                             help='Account.name.help'
                             type='text'
