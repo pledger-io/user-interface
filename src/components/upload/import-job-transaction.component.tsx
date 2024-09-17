@@ -1,3 +1,4 @@
+import { mdiRadar } from "@mdi/js";
 import React, { useEffect, useState } from "react";
 import { Resolver } from "../../core";
 import { groupTransactionByYear, YearlyTransactions } from "../../reducers";
@@ -5,6 +6,7 @@ import ImportJobRepository from "../../core/repositories/import-job.repository";
 import { Pagination } from "../../types/types";
 import useQueryParam from "../../hooks/query-param.hook";
 import MoneyComponent from "../format/money.component";
+import { Button } from "../layout/button";
 
 import Loading from "../layout/loading.component";
 import { Paginator } from "../layout/paginator.component";
@@ -36,6 +38,14 @@ const ImportJobTransactionComponent = ({ slug }: { slug: string }) => {
         <h1 className='mt-5 mb-2 text-lg font-bold'>
             <Translation label='page.title.transactions.overview'/>
         </h1>
+
+        <div className='flex justify-end'>
+            <Button onClick={ () => ImportJobRepository.runTransactionRules(slug)}
+                    className='mb-2'
+                    icon={ mdiRadar}
+                    label='page.settings.import.details.transactions.rules.run' />
+        </div>
+
         { !isLoaded && <Loading/> }
 
         { isLoaded && !hasTransactions && <div className='text-center text-gray-500'>

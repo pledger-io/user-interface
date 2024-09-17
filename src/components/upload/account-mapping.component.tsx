@@ -30,7 +30,7 @@ const AccountMappingRowComponent = ({ mapping }: { mapping: AccountMapping }) =>
     return <>
         <div className='w-[25em] font-bold'>{ mapping.name }</div>
         <div className='flex-1'>
-            <Entity.Account id={ mapping.name } value={ account }/>
+            <Entity.Account id={ mapping.name } value={ account } inputOnly={ true }/>
         </div>
     </>
 }

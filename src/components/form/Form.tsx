@@ -101,6 +101,8 @@ export const Form: FC<FormProps> = ({ entity, onSubmit, style = 'group', childre
               className={`Form ${style}`}
               noValidate={true}
               autoComplete='off'
+              autoCorrect="off"
+              spellCheck="false"
               action="#">
             <FormContext.Provider value={formContext}>
                 {children}

@@ -18,7 +18,7 @@ async function lookup_entity<T>(type: RuleField, id: Identifier) : Promise<T> {
                 .then((c: Category) => ({ ...c, name: c.label }))
         case 'BUDGET':
             return (await BudgetRepository.budgetMonth(new Date().getFullYear(), new Date().getMonth() + 1))
-                .expenses.filter((e : BudgetExpense) => e.id === id)[0] as T
+                .expenses.filter((e : BudgetExpense) => e.id == id)[0] as T
         case 'CONTRACT':
             return await ContractRepository.get(id) as T
         case 'TAGS': return (id as string).split(',') as T
