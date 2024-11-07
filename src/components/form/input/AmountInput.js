@@ -25,12 +25,12 @@ export const AmountInput = (props) => {
                 </span>
                 <input id={field.id}
                        name={field.id}
-                       value={field.value}
+                       defaultValue={field.value}
                        required={props.required}
                        min={props.min}
                        max={props.max}
                        readOnly={props.readonly}
-                       onChange={onChange}
+                       onBlur={onChange}
                        data-testid={`${props.id}-input`}
                        type='number' />
             </div>

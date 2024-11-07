@@ -60,6 +60,19 @@ const TransactionForm = () => {
             }]
         } as any
     })
+    const onInputChanged = (e: any) => {
+        const suggestionReq = {
+            source: e.from?.name,
+            destination: e.to?.name,
+            amount: e.amount,
+            description: e.description
+        }
+
+        TransactionRepository.suggest(suggestionReq)
+            .then((result) => {
+                console.log(result)
+            })
+    }
 
     const backendType = Resolver.Account.convertToBackendType(type)
     if (!transaction || !account) return <Loading/>
@@ -75,7 +88,7 @@ const TransactionForm = () => {
             <BreadCrumbItem label='common.action.edit'/>
         </BreadCrumbs>
 
-        <Form onSubmit={ onSubmit } entity='Transaction'>
+        <Form onSubmit={ onSubmit } entity='Transaction' onChange={ onInputChanged }>
             <Card title='page.transactions.add'
                   buttons={ [
                       <SubmitButton key='save' label='common.action.save' icon={ mdiContentSave }/>,
