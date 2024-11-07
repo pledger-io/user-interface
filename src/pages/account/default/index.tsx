@@ -87,7 +87,7 @@ const AccountOverview = () => {
     const reload = () => {
         setAccounts(undefined)
         AccountRepository.search({
-            types: [type],
+            types: [type] as any,
             page: parseInt(page)
         }).then(response => {
             setAccounts(response.content)

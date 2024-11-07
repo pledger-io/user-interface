@@ -20,7 +20,7 @@ const LiabilityOverview = () => {
     const reload = () => {
         setAccounts(undefined)
         AccountRepository.search({
-            types: ['loan', 'mortgage', 'debt'],
+            types: ['loan', 'mortgage', 'debt'] as any,
             page: parseInt(page)
         }).then(resultPage => {
             setAccounts(resultPage.content || [])
