@@ -77,7 +77,7 @@ const LiabilityForm = () => {
         if (!id) {
             AccountRepository.create(updatedEntity)
                 .then(created => {
-                    AccountRepository.search({ types: ['reconcile'] })
+                    AccountRepository.search({ types: ['reconcile'] as any })
                         .then(response => {
                             TransactionRepository.create(`accounts/${created.id}/transactions`, {
                                 date: entity.startDate,
