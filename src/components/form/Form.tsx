@@ -88,6 +88,7 @@ export const Form: FC<FormProps> = ({ entity, onSubmit, onChange, style = 'group
                 const entity: Record<string, any> = {}
                 Object.entries(fields)
                     .forEach(([id, field]) => entity[id] = (field as FieldType).value)
+                entity[id] = (event.currentTarget as HTMLInputElement).value
                 onChange(entity)
             }
         }

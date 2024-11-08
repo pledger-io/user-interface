@@ -1,9 +1,11 @@
 import '../../../assets/css/TransactionForm.scss'
 import { mdiCallSplit, mdiCancel, mdiContentSave } from "@mdi/js";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { NavigateFunction, useNavigate, useParams, useRouteLoaderData } from "react-router-dom";
 import GenericFieldsetComponent from "../../../components/account/transaction/generic-fieldset.component";
-import MetadataFieldsetComponent from "../../../components/account/transaction/metadata-fieldset.component";
+import MetadataFieldsetComponent, {
+    SuggestionFunction, Suggestion
+} from "../../../components/account/transaction/metadata-fieldset.component";
 import BreadCrumbItem from "../../../components/breadcrumb/breadcrumb-item.component";
 import BreadCrumbs from "../../../components/breadcrumb/breadcrumb.component";
 import { Form, SubmitButton } from "../../../components/form";
@@ -49,7 +51,10 @@ const TransactionForm = () => {
         }
     }, [transactionType, transactionId, account])
 
-    const onSubmit = (e: any) => processSubmit(transactionId as string, e, account.account.currency, navigate)
+    const onSubmit = useCallback(
+        (e: any) => processSubmit(transactionId as string, e, account.account.currency, navigate),
+        [account.account.currency, transactionId, navigate])
+
     const initialSplit = () => setTransaction(old => {
         const existing = old as Transaction
         return {
@@ -60,18 +65,18 @@ const TransactionForm = () => {
             }]
         } as any
     })
+
+    const suggestionFunction: SuggestionFunction = { suggest: (_: Suggestion) => void 0 }
     const onInputChanged = (e: any) => {
         const suggestionReq = {
             source: e.from?.name,
             destination: e.to?.name,
-            amount: e.amount,
+            amount: e.amount ? parseFloat(e.amount) : null,
             description: e.description
         }
 
         TransactionRepository.suggest(suggestionReq)
-            .then((result) => {
-                console.log(result)
-            })
+            .then((result: Suggestion) => suggestionFunction.suggest(result))
     }
 
     const backendType = Resolver.Account.convertToBackendType(type)
@@ -96,7 +101,7 @@ const TransactionForm = () => {
 
                 <GenericFieldsetComponent transaction={ transaction } account={ account as Account }/>
 
-                <MetadataFieldsetComponent transaction={ transaction }/>
+                <MetadataFieldsetComponent transaction={ transaction } suggestionFunc={ suggestionFunction }/>
 
                 { transactionId && !transaction.split && <>
                     <fieldset className='Buttons'>

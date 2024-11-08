@@ -46,8 +46,8 @@ export const useInputField = ({ onChange, field }: useInputFieldProps) : [FieldT
         }
     }, [field.id])
     useEffect(() => {
-        if (field.value) console.debug(`\tUpdating field %c${field.id}%c value to '%c${JSON.stringify(field.value)}%c'.`, 'color: blue', '', 'color: purple', '')
-        if (formContext.fields[field.id])
+        if (formContext.fields[field.id] && !formContext.fields[field.id].touched)
+            if (field.value) console.debug(`\tUpdating field %c${field.id}%c value to '%c${JSON.stringify(field.value)}%c'.`, 'color: blue', '', 'color: purple', '')
             formContext.addField({
                 field: {
                     ...formContext.fields[field.id],
@@ -55,7 +55,6 @@ export const useInputField = ({ onChange, field }: useInputFieldProps) : [FieldT
                 }
             })
     }, [field.value])
-
 
     const onChangedEvent: ChangeEventHandler = event => {
         formContext.onChange(event, formContext.fields[field.id])

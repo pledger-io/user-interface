@@ -1,6 +1,6 @@
 import { Resolver } from "../../core";
 import { InputGroup, InputValidationErrors, useInputField } from "./input/InputGroup";
-import React, { ChangeEventHandler, KeyboardEventHandler, ReactNode, useRef, useState } from "react";
+import React, { ChangeEventHandler, KeyboardEventHandler, ReactNode, useEffect, useRef, useState } from "react";
 import { Identifiable } from "../../types/types";
 import { Button } from "../../components/layout/button";
 
@@ -14,11 +14,20 @@ type useAutocompleteParams<T extends Identifiable> = {
 }
 type InputChangeHandler = ChangeEventHandler<HTMLInputElement>
 
+const isString = (value: any) => typeof value === "string" || value instanceof String
+
 export const useAutocomplete = function <T extends Identifiable>({ autoCompleteCallback, entityRender, entityLabel, onCreateCallback }: useAutocompleteParams<T>, props: any) {
     const [field, errors, onChange] = useInputField({ onChange: undefined, field: props })
     const [options, setOptions] = useState<Array<T>>([])
     const [selected, setSelected] = useState(-1)
     const inputRef = useRef<HTMLInputElement>(null)
+
+    useEffect(() => {
+        if (!field?.touched && props.value && inputRef.current && props.value !== inputRef.current?.value) {
+            console.debug(`\tUpdating autocomplete field ${props.id} value ${props.value}.`)
+            inputRef.current.value = isString(props.value) ? props.value : entityLabel(props.value)
+        }
+    }, [props.value]);
 
     const changeHandler = (selected: T) => {
         onChange({ currentTarget: { value: selected }, persist: () => undefined })
@@ -30,7 +39,7 @@ export const useAutocomplete = function <T extends Identifiable>({ autoCompleteC
 
     const onKeyDown: KeyboardEventHandler = e => {
         if ((/^[\w\s]$/i.test(e.key) || e.key === 'Backspace' || e.key === 'Delete') && field.value) {
-            console.trace(`Resetting value for ${field.id} due to value ${e.key}.`)
+            console.debug(`\tResetting value for ${field.id} due to value ${e.key}.`)
             // reset the value on new key presses
             onChange({ currentTarget: { value: undefined }, persist: (_: any) => undefined })
         }
