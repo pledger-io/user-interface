@@ -53,7 +53,7 @@ type FormProps = {
  * of the input components.
  */
 export const Form: FC<FormProps> = ({ entity, onSubmit, onChange, style = 'group', children }) => {
-    const [fields, setFields] = useState({})
+    const [fields, setFields] = useState<Record<string, FieldType>>({})
     const [errors, setErrors] = useState({})
 
     useEffect(() => {
@@ -71,19 +71,25 @@ export const Form: FC<FormProps> = ({ entity, onSubmit, onChange, style = 'group
         event.persist()
 
         type FieldKey = keyof typeof fields
-        onAddField({
-            field: {
-                ...(fields[id as FieldKey] as FieldType),
-                touched: true,
-                value: (event.currentTarget as HTMLInputElement).value
-            }
-        })
+        const existingField = fields[id as FieldKey]
+        const updatedValue = (event.currentTarget as HTMLInputElement).value
+        const hasChanged = existingField.value !== updatedValue
 
-        if (onChange) {
-            const entity: Record<string, any> = {}
-            Object.entries(fields)
-                .forEach(([id, field]) => entity[id] = (field as FieldType).value)
-            onChange(entity)
+        if (hasChanged) {
+            onAddField({
+                field: {
+                    ...(fields[id as FieldKey] as FieldType),
+                    touched: true,
+                    value: (event.currentTarget as HTMLInputElement).value
+                }
+            })
+
+            if (onChange) {
+                const entity: Record<string, any> = {}
+                Object.entries(fields)
+                    .forEach(([id, field]) => entity[id] = (field as FieldType).value)
+                onChange(entity)
+            }
         }
     }
     const onFormSubmit = (event: FormEvent) => {
