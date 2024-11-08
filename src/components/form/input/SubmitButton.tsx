@@ -17,8 +17,8 @@ export const SubmitButton: FC<SubmitButtonProps> = (props) => {
         .filter(fieldErrors => fieldErrors.length > 0)
         .length > 0
 
-    return <Button {...props}
-                   disabled={hasErrors}
+    return <Button { ...props }
+                   disabled={ hasErrors }
                    variant='primary'
                    type='submit'/>
 }
