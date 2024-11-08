@@ -42,6 +42,7 @@ export const FormContext: Context<FormContextType> = createContext({} as FormCon
 type FormProps = {
     entity: string,                             // The entity type, used in error building
     onSubmit: (_: any) => void,                 // The handler that will be called with the entity, where the entity is build up of all fields in the form.
+    onChange?: (_: any) => void,                 // A handler that will be called if any of the inputs changes
     style?: 'group' | 'default',
     children: ReactNode | ReactNode[]
 }
@@ -51,8 +52,8 @@ type FormProps = {
  * to get notified when the form is submitted. This hook is only triggered when there are no validation failures in any
  * of the input components.
  */
-export const Form: FC<FormProps> = ({ entity, onSubmit, style = 'group', children }) => {
-    const [fields, setFields] = useState({})
+export const Form: FC<FormProps> = ({ entity, onSubmit, onChange, style = 'group', children }) => {
+    const [fields, setFields] = useState<Record<string, FieldType>>({})
     const [errors, setErrors] = useState({})
 
     useEffect(() => {
@@ -70,13 +71,27 @@ export const Form: FC<FormProps> = ({ entity, onSubmit, style = 'group', childre
         event.persist()
 
         type FieldKey = keyof typeof fields
-        onAddField({
-            field: {
-                ...(fields[id as FieldKey] as FieldType),
-                touched: true,
-                value: (event.currentTarget as HTMLInputElement).value
+        const existingField = fields[id as FieldKey]
+        const updatedValue = (event.currentTarget as HTMLInputElement).value
+        const hasChanged = existingField.value !== updatedValue
+
+        if (hasChanged) {
+            onAddField({
+                field: {
+                    ...(fields[id as FieldKey] as FieldType),
+                    touched: true,
+                    value: (event.currentTarget as HTMLInputElement).value
+                }
+            })
+
+            if (onChange) {
+                const entity: Record<string, any> = {}
+                Object.entries(fields)
+                    .forEach(([id, field]) => entity[id] = (field as FieldType).value)
+                entity[id] = (event.currentTarget as HTMLInputElement).value
+                onChange(entity)
             }
-        })
+        }
     }
     const onFormSubmit = (event: FormEvent) => {
         console.info('Handling the form submit.')

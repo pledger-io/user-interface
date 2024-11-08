@@ -20,26 +20,26 @@ export const TextInput: FC<TextInputProps> = (props) => {
 
     if (!field) return <>props.id</>
     return (
-        <InputGroup id={props.id}
-                    required={props.required}
-                    title={props.title}
-                    help={props.help}
-                    className={props.className}
-                    valid={field.touched ? errors.length === 0 : undefined }>
-            <input id={field.id}
-                   name={field.id}
-                   autoComplete={props.autocomplete}
-                   defaultValue={field.value || props.value}
-                   required={props.required}
-                   pattern={props.pattern}
-                   readOnly={props.readonly}
-                   onChange={onChange}
-                   minLength={props.minLength}
-                   maxLength={props.maxLength}
-                   data-testid={`${props.id}-input`}
-                   type={props.type}/>
+        <InputGroup id={ props.id }
+                    required={ props.required }
+                    title={ props.title }
+                    help={ props.help }
+                    className={ props.className }
+                    valid={ field.touched ? errors.length === 0 : undefined }>
+            <input id={ field.id }
+                   name={ field.id }
+                   autoComplete={ props.autocomplete }
+                   defaultValue={ field.value || props.value }
+                   required={ props.required }
+                   pattern={ props.pattern }
+                   readOnly={ props.readonly }
+                   onBlur={ onChange }
+                   minLength={ props.minLength }
+                   maxLength={ props.maxLength }
+                   data-testid={ `${ props.id }-input` }
+                   type={ props.type }/>
 
-            {field.touched && <InputValidationErrors field={field} errors={errors} />}
+            { field.touched && <InputValidationErrors field={ field } errors={ errors }/> }
         </InputGroup>
     )
 }

@@ -20,20 +20,20 @@ export const SelectInput: FC<SelectInputProps> = (props) => {
 
     if (!field) return <>props.id</>
     return (
-        <InputGroup id={props.id}
-                    required={props.required}
-                    title={props.title}
-                    help={props.help}
-                    className={props.className}
-                    valid={field.touched ? errors.length === 0 : undefined }>
+        <InputGroup id={ props.id }
+                    required={ props.required }
+                    title={ props.title }
+                    help={ props.help }
+                    className={ props.className }
+                    valid={ field.touched ? errors.length === 0 : undefined }>
 
-            <select id={field.id}
-                    name={field.id}
-                    value={field.value}
-                    required={props.required}
-                    onChange={onChange}>
-                <option disabled={field.value}>-</option>
-                {props.children}
+            <select id={ field.id }
+                    name={ field.id }
+                    value={ field.value }
+                    required={ props.required }
+                    onChange={ onChange }>
+                <option disabled={ field.value }>-</option>
+                { props.children }
             </select>
         </InputGroup>
     )
@@ -59,5 +59,5 @@ export const SelectOption: FC<SelectOptionProps> = ({ message, value, label }) =
         if (message) setDisplay(message)
     }, [message])
 
-    return <option value={value}>{display}</option>
+    return <option value={ value }>{ display }</option>
 }

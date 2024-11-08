@@ -37,6 +37,7 @@ const TransactionRepository = (api => {
         update: (transactionId, transaction) => api.post(`accounts/-1/transactions/${transactionId}`, transaction),
         splits: (transactionId, split) => api.patch(`accounts/-1/transactions/${transactionId}`, split),
         search: searchCommand => api.post('transactions', searchCommand),
+        suggest: suggestCommand => api.post('transactions/suggestions', suggestCommand),
         delete: (id, transactionId) => api.delete(`accounts/${id}/transactions/${transactionId}`),
     }
 })(RestApi)
