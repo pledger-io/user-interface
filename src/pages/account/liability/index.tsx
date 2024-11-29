@@ -33,7 +33,7 @@ const LiabilityOverview = () => {
     const isLoaded = accounts
     const hasContent = isLoaded && accounts?.length > 0
     return (
-        <div className='LiabilityOverview'>
+        <div id='LiabilityOverview'>
             <BreadCrumbs>
                 <BreadCrumbItem label='page.nav.settings'/>
                 <BreadCrumbItem label='page.nav.accounts'/>

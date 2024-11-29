@@ -36,15 +36,15 @@ const AccountRow = ({ account, deleteCallback }: AccountRowProps) => {
         .catch(() => NotificationService.warning('page.account.delete.failed'))
 
     return (
-        <tr className='AccountRow' onMouseLeave={ () => dropDownActions.close() }>
+        <tr className='' onMouseLeave={ () => dropDownActions.close() }>
             <td>
                 { account.iconFileCode && <Attachment.Image fileCode={ account.iconFileCode }/> }
             </td>
             <td>
-                <h2><NavLink to={ `./${ account.id }/transactions` }>{ account.name }</NavLink></h2>
+                <h2 className='m-0 text-lg'><NavLink to={ `./${ account.id }/transactions` }>{ account.name }</NavLink></h2>
                 <When condition={ account.history.lastTransaction !== null }>
-                    <div className='Summary'>
-                        <label><Translation label='Account.lastActivity'/></label>
+                    <div className='text-muted'>
+                        <Translation label='Account.lastActivity' className='font-semibold'/>:
                         <DateComponent date={ account.history.lastTransaction }/>
                     </div>
                 </When>
@@ -98,7 +98,7 @@ const AccountOverview = () => {
     useEffect(reload, [page, type])
 
     return (
-        <div className='AccountOverview'>
+        <div id='AccountPage'>
             <BreadCrumbs>
                 <BreadCrumbItem label='page.nav.settings'/>
                 <BreadCrumbItem label='page.nav.accounts'/>
@@ -112,7 +112,7 @@ const AccountOverview = () => {
                          href='./add'
                          variant='primary'/>] }>
                 <Loading condition={ accounts !== undefined }>
-                    <table className='Table AccountTable'>
+                    <table className='Table'>
                         <thead>
                         <tr>
                             <th className='w-[30px]'/>

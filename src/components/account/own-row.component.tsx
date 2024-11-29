@@ -34,7 +34,7 @@ const AccountRowComponent = ({ account, deleteCallback }: AccountRowProps) => {
     const accountArray = [account]
     return <tr onMouseLeave={ () => dropDownActions.close() }>
         <td>
-            <h2><Link to={ accountLink }>{ account.name }</Link></h2>
+            <h2 className='text-lg'><Link to={ accountLink }>{ account.name }</Link></h2>
 
             <div className='text-muted pl-1 text-sm'>
                 <label className='font-bold mr-1'><Translation label='Account.type'/>:</label>
@@ -44,7 +44,7 @@ const AccountRowComponent = ({ account, deleteCallback }: AccountRowProps) => {
                 <label className='font-bold mr-1'><Translation label='Account.lastActivity'/>:</label>
                 <DateComponent date={ account.history.lastTransaction }/>
             </div>
-            <div className='mt-2 pl-1 text-muted text-sm'>{ account.description }</div>
+            <div className='mt-1 pl-1 text-muted text-sm'>{ account.description }</div>
         </td>
         <td className='hidden md:table-cell'>
             { account.account.iban && `${ account.account.iban }` }

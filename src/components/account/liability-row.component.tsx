@@ -25,12 +25,12 @@ const AccountRow = ({ account, deleteCallback }: AccountRowProps) => {
         .catch(() => NotificationService.success('page.accounts.liability.delete.failed'))
 
     return (
-        <tr className='AccountRow'>
+        <tr>
             <td><ImageAttachment fileCode={ account.iconFileCode }/></td>
             <td>
-                <Link to={ `./${ account.id }` }>{ account.name }</Link>
+                <Link to={ `./${ account.id }` } className='text-lg'>{ account.name }</Link>
                 {  account.history.lastTransaction &&
-                    <div className='Text Muted'>
+                    <div className='text-muted'>
                         <Translation label='Account.lastActivity'/>
                         <Date date={ account.history.lastTransaction }/>
                     </div>

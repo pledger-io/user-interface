@@ -53,9 +53,9 @@ const TransactionList: FC<TransactionListProps> = ({ account, range }) => {
                 .filter(t => (!isManaged && Resolver.Transaction.isDebit(t)) || (isManaged && Resolver.Transaction.isCredit(t)))
                 .reduce((a, t) => a + t.amount, 0)
 
-            return <div key={key} className='flex flex-col gap-0.5 pb-3'>
-                <div className='flex gap-2 items-center border-b-[1px] pb-1 mb-1'>
-                    <div className='font-bold text-lg[1.5em]'>
+            return <div key={key} className='flex flex-col gap-0.5 pb-1'>
+                <div className='flex gap-2 items-center border-b-[1px] py-0.5 mb-1 bg-blue-200 bg-opacity-10 rounded-lg px-2'>
+                    <div className='font-bold text-lg[1.5em] text-muted'>
                         { date.getDate() }
                     </div>
                     <div className='flex flex-col'>

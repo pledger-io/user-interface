@@ -101,7 +101,7 @@ const LiabilityDetailView = () => {
                 <Button label='page.account.liability.payment.add'
                         href={ `${ Resolver.Account.resolveUrl(account) }/transactions/add` }
                         variant='success'
-                        className={ Resolver.Account.isDebtor(account) ? 'Hidden' : '' }
+                        className='mb-5'
                         icon={ mdiCashPlus }/>
 
                 <LiabilityTransactionList account={ account } range={ range }/>

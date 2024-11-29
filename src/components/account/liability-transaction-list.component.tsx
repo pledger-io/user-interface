@@ -44,7 +44,7 @@ const LiabilityTransactionList: FC<LiabilityTransactionListProps> = ({ account, 
             .reverse()
             .map(year =>
                 <div className='flex flex-col' key={ year }>
-                    <div className='border-b-[1px] pb-1 mb-1 flex'>
+                    <div className='border-b-[1px] pb-1 mb-1 flex bg-blue-200 bg-opacity-10 rounded-lg px-2'>
                         <h1 className='font-bold flex-1'>
                             { year }
                         </h1>
