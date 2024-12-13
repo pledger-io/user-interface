@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Resolver } from "../../../core";
 import { groupTransactionByYear, YearlyTransactions } from "../../../reducers";
 import AccountRepository from "../../../core/repositories/account-repository";
 import { Account, Pagination as PaginationType, Transaction } from "../../../types/types";
@@ -46,25 +47,35 @@ const TransactionListComponent = ({ account }: { account: Account }) => {
             </div>
         }
 
-        { hasTransactions && Object.keys(transactions).map(year => {
-            return <div className='flex flex-col' key={ year }>
-                <div className='border-b-[1px] pb-1 mb-1 flex'>
-                    <h1 className='font-bold flex-1'>
-                        { year }
-                    </h1>
-                    <span className='flex-1 text-right font-bold'>
-                        <MoneyComponent
-                            money={ transactions[year].reduce((accumulator: number, transaction: Transaction) => accumulator - transaction.amount, 0) }
-                            currency={ account.account.currency }/>
-                    </span>
-                </div>
+        { hasTransactions && Object.keys(transactions)
+            .sort((l, r) => l.localeCompare(r))
+            .reverse()
+            .map(year => {
+                const expense = transactions[year]
+                    .filter(t => t.source.id == account.id)
+                    .reduce((a, t) => a + t.amount, 0)
+                const income = transactions[year]
+                    .filter(t => t.destination.id == account.id)
+                    .reduce((a, t) => a + t.amount, 0)
 
-                { transactions[year].map(transaction =>
-                    <TransactionItem key={ transaction.id }
-                                     account={ account }
-                                     transaction={ transaction }/>)
-                }
-            </div>
+                return <div className='flex flex-col' key={ year }>
+                    <div className='border-b-[1px] pb-1 mb-1 flex'>
+                        <h1 className='font-bold flex-1'>
+                            { year }
+                        </h1>
+                        <span className='flex-1 text-right font-bold'>
+                            <MoneyComponent
+                                money={ income - expense }
+                                currency={ account.account.currency }/>
+                        </span>
+                    </div>
+
+                    { transactions[year].map(transaction =>
+                        <TransactionItem key={ transaction.id }
+                                         account={ account }
+                                         transaction={ transaction }/>)
+                    }
+                </div>
         }) }
 
         { showPagination && <Paginator page={ parseInt(page) }
