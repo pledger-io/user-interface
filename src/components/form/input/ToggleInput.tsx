@@ -1,6 +1,5 @@
 import React from "react";
 import { useInputField } from "./InputGroup";
-import PropTypes from "prop-types";
 
 type ToggleInputProps = {
     id: string,
@@ -35,10 +34,3 @@ export const ToggleInput = (props: ToggleInputProps) => {
         </div>
     )
 }
-ToggleInput.propTypes = {
-    id: PropTypes.string,
-    onChange: PropTypes.func,
-    value: PropTypes.bool,
-    className: PropTypes.string
-}
-

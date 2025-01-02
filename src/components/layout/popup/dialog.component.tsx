@@ -1,5 +1,5 @@
 import { mdiCancel } from "@mdi/js";
-import { LegacyRef, ReactElement, useEffect, useRef } from "react";
+import {LegacyRef, ReactElement, Ref, useEffect, useRef} from "react";
 import { Button } from "../button";
 
 import Popup, { PopupCallbacks, PopupProps } from "./popup.component";
@@ -13,7 +13,7 @@ type DialogProps = PopupProps & {
 }
 
 export const Dialog = ({ control, openButton, title, actions = [], className = '', children }: DialogProps) => {
-    const dialogRef: LegacyRef<PopupCallbacks> = useRef(null)
+    const dialogRef: Ref<PopupCallbacks> = useRef(null)
 
     useEffect(() => {
         if (control) {
@@ -32,7 +32,7 @@ export const Dialog = ({ control, openButton, title, actions = [], className = '
                                                   icon={ mdiCancel }/>]
 
     return <>
-        { openButton && <Button { ...openButton.props } onClick={ open }/> }
+        { openButton && <Button { ...(openButton.props as any) } onClick={ open }/> }
         <Popup title={ title }
                className={ className }
                ref={ dialogRef }
