@@ -16,7 +16,7 @@ type TextInputProps = FieldType & {
 }
 
 export const TextInput: FC<TextInputProps> = (props) => {
-    const [field, errors, onChange] = useInputField({ onChange: props.onChange, field: props })
+    const [field, errors, onChange, onBlur] = useInputField({ onChange: props.onChange, field: props })
 
     if (!field) return <>props.id</>
     return (
@@ -33,7 +33,8 @@ export const TextInput: FC<TextInputProps> = (props) => {
                    required={ props.required }
                    pattern={ props.pattern }
                    readOnly={ props.readonly }
-                   onBlur={ onChange }
+                   onChange={ onChange }
+                   onBlur={ onBlur }
                    minLength={ props.minLength }
                    maxLength={ props.maxLength }
                    data-testid={ `${ props.id }-input` }

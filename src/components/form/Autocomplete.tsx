@@ -17,7 +17,7 @@ type InputChangeHandler = ChangeEventHandler<HTMLInputElement>
 const isString = (value: any) => typeof value === "string" || value instanceof String
 
 export const useAutocomplete = function <T extends Identifiable>({ autoCompleteCallback, entityRender, entityLabel, onCreateCallback }: useAutocompleteParams<T>, props: any) {
-    const [field, errors, onChange] = useInputField({ onChange: undefined, field: props })
+    const [field, errors, onChange, onBlur] = useInputField({ onChange: undefined, field: props })
     const [options, setOptions] = useState<Array<T>>([])
     const [selected, setSelected] = useState(-1)
     const inputRef = useRef<HTMLInputElement>(null)
@@ -31,6 +31,7 @@ export const useAutocomplete = function <T extends Identifiable>({ autoCompleteC
 
     const changeHandler = (selected: T) => {
         onChange({ currentTarget: { value: selected }, persist: () => undefined })
+        onBlur()
         setSelected(-1)
         setOptions([])
         if (inputRef.current) inputRef.current.value = entityLabel(selected)

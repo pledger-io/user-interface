@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { InputGroup, useInputField } from "./InputGroup";
 
 export const AmountInput = (props) => {
-    const [field, errors, onChange] = useInputField({ onChange: props.onChange, field: props })
+    const [field, errors, onChange, onBlur] = useInputField({ onChange: props.onChange, field: props })
     const language = localStorage.getItem('language') || 'en';
     const formatter = new Intl.NumberFormat(language, {
         currency: props.currency || 'EUR',
@@ -30,7 +30,8 @@ export const AmountInput = (props) => {
                        min={props.min}
                        max={props.max}
                        readOnly={props.readonly}
-                       onBlur={onChange}
+                       onChange={onChange}
+                       onBlur={onBlur}
                        data-testid={`${props.id}-input`}
                        type='number' />
             </div>

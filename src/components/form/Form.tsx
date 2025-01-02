@@ -83,14 +83,6 @@ export const Form: FC<FormProps> = ({ entity, onSubmit, onChange, style = 'group
                     value: (event.currentTarget as HTMLInputElement).value
                 }
             })
-
-            if (onChange) {
-                const entity: Record<string, any> = {}
-                Object.entries(fields)
-                    .forEach(([id, field]) => entity[id] = (field as FieldType).value)
-                entity[id] = (event.currentTarget as HTMLInputElement).value
-                onChange(entity)
-            }
         }
     }
     const onFormSubmit = (event: FormEvent) => {
@@ -108,7 +100,15 @@ export const Form: FC<FormProps> = ({ entity, onSubmit, onChange, style = 'group
         errors,
         entity: entity,
         addField: onAddField,
-        onChange: onValueChange
+        onChange: onValueChange,
+        onInputBlur: () => {
+            if (onChange) {
+                const entity: Record<string, any> = {}
+                Object.entries(fields)
+                    .forEach(([id, field]) => entity[id] = (field as FieldType).value)
+                onChange(entity)
+            }
+        }
     } as FormContextType
 
     return (

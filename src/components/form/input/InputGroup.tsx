@@ -3,7 +3,7 @@ import Translation from "../../localization/translation.component";
 import HelpTranslation from "../../localization/help.component";
 
 import { FormContext } from "../Form";
-import { FieldType, FormContextType, InputChangeFunc } from "../form-types";
+import {FieldType, FormContextType, InputBlurFunc, InputChangeFunc} from "../form-types";
 
 type InputGroupProps = {
     id: string,                 // The identifier of the field in the entity
@@ -33,7 +33,7 @@ type useInputFieldProps = {
     field: any,
     onChange?: (_: string) => void,
 }
-export const useInputField = ({ onChange, field }: useInputFieldProps) : [FieldType, string[], InputChangeFunc<any>] => {
+export const useInputField = ({ onChange, field }: useInputFieldProps) : [FieldType, string[], InputChangeFunc<any>, InputBlurFunc] => {
     const formContext = useContext(FormContext) as FormContextType
 
     useEffect(() => {
@@ -60,11 +60,15 @@ export const useInputField = ({ onChange, field }: useInputFieldProps) : [FieldT
         formContext.onChange(event, formContext.fields[field.id])
         if (onChange) onChange((event.currentTarget as HTMLInputElement).value)
     }
+    const onInputBlur = () => {
+        formContext.onInputBlur()
+    }
 
     return [
         formContext.fields[field.id],
         formContext.errors[field.id] || [],
-        onChangedEvent
+        onChangedEvent,
+        onInputBlur,
     ]
 }
 

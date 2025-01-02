@@ -13,7 +13,7 @@ type TextAreaProps = FieldType & {
  * A text area that is bound to the form context it is in.
  */
 export const TextArea: FC<TextAreaProps> = (props) => {
-    const [field, errors, onChange] = useInputField({ onChange: props.onChange, field: props })
+    const [field, errors, onChange, onBlur] = useInputField({ onChange: props.onChange, field: props })
 
     if (!field) return <>props.id</>
     return (
@@ -26,7 +26,8 @@ export const TextArea: FC<TextAreaProps> = (props) => {
                       name={ field.id }
                       defaultValue={ field && props.value }
                       required={ props.required }
-                      onBlur={ onChange }/>
+                      onChange={ onChange }
+                      onBlur={ onBlur }/>
 
             { field.touched && <InputValidationErrors field={ field } errors={ errors }/> }
         </InputGroup>
