@@ -23,7 +23,7 @@ const ChangeFieldComponent = (props: {
             if (change.change !== entity?.id) {
                 lookup_entity(change.field, change.change)
                     .then(setEntity)
-                    .catch(e => setEntity(null))
+                    .catch(_ => setEntity(null))
             }
         }
     }, [change.change, change.field])

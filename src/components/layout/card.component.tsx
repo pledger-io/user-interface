@@ -22,23 +22,24 @@ const Card: FC<CardProps> = ({ title, actions, buttons, children, className = ''
     const hasHeader = (title || actions || message) !== undefined
 
     return (
-        <div className={`card rounded-lg my-4 ${className}`}>
+        <div className={`card rounded-lg my-4 ${ className }`}>
             {hasHeader && (
                 <header className='bg-header py-2 px-4 flex items-center justify-between
                                    font-bold text-lg rounded-t-lg
                                    border-b-solid border-b-[1px] border-bottom-separator'>
-                    {title && <Translation label={title}/>}
+                    {title && <Translation label={ title }/>}
                     {message !== undefined && <div>{ message }</div> }
-                    {actions && <div className='font-normal text-sm'>{ actions }</div>}
+                    {actions && <div className='font-normal text-sm flex gap-0.5'>{ actions }</div>}
                 </header>
             )}
             <article className='bg-white p-4 first:rounded-t-lg last:rounded-b-lg'>
-                {children}
+                { children }
             </article>
-            {buttons &&
+            { buttons &&
                 <footer className='bg-header py-2 px-4 text-right rounded-b-lg'>
                     <ButtonBar>{buttons}</ButtonBar>
-                </footer>}
+                </footer>
+            }
         </div>
     )
 }
