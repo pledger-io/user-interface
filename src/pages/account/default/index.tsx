@@ -1,5 +1,4 @@
 import { mdiDotsVertical, mdiPlus, mdiSquareEditOutline, mdiTrashCanOutline } from "@mdi/js";
-import PropTypes from "prop-types";
 import React, { Attributes, useEffect, useState } from "react";
 import { NavLink, useRouteLoaderData } from "react-router-dom";
 import BalanceComponent from "../../../components/balance.component";
@@ -72,10 +71,6 @@ const AccountRow = ({ account, deleteCallback }: AccountRowProps) => {
             </td>
         </tr>
     )
-}
-AccountRow.propTypes = {
-    account: EntityShapes.Account,
-    deleteCallback: PropTypes.func.isRequired
 }
 
 const AccountOverview = () => {

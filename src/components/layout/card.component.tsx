@@ -15,10 +15,9 @@ type CardProps = Attributes & {
 /**
  * A basic card that has borders, an optional title bar and options to add buttons to the header and footer.
  *
- * @returns {JSX.Element}
  * @constructor
  */
-const Card: FC<CardProps> = ({ title, actions, buttons, children, className = '', message }): JSX.Element => {
+const Card: FC<CardProps> = ({ title, actions, buttons, children, className = '', message }) => {
     const hasHeader = (title || actions || message) !== undefined
 
     return (

@@ -24,7 +24,7 @@ const ConfirmComponent = (props: ConfirmProps) => {
     const onCloseClick = () => dialogRef.current?.close()
 
     return <>
-        <Button { ...openButton.props } onClick={ onOpenClick }/>
+        <Button { ...(openButton.props as any) } onClick={ onOpenClick }/>
         <Popup ref={ dialogRef }
                { ...props }
                actions={ [

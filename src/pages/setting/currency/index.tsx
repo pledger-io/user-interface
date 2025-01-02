@@ -1,5 +1,4 @@
 import { mdiPlus, mdiSquareEditOutline } from "@mdi/js";
-import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import BreadCrumbItem from "../../../components/breadcrumb/breadcrumb-item.component";
 import BreadCrumbs from "../../../components/breadcrumb/breadcrumb.component";
@@ -36,9 +35,6 @@ const CurrencyRow = ({ currency }: { currency: Currency }) => {
             </td>
         </tr>
     )
-}
-CurrencyRow.propTypes = {
-    currency: PropTypes.any
 }
 
 const _ = () => {
