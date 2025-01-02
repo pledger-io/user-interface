@@ -12,10 +12,11 @@ type InputGroupProps = {
     required?: boolean          // Indicator if the field is required,
     valid?: boolean,
     className?: string,
+    inputClassName?: string
     children: ReactNode | ReactNode[]
 }
 
-export const InputGroup: FC<InputGroupProps> = ({ id, help, title, required = false, valid, className = '', children }) => {
+export const InputGroup: FC<InputGroupProps> = ({ id, help, title, required = false, valid, className = '', inputClassName = '', children }) => {
     return <div
         className={ `Input mb-2 block md:flex ${ valid !== undefined ? (valid ? 'valid' : 'invalid') : '' } ${ className }` }>
         { title && (
@@ -25,7 +26,7 @@ export const InputGroup: FC<InputGroupProps> = ({ id, help, title, required = fa
                 { help ? <HelpTranslation label={ help } className='font-normal text-end pr-1'/> : '' }
             </label>
         ) }
-        <div className='flex-1'>{ children }</div>
+        <div className={`flex-1 ${ inputClassName }`}>{ children }</div>
     </div>
 }
 

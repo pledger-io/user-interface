@@ -11,21 +11,30 @@ const DateFormats = {
     en: 'MM/dd/yyyy',
     de: 'dd.MM.yyyy'
 }
+type DateFormatLanguage = keyof typeof DateFormats;
 
 /**
  * A date selection component for forms.
  */
-export const DateInput = (props) => {
+export const DateInput = (props: any) => {
     const [field, errors, onChange] = useInputField({ onChange: props.onChange, field: props })
     const [selected, setSelected]   = useState(new Date())
 
-    const onDateChanged = date => {
-        const isoDate = date.toISOString().substring(0, 10)
-        setSelected(date)
-        onChange({
-            persist: () => {},
-            currentTarget: { value: isoDate }
-        })
+    const onDateChanged = (date: Date | null) => {
+        if (date == null) {
+            setSelected(new Date())
+            onChange({
+                persist: () => {},
+                currentTarget: { value: null }
+            })
+        } else {
+            const isoDate = date.toISOString().substring(0, 10)
+            setSelected(date)
+            onChange({
+                persist: () => {},
+                currentTarget: { value: isoDate }
+            })
+        }
     }
 
     useEffect(() => {
@@ -38,14 +47,15 @@ export const DateInput = (props) => {
                     required={props.required}
                     title={props.title}
                     help={props.help}
+                    inputClassName='!block'
                     valid={field.touched ? errors.length === 0 : undefined }>
             <DatePicker required={props.required}
                         selected={selected}
                         readOnly={props.readonly}
                         minDate={props.minDate}
-                        showYearDropdown
-                        dateFormat={DateFormats[localStorage.getItem('language')]}
-                        onChange={onDateChanged}/>
+                        showYearDropdown={ true }
+                        dateFormat={DateFormats[localStorage.getItem('language') as DateFormatLanguage]}
+                        onChange={ onDateChanged }/>
 
             {field.touched && <InputValidationErrors field={field} errors={errors} />}
         </InputGroup>
@@ -59,17 +69,25 @@ DateInput.propTypes = {
     minDate: PropTypes.instanceOf(Date)
 }
 
-export const MonthPicker = (props) => {
+export const MonthPicker = (props: any) => {
     const [field, errors, onChange] = useInputField({ onChange: props.onChange, field: props })
-    const [selected, setSelected]   = useState(new Date())
+    const [selected, setSelected]   = useState<Date>(new Date())
 
-    const onDateChanged = date => {
-        const isoDate = date.toISOString().substring(0, 10)
-        setSelected(date)
-        onChange({
-            persist: () => {},
-            currentTarget: { value: isoDate }
-        })
+    const onDateChanged = (date: Date | null) => {
+        if (date == null) {
+            setSelected(new Date())
+            onChange({
+                persist: () => {},
+                currentTarget: { value: null }
+            })
+        } else {
+            const isoDate = date.toISOString().substring(0, 10)
+            setSelected(date)
+            onChange({
+                persist: () => {},
+                currentTarget: { value: isoDate }
+            })
+        }
     }
 
     useEffect(() => {
@@ -89,18 +107,18 @@ export const MonthPicker = (props) => {
                         showMonthYearPicker
                         showFullMonthYearPicker
                         dateFormat='MM/yyyy'
-                        onChange={onDateChanged}/>
+                        onChange={ onDateChanged }/>
 
             {field.touched && <InputValidationErrors field={field} errors={errors} />}
         </InputGroup>
     )
 }
 
-export const DateRangeInput = (props) => {
+export const DateRangeInput = (props: any) => {
     const [field, errors, onChange] = useInputField({ onChange: props.onChange, field: props })
 
-    const [startDate, setStartDate] = useState()
-    const [endDate, setEndDate]     = useState()
+    const [startDate, setStartDate] = useState<Date>()
+    const [endDate, setEndDate]     = useState<Date>()
 
     useEffect(() => {
         if (!startDate || !endDate) return
@@ -116,7 +134,10 @@ export const DateRangeInput = (props) => {
     }, [startDate, endDate, onChange])
     useEffect(() => {
         const { start, end } = props.value
-        if (start && end) setEndDate(new Date(end)) || setStartDate(new Date(start))
+        if (start && end) {
+            setEndDate(new Date(end))
+            setStartDate(new Date(start))
+        }
     }, [props.value])
 
     if (!field) return <></>
@@ -131,25 +152,29 @@ export const DateRangeInput = (props) => {
                             selected={startDate}
                             startDate={startDate}
                             endDate={endDate}
-                            selectStart
+                            selectsStart
                             showMonthDropdown
                             useShortMonthInDropdown
                             showYearDropdown
                             readOnly={props.readonly}
-                            dateFormat={DateFormats[localStorage.getItem('language')]}
-                            onChange={setStartDate}/>
+                            dateFormat={DateFormats[localStorage.getItem('language') as DateFormatLanguage]}
+                            onChange={ (date) => {
+                                if (date != null) setStartDate(date)
+                            } }/>
                 <span>-</span>
                 <DatePicker required={props.required}
                             selected={endDate}
                             startDate={startDate}
                             endDate={endDate}
-                            selectEnd
+                            selectsEnd
                             showMonthDropdown
                             useShortMonthInDropdown
                             showYearDropdown
                             readOnly={props.readonly}
-                            dateFormat={DateFormats[localStorage.getItem('language')]}
-                            onChange={setEndDate}/>
+                            dateFormat={DateFormats[localStorage.getItem('language') as DateFormatLanguage]}
+                            onChange={ (date) => {
+                                if (date != null) setEndDate(date)
+                            }  }/>
             </div>
         </InputGroup>
     </>
