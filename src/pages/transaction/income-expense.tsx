@@ -1,4 +1,4 @@
-import { mdiCashMinus, mdiCashPlus, mdiChevronDown } from "@mdi/js";
+import { mdiCashMinus, mdiCashPlus } from "@mdi/js";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import BreadCrumbItem from "../../components/breadcrumb/breadcrumb-item.component";
@@ -6,7 +6,7 @@ import BreadCrumbMenu from "../../components/breadcrumb/breadcrumb-menu.componen
 import BreadCrumbs from "../../components/breadcrumb/breadcrumb.component";
 import CategorizedPieChart from "../../components/graphs/categorized-pie-chart";
 import Card from "../../components/layout/card.component";
-import { Dropdown, YearMonth } from "../../components/layout/dropdown";
+import { YearMonth } from "../../components/layout/dropdown";
 
 import Grid from "../../components/layout/grid.component";
 import NewTransactionDialog from "../../components/transaction/transaction-dialog.component";
@@ -57,16 +57,12 @@ const TransactionGlobalView = () => {
 
         <Card title='page.title.transactions.overview'
               actions={ [
-                  <Dropdown icon={ mdiChevronDown }
-                            key='add-debit-popup'
-                            title='page.transaction.add'>
                       <NewTransactionDialog type='debit'
                                             icon={ mdiCashPlus }
-                                            variant='success'/>
+                                            variant='success'/>,
                       <NewTransactionDialog type='credit'
                                             icon={ mdiCashMinus }
-                                            variant='warning'/>
-                  </Dropdown>] }>
+                                            variant='warning'/>] }>
 
             <TransactionOverview range={ range } transfers={ false }/>
         </Card>
