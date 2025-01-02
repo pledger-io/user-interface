@@ -45,6 +45,7 @@ const TransactionItem: FC<TransactionItemProps> = ({ transaction, className = ''
     const sourceAccount = isSource ? transaction.source : transaction.destination
     const otherAccount = isSource ? transaction.destination : transaction.source
     const amount = determineAmount(transaction, account)
+    const transactionDate = new Date(transaction.dates.transaction)
 
     const onDelete = () => {
         TransactionRepository.delete(transaction.source.id, transaction.id)
@@ -75,16 +76,16 @@ const TransactionItem: FC<TransactionItemProps> = ({ transaction, className = ''
             </div> }
             <span className='text-gray-400 flex items-center gap-0.5'>
                 { !account && <>
-                    <NavLink to={ `/accounts/${sourceAccount.id}/transactions` } className='text-gray-400 hover:text-blue-400'>
+                    <NavLink to={ `${Resolver.Account.resolveUrl(sourceAccount)}/transactions/${transactionDate.getFullYear()}/${transactionDate.getMonth() + 1}` } className='text-gray-400 hover:text-blue-400'>
                         { sourceAccount.name }
                     </NavLink>
                     <Icon path={ mdiArrowRight } size={ .6 } className='inline-block' />
-                    <NavLink to={ `/accounts/${otherAccount.id}/transactions` } className='text-gray-400 hover:text-blue-400'>
+                    <NavLink to={ `${Resolver.Account.resolveUrl(otherAccount)}/transactions/${transactionDate.getFullYear()}/${transactionDate.getMonth() + 1}` } className='text-gray-400 hover:text-blue-400'>
                         { otherAccount.name }
                     </NavLink>
                 </> }
                 { account && <>
-                    <NavLink to={ `/accounts/${otherAccount.id}/transactions` } className='text-gray-400 hover:text-blue-400'>
+                    <NavLink to={ `${Resolver.Account.resolveUrl(otherAccount)}/transactions/${transactionDate.getFullYear()}/${transactionDate.getMonth() + 1}` } className='text-gray-400 hover:text-blue-400'>
                         { otherAccount.name }
                     </NavLink>
                 </> }
