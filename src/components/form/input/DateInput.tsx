@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import PropTypes from 'prop-types';
 
 import DatePicker from "react-datepicker";
 import { InputGroup, InputValidationErrors, useInputField } from "./InputGroup";
 
 import 'react-datepicker/dist/react-datepicker.css';
+import {FieldType} from "../form-types";
 
 const DateFormats = {
     nl: 'dd-MM-yyyy',
@@ -13,10 +13,17 @@ const DateFormats = {
 }
 type DateFormatLanguage = keyof typeof DateFormats;
 
+type DateInputProps = FieldType & {
+    onChange?: (_: string) => void
+    help?: string
+    readonly?: boolean,
+    minDate?: Date
+}
+
 /**
  * A date selection component for forms.
  */
-export const DateInput = (props: any) => {
+export const DateInput = (props: DateInputProps) => {
     const [field, errors, onChange] = useInputField({ onChange: props.onChange, field: props })
     const [selected, setSelected]   = useState(new Date())
 
@@ -60,13 +67,6 @@ export const DateInput = (props: any) => {
             {field.touched && <InputValidationErrors field={field} errors={errors} />}
         </InputGroup>
     )
-}
-DateInput.propTypes = {
-    ...InputGroup.propTypes,
-    value: PropTypes.string,
-    // Indicator if the field is in read only mode
-    readonly: PropTypes.bool,
-    minDate: PropTypes.instanceOf(Date)
 }
 
 export const MonthPicker = (props: any) => {
