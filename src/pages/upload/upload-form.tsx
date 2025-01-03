@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 import UploadTransactionsComponent from "../../components/upload/upload-transactions";
 import BreadCrumbItem from "../../components/breadcrumb/breadcrumb-item.component";
 import BreadCrumbs from "../../components/breadcrumb/breadcrumb.component";

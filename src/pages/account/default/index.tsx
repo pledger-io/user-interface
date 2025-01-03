@@ -1,6 +1,6 @@
 import { mdiDotsVertical, mdiPlus, mdiSquareEditOutline, mdiTrashCanOutline } from "@mdi/js";
 import React, { Attributes, useEffect, useState } from "react";
-import { NavLink, useRouteLoaderData } from "react-router-dom";
+import { NavLink, useRouteLoaderData } from "react-router";
 import BalanceComponent from "../../../components/balance.component";
 import BreadCrumbItem from "../../../components/breadcrumb/breadcrumb-item.component";
 import BreadCrumbs from "../../../components/breadcrumb/breadcrumb.component";
@@ -13,7 +13,6 @@ import { Paginator } from "../../../components/layout/paginator.component";
 import ConfirmComponent from "../../../components/layout/popup/confirm.component";
 import { PopupCallbacks } from "../../../components/layout/popup/popup.component";
 import Translation from "../../../components/localization/translation.component";
-import { EntityShapes } from "../../../config";
 import { Attachment, When } from "../../../core";
 import AccountRepository from "../../../core/repositories/account-repository";
 

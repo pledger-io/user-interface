@@ -1,6 +1,6 @@
 import { Contract } from "../../../types/types";
 import { FC } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink } from "react-router";
 import { Attachment, Resolver } from "../../../core";
 import { mdiCalendarCheck, mdiDotsVertical, mdiSquareEditOutline, mdiTrashCanOutline } from "@mdi/js";
 import ContractRepository from "../../../core/repositories/contract-repository";

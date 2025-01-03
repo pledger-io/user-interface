@@ -1,7 +1,7 @@
 import '../../../assets/css/TransactionForm.scss'
 import { mdiCallSplit, mdiCancel, mdiContentSave } from "@mdi/js";
 import { useCallback, useEffect, useState } from "react";
-import { NavigateFunction, useNavigate, useParams, useRouteLoaderData } from "react-router-dom";
+import { NavigateFunction, useNavigate, useParams, useRouteLoaderData } from "react-router";
 import GenericFieldsetComponent from "../../../components/account/transaction/generic-fieldset.component";
 import MetadataFieldsetComponent, {
     SuggestionFunction, Suggestion

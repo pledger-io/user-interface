@@ -7,7 +7,7 @@ import {
     RouterProvider,
     useNavigate,
     useRouteError
-} from "react-router-dom";
+} from "react-router";
 import { lazy, Suspense } from "react";
 
 import SecurityRepository from "./core/repositories/security-repository";
@@ -58,6 +58,7 @@ const router = createBrowserRouter([
         Component: AuthenticatedComponent,
         loader: authenticatedLoader,
         errorElement: <RootErrorBoundary/>,
+        hydrateFallbackElement: <Loading />,
         children: [
             {
                 id: 'dashboard',
@@ -155,8 +156,7 @@ function SuspenseLoading() {
 
 function _() {
     return (
-        <RouterProvider router={ router }
-                        fallbackElement={ <Loading/> }/>
+        <RouterProvider router={ router } />
     )
 }
 

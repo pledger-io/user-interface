@@ -1,6 +1,6 @@
 import { mdiCloseBox, mdiLogoutVariant } from "@mdi/js";
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink } from "react-router";
 import config from '../../config/sidebar-config.js'
 import { Button } from "../layout/button";
 import ProfilePicture from "../profile/profile-picture.component";

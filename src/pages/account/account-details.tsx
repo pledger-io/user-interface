@@ -1,6 +1,6 @@
 import { mdiCartPlus, mdiCashPlus, mdiSwapHorizontal } from "@mdi/js";
 import React, { FC, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router";
 import TransactionList from "../../components/account/transaction-list.component";
 import BreadCrumbItem from "../../components/breadcrumb/breadcrumb-item.component";
 import BreadCrumbMenu from "../../components/breadcrumb/breadcrumb-menu.component";

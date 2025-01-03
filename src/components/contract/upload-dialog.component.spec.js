@@ -2,8 +2,8 @@ import user from '@testing-library/user-event';
 import axios from "axios";
 import { fireEvent, render, waitFor } from "@testing-library/react";
 
-import { routerWrapped } from "../../setupTests";
 import UploadContract from "./upload-dialog.component";
+import {BrowserRouter} from "react-router";
 
 describe('upload-contract', () => {
 
@@ -14,7 +14,7 @@ describe('upload-contract', () => {
     })
 
     it('open upload contract', async () => {
-        const { getByTestId } = render(routerWrapped(<UploadContract id={1}/>))
+        const { getByTestId } = render(<UploadContract id={1}/>, {wrapper: BrowserRouter})
         const button = getByTestId('upload-button')
 
         expect(button).toBeInTheDocument()
@@ -27,7 +27,7 @@ describe('upload-contract', () => {
     })
 
     it('should upload a contract', async () => {
-        const { container, getByTestId } = render(routerWrapped(<UploadContract id={1}/>))
+        const { container, getByTestId } = render(<UploadContract id={1}/>, {wrapper: BrowserRouter})
 
         const openButton = getByTestId('upload-button')
         fireEvent.click(openButton)

@@ -1,6 +1,6 @@
 import { mdiCancel, mdiContentSave } from "@mdi/js";
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router";
 import BreadCrumbItem from "../../../components/breadcrumb/breadcrumb-item.component";
 import BreadCrumbs from "../../../components/breadcrumb/breadcrumb.component";
 

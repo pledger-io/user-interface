@@ -5,7 +5,7 @@ import { Form, Input, SubmitButton } from '../components/form'
 import Message from "../components/layout/message.component";
 import SecurityRepository from "../core/repositories/security-repository";
 import useQueryParam from "../hooks/query-param.hook";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import Card from "../components/layout/card.component";
 import LocalizationService from "../service/localization.service";
 import { Dropdown } from "../components/layout/dropdown";

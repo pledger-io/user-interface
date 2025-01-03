@@ -9,7 +9,7 @@ import {
 } from "@mdi/js";
 import Icon from "@mdi/react";
 import React, { Attributes, FC, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink } from "react-router";
 import { Resolver } from "../../core";
 import { TransactionRepository } from "../../core/RestAPI";
 import { Account, Transaction } from "../../types/types";

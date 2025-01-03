@@ -5,7 +5,7 @@ import { mdiContentSave } from "@mdi/js";
 import React from "react";
 import Message from "../../components/layout/message.component";
 import BudgetRepository from "../../core/repositories/budget.repository";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 import Card from "../../components/layout/card.component";
 import NotificationService from "../../service/notification.service";

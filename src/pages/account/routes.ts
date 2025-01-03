@@ -1,5 +1,5 @@
 import { lazy } from "react";
-import { RouteObject } from "react-router-dom";
+import { RouteObject } from "react-router";
 import AccountRepository from "../../core/repositories/account-repository";
 
 import liability from './liability/routes'

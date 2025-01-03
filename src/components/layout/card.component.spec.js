@@ -1,8 +1,8 @@
 import Card from "./card.component";
 import {render} from "@testing-library/react";
 import {Button} from "./button";
-import {routerWrapped} from "../../setupTests";
 import {mdiAccount} from "@mdi/js";
+import {BrowserRouter} from "react-router";
 
 describe('Card', () => {
     let button = <Button label='test.button' icon={mdiAccount} key='button'/>
@@ -18,7 +18,7 @@ describe('Card', () => {
     })
 
     it("A card with actions should have a header", () => {
-        const { container } = render(routerWrapped(<Card actions={[button]}><div/></Card>))
+        const { container } = render(<Card actions={[button]}><div/></Card>, {wrapper: BrowserRouter})
 
         const header = container.querySelector('header')
         expect(header).toBeInTheDocument()
@@ -28,7 +28,7 @@ describe('Card', () => {
     })
 
     it("A card with buttons should have a footer", () => {
-        const { container } = render(routerWrapped(<Card buttons={[button]}><div/></Card>))
+        const { container } = render(<Card buttons={[button]}><div/></Card>, {wrapper: BrowserRouter})
 
         const footer = container.querySelector('footer')
         expect(footer).toBeInTheDocument()

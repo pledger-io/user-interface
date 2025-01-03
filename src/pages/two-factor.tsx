@@ -3,7 +3,7 @@ import { mdiCheck } from "@mdi/js";
 import Message from "../components/layout/message.component";
 import SecurityRepository from "../core/repositories/security-repository";
 import { AxiosError } from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import useQueryParam from "../hooks/query-param.hook";
 
 import Card from "../components/layout/card.component";

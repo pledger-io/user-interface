@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 
 import { Contract } from "../../types/types";
 import ContractRepository from "../../core/repositories/contract-repository";

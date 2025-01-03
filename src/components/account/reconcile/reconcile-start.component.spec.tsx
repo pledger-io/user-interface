@@ -1,9 +1,9 @@
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import ProcessRepository from "../../../core/repositories/process.repository";
 import NotificationService from "../../../service/notification.service";
-import { routerWrapped } from "../../../setupTests";
 import ReconcilePopup from "./reconcile-start.component";
 import { Account } from "../../../types/types";
+import {BrowserRouter} from "react-router";
 
 jest.mock("../../../core/repositories/process.repository");
 jest.mock("../../../core");
@@ -20,8 +20,7 @@ describe('ReconcilePopup', () => {
         ProcessRepository.start = jest.fn().mockResolvedValue({});
         NotificationService.success = jest.fn();
 
-        const { getByTestId } = render(
-            routerWrapped(<ReconcilePopup account={ mockAccount } afterCreate={ mockAfterCreate }/>));
+        const { getByTestId } = render(<ReconcilePopup account={ mockAccount } afterCreate={ mockAfterCreate }/>, {wrapper: BrowserRouter});
 
         fireEvent.click(getByTestId(`reconcile-open-button-${ mockAccount.id }`));
 

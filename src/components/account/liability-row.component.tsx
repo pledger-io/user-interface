@@ -1,6 +1,6 @@
 import { mdiDotsVertical, mdiSquareEditOutline, mdiTrashCanOutline } from "@mdi/js";
 import React, { Attributes } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import ImageAttachment from "../../core/attachment/image-attachment";
 import AccountRepository from "../../core/repositories/account-repository";
 import { Account } from "../../types/types";

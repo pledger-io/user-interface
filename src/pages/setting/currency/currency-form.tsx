@@ -7,7 +7,7 @@ import Card from "../../../components/layout/card.component";
 import { Currency } from "../../../types/types";
 
 import { Form, Input, SubmitButton } from "../../../components/form";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router";
 import { CurrencyRepository } from "../../../core/RestAPI";
 
 const _ = () => {

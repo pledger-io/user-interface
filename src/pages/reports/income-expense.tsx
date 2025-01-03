@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router";
 import BalanceComponent from "../../components/balance.component";
 import BreadCrumbItem from "../../components/breadcrumb/breadcrumb-item.component";
 import BreadCrumbMenu from "../../components/breadcrumb/breadcrumb-menu.component";

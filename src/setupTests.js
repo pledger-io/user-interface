@@ -3,17 +3,6 @@
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom';
-import { BrowserRouter } from "react-router-dom";
-import { Form } from "./components/form";
+import { TextEncoder } from 'util';
 
-export const routerWrapped = (component) => {
-    return <BrowserRouter >
-        {component}
-    </BrowserRouter>
-}
-
-export const formWrapped = (component) => {
-    return <Form entity='TestForm' onSubmit={_ => undefined}>
-        {component}
-    </Form>
-}
+global.TextEncoder = TextEncoder;
