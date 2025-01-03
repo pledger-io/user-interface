@@ -10,7 +10,7 @@ import { Resolver } from "../../../core";
 
 import AccountRepository from "../../../core/repositories/account-repository";
 import { mdiCashPlus } from "@mdi/js";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 import { Account, Transaction } from "../../../types/types";
 import DateRange from "../../../types/date-range.type";
 

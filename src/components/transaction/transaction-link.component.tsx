@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 import { Resolver } from "../../core";
 import { Account, Transaction } from "../../types/types";

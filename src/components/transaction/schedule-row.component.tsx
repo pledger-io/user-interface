@@ -1,6 +1,6 @@
 import { mdiDotsVertical, mdiSquareEditOutline, mdiTrashCanOutline } from "@mdi/js";
 import React, { Attributes } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink } from "react-router";
 import DateComponent from "../../components/format/date.component";
 import { Resolver, When } from "../../core";
 

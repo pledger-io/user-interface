@@ -1,6 +1,6 @@
 import React from 'react'
 import { mdiCancel, mdiContentSave } from "@mdi/js";
-import { useLoaderData, useNavigate, useRouteLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate, useRouteLoaderData } from "react-router";
 import Loading from "../../../components/layout/loading.component";
 import { Category, Transaction } from "../../../types/types";
 import { TransactionService } from "../../../service/TransactionService";

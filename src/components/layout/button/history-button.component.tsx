@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import React, { Attributes, FC } from "react";
 import ButtonComponent from "./button.component";
 

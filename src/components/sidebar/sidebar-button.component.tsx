@@ -1,6 +1,6 @@
 import Icon from "@mdi/react";
 import React, { Attributes } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink } from "react-router";
 
 import Translation from "../localization/translation.component";
 import { SidebarButton } from "./sidebar.types";

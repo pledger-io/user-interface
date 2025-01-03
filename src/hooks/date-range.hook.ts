@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 import DateRange from "../types/date-range.type";
 import DateRangeService from "../service/date-range.service";
 

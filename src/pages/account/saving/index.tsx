@@ -1,6 +1,6 @@
 import { mdiSwapHorizontal } from "@mdi/js";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 import SavingGoalTableComponent from "../../../components/account/saving/saving-goal-table.component";
 
 import SavingSummaryComponent from "../../../components/account/saving/saving-goal.component";

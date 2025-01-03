@@ -5,7 +5,7 @@ import { mdiCheckDecagram, mdiSkipNext } from "@mdi/js";
 import { useState } from "react";
 import ImportJobRepository from "../../core/repositories/import-job.repository";
 import ProcessRepository from "../../core/repositories/process.repository";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import Icon from "@mdi/react";
 import Translation from "../localization/translation.component";
 

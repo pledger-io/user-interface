@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router";
 
 const useQueryParam = ({ key, initialValue }: { initialValue: string | (() => string), key: string }) => {
     const [value, setValue] = useState(initialValue)

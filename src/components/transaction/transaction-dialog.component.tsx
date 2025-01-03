@@ -1,6 +1,6 @@
 import { mdiPageNext } from "@mdi/js";
 import React, { FC } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import { Resolver } from "../../core";
 import { Account } from "../../types/types";
 import { Entity, Form, SubmitButton } from "../form";

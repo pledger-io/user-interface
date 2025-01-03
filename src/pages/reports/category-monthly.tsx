@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Currency, Year } from "../../components/layout/dropdown";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router";
 
 import { CurrencyRepository } from "../../core/RestAPI";
 import CategoryRepository from "../../core/repositories/category-repository";

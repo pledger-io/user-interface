@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink } from "react-router";
 import Translation from "../localization/translation.component";
 
 const NavigationComponent = () => {

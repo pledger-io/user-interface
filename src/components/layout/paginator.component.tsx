@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { mdiChevronLeft, mdiChevronRight } from "@mdi/js";
 import Icon from "@mdi/react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 type PageButtonProp = {
     page: number,

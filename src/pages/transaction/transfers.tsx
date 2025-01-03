@@ -1,6 +1,6 @@
 import { mdiSwapHorizontal } from "@mdi/js";
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import BreadCrumbItem from "../../components/breadcrumb/breadcrumb-item.component";
 import BreadCrumbMenu from "../../components/breadcrumb/breadcrumb-menu.component";
 import BreadCrumbs from "../../components/breadcrumb/breadcrumb.component";

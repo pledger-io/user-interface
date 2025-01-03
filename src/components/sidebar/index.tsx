@@ -1,6 +1,6 @@
 import { mdiLogoutVariant } from "@mdi/js";
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink } from "react-router";
 import logo from '../../assets/logo.png'
 import config from '../../config/sidebar-config.js'
 import { Button } from "../layout/button";

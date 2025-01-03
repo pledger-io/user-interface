@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router";
 import { mdiCancel, mdiContentSave } from "@mdi/js";
 
 import { Contract } from "../../types/types";

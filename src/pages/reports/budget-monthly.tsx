@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router";
 import { Currency, Year } from "../../components/layout/dropdown";
 
 import { Budget } from "../../types/types";
