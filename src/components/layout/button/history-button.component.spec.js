@@ -1,22 +1,22 @@
 import HistoryButtonComponent from "./history-button.component"
 import { fireEvent, render } from "@testing-library/react";
-import { routerWrapped } from "../../../setupTests";
 import { mdiAccount } from "@mdi/js";
+import {BrowserRouter} from "react-router";
 
 describe(HistoryButtonComponent, () => {
 
     const mockNavigate = jest.fn()
 
     beforeEach(() => {
-        jest.mock('react-router-dom', () => ({
-            ...jest.requireActual('react-router-dom'),
+        jest.mock('react-router', () => ({
+            ...jest.requireActual('react-router'),
             useNavigate: () => mockNavigate
         }))
     })
 
     it("click on the back button", () => {
         const { getByRole } = render(
-            routerWrapped(<HistoryButtonComponent label='common.test' icon={mdiAccount}/>))
+            <HistoryButtonComponent label='common.test' icon={mdiAccount}/>, {wrapper: BrowserRouter})
         const button = getByRole('button')
 
         expect(button).toBeInTheDocument()

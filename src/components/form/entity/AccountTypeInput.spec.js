@@ -1,7 +1,13 @@
 import { AccountTypeInput } from "./AccountTypeInput";
-import { formWrapped } from "../../../setupTests";
 import { render, waitFor } from "@testing-library/react";
 import axios from "axios";
+import {Form} from "../Form";
+
+const formWrapped = (component) => {
+    return <Form entity='TestForm' onSubmit={_ => undefined}>
+        {component}
+    </Form>
+}
 
 describe('AccountTypeInput', () => {
 

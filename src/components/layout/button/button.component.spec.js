@@ -1,27 +1,27 @@
 import { fireEvent, render } from '@testing-library/react';
 import ButtonComponent from './button.component';
-import { routerWrapped } from "../../../setupTests";
 import { mdiAbacus } from "@mdi/js";
+import {BrowserRouter} from "react-router";
 
 describe('Button', () => {
     const mockNavigate = jest.fn()
 
     beforeEach(() => {
-        jest.mock('react-router-dom', () => ({
-            ...jest.requireActual('react-router-dom'),
+        jest.mock('react-router', () => ({
+            ...jest.requireActual('react-router'),
             useNavigate: () => mockNavigate
         }))
     })
 
     it('renders with default props', () => {
-        const { getByTestId } = render(routerWrapped(<ButtonComponent dataTestId="button" />));
+        const { getByTestId } = render(<ButtonComponent dataTestId="button" />, {wrapper: BrowserRouter});
         const button = getByTestId('button');
         expect(button).toBeInTheDocument();
     });
 
     it('calls onClick when clicked', () => {
         const handleClick = jest.fn();
-        const { getByTestId } = render(routerWrapped(<ButtonComponent onClick={ handleClick } dataTestId="button" />));
+        const { getByTestId } = render(<ButtonComponent onClick={ handleClick } dataTestId="button" />, {wrapper: BrowserRouter});
         const button = getByTestId('button');
 
         fireEvent.click(button);
@@ -29,7 +29,7 @@ describe('Button', () => {
     });
 
     it('navigates when href is provided and button is clicked', () => {
-        const { getByTestId } = render(routerWrapped(<ButtonComponent href="/test" dataTestId="button" />));
+        const { getByTestId } = render(<ButtonComponent href="/test" dataTestId="button" />, {wrapper: BrowserRouter});
         const button = getByTestId('button');
 
         fireEvent.click(button);
@@ -38,7 +38,7 @@ describe('Button', () => {
 
     it('does not navigate when onClick is provided', () => {
         const handleClick = jest.fn();
-        const { getByTestId } = render(routerWrapped(<ButtonComponent href="/test" onClick={ handleClick } dataTestId="button" />));
+        const { getByTestId } = render(<ButtonComponent href="/test" onClick={ handleClick } dataTestId="button" />, {wrapper: BrowserRouter});
         const button = getByTestId('button');
 
         fireEvent.click(button);
@@ -47,19 +47,19 @@ describe('Button', () => {
     });
 
     it('renders with icon before label when iconPos is before', () => {
-        const { getByTestId } = render(routerWrapped(<ButtonComponent icon={ mdiAbacus } iconPos="before" dataTestId="button" />));
+        const { getByTestId } = render(<ButtonComponent icon={ mdiAbacus } iconPos="before" dataTestId="button" />, {wrapper: BrowserRouter});
         const button = getByTestId('button');
         expect(button.firstChild.nodeName).toBe('svg');
     });
 
     it('renders with icon after label when iconPos is after', () => {
-        const { getByTestId } = render(routerWrapped(<ButtonComponent icon={ mdiAbacus } iconPos="after" dataTestId="button" />));
+        const { getByTestId } = render(<ButtonComponent icon={ mdiAbacus } iconPos="after" dataTestId="button" />, {wrapper: BrowserRouter});
         const button = getByTestId('button');
         expect(button.lastChild.nodeName).toBe('svg');
     });
 
     it('renders with disabled attribute when disabled prop is true', () => {
-        const { getByTestId } = render(routerWrapped(<ButtonComponent disabled={true} dataTestId="button" />));
+        const { getByTestId } = render(<ButtonComponent disabled={true} dataTestId="button" />, {wrapper: BrowserRouter});
         const button = getByTestId('button');
 
         expect(button).toBeDisabled();
