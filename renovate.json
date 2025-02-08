@@ -7,10 +7,6 @@
     {
       "groupName": "Patch version bumps",
       "matchUpdateTypes": ["patch"]
-    },
-    {
-      "groupName": "Minor version bumps",
-      "matchUpdateTypes": ["minor"]
     }
   ],
   "addLabels": ["dependencies"],
