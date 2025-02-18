@@ -1,4 +1,4 @@
-import { ChangeEvent } from "react";
+import {ChangeEvent, FocusEvent} from "react";
 
 export type ValidatorFunc = (value: any) => boolean
 export type ValidatorType = {
@@ -30,6 +30,6 @@ export type FormContextType = {
     errors: Record<string, string[]>,
     entity: string,
     onChange: OnValueChangeFunc,
-    onInputBlur: InputBlurFunc,
+    onInputBlur: (field: FieldType) => void,
     addField: AddFieldFunc
 }

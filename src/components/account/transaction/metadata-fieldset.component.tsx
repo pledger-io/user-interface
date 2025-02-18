@@ -21,12 +21,13 @@ const MetadataFieldsetComponent = ({ transaction, suggestionFunc }: { transactio
         if (suggestionFunc) {
             suggestionFunc.suggest = (suggestion: Suggestion) => setSuggestion(suggestion)
         }
-    }, [suggestion])
+    }, [suggestionFunc])
 
     const isNotTransfer = !Resolver.Transaction.isTransfer(transaction)
     const categoryValue = transaction.metadata?.category || (suggestion?.CATEGORY && { id: -1, name: suggestion.CATEGORY })
     const budgetValue = transaction.metadata?.budget || (suggestion?.BUDGET && { id: -1, name: suggestion?.BUDGET })
     const contractValue = transaction.metadata?.contract || (suggestion?.CONTRACT && { id: -1, name: suggestion?.CONTRACT })
+    const tags = transaction.metadata?.tags || suggestion?.TAGS?.map((tag: any) => tag.name)
     return <fieldset>
         <legend><Translation label='page.transaction.add.link'/></legend>
 
@@ -43,7 +44,7 @@ const MetadataFieldsetComponent = ({ transaction, suggestionFunc }: { transactio
                                             title='Transaction.contract'/> }
 
         <Input.Tags title='Transaction.tags'
-                    value={ transaction.metadata?.tags }
+                    value={ tags }
                     id='tags'/>
     </fieldset>
 }

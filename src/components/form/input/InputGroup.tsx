@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, FC, ReactNode, useContext, useEffect } from "react";
+import React, {ChangeEventHandler, FC, FocusEvent, FocusEventHandler, ReactNode, useContext, useEffect} from "react";
 import Translation from "../../localization/translation.component";
 import HelpTranslation from "../../localization/help.component";
 
@@ -62,7 +62,7 @@ export const useInputField = ({ onChange, field }: useInputFieldProps) : [FieldT
         if (onChange) onChange((event.currentTarget as HTMLInputElement).value)
     }
     const onInputBlur = () => {
-        formContext.onInputBlur()
+        formContext.onInputBlur({ id: field.id })
     }
 
     return [

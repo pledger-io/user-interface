@@ -1,4 +1,4 @@
-import React, { Context, createContext, FC, FormEvent, ReactNode, useEffect, useState } from "react";
+import React, {Context, createContext, FC, FocusEvent, FormEvent, ReactNode, useEffect, useState} from "react";
 import { AddFieldFunc, FieldType, FormContextType, OnValueChangeFunc } from "./form-types";
 
 import '../../assets/css/Form.scss'
@@ -101,12 +101,13 @@ export const Form: FC<FormProps> = ({ entity, onSubmit, onChange, style = 'group
         entity: entity,
         addField: onAddField,
         onChange: onValueChange,
-        onInputBlur: () => {
+        onInputBlur: ({ id }: { id: string }) => {
             if (onChange) {
                 const entity: Record<string, any> = {}
                 Object.entries(fields)
                     .forEach(([id, field]) => entity[id] = (field as FieldType).value)
-                onChange(entity)
+
+                onChange({ changed: id, value: entity })
             }
         }
     } as FormContextType

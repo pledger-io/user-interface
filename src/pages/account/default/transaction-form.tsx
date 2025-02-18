@@ -68,15 +68,19 @@ const TransactionForm = () => {
 
     const suggestionFunction: SuggestionFunction = { suggest: (_: Suggestion) => void 0 }
     const onInputChanged = (e: any) => {
+        if (['from', 'to', 'amount', 'description'].indexOf(e.changed) == -1) {
+            return
+        }
         const suggestionReq = {
-            source: e.from?.name,
-            destination: e.to?.name,
-            amount: e.amount ? parseFloat(e.amount) : null,
-            description: e.description
+            source: e.value.from?.name,
+            destination: e.value.to?.name,
+            amount: e.value.amount ? parseFloat(e.amount) : null,
+            description: e.value.description
         }
 
         TransactionRepository.suggest(suggestionReq)
             .then((result: Suggestion) => suggestionFunction.suggest(result))
+            .catch(console.error)
     }
 
     const backendType = Resolver.Account.convertToBackendType(type)
