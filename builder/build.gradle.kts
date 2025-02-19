@@ -4,7 +4,7 @@ plugins {
 }
 
 tasks.processResources {
-    from("../build") {
+    from("../dist") {
         into("public")
     }
 }
