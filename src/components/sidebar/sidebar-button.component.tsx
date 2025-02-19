@@ -13,8 +13,8 @@ const SidebarButtonComponent = (props: Attributes & { config: SidebarButton }) =
                            `flex flex-row items-center
                             pl-4 py-2 gap-1
                             ${ isActive ? 'bg-[var(--sidebar-sub-background)] font-bold' : '' }
-                            hover:bg-[var(--app-background)] hover:text-[var(--app-header-text)]
-                            text-[var(--sidebar-title-color)]`}>
+                            hover:bg-[var(--app-background)] hover:text-[var(--app-header-text)]!
+                            text-[var(--sidebar-title-color)]!`}>
         <Icon path={ icon }
               className='pl-1'
               size={.9}/>

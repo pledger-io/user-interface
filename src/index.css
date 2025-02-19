@@ -1,6 +1,6 @@
 @import 'tailwindcss';
 
-@theme {
+@theme inline {
   --color-primary: var(--primary-color);
   --color-dark-primary: var(--dark-primary-color);
   --color-secondary: var(--secondary-color);

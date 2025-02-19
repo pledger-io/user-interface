@@ -55,7 +55,7 @@ const Sidebar = ({ logoutCallback }: SidebarProps) => {
                 <Button icon={ mdiLogoutVariant }
                         onClick={ logoutCallback }
                         variant='icon'
-                        className='px-2 text-[var(--sidebar-icon-color)]'/>
+                        className='px-2 text-[var(--sidebar-icon-color)]!'/>
             </footer>
         </div>
 }

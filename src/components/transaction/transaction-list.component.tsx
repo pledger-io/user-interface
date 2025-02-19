@@ -74,7 +74,7 @@ const TransactionOverview: FC<TransactionOverviewProps> = ({ range, transfers })
                 .reduce((a, t) => a + t.amount, 0)
 
             return <div key={key} className='flex flex-col gap-0.5 pb-3'>
-                <div className='flex gap-2 items-center border-b-[1px] pb-1 mb-1 px-2 rounded-lg bg-blue-200 bg-opacity-10'>
+                <div className='flex gap-2 items-center border-b-[1px] pb-1 mb-1 px-2 rounded-lg bg-blue-200/20'>
                     <div className='font-bold text-lg[1.5em] text-muted'>
                         { date.getDate() }
                     </div>
