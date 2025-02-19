@@ -82,7 +82,7 @@ const TransactionOverview: FC<TransactionOverviewProps> = ({ range, transfers })
                         <span className='text-[.9em] text-neutral-500'>
                             { `${date.getFullYear()}.${date.getMonth()}` }
                         </span>
-                        <span className='rounded bg-gray-300 py-0.5 text-[.75em] text-white text-center font-bold'>
+                        <span className='rounded-sm bg-gray-300 py-0.5 text-[.75em] text-white text-center font-bold'>
                             <Translation label={`common.weekday.${date.getDay()}`} />
                         </span>
                     </div>

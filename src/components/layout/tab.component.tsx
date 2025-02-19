@@ -29,7 +29,7 @@ const Tabs: FC<TabsProps> = ({  activeTab, buttons, children, onChange }) => {
                                 icon={ button.icon }/>
                     ))
                 }
-                <div className='flex-grow border-b-[1px] border-b-separator'/>
+                <div className='grow border-b-[1px] border-b-separator'/>
             </div>
             <div>
                 { children }

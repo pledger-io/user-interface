@@ -9,9 +9,9 @@ const BreadCrumbItem = ({ message, label, href }: { message?: string, label?: st
     }
 
     return <li className="flex-1 max-w-fit before:content-['\\']
-                          [&:nth-child(n+4)]:hidden
-                          md:[&:nth-child(n+3)]:!block
-                          before:mr-1 [&:nth-child(2)]:before:content-['']">{ text }</li>
+                          nth-[n+4]:hidden
+                          md:nth-[n+3]:block!
+                          before:mr-1 nth-2:before:content-['']">{ text }</li>
 }
 
 export default BreadCrumbItem

@@ -26,7 +26,7 @@ const MobileSidebar = ({ logoutCallback }: SidebarProps) => {
 
     if (!isOpen) return <></>
     return <div
-        className='fixed md:hidden left-0 top-[38px] z-[1055] h-full w-full bg-[#00000099] flex items-center justify-center'>
+        className='fixed md:hidden left-0 top-[38px] z-1055 h-full w-full bg-[#00000099] flex items-center justify-center'>
         <div className='mx-auto w-fit min-w-[20em] bg-[var(--sidebar-background)] p-4 rounded-2xl overflow-hidden'>
             {
                 config.map((section, idx) => {
@@ -47,14 +47,14 @@ const MobileSidebar = ({ logoutCallback }: SidebarProps) => {
                     className='mx-[-1rem] mb-[-.9rem] mt-5 flex items-center justify-between bg-[var(--sidebar-sub-background)]'>
                     <NavLink to='/user/profile/theme' className='px-2 py-1'>
                         <ProfilePicture size={ 40 }
-                                        className='bg-[var(--sidebar-title-color)] rounded'/>
+                                        className='bg-[var(--sidebar-title-color)] rounded-sm'/>
                     </NavLink>
 
                     <Button label='common.action.close'
                             icon={ mdiCloseBox }
                             onClick={ () => setIsOpen(false) }
                             variant='primary'
-                            className='border-none !text-white'/>
+                            className='border-none text-white!'/>
 
                     <Button icon={ mdiLogoutVariant }
                             onClick={ logoutCallback }
