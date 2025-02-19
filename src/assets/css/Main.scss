@@ -1,4 +1,4 @@
-@import 'src/config/constants';
+@use 'constants';
 
 #root {
   display: flex;
@@ -183,7 +183,7 @@ a {
   }
 }
 
-@media (max-width: $media-max-width) {
+@media (max-width: constants.$media-max-width) {
   .mobile-hidden {
     display: none;
   }
