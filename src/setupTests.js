@@ -4,5 +4,8 @@
 // learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom';
 import { TextEncoder } from 'util';
+import {mockedAxios} from "../__mocks__/axios.js";
 
 global.TextEncoder = TextEncoder;
+
+mockedAxios.get()

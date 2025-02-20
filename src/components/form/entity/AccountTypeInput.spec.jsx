@@ -1,7 +1,7 @@
 import { AccountTypeInput } from "./AccountTypeInput";
 import { render, waitFor } from "@testing-library/react";
-import axios from "axios";
 import {Form} from "../Form";
+import {mockedAxios} from "../../../../__mocks__/axios.js";
 
 const formWrapped = (component) => {
     return <Form entity='TestForm' onSubmit={_ => undefined}>
@@ -12,7 +12,7 @@ const formWrapped = (component) => {
 describe('AccountTypeInput', () => {
 
     beforeEach(() => {
-        axios.get.mockImplementationOnce(_ => {
+        mockedAxios.get.mockImplementationOnce(_ => {
             return Promise.resolve({ data: ['Car'] })
         })
     })
@@ -23,9 +23,5 @@ describe('AccountTypeInput', () => {
         await waitFor(() => {
             expect(container.querySelector('option[value="Car"]')).toBeInTheDocument()
         })
-    })
-
-    afterEach(() => {
-        jest.resetAllMocks()
     })
 })

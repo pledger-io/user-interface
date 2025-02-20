@@ -1,14 +1,14 @@
 import user from '@testing-library/user-event';
-import axios from "axios";
 import { fireEvent, render, waitFor } from "@testing-library/react";
 
 import UploadContract from "./upload-dialog.component";
 import {BrowserRouter} from "react-router";
+import {mockedAxios} from "../../../__mocks__/axios.js";
 
 describe('upload-contract', () => {
 
     beforeEach(() => {
-        axios.post.mockImplementationOnce(_ => {
+        mockedAxios.post.mockImplementationOnce(_ => {
             return Promise.resolve({ fileCode: 'absded' })
         })
     })
@@ -50,10 +50,6 @@ describe('upload-contract', () => {
         await waitFor(() => {
             expect(button).not.toBeInTheDocument()
         })
-    })
-
-    afterEach(() => {
-        jest.resetAllMocks()
     })
 
 })
