@@ -53,14 +53,14 @@ const ButtonComponent: FC<ButtonProps> = ({
             type={type}
             onClick={() => (href && navigate(href)) || onClick()}
             data-testid={ dataTestId }
-            className={`whitespace-nowrap outline-none
+            className={`whitespace-nowrap outline-hidden
                         flex items-center justify-center cursor-pointer
                         hover:brightness-125
                         text-sm gap-1 ${variantType}
                         ${disabled ? 'pointer-events-none opacity-60' : ''}
                         ${specialVariant 
                             ? 'border-none hover:border-b-primary hover:underline text-primary'
-                            : `px-1.5 md:px-2 py-0 md:py-1 border-solid border-[1px] rounded border-${variant} bg-dark-${variant} text-white`
+                            : `px-1.5 md:px-2 py-0 md:py-1 border-solid border-[1px] rounded-sm border-${variant} bg-dark-${variant} text-white`
                         }
                         ${className}`}
             disabled={disabled}>

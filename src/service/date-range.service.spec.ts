@@ -1,13 +1,14 @@
 import DateRangeService from "./date-range.service";
+import {vi} from "vitest";
 
 describe('Ranges', () => {
     beforeEach(() => {
-        jest.useFakeTimers()
+        vi.useFakeTimers()
             .setSystemTime(new Date('2010-01-03'))
     })
 
     afterEach(() => {
-        jest.useRealTimers()
+        vi.useRealTimers()
     })
 
     it("Get correct range for current month.", () => {

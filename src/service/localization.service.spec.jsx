@@ -1,5 +1,5 @@
-import axios from "axios";
 import LocalizationService from "./localization.service";
+import {mockedAxios} from "../../__mocks__/axios.js";
 
 const timesOut = async (promise, ms) => {
     const awaiting = Promise.race([promise, new Promise((_, reject) => {
@@ -16,7 +16,7 @@ const timesOut = async (promise, ms) => {
 describe('LocalizationService', () => {
 
     beforeEach(() => {
-        axios.get.mockImplementationOnce(_ => {
+        mockedAxios.get.mockImplementationOnce(_ => {
             return Promise.resolve({
                 data: {
                     test: 'Localization test'

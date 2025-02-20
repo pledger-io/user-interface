@@ -4,21 +4,19 @@ import NotificationService from "../../../service/notification.service";
 import ReconcilePopup from "./reconcile-start.component";
 import { Account } from "../../../types/types";
 import {BrowserRouter} from "react-router";
-
-jest.mock("../../../core/repositories/process.repository");
-jest.mock("../../../core");
+import {vi} from "vitest";
 
 describe('ReconcilePopup', () => {
     const mockAccount = { id: '123', name: 'Test Account' } as Account;
-    const mockAfterCreate = jest.fn();
+    const mockAfterCreate = vi.fn();
 
     beforeEach(() => {
-        jest.clearAllMocks();
+
     });
 
     it('submits the form successfully', async () => {
-        ProcessRepository.start = jest.fn().mockResolvedValue({});
-        NotificationService.success = jest.fn();
+        ProcessRepository.start = vi.fn().mockResolvedValue({});
+        NotificationService.success = vi.fn();
 
         const { getByTestId } = render(<ReconcilePopup account={ mockAccount } afterCreate={ mockAfterCreate }/>, {wrapper: BrowserRouter});
 

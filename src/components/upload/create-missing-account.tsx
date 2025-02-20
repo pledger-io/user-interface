@@ -115,7 +115,7 @@ const _ = ({ task }: { task: ProcessTask }) => {
 
                 <div className='flex mb-2'>
                     <span className='flex-auto max-w-full md-max-w-[15vw]'/>
-                    <span className='flex-[3] flex gap-3'>
+                    <span className='flex-3 flex gap-3'>
                         <Input.Toggle id='ownAccount'
                                       onChange={ () => setAssetAccount(!assetAccount) }
                                       value={ true }/>
@@ -130,7 +130,7 @@ const _ = ({ task }: { task: ProcessTask }) => {
                 { !assetAccount && <span className='flex mb-2'>
                     <span className='flex-auto max-w-full md-max-w-[15vw]'/>
 
-                    <span className='flex-[3]'>
+                    <span className='flex-3'>
                         <Input.RadioButtons id='type'
                                             value='creditor'
                                             options={ [

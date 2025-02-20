@@ -30,7 +30,7 @@ const OverviewRowComponent = ({ importJob }: Attributes & { importJob: ImportJob
                     <Translation label='page.import.delete.confirm'/>
                 </Confirm>
             </td>
-            <td className='max-w-32 overflow-x-hidden overflow-ellipsis md:max-w-full'>
+            <td className='max-w-32 overflow-x-hidden text-ellipsis md:max-w-full'>
                 { hasFinished && <Button href={ `/upload/${ importJob.slug }/result` }
                                          variant='text'
                                          message={ importJob.slug }/> }

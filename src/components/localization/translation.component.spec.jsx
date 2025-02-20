@@ -1,16 +1,17 @@
-import { act, render, screen } from "@testing-library/react";
+import { act, screen } from "@testing-library/react";
 import axios from "axios";
 import LocalizationService from "../../service/localization.service";
 
 import Translation from "./translation.component";
 import {createRoot} from "react-dom/client";
+import {mockedAxios} from "../../../__mocks__/axios.js";
 
 describe('Translation', () => {
 
     let root = null
 
     beforeEach(() => {
-        axios.get.mockImplementationOnce(_ => {
+        mockedAxios.get.mockImplementationOnce(_ => {
             return Promise.resolve({ data: { test: 'Localization test' } })
         })
 
@@ -40,7 +41,7 @@ describe('Translation', () => {
     })
 
     afterEach(async () => {
-        jest.restoreAllMocks()
+        vi.restoreAllMocks()
         act(() => {
             root.unmount()
         })

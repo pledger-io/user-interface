@@ -54,7 +54,7 @@ export const DateInput = (props: DateInputProps) => {
                     required={props.required}
                     title={props.title}
                     help={props.help}
-                    inputClassName='!block'
+                    inputClassName='block!'
                     valid={field.touched ? errors.length === 0 : undefined }>
             <DatePicker required={props.required}
                         selected={selected}

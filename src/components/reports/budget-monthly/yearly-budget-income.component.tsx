@@ -29,7 +29,7 @@ const YearlyBudgetIncomeComponent = ({ range, budgets = [] } : YearlyBudgetIncom
 
     return <Card title='page.reports.budget.incomePercent'>
         <Progressbar total={ yearlyExpected }
-                     className='success !h-12'
+                     className='success h-12!'
                      current={ yearlyIncome }/>
     </Card>
 }

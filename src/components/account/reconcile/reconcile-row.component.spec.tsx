@@ -7,8 +7,8 @@ import ProcessRepository, {
     ProcessVariable
 } from "../../../core/repositories/process.repository";
 import {BrowserRouter} from "react-router";
+import {vi} from "vitest";
 
-jest.mock("../../../core/repositories/process.repository");
 
 function tableWrapped(children: any) {
     return <BrowserRouter><table>
@@ -19,7 +19,7 @@ function tableWrapped(children: any) {
 }
 
 describe('ReconcileRowComponent', () => {
-    const mockOnRemoved = jest.fn();
+    const mockOnRemoved = vi.fn();
     const mockProcess: ProcessInstance = {
         id: '1',
         process: 'Process1',
@@ -40,21 +40,17 @@ describe('ReconcileRowComponent', () => {
         definition: 'Definition1'
     }];
 
-    beforeEach(() => {
-        jest.clearAllMocks();
-    });
-
     it('should load process variables on mount', async () => {
-        jest.spyOn(ProcessRepository, 'variables').mockResolvedValue(Promise.resolve(mockVariables));
+        vi.spyOn(ProcessRepository, 'variables').mockResolvedValue(mockVariables);
         render(tableWrapped(<ReconcileRowComponent process={mockProcess} onRemoved={mockOnRemoved}/>));
 
         await waitFor(() => expect(ProcessRepository.variables).toHaveBeenCalledWith('AccountReconcile', mockProcess.businessKey, mockProcess.id));
     });
 
     it('should call onRemoved when process is retried', async () => {
-        jest.spyOn(ProcessRepository, 'tasks').mockResolvedValue(Promise.resolve(mockTasks));
-        jest.spyOn(ProcessRepository, 'completeTask').mockResolvedValue(Promise.resolve());
-        jest.spyOn(ProcessRepository, 'variables').mockResolvedValue(Promise.resolve(mockVariables));
+        vi.spyOn(ProcessRepository, 'tasks').mockResolvedValue(mockTasks);
+        vi.spyOn(ProcessRepository, 'completeTask').mockResolvedValue();
+        vi.spyOn(ProcessRepository, 'variables').mockResolvedValue(mockVariables);
 
         const { getByTestId } = render(tableWrapped(<ReconcileRowComponent process={ mockProcess }
                                                                             onRemoved={ mockOnRemoved }/>));
@@ -70,8 +66,8 @@ describe('ReconcileRowComponent', () => {
     });
 
     it('should call onRemoved when process is deleted', async () => {
-        jest.spyOn(ProcessRepository, 'variables').mockResolvedValue(Promise.resolve(mockVariables));
-        jest.spyOn(ProcessRepository, 'delete').mockResolvedValue(Promise.resolve());
+        vi.spyOn(ProcessRepository, 'variables').mockResolvedValue(mockVariables);
+        vi.spyOn(ProcessRepository, 'delete').mockResolvedValue();
 
         const {getByTestId} = render(tableWrapped(<ReconcileRowComponent process={mockProcess}
                                                                          onRemoved={mockOnRemoved}/>));

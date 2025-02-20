@@ -1,6 +1,5 @@
 import { render } from "@testing-library/react";
 import { Paginator } from "./paginator.component";
-import { routerWrapped } from "../../setupTests";
 import {BrowserRouter} from "react-router";
 
 describe('Paginator', () => {

@@ -32,9 +32,9 @@ function Login() {
                   className='min-w-[30rem]'
                   actions={ [
                       <Dropdown icon={ mdiWeb }
-                                         className='[&>div]:bg-white [&>div]:px-4 [&>div]:rounded [&>div]:border-separator [&>div]:border-[1px]'
+                                         className='[&>div]:bg-white [&>div]:px-4 [&>div]:rounded-sm [&>div]:border-separator [&>div]:border-[1px]'
                                          key='language-dropdown'>
-                          <button className='!rounded-t Flag us hover:opacity-80 border-b-[1px]'
+                          <button className='rounded-t! Flag us hover:opacity-80 border-b-[1px]'
                                   type='button'
                                   onClick={ () => LocalizationService.load('en') }>English
                           </button>
@@ -42,7 +42,7 @@ function Login() {
                                   type='button'
                                   onClick={ () => LocalizationService.load('de') }>Deutsch
                           </button>
-                          <button className='Flag nl !pl-5 !rounded-b hover:opacity-80'
+                          <button className='Flag nl pl-5! rounded-b! hover:opacity-80'
                                   type='button'
                                   onClick={ () => LocalizationService.load('nl') }>Nederlands
                           </button>

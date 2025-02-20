@@ -49,13 +49,13 @@ const Sidebar = ({ logoutCallback }: SidebarProps) => {
             <footer className='flex items-center justify-between bg-[var(--sidebar-sub-background)]'>
                 <NavLink to='/user/profile/theme' className='px-2 py-1'>
                     <ProfilePicture size={ 40 }
-                                    className='bg-[var(--sidebar-title-color)] rounded'/>
+                                    className='bg-[var(--sidebar-title-color)] rounded-sm'/>
                 </NavLink>
 
                 <Button icon={ mdiLogoutVariant }
                         onClick={ logoutCallback }
                         variant='icon'
-                        className='px-2 text-[var(--sidebar-icon-color)]'/>
+                        className='px-2 text-[var(--sidebar-icon-color)]!'/>
             </footer>
         </div>
 }

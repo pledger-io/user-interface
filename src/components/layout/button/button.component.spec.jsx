@@ -2,15 +2,13 @@ import { fireEvent, render } from '@testing-library/react';
 import ButtonComponent from './button.component';
 import { mdiAbacus } from "@mdi/js";
 import {BrowserRouter} from "react-router";
+import {mockedReactRouter} from "../../../../__mocks__/react-router.jsx";
 
 describe('Button', () => {
-    const mockNavigate = jest.fn()
+    const mockNavigate = mockedReactRouter.useNavigate
 
     beforeEach(() => {
-        jest.mock('react-router', () => ({
-            ...jest.requireActual('react-router'),
-            useNavigate: () => mockNavigate
-        }))
+        vi.resetAllMocks()
     })
 
     it('renders with default props', () => {
@@ -20,7 +18,7 @@ describe('Button', () => {
     });
 
     it('calls onClick when clicked', () => {
-        const handleClick = jest.fn();
+        const handleClick = vi.fn();
         const { getByTestId } = render(<ButtonComponent onClick={ handleClick } dataTestId="button" />, {wrapper: BrowserRouter});
         const button = getByTestId('button');
 
@@ -37,7 +35,7 @@ describe('Button', () => {
     });
 
     it('does not navigate when onClick is provided', () => {
-        const handleClick = jest.fn();
+        const handleClick = vi.fn();
         const { getByTestId } = render(<ButtonComponent href="/test" onClick={ handleClick } dataTestId="button" />, {wrapper: BrowserRouter});
         const button = getByTestId('button');
 

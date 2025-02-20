@@ -74,7 +74,7 @@ const TransactionOverview: FC<TransactionOverviewProps> = ({ range, transfers })
                 .reduce((a, t) => a + t.amount, 0)
 
             return <div key={key} className='flex flex-col gap-0.5 pb-3'>
-                <div className='flex gap-2 items-center border-b-[1px] pb-1 mb-1 px-2 rounded-lg bg-blue-200 bg-opacity-10'>
+                <div className='flex gap-2 items-center border-b-[1px] pb-1 mb-1 px-2 rounded-lg bg-blue-200/20'>
                     <div className='font-bold text-lg[1.5em] text-muted'>
                         { date.getDate() }
                     </div>
@@ -82,7 +82,7 @@ const TransactionOverview: FC<TransactionOverviewProps> = ({ range, transfers })
                         <span className='text-[.9em] text-neutral-500'>
                             { `${date.getFullYear()}.${date.getMonth()}` }
                         </span>
-                        <span className='rounded bg-gray-300 py-0.5 text-[.75em] text-white text-center font-bold'>
+                        <span className='rounded-sm bg-gray-300 py-0.5 text-[.75em] text-white text-center font-bold'>
                             <Translation label={`common.weekday.${date.getDay()}`} />
                         </span>
                     </div>

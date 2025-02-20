@@ -68,7 +68,7 @@ const LiabilityDetailView = () => {
                         <label className='min-w-[8em]'>
                             <Translation label='page.accounts.liability.startBalance'/>:
                         </label>
-                        <span className='flex-1 [&>*]:!text-warning'>
+                        <span className='flex-1 *:text-warning!'>
                             <MoneyComponent money={ openingTransaction?.amount } currency={ account.account.currency }/>
                         </span>
                     </div>
@@ -81,7 +81,7 @@ const LiabilityDetailView = () => {
                         </span>
                     </div>
                 </Card>
-                <Card className='flex-[2]'>
+                <Card className='flex-2'>
                     <h1>
                         <Translation label='common.account.balance'/>
                     </h1>

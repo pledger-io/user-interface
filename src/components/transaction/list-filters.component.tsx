@@ -38,7 +38,7 @@ const TransactionFilters: FC<TransactionFiltersProps> = ({ onChange }) => {
 
     return <div className='max-w-[90em] mx-auto my-0 mobile-hidden'>
         <Form entity='Transaction' onSubmit={ onSubmit }>
-            <fieldset className='!border-solid !border-[1px] !border-separator'>
+            <fieldset className='border-solid! border-[1px]! border-separator!'>
                 <legend className='text-xl font-normal px-2'>
                     <Translation label='page.transactions.filter'/>
                 </legend>

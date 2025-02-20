@@ -41,7 +41,7 @@ const ReconcilePopup = ({ account, afterCreate }: { account: Account, afterCreat
                 openButton={
                     <Button label='page.reports.default.reconcile'
                             key='reconcile'
-                            className='!py-2'
+                            className='py-2!'
                             icon={ mdiCheck }
                             dataTestId={ `reconcile-open-button-${ account.id }` }/>
                 }>

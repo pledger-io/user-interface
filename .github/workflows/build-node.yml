@@ -7,10 +7,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Set Node.js 21.x
+      - name: Set Node.js 22.x
         uses: actions/setup-node@v4
         with:
-          node-version: 21.x
+          node-version: 22.x
       - name: Install dependencies
         run: yarn --frozen-lockfile
       - name: Run test suite
@@ -22,4 +22,4 @@ jobs:
         with:
           name: build-artifact
           path: |
-            build/**
+            dist/**

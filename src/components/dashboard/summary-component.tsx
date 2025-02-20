@@ -36,7 +36,7 @@ const SummaryComponent: FC<SummaryComponentProps> = ({ title, icon, currency, cu
         }
     }, [current, previous])
 
-    return <Card className='flex-1 !my-0'>
+    return <Card className='flex-1 my-0!'>
         <div className='flex flex-row justify-between'>
             <div className='min-w-[100px] min-h-[125px]'>
                 <h1 className='text-2xl'>

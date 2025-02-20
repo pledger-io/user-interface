@@ -45,7 +45,7 @@ export const PasswordInput: FC<PasswordInputProps> = (props) => {
                        autoComplete='new-password'
                        onChange={ onChange }/>
             </InputGroup>
-            <div className='py-4 px-2 my-3 mx-2 rounded border-solid border-[1px] border-separator shadow-xl'>
+            <div className='py-4 px-2 my-3 mx-2 rounded-sm border-solid border-[1px] border-separator shadow-xl'>
                 { validations.map(rule => {
                     const invalid = errors.indexOf(rule.label) > -1
                     return <div key={ rule.label }

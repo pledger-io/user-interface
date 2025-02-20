@@ -97,7 +97,7 @@ const TransactionItem: FC<TransactionItemProps> = ({ transaction, className = ''
                     </div>
                 }
             </span>
-            <span className='text-[.9em] [&>*]:inline-block'>
+            <span className='text-[.9em] *:inline-block'>
                 <ActionExpander transaction={ transaction } onDelete={ onDelete } />
             </span>
         </span>
@@ -111,13 +111,13 @@ const TransactionItem: FC<TransactionItemProps> = ({ transaction, className = ''
 const ActionExpander = ({ transaction, onDelete } : { transaction: Transaction, onDelete: () => void }) => {
     const [expanded, setExpanded] = useState(false)
 
-    return <div className='!flex justify-start items-stretch gap-2'>
+    return <div className='flex! justify-start items-stretch gap-2'>
         { !expanded && <Button variant='icon'
-                               className='opacity-40 !text-gray-500'
+                               className='opacity-40 text-gray-500!'
                                icon={ mdiChevronRightBox }
                                onClick={ () => setExpanded(true) }/> }
         <div
-            className={ `${ expanded ? '[&>*]:inline-flex max-w-[35em] opacity-100' : 'max-w-0 overflow-hidden opacity-0' } flex h-[2em] gap-1 transition ease-in-out duration-300` }>
+            className={ `${ expanded ? '*:inline-flex max-w-[35em] opacity-100' : 'max-w-0 overflow-hidden opacity-0' } flex h-[2em] gap-1 transition ease-in-out duration-300` }>
             <ScheduleTransactionDialog transaction={ transaction } iconStyle={ true }/>
             { transaction.split && <TransactionSplitDialog transaction={ transaction } iconStyle={ true }/> }
             <Button variant='icon'
@@ -135,7 +135,7 @@ const ActionExpander = ({ transaction, onDelete } : { transaction: Transaction, 
             </Confirm>
         </div>
         { expanded && <Button variant='icon'
-                              className='opacity-70 !text-gray-500'
+                              className='opacity-70 text-gray-500!'
                               icon={ mdiChevronLeftBox }
                               onClick={ () => setExpanded(false) }/> }
     </div>

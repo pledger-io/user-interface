@@ -49,13 +49,13 @@ const ChangeFieldComponent = (props: {
                                           onChange={ (value: Account) => onValueChange(change.uuid, 'change', value.id as string) }
                                           title='dd'
                                           value={ entity?.id }
-                                          className='!m-0 flex-1 [&>label]:!hidden'/> }
+                                          className='m-0! flex-1 [&>label]:hidden!'/> }
 
             { change.field === 'SOURCE_ACCOUNT'
                 && <Entity.Account value={ entity }
                                    onChange={ (value: Account) => onValueChange(change.uuid, 'change', value.id as string) }
                                    id={ `chang_${ change.uuid }_change` }
-                                   className='!m-0 flex-1 [&>label]:!hidden'
+                                   className='m-0! flex-1 [&>label]:hidden!'
                                    title='dd'
                                    inputOnly={ true }
                                    type='debtor'/> }
@@ -64,7 +64,7 @@ const ChangeFieldComponent = (props: {
                 && <Entity.Account value={ entity }
                                    onChange={ (value: Account) => onValueChange(change.uuid, 'change', value.id as string) }
                                    id={ `chang_${ change.uuid }_change` }
-                                   className='!m-0 flex-1 [&>label]:!hidden'
+                                   className='m-0! flex-1 [&>label]:hidden!'
                                    title='dd'
                                    inputOnly={ true }
                                    type='creditor'/> }
@@ -74,7 +74,7 @@ const ChangeFieldComponent = (props: {
                 && <Entity.Category value={ { id: -1, name: entity?.label } }
                                     onChange={ (value: Category) => onValueChange(change.uuid, 'change', value.id as string) }
                                     id={ `chang_${ change.uuid }_change` }
-                                    className='!m-0 flex-1 [&>label]:!hidden'
+                                    className='m-0! flex-1 [&>label]:hidden!'
                                     inputOnly={ true }
                                     title='dd'/> }
 
@@ -82,21 +82,21 @@ const ChangeFieldComponent = (props: {
                 && <Entity.Budget value={ entity }
                                   onChange={ (value: BudgetExpense) => onValueChange(change.uuid, 'change', value.id as string) }
                                   id={ `chang_${ change.uuid }_change` }
-                                  className='!m-0 flex-1 [&>label]:!hidden'
+                                  className='m-0! flex-1 [&>label]:hidden!'
                                   title='dd'/> }
 
             { change.field === 'CONTRACT'
                 && <Entity.Contract value={ entity }
                                     onChange={ (value: Contract) => onValueChange(change.uuid, 'change', value.id as string) }
                                     id={ `chang_${ change.uuid }_change` }
-                                    className='!m-0 flex-1 [&>label]:!hidden'
+                                    className='m-0! flex-1 [&>label]:hidden!'
                                     title='dd'/> }
 
             { change.field === 'TAGS'
                 && <Input.Tags id={ `chang_${ change.uuid }_change` }
                                title='dd'
                                value={ entity }
-                               className='!m-0 flex-1 [&>label]:!hidden'
+                               className='m-0! flex-1 [&>label]:hidden!'
                                onChange={ (value: string[]) => onValueChange(change.uuid, 'change', value.join(",")) }/> }
 
             { change.uuid && <Button icon={ mdiDelete }
