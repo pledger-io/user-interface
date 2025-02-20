@@ -22,4 +22,4 @@ jobs:
         with:
           name: build-artifact
           path: |
-            build/**
+            dist/**
