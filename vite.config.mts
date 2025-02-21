@@ -24,9 +24,10 @@ export default defineConfig({
         css: true,
         reporters: ['verbose'],
         coverage: {
-            reporter: ['lcov','html'],
+            reporter: ['json-summary', 'json'],
             include: ['src/**/*'],
             exclude: [],
+            reportOnFailure: true,
         }
     },
 })
