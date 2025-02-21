@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 import MoneyComponent from "./money.component";
 
-describe(MoneyComponent, () => {
+describe("MoneyComponent", () => {
     test("Should be correctly rendered", () => {
         const { container } = render(<MoneyComponent money={20.32233} currency={'EUR'} />)
 

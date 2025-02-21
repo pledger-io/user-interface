@@ -1,8 +1,8 @@
+/// <reference types="vitest" />
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import tailwindcss from '@tailwindcss/vite'
 
-// https://vitejs.dev/config/
 export default defineConfig({
     base: '/ui',
     plugins: [
@@ -12,7 +12,7 @@ export default defineConfig({
     server: {
         proxy: {
             '/api': {
-                target: 'http://localhost:8080',
+                target: 'http://127.0.0.1:8080',
                 changeOrigin: true
             }
         }
@@ -24,9 +24,10 @@ export default defineConfig({
         css: true,
         reporters: ['verbose'],
         coverage: {
-            reporter: ['text', 'json', 'html'],
+            reporter: ['json-summary', 'json'],
             include: ['src/**/*'],
             exclude: [],
+            reportOnFailure: true,
         }
     },
 })
