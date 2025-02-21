@@ -1,5 +1,4 @@
 import { act, screen } from "@testing-library/react";
-import axios from "axios";
 import LocalizationService from "../../service/localization.service";
 
 import Translation from "./translation.component";

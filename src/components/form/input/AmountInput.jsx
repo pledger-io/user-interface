@@ -1,5 +1,3 @@
-import PropTypes from 'prop-types';
-
 import { InputGroup, useInputField } from "./InputGroup";
 
 export const AmountInput = (props) => {
@@ -38,15 +36,4 @@ export const AmountInput = (props) => {
         </InputGroup>
     )
 }
-AmountInput.propTypes = {
-    ...InputGroup.propTypes,
-    // Indicator if the field is in read only mode
-    readonly: PropTypes.bool,
-    value: PropTypes.number,
-    // Any minimum value validation
-    min: PropTypes.number,
-    // Any maximum value
-    max: PropTypes.number,
-    // The currency the amount is in
-    currency: PropTypes.string
-}
+
