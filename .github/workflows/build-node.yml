@@ -15,6 +15,10 @@ jobs:
         run: yarn --frozen-lockfile
       - name: Run test suite
         run: yarn run test:coverage
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v5
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       - name: Build application
         run: yarn run build
       - name: Upload build artifact
