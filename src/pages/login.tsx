@@ -29,7 +29,7 @@ function Login() {
     return <div className='flex justify-center h-[100vh] items-center'>
         <Form entity='UserAccount' onSubmit={ onSubmit }>
             <Card title='page.login.title'
-                  className='min-w-[30rem]'
+                  className='min-w-[100vw] md:min-w-[30rem]'
                   actions={ [
                       <Dropdown icon={ mdiWeb }
                                          className='[&>div]:bg-white [&>div]:px-4 [&>div]:rounded-sm [&>div]:border-separator [&>div]:border-[1px]'

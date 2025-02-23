@@ -45,9 +45,9 @@ const CategoryListing = () => {
             <table className='Table'>
                 <thead>
                 <tr>
-                    <th className='w-[60px]'/>
+                    <th className='md:w-[60px]'/>
                     <th><Translation label='Category.label'/></th>
-                    <th><Translation label='Category.description'/></th>
+                    <th className='hidden md:table-cell'><Translation label='Category.description'/></th>
                     <th><Translation label='Category.lastActivity'/></th>
                 </tr>
                 </thead>

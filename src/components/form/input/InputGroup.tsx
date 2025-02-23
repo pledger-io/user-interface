@@ -1,4 +1,4 @@
-import React, {ChangeEventHandler, FC, FocusEvent, FocusEventHandler, ReactNode, useContext, useEffect} from "react";
+import React, {ChangeEventHandler, FC, ReactNode, useContext, useEffect} from "react";
 import Translation from "../../localization/translation.component";
 import HelpTranslation from "../../localization/help.component";
 
@@ -26,7 +26,7 @@ export const InputGroup: FC<InputGroupProps> = ({ id, help, title, required = fa
                 { help ? <HelpTranslation label={ help } className='font-normal text-end pr-1'/> : '' }
             </label>
         ) }
-        <div className={`flex-1 ${ inputClassName }`}>{ children }</div>
+        <div className={`px-1 md:px-0 md:flex-1 ${ inputClassName }`}>{ children }</div>
     </div>
 }
 

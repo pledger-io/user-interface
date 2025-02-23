@@ -28,11 +28,12 @@ const Register = () => {
         .catch(setException)
 
     return (
-        <div className="RegisterCard">
+        <div className="flex h-[100vh] items-center justify-center">
             <span/>
             <Form onSubmit={onSubmit}
                   entity='UserAccount'>
                 <Card title='page.title.register'
+                      className=''
                              buttons={[
                                  <SubmitButton key='login'
                                                label='page.register.register'

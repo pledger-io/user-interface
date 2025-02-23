@@ -25,9 +25,10 @@ const NewTransactionDialog: FC<NewTransactionDialogProps> = ({ variant, icon, ty
 
     return <>
         <Button label={ `page.transactions.${type}.add` }
-                        variant={ variant }
-                        onClick={ () => control.open() }
-                        icon={ icon }/>
+                variant={ variant }
+                className='[&>.Translation]:hidden text-xl md:text-sm md:[&>.Translation]:block'
+                onClick={ () => control.open() }
+                icon={ icon }/>
         <Form onSubmit={ onSelect } entity='transaction'>
             <Dialog
                 title='page.accounts.select'

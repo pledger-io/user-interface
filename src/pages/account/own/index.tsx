@@ -40,7 +40,7 @@ const OwnAccountsView = () => {
                 <tr>
                     <th><Translation label='Account.name'/></th>
                     <th className='w-48 hidden md:table-cell'><Translation label='Account.number'/></th>
-                    <th className='w-40'><Translation label='common.account.saldo'/></th>
+                    <th className='md:w-40'><Translation label='common.account.saldo'/></th>
                     <th className='w-7'/>
                 </tr>
                 </thead>
