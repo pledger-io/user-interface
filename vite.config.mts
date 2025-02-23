@@ -22,7 +22,10 @@ export default defineConfig({
         environment: 'jsdom',
         setupFiles: './src/setupTests.js',
         css: true,
-        reporters: ['verbose'],
+        reporters: ['verbose', 'junit'],
+        outputFile: {
+            junit: 'coverage/junit-report.xml'
+        },
         coverage: {
             reporter: ['json-summary', 'json'],
             include: ['src/**/*'],

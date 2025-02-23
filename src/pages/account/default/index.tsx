@@ -35,18 +35,18 @@ const AccountRow = ({ account, deleteCallback }: AccountRowProps) => {
 
     return (
         <tr className='' onMouseLeave={ () => dropDownActions.close() }>
-            <td>
+            <td className='align-middle'>
                 { account.iconFileCode && <Attachment.Image fileCode={ account.iconFileCode }/> }
             </td>
             <td>
-                <h2 className='m-0 text-lg'><NavLink to={ `./${ account.id }/transactions` }>{ account.name }</NavLink></h2>
+                <h2 className='m-0 text-md md:text-lg'><NavLink to={ `./${ account.id }/transactions` }>{ account.name }</NavLink></h2>
                 <When condition={ account.history.lastTransaction !== null }>
                     <div className='text-muted'>
                         <Translation label='Account.lastActivity' className='font-semibold'/>:
                         <DateComponent date={ account.history.lastTransaction }/>
                     </div>
                 </When>
-                <div className='Description Text Muted'>{ account.description }</div>
+                <div className='hidden md:block mt-1 pl-1 text-muted text-sm'>{ account.description }</div>
             </td>
             <td className='hidden md:table-cell'>
                 { account.account.iban && `${ account.account.iban }` }
@@ -109,10 +109,10 @@ const AccountOverview = () => {
                     <table className='Table'>
                         <thead>
                         <tr>
-                            <th className='w-[30px]'/>
+                            <th className='md:w-[30px]'/>
                             <th><Translation label='Account.name'/></th>
                             <th className='hidden md:table-cell w-[160px]'><Translation label='Account.number'/></th>
-                            <th className='w-[120px]'><Translation label='common.account.saldo'/></th>
+                            <th className='md:w-[120px]'><Translation label='common.account.saldo'/></th>
                             <th className='w-[20px]'/>
                         </tr>
                         </thead>

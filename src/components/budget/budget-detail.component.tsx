@@ -73,7 +73,7 @@ const BudgetDetailComponent = ({ range }: { range: DateRange }) => {
 
     if (!budget) return <Loading />
     return <>
-        <div className='flex flex-col'>
+        <div className='flex flex-col pl-16 md:pl-0'>
             <div className='flex'>
                 <Translation label='page.budget.group.budget.period'
                                           className='font-bold mr-2 min-w-[10em] after:content-[":"]'/>
@@ -102,7 +102,7 @@ const BudgetDetailComponent = ({ range }: { range: DateRange }) => {
                                   month={ range.month() }
                                   onChanges={ loadBudget }/>
 
-        <div className='flex justify-end'>
+        <div className='flex justify-end pr-2 md:pr-0'>
             { currentMonth.isSame(range.year(), range.month()) && <AddExpenseDialog onChange={ loadBudget } /> }
         </div>
     </>

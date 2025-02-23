@@ -54,7 +54,7 @@ const TransactionList: FC<TransactionListProps> = ({ account, range }) => {
                 .reduce((a, t) => a + t.amount, 0)
 
             return <div key={key} className='flex flex-col gap-0.5 pb-1'>
-                <div className='flex gap-2 items-center border-b-[1px] py-0.5 mb-1 bg-blue-200/20 rounded-lg px-2'>
+                <div className='flex gap-2 items-center border-b-[1px] py-0.5 mb-1 px-2 md:rounded-lg bg-blue-300/10 md:bg-blue-200/20'>
                     <div className='font-bold text-lg[1.5em] text-muted'>
                         { date.getDate() }
                     </div>

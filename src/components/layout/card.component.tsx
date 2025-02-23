@@ -31,7 +31,7 @@ const Card: FC<CardProps> = ({ title, actions, buttons, children, className = ''
                     {actions && <div className='font-normal text-sm flex gap-0.5'>{ actions }</div>}
                 </header>
             )}
-            <article className='bg-white p-4 first:rounded-t-lg last:rounded-b-lg'>
+            <article className='bg-white py-4 md:px-4 first:rounded-t-lg last:rounded-b-lg'>
                 { children }
             </article>
             { buttons &&

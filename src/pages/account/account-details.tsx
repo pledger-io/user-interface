@@ -92,7 +92,7 @@ const AccountDetailView: FC = () => {
         </> }
 
         <Card title='page.title.transactions.overview'>
-            { account && <ButtonBar className='pb-2 justify-center md:justify-end'>
+            { account && <ButtonBar className='pb-2 justify-center! md:justify-end! mb-2 md:mb-0'>
                 { (!Resolver.Account.isManaged(account) || Resolver.Account.isCreditor(account))
                     && <Button label='page.transactions.debit.add'
                                        href={ `${Resolver.Account.resolveUrl(account)}/transactions/add/debit`}

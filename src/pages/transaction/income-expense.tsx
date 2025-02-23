@@ -20,8 +20,6 @@ const TransactionGlobalView = () => {
     const onDateChange = (year: number, month: number) =>
         navigate(`/transactions/income-expense/${ year }/${ month }`)
 
-    console.log(range)
-
     return <div className='TransactionOverview'>
         <BreadCrumbs>
             <BreadCrumbItem label='page.nav.accounting'/>

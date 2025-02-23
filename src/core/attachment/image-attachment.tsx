@@ -13,7 +13,7 @@ const ImageAttachment = ({ fileCode }: { fileCode: string }) => {
     }, [fileCode])
 
     if (data !== '') {
-        return <img src={data} className='ImageAttachment' alt='Attachment'/>
+        return <img src={data} className='max-w-[1rem] md:max-w-[2rem]' alt='Attachment'/>
     }
 
     return <div className='ImageAttachment not-found'/>

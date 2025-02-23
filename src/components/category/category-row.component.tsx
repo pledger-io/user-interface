@@ -36,7 +36,7 @@ const CategoryRow = ({ category, deleteCallback = () => undefined }: CategoryRow
                                 href={ `${ category.id }/edit` }/>
             </td>
             <td>{ category.label }</td>
-            <td>{ category.description }</td>
+            <td className='hidden md:table-cell'>{ category.description }</td>
             <td><DateComponent date={ category.lastUsed }/></td>
         </tr>
     )

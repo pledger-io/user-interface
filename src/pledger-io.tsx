@@ -120,7 +120,7 @@ function AuthenticatedComponent() {
     return <>
         <Sidebar logoutCallback={ logout }/>
         <MobileSidebar logoutCallback={ logout }/>
-        <main className='Main px-2 md:px-5 h-[100vh] flex flex-col overflow-y-auto'>
+        <main className='Main md:px-2 md:px-5 h-[100vh] flex flex-col overflow-y-auto'>
             <NotificationCenter/>
             <Suspense fallback={ <SuspenseLoading/> }>
                 <Outlet/>
