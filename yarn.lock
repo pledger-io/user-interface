@@ -4921,9 +4921,9 @@ source-map@^0.6.0, source-map@^0.6.1, source-map@~0.6.1:
   integrity sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==
 
 spacetime@^7.6.2:
-  version "7.7.0"
-  resolved "https://registry.yarnpkg.com/spacetime/-/spacetime-7.7.0.tgz#36f27a749c3afa625b6ebc1a2fc29d8e0c8cff3e"
-  integrity sha512-m97vi+g9OdEZWmvpWFpoDjx9ApsUX8pcTw2VcTc39SCysg/pmPfTD7zhs+XSg5tfA1yr7SlRpzzprgAVFLUdeA==
+  version "7.8.0"
+  resolved "https://registry.yarnpkg.com/spacetime/-/spacetime-7.8.0.tgz#52bd713a04bb3144833fc8c68cbd8d4fe41317ac"
+  integrity sha512-H9kwMYcFycuW6VHN3NZ9V3RMafdrU/zkbD7digwhtKNDmCIbl0Oal0M1MhVR7FIEc7tQQHDP01ryrS1i3sp1CA==
 
 sprintf-js@~1.0.2:
   version "1.0.3"
