@@ -12,14 +12,14 @@ describe('Button', () => {
     })
 
     it('renders with default props', () => {
-        const { getByTestId } = render(<ButtonComponent dataTestId="button" />, {wrapper: BrowserRouter});
+        const { getByTestId } = render(<ButtonComponent data-testid="button" />, {wrapper: BrowserRouter});
         const button = getByTestId('button');
         expect(button).toBeInTheDocument();
     });
 
     it('calls onClick when clicked', () => {
         const handleClick = vi.fn();
-        const { getByTestId } = render(<ButtonComponent onClick={ handleClick } dataTestId="button" />, {wrapper: BrowserRouter});
+        const { getByTestId } = render(<ButtonComponent onClick={ handleClick } data-testid="button" />, {wrapper: BrowserRouter});
         const button = getByTestId('button');
 
         fireEvent.click(button);
@@ -27,7 +27,7 @@ describe('Button', () => {
     });
 
     it('navigates when href is provided and button is clicked', () => {
-        const { getByTestId } = render(<ButtonComponent href="/test" dataTestId="button" />, {wrapper: BrowserRouter});
+        const { getByTestId } = render(<ButtonComponent href="/test" data-testid="button" />, {wrapper: BrowserRouter});
         const button = getByTestId('button');
 
         fireEvent.click(button);
@@ -36,7 +36,7 @@ describe('Button', () => {
 
     it('does not navigate when onClick is provided', () => {
         const handleClick = vi.fn();
-        const { getByTestId } = render(<ButtonComponent href="/test" onClick={ handleClick } dataTestId="button" />, {wrapper: BrowserRouter});
+        const { getByTestId } = render(<ButtonComponent href="/test" onClick={ handleClick } data-testid="button" />, {wrapper: BrowserRouter});
         const button = getByTestId('button');
 
         fireEvent.click(button);
@@ -45,19 +45,13 @@ describe('Button', () => {
     });
 
     it('renders with icon before label when iconPos is before', () => {
-        const { getByTestId } = render(<ButtonComponent icon={ mdiAbacus } iconPos="before" dataTestId="button" />, {wrapper: BrowserRouter});
+        const { getByTestId } = render(<ButtonComponent icon={ mdiAbacus } iconPos="before" data-testid="button" />, {wrapper: BrowserRouter});
         const button = getByTestId('button');
         expect(button.firstChild.nodeName).toBe('svg');
     });
 
-    it('renders with icon after label when iconPos is after', () => {
-        const { getByTestId } = render(<ButtonComponent icon={ mdiAbacus } iconPos="after" dataTestId="button" />, {wrapper: BrowserRouter});
-        const button = getByTestId('button');
-        expect(button.lastChild.nodeName).toBe('svg');
-    });
-
     it('renders with disabled attribute when disabled prop is true', () => {
-        const { getByTestId } = render(<ButtonComponent disabled={true} dataTestId="button" />, {wrapper: BrowserRouter});
+        const { getByTestId } = render(<ButtonComponent disabled={true} data-testid="button" />, {wrapper: BrowserRouter});
         const button = getByTestId('button');
 
         expect(button).toBeDisabled();

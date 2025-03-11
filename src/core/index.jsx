@@ -4,33 +4,16 @@ import PropTypes from 'prop-types';
 // Export all core classes and functions
 import * as Attachment from './attachment/index'
 
-import '../assets/css/BreadCrumbs.scss'
 import '../assets/css/Message.scss'
 
 const Progressbar = ({ total = 1, current = 0, className = '' }) => {
     const percentage = Math.min(100, Math.round(current / total * 100))
 
     return <>
-        <div className={`Progressbar ${className}`} title={`${percentage}%`}>
-            <div className='fg-color' style={{ width: `${percentage}%` }} />
+        <div className='bg-separator rounded' title={`${percentage}%`}>
+            <div className={`rounded ${className}`} style={{ width: `${percentage}%` }} />
         </div>
     </>
-}
-
-class When extends React.Component {
-    static propTypes = {
-        // The condition that needs to be true for the children to be rendered.
-        condition: PropTypes.bool
-    }
-    render() {
-        const { condition, children } = this.props;
-
-        if (condition) {
-            return children;
-        }
-
-        return null;
-    }
 }
 
 const ACCOUNT_TYPE_CONVERSION_MAP = {
@@ -91,7 +74,6 @@ const Resolver = {
 
 export {
     Attachment,
-    When,
     Resolver,
     Progressbar,
 }

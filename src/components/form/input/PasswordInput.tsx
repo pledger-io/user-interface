@@ -3,8 +3,10 @@ import Icon from "@mdi/react";
 import { mdiAlertCircle, mdiCheck } from "@mdi/js";
 import Translation from "../../localization/translation.component";
 
-import { InputGroup, useInputField } from "./InputGroup";
+import { useInputField } from "./InputGroup";
 import { FieldType, ValidatorType } from "../form-types";
+import { i10n } from "../../../config/prime-locale";
+import { InputText } from "primereact/inputtext";
 
 const validations: ValidatorType[] = [
     { label: 'Account.password.at_least_six_chars', validate: value => value && RegExp(/^.{6,63}$/).test(value) },
@@ -33,30 +35,30 @@ export const PasswordInput: FC<PasswordInputProps> = (props) => {
     })
 
     if (!field) return <>''</>
-    return (
-        <div>
-            <InputGroup id='password'
-                        required
-                        title='UserAccount.password'
-                        valid={ field.touched ? errors.length === 0 : undefined }>
-                <input type='password'
-                       id='password'
-                       name='password'
-                       autoComplete='new-password'
+    return <>
+        <div className="flex flex-col gap-2 mt-2">
+            <label htmlFor={ props.id } className='font-bold' data-testid={ `${ props.id }-label` }>{ i10n(props.title as string) }</label>
+            <InputText id={ props.id }
+                       type='password'
+                       defaultValue={ field.value || props.value }
+                       required={ props.required }
+                       pattern={ props.pattern }
+                       data-testid={ `${ props.id }-input` }
+                       invalid={ field.touched ? errors.length > 0 : undefined }
                        onChange={ onChange }/>
-            </InputGroup>
-            <div className='py-4 px-2 my-3 mx-2 rounded-sm border-solid border-[1px] border-separator shadow-xl'>
-                { validations.map(rule => {
-                    const invalid = errors.indexOf(rule.label) > -1
-                    return <div key={ rule.label }
-                                className={ `flex gap-2
-                                            ${ invalid ? 'text-dark-warning' : 'text-dark-success' }` }>
-                        { invalid && <Icon path={ mdiAlertCircle } size={ .8 } className='mt-0.5'/> }
-                        { !invalid && <Icon path={ mdiCheck } size={ .8 } className='mt-0.5'/> }
-                        <Translation label={ rule.label }/>
-                    </div>
-                }) }
-            </div>
         </div>
-    )
+
+        <div className='py-4 px-2 my-3 mx-2 rounded-sm border-solid border-[1px] border-separator shadow-xl'>
+            { validations.map(rule => {
+                const invalid = errors.indexOf(rule.label) > -1
+                return <div key={ rule.label }
+                            className={ `flex gap-2
+                                            ${ invalid ? 'text-dark-warning' : 'text-dark-success' }` }>
+                    { invalid && <Icon path={ mdiAlertCircle } size={ .8 } className='mt-0.5'/> }
+                    { !invalid && <Icon path={ mdiCheck } size={ .8 } className='mt-0.5'/> }
+                    <Translation label={ rule.label }/>
+                </div>
+            }) }
+        </div>
+    </>
 }

@@ -2,8 +2,8 @@ import { FC, useEffect, useState } from "react";
 import useDateRange from "../../hooks/date-range.hook";
 import { isArray } from "chart.js/helpers";
 import { Account } from "../../types/types";
+import { Chart } from 'primereact/chart';
 import StatisticalRepository from "../../core/repositories/statistical-repository";
-import { Chart } from "react-chartjs-2";
 import { ChartData, Tooltip, TooltipPosition } from "chart.js";
 import { defaultGraphColors } from "../../config/global-chart-config";
 
@@ -25,7 +25,7 @@ let lastPosition: TooltipPosition
     return lastPosition
 }
 
-const CategorizedPieChart: FC<CategorizedPieChartProps> = ({ id, split, incomeOnly, accounts = [] }) => {
+const CategorizedPieChart: FC<CategorizedPieChartProps> = ({ id, split, incomeOnly, accounts }) => {
     const [pieSeries, setPieSeries] = useState<ChartData<'doughnut'> | undefined>(undefined)
     const [range] = useDateRange()
 
@@ -38,7 +38,7 @@ const CategorizedPieChart: FC<CategorizedPieChartProps> = ({ id, split, incomeOn
                 end: range.endString()
             },
             onlyIncome: incomeOnly,
-            accounts: Array.isArray(accounts) ? accounts : [accounts]
+            accounts: Array.isArray(accounts) ? accounts : (accounts ? [accounts] : undefined)
         }
 
         StatisticalRepository.split(split, searchCommand)
@@ -61,7 +61,7 @@ const CategorizedPieChart: FC<CategorizedPieChartProps> = ({ id, split, incomeOn
     return <>
         <Chart id={ id }
                type='doughnut'
-               height={ 300 }
+               className='w-full'
                data={ pieSeries }
                options={
                   {

@@ -3,12 +3,13 @@ import { mdiCancel, mdiContentSave } from "@mdi/js";
 import BreadCrumbItem from "../../../components/breadcrumb/breadcrumb-item.component";
 import BreadCrumbs from "../../../components/breadcrumb/breadcrumb.component";
 import { BackButton } from "../../../components/layout/button";
-import Card from "../../../components/layout/card.component";
 import { Currency } from "../../../types/types";
 
 import { Form, Input, SubmitButton } from "../../../components/form";
 import { useNavigate, useParams } from "react-router";
 import { CurrencyRepository } from "../../../core/RestAPI";
+import { Card } from "primereact/card";
+import { i10n } from "../../../config/prime-locale";
 
 const _ = () => {
     const [currency, setCurrency] = useState<Currency>({} as Currency)
@@ -23,15 +24,19 @@ const _ = () => {
     const onSubmit = (entity: any) => {
         if (code) {
             CurrencyRepository.update(code, entity)
-                .then(() => navigate(-1))
+                .then(() => navigate('/settings/currencies'))
         } else {
             CurrencyRepository.create(entity)
-                .then(() => navigate(-1))
+                .then(() => navigate('/settings/currencies'))
         }
     }
 
     const overviewUri = code == null ? './..' : './../..'
     const pageBreadCrumb = code == null ? 'page.settings.currencies.add' : 'page.settings.currencies.edit'
+    const header = () => <div className='px-2 py-2 border-b-1 text-center font-bold'>
+        { i10n(pageBreadCrumb) }
+    </div>
+
     return <>
         <BreadCrumbs>
             <BreadCrumbItem label='page.nav.settings.options'/>
@@ -39,11 +44,8 @@ const _ = () => {
             <BreadCrumbItem label={ pageBreadCrumb }/>
         </BreadCrumbs>
 
-        <Form onSubmit={ onSubmit } entity='Currency'>
-            <Card title={ pageBreadCrumb }
-                         buttons={ [
-                             <SubmitButton key='save' label='common.action.save' icon={ mdiContentSave }/>,
-                             <BackButton key='cancel' label='common.action.cancel' icon={ mdiCancel }/>] }>
+        <Card header={ header } className='my-4 mx-2'>
+            <Form onSubmit={ onSubmit } entity='Currency'>
                 <Input.Text title='Currency.name'
                             type='text'
                             id='name'
@@ -63,8 +65,13 @@ const _ = () => {
                             minLength={ 1 }
                             maxLength={ 1 }
                             required/>
-            </Card>
-        </Form>
+
+                <div className='flex justify-end gap-2 mt-2'>
+                    <SubmitButton label='common.action.save' icon={ mdiContentSave } />
+                    <BackButton key='cancel' label='common.action.cancel' icon={ mdiCancel } />
+                </div>
+            </Form>
+        </Card>
     </>
 }
 

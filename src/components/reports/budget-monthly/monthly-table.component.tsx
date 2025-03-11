@@ -1,85 +1,74 @@
-import React, { FC, useEffect, useState } from "react";
-import DateRange from "../../../types/date-range.type";
+import { Column } from "primereact/column";
+import { DataTable } from "primereact/datatable";
+import React, { useEffect, useState } from "react";
+import { i10n } from "../../../config/prime-locale";
 import StatisticalRepository from "../../../core/repositories/statistical-repository";
-import { Budget, BudgetExpense } from "../../../types/types";
 import DateRangeService from "../../../service/date-range.service";
+import { Budget } from "../../../types/types";
 import MoneyComponent from "../../format/money.component";
 
-import Loading from "../../layout/loading.component";
-import Translation from "../../localization/translation.component";
-
 type MonthlyPerBudgetTableProps = {
-    budgets: Budget[],
-    year: number,
-    currency: string
+  budgets: Budget[],
+  year: number,
+  currency: string
+}
+
+type BudgetMonthExpenses = {
+  name: string,
+  expenses: number[]
 }
 
 const MonthlyPerBudgetTableComponent = ({ budgets, year, currency }: MonthlyPerBudgetTableProps) => {
-    const [months, setMonths] = useState<DateRange[]>([])
-    const [expenses, setExpenses] = useState<BudgetExpense[]>([])
+  const [expenses, setExpenses] = useState<BudgetMonthExpenses[]>([])
 
-    useEffect(() => {
-        setMonths(DateRangeService.months(year))
-    }, [year])
-    useEffect(() => {
-        const reduced = budgets.reduce((expenses: BudgetExpense[], budget) => [...expenses, ...budget.expenses], [])
-        const unique = reduced.filter((e, i) => reduced.findIndex(a => a.id === e.id) === i)
-        setExpenses(unique)
-    }, [budgets])
+  useEffect(() => {
+    if (budgets.length === 0) return
 
-    return <table className='Table'>
-        <thead>
-        <tr>
-            <th><Translation label='Budget.Expense.name'/></th>
-            { months.map(month =>
-                <th key={ month.month() }>
-                    <Translation label={ `common.month.${ month.month() }` }/>
-                </th>) }
-        </tr>
-        </thead>
-        <tbody>
-        { expenses.map(expense =>
-            <MonthlyBudgetTableRow key={ expense.id }
-                                   months={ months }
-                                   currency={ currency }
-                                   expense={ expense }/>) }
-        { expenses.length === 0 && <tr>
-            <td className='text-center' colSpan={ 1 + months.length }><Translation label='common.overview.noresults'/>
-            </td>
-        </tr> }
-        </tbody>
-    </table>
-}
+    const dataPromises = DateRangeService.months(year).map(async month => {
+      const splitOnMonth = await StatisticalRepository.split('budget', {
+        dateRange: month.toBackend(),
+        onlyIncome: false,
+        currency: currency
+      })
 
-type MonthlyBudgetTableRowProps = {
-    months: DateRange[],
-    expense: BudgetExpense,
-    currency: string
-}
+      return {
+        month: month.month(),
+        expenses: splitOnMonth
+      }
+    })
 
-const MonthlyBudgetTableRow: FC<MonthlyBudgetTableRowProps> = ({ months, expense, currency }) => {
-    const [expenses, setExpenses] = useState<number[]>([])
+    Promise.all(dataPromises)
+      .then(monthSplits => {
+        const budgetMonthExpenses: BudgetMonthExpenses[] = []
 
-    useEffect(() => {
-        setExpenses([])
-        Promise.all(months.map(month => StatisticalRepository.balance({
-            expenses: [expense],
-            dateRange: month.toBackend(),
-            onlyIncome: false,
-            currency: currency
-        })))
-            .then(balances => balances.map(({ balance }) => balance))
-            .then(setExpenses)
-    }, [expense, months, currency])
+        monthSplits.forEach(({ month, expenses }) => {
+          expenses.forEach(expense => {
+            if (!expense.partition) return
+            let budget: BudgetMonthExpenses | undefined = budgetMonthExpenses.find(b => b.name === expense.partition)
+            if (!budget) {
+              budget = { name: expense.partition, expenses: [] }
+              budgetMonthExpenses.push(budget)
+            }
 
-    return <tr key={ expense.id }>
-        <td>{ expense.name }</td>
-        { months.map((_, idx) =>
-            <td key={ idx }>
-                { expenses[idx] === undefined && <Loading/> }
-                { expenses[idx] && <MoneyComponent money={expenses[idx]} currency={currency}/> }
-            </td>) }
-    </tr>
+            budget.expenses[month - 1] = expense.balance
+          })
+        })
+
+        setExpenses(budgetMonthExpenses)
+      })
+
+  }, [year, budgets])
+
+  return <>
+    <DataTable value={ expenses } loading={ !expenses } size='small'>
+      <Column header={ i10n('Budget.Expense.name') } field='name' />
+      { [...new Array(12).keys()].map(month =>
+        <Column key={ month }
+                headerClassName='min-w-[7rem]'
+                body={ (row: BudgetMonthExpenses) => <MoneyComponent money={ row.expenses[month] } currency={ currency } /> }
+                header={ i10n(`common.month.${ month + 1 }`) }/>)}
+    </DataTable>
+  </>
 }
 
 export default MonthlyPerBudgetTableComponent

@@ -1,12 +1,10 @@
-import React, {Context, createContext, FC, FocusEvent, FormEvent, ReactNode, useEffect, useState} from "react";
+import React, { Context, createContext, FC, FormEvent, ReactNode, useEffect, useState } from "react";
 import { AddFieldFunc, FieldType, FormContextType, OnValueChangeFunc } from "./form-types";
-
-import '../../assets/css/Form.scss'
 
 function validateField(field: FieldType) {
     const { value } = field;
     const errors = [];
-    if (field.required && !value) {
+    if (field.required && (value === undefined || value === null || value === '')) {
         errors.push('required')
     }
 
@@ -30,6 +28,7 @@ function validateField(field: FieldType) {
             }
         }
     }
+
     return errors;
 }
 
@@ -68,13 +67,14 @@ export const Form: FC<FormProps> = ({ entity, onSubmit, onChange, style = 'group
         setErrors(current => ({ ...current, [field.id]: validateField(field) }))
     }
     const onValueChange: OnValueChangeFunc = (event, { id }) => {
-        event.persist()
+        if (event.persist) event.persist()
 
         type FieldKey = keyof typeof fields
         const existingField = fields[id as FieldKey]
         const updatedValue = (event.currentTarget as HTMLInputElement).value
         const hasChanged = existingField.value !== updatedValue
 
+        console.debug(`\tUpdating field %c${id}%c value to '%c${JSON.stringify((event.currentTarget as HTMLInputElement).value)}%c'.`, 'color: blue', '', 'color: purple', '')
         if (hasChanged) {
             onAddField({
                 field: {
@@ -88,6 +88,7 @@ export const Form: FC<FormProps> = ({ entity, onSubmit, onChange, style = 'group
     const onFormSubmit = (event: FormEvent) => {
         console.info('Handling the form submit.')
         event.preventDefault()
+
         const entity: Record<string, any> = {}
         Object.entries(fields)
             .forEach(([id, field]) => entity[id] = (field as FieldType).value)
@@ -95,7 +96,8 @@ export const Form: FC<FormProps> = ({ entity, onSubmit, onChange, style = 'group
         return false;
     }
 
-    const formContext = {
+    // eslint-disable-next-line @eslint-react/no-unstable-context-value
+    const formContext: FormContextType = {
         fields,
         errors,
         entity: entity,
@@ -110,21 +112,19 @@ export const Form: FC<FormProps> = ({ entity, onSubmit, onChange, style = 'group
                 onChange({ changed: id, value: entity })
             }
         }
-    } as FormContextType
+    }
 
     return (
-        <form onSubmit={onFormSubmit}
-              className={`Form ${style}`}
-              noValidate={true}
+        <form onSubmit={ onFormSubmit }
+              className={ `${ style }` }
+              noValidate={ true }
               autoComplete='off'
               autoCorrect="off"
               spellCheck="false"
               action="#">
-            <FormContext.Provider value={formContext}>
-                {children}
-            </FormContext.Provider>
+            <FormContext value={ formContext }>
+                { children }
+            </FormContext>
         </form>
     )
 }
-
-

@@ -14,7 +14,9 @@ const HistoryButtonComponent: FC<HistoryButtonProps> = ({ icon, label }) => {
 
     return <ButtonComponent icon={ icon }
                             label={ label }
-                            variant='secondary'
+                            type='reset'
+                            text
+                            severity='secondary'
                             onClick={ () => navigate(-1) }/>
 }
 

@@ -1,5 +1,5 @@
 import { mdiCancel, mdiRadioboxBlank } from "@mdi/js";
-import React, { LegacyRef, ReactElement, useRef } from "react";
+import React, { ReactElement, RefObject, useRef } from "react";
 import { Button } from "../button";
 
 import Popup, { PopupCallbacks, PopupProps } from "./popup.component";
@@ -13,12 +13,12 @@ export type ConfirmProps = PopupProps & {
  * A confirm dialog that can be used to get feedback from the user.
  */
 const ConfirmComponent = (props: ConfirmProps) => {
-    const dialogRef: LegacyRef<PopupCallbacks> = useRef(null)
-    const { openButton, onConfirm = () => undefined, children } = props
+    const dialogRef: RefObject<PopupCallbacks | null> = useRef(null)
+    const { openButton, onConfirm, children } = props
 
     const onOpenClick = () => dialogRef.current?.open()
     const onConfirmClick = () => {
-        onConfirm()
+        if (onConfirm) onConfirm()
         dialogRef.current?.close()
     }
     const onCloseClick = () => dialogRef.current?.close()
@@ -30,13 +30,13 @@ const ConfirmComponent = (props: ConfirmProps) => {
                actions={ [
                    <Button label='common.action.confirm'
                            key='confirm'
-                           variant='warning'
-                           dataTestId={ 'confirm-button' }
+                           severity='warning'
+                           data-testid={ 'confirm-button' }
                            onClick={ onConfirmClick }
                            icon={ mdiRadioboxBlank }/>,
                    <Button label='common.action.cancel'
                            key='cancel'
-                           variant='secondary'
+                           severity='secondary'
                            onClick={ onCloseClick }
                            icon={ mdiCancel }/>] }>{ children }</Popup>
     </>

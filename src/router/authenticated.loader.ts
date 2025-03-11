@@ -1,7 +1,8 @@
-import {LoaderFunctionArgs, redirect} from "react-router";
-import SecurityRepository from "../core/repositories/security-repository";
+import { LoaderFunctionArgs, redirect } from "react-router";
 import RestAPI from "../core/repositories/rest-api";
-import {CurrencyRepository} from "../core/RestAPI";
+import SecurityRepository from "../core/repositories/security-repository";
+import { CurrencyRepository } from "../core/RestAPI";
+import { RouterAuthentication } from "../types/router-types";
 
 /**
  * Performs an authenticated loading operation. This method takes a LoaderFunctionArgs object as a parameter.
@@ -13,18 +14,18 @@ import {CurrencyRepository} from "../core/RestAPI";
  *
  * @return {Object} Returns user profile object upon successful loading operation.
  */
-export async function authenticatedLoader({ request }: LoaderFunctionArgs): Promise<{ user: any } | Response> {
-    const params = new URLSearchParams();
-    params.set("from", new URL(request.url).pathname.replace("/ui", ""));
-    if (!SecurityRepository.isAuthenticated()) {
-        return redirect("/login?" + params.toString());
-    }
+export async function authenticatedLoader({ request }: LoaderFunctionArgs): Promise<RouterAuthentication | Response> {
+  const params = new URLSearchParams();
+  params.set("from", new URL(request.url).pathname.replace("/ui", ""));
+  if (!SecurityRepository.isAuthenticated()) {
+    return redirect("/login?" + params.toString());
+  }
 
-    await RestAPI.profile()
-    const profile = RestAPI.user() as any
-    await CurrencyRepository.list()
-    profile.defaultCurrency = CurrencyRepository.cached(profile.currency)
-    return {
-        user: profile
-    }
+  await Promise.all([RestAPI.profile(), CurrencyRepository.list()])
+
+  const profile = RestAPI.user() as any
+  profile.defaultCurrency = CurrencyRepository.cached(profile.currency)
+  return {
+    user: profile
+  }
 }

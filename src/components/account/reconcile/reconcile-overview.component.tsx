@@ -1,17 +1,29 @@
-import { mdiBagChecked } from "@mdi/js";
-import React, { useEffect, useState } from "react";
-import Message from "../../../components/layout/message.component";
+import React, { FC, useEffect, useImperativeHandle, useState } from "react";
 import ProcessRepository, { BusinessKey, ProcessInstance } from "../../../core/repositories/process.repository";
-import { Identifier } from "../../../types/types";
-import { Button } from "../../layout/button";
 import Loading from "../../layout/loading.component";
-import { Dialog } from "../../layout/popup";
 import Translation from "../../localization/translation.component";
 
 import ReconcileRowComponent from "./reconcile-row.component";
+import { Dialog } from "primereact/dialog";
+import { i10n } from "../../../config/prime-locale";
+import { Message } from "primereact/message";
+import { Identifier } from "../../../types/types";
 
-const ReconcileOverviewComponent = ({ accountId, onRemoved }: { accountId: Identifier, onRemoved: () => void }) => {
+type ReconcileOverviewProps = {
+    accountId: Identifier
+    onRemoved: () => void
+    ref: any
+}
+
+const ReconcileOverviewComponent: FC<ReconcileOverviewProps> = ({ ref, accountId, onRemoved }) => {
     const [reconcileActivity, setReconcileActivity] = useState<ProcessInstance[]>()
+    const [visible, setVisible] = React.useState(false);
+
+    useImperativeHandle(ref, () => ({
+        open() {
+            setVisible(true)
+        }
+    }));
 
     const loadReconcileActivity = () => {
         setReconcileActivity(undefined)
@@ -26,16 +38,17 @@ const ReconcileOverviewComponent = ({ accountId, onRemoved }: { accountId: Ident
         }
     }, [reconcileActivity, onRemoved])
 
-    return <Dialog title='page.accounts.reconcile.active'
-                   className='Large'
-                   openButton={
-                       <Button label='page.accounts.reconcile.active' icon={ mdiBagChecked }/>
-                   }>
+    return <Dialog header={ i10n('page.accounts.reconcile.active') }
+                   visible={ visible }
+                   className='max-w-[40rem]'
+                   onHide={ () => setVisible(false) }>
 
-        <Message label='page.accounts.reconcile.active.explained'/>
+        <Message text={ i10n('page.accounts.reconcile.active.explained') }
+                 className='max-w-fit'
+                 severity='info'/>
 
-        <table className='Table'>
-            <thead>
+        <table className='p-datatable-table p-datatable mt-4'>
+            <thead className='p-datatable-thead'>
             <tr>
                 <th rowSpan={ 2 } className='w-4'/>
                 <th rowSpan={ 2 }>

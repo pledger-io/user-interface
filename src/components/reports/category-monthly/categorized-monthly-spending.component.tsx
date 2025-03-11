@@ -1,71 +1,71 @@
+import { Column } from "primereact/column";
+import { DataTable } from "primereact/datatable";
 import React, { useEffect, useState } from "react";
+import { i10n } from "../../../config/prime-locale";
 import StatisticalRepository from "../../../core/repositories/statistical-repository";
-import { Category } from "../../../types/types";
 import DateRangeService from "../../../service/date-range.service";
 import MoneyComponent from "../../format/money.component";
 
-import Loading from "../../layout/loading.component";
-import Translation from "../../localization/translation.component";
-
 type CategorizedMonthlySpendingComponentProps = {
-    categories: Category[],
-    year: number
+  currency: string,
+  year: number
 }
 
-const CategoryRowComponent = ({ category, year }: { category: Category, year: number }) => {
-    const [spending, setSpending] = useState<number[]>();
+type CategoryMonthExpenses = {
+  name: string,
+  expenses: number[]
+}
 
-    useEffect(() => {
-        setSpending(undefined)
-        StatisticalRepository.monthly({
-            categories: [category],
-            onlyIncome: false,
-            dateRange: DateRangeService.forYear(year).toBackend()
-        }).then(data => {
-            const transformed = Array(12).fill(0)
-            data.forEach(d => transformed[new Date(d.date).getMonth()] = d.amount)
-            setSpending(transformed)
+const CategorizedMonthlySpendingComponent = ({ currency, year }: CategorizedMonthlySpendingComponentProps) => {
+  const [expenses, setExpenses] = useState<CategoryMonthExpenses[]>()
+
+  useEffect(() => {
+    const dataPromises = [...new Array(12).keys()]
+      .map(month => DateRangeService.forMonth(year, month + 1))
+      .map(async month => {
+        const splitOnMonth = await StatisticalRepository.split('category', {
+          dateRange: month.toBackend(),
+          onlyIncome: false,
         })
-    }, [category, year]);
 
-    const months = DateRangeService.months(year)
-    return (
-        <tr key={ category.id }>
-            <td>{ category.label }</td>
-            { spending && months.map(month =>
-                <td key={ month.month() }>
-                    <MoneyComponent money={ spending[month.month()] }/>
-                </td>) }
-            { !spending && <td colSpan={ 12 } className='text-center'>
-                <Loading/>
-            </td> }
-        </tr>
-    )
-}
+        return {
+          month: month.month(),
+          expenses: splitOnMonth
+        }
+      })
 
-const CategorizedMonthlySpendingComponent = ({ categories, year }: CategorizedMonthlySpendingComponentProps) => {
-    const months = [...new Array(12).keys()]
-        .map(month => DateRangeService.forMonth(year, month + 1))
+    Promise.all(dataPromises)
+      .then(monthSplits => {
+        const monthExpenses: CategoryMonthExpenses[] = []
 
-    return (
-        <table className='Table'>
-            <thead>
-            <tr>
-                <th><Translation label='Category.label'/></th>
-                { months.map(month =>
-                    <th key={month.month()}>
-                        <Translation label={`common.month.${month.month()}`}/>
-                    </th>)
-                }
-            </tr>
-            </thead>
-            <tbody>
-            {categories.map(category => (
-                <CategoryRowComponent key={ category.id } category={ category } year={ year }/>
-            ))}
-            </tbody>
-        </table>
-    )
+        monthSplits.forEach(({ month, expenses }) => {
+          expenses.forEach(expense => {
+            if (!expense.partition) return
+            let category: CategoryMonthExpenses | undefined = monthExpenses.find(b => b.name === expense.partition)
+            if (!category) {
+              category = { name: expense.partition, expenses: [] }
+              monthExpenses.push(category)
+            }
+
+            category.expenses[month - 1] = expense.balance
+          })
+        })
+
+        setExpenses(monthExpenses)
+      })
+  }, [year]);
+
+
+  return <>
+    <DataTable value={ expenses } loading={ !expenses } size='small'>
+      <Column header={ i10n('Category.label') } field='name' bodyClassName='font-bold' frozen={ true } alignFrozen='left' />
+      { [...new Array(12).keys()].map(month =>
+        <Column key={ month }
+                headerClassName='min-w-[7rem]'
+                body={ (row) => <MoneyComponent money={ row.expenses[month] } currency={ currency } /> }
+                header={ i10n(`common.month.${ month + 1 }`) }/>)}
+    </DataTable>
+  </>
 }
 
 export default CategorizedMonthlySpendingComponent

@@ -1,11 +1,12 @@
-import { Chart } from "react-chartjs-2";
+import { Chart } from "primereact/chart";
 import { DefaultChartConfig, Service } from "../../../config/global-chart-config";
 import React from "react";
 import { ChartData } from "chart.js";
 
 const BudgetChart = ({ dataSet, currencySymbol = '' } : { dataSet: ChartData, currencySymbol: string }) => {
     return  <Chart type='line'
-                   height={ 300 }
+                   height='300'
+                   className='w-full'
                    options={ Service.mergeOptions(DefaultChartConfig.line,{
                        scales: {
                            x: {

@@ -5,7 +5,7 @@ import {mdiAccount} from "@mdi/js";
 import {BrowserRouter} from "react-router";
 
 describe('Card', () => {
-    let button = <Button label='test.button' icon={mdiAccount} key='button'/>
+    let button = <Button label='test.button' data-testid='test-button' icon={mdiAccount} key='button'/>
 
     it("A card with a title should have a header", () => {
         const { container } = render(<Card title='common.test'><div/></Card>)
@@ -23,8 +23,11 @@ describe('Card', () => {
         const header = container.querySelector('header')
         expect(header).toBeInTheDocument()
 
-        const buttons = header.querySelector('button')
-        expect(buttons).toHaveTextContent('test.button')
+        const buttons = header.querySelector('[data-testid="test-button"]')
+        console.log(buttons.textContent)
+        expect(buttons)
+            .toBeInTheDocument()
+            .toHaveTextContent('_missing_localization_test.button_en_')
     })
 
     it("A card with buttons should have a footer", () => {
@@ -34,6 +37,8 @@ describe('Card', () => {
         expect(footer).toBeInTheDocument()
 
         const buttons = footer.querySelector('button')
-        expect(buttons).toHaveTextContent('test.button')
+        expect(buttons)
+            .toBeInTheDocument()
+            .toHaveTextContent('_missing_localization_test.button_en_')
     })
 })

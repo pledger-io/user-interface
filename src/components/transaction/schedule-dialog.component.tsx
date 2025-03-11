@@ -1,126 +1,146 @@
-import { mdiCalendarCheck, mdiContentSave } from "@mdi/js";
-import React, { Attributes, useState } from "react";
+import { mdiCancel, mdiContentSave } from "@mdi/js";
+import { Dialog } from "primereact/dialog";
+import React, { Attributes, FC, Ref, useImperativeHandle, useState } from "react";
 import Message from "../../components/layout/message.component";
+import { i10n } from "../../config/prime-locale";
 
 import { TransactionScheduleRepository } from "../../core/RestAPI";
-import { Transaction } from "../../types/types";
 import NotificationService from "../../service/notification.service";
+import { DialogOptions, Transaction } from "../../types/types";
 import { Entity, Form, Input, SubmitButton } from "../form";
 import { Button } from "../layout/button";
-import { Dialog } from "../layout/popup";
-import { PopupCallbacks } from "../layout/popup/popup.component";
-import Translation from "../localization/translation.component";
 
 const createScheduleEntity = (entity: any) => {
-    return {
-        name: entity.name,
-        amount: entity.amount,
-        source: {
-            id: entity.from.id,
-            name: entity.from.name
-        },
-        destination: {
-            id: entity.to.id,
-            name: entity.to.name
-        },
-        schedule: {
-            periodicity: entity.periodicity,
-            interval: parseInt(entity.interval)
-        }
+  return {
+    name: entity.name,
+    amount: entity.amount,
+    source: {
+      id: entity.from.id,
+      name: entity.from.name
+    },
+    destination: {
+      id: entity.to.id,
+      name: entity.to.name
+    },
+    schedule: {
+      periodicity: entity.periodicity,
+      interval: parseInt(entity.interval)
     }
+  }
 }
 
 type ScheduleTransactionDialogProps = Attributes & {
-    transaction?: Transaction,
-    onCreated?: () => void,
-    iconStyle?: boolean
+  transaction?: Transaction,
+  onCreated?: () => void,
+  iconStyle?: boolean
+  ref: Ref<DialogOptions>
 }
 
-const ScheduleTransactionDialog = ({ transaction, onCreated = () => {}, iconStyle = false } : ScheduleTransactionDialogProps) => {
-    const [type, setType] = useState(transaction?.type.code.toLowerCase() || 'credit')
+const ScheduleTransactionDialog: FC<ScheduleTransactionDialogProps> = ({ ref, transaction, onCreated }) => {
+  const [type, setType] = useState(transaction?.type.code.toLowerCase() || 'credit')
+  const [visible, setVisible] = useState<boolean>(false)
 
-    const dialogHandler: PopupCallbacks = { close: () => {}, open: () => {} }
-    const onSubmit = (entity: any) => TransactionScheduleRepository.create(createScheduleEntity(entity))
-        .then(() => NotificationService.success('popup.schedule.transaction.create.success'))
-        .then(() => onCreated && onCreated())
-        .then(() => dialogHandler.close())
-        .catch(() => NotificationService.warning('popup.schedule.transaction.create.failed'))
+  useImperativeHandle(ref, () => ({
+    open() {
+      setVisible(true)
+    }
+  }));
 
-    return (
-        <Form onSubmit={ onSubmit } entity='ScheduledTransaction'>
-            <Dialog title='page.title.schedule.transaction.add'
-                    control={ dialogHandler }
-                    className='ScheduleTransaction'
-                    actions={ [
-                        <SubmitButton key='save' label='common.action.save' icon={ mdiContentSave }/>
-                    ] }
-                    openButton={ <Button label='page.transaction.action.recurring'
-                                         variant={ iconStyle ? 'icon' : 'primary' }
-                                         icon={ mdiCalendarCheck }/> }>
-                <Message label='page.budget.schedule.explained' variant='info'/>
+  const onSubmit = (entity: any) => TransactionScheduleRepository.create(createScheduleEntity(entity))
+    .then(() => NotificationService.success('popup.schedule.transaction.create.success'))
+    .then(() => onCreated && onCreated())
+    .then(() => setVisible(false))
+    .catch(() => NotificationService.warning('popup.schedule.transaction.create.failed'))
 
-                <fieldset>
-                    <legend><Translation label='popup.schedule.transaction.info'/></legend>
-                    <Input.Text id='name'
-                                type='text'
-                                title='ScheduledTransaction.name'
-                                value={ transaction?.description }
-                                required/>
+  return (
+    <Dialog header={ i10n('page.title.schedule.transaction.add') }
+            onHide={ () => setVisible(false) }
+            className='max-w-[35rem]'
+            visible={ visible }>
+      <Form onSubmit={ onSubmit } entity='ScheduledTransaction'>
+        <Message label='page.budget.schedule.explained' variant='info'/>
 
-                    <Input.Text title='ScheduledTransaction.amount'
-                                id='amount'
-                                type='number'
-                                value={ transaction?.amount }
-                                required/>
+        <fieldset>
+          <legend className='font-bold text-xl underline'>{ i10n('popup.schedule.transaction.info') }</legend>
+          <Input.Text id='name'
+                      type='text'
+                      title='ScheduledTransaction.name'
+                      value={ transaction?.description }
+                      required/>
 
-                    <Input.Text title='ScheduledTransaction.schedule'
-                                id='interval'
-                                type='number'
-                                required/>
-                    <Input.Select id='periodicity'
-                                  title='ScheduledTransaction.periodicity'
-                                  value='MONTHS'
-                                  required>
-                        <Input.SelectOption label='Periodicity.WEEKS' value='WEEKS'/>
-                        <Input.SelectOption label='Periodicity.MONTHS' value='MONTHS'/>
-                        <Input.SelectOption label='Periodicity.YEARS' value='YEARS'/>
-                    </Input.Select>
-                </fieldset>
+          <Input.Text title='ScheduledTransaction.amount'
+                      id='amount'
+                      type='number'
+                      value={ transaction?.amount }
+                      required/>
 
-                <fieldset>
-                    <legend><Translation label='popup.schedule.transaction.accounts'/></legend>
+          <div className='md:flex gap-4'>
+            <Input.Text title='ScheduledTransaction.schedule'
+                        id='interval'
+                        type='number'
+                        className='md:flex-1'
+                        required/>
 
-                    { type === 'debit' && <Entity.Account id='from'
-                                                          type='debtor'
-                                                          value={ transaction?.source }
-                                                          required
-                                                          title='ScheduledTransaction.source'/> }
-                    { type !== 'debit' && <Entity.ManagedAccount id='from'
-                                                                 required
-                                                                 value={ transaction?.source }
-                                                                 title='ScheduledTransaction.source'/> }
+            <Input.Select id='periodicity'
+                          title='ScheduledTransaction.periodicity'
+                          className='flex-1'
+                          value='MONTHS'
+                          options={ [
+                            { label: 'Periodicity.WEEKS', value: 'WEEKS' },
+                            { label: 'Periodicity.MONTHS', value: 'MONTHS' },
+                            { label: 'Periodicity.YEARS', value: 'YEARS' }
+                          ] }
+                          required/>
+          </div>
+        </fieldset>
 
-                    { type === 'credit' && <Entity.Account id='to'
-                                                           type='creditor'
-                                                           value={ transaction?.destination }
-                                                           required
-                                                           title='ScheduledTransaction.destination'/> }
-                    { type !== 'credit' && <Entity.ManagedAccount id='to'
-                                                                  required
-                                                                  value={ transaction?.destination }
-                                                                  title='ScheduledTransaction.destination'/> }
+        <fieldset className='my-4'>
+          <legend className='font-bold text-xl underline'>{ i10n('popup.schedule.transaction.accounts') }</legend>
 
-                    <Input.RadioButtons id='type'
-                                        onChange={ setType }
-                                        value={ type }
-                                        options={ [
-                                            { label: 'common.transfer', value: 'transfer', variant: 'primary' },
-                                            { label: 'common.credit', value: 'credit', variant: 'warning' },
-                                            { label: 'common.debit', value: 'debit', variant: 'success' }] }/>
-                </fieldset>
-            </Dialog>
-        </Form>
-    )
+          { type === 'debit' && <Entity.Account id='from'
+                                                type='debtor'
+                                                value={ transaction?.source }
+                                                required
+                                                title='ScheduledTransaction.source'/> }
+          { type !== 'debit' && <Entity.ManagedAccount id='from'
+                                                       required
+                                                       value={ transaction?.source }
+                                                       title='ScheduledTransaction.source'/> }
+
+          { type === 'credit' && <Entity.Account id='to'
+                                                 type='creditor'
+                                                 value={ transaction?.destination }
+                                                 required
+                                                 title='ScheduledTransaction.destination'/> }
+          { type !== 'credit' && <Entity.ManagedAccount id='to'
+                                                        required
+                                                        value={ transaction?.destination }
+                                                        title='ScheduledTransaction.destination'/> }
+
+          <Input.RadioButtons id='type'
+                              className='mt-4 w-full'
+                              onChange={ setType }
+                              value={ type }
+                              options={ [
+                                { label: 'common.transfer', value: 'transfer', variant: 'primary' },
+                                { label: 'common.credit', value: 'credit', variant: 'warning' },
+                                { label: 'common.debit', value: 'debit', variant: 'success' }] }/>
+        </fieldset>
+
+        <div className='flex gap-1 justify-end mt-4'>
+          <Button label='common.action.cancel'
+                  text
+                  type='reset'
+                  severity='secondary'
+                  onClick={ () => setVisible(false) }
+                  icon={ mdiCancel }/>
+          <SubmitButton label='common.action.save'
+                        icon={ mdiContentSave }
+                        data-testid={ `schedule-transaction-submit-${ transaction?.id || 1 }` }/>
+        </div>
+      </Form>
+    </Dialog>
+  )
 }
 
 export default ScheduleTransactionDialog

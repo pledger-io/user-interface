@@ -1,5 +1,5 @@
-import { mdiContentSaveSettings, mdiDelete, mdiHammer, mdiRedo } from "@mdi/js";
-import React, { useEffect, useState } from "react";
+import { mdiCancel, mdiContentSaveSettings, mdiDelete, mdiHammer, mdiRedo } from "@mdi/js";
+import React, { FC, Ref, useEffect, useImperativeHandle, useRef, useState } from "react";
 import ProcessRepository, {
     BusinessKey,
     ProcessInstance,
@@ -11,24 +11,30 @@ import { Form, Input, SubmitButton } from "../../form";
 import MoneyComponent from "../../format/money.component";
 import { Button } from "../../layout/button";
 import Loading from "../../layout/loading.component";
-import { Confirm, Dialog } from "../../layout/popup";
+import { Confirm } from "../../layout/popup";
 
-import { PopupCallbacks } from "../../layout/popup/popup.component";
 import Translation from "../../localization/translation.component";
 import { ReconcileStart } from "./types";
+import { Dialog } from "primereact/dialog";
+import { i10n } from "../../../config/prime-locale";
 
-const ReconcilePreviousYearComponent = ({ accountId, year, endBalance, onComplete }: {
-    accountId: Identifier,
-    year: number,
+type ReconcilePreviousYearProps = {
+    accountId: Identifier
+    year: number
     endBalance: number,
-    onComplete: () => void
-}) => {
+    onComplete: () => void,
+    ref: Ref<any>
+}
 
-    const dialogActions: PopupCallbacks = {
-        close: () => {
-        }, open: () => {
+const ReconcilePreviousYearComponent: FC<ReconcilePreviousYearProps> = ({ ref, accountId, year, endBalance, onComplete }) => {
+    const [visible, setVisible] = React.useState(false);
+
+    useImperativeHandle(ref, () => ({
+        open() {
+            setVisible(true)
         }
-    }
+    }));
+
     const onFormSubmit = (data: any) => {
         const processData: ReconcileStart = {
             businessKey: accountId as BusinessKey,
@@ -41,37 +47,41 @@ const ReconcilePreviousYearComponent = ({ accountId, year, endBalance, onComplet
 
         ProcessRepository.start('AccountReconcile', processData)
             .then(() => NotificationService.success('page.accounts.reconcile.success'))
-            .then(() => dialogActions.close())
+            .then(() => setVisible(false))
             .then(() => setTimeout(onComplete, 500))
             .catch(() => NotificationService.warning('page.accounts.reconcile.error'))
     }
 
-    return <Form entity='Account' onSubmit={ onFormSubmit }>
-        <Dialog title='page.accounts.reconcile.previous'
-                openButton={
-                    <Button variant='icon' icon={ mdiHammer }
-                            className='text-primary'/>
-                }
-                actions={ [
-                    <SubmitButton key='save-btn' label='common.action.save' icon={ mdiContentSaveSettings }/>,
-                ] }
-                control={ dialogActions }>
-
-            <Input.Text id='year' title='common.year' type='text' value={ year } readonly/>
+    return <Dialog header={i10n('page.accounts.reconcile.previous')}
+                visible={visible}
+                onHide={() => setVisible(false)}>
+        <Form entity='Account' onSubmit={ onFormSubmit }>
+            <Input.Text id='year' title='common.year' type='text' value={year} readonly/>
             <Input.Amount id='openBalance'
                           title='page.accounts.reconcile.openBalance'
-                          required={ true }/>
+                          required={true}/>
 
             <Input.Amount id='endBalance'
                           value={ endBalance }
                           title='page.accounts.reconcile.endBalance'
                           readonly/>
-        </Dialog>
-    </Form>
+
+            <div className='flex gap-1 justify-end mt-4'>
+              <Button label='common.action.cancel'
+                      type='reset'
+                      severity='secondary'
+                      text
+                      onClick={() => setVisible(false)}
+                      icon={mdiCancel}/>
+              <SubmitButton key='save-btn' label='common.action.save' icon={mdiContentSaveSettings}/>
+            </div>
+        </Form>
+    </Dialog>
 }
 
 const ReconcileRowComponent = ({ process, onRemoved }: { process: ProcessInstance, onRemoved: () => void }) => {
     const [variables, setVariables] = useState<ProcessVariable[]>()
+    const previousYearRef = useRef<any>(null)
 
     useEffect(() => {
         ProcessRepository.variables('AccountReconcile', process.businessKey, process.id)
@@ -108,20 +118,29 @@ const ReconcileRowComponent = ({ process, onRemoved }: { process: ProcessInstanc
     return <tr>
         <td className='flex gap-0.5'>
             <ReconcilePreviousYearComponent year={ year - 1 }
+                                            ref={ previousYearRef }
                                             endBalance={ desiredStartBalance }
                                             accountId={ parseInt(process.businessKey) }
                                             onComplete={ onRemoved }/>
-            <Button variant='icon'
+            <Button
+                icon={ mdiHammer }
+                outlined
+                severity='info'
+                onClick={ () => previousYearRef?.current?.open() }
+                data-testid={ `previous-year-button-${ process.id }` }/>
+            <Button
                     icon={ mdiRedo }
-                    className='text-success'
+                    outlined
+                    severity='success'
                     onClick={ onRetry }
-                    dataTestId={ `retry-button-${ process.id }` }/>
+                    data-testid={ `retry-button-${ process.id }` }/>
             <Confirm title='page.accounts.reconcile.delete.confirm'
-                     openButton={ <Button variant='icon'
+                     openButton={ <Button
                                           key={ `remove-row-${ process.id }` }
                                           icon={ mdiDelete }
-                                          dataTestId={ `remove-row-${ process.id }` }
-                                          className='text-warning'/> }
+                                          outlined
+                                          severity='warning'
+                                          data-testid={ `remove-row-${ process.id }` }/> }
                      onConfirm={ onDelete }>
                 <Translation label='page.accounts.reconcile.delete.confirm'/>
             </Confirm>

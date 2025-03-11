@@ -1,4 +1,4 @@
-import {ChangeEvent, FocusEvent} from "react";
+import { ChangeEvent } from "react";
 
 export type ValidatorFunc = (value: any) => boolean
 export type ValidatorType = {

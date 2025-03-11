@@ -58,6 +58,7 @@ const ColumnMappingComponent = (props: any) => {
                     valid={ field.touched ? errors.length === 0 : undefined }>
             <div className='flex flex-col gap-2'>
 
+              {/* eslint-disable-next-line @eslint-react/no-array-index-key */}
                 { field.value.map((mapping: string, index: number) => <div key={ index } className='flex-1 flex items-center gap-1'>
                     <span><Translation label='ImportConfig.Json.column'/> { index }</span>
                     <select id={ `${ props.id }-${ index }` }

@@ -1,78 +1,67 @@
+import { Column } from "primereact/column";
+import { DataTable } from "primereact/datatable";
 import React, { FC, useEffect, useState } from "react";
+import { i10n } from "../../../config/prime-locale";
 import DateRange from "../../../types/date-range.type";
 import StatisticalRepository from "../../../core/repositories/statistical-repository";
 import { Budget } from "../../../types/types";
 import DateRangeService from "../../../service/date-range.service";
 import MoneyComponent from "../../format/money.component";
 import PercentageComponent from "../../format/percentage.component";
-
 import Translation from "../../localization/translation.component";
 
 type BudgetTableProps = {
-    budgets: Budget[],
-    year: number,
-    currency: string
+  budgets: Budget[],
+  year: number,
+  currency: string
+}
+
+type MonthlyBudgetTableRowProps = {
+  month: number
+  expected: number
+  expenses: number
 }
 
 const BudgetTable: FC<BudgetTableProps> = ({ budgets, year, currency }) => {
-    const [months, setMonths] = useState<DateRange[]>([])
-    const [monthlyExpenses, setMonthlyExpenses] = useState<number[]>([])
+  const [monthlyExpenses, setMonthlyExpenses] = useState<MonthlyBudgetTableRowProps[]>()
 
-    useEffect(() => {
-        const ranges = DateRangeService.months(year)
+  useEffect(() => {
+    if (budgets.length === 0) return
 
-        Promise.all(ranges.map(month => StatisticalRepository.balance({
-            onlyIncome: false,
-            dateRange: month.toBackend()
-        })))
-            .then(expenses => expenses.map(({ balance }) => Math.abs(balance)))
-            .then(setMonthlyExpenses)
-            .catch(console.error)
+    const ranges = DateRangeService.months(year)
+    const promises = ranges.map(async (month: DateRange) => {
+      const balance = await StatisticalRepository.balance({
+        onlyIncome: false,
+        dateRange: month.toBackend()
+      })
 
-        setMonths(ranges)
-    }, [year])
+      return {
+        month: month.month(),
+        expected: budgets[month.month() - 1].expenses?.reduce((total, e) => total + e.expected, 0),
+        expenses: Math.abs(balance.balance)
+      }
+    })
 
-    return <table className='Table MonthlyView'>
-        <thead>
-        <tr>
-            <th><Translation label='common.month'/></th>
-            <th><Translation label='Transaction.budget'/></th>
-            <th><Translation label='graph.series.budget.actual'/></th>
-            <th><Translation label='common.difference'/></th>
-            <th><Translation label='common.percentage'/></th>
-        </tr>
-        </thead>
-        <tbody>
-        { budgets.length > 0 && months.map((month, idx) => {
-            const expectedExpenses = budgets[idx].expenses.reduce((total, e) => total + e.expected, 0)
-            const percentageOfExpected = monthlyExpenses[idx] / expectedExpenses
-            return <tr key={ month.month() } className={ percentageOfExpected > 1 ? 'warning' : 'success' }>
-                <td>
-                    <Translation label={ `common.month.${ month.month() }` }/>
-                </td>
-                <td>
-                    <MoneyComponent money={ expectedExpenses }
-                                    currency={ currency }/>
-                </td>
-                <td>
-                    <MoneyComponent money={ monthlyExpenses[idx] }
-                                    currency={ currency }/>
-                </td>
-                <td>
-                    <MoneyComponent money={ expectedExpenses - monthlyExpenses[idx] }
-                                    currency={ currency }/>
-                </td>
-                <td className={ percentageOfExpected > 1 ? 'warning' : 'success' }>
-                    <PercentageComponent percentage={ percentageOfExpected }
-                                         decimals={ 2 }/>
-                </td>
-            </tr>
-        }) }
-        { budgets.length === 0 && <tr>
-            <td className='text-center' colSpan={ 5 }><Translation label='common.overview.noresults'/></td>
-        </tr> }
-        </tbody>
-    </table>
+    Promise.all(promises)
+      .then(setMonthlyExpenses)
+      .catch(console.error)
+  }, [year, budgets])
+
+  return <>
+    <DataTable value={ monthlyExpenses } loading={ !monthlyExpenses } size='small'>
+      <Column header={ i10n('common.month') }
+              body={ (row) => i10n(`common.month.${ row.month }`) }/>
+      <Column header={ i10n('Transaction.budget') }
+              body={ (row) => <MoneyComponent money={ row.expected } currency={ currency } /> }/>
+      <Column header={ i10n('graph.series.budget.actual') }
+              body={ (row) => <MoneyComponent money={ row.expenses } currency={ currency } /> }/>
+      <Column header={ i10n('common.difference') }
+              body={ (row) => <MoneyComponent money={ row.expected - row.expenses } currency={ currency } /> }/>
+      <Column header={ i10n('common.percentage') }
+              bodyClassName={ (row) => row.expected < row.expenses ? 'text-red-500' : 'text-green-600' }
+              body={ (row) => <PercentageComponent percentage={ row.expenses / row.expected } decimals={ 2 }/> }/>
+    </DataTable>
+  </>
 }
 
 export default BudgetTable
