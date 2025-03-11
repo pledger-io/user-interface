@@ -1,5 +1,5 @@
 import RestAPI from "../../core/repositories/rest-api";
-import defaultPicture from '../../assets/user60.png';
+import defaultPicture from '../../../public/images/user60.png';
 
 const ProfilePicture = ({ size, className }: { size: number, className?: string }) => {
 

@@ -1,5 +1,5 @@
 import { mdiCancel } from "@mdi/js";
-import {LegacyRef, ReactElement, Ref, useEffect, useRef} from "react";
+import { ReactElement, Ref, useEffect, useRef } from "react";
 import { Button } from "../button";
 
 import Popup, { PopupCallbacks, PopupProps } from "./popup.component";
@@ -12,7 +12,7 @@ type DialogProps = PopupProps & {
     }
 }
 
-export const Dialog = ({ control, openButton, title, actions = [], className = '', children }: DialogProps) => {
+export const Dialog = ({ control, openButton, title, actions, className = '', children }: DialogProps) => {
     const dialogRef: Ref<PopupCallbacks> = useRef(null)
 
     useEffect(() => {

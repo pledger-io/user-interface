@@ -1,29 +1,44 @@
-import { FC } from "react";
-
+import { Column } from "primereact/column";
+import { DataTable } from "primereact/datatable";
+import React, { FC } from "react";
+import { NavLink } from "react-router";
+import { i10n } from "../../../config/prime-locale";
+import { Resolver } from "../../../core";
 import { Contract } from "../../../types/types";
+import DateComponent from "../../format/date.component";
 
-import ContractRow from "./row.component";
-import Translation from "../../localization/translation.component";
+const NameColumn = ({ contract }: { contract: Contract }) => {
+  return <>
+    <NavLink className='text-blue-700' to={ `/contracts/${ contract.id }` }>{ contract.name }</NavLink>
+    <div className='text-muted text-sm'>{ contract.description }</div>
+  </>
+}
+
+const CompanyColumn = ({ contract }: { contract: Contract }) => {
+  return <NavLink className='text-blue-400' to={ `${ Resolver.Account.resolveUrl(contract.company) }/transactions` }>
+    { contract.company.name }
+  </NavLink>
+}
 
 type ContractTableProps = {
-    contracts: Contract[],
-    onChanges?: () => any
+  contracts?: Contract[],
+  onChanges?: () => any
 }
-const ContractTable: FC<ContractTableProps> = ({ contracts = [], onChanges }) => {
-    return <table className='Table'>
-        <thead>
-        <tr>
-            <th><Translation label='Contract.name' /></th>
-            <th><Translation label='Contract.company' /></th>
-            <th><Translation label='Contract.start' /></th>
-            <th><Translation label='Contract.end' /></th>
-            <th/>
-        </tr>
-        </thead>
-        <tbody>
-        {contracts.map(contract => <ContractRow key={ contract.id } contract={ contract } onChanges={ onChanges } />)}
-        </tbody>
-    </table>
+const ContractTable: FC<ContractTableProps> = ({ contracts, onChanges }) => {
+
+  return <DataTable value={ contracts } loading={ !contracts }>
+    <Column header={ i10n('Contract.name') }
+            body={ contract => <NameColumn contract={ contract }/> }/>
+    <Column header={ i10n('Contract.company') }
+            body={ contract => <CompanyColumn contract={ contract }/> }/>
+    <Column header={ i10n('Contract.start') }
+            bodyClassName='w-[10rem]'
+            body={ contract => <DateComponent date={ contract.start }/> }/>
+    <Column header={ i10n('Contract.end') }
+            bodyClassName='w-[10rem]'
+            body={ contract => <DateComponent date={ contract.end }/> }/>
+    <Column bodyClassName='w-[1rem]' />
+  </DataTable>
 }
 
 export default ContractTable

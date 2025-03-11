@@ -21,6 +21,7 @@ const Translation: FC<TranslationProps> = ({ label, className = '', noHtml = fal
     if (noHtml)
         return localized
 
+  // eslint-disable-next-line @eslint-react/dom/no-dangerously-set-innerhtml
     return <span className={ `Translation ${className}` } dangerouslySetInnerHTML={ { __html: localized } } />
 }
 

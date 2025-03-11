@@ -1,42 +1,10 @@
-import { mdiTrayArrowUp } from "@mdi/js";
-import React, { DragEventHandler, useState } from "react";
-
-import UploadSVG from "../../assets/ic-upload-file.svg";
-import { Button } from "../../components/layout/button";
-import NotificationService from "../../service/notification.service";
-import { When } from "../index";
+import { mdiCloudUploadOutline, mdiPlus } from "@mdi/js";
+import React, { FC } from "react";
 import { AttachmentRepository } from "../RestAPI";
 import { Attachment } from "../../types/types";
-
-function matchingType(accepted: string, presented: string) {
-    accepted = accepted || '*/*'
-
-    if (accepted === '*/*' || presented === accepted) {
-        return true
-    }
-
-    return accepted.startsWith('image/') && presented.startsWith('image/');
-}
-
-let uploadCounter = 0
-
-const validDrop = (event: React.DragEvent, max: number | null, accepts: string) => {
-    if (event.dataTransfer.items.length > (max || 1)) {
-        NotificationService.warning('common.upload.files.tooMany')
-        return false;
-    }
-
-    const invalidFiles = [...event.dataTransfer.items]
-        .filter(item => item.kind !== 'file' || !matchingType(accepts, item.type))
-        .length > 0
-
-    if (invalidFiles) {
-        NotificationService.warning('common.upload.files.unsupported')
-        return false;
-    }
-
-    return true
-}
+import { FileUpload, FileUploadHandlerEvent } from "primereact/fileupload";
+import { i10n } from "../../config/prime-locale";
+import Icon from "@mdi/react";
 
 type UploadAttachmentProps = {
     accepts?: string,
@@ -46,65 +14,43 @@ type UploadAttachmentProps = {
     required?: boolean
 }
 
-const UploadAttachment = ({ accepts = '*/*', label, onUpload, max = 1, required = false }: UploadAttachmentProps) => {
-    const [dropActive, setDropActive] = useState(false)
-    const [valid, setValid] = useState(false)
-    const [uniqueId] = useState('attachment-' + (++uploadCounter))
+const EmptyTemplate: FC<{text: string}> = ({ text }) => {
+    return <>
+        <div className="flex items-center flex-col text-muted">
+            <Icon path={ mdiCloudUploadOutline } size={ 10 } className='bg-[var(--surface-b)] rounded-full p-5'/>
+            <span className='text-lg'>{ i10n(text) }</span>
+        </div>
+    </>
+}
 
-    const onFileOver: DragEventHandler = event => {
-        event.preventDefault()
-        if (!dropActive) {
-            setValid(false)
-            setDropActive(true)
-        }
-    }
-    const onFileOut: DragEventHandler = event => {
-        event.preventDefault()
-        setValid(validDrop(event, max, accepts))
-        setDropActive(false)
-    }
-    const onFileDrop: DragEventHandler = event => {
-        event.preventDefault()
-        if (valid && event.dataTransfer) {
-            upload([...event.dataTransfer.items])
-        }
-    }
+const headerTemplate = (props: any) => {
+    const { chooseButton, uploadButton } = props;
 
-    const upload = (files: DataTransferItem[]) => files.forEach(file => AttachmentRepository.upload(file.getAsFile())
-        .then(response => (onUpload || (_ => console.warn(`No upload handler set, attachmentId=${ response }.`)))(response))
-        .catch(() => NotificationService.warning('common.upload.file.failed')))
+    return <div className={ `border-[var(--surface-d)] border-1 py-2 bg-transparent! gap-2 flex justify-center` }>
+        { chooseButton }
+        { uploadButton }
+    </div>
+}
 
-    const onChangeHandler = (files: FileList | null) => {
-        if (!files) {
-            return
-        }
-
-        for (let i = 0; i < files.length; i++) {
-            AttachmentRepository.upload(files[i])
-                .then(response => (onUpload || (_ => console.warn(`No upload handler set, attachmentId=${ response }.`)))(response))
-                .catch(() => NotificationService.warning('common.upload.file.failed'))
-        }
+const UploadAttachment = ({ accepts = '*/*', label, onUpload, max = 1 }: UploadAttachmentProps) => {
+    const upload = (event: FileUploadHandlerEvent) => {
+        Promise.all(event.files.map(file => AttachmentRepository.upload(file)))
+            .then(response => response.forEach(onUpload || (_ => console.warn(`No upload handler set, attachmentId=${ response }.`))))
+            .then(() => event.options.clear())
     }
 
     return (
-        <div className='UploadAttachment'
-             onDrop={ onFileDrop }
-             onDragLeave={ onFileOver }
-             onDragOver={ onFileOut }>
-            <input type='file'
-                   id={ uniqueId }
-                   accept={ accepts }
-                   required={ required }
-                   onChange={ event => onChangeHandler(event.target.files) }/>
-            <When condition={ max === 1 }>
-                <img src={ UploadSVG } alt='Attachment'/>
-
-                <Button label={ label }
-                        icon={ mdiTrayArrowUp }
-                        onClick={ () => document.getElementById(uniqueId)?.click() }
-                        variant='text'/>
-            </When>
-        </div>
+        <FileUpload multiple={ max > 1 }
+                    name='upload'
+                    mode='advanced'
+                    customUpload={ true}
+                    uploadHandler={ upload }
+                    headerTemplate={ headerTemplate }
+                    uploadOptions={ { label: i10n(label), iconOnly: true, icon: () => <Icon path={ mdiCloudUploadOutline } size={ 1 }/>, className: 'p-button-outlined p-button-rounded' } }
+                    chooseOptions={ { label: i10n(label), iconOnly: false, icon: () => <Icon path={ mdiPlus } size={ 1 }/>, className: 'p-button-outlined p-button-rounded' } }
+                    cancelOptions={ { iconOnly: true, className: 'p-button-outlined p-button-rounded' } }
+                    emptyTemplate={ <EmptyTemplate text={ label } /> }
+                    accept={ accepts }/>
     )
 }
 

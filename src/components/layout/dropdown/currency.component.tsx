@@ -1,52 +1,48 @@
-import { useEffect, useState } from "react";
+import * as React from "react";
+import { useEffect, useRef, useState } from "react";
 import { CurrencyRepository } from "../../../core/RestAPI";
-import { Button } from "../button";
 import { mdiMenuDown } from "@mdi/js";
 import { Currency } from "../../../types/types";
+import Icon from "@mdi/react";
+import { Menu } from "primereact/menu";
+import { MenuItem } from "primereact/menuitem";
 
 type CurrencyDropdownProps = {
-    // The currently selected currency
-    currency: string,
-    // The callback used when a currency is selected
-    onChange: (_: Currency) => void
+  // The currently selected currency
+  currency: string,
+  // The callback used when a currency is selected
+  onChange: (_: Currency) => void
 }
 
-const CurrencyDropdown = ({ currency, onChange = _ => undefined }: CurrencyDropdownProps) => {
-    const [currencyOpen, setCurrencyOpen] = useState(false)
-    const [currencies, setCurrencies] = useState<Currency[]>([])
+const CurrencyDropdown = ({ currency, onChange }: CurrencyDropdownProps) => {
+  const menuRef = useRef<Menu>(null)
+  const [currencies, setCurrencies] = useState<MenuItem[]>([])
 
-    const onSelect = (selected: Currency) => {
-        onChange(selected)
-        setCurrencyOpen(false)
-    }
+  useEffect(() => {
+    CurrencyRepository.list()
+      .then((currencies: Currency[]) => {
+        const menuItems = currencies
+          .filter(currency => currency.enabled)
+          .map(currency => ({
+            label: currency.code,
+            icon: () => <>{ currency.symbol }</>,
+            command: () => onChange(currency)
+          }))
 
-    useEffect(() => {
-        CurrencyRepository.list()
-            .then(setCurrencies)
-    }, [])
+        setCurrencies(menuItems)
+      })
+  }, [])
 
-    return (
-        <div className="relative">
-            <Button variant='text'
-                    onClick={ () => setCurrencyOpen(!currencyOpen) }
-                    icon={ mdiMenuDown }
-                    className={ 'inline-flex m-0' }
-                    iconPos={ 'after' }
-                    message={ currency }/>
-
-            <div className='absolute w-[10em] right-0 z-40'>
-                { currencyOpen && (
-                    currencies
-                        .map(currency =>
-                            <Button message={ `${ currency.name } (${ currency.symbol })` }
-                                    onClick={ () => onSelect(currency) }
-                                    key={ currency.code }
-                                    variant='secondary'
-                                    className='w-full rounded-none'/>)
-                ) }
-            </div>
-        </div>
-    )
+  return <>
+    <a onClick={ event => menuRef.current?.toggle(event) } className='flex items-center cursor-pointer'>
+      { currency }
+      <Icon path={ mdiMenuDown } size={ 1 }/>
+    </a>
+    <Menu ref={ menuRef }
+          popup
+          className='max-w-[8rem]'
+          model={ currencies } />
+  </>
 }
 
 export default CurrencyDropdown
