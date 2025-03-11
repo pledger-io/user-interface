@@ -1,9 +1,10 @@
 import { Link } from "react-router";
 
 import Translation from "../localization/translation.component";
+import {i10n} from "../../config/prime-locale";
 
 const BreadCrumbItem = ({ message, label, href }: { message?: string, label?: string, href?: string }) => {
-    let text = label ? <Translation label={label}/> : message;
+    let text = label ? i10n(label) : message;
     if (href) {
         text = <Link to={ href } className="flex-1 max-w-fit">{ text }</Link>
     }

@@ -1,12 +1,30 @@
-import React, {Context, createContext, FC, FocusEvent, FormEvent, ReactNode, useEffect, useState} from "react";
-import { AddFieldFunc, FieldType, FormContextType, OnValueChangeFunc } from "./form-types";
+import React, {
+    ChangeEventHandler,
+    Context,
+    createContext,
+    FC,
+    FocusEvent,
+    FormEvent,
+    ReactNode,
+    useContext,
+    useEffect,
+    useState
+} from "react";
+import {
+    AddFieldFunc,
+    FieldType,
+    FormContextType,
+    InputBlurFunc,
+    InputChangeFunc,
+    OnValueChangeFunc
+} from "./form-types";
 
 import '../../assets/css/Form.scss'
 
 function validateField(field: FieldType) {
     const { value } = field;
     const errors = [];
-    if (field.required && !value) {
+    if (field.required && (value === null || value === '')) {
         errors.push('required')
     }
 
@@ -68,13 +86,14 @@ export const Form: FC<FormProps> = ({ entity, onSubmit, onChange, style = 'group
         setErrors(current => ({ ...current, [field.id]: validateField(field) }))
     }
     const onValueChange: OnValueChangeFunc = (event, { id }) => {
-        event.persist()
+        if (event.persist) event.persist()
 
         type FieldKey = keyof typeof fields
         const existingField = fields[id as FieldKey]
         const updatedValue = (event.currentTarget as HTMLInputElement).value
         const hasChanged = existingField.value !== updatedValue
 
+        console.debug(`\tUpdating field %c${id}%c value to '%c${JSON.stringify((event.currentTarget as HTMLInputElement).value)}%c'.`, 'color: blue', '', 'color: purple', '')
         if (hasChanged) {
             onAddField({
                 field: {
@@ -114,7 +133,7 @@ export const Form: FC<FormProps> = ({ entity, onSubmit, onChange, style = 'group
 
     return (
         <form onSubmit={onFormSubmit}
-              className={`Form ${style}`}
+              className={`${style}`}
               noValidate={true}
               autoComplete='off'
               autoCorrect="off"
@@ -126,5 +145,3 @@ export const Form: FC<FormProps> = ({ entity, onSubmit, onChange, style = 'group
         </form>
     )
 }
-
-

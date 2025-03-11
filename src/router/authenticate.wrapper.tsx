@@ -1,14 +1,14 @@
 import SecurityRepository from "../core/repositories/security-repository";
-import Sidebar from "../components/sidebar";
-import MobileSidebar from "../components/sidebar/mobile-sidebar";
 import NotificationCenter from "../components/notification";
-import {Suspense} from "react";
+import {Suspense, useEffect, useState} from "react";
 import {Outlet} from "react-router";
 import Loading from "../components/layout/loading.component";
+import Sidebar from "../components/sidebar";
+import {PrimeReactProvider} from "primereact/api";
 
 function SuspenseLoading() {
     return <div className='flex h-[100vh] justify-center items-center'>
-        <Loading />
+        <Loading/>
     </div>
 }
 
@@ -20,18 +20,27 @@ function SuspenseLoading() {
  * @return the authenticated component to be rendered in the application
  */
 export function AuthenticatedComponent() {
+    const [locale, setLocale] = useState(() => localStorage.getItem("language") || "en")
     const logout = () => {
         SecurityRepository.logout()
     }
 
-    return <>
-        <Sidebar logoutCallback={ logout }/>
-        <MobileSidebar logoutCallback={ logout }/>
-        <main className='Main md:px-2 md:px-5 h-[100vh] flex flex-col overflow-y-auto'>
-            <NotificationCenter/>
-            <Suspense fallback={ <SuspenseLoading/> }>
-                <Outlet/>
-            </Suspense>
-        </main>
-    </>
+    useEffect(() => {
+        const localeChange = () => setLocale(localStorage.getItem("language") || "en")
+        document.addEventListener("locale-changed", localeChange)
+
+        return () => document.removeEventListener("locale-changed", localeChange)
+    }, [])
+
+    return <PrimeReactProvider value={ { ripple: true, locale: locale, cssTransition: true} }>
+        <div className='flex'>
+            <Sidebar logoutCallback={logout} className='w-[218px] min-w-[218px]'/>
+            <main className='h-[100vh] flex flex-col overflow-y-auto flex-grow'>
+                <NotificationCenter/>
+                <Suspense fallback={<SuspenseLoading/>}>
+                    <Outlet/>
+                </Suspense>
+            </main>
+        </div>
+    </PrimeReactProvider>
 }

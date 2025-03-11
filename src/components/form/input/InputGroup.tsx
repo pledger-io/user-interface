@@ -86,8 +86,8 @@ export const InputValidationErrors: FC<InputValidationErrorsProps> = ({ errors, 
 
     return <>
         { errors.map((error: string, idx: number) =>
-            <span className='validation' key={idx}>
+            <small className='text-dark-warning' key={idx}>
                 <Translation key={idx} label={`${formContext.entity}.${field.id}.${error}`}/>
-            </span>) }
+            </small>) }
     </>
 }

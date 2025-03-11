@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@import 'primereact/resources/themes/soho-light/theme.css' layer(primereact);
 
 @theme inline {
   --color-primary: var(--primary-color);
@@ -41,6 +42,34 @@
   }
 }
 
+@layer primereact {
+  .p-button{
+    padding: 0.45rem .65rem;
+
+    &.p-button-sm {
+      padding: 0.45rem .65rem;
+    }
+  }
+
+  .p-menu {
+    .p-menuitem-link {
+      display: inline-flex;
+      gap: 0.25rem;
+
+      padding-top: .35rem;
+      padding-bottom: .35rem;
+    }
+  }
+
+  .p-datatable {
+    .p-datatable-emptymessage td {
+      text-align: center;
+      font-style: italic;
+      color: var(--app-text-muted-color);
+    }
+  }
+}
+
 body {
   margin: 0;
   font-family: var(--font-family-sans-serif);
@@ -51,9 +80,5 @@ body {
   background: var(--app-body-background);
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
 
 

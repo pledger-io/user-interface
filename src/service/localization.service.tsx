@@ -39,6 +39,7 @@ const LocalizationService = {
                 Object.entries(response)
                     .forEach(([key, value]) => computeIfAbsent(key)?.resolved(value))
             })
+        document.dispatchEvent(new Event("locale-changed"))
     },
     get: (key: string): TranslationType => computeIfAbsent(key)
 }

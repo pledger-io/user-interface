@@ -6,7 +6,7 @@ import {SelectInput, SelectOption} from "./SelectInput";
 import {PasswordInput} from "./PasswordInput";
 import {RadioButtons} from "./RadioButtons";
 import {ToggleInput} from "./ToggleInput";
-import {AmountInput} from "./AmountInput";
+import {AmountInput} from "./AmountInput.js";
 import RadioInput from "./RadioInput";
 import {TagInput} from "./TagInput";
 import {ComplexTypeInput} from "./ComplexTypeInput";

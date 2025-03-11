@@ -11,7 +11,7 @@ describe(HistoryButtonComponent, () => {
         const button = getByRole('button')
 
         expect(button).toBeInTheDocument()
-        expect(button).toHaveAttribute('type', 'button')
+        expect(button).toHaveAttribute('type', 'reset')
         fireEvent.click(button)
         //expect(mockedReactRouter.useNavigate).toHaveBeenCalled()
     })

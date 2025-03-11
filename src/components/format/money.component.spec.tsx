@@ -12,14 +12,14 @@ describe("MoneyComponent", () => {
     test("Positive amount should be formatted", () => {
         const { getByTestId } = render(<MoneyComponent money={20.32233} currency={'EUR'} />)
         const element = getByTestId('money')
-        expect(element).toHaveClass('Green')
+        expect(element).toHaveClass('text-green-800')
         expect(element).toHaveTextContent('20.32')
     })
 
     test("Negative amount should be formatted", () => {
         const { getByTestId } = render(<MoneyComponent money={-20.32233} currency={'EUR'} />)
         const element = getByTestId('money')
-        expect(element).toHaveClass('Red')
+        expect(element).toHaveClass('text-red-800')
         expect(element).toHaveTextContent(/-.20\.32/)
     })
 })
