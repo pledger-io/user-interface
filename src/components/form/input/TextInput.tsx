@@ -24,7 +24,7 @@ export const TextInput: FC<TextInputProps> = (props) => {
 
     if (!field) return <>props.id</>
     return <>
-        <div className="flex flex-col gap-2 mt-2">
+        <div className={`flex flex-col gap-2 mt-2 ${ props.className || '' }`}>
             <label htmlFor={ props.id } className='font-bold'>{ i10n(props.title as string) }</label>
             <InputText id={ props.id }
                        type={ props.type }
@@ -41,8 +41,7 @@ export const TextInput: FC<TextInputProps> = (props) => {
                        tooltipOptions={ { position: 'mouse', className: 'max-w-xs' } }
                        invalid={ field.touched ? errors.length > 0 : undefined }
                        onChange={ onChange }/>
+            { field.touched && <InputValidationErrors field={ field } errors={ errors }/> }
         </div>
-
-        { field.touched && <InputValidationErrors field={ field } errors={ errors }/> }
     </>
 }

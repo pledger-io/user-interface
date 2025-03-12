@@ -41,7 +41,7 @@ const LoginCard = () => {
         <button type='button' className="cursor-pointer z-10" onClick={ (e) => configMenu?.current?.toggle(e) } role='button'>
             <Icon path={ mdiWeb } size={ 1 }/>
         </button>
-        <img src='images/login-bg.png' className='z-[0] opacity-60 absolute left-0 right-0 top-0 bottom-0' alt='background'/>
+        <img src='/ui/images/login-bg.png' className='z-[0] opacity-60 absolute left-0 right-0 top-0 bottom-0' alt='background'/>
     </div>
 
     const onSubmit = (entity: LoginForm) =>

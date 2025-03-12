@@ -6,7 +6,6 @@ import BreadCrumbItem from "../../components/breadcrumb/breadcrumb-item.componen
 import BreadCrumbs from "../../components/breadcrumb/breadcrumb.component";
 import { Entity, Form, Input, SubmitButton } from "../../components/form";
 import { BackButton } from "../../components/layout/button";
-import Translation from "../../components/localization/translation.component";
 import { Attachment } from "../../core";
 import AccountRepository from "../../core/repositories/account-repository";
 import { Account } from "../../types/types";
@@ -95,9 +94,9 @@ const AccountForm = ({ type }: { type: string }) => {
                 { (type === 'creditor' || type === 'debtor') && (<Input.Hidden id='type' value={ type }/>) }
                 { exception && <Message text={ exception } severity='error' /> }
 
-                <fieldset className='General'>
-                    <div>
-                        <legend><Translation label='page.account.accounts.general'/></legend>
+                <fieldset className='flex gap-2'>
+                    <div className='flex-2'>
+                        <legend className='font-bold text-xl underline'>{ i10n('page.account.accounts.general') }</legend>
 
                         <Input.Text id='name'
                                     value={ account.name }
@@ -106,37 +105,47 @@ const AccountForm = ({ type }: { type: string }) => {
                                     type='text'
                                     required/>
 
-                        <Entity.Currency id='currency'
-                                         value={ account.currency }
-                                         title='Account.currency'
-                                         required/>
-
-                        { type !== 'creditor' && type !== 'debtor' && (
-                            <Entity.AccountType id='type'
-                                                value={ account.type }
-                                                title='Account.type'
-                                                required/>) }
+                        <div className='flex gap-2 md:flex-row flex-col'>
+                            { type !== 'creditor' && type !== 'debtor' && (
+                                <Entity.AccountType id='type'
+                                                    className='flex-grow'
+                                                    value={ account.type }
+                                                    title='Account.type'
+                                                    required/>) }
+                            <Entity.Currency id='currency'
+                                             className='max-w-full md:max-w-fit'
+                                             value={ account.currency }
+                                             title='Account.currency'
+                                             required/>
+                        </div>
                     </div>
-                    <Attachment.Upload label='page.accounts.accounts.changeIcon'
-                                       accepts='image/*'
-                                       onUpload={ onPictureChange }/>
+                    <div className='flex-1'>
+                        <Attachment.Upload label='page.accounts.accounts.changeIcon'
+                                           accepts='image/*'
+                                           onUpload={ onPictureChange }/>
+                    </div>
                 </fieldset>
 
-                <fieldset>
-                    <legend><Translation label='page.account.accounts.accountdetails'/></legend>
+                <fieldset className='my-4'>
+                    <legend className='font-bold text-xl underline'>{ i10n('page.account.accounts.accountdetails') }</legend>
 
-                    <Input.Text id='iban'
-                                value={ account.iban }
-                                title='Account.iban'
-                                pattern='^([A-Z]{2}[ \-]?[0-9]{2})(?=(?:[ \-]?[A-Z0-9]){9,30}$)((?:[ \-]?[A-Z0-9]{3,5}){2,7})([ \-]?[A-Z0-9]{1,3})?$'
-                                type='text'
-                                help='Account.iban.help'/>
+                    <div className='flex gap-2 md:flex-row flex-col'>
+                        <Input.Text id='iban'
+                                    className='flex-1'
+                                    value={ account.iban }
+                                    title='Account.iban'
+                                    pattern='^([A-Z]{2}[ \-]?[0-9]{2})(?=(?:[ \-]?[A-Z0-9]){9,30}$)((?:[ \-]?[A-Z0-9]{3,5}){2,7})([ \-]?[A-Z0-9]{1,3})?$'
+                                    type='text'
+                                    help='Account.iban.help'/>
 
-                    <Input.Text id='bic'
-                                value={ account.bic }
-                                title='Account.bic'
-                                type='text'
-                                help='Account.bic.help'/>
+                        <Input.Text id='bic'
+                                    className='flex-1'
+                                    value={ account.bic }
+                                    title='Account.bic'
+                                    type='text'
+                                    help='Account.bic.help'/>
+                    </div>
+
 
                     <Input.Text id='number'
                                 value={ account.number }
@@ -150,7 +159,7 @@ const AccountForm = ({ type }: { type: string }) => {
 
                 <div className='flex justify-end gap-2 mt-2'>
                     <SubmitButton label='common.action.save' icon={ mdiContentSave } />
-                    <BackButton key='cancel' label='common.action.cancel' icon={mdiCancel}/>
+                    <BackButton key='cancel' label='common.action.cancel' icon={ mdiCancel } />
                 </div>
             </Form>
         </Card>

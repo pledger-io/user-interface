@@ -89,7 +89,7 @@ const CategoryListing = () => {
                 </> }/>
                 <Column body={ category => <DateComponent date={ category.lastUsed }/> }
                         header={ i10n('Category.lastActivity') }></Column>
-                <Column body={ category => <ActionButtons category={ category } deleteCallback={ load }/> }/>
+                <Column body={ category => <ActionButtons category={ category } deleteCallback={ load }/> } className='w-[1rem]' />
             </DataTable>
 
             { (pagination?.records || 0) > 0

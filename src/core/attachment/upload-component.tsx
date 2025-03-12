@@ -87,7 +87,7 @@ const UploadAttachment = ({ accepts = '*/*', label, onUpload, max = 1, required 
     }
 
     return (
-        <div className='UploadAttachment'
+        <div className='flex flex-col items-center justify-center'
              onDrop={ onFileDrop }
              onDragLeave={ onFileOver }
              onDragOver={ onFileOut }>
@@ -102,7 +102,7 @@ const UploadAttachment = ({ accepts = '*/*', label, onUpload, max = 1, required 
                 <Button label={ label }
                         icon={ mdiTrayArrowUp }
                         onClick={ () => document.getElementById(uniqueId)?.click() }
-                        variant='text'/>
+                        link />
             </When>
         </div>
     )
