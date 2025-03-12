@@ -4,7 +4,7 @@ import DatePicker from "react-datepicker";
 import { InputGroup, InputValidationErrors, useInputField } from "./InputGroup";
 
 import 'react-datepicker/dist/react-datepicker.css';
-import {FieldType} from "../form-types";
+import { FieldType } from "../form-types";
 
 const DateFormats = {
     nl: 'dd-MM-yyyy',

@@ -1,20 +1,21 @@
-import {mdiCancel, mdiContentSave} from "@mdi/js";
-import React, {forwardRef, useImperativeHandle, useRef} from "react";
-import ProcessRepository, {BusinessKey} from "../../../core/repositories/process.repository";
-import {Account} from "../../../types/types";
+import { mdiCancel, mdiContentSave } from "@mdi/js";
+import React, { FC, useImperativeHandle } from "react";
+import ProcessRepository, { BusinessKey } from "../../../core/repositories/process.repository";
+import { Account } from "../../../types/types";
 import NotificationService from "../../../service/notification.service";
-import {Form, Input, SubmitButton} from "../../form";
-import {ReconcileStart} from "./types";
-import {Dialog} from "primereact/dialog";
-import {i10n} from "../../../config/prime-locale";
-import {Button} from "../../layout/button";
+import { Form, Input, SubmitButton } from "../../form";
+import { ReconcileStart } from "./types";
+import { Dialog } from "primereact/dialog";
+import { i10n } from "../../../config/prime-locale";
+import { Button } from "../../layout/button";
 
 type ReconcileStartProps = {
     account: Account
     afterCreate: () => void
+    ref: any
 }
 
-const ReconcileStartComponent = forwardRef(({account, afterCreate}: ReconcileStartProps, ref) => {
+const ReconcileStartComponent: FC<ReconcileStartProps> = ({ ref, account, afterCreate }) => {
     const [visible, setVisible] = React.useState(false);
 
     useImperativeHandle(ref, () => ({
@@ -72,6 +73,6 @@ const ReconcileStartComponent = forwardRef(({account, afterCreate}: ReconcileSta
             </div>
         </Form>
     </Dialog>
-})
+}
 
 export default ReconcileStartComponent

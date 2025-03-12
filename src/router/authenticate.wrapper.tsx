@@ -1,10 +1,10 @@
 import SecurityRepository from "../core/repositories/security-repository";
 import NotificationCenter from "../components/notification";
-import {Suspense, useEffect, useState} from "react";
-import {Outlet} from "react-router";
+import { Suspense, useEffect, useState } from "react";
+import { Outlet } from "react-router";
 import Loading from "../components/layout/loading.component";
 import Sidebar from "../components/sidebar";
-import {PrimeReactProvider} from "primereact/api";
+import { PrimeReactProvider } from "primereact/api";
 
 function SuspenseLoading() {
     return <div className='flex h-[100vh] justify-center items-center'>
@@ -32,7 +32,7 @@ export function AuthenticatedComponent() {
         return () => document.removeEventListener("locale-changed", localeChange)
     }, [])
 
-    return <PrimeReactProvider value={ { ripple: true, locale: locale, cssTransition: true} }>
+    return <PrimeReactProvider value={ { ripple: true, locale: locale, cssTransition: true } }>
         <div className='flex'>
             <Sidebar logoutCallback={logout} className='w-[218px] min-w-[218px]'/>
             <main className='h-[100vh] flex flex-col overflow-y-auto flex-grow'>

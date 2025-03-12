@@ -15,7 +15,7 @@ export type PopupCallbacks = {
     open: () => void
 }
 
-const Popup = forwardRef(({ title, className, actions, children }: PopupProps, ref: ForwardedRef<PopupCallbacks>) => {
+const Popup = ({ ref, title, className, actions, children }) => {
     const [closed, setClosed] = useState(true)
 
     useImperativeHandle(ref, () => ({
@@ -44,6 +44,6 @@ const Popup = forwardRef(({ title, className, actions, children }: PopupProps, r
                 </footer> }
             </div>
         </span>
-})
+}
 
 export default Popup

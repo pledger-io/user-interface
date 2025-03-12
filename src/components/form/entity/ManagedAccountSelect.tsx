@@ -1,15 +1,15 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 
-import {InputGroup, useInputField} from "../input/InputGroup";
+import { InputGroup, useInputField } from "../input/InputGroup";
 
-import {SelectOption} from "../input";
+import { SelectOption } from "../input";
 
 import Loading from "../../../components/layout/loading.component";
 import AccountRepository from "../../../core/repositories/account-repository";
-import {Account, Identifier} from "../../../types/types";
+import { Account, Identifier } from "../../../types/types";
 
 export const ManagedAccountSelect = (props: any) => {
-    const [field, errors, onChange] = useInputField({onChange: props.onChange, field: props})
+    const [field, errors, onChange] = useInputField({ onChange: props.onChange, field: props })
     const [selectedValue, setSelectedValue] = useState<Identifier>()
     const [accounts, setAccounts] = useState<Account[]>([])
 
@@ -28,7 +28,7 @@ export const ManagedAccountSelect = (props: any) => {
         onChange({
             persist: () => {
             },
-            currentTarget: {value: selectedAccount}
+            currentTarget: { value: selectedAccount }
         })
         if (props.onChange) props.onChange(selectedAccount)
     }

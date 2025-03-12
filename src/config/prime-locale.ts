@@ -1,5 +1,5 @@
-import {LocalizationRepository} from "../core/RestAPI";
-import {addLocale, locale, localeOption} from "primereact/api";
+import { LocalizationRepository } from "../core/RestAPI";
+import { addLocale, localeOption } from "primereact/api";
 
 export const Locales = {
     en: {
@@ -15,11 +15,12 @@ export const Locales = {
 export type SupportedLocales = keyof typeof Locales
 
 export const i10n = (key: string) => {
-    return localeOption(key, localStorage.getItem('language') || 'en')
+    return localeOption(key, localStorage.getItem('language') || 'en') ||
+        `_missing_localization_${ key }_${ localStorage.getItem('language') || 'en' }_`
 }
 
 const _ = async () => {
-    for (let language of Object.keys(Locales)) {
+    for (const language of Object.keys(Locales)) {
         const response = await LocalizationRepository.get(language)
         addLocale(language, response)
     }

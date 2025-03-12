@@ -1,15 +1,21 @@
-import React, {forwardRef, useEffect, useImperativeHandle, useState} from "react";
+import React, { FC, useEffect, useImperativeHandle, useState } from "react";
 import ProcessRepository, { BusinessKey, ProcessInstance } from "../../../core/repositories/process.repository";
-import { Identifier } from "../../../types/types";
 import Loading from "../../layout/loading.component";
 import Translation from "../../localization/translation.component";
 
 import ReconcileRowComponent from "./reconcile-row.component";
-import {Dialog} from "primereact/dialog";
-import {i10n} from "../../../config/prime-locale";
-import {Message} from "primereact/message";
+import { Dialog } from "primereact/dialog";
+import { i10n } from "../../../config/prime-locale";
+import { Message } from "primereact/message";
+import { Identifier } from "../../../types/types";
 
-const ReconcileOverviewComponent = forwardRef(({ accountId, onRemoved }: { accountId: Identifier, onRemoved: () => void }, ref) => {
+type ReconcileOverviewProps = {
+    accountId: Identifier
+    onRemoved: () => void
+    ref: any
+}
+
+const ReconcileOverviewComponent: FC<ReconcileOverviewProps> = ({ ref, accountId, onRemoved }) => {
     const [reconcileActivity, setReconcileActivity] = useState<ProcessInstance[]>()
     const [visible, setVisible] = React.useState(false);
 
@@ -72,6 +78,6 @@ const ReconcileOverviewComponent = forwardRef(({ accountId, onRemoved }: { accou
         </table>
 
     </Dialog>
-})
+}
 
 export default ReconcileOverviewComponent

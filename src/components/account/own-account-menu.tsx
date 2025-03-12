@@ -1,8 +1,8 @@
-import {Account, Identifier} from "../../types/types";
-import React, {useEffect, useRef, useState} from "react";
-import {Menu} from "primereact/menu";
-import ProcessRepository, {BusinessKey, ProcessInstance} from "../../core/repositories/process.repository";
-import {i10n} from "../../config/prime-locale";
+import { Account, Identifier } from "../../types/types";
+import React, { useEffect, useRef, useState } from "react";
+import { Menu } from "primereact/menu";
+import ProcessRepository, { BusinessKey, ProcessInstance } from "../../core/repositories/process.repository";
+import { i10n } from "../../config/prime-locale";
 import Icon from "@mdi/react";
 import {
     mdiBagChecked,
@@ -11,10 +11,10 @@ import {
     mdiSquareEditOutline,
     mdiTrashCanOutline
 } from "@mdi/js";
-import {Button} from "../layout/button";
-import {MenuItem} from "primereact/menuitem";
-import {useNavigate} from "react-router";
-import {confirmDialog} from "primereact/confirmdialog";
+import { Button } from "../layout/button";
+import { MenuItem } from "primereact/menuitem";
+import { useNavigate } from "react-router";
+import { confirmDialog } from "primereact/confirmdialog";
 import NotificationService from "../../service/notification.service";
 import AccountRepository from "../../core/repositories/account-repository";
 import ReconcileStartComponent from "./reconcile/reconcile-start.component";
@@ -26,7 +26,7 @@ const loadReconcileActivity = (accountId: Identifier, callback: (process: Proces
         .then(callback)
 }
 
-const OwnAccountMenu = ({account, callback}: {account: Account, callback: () => void}) => {
+const OwnAccountMenu = ({ account, callback }: {account: Account, callback: () => void}) => {
     const actionMenu = useRef<Menu>(null);
     const reconcileStartRef = useRef<any>(null)
     const reconcileOverviewRef = useRef<any>(null)

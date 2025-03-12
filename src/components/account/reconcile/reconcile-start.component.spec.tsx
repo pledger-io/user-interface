@@ -3,8 +3,8 @@ import ProcessRepository from "../../../core/repositories/process.repository";
 import NotificationService from "../../../service/notification.service";
 import ReconcilePopup from "./reconcile-start.component";
 import { Account } from "../../../types/types";
-import {BrowserRouter} from "react-router";
-import {vi} from "vitest";
+import { BrowserRouter } from "react-router";
+import { vi } from "vitest";
 
 describe('ReconcilePopup', () => {
     const mockAccount = { id: '123', name: 'Test Account' } as Account;
@@ -18,7 +18,7 @@ describe('ReconcilePopup', () => {
         ProcessRepository.start = vi.fn().mockResolvedValue({});
         NotificationService.success = vi.fn();
 
-        const { getByTestId } = render(<ReconcilePopup account={ mockAccount } afterCreate={ mockAfterCreate }/>, {wrapper: BrowserRouter});
+        const { getByTestId } = render(<ReconcilePopup account={ mockAccount } afterCreate={ mockAfterCreate }/>, { wrapper: BrowserRouter });
 
         fireEvent.click(getByTestId(`reconcile-open-button-${ mockAccount.id }`));
 

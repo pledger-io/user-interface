@@ -1,4 +1,4 @@
-import {act, fireEvent, render, waitFor} from '@testing-library/react';
+import { act, fireEvent, render, waitFor } from '@testing-library/react';
 import React from "react";
 import ReconcileRowComponent from './reconcile-row.component';
 import ProcessRepository, {
@@ -6,8 +6,8 @@ import ProcessRepository, {
     ProcessTask,
     ProcessVariable
 } from "../../../core/repositories/process.repository";
-import {BrowserRouter} from "react-router";
-import {vi} from "vitest";
+import { BrowserRouter } from "react-router";
+import { vi } from "vitest";
 
 
 function tableWrapped(children: any) {
@@ -69,7 +69,7 @@ describe('ReconcileRowComponent', () => {
         vi.spyOn(ProcessRepository, 'variables').mockResolvedValue(mockVariables);
         vi.spyOn(ProcessRepository, 'delete').mockResolvedValue();
 
-        const {getByTestId} = render(tableWrapped(<ReconcileRowComponent process={mockProcess}
+        const { getByTestId } = render(tableWrapped(<ReconcileRowComponent process={mockProcess}
                                                                          onRemoved={mockOnRemoved}/>));
         await waitFor(() => expect(getByTestId(`remove-row-${mockProcess.id}`)).toBeInTheDocument());
 

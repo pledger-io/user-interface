@@ -1,8 +1,8 @@
 import React, { FC } from "react";
 import { InputValidationErrors, useInputField } from "./InputGroup";
 import { FieldType } from "../form-types";
-import {InputText} from "primereact/inputtext";
-import {i10n} from "../../../config/prime-locale";
+import { InputText } from "primereact/inputtext";
+import { i10n } from "../../../config/prime-locale";
 
 type TextInputProps = FieldType & {
     type: 'number' | 'text' | 'password',
@@ -20,6 +20,8 @@ type TextInputProps = FieldType & {
 export const TextInput: FC<TextInputProps> = (props) => {
     const [field, errors, onChange, onBlur] = useInputField({ onChange: props.onChange, field: props })
 
+    const tooltipText = props.help ? i10n(props.help) : undefined
+
     if (!field) return <>props.id</>
     return <>
         <div className="flex flex-col gap-2 mt-2">
@@ -35,7 +37,9 @@ export const TextInput: FC<TextInputProps> = (props) => {
                        minLength={props.minLength}
                        maxLength={props.maxLength}
                        data-testid={`${props.id}-input`}
-                       invalid={ field.touched ? errors.length > 0 : undefined }
+                       tooltip={tooltipText}
+                       tooltipOptions={ { position: 'bottom' } }
+                       invalid={field.touched ? errors.length > 0 : undefined}
                        onChange={onChange}/>
         </div>
 

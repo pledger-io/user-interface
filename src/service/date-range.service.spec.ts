@@ -1,5 +1,5 @@
 import DateRangeService from "./date-range.service";
-import {vi} from "vitest";
+import { vi } from "vitest";
 
 describe('Ranges', () => {
     beforeEach(() => {

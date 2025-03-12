@@ -50,8 +50,9 @@ const _: FC<UploadContractProps> = ({ id, onChanges }) => {
 
     return <>
         <Button label='page.budget.contracts.action.uploadContract'
-                variant='secondary'
-                dataTestId='upload-button'
+                severity='secondary'
+                data-testid='upload-button'
+                type='button'
                 onClick={ () => dialogControl.open() }
                 icon={ mdiUpload }/>
 
@@ -60,7 +61,7 @@ const _: FC<UploadContractProps> = ({ id, onChanges }) => {
                     actions={ [
                         <SubmitButton key={ 'submit' }
                                       label='common.action.save'
-                                      dataTestId='submit-button'
+                                      data-testid='submit-button'
                                       disabled={ !attachment }
                                       icon={ mdiContentSave }/>
                     ] }

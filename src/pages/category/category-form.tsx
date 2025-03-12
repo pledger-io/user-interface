@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { mdiCancel, mdiContentSave } from "@mdi/js";
-import { SubmitButton, Form, Input } from "../../components/form";
+import { Form, Input, SubmitButton } from "../../components/form";
 import NotificationService from "../../service/notification.service";
 
 import CategoryRepository from "../../core/repositories/category-repository";
 import { Category } from "../../types/types";
 
-import {BackButton} from "../../components/layout/button";
+import { BackButton } from "../../components/layout/button";
 import BreadCrumbItem from "../../components/breadcrumb/breadcrumb-item.component";
 import BreadCrumbs from "../../components/breadcrumb/breadcrumb.component";
-import {i10n} from "../../config/prime-locale";
-import {Card} from "primereact/card";
-import {Message} from "primereact/message";
+import { i10n } from "../../config/prime-locale";
+import { Card } from "primereact/card";
+import { Message } from "primereact/message";
 
 const CategoryForm = () => {
     const [category, setCategory] = useState<Category>({ } as Category)

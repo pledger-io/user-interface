@@ -32,14 +32,14 @@ const _ = ({ task }: { task: ProcessTask }) => {
 
     useEffect(() => {
         ProcessRepository.taskVariables('import_job', task.id, 'transaction')
-            .then(({variables}) => {
+            .then(({ variables }) => {
                 const transaction: TransactionDetails = variables.transaction.value
                 setTransaction(transaction)
             })
     }, [task]);
 
     const onSubmit = (data: any) => {
-        AccountRepository.create({name: data.name, currency: data.currency, type: data.type})
+        AccountRepository.create({ name: data.name, currency: data.currency, type: data.type })
             .then(account => {
                 const accountCreated: TaskVariables = {
                     variables: {
@@ -56,7 +56,7 @@ const _ = ({ task }: { task: ProcessTask }) => {
             .catch(() => NotificationService.warning('page.user.profile.import.error'))
     }
 
-    const continueWithAccount = ({account} : {account: AccountRef}) => {
+    const continueWithAccount = ({ account } : {account: AccountRef}) => {
         const accountCreated: TaskVariables = {
             variables: {
                 accountId: {

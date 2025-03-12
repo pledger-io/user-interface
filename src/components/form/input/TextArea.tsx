@@ -1,9 +1,9 @@
 import React, { FC } from "react";
 
-import { InputGroup, InputValidationErrors, useInputField } from "./InputGroup";
+import { InputValidationErrors, useInputField } from "./InputGroup";
 import { FieldType } from "../form-types";
-import {i10n} from "../../../config/prime-locale";
-import {InputTextarea} from "primereact/inputtextarea";
+import { i10n } from "../../../config/prime-locale";
+import { InputTextarea } from "primereact/inputtextarea";
 
 type TextAreaProps = FieldType & {
     title?: string,

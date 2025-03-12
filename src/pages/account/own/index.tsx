@@ -1,20 +1,20 @@
-import React, {useEffect, useState} from "react";
-import {mdiPlus} from "@mdi/js";
+import React, { useEffect, useState } from "react";
+import { mdiPlus } from "@mdi/js";
 import AccountRepository from "../../../core/repositories/account-repository";
-import {Account} from "../../../types/types";
+import { Account } from "../../../types/types";
 import Translation from "../../../components/localization/translation.component";
 import BreadCrumbs from "../../../components/breadcrumb/breadcrumb.component";
 import BreadCrumbItem from "../../../components/breadcrumb/breadcrumb-item.component";
-import {i10n} from "../../../config/prime-locale";
-import {Card} from "primereact/card";
-import {NavLink} from "react-router";
+import { i10n } from "../../../config/prime-locale";
+import { Card } from "primereact/card";
+import { NavLink } from "react-router";
 import Icon from "@mdi/react";
-import {DataTable} from "primereact/datatable";
-import {Column} from "primereact/column";
+import { DataTable } from "primereact/datatable";
+import { Column } from "primereact/column";
 import BalanceComponent from "../../../components/balance.component";
 import DateComponent from "../../../components/format/date.component";
 import OwnAccountMenu from "../../../components/account/own-account-menu";
-import {ConfirmDialog} from "primereact/confirmdialog";
+import { ConfirmDialog } from "primereact/confirmdialog";
 
 const OwnAccountsView = () => {
     const [accounts, setAccounts] = useState<Account[] | undefined>(undefined)

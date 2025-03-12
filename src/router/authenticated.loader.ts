@@ -1,7 +1,7 @@
-import {LoaderFunctionArgs, redirect} from "react-router";
+import { LoaderFunctionArgs, redirect } from "react-router";
 import SecurityRepository from "../core/repositories/security-repository";
 import RestAPI from "../core/repositories/rest-api";
-import {CurrencyRepository} from "../core/RestAPI";
+import { CurrencyRepository } from "../core/RestAPI";
 
 /**
  * Performs an authenticated loading operation. This method takes a LoaderFunctionArgs object as a parameter.

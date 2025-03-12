@@ -1,9 +1,9 @@
-import React, {ChangeEventHandler, FC, ReactNode, useContext, useEffect} from "react";
+import React, { ChangeEventHandler, FC, ReactNode, use, useEffect } from "react";
 import Translation from "../../localization/translation.component";
 import HelpTranslation from "../../localization/help.component";
 
 import { FormContext } from "../Form";
-import {FieldType, FormContextType, InputBlurFunc, InputChangeFunc} from "../form-types";
+import { FieldType, FormContextType, InputBlurFunc, InputChangeFunc } from "../form-types";
 
 type InputGroupProps = {
     id: string,                 // The identifier of the field in the entity
@@ -16,6 +16,9 @@ type InputGroupProps = {
     children: ReactNode | ReactNode[]
 }
 
+/**
+ * @deprecated
+ */
 export const InputGroup: FC<InputGroupProps> = ({ id, help, title, required = false, valid, className = '', inputClassName = '', children }) => {
     return <div
         className={ `Input mb-2 block md:flex ${ valid !== undefined ? (valid ? 'valid' : 'invalid') : '' } ${ className }` }>
@@ -35,7 +38,7 @@ type useInputFieldProps = {
     onChange?: (_: string) => void,
 }
 export const useInputField = ({ onChange, field }: useInputFieldProps) : [FieldType, string[], InputChangeFunc<any>, InputBlurFunc] => {
-    const formContext = useContext(FormContext) as FormContextType
+    const formContext: FormContextType = use(FormContext)
 
     useEffect(() => {
         if (!formContext.fields[field.id]) {
@@ -82,12 +85,12 @@ type InputValidationErrorsProps = {
  * For rendering any input validation failures.
  */
 export const InputValidationErrors: FC<InputValidationErrorsProps> = ({ errors, field }) => {
-    const formContext = useContext(FormContext)
+    const formContext = use(FormContext)
 
     return <>
-        { errors.map((error: string, idx: number) =>
-            <small className='text-dark-warning' key={idx}>
-                <Translation key={idx} label={`${formContext.entity}.${field.id}.${error}`}/>
+        { errors.map((error: string) =>
+            <small className='text-dark-warning' key={ error }>
+                <Translation label={ `${ formContext.entity }.${ field.id }.${ error }` }/>
             </small>) }
     </>
 }

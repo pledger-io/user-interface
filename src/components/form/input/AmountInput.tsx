@@ -1,9 +1,8 @@
-import {InputGroup, InputValidationErrors, useInputField} from "./InputGroup";
-import {i10n} from "../../../config/prime-locale.js";
-import {InputText} from "primereact/inputtext";
-import React, {ChangeEvent} from "react";
-import {InputNumber, InputNumberChangeEvent, InputNumberProps} from "primereact/inputnumber";
-import {FieldType, InputChangeFunc} from "../form-types";
+import { InputValidationErrors, useInputField } from "./InputGroup";
+import { i10n } from "../../../config/prime-locale.js";
+import React from "react";
+import { InputNumber, InputNumberChangeEvent } from "primereact/inputnumber";
+import { FieldType } from "../form-types";
 
 type AmountInputProps = FieldType & {
     title?: string,

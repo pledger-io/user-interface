@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { use } from "react";
 import { Account, Transaction } from "../../../types/types";
 import { Input } from "../../form";
 import { FormContext } from "../../form/Form";
@@ -14,7 +14,7 @@ type GenericDetailsComponentProps = {
 }
 
 const GenericDetailsComponent = ({ transaction, account }: GenericDetailsComponentProps) => {
-    const formContext = useContext(FormContext)
+    const formContext = use(FormContext)
 
     const onSplitTotalChanged = (total: number) => formContext.onChange({
             currentTarget: { value: total }, persist: () => {}

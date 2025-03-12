@@ -1,4 +1,4 @@
-import {isRouteErrorResponse, useNavigate, useRouteError} from "react-router";
+import { isRouteErrorResponse, useNavigate, useRouteError } from "react-router";
 import SecurityRepository from "../core/repositories/security-repository";
 
 /**

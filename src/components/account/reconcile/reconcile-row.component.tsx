@@ -1,31 +1,32 @@
-import {mdiCancel, mdiContentSaveSettings, mdiDelete, mdiHammer, mdiRedo} from "@mdi/js";
-import React, {forwardRef, useEffect, useImperativeHandle, useRef, useState} from "react";
+import { mdiCancel, mdiContentSaveSettings, mdiDelete, mdiHammer, mdiRedo } from "@mdi/js";
+import React, { FC, Ref, useEffect, useImperativeHandle, useRef, useState } from "react";
 import ProcessRepository, {
     BusinessKey,
     ProcessInstance,
     ProcessVariable
 } from "../../../core/repositories/process.repository";
-import {Identifier} from "../../../types/types";
+import { Identifier } from "../../../types/types";
 import NotificationService from "../../../service/notification.service";
-import {Form, Input, SubmitButton} from "../../form";
+import { Form, Input, SubmitButton } from "../../form";
 import MoneyComponent from "../../format/money.component";
-import {Button} from "../../layout/button";
+import { Button } from "../../layout/button";
 import Loading from "../../layout/loading.component";
-import {Confirm} from "../../layout/popup";
+import { Confirm } from "../../layout/popup";
 
 import Translation from "../../localization/translation.component";
-import {ReconcileStart} from "./types";
-import {Dialog} from "primereact/dialog";
-import {i10n} from "../../../config/prime-locale";
+import { ReconcileStart } from "./types";
+import { Dialog } from "primereact/dialog";
+import { i10n } from "../../../config/prime-locale";
 
 type ReconcilePreviousYearProps = {
     accountId: Identifier
     year: number
     endBalance: number,
-    onComplete: () => void
+    onComplete: () => void,
+    ref: Ref<any>
 }
 
-const ReconcilePreviousYearComponent = forwardRef(({ accountId, year, endBalance, onComplete }: ReconcilePreviousYearProps, ref) => {
+const ReconcilePreviousYearComponent: FC<ReconcilePreviousYearProps> = ({ ref, accountId, year, endBalance, onComplete }) => {
     const [visible, setVisible] = React.useState(false);
 
     useImperativeHandle(ref, () => ({
@@ -74,7 +75,7 @@ const ReconcilePreviousYearComponent = forwardRef(({ accountId, year, endBalance
             </div>
         </Form>
     </Dialog>
-})
+}
 
 const ReconcileRowComponent = ({ process, onRemoved }: { process: ProcessInstance, onRemoved: () => void }) => {
     const [variables, setVariables] = useState<ProcessVariable[]>()
@@ -124,13 +125,13 @@ const ReconcileRowComponent = ({ process, onRemoved }: { process: ProcessInstanc
                 outlined
                 severity='info'
                 onClick={ () => previousYearRef?.current?.open() }
-                data-test-id={ `retry-button-${ process.id }` }/>
+                data-testid={ `retry-button-${ process.id }` }/>
             <Button
                     icon={ mdiRedo }
                     outlined
                     severity='success'
                     onClick={ onRetry }
-                    data-test-id={ `retry-button-${ process.id }` }/>
+                    data-testid={ `retry-button-${ process.id }` }/>
             <Confirm title='page.accounts.reconcile.delete.confirm'
                      openButton={ <Button
                                           key={ `remove-row-${ process.id }` }

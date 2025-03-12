@@ -1,5 +1,5 @@
-import {createBrowserRouter, redirect, RouterProvider} from "react-router";
-import {lazy} from "react";
+import { createBrowserRouter, redirect, RouterProvider } from "react-router";
+import { lazy } from "react";
 import Loading from "./components/layout/loading.component";
 
 import LoginPage from "./pages/login";
@@ -17,10 +17,10 @@ import transactions from "./pages/transaction/routes";
 import settings from "./pages/setting/routes";
 import upload from "./pages/upload/routes";
 
-import {anonymousLoader} from "./router/anonymous.loader";
-import {authenticatedLoader} from "./router/authenticated.loader";
-import {RootErrorBoundary} from "./router/error-boundary";
-import {AuthenticatedComponent} from "./router/authenticate.wrapper";
+import { anonymousLoader } from "./router/anonymous.loader";
+import { authenticatedLoader } from "./router/authenticated.loader";
+import { RootErrorBoundary } from "./router/error-boundary";
+import { AuthenticatedComponent } from "./router/authenticate.wrapper";
 
 const router = createBrowserRouter([
     {

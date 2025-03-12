@@ -1,25 +1,5 @@
-import React, {
-    ChangeEventHandler,
-    Context,
-    createContext,
-    FC,
-    FocusEvent,
-    FormEvent,
-    ReactNode,
-    useContext,
-    useEffect,
-    useState
-} from "react";
-import {
-    AddFieldFunc,
-    FieldType,
-    FormContextType,
-    InputBlurFunc,
-    InputChangeFunc,
-    OnValueChangeFunc
-} from "./form-types";
-
-import '../../assets/css/Form.scss'
+import React, { Context, createContext, FC, FormEvent, ReactNode, useEffect, useState } from "react";
+import { AddFieldFunc, FieldType, FormContextType, OnValueChangeFunc } from "./form-types";
 
 function validateField(field: FieldType) {
     const { value } = field;
@@ -114,7 +94,8 @@ export const Form: FC<FormProps> = ({ entity, onSubmit, onChange, style = 'group
         return false;
     }
 
-    const formContext = {
+    // eslint-disable-next-line @eslint-react/no-unstable-context-value
+    const formContext: FormContextType = {
         fields,
         errors,
         entity: entity,
@@ -129,19 +110,19 @@ export const Form: FC<FormProps> = ({ entity, onSubmit, onChange, style = 'group
                 onChange({ changed: id, value: entity })
             }
         }
-    } as FormContextType
+    }
 
     return (
-        <form onSubmit={onFormSubmit}
-              className={`${style}`}
-              noValidate={true}
+        <form onSubmit={ onFormSubmit }
+              className={ `${ style }` }
+              noValidate={ true }
               autoComplete='off'
               autoCorrect="off"
               spellCheck="false"
               action="#">
-            <FormContext.Provider value={formContext}>
-                {children}
-            </FormContext.Provider>
+            <FormContext value={ formContext }>
+                { children }
+            </FormContext>
         </form>
     )
 }

@@ -17,8 +17,10 @@ describe('upload-contract', () => {
         const { getByTestId } = render(<UploadContract id={1}/>, {wrapper: BrowserRouter})
         const button = getByTestId('upload-button')
 
-        expect(button).toBeInTheDocument()
-        expect(button).toHaveAttribute('type', 'button')
+        expect(button)
+            .toBeInTheDocument()
+            .toHaveAttribute('type', 'button')
+
         fireEvent.click(button)
 
         await waitFor(() => {

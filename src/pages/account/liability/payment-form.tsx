@@ -78,7 +78,7 @@ const LiabilityPayment = () => {
                     <legend><Translation label='page.transaction.add.link'/></legend>
 
                     <Entity.Category id='category'
-                                     value={ {label: model.metadata?.category} as Category }
+                                     value={ { label: model.metadata?.category } as Category }
                                      title='Transaction.category'/>
 
                     <Input.Tags title='Transaction.tags'

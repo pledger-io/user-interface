@@ -1,7 +1,5 @@
 import { Link } from "react-router";
-
-import Translation from "../localization/translation.component";
-import {i10n} from "../../config/prime-locale";
+import { i10n } from "../../config/prime-locale";
 
 const BreadCrumbItem = ({ message, label, href }: { message?: string, label?: string, href?: string }) => {
     let text = label ? i10n(label) : message;

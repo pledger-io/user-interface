@@ -28,6 +28,7 @@
     "vite-tsconfig-paths": "^5.1.4"
   },
   "devDependencies": {
+    "@eslint-react/eslint-plugin": "^1.32.0",
     "@stylistic/eslint-plugin": "^4.0.0",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
@@ -68,6 +69,9 @@
     "development": [
       "last 1 version"
     ]
+  },
+  "engines": {
+    "node": ">=22.0.0 <23.0.0"
   },
   "packageManager": "yarn@1.22.22"
 }

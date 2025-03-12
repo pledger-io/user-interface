@@ -1,4 +1,4 @@
-import {LoaderFunctionArgs, redirect} from "react-router";
+import { LoaderFunctionArgs, redirect } from "react-router";
 import SecurityRepository from "../core/repositories/security-repository";
 
 /**
