@@ -44,7 +44,7 @@ const ActionButtons = ({ category, deleteCallback }: { category: Category, delet
 }
 
 const CategoryListing = () => {
-    const [categories, setCategories] = useState<Category[]>()
+    const [categories, setCategories] = useState<Category[] | undefined>(undefined)
     const [page] = useQueryParam({ key: 'page', initialValue: "1" })
     const [pagination, setPagination] = useState<Pagination>()
     const navigate = useNavigate()
@@ -53,7 +53,7 @@ const CategoryListing = () => {
         setCategories(undefined)
         CategoryRepository.list(parseInt(page))
             .then(response => {
-                setCategories(response.content)
+                setCategories(response.content || [])
                 setPagination(response.info)
             })
     }, [page])
