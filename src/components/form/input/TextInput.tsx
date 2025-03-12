@@ -25,24 +25,24 @@ export const TextInput: FC<TextInputProps> = (props) => {
     if (!field) return <>props.id</>
     return <>
         <div className="flex flex-col gap-2 mt-2">
-            <label htmlFor={props.id} className='font-bold'>{i10n(props.title as string)}</label>
-            <InputText id={props.id}
-                       type={props.type}
-                       onBlur={onBlur}
-                       defaultValue={field.value || props.value}
-                       autoComplete={props.autocomplete}
-                       required={props.required}
-                       pattern={props.pattern}
-                       readOnly={props.readonly}
-                       minLength={props.minLength}
-                       maxLength={props.maxLength}
-                       data-testid={`${props.id}-input`}
-                       tooltip={tooltipText}
-                       tooltipOptions={ { position: 'bottom' } }
-                       invalid={field.touched ? errors.length > 0 : undefined}
-                       onChange={onChange}/>
+            <label htmlFor={ props.id } className='font-bold'>{ i10n(props.title as string) }</label>
+            <InputText id={ props.id }
+                       type={ props.type }
+                       onBlur={ onBlur }
+                       defaultValue={ field.value || props.value }
+                       autoComplete={ props.autocomplete }
+                       required={ props.required }
+                       pattern={ props.pattern }
+                       readOnly={ props.readonly }
+                       minLength={ props.minLength }
+                       maxLength={ props.maxLength }
+                       data-testid={ `${ props.id }-input` }
+                       tooltip={ tooltipText }
+                       tooltipOptions={ { position: 'mouse', className: 'max-w-xs' } }
+                       invalid={ field.touched ? errors.length > 0 : undefined }
+                       onChange={ onChange }/>
         </div>
 
-        {field.touched && <InputValidationErrors field={field} errors={errors}/>}
+        { field.touched && <InputValidationErrors field={ field } errors={ errors }/> }
     </>
 }
