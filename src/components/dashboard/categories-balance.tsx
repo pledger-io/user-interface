@@ -9,8 +9,6 @@ import { DefaultChartConfig, Service as ChartService } from "../../config/global
 import RestAPI from "../../core/repositories/rest-api";
 
 import LocalizationService from "../../service/localization.service";
-
-import Card from "../layout/card.component";
 import Loading from "../layout/loading.component";
 import { Panel } from "primereact/panel";
 import { i10n } from "../../config/prime-locale";

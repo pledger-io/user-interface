@@ -7,8 +7,6 @@ import DateRange from "../../types/date-range.type";
 import { BalanceSeries } from "../graphs/balance-series";
 import { DefaultChartConfig, Service as ChartService } from "../../config/global-chart-config";
 import RestAPI from "../../core/repositories/rest-api";
-
-import Card from "../layout/card.component";
 import Loading from "../layout/loading.component";
 import { Panel } from "primereact/panel";
 import { i10n } from "../../config/prime-locale";

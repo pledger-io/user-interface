@@ -11,7 +11,6 @@ import RestAPI from "../../core/repositories/rest-api";
 import LocalizationService from "../../service/localization.service";
 
 import Loading from "../layout/loading.component";
-import Card from "../layout/card.component";
 import { Panel } from "primereact/panel";
 import { i10n } from "../../config/prime-locale";
 
