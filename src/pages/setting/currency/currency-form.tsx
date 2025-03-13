@@ -24,10 +24,10 @@ const _ = () => {
     const onSubmit = (entity: any) => {
         if (code) {
             CurrencyRepository.update(code, entity)
-                .then(() => navigate(-1))
+                .then(() => navigate('/settings/currencies'))
         } else {
             CurrencyRepository.create(entity)
-                .then(() => navigate(-1))
+                .then(() => navigate('/settings/currencies'))
         }
     }
 
