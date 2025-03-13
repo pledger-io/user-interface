@@ -15,7 +15,7 @@ import {
     mdiFileUploadOutline,
     mdiFormatListBulletedSquare,
     mdiHandCoinOutline,
-    mdiLogoutVariant,
+    mdiLogoutVariant, mdiMonitorDashboard,
     mdiRobot,
     mdiShuffleVariant,
     mdiSwapHorizontal,
@@ -85,6 +85,8 @@ const Sidebar = ({ logoutCallback, className }: SidebarProps) => {
             <ul className="list-none p-3 m-0">
                 <li>
                     <Section title='page.nav.reports'>
+                        <SectionLink url='/dashboard' icon={ mdiMonitorDashboard }
+                                     title='page.nav.dashboard'/>
                         <SectionLink url='/reports/income-expense' icon={ mdiChartAreaspline }
                                      title='page.reports.default.title'/>
                         <SectionLink url='/reports/monthly-budget' icon={ mdiChartPie }
