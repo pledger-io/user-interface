@@ -12,6 +12,8 @@ import LocalizationService from "../../service/localization.service";
 
 import Loading from "../layout/loading.component";
 import Card from "../layout/card.component";
+import { Panel } from "primereact/panel";
+import { i10n } from "../../config/prime-locale";
 
 const percentageOfYear = 90 / 365
 
@@ -78,7 +80,7 @@ function BudgetBalance({ range } : Readonly<{ range : DateRange }>) {
         }
     )
 
-    return <Card title='page.dashboard.budgets.balance'>
+    return <Panel header={ i10n('page.dashboard.budgets.balance') }>
         { !budgetSeries && <Loading/> }
         { budgetSeries &&
             <Chart type='bar'
@@ -87,7 +89,7 @@ function BudgetBalance({ range } : Readonly<{ range : DateRange }>) {
                    options={ config }
                    data={ budgetSeries }/>
         }
-    </Card>
+    </Panel>
 }
 
 export default BudgetBalance

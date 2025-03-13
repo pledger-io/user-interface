@@ -22,7 +22,7 @@ const Dashboard = () => {
         <BreadCrumbs>
             <BreadCrumbItem label='page.nav.dashboard' />
         </BreadCrumbs>
-        <div className="Dashboard">
+        <div className="px-2 flex flex-col gap-4">
             <Summary range={ range } compareRange={ compareRange } />
 
             <BalanceChart range={ range }/>

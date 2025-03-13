@@ -49,7 +49,7 @@ const OwnAccountsView = () => {
 
             <DataTable loading={ !accounts } value={ accounts } size='small'>
                 <Column header={ i10n('Account.name') } body={ account => <>
-                    <NavLink to={`/account/${ ['savings', 'joined_savings'].indexOf(account.type) == -1 ? 'own' : 'savings' }/${account.id}/transactions`}>{account.name}</NavLink>
+                    <NavLink to={`/accounts/${ ['savings', 'joined_savings'].indexOf(account.type) == -1 ? 'own' : 'savings' }/${account.id}/transactions`}>{account.name}</NavLink>
                     <div className='text-muted md:pl-1 text-sm flex md:block flex-col'>
                         <label className='font-bold mr-1'><Translation label='Account.type'/>:</label>
                         <Translation className='md:px-0 px-2' label={`AccountType.${account.type}`}/>

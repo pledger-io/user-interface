@@ -10,6 +10,8 @@ import RestAPI from "../../core/repositories/rest-api";
 
 import Card from "../layout/card.component";
 import Loading from "../layout/loading.component";
+import { Panel } from "primereact/panel";
+import { i10n } from "../../config/prime-locale";
 
 const BalanceChart = ({ range } : { range: DateRange }) => {
     const [balanceSeries, setBalanceSeries] = useState<ChartData | undefined>()
@@ -24,7 +26,7 @@ const BalanceChart = ({ range } : { range: DateRange }) => {
         }))
     }, [range])
 
-    return <Card title='page.dashboard.accounts.balance'>
+    return <Panel header={ i10n(`page.dashboard.accounts.balance`) }>
         { !balanceSeries && <Loading/> }
 
         { balanceSeries && <div className='relative h-[25em]'>
@@ -60,7 +62,7 @@ const BalanceChart = ({ range } : { range: DateRange }) => {
                    ) }
                    data={ balanceSeries }/></div>
         }
-    </Card>
+    </Panel>
 }
 
 export default BalanceChart

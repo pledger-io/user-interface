@@ -12,6 +12,8 @@ import LocalizationService from "../../service/localization.service";
 
 import Card from "../layout/card.component";
 import Loading from "../layout/loading.component";
+import { Panel } from "primereact/panel";
+import { i10n } from "../../config/prime-locale";
 
 const CategoriesBalance = ({ range } : { range: DateRange }) => {
     const [categorySeries, setCategorySeries] = useState<ChartData | undefined>()
@@ -63,7 +65,7 @@ const CategoriesBalance = ({ range } : { range: DateRange }) => {
         }
     )
 
-    return <Card title='page.dashboard.categories.balance'>
+    return <Panel header={ i10n('page.dashboard.categories.balance') }>
         { !categorySeries && <Loading/> }
         { categorySeries &&
             <Chart type='bar'
@@ -72,7 +74,7 @@ const CategoriesBalance = ({ range } : { range: DateRange }) => {
                    data={ categorySeries }
                    id='dashboard-categories-graph'/>
         }
-    </Card>
+    </Panel>
 }
 
 export default CategoriesBalance

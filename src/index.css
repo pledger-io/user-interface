@@ -51,6 +51,12 @@
     }
   }
 
+  .p-panel {
+    .p-panel-header {
+      padding: 1rem 1.25rem;
+    }
+  }
+
   .p-menu {
     .p-menuitem-link {
       display: inline-flex;
