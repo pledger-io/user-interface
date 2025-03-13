@@ -68,6 +68,22 @@
       color: var(--app-text-muted-color);
     }
   }
+
+  .p-fileupload {
+    .p-fileupload-content {
+      .p-fileupload-row {
+        div[data-pc-section="details"] {
+          text-align: center;
+        }
+        .p-fileupload-filename, span[data-pc-section="filesize"] {
+          display: none;
+        }
+        div[data-pc-section="actions"] {
+          max-width: 3rem;
+        }
+      }
+    }
+  }
 }
 
 body {
