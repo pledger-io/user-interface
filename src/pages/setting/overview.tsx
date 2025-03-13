@@ -53,7 +53,7 @@ const SettingActionButtons: FC<{setting: Setting, callback: () => void}> = ({ se
     </div>
 }
 
-const _ = () => {
+const SettingPage = () => {
     const [settings, setSettings] = useState<Setting[]>([])
 
     const loadSettings = () => {
@@ -87,4 +87,4 @@ const _ = () => {
     </>
 }
 
-export default _
+export default SettingPage
