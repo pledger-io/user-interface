@@ -7,10 +7,12 @@ import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
 import { useInputField } from "../input/InputGroup";
 import { i10n } from "../../../config/prime-locale";
 
+type CurrencyInputProps = Omit<SelectInputProps, 'options'>
+
 /**
  * Specification of a Select but then only meant for currency values.
  */
-export const CurrencyInput: FC<SelectInputProps> = (props) => {
+export const CurrencyInput: FC<CurrencyInputProps> = (props) => {
     const [field, errors, onChange] = useInputField({ onChange: props.onChange, field: props })
     const [currencies, setCurrencies] = useState<Currency[]>()
 

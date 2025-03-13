@@ -4,7 +4,7 @@ import { AddFieldFunc, FieldType, FormContextType, OnValueChangeFunc } from "./f
 function validateField(field: FieldType) {
     const { value } = field;
     const errors = [];
-    if (field.required && (value === null || value === '')) {
+    if (field.required && (value === undefined || value === null || value === '')) {
         errors.push('required')
     }
 
@@ -28,6 +28,7 @@ function validateField(field: FieldType) {
             }
         }
     }
+
     return errors;
 }
 
@@ -87,6 +88,7 @@ export const Form: FC<FormProps> = ({ entity, onSubmit, onChange, style = 'group
     const onFormSubmit = (event: FormEvent) => {
         console.info('Handling the form submit.')
         event.preventDefault()
+
         const entity: Record<string, any> = {}
         Object.entries(fields)
             .forEach(([id, field]) => entity[id] = (field as FieldType).value)

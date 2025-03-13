@@ -1,15 +1,16 @@
+import { Calendar } from "primereact/calendar";
 import React, { useEffect, useState } from "react";
 
 import DatePicker from "react-datepicker";
+import { i10n } from "../../../config/prime-locale";
 import { InputGroup, InputValidationErrors, useInputField } from "./InputGroup";
 
-import 'react-datepicker/dist/react-datepicker.css';
 import { FieldType } from "../form-types";
 
 const DateFormats = {
-    nl: 'dd-MM-yyyy',
-    en: 'MM/dd/yyyy',
-    de: 'dd.MM.yyyy'
+    nl: 'dd-mm-yy',
+    en: 'mm/dd/yy',
+    de: 'dd.mm.yy'
 }
 type DateFormatLanguage = keyof typeof DateFormats;
 
@@ -25,9 +26,9 @@ type DateInputProps = FieldType & {
  */
 export const DateInput = (props: DateInputProps) => {
     const [field, errors, onChange] = useInputField({ onChange: props.onChange, field: props })
-    const [selected, setSelected]   = useState(new Date())
+    const [selected, setSelected]   = useState<Date | null>(null)
 
-    const onDateChanged = (date: Date | null) => {
+    const onDateChanged = (date: Date | null | undefined) => {
         if (date == null) {
             setSelected(new Date())
             onChange({
@@ -35,7 +36,7 @@ export const DateInput = (props: DateInputProps) => {
                 currentTarget: { value: null }
             })
         } else {
-            const isoDate = date.toISOString().substring(0, 10)
+            const isoDate = `${ date.getFullYear() }-${ String(date.getMonth() + 1).padStart(2, '0')}-${ String(date.getDate()).padStart(2, '0') }`
             setSelected(date)
             onChange({
                 persist: () => {},
@@ -49,24 +50,22 @@ export const DateInput = (props: DateInputProps) => {
     }, [props.value])
 
     if (!field) return <></>
-    return (
-        <InputGroup id={props.id}
-                    required={props.required}
-                    title={props.title}
-                    help={props.help}
-                    inputClassName='block!'
-                    valid={field.touched ? errors.length === 0 : undefined }>
-            <DatePicker required={props.required}
-                        selected={selected}
-                        readOnly={props.readonly}
-                        minDate={props.minDate}
-                        showYearDropdown={ true }
-                        dateFormat={DateFormats[localStorage.getItem('language') as DateFormatLanguage]}
-                        onChange={ onDateChanged }/>
+    return <>
+        <div className={`flex flex-col gap-2 mt-2 ${ props.className || '' }`}>
+            <label htmlFor={ props.id } className='font-bold'>{ i10n(props.title as string) }</label>
+            <Calendar id={ props.id }
+                      showIcon={ true }
+                      disabled={ props.readonly }
+                      minDate={ props.minDate }
+                      dateFormat={ DateFormats[localStorage.getItem('language') as DateFormatLanguage] }
+                      onChange={ e => onDateChanged(e.value) }
+                      invalid={ field.touched ? errors.length > 0 : undefined }
+                      required={ props.required }
+                      value={ selected } />
 
-            {field.touched && <InputValidationErrors field={field} errors={errors} />}
-        </InputGroup>
-    )
+            { field.touched && <InputValidationErrors field={ field } errors={ errors }/> }
+        </div>
+    </>
 }
 
 export const MonthPicker = (props: any) => {

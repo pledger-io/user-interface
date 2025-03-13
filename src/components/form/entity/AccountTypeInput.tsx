@@ -6,10 +6,12 @@ import { useInputField } from "../input/InputGroup";
 import { i10n } from "../../../config/prime-locale";
 import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
 
+type AccountTypeInputProps = Omit<SelectInputProps, 'options'>
+
 /**
  * Specification of a Select but then only meant for an account type selection.
  */
-export const AccountTypeInput: FC<SelectInputProps> = (props) => {
+export const AccountTypeInput: FC<AccountTypeInputProps> = (props) => {
     const [field, errors, onChange] = useInputField({ onChange: props.onChange, field: props })
     const [accountTypes, setAccountTypes] = useState([])
 
