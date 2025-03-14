@@ -1,20 +1,18 @@
 import { mdiPlus, mdiSquareEditOutline } from "@mdi/js";
+import Icon from "@mdi/react";
+import { Card } from "primereact/card";
+import { Column } from "primereact/column";
+import { DataTable } from "primereact/datatable";
 import React, { useEffect, useState } from "react";
+import { NavLink } from "react-router";
 import BreadCrumbItem from "../../../components/breadcrumb/breadcrumb-item.component";
 import BreadCrumbs from "../../../components/breadcrumb/breadcrumb.component";
 
 import { Form, Input } from '../../../components/form'
-import { Button } from "../../../components/layout/button";
-import Translation from "../../../components/localization/translation.component";
-import { CurrencyRepository } from "../../../core/RestAPI";
-import { Currency } from "../../../types/types";
-import NotificationService from "../../../service/notification.service";
 import { i10n } from "../../../config/prime-locale";
-import { Card } from "primereact/card";
-import { NavLink } from "react-router";
-import Icon from "@mdi/react";
-import { DataTable } from "primereact/datatable";
-import { Column } from "primereact/column";
+import { CurrencyRepository } from "../../../core/RestAPI";
+import NotificationService from "../../../service/notification.service";
+import { Currency } from "../../../types/types";
 
 const CurrencyPage = () => {
     const [currencies, setCurrencies] = useState<Currency[]>([])

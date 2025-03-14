@@ -1,26 +1,26 @@
+import { mdiCashPlus } from "@mdi/js";
 import React, { useEffect, useState } from 'react'
+import { useParams } from "react-router";
+import LiabilityGraph from "../../../components/account/liability-graph.component";
+
+import LiabilityTransactionList from "../../../components/account/liability-transaction-list.component";
 import BalanceComponent from "../../../components/balance.component";
 import BreadCrumbItem from "../../../components/breadcrumb/breadcrumb-item.component";
 import BreadCrumbs from "../../../components/breadcrumb/breadcrumb.component";
 import MoneyComponent from "../../../components/format/money.component";
 import PercentageComponent from "../../../components/format/percentage.component";
 import { Button } from "../../../components/layout/button";
-import Translation from "../../../components/localization/translation.component";
-import { Resolver } from "../../../core";
-
-import AccountRepository from "../../../core/repositories/account-repository";
-import { mdiCashPlus } from "@mdi/js";
-import { useParams } from "react-router";
-import { Account, Transaction } from "../../../types/types";
-import DateRange from "../../../types/date-range.type";
-
-import LiabilityTransactionList from "../../../components/account/liability-transaction-list.component";
-import LiabilityGraph from "../../../components/account/liability-graph.component";
 import Card from "../../../components/layout/card.component";
 import Loading from "../../../components/layout/loading.component";
 
 import '../../../assets/css/LiabiliryView.scss'
+import Translation from "../../../components/localization/translation.component";
+import { Resolver } from "../../../core";
+
+import AccountRepository from "../../../core/repositories/account-repository";
 import DateRangeService from "../../../service/date-range.service";
+import DateRange from "../../../types/date-range.type";
+import { Account, Transaction } from "../../../types/types";
 
 const LiabilityDetailView = () => {
     const [account, setAccount] = useState<Account>()

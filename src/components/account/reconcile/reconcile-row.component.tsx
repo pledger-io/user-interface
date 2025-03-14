@@ -125,7 +125,7 @@ const ReconcileRowComponent = ({ process, onRemoved }: { process: ProcessInstanc
                 outlined
                 severity='info'
                 onClick={ () => previousYearRef?.current?.open() }
-                data-testid={ `retry-button-${ process.id }` }/>
+                data-testid={ `previous-year-button-${ process.id }` }/>
             <Button
                     icon={ mdiRedo }
                     outlined
@@ -138,7 +138,7 @@ const ReconcileRowComponent = ({ process, onRemoved }: { process: ProcessInstanc
                                           icon={ mdiDelete }
                                           outlined
                                           severity='warning'
-                                          data-test-id={ `remove-row-${ process.id }` }/> }
+                                          data-testid={ `remove-row-${ process.id }` }/> }
                      onConfirm={ onDelete }>
                 <Translation label='page.accounts.reconcile.delete.confirm'/>
             </Confirm>

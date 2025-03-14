@@ -70,7 +70,7 @@ export const DateInput = (props: DateInputProps) => {
 
 export const MonthPicker = (props: any) => {
     const [field, errors, onChange] = useInputField({ onChange: props.onChange, field: props })
-    const [selected, setSelected]   = useState<Date>(new Date())
+    const [selected, setSelected]   = useState<Date>(() => new Date())
 
     const onDateChanged = (date: Date | null) => {
         if (date == null) {

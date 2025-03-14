@@ -31,7 +31,7 @@ const ConfirmComponent = (props: ConfirmProps) => {
                    <Button label='common.action.confirm'
                            key='confirm'
                            variant='warning'
-                           dataTestId={ 'confirm-button' }
+                           data-testid={ 'confirm-button' }
                            onClick={ onConfirmClick }
                            icon={ mdiRadioboxBlank }/>,
                    <Button label='common.action.cancel'

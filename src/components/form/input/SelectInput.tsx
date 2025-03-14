@@ -1,5 +1,5 @@
 import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
-import React, { FC, ReactNode, useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { i10n } from "../../../config/prime-locale";
 import LocalizationService from "../../../service/localization.service";
 import { FieldType } from "../form-types";
