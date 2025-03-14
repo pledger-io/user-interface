@@ -1,17 +1,16 @@
-import React, { useRef, useState } from "react";
-
+import { mdiAccountPlus, mdiLogin, mdiWeb } from "@mdi/js";
+import Icon from "@mdi/react";
 import { PrimeReactProvider } from "primereact/api";
 import { Card } from "primereact/card";
+import { useLocalStorage } from "primereact/hooks";
 import { Menu } from "primereact/menu";
-import Icon from "@mdi/react";
-import { mdiAccountPlus, mdiLogin, mdiWeb } from "@mdi/js";
 import { Message } from "primereact/message";
-import { i10n, Locales, SupportedLocales } from "../config/prime-locale";
-import { Form, Input, SubmitButton } from "../components/form";
-import SecurityRepository from "../core/repositories/security-repository";
+import React, { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router";
+import { Form, Input, SubmitButton } from "../components/form";
+import { i10n, Locales, SupportedLocales } from "../config/prime-locale";
+import SecurityRepository from "../core/repositories/security-repository";
 import useQueryParam from "../hooks/query-param.hook";
-import LocalizationService from "../service/localization.service";
 
 type LoginForm = {
   username: string,
@@ -23,15 +22,16 @@ const Flag = ({ language }: { language: SupportedLocales }) => {
 }
 
 const LoginCard = () => {
+  const [_, setLocale] = useLocalStorage<SupportedLocales>('en', 'language')
   const configMenu = useRef<Menu>(null);
   const navigate = useNavigate()
   const [failure, setFailure] = useState()
   const [from] = useQueryParam({ key: 'from', initialValue: '/dashboard' })
 
   const languageMenu = [
-    { label: 'English', icon: () => <Flag language='en'/>, command: () => LocalizationService.load('en') },
-    { label: 'Nederlands', icon: () => <Flag language='nl'/>, command: () => LocalizationService.load('nl') },
-    { label: 'Deutsch', icon: () => <Flag language='de'/>, command: () => LocalizationService.load('de') }
+    { label: 'English', icon: () => <Flag language='en'/>, command: () => setLocale('en') },
+    { label: 'Nederlands', icon: () => <Flag language='nl'/>, command: () => setLocale('nl') },
+    { label: 'Deutsch', icon: () => <Flag language='de'/>, command: () => setLocale('de') }
   ]
 
   const header = <div className='p-4 flex justify-between relative overflow-hidden'>
@@ -84,7 +84,9 @@ const LoginCard = () => {
 }
 
 const _ = () => {
-  return <PrimeReactProvider>
+  const [locale] = useLocalStorage<SupportedLocales>('en', 'language')
+
+  return <PrimeReactProvider value={ { locale: locale } }>
     <div className='flex justify-center h-screen items-center'>
       <LoginCard/>
     </div>
