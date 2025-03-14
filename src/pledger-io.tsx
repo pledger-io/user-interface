@@ -23,61 +23,61 @@ import { RootErrorBoundary } from "./router/error-boundary";
 import { AuthenticatedComponent } from "./router/authenticate.wrapper";
 
 const router = createBrowserRouter([
-    {
-        id: 'login',
-        path: '/login',
-        Component: LoginPage,
-        loader: anonymousLoader
-    },
-    {
-        id: 'register',
-        path: '/register',
-        Component: RegisterPage,
-        loader: anonymousLoader
-    },
-    {
-        id: 'two-factor',
-        path: '/two-factor',
-        Component: TwoFactorPage,
-    },
-    {
-        id: 'pledger',
-        path: '/',
-        Component: AuthenticatedComponent,
-        loader: authenticatedLoader,
-        errorElement: <RootErrorBoundary />,
-        hydrateFallbackElement: <Loading />,
-        children: [
-            {
-                id: 'dashboard',
-                path: 'dashboard',
-                Component: lazy(() => import('./pages/dashboard'))
-            },
-            account,
-            automation,
-            budget,
-            category,
-            contract,
-            profile,
-            reports,
-            transactions,
-            settings,
-            upload,
-            {
-                id: 'catch-all',
-                path: '/*',
-                loader: () => redirect('/dashboard')
-            }
-        ]
-    }
+  {
+    id: 'login',
+    path: '/login',
+    Component: LoginPage,
+    loader: anonymousLoader
+  },
+  {
+    id: 'register',
+    path: '/register',
+    Component: RegisterPage,
+    loader: anonymousLoader
+  },
+  {
+    id: 'two-factor',
+    path: '/two-factor',
+    Component: TwoFactorPage,
+  },
+  {
+    id: 'pledger',
+    path: '/',
+    Component: AuthenticatedComponent,
+    loader: authenticatedLoader,
+    errorElement: <RootErrorBoundary/>,
+    hydrateFallbackElement: <Loading/>,
+    children: [
+      {
+        id: 'dashboard',
+        path: 'dashboard',
+        Component: lazy(() => import('./pages/dashboard'))
+      },
+      account,
+      automation,
+      budget,
+      category,
+      contract,
+      profile,
+      reports,
+      transactions,
+      settings,
+      upload,
+      {
+        id: 'catch-all',
+        path: '/*',
+        loader: () => redirect('/dashboard')
+      }
+    ]
+  }
 ], {
-    basename: '/ui'
+  basename: '/ui'
 })
 
 function _() {
-    return (
-        <RouterProvider router={ router } />
-    )
+  return (
+    <RouterProvider router={ router }/>
+  )
 }
 
 export default _;

@@ -1,5 +1,5 @@
 import { mdiClose } from "@mdi/js";
-import { ForwardedRef, forwardRef, PropsWithChildren, useImperativeHandle, useState } from "react";
+import { PropsWithChildren, useImperativeHandle, useState } from "react";
 
 import Translation from "../../localization/translation.component";
 import { Button, ButtonBar } from "../button";

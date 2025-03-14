@@ -18,21 +18,21 @@ const compareRange = range.before(DASHBOARD_DAYS)
 
 const Dashboard = () => {
 
-    return <>
-        <BreadCrumbs>
-            <BreadCrumbItem label='page.nav.dashboard' />
-        </BreadCrumbs>
-        <div className="px-2 flex flex-col gap-4">
-            <Summary range={ range } compareRange={ compareRange } />
+  return <>
+    <BreadCrumbs>
+      <BreadCrumbItem label='page.nav.dashboard'/>
+    </BreadCrumbs>
+    <div className="px-2 flex flex-col gap-4">
+      <Summary range={ range } compareRange={ compareRange }/>
 
-            <BalanceChart range={ range }/>
+      <BalanceChart range={ range }/>
 
-            <Grid type='column' minWidth='35em'>
-                <BudgetBalance range={ range } />
-                <CategoriesBalance range={ range } />
-            </Grid>
-        </div>
-    </>
+      <Grid type='column' minWidth='35em'>
+        <BudgetBalance range={ range }/>
+        <CategoriesBalance range={ range }/>
+      </Grid>
+    </div>
+  </>
 }
 
 export default Dashboard

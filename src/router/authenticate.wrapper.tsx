@@ -1,15 +1,21 @@
 import SecurityRepository from "../core/repositories/security-repository";
 import NotificationCenter from "../components/notification";
 import { Suspense, useEffect, useState } from "react";
-import { Outlet } from "react-router";
+import { Outlet, useNavigate } from "react-router";
 import Loading from "../components/layout/loading.component";
 import Sidebar from "../components/sidebar";
 import { PrimeReactProvider } from "primereact/api";
 
+/**
+ * A React component that displays a loading state with a flex container
+ * centered horizontally and vertically, occupying the full height of the viewport.
+ *
+ * @return {JSX.Element} A JSX element rendering a full-page centered loading spinner.
+ */
 function SuspenseLoading() {
-    return <div className='flex h-[100vh] justify-center items-center'>
-        <Loading/>
-    </div>
+  return <div className='flex h-[100vh] justify-center items-center'>
+    <Loading/>
+  </div>
 }
 
 /**
@@ -20,27 +26,30 @@ function SuspenseLoading() {
  * @return the authenticated component to be rendered in the application
  */
 export function AuthenticatedComponent() {
-    const [locale, setLocale] = useState(() => localStorage.getItem("language") || "en")
-    const logout = () => {
-        SecurityRepository.logout()
-    }
+  const [locale, setLocale] = useState(() => localStorage.getItem("language") || "en")
+  const navigate = useNavigate()
 
-    useEffect(() => {
-        const localeChange = () => setLocale(localStorage.getItem("language") || "en")
-        document.addEventListener("locale-changed", localeChange)
+  useEffect(() => {
+    const localeChange = () => setLocale(localStorage.getItem("language") || "en")
+    document.addEventListener("locale-changed", localeChange)
 
-        return () => document.removeEventListener("locale-changed", localeChange)
-    }, [])
+    return () => document.removeEventListener("locale-changed", localeChange)
+  }, [])
 
-    return <PrimeReactProvider value={ { ripple: true, locale: locale, cssTransition: true } }>
-        <div className='flex'>
-            <Sidebar logoutCallback={logout} className='w-[218px] min-w-[218px]'/>
-            <main className='h-[100vh] flex flex-col overflow-y-auto flex-grow'>
-                <NotificationCenter/>
-                <Suspense fallback={<SuspenseLoading/>}>
-                    <Outlet/>
-                </Suspense>
-            </main>
-        </div>
-    </PrimeReactProvider>
+  const logout = () => {
+    SecurityRepository.logout()
+    navigate("/login")
+  }
+
+  return <PrimeReactProvider value={ { ripple: true, locale: locale, cssTransition: true } }>
+    <div className='flex'>
+      <Sidebar logoutCallback={ logout } className='w-[218px] min-w-[218px]'/>
+      <main className='h-[100vh] flex flex-col overflow-y-auto flex-grow'>
+        <NotificationCenter/>
+        <Suspense fallback={ <SuspenseLoading/> }>
+          <Outlet/>
+        </Suspense>
+      </main>
+    </div>
+  </PrimeReactProvider>
 }

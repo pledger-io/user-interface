@@ -1,0 +1,10 @@
+root = true
+
+[{*.ts,*.tsx,*.jsx}]
+indent_style = space
+indent_size = 2
+quote_type = single
+
+[*.css]
+indent_style = space
+indent_size = 4
