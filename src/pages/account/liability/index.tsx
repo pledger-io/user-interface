@@ -21,7 +21,7 @@ import useQueryParam from "../../../hooks/query-param.hook";
 import { Account, Pagination } from "../../../types/types";
 
 const accountNameColumn = (account: Account) => <>
-  <NavLink to={ `./${ account.id }/transactions` }>{ account.name }</NavLink>
+  <NavLink to={ `./${ account.id }` }>{ account.name }</NavLink>
   <div className='text-muted md:pl-1 text-sm flex md:block flex-col'>
     <span className='font-semibold'>
         { i10n('Account.lastActivity') }:
