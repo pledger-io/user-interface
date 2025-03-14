@@ -1,12 +1,12 @@
+import { PrimeReactProvider } from "primereact/api";
 import { useLocalStorage } from "primereact/hooks";
-import { SupportedLocales } from "../config/prime-locale";
-import SecurityRepository from "../core/repositories/security-repository";
-import NotificationCenter from "../components/notification";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense } from "react";
 import { Outlet, useNavigate } from "react-router";
 import Loading from "../components/layout/loading.component";
+import NotificationCenter from "../components/notification";
 import Sidebar from "../components/sidebar";
-import { PrimeReactProvider } from "primereact/api";
+import { SupportedLocales } from "../config/prime-locale";
+import SecurityRepository from "../core/repositories/security-repository";
 
 /**
  * A React component that displays a loading state with a flex container

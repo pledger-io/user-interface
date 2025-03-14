@@ -36,7 +36,7 @@ type ScheduleTransactionDialogProps = Attributes & {
     iconStyle?: boolean
 }
 
-const ScheduleTransactionDialog = ({ transaction, onCreated = () => {}, iconStyle = false } : ScheduleTransactionDialogProps) => {
+const ScheduleTransactionDialog = ({ transaction, onCreated, iconStyle = false } : ScheduleTransactionDialogProps) => {
     const [type, setType] = useState(transaction?.type.code.toLowerCase() || 'credit')
 
     const dialogHandler: PopupCallbacks = { close: () => {}, open: () => {} }
@@ -55,6 +55,7 @@ const ScheduleTransactionDialog = ({ transaction, onCreated = () => {}, iconStyl
                         <SubmitButton key='save' label='common.action.save' icon={ mdiContentSave }/>
                     ] }
                     openButton={ <Button label='page.transaction.action.recurring'
+                                         key='recurring'
                                          variant={ iconStyle ? 'icon' : 'primary' }
                                          icon={ mdiCalendarCheck }/> }>
                 <Message label='page.budget.schedule.explained' variant='info'/>

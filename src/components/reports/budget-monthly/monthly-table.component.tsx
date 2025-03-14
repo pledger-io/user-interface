@@ -74,8 +74,8 @@ const MonthlyBudgetTableRow: FC<MonthlyBudgetTableRowProps> = ({ months, expense
 
     return <tr key={ expense.id }>
         <td>{ expense.name }</td>
-        { months.map((_, idx) =>
-            <td key={ idx }>
+        { months.map((range, idx) =>
+            <td key={ range.toString() }>
                 { expenses[idx] === undefined && <Loading/> }
                 { expenses[idx] && <MoneyComponent money={expenses[idx]} currency={currency}/> }
             </td>) }

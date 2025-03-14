@@ -30,6 +30,7 @@ const GroupAddDialog = (props: GroupAddDialogProps) => {
                     control={ dialogControl }
                     actions={ [
                         <SubmitButton label='common.action.save'
+                                      key='submit'
                                       icon={ mdiContentSave }
                                       variant='primary'/>,
                     ] }

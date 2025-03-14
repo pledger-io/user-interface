@@ -13,6 +13,7 @@ const NotificationCenter = () => {
         const onNotificationEvent = (event: Event) => {
             const notification = (event as CustomEvent).detail as NotificationEvent
 
+          // eslint-disable-next-line @eslint-react/web-api/no-leaked-timeout
             setTimeout(() => {
                 // Remove the notification after 2 seconds
                 setNotifications((existing) => {

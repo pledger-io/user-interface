@@ -1,5 +1,5 @@
 @import 'tailwindcss';
-@import 'primereact/resources/themes/soho-light/theme.css' layer(primereact);
+@import 'primereact/resources/themes/lara-light-blue/theme.css' layer(primereact);
 
 @theme inline {
   --color-primary: var(--primary-color);

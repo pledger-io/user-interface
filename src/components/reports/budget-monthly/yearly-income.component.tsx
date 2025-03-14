@@ -16,7 +16,7 @@ type BudgetYearlyExpenseProps = {
     currencySymbol: string
 }
 
-const YearlyIncomeGraphComponent = ({ year = 1970, budgets = [], currencySymbol = '' } : BudgetYearlyExpenseProps) => {
+const YearlyIncomeGraphComponent = ({ year = 1970, budgets, currencySymbol = '' } : BudgetYearlyExpenseProps) => {
     const [chartData, setChartData] = useState<ChartData | undefined>()
 
     useEffect(() => {

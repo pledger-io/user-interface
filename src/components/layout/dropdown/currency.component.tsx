@@ -11,7 +11,7 @@ type CurrencyDropdownProps = {
     onChange: (_: Currency) => void
 }
 
-const CurrencyDropdown = ({ currency, onChange = _ => undefined }: CurrencyDropdownProps) => {
+const CurrencyDropdown = ({ currency, onChange }: CurrencyDropdownProps) => {
     const [currencyOpen, setCurrencyOpen] = useState(false)
     const [currencies, setCurrencies] = useState<Currency[]>([])
 
@@ -27,11 +27,10 @@ const CurrencyDropdown = ({ currency, onChange = _ => undefined }: CurrencyDropd
 
     return (
         <div className="relative">
-            <Button variant='text'
+            <Button text
                     onClick={ () => setCurrencyOpen(!currencyOpen) }
                     icon={ mdiMenuDown }
                     className={ 'inline-flex m-0' }
-                    iconPos={ 'after' }
                     message={ currency }/>
 
             <div className='absolute w-[10em] right-0 z-40'>
@@ -41,7 +40,7 @@ const CurrencyDropdown = ({ currency, onChange = _ => undefined }: CurrencyDropd
                             <Button message={ `${ currency.name } (${ currency.symbol })` }
                                     onClick={ () => onSelect(currency) }
                                     key={ currency.code }
-                                    variant='secondary'
+                                    severity='secondary'
                                     className='w-full rounded-none'/>)
                 ) }
             </div>

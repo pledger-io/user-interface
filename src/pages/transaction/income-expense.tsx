@@ -56,9 +56,11 @@ const TransactionGlobalView = () => {
         <Card title='page.title.transactions.overview'
               actions={ [
                       <NewTransactionDialog type='debit'
+                                            key={ 'new-debit' }
                                             icon={ mdiCashPlus }
                                             variant='success'/>,
                       <NewTransactionDialog type='credit'
+                                            key={ 'new-credit' }
                                             icon={ mdiCashMinus }
                                             variant='warning'/>] }>
 

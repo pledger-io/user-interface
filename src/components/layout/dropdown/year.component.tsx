@@ -11,7 +11,7 @@ type YearDropdownProps = {
     onChange?: (_: number) => void
 }
 
-const YearDropdown = ({ year = 1970, onChange = _ => undefined }: YearDropdownProps) => {
+const YearDropdown = ({ year = 1970, onChange }: YearDropdownProps) => {
     const [yearOpen, setYearOpen] = useState<boolean>(false)
     const onSelect = (date: Date | null, _: any) => {
         setYearOpen(false)

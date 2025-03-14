@@ -46,7 +46,7 @@ type OpeningBalance = {
 
 const LiabilityForm = () => {
     const { id } = useParams()
-    const [account, setAccount] = useState(new AccountModel({} as Account))
+    const [account, setAccount] = useState(() => new AccountModel({} as Account))
     const [openingBalance, setOpeningBalance] = useState<OpeningBalance>({ amount: 0 } as OpeningBalance)
     const navigate = useNavigate()
 

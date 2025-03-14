@@ -11,7 +11,7 @@ type YearlyBudgetIncomeComponentProps = {
     budgets: Budget[]
 }
 
-const YearlyBudgetIncomeComponent = ({ range, budgets = [] } : YearlyBudgetIncomeComponentProps) => {
+const YearlyBudgetIncomeComponent = ({ range, budgets } : YearlyBudgetIncomeComponentProps) => {
     const [yearlyIncome, setYearlyIncome] = useState(0)
     const [yearlyExpected, setYearlyExpected] = useState(0)
 

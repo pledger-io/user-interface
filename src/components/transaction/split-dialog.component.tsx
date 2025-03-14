@@ -40,6 +40,7 @@ const TransactionSplitDialog = ({ transaction: { split, currency, amount }, icon
                 </thead>
                 <tbody>
                 { split.map((row: any, idx: number) => (
+                  // eslint-disable-next-line @eslint-react/no-array-index-key
                     <tr key={ idx }>
                         <td>{ row.description }</td>
                         <td style={ priceStyle }><MoneyComponent money={ row.amount } currency={ currency }/></td>

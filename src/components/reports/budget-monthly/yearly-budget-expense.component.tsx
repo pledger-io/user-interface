@@ -11,7 +11,7 @@ type YearlyBudgetExpenseComponentProps = {
     range: DateRange
 }
 
-const YearlyBudgetExpenseComponent = ({ budgets = [], range }: YearlyBudgetExpenseComponentProps) => {
+const YearlyBudgetExpenseComponent = ({ budgets, range }: YearlyBudgetExpenseComponentProps) => {
     const [yearlyExpenses, setYearlyExpenses] = useState(0)
     const [yearlyExpected, setYearlyExpected] = useState(0)
 
