@@ -14,6 +14,7 @@ import Card from "../../../components/layout/card.component";
 import Loading from "../../../components/layout/loading.component";
 import { Resolver } from "../../../core";
 import { TransactionRepository } from "../../../core/RestAPI";
+import { ROUTER_ACCOUNT_KEY, RouterAccount } from "../../../types/router-types";
 import { Account, Transaction } from "../../../types/types";
 import NotificationService from "../../../service/notification.service";
 
@@ -21,7 +22,7 @@ const TransactionForm = () => {
     const { type, transactionType, transactionId } = useParams()
     const [transaction, setTransaction] = useState<Transaction>()
     const navigate = useNavigate()
-    const account: any = useRouteLoaderData('other-detail')
+    const account: RouterAccount = useRouteLoaderData(ROUTER_ACCOUNT_KEY)
 
     useEffect(() => {
         // load transaction defaults
@@ -53,7 +54,7 @@ const TransactionForm = () => {
 
     const onSubmit = useCallback(
         (e: any) => processSubmit(transactionId as string, e, account.account.currency, navigate),
-        [account.account.currency, transactionId, navigate])
+        [account?.account.currency, transactionId, navigate])
 
     const initialSplit = () => setTransaction(old => {
         const existing = old as Transaction

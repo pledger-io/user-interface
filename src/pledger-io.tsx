@@ -41,7 +41,7 @@ const router = createBrowserRouter([
     Component: TwoFactorPage,
   },
   {
-    id: 'pledger',
+    id: 'authenticated',
     path: '/',
     Component: AuthenticatedComponent,
     loader: authenticatedLoader,

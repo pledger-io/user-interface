@@ -39,6 +39,7 @@ export const AmountInput = (props: AmountInputProps) => {
                          invalid={ field.touched ? errors.length > 0 : undefined }
                          onBlur={ onBlur }
                          mode='currency'
+                         data-testid={ `${ props.id }-input` }
                          currency={ props.currency || 'EUR' }
                          onChange={ handleChangeEvent }/>
         </div>

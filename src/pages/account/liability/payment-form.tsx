@@ -2,6 +2,7 @@ import React from 'react'
 import { mdiCancel, mdiContentSave } from "@mdi/js";
 import { useLoaderData, useNavigate, useRouteLoaderData } from "react-router";
 import Loading from "../../../components/layout/loading.component";
+import { ROUTER_ACCOUNT_LIABILITY_KEY, RouterAccount } from "../../../types/router-types";
 import { Category, Transaction } from "../../../types/types";
 import { TransactionService } from "../../../service/TransactionService";
 import BreadCrumbItem from "../../../components/breadcrumb/breadcrumb-item.component";
@@ -12,7 +13,7 @@ import Card from "../../../components/layout/card.component";
 import Translation from "../../../components/localization/translation.component";
 
 const LiabilityPayment = () => {
-    const account: any = useRouteLoaderData('liability')
+    const account: RouterAccount = useRouteLoaderData(ROUTER_ACCOUNT_LIABILITY_KEY)
     const transaction: any = useLoaderData()
     const navigate = useNavigate()
 

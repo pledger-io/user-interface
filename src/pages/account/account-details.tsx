@@ -15,7 +15,7 @@ import Loading from "../../components/layout/loading.component";
 import { i10n } from "../../config/prime-locale";
 import { Resolver } from "../../core";
 import DateRangeService from "../../service/date-range.service";
-import { Account } from "../../types/types";
+import { ROUTER_ACCOUNT_KEY, RouterAccount } from "../../types/router-types";
 
 const TYPE_MAPPING = {
     expense: 'creditor',
@@ -30,7 +30,7 @@ const AccountDetailView: FC = () => {
     const [range, setRange] = useState(DateRangeService.currentMonth())
     const { id, type, year, month } = useParams()
     const navigate = useNavigate()
-    const account: Account | undefined = useRouteLoaderData('other-detail') as Account | undefined
+    const account: RouterAccount = useRouteLoaderData(ROUTER_ACCOUNT_KEY)
 
     useEffect(() => {
         if (year && month) setRange(DateRangeService.forMonth(parseInt(year), parseInt(month)))

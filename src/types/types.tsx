@@ -191,3 +191,15 @@ export type ApiError = {
     }[]
   }
 }
+
+export type UserProfile = {
+  theme: string,
+  defaultCurrency?: Currency,
+  currency: string
+  mfa: boolean
+}
+
+// eslint-disable-next-line @typescript-eslint/no-namespace
+export namespace RouteData {
+
+}

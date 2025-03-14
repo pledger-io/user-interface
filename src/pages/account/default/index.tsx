@@ -16,6 +16,7 @@ import { i10n } from "../../../config/prime-locale";
 import { Attachment } from "../../../core";
 import AccountRepository from "../../../core/repositories/account-repository";
 import useQueryParam from "../../../hooks/query-param.hook";
+import { ROUTER_ACCOUNT_TYPE_KEY } from "../../../types/router-types";
 import { Account, Pagination } from "../../../types/types";
 
 const accountNameColumn = (account: Account) => <>
@@ -36,7 +37,7 @@ const AccountOverview = () => {
     const [accounts, setAccounts] = useState<Account[] | undefined>(undefined)
     const [page] = useQueryParam({ key: 'page', initialValue: "1" })
     const [pagination, setPagination] = useState<Pagination>()
-    const type = useRouteLoaderData('other-accounts')
+    const type = useRouteLoaderData(ROUTER_ACCOUNT_TYPE_KEY)
 
     const reload = () => {
         setAccounts(undefined)

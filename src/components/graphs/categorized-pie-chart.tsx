@@ -25,7 +25,7 @@ let lastPosition: TooltipPosition
     return lastPosition
 }
 
-const CategorizedPieChart: FC<CategorizedPieChartProps> = ({ id, split, incomeOnly, accounts = [] }) => {
+const CategorizedPieChart: FC<CategorizedPieChartProps> = ({ id, split, incomeOnly, accounts }) => {
     const [pieSeries, setPieSeries] = useState<ChartData<'doughnut'> | undefined>(undefined)
     const [range] = useDateRange()
 
@@ -38,7 +38,7 @@ const CategorizedPieChart: FC<CategorizedPieChartProps> = ({ id, split, incomeOn
                 end: range.endString()
             },
             onlyIncome: incomeOnly,
-            accounts: Array.isArray(accounts) ? accounts : [accounts]
+            accounts: Array.isArray(accounts) ? accounts : (accounts ? [accounts] : undefined)
         }
 
         StatisticalRepository.split(split, searchCommand)
