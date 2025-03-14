@@ -21,86 +21,84 @@ import useQueryParam from "../../../hooks/query-param.hook";
 import { Account, Pagination } from "../../../types/types";
 
 const accountNameColumn = (account: Account) => <>
-    <NavLink to={ `./${ account.id }/transactions` }>{ account.name }</NavLink>
-    <div className='text-muted md:pl-1 text-sm flex md:block flex-col'>
-                            <span className='font-semibold'>
-                                { i10n('Account.lastActivity') }:
-                            </span>
-        <DateComponent date={ account.history.lastTransaction }/>
-    </div>
-    <span className='hidden md:block mt-1 pl-1 text-muted text-sm'>
-                            { account.description }
-                        </span>
+  <NavLink to={ `./${ account.id }/transactions` }>{ account.name }</NavLink>
+  <div className='text-muted md:pl-1 text-sm flex md:block flex-col'>
+    <span className='font-semibold'>
+        { i10n('Account.lastActivity') }:
+    </span>
+    <DateComponent date={ account.history.lastTransaction }/>
+  </div>
+  <span className='hidden md:block mt-1 pl-1 text-muted text-sm'>{ account.description }</span>
 </>
 
-const percentageColumn = (account: Account)=> <>
-    <PercentageComponent percentage={ account.interest.interest } decimals={ 2 }/>
-    (<Translation label={ `Periodicity.${ account.interest?.periodicity }` }/>)
+const percentageColumn = (account: Account) => <>
+  <PercentageComponent percentage={ account.interest.interest } decimals={ 2 }/>
+  (<Translation label={ `Periodicity.${ account.interest?.periodicity }` }/>)
 </>
 
 const LiabilityOverview = () => {
-    const navigate = useNavigate()
-    const [page] = useQueryParam({ key: 'page', initialValue: "1" })
-    const [accounts, setAccounts] = useState<Account[] | undefined>(undefined)
-    const [pagination, setPagination] = useState<Pagination>()
+  const navigate = useNavigate()
+  const [page] = useQueryParam({ key: 'page', initialValue: "1" })
+  const [accounts, setAccounts] = useState<Account[] | undefined>(undefined)
+  const [pagination, setPagination] = useState<Pagination>()
 
-    const reload = () => {
-        setAccounts(undefined)
-        AccountRepository.search({
-            types: ['loan', 'mortgage', 'debt'] as any,
-            page: parseInt(page)
-        }).then(resultPage => {
-            setAccounts(resultPage.content || [])
-            setPagination(resultPage.info)
-        })
-    }
+  const reload = () => {
+    setAccounts(undefined)
+    AccountRepository.search({
+      types: ['loan', 'mortgage', 'debt'] as any,
+      page: parseInt(page)
+    }).then(resultPage => {
+      setAccounts(resultPage.content || [])
+      setPagination(resultPage.info)
+    })
+  }
 
-    useEffect(reload, [page])
+  useEffect(reload, [page])
 
-    const header = () => <div className='px-2 py-2 border-b-1 text-center font-bold'>
-        { i10n('page.nav.accounts.liability') }
-    </div>
-    return (
-        <>
-            <BreadCrumbs>
-                <BreadCrumbItem label='page.nav.settings'/>
-                <BreadCrumbItem label='page.nav.accounts'/>
-                <BreadCrumbItem label='page.nav.accounts.liability'/>
-            </BreadCrumbs>
+  const header = () => <div className='px-2 py-2 border-b-1 text-center font-bold'>
+    { i10n('page.nav.accounts.liability') }
+  </div>
+  return (
+    <>
+      <BreadCrumbs>
+        <BreadCrumbItem label='page.nav.settings'/>
+        <BreadCrumbItem label='page.nav.accounts'/>
+        <BreadCrumbItem label='page.nav.accounts.liability'/>
+      </BreadCrumbs>
 
-            <ConfirmDialog className='max-w-[25rem]'/>
+      <ConfirmDialog className='max-w-[25rem]'/>
 
-            <Card header={ header } className='my-4 mx-2'>
-                <div className='flex justify-end'>
-                    <NavLink to={ './add' }
-                             className='p-button p-button-success p-button-sm !mb-4 gap-1 items-center'>
-                        <Icon path={ mdiPlus } size={ .8 }/> { i10n('page.title.accounts.liabilities.add') }
-                    </NavLink>
-                </div>
+      <Card header={ header } className='my-4 mx-2'>
+        <div className='flex justify-end'>
+          <NavLink to={ './add' }
+                   className='p-button p-button-success p-button-sm !mb-4 gap-1 items-center'>
+            <Icon path={ mdiPlus } size={ .8 }/> { i10n('page.title.accounts.liabilities.add') }
+          </NavLink>
+        </div>
 
-                <DataTable value={ accounts } size='small' loading={ !accounts }>
-                    <Column className='w-[3rem]' body={ account => <>
-                        { account.iconFileCode && <Attachment.Image fileCode={ account.iconFileCode }/> }
-                    </>} />
-                    <Column header={ i10n('Account.name') } body={ accountNameColumn } />
-                    <Column className='w-[9rem]'
-                            body={ percentageColumn }
-                            header={ i10n('Account.interest') + ' (' + i10n('Account.interestPeriodicity') + ')' } />
-                    <Column header={i10n('common.account.saldo')}
-                            className='w-[9rem]'
-                            body={(account: Account) =>
-                                <BalanceComponent accounts={[account]} currency={account.account.currency}/>}/>
-                    <Column className='w-[1rem]' body={ account => <AccountMenu account={ account } callback={ reload }/> } />
-                </DataTable>
+        <DataTable value={ accounts } size='small' loading={ !accounts }>
+          <Column className='w-[3rem]' body={ account => <>
+            { account.iconFileCode && <Attachment.Image fileCode={ account.iconFileCode }/> }
+          </> }/>
+          <Column header={ i10n('Account.name') } body={ accountNameColumn }/>
+          <Column className='w-[9rem]'
+                  body={ percentageColumn }
+                  header={ i10n('Account.interest') + ' (' + i10n('Account.interestPeriodicity') + ')' }/>
+          <Column header={ i10n('common.account.saldo') }
+                  className='w-[9rem]'
+                  body={ (account: Account) =>
+                    <BalanceComponent accounts={ [account] } currency={ account.account.currency }/> }/>
+          <Column className='w-[1rem]' body={ account => <AccountMenu account={ account } callback={ reload }/> }/>
+        </DataTable>
 
-                { (pagination?.records || 0) > 0
-                    && <Paginator totalRecords={ pagination?.records }
-                                  rows={ pagination?.pageSize }
-                                  onPageChange={ ({ page }) => navigate('?page=' + page) }/> }
+        { (pagination?.records || 0) > 0
+          && <Paginator totalRecords={ pagination?.records }
+                        rows={ pagination?.pageSize }
+                        onPageChange={ ({ page }) => navigate('?page=' + page) }/> }
 
-            </Card>
-        </>
-    )
+      </Card>
+    </>
+  )
 }
 
 export default LiabilityOverview

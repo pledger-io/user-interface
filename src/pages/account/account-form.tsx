@@ -1,4 +1,3 @@
-import '../../assets/css/AccountForm.scss'
 import { mdiCancel, mdiContentSave } from "@mdi/js";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";

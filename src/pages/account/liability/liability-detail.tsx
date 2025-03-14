@@ -13,7 +13,6 @@ import { Button } from "../../../components/layout/button";
 import Card from "../../../components/layout/card.component";
 import Loading from "../../../components/layout/loading.component";
 
-import '../../../assets/css/LiabiliryView.scss'
 import Translation from "../../../components/localization/translation.component";
 import { Resolver } from "../../../core";
 
