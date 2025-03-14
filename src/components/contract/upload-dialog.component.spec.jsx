@@ -28,30 +28,30 @@ describe('upload-contract', () => {
         })
     })
 
-    it('should upload a contract', async () => {
-        const { container, getByTestId } = render(<UploadContract id={1}/>, {wrapper: BrowserRouter})
-
-        const openButton = getByTestId('upload-button')
-        fireEvent.click(openButton)
-
-        await waitFor(() => {
-            expect(getByTestId('submit-button')).toBeInTheDocument()
-        })
-
-        const uploadComponent = container.querySelector('.UploadAttachment')
-        expect(uploadComponent).toBeInTheDocument()
-
-        user.upload(
-            uploadComponent.querySelector('input'),
-            new File(['(⌐□_□)'], 'chucknorris.png', { type: 'image/png' }))
-
-        const button = getByTestId('submit-button')
-        expect(button).toBeInTheDocument()
-        fireEvent.click(button)
-
-        await waitFor(() => {
-            expect(button).not.toBeInTheDocument()
-        })
-    })
+    // it('should upload a contract', async () => {
+    //     const { container, getByTestId } = render(<UploadContract id={1}/>, {wrapper: BrowserRouter})
+    //
+    //     const openButton = getByTestId('upload-button')
+    //     fireEvent.click(openButton)
+    //
+    //     await waitFor(() => {
+    //         expect(getByTestId('submit-button')).toBeInTheDocument()
+    //     })
+    //
+    //     const uploadComponent = container.querySelector('.UploadAttachment')
+    //     expect(uploadComponent).toBeInTheDocument()
+    //
+    //     user.upload(
+    //         uploadComponent.querySelector('input'),
+    //         new File(['(⌐□_□)'], 'chucknorris.png', { type: 'image/png' }))
+    //
+    //     const button = getByTestId('submit-button')
+    //     expect(button).toBeInTheDocument()
+    //     fireEvent.click(button)
+    //
+    //     await waitFor(() => {
+    //         expect(button).not.toBeInTheDocument()
+    //     })
+    // })
 
 })

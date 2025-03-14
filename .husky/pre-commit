@@ -1,1 +1,2 @@
 yarn lint:fix
+yarn test --watch=false --reporter=dot --silent
