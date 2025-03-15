@@ -199,7 +199,6 @@ export type UserProfile = {
   mfa: boolean
 }
 
-// eslint-disable-next-line @typescript-eslint/no-namespace
-export namespace RouteData {
-
+export type DialogOptions = {
+  open: () => void
 }
