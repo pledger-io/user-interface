@@ -14,9 +14,15 @@ export const Locales = {
 }
 export type SupportedLocales = keyof typeof Locales
 
+function getLocale(): SupportedLocales {
+  const locale = localStorage.getItem('language')
+  if (locale) return locale.replaceAll('"', '') as SupportedLocales
+  return 'en'
+}
+
 export const i10n = (key: string): string => {
-  return localeOption(key, localStorage.getItem('language') || 'en') ||
-    `_missing_localization_${ key }_${ localStorage.getItem('language') || 'en' }_`
+  return localeOption(key, getLocale()) ||
+    `_missing_localization_${ key }_${ getLocale() }_`
 }
 
 // Preload all languages into the web-application

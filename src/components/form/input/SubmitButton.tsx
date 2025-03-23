@@ -16,7 +16,7 @@ export const SubmitButton: FC<ButtonProps> = (props) => {
         .length > 0
 
     return <Button { ...props }
-                   disabled={ hasErrors }
+                   disabled={ hasErrors || props.disabled }
                    severity='success'
                    type='submit'/>
 }

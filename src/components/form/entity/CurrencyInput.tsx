@@ -32,7 +32,7 @@ export const CurrencyInput: FC<CurrencyInputProps> = (props) => {
     if (!currencies) return <></>
     return <>
         <div className={ `flex flex-col gap-2 mt-2 ${ props.className || '' }` }>
-            <label htmlFor={ props.id } className='font-bold'>{ i10n(props.title as string) }</label>
+            <label htmlFor={ props.id } className='font-bold'>{ i10n(props.title as string) }{ props.required ? ' *' : '' }</label>
             <Dropdown id={ props.id }
                       name={ props.id }
                       value={ field.value || props.value }

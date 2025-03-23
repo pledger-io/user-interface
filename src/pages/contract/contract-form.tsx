@@ -1,88 +1,84 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router";
+import React from "react";
+import { useLoaderData, useNavigate, useParams } from "react-router";
 import { mdiCancel, mdiContentSave } from "@mdi/js";
-
-import { Contract } from "../../types/types";
 import { Entity, Form, Input, SubmitButton } from "../../components/form";
 import ContractRepository from "../../core/repositories/contract-repository";
-
-import Loading from "../../components/layout/loading.component";
-import Card from "../../components/layout/card.component";
 import { BackButton } from "../../components/layout/button";
 import BreadCrumbs from "../../components/breadcrumb/breadcrumb.component";
 import BreadCrumbItem from "../../components/breadcrumb/breadcrumb-item.component";
 import NotificationService from "../../service/notification.service";
+import { Contract } from "../../types/types";
+import { Card } from "primereact/card";
+import { i10n } from "../../config/prime-locale";
 
 const ContractEdit = () => {
-    const { id } = useParams()
-    const [contract, setContract] = useState<Contract>()
-    const navigate = useNavigate()
+  const { id } = useParams()
+  const contract: Contract = useLoaderData()
+  const navigate = useNavigate()
 
-    useEffect(() => {
-        if (id) {
-            ContractRepository.get(id)
-                .then(setContract)
-        } else {
-            setContract({} as Contract)
-        }
-    }, [id]);
-
-    const onSubmit = (entity: any) => {
-        if (id) {
-            ContractRepository.update(id, entity)
-                .then(() => NotificationService.success('page.budget.contracts.updated.success'))
-                .then(() => navigate(-1))
-                .catch(() => NotificationService.success('page.budget.contracts.updated.failed'))
-        } else {
-            ContractRepository.create(entity)
-                .then(() => NotificationService.success('page.budget.contracts.created.success'))
-                .then(() => navigate(-1))
-                .catch(() => NotificationService.success('page.budget.contracts.created.failed'))
-        }
+  const onSubmit = (entity: any) => {
+    if (id) {
+      ContractRepository.update(id, entity)
+        .then(() => NotificationService.success('page.budget.contracts.updated.success'))
+        .then(() => navigate(-1))
+        .catch(() => NotificationService.success('page.budget.contracts.updated.failed'))
+    } else {
+      ContractRepository.create(entity)
+        .then(() => NotificationService.success('page.budget.contracts.created.success'))
+        .then(() => navigate(-1))
+        .catch(() => NotificationService.success('page.budget.contracts.created.failed'))
     }
+  }
 
-    const editLabel = !id ? 'page.budget.contracts.add' : 'page.budget.contracts.edit'
-    return <>
-        <BreadCrumbs>
-            <BreadCrumbItem label='page.nav.finances'/>
-            <BreadCrumbItem label='page.nav.budget.contracts' href='/contracts'/>
-            <BreadCrumbItem message={ contract?.name }/>
-        </BreadCrumbs>
-        <Loading condition={ contract !== undefined }>
-            <Form entity='Contract' onSubmit={ onSubmit }>
-                <Card title={ editLabel }
-                             buttons={[
-                                 <SubmitButton key='save' label='common.action.save' icon={ mdiContentSave }/>,
-                                 <BackButton key='cancel' label='common.action.cancel' icon={ mdiCancel }/>]}>
+  const header = () => <div className='px-2 py-2 border-b-1 text-center font-bold'>
+    { i10n(!id ? 'page.budget.contracts.add' : 'page.budget.contracts.edit') }
+  </div>
 
-                    <Input.Text id='name'
-                                value={ contract?.name }
-                                title='Contract.name'
-                                type='text'
-                                required/>
+  return <>
+    <BreadCrumbs>
+      <BreadCrumbItem label='page.nav.finances'/>
+      <BreadCrumbItem label='page.nav.budget.contracts' href='/contracts'/>
+      <BreadCrumbItem message={ contract?.name }/>
+    </BreadCrumbs>
 
-                    <Entity.Account id='company'
-                                    title='Contract.company'
-                                    type='creditor'
-                                    required
-                                    value={ contract?.company }/>
+    <Card header={ header } className='my-4 mx-2'>
+      <Form entity='Contract' onSubmit={ onSubmit }>
+        <Input.Text id='name'
+                    value={ contract?.name }
+                    title='Contract.name'
+                    type='text'
+                    required/>
 
-                    <Input.Date id='start'
-                                value={ contract?.start }
-                                required
-                                title='Contract.start'/>
-                    <Input.Date id='end'
-                                value={ contract?.end }
-                                required
-                                title='Contract.end'/>
+        <Entity.Account id='company'
+                        title='Contract.company'
+                        type='creditor'
+                        required
+                        value={ contract?.company }/>
 
-                    <Input.TextArea id='description'
-                                    value={ contract?.description }
-                                    title='Contract.description' />
-                </Card>
-            </Form>
-        </Loading>
-    </>
+        <div className='md:flex gap-4'>
+          <Input.Date id='start'
+                      className='flex-1'
+                      value={ contract?.start }
+                      required
+                      title='Contract.start'/>
+          <Input.Date id='end'
+                      className='flex-1'
+                      value={ contract?.end }
+                      required
+                      title='Contract.end'/>
+        </div>
+
+        <Input.TextArea id='description'
+                        value={ contract?.description }
+                        title='Contract.description'/>
+
+        <div className='flex justify-end gap-2 mt-2'>
+          <BackButton label='common.action.cancel' icon={ mdiCancel }/>
+          <SubmitButton label='common.action.save' icon={ mdiContentSave }/>
+        </div>
+      </Form>
+    </Card>
+  </>
 }
 
 export default ContractEdit

@@ -6,6 +6,7 @@ import { i10n } from "../../../config/prime-locale";
 import { Resolver } from "../../../core";
 import { Contract } from "../../../types/types";
 import DateComponent from "../../format/date.component";
+import ContractMenuActions from "./contract-action-menu";
 
 const NameColumn = ({ contract }: { contract: Contract }) => {
   return <>
@@ -22,7 +23,7 @@ const CompanyColumn = ({ contract }: { contract: Contract }) => {
 
 type ContractTableProps = {
   contracts?: Contract[],
-  onChanges?: () => any
+  onChanges: () => void
 }
 const ContractTable: FC<ContractTableProps> = ({ contracts, onChanges }) => {
 
@@ -37,7 +38,7 @@ const ContractTable: FC<ContractTableProps> = ({ contracts, onChanges }) => {
     <Column header={ i10n('Contract.end') }
             bodyClassName='w-[10rem]'
             body={ contract => <DateComponent date={ contract.end }/> }/>
-    <Column bodyClassName='w-[1rem]' />
+    <Column bodyClassName='w-[1rem]' body={ contract => <ContractMenuActions contract={ contract } callback={ onChanges } /> }/>
   </DataTable>
 }
 

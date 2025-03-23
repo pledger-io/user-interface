@@ -9,17 +9,20 @@ import BreadCrumbs from "../../components/breadcrumb/breadcrumb.component";
 import ContractTable from "../../components/contract/contract-table";
 import { i10n } from "../../config/prime-locale";
 import ContractRepository, { ContractList } from "../../core/repositories/contract-repository";
+import { ConfirmDialog } from "primereact/confirmdialog";
 
 const ContractOverview = () => {
   const [contracts, setContracts] = useState<ContractList>()
 
-  useEffect(() => {
+  const loadContracts = () => {
     ContractRepository.list()
       .then(response => setContracts({
         active: response.active || [],
         terminated: response.terminated || []
       }))
-  }, [])
+  }
+
+  useEffect(loadContracts, [])
 
   const header = () => <div className='px-2 py-2 border-b-1 text-center font-bold'>
     { i10n('page.budget.contracts.title') }
@@ -30,6 +33,8 @@ const ContractOverview = () => {
       <BreadCrumbItem label='page.nav.finances'/>
       <BreadCrumbItem label='page.nav.budget.contracts'/>
     </BreadCrumbs>
+
+    <ConfirmDialog className='max-w-[25rem]'/>
 
     <Card header={ header } className='mx-2 my-4'>
 
@@ -42,10 +47,10 @@ const ContractOverview = () => {
 
       <TabView>
         <TabPanel header={ i10n('page.budget.contracts.active') }>
-          <ContractTable contracts={ contracts?.active }/>
+          <ContractTable contracts={ contracts?.active } onChanges={ loadContracts }/>
         </TabPanel>
         <TabPanel header={ i10n('page.budget.contracts.inactive') }>
-          <ContractTable contracts={ contracts?.terminated }/>
+          <ContractTable contracts={ contracts?.terminated } onChanges={ loadContracts }/>
         </TabPanel>
       </TabView>
     </Card>

@@ -22,7 +22,7 @@ const Flag = ({ language }: { language: SupportedLocales }) => {
 }
 
 const Register = () => {
-  const [_, setLocale] = useLocalStorage<SupportedLocales>('en', 'language')
+  const [_, setLocale] = useLocalStorage<string>('en', 'language')
   const configMenu = useRef<Menu>(null);
   const [exception, setException] = useState()
   const navigate = useNavigate()

@@ -1,92 +1,101 @@
-import { FC } from "react";
+import React, { FC, Ref, useImperativeHandle } from "react";
 import { Entity, Form, Input, SubmitButton } from "../form";
-import { mdiCalendarPlus, mdiContentSave } from "@mdi/js";
-import { Account, Contract } from "../../types/types";
+import { mdiCancel, mdiContentSave } from "@mdi/js";
+import { Account, Contract, DialogOptions } from "../../types/types";
 import ContractRepository from "../../core/repositories/contract-repository";
 import { Button } from "../layout/button";
-import { Dialog } from "../layout/popup";
-
-import Translation from "../localization/translation.component";
 import NotificationService from "../../service/notification.service";
-
+import { Dialog } from "primereact/dialog";
+import { i10n } from "../../config/prime-locale";
+import { Message } from "primereact/message";
 
 type ScheduleContractProps = {
-    contract: Contract
+  contract: Contract,
+  ref: Ref<DialogOptions>
 }
 
 type ScheduleContractModel = {
-    source: Account,
-    from: Account,
-    amount: number,
-    periodicity: string,
-    interval: number
+  source: Account,
+  from: Account,
+  amount: number,
+  periodicity: string,
+  interval: number
 }
 
-const ScheduleContract: FC<ScheduleContractProps> = ({ contract }) => {
-    const dialogControl = {
-        open: () => {
-        },
-        close: () => {
-        }
+const ScheduleContract: FC<ScheduleContractProps> = ({ ref, contract }) => {
+  const [visible, setVisible] = React.useState(false);
+
+  useImperativeHandle(ref, () => ({
+    open() {
+      setVisible(true)
+    }
+  }));
+
+  const onSubmit = (e: ScheduleContractModel) => {
+    const contractModel = {
+      from: e.from,
+      amount: e.amount,
+      schedule: {
+        periodicity: e.periodicity,
+        interval: e.interval
+      }
     }
 
-    const onSubmit = (e: ScheduleContractModel) => {
-        const contractModel = {
-            from: e.from,
-            amount: e.amount,
-            schedule: {
-                periodicity: e.periodicity,
-                interval: e.interval
-            }
-        }
+    ContractRepository.schedule(contract.id, contractModel)
+      .then(() => NotificationService.success('page.contract.schedule.success'))
+      .then(() => setVisible(false))
+      .catch(() => NotificationService.warning('page.contract.schedule.error'));
+  }
 
-        ContractRepository.schedule(contract.id, contractModel)
-            .then(() => NotificationService.success('page.contract.schedule.success'))
-            .then(() => dialogControl.close())
-            .catch(() => NotificationService.warning('page.contract.schedule.error'));
-    }
+  return <>
+    <Dialog header={ i10n('page.title.schedule.transaction.add') }
+            visible={ visible }
+            onHide={ () => setVisible(false) }>
+      <Form entity='Contract' onSubmit={ onSubmit }>
 
-    return <>
-        <Button icon={ mdiCalendarPlus }
-                        onClick={ () => dialogControl.open() }
-                        label={ 'page.contract.action.schedule' }/>
-        <Form entity='Contract' onSubmit={ onSubmit }>
-            <Dialog title={ 'page.title.schedule.transaction.add' }
-                           actions={ [
-                               <SubmitButton key='submit' label='common.action.save' icon={ mdiContentSave }/>
-                           ] }
-                           control={ dialogControl }>
+        <Message text={ i10n('page.budget.schedule.explained') } severity='info'/>
 
-                <div className='border-1 text-gray-400 mb-3'>
-                    <Translation label='page.budget.schedule.explained'/>
-                </div>
+        <Entity.ManagedAccount id='from'
+                               required={ true }
+                               title='page.contract.schedule.source'/>
 
-                <Entity.ManagedAccount id='from'
-                                       required={ true }
-                                       title='page.contract.schedule.source'/>
+        <Input.Amount id='amount'
+                      title={ 'ScheduledTransaction.amount' }
+                      required={ true }/>
 
-                <Input.Amount id='amount'
-                              title={ 'ScheduledTransaction.amount' }
-                              required={ true }/>
+        <div className='md:flex gap-4'>
+          <Input.Text title='ScheduledTransaction.schedule'
+                      id='interval'
+                      type='number'
+                      className='md:flex-1'
+                      required/>
 
-                <div className='flex flex-row'>
-                    <Translation className='font-bold flex-1'
-                                              label='ScheduledTransaction.schedule'/>
-                    <span className='flex'>
-                        <Input.Text id='interval'
-                                    className='pr-1'
-                                    type={ 'number' }
-                                    required={ true }/>
-                        <Input.Select id='periodicity'>
-                            <Input.SelectOption value={ 'WEEKS' } label={ 'Periodicity.WEEKS' }/>
-                            <Input.SelectOption value={ 'MONTHS' } label={ 'Periodicity.MONTHS' }/>
-                            <Input.SelectOption value={ 'YEARS' } label={ 'Periodicity.YEARS' }/>
-                        </Input.Select>
-                    </span>
-                </div>
-            </Dialog>
-        </Form>
-    </>
+          <Input.Select id='periodicity'
+                        title='ScheduledTransaction.periodicity'
+                        className='flex-1'
+                        value='MONTHS'
+                        options={ [
+                          { label: 'Periodicity.WEEKS', value: 'WEEKS' },
+                          { label: 'Periodicity.MONTHS', value: 'MONTHS' },
+                          { label: 'Periodicity.YEARS', value: 'YEARS' }
+                        ] }
+                        required/>
+        </div>
+
+        <div className='flex gap-1 justify-end mt-4'>
+          <Button label='common.action.cancel'
+                  text
+                  type='reset'
+                  severity='secondary'
+                  onClick={ () => setVisible(false) }
+                  icon={ mdiCancel }/>
+          <SubmitButton label='common.action.save'
+                        icon={ mdiContentSave }
+                        data-testid={ `schedule-transaction-submit-${ contract?.id || 1 }` }/>
+        </div>
+      </Form>
+    </Dialog>
+  </>
 }
 
 export default ScheduleContract
