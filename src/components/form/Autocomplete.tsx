@@ -104,7 +104,7 @@ export const useAutocomplete = function <T extends Identifiable>({
 
   return <>
     <div className={ `flex flex-col gap-2 mt-2 relative ${ props.className || '' }` }>
-      <label htmlFor={ props.id } className='font-bold'>{ i10n(props.title as string) }</label>
+      { props.title && <label htmlFor={ props.id } className='font-bold'>{ i10n(props.title as string) }</label> }
 
       <div className='flex items-center'>
         <input type='text'
