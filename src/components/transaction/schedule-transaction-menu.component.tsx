@@ -35,6 +35,7 @@ const ScheduleTransactionMenu: FC<AccountMenuProps> = ({ schedule, callback }) =
     {
       icon: () => <Icon path={ mdiTrashCanOutline } size={ 1 }/>,
       label: i10n('common.action.delete'),
+      className: '[&>div>a]:!text-red-600 [&>div>a>.p-menuitem-text]:!text-red-600',
       command() {
         confirmDialog({
           message: i10n('page.budget.schedule.delete.confirm'),

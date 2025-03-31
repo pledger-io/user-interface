@@ -1,6 +1,7 @@
 import { mdiCalendarCheck } from "@mdi/js";
 import { Card } from "primereact/card";
 import { Column } from "primereact/column";
+import { ConfirmDialog } from "primereact/confirmdialog";
 import { DataTable } from "primereact/datatable";
 import React, { useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router";
@@ -36,6 +37,8 @@ const ScheduledTransactionOverview = () => {
         <BreadCrumbItem label='page.nav.automation'/>
         <BreadCrumbItem label='page.nav.budget.recurring'/>
       </BreadCrumbs>
+
+      <ConfirmDialog className='max-w-[25rem]'/>
 
       <Card header={ header } className='my-4 mx-2'>
         <div className='flex justify-end mb-4'>
