@@ -7,7 +7,7 @@ const NavigationComponent = () => {
         <section className='mb-4'>
             <h1 className='font-bold'><Translation label='page.user.profile.theme' /></h1>
 
-            <NavLink to="/user/profile/theme" className='block ml-3'><Translation label='page.user.profile.theme' /></NavLink>
+            {/*<NavLink to="/user/profile/theme" className='block ml-3'><Translation label='page.user.profile.theme' /></NavLink>*/}
             <NavLink to="/user/profile/currency" className='block ml-3'><Translation label='page.user.profile.currency' /></NavLink>
         </section>
 
