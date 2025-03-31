@@ -100,8 +100,8 @@ const Sidebar = ({ logoutCallback, className }: SidebarProps) => {
       className={ `md:hidden absolute top-2 right-2 rounded-full bg-gray-400 p-1 opacity-25 hover:opacity-100 transition-all cursor-pointer z-11` }>
       <Icon path={ mdiMenu } size={ 1 }/>
     </div>
-    <div className={ `opacity-0 absolute md:relative overflow-hidden md:flex md:opacity-100 flex-col surface-ground p-card !rounded-none ${ updatedClass } transition-all duration-300 ease-in-out` }>
-      <div className='px-3 mb-5 flex flex-row items-center relative overflow-hidden py-2'>
+    <div className={ `opacity-0 absolute md:relative overflow-hidden md:flex md:opacity-100 flex-col surface-ground p-card !rounded-none ${ updatedClass } transition-all duration-300 ease-in-out h-[100vh]` }>
+      <div className='px-3 mb-5 flex flex-row items-center relative !overflow-hidden py-2'>
         <img src='/ui/images/login-bg.png' className='absolute left-0 right-0 top-0 bottom-0 opacity-40 z-[1]'
              alt='background'/>
         <img className='w-[35px] h-[35px]'
@@ -111,7 +111,7 @@ const Sidebar = ({ logoutCallback, className }: SidebarProps) => {
             </span>
       </div>
 
-      <div className="overflow-y-auto">
+      <div className="overflow-hidden overflow-y-auto flex-grow">
         <ul className="list-none p-3 m-0">
           <li>
             <Section title='page.nav.reports'>
@@ -193,8 +193,6 @@ const Sidebar = ({ logoutCallback, className }: SidebarProps) => {
           </li>
         </ul>
       </div>
-
-      <div className='flex-grow'/>
 
       <div className='flex p-2 border-t-1 items-center justify-between'>
         <NavLink to={ '/user/profile/currency' }>
