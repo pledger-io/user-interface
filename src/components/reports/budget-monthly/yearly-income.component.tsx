@@ -43,7 +43,13 @@ const YearlyIncomeGraphComponent = ({ year = 1970, budgets, currencySymbol = '' 
           ]
         } as ChartData)
       })
-      .catch(console.error)
+      .catch(exception => {
+        console.error('Failed to fetch budget data.', exception)
+        setChartData({
+          labels: DateRangeService.months(year).map(m => m.startDate()),
+          datasets: []
+        })
+      })
   }, [year, budgets]);
 
   if (!chartData) return <Loading/>

@@ -10,7 +10,6 @@ import BreadCrumbItem from "../../../components/breadcrumb/breadcrumb-item.compo
 import BreadCrumbs from "../../../components/breadcrumb/breadcrumb.component";
 import MoneyComponent from "../../../components/format/money.component";
 import PercentageComponent from "../../../components/format/percentage.component";
-import Card from "../../../components/layout/card.component";
 import Loading from "../../../components/layout/loading.component";
 import Translation from "../../../components/localization/translation.component";
 import { i10n } from "../../../config/prime-locale";
@@ -50,9 +49,8 @@ const LiabilityDetailView = () => {
         <BreadCrumbItem label='page.nav.transactions'/>
       </BreadCrumbs>
 
-      <div className="flex gap-2 flex-wrap mx-2">
-        <Card className='flex-1'>
-          <h1 className='font-bold'>{ account.name }</h1>
+      <div className="flex gap-2 flex-wrap mx-2 my-4">
+        <Panel className='flex-1 h-full' header={ account.name }>
           <div className="flex">
             <label className='min-w-[8em]'>{ i10n('Account.interest') }:</label>
             <span className='flex-1'><PercentageComponent percentage={ account.interest?.interest }/></span>
@@ -76,9 +74,8 @@ const LiabilityDetailView = () => {
                                   currency={ account.account.currency }/>
             </span>
           </div>
-        </Card>
-        <Card className='flex-2'>
-          <h1 className='font-bold'>{ i10n('common.account.balance') }</h1>
+        </Panel>
+        <Panel className='flex-2' header={ i10n('common.account.balance') }>
           <h4 className='flex gap-1'>
             <span>{ i10n(`common.month.${ range.month() }`) }</span>
             <span>{ range.year() }</span>
@@ -88,7 +85,7 @@ const LiabilityDetailView = () => {
           </h4>
 
           <LiabilityGraph account={ account } range={ range }/>
-        </Card>
+        </Panel>
       </div>
 
       <Panel header={ i10n('page.title.transactions.overview') } className='px-2'>

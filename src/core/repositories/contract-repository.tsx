@@ -14,7 +14,7 @@ const ContractRepository = (api => {
         create: (entity: Contract)                  => api.post<Contract, Contract>('contracts', entity),
         update: (id: Identifier, entity: Contract)  => api.post<Contract, Contract>(`contracts/${id}`, entity),
         delete: (id: Identifier)                    => api.delete(`contracts/${id}`),
-        schedule: (id: Identifier, entity: any)     => api.post<any, Contract>(`contracts/${id}/schedule`, entity),
+        schedule: (id: Identifier, entity: any)     => api.put<any, Contract>(`contracts/${id}/schedule`, entity),
         warn: (id: Identifier): Promise<Contract>   => api.get(`contracts/${id}/expire-warning`),
         attach: (id: Identifier, file: Attachment)  => api.post<any, void>(`contracts/${id}/attachment`, file),
         transactions: (id: Identifier, page: number)=> api.get<TransactionPage>(`contracts/${id}/transactions?page=${page}`)

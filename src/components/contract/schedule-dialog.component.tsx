@@ -33,7 +33,7 @@ const ScheduleContract: FC<ScheduleContractProps> = ({ ref, contract }) => {
 
   const onSubmit = (e: ScheduleContractModel) => {
     const contractModel = {
-      from: e.from,
+      source: e.from,
       amount: e.amount,
       schedule: {
         periodicity: e.periodicity,
