@@ -33,7 +33,6 @@ const ImportJobTransactionComponent = ({ slug }: { slug: string }) => {
 
   const isLoaded = transactions
   const hasTransactions = transactions && Object.keys(transactions).length > 0
-  const showPagination = pagination && pagination?.records > pagination?.pageSize
 
   return <>
     <h1 className='mt-5 mb-2 text-lg font-bold'>

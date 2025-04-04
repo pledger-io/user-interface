@@ -26,7 +26,6 @@ describe('AmountInput', () => {
     expect(getByTestId('amount-label')).toBeInTheDocument()
     expect(getByTestId('amount-input'))
       .toHaveValue('$100.50')
-      .toBeInTheDocument()
   })
 
   it('calls onChange when value changes', async () => {

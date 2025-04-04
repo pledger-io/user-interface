@@ -1,6 +1,5 @@
 import { mdiBagChecked, mdiCheck, mdiDotsVertical, mdiSquareEditOutline, mdiTrashCanOutline } from "@mdi/js";
 import Icon from "@mdi/react";
-import { confirmDialog } from "primereact/confirmdialog";
 import { Menu } from "primereact/menu";
 import { MenuItem } from "primereact/menuitem";
 import React, { FC, useEffect, useRef, useState } from "react";
@@ -10,6 +9,7 @@ import AccountRepository from "../../core/repositories/account-repository";
 import ProcessRepository, { BusinessKey, ProcessInstance } from "../../core/repositories/process.repository";
 import NotificationService from "../../service/notification.service";
 import { Account, Identifier } from "../../types/types";
+import { confirmDeleteDialog } from "../confirm-dialog";
 import { Button } from "../layout/button";
 import ReconcileOverviewComponent from "./reconcile/reconcile-overview.component";
 import ReconcileStartComponent from "./reconcile/reconcile-start.component";
@@ -64,18 +64,15 @@ const OwnAccountMenu: FC<OwnAccountMenuProps> = ({ account, callback }) => {
       label: i10n('common.action.delete'),
       className: '[&>div>a]:!text-red-600 [&>div>a>.p-menuitem-text]:!text-red-600',
       command() {
-        confirmDialog({
+        confirmDeleteDialog({
           message: i10n('page.accounts.delete.confirm'),
-          header: i10n('common.action.delete'),
-          defaultFocus: 'reject',
-          acceptClassName: 'p-button-danger',
           accept: () => {
             AccountRepository.delete(account.id)
               .then(() => NotificationService.success('page.account.delete.success'))
               .then(() => callback())
               .catch(() => NotificationService.warning('page.account.delete.failed'))
           }
-        });
+        })
       }
     },
     {

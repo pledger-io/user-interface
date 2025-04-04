@@ -1,6 +1,5 @@
 import { mdiDotsVertical, mdiSquareEditOutline, mdiTrashCanOutline } from "@mdi/js";
 import Icon from "@mdi/react";
-import { confirmDialog } from "primereact/confirmdialog";
 import { Menu } from "primereact/menu";
 import { MenuItem } from "primereact/menuitem";
 import React, { FC, useRef } from "react";
@@ -9,6 +8,7 @@ import { i10n } from "../../config/prime-locale";
 import AccountRepository from "../../core/repositories/account-repository";
 import NotificationService from "../../service/notification.service";
 import { Account } from "../../types/types";
+import { confirmDeleteDialog } from "../confirm-dialog";
 import { Button } from "../layout/button";
 
 type AccountMenuProps = {
@@ -38,18 +38,15 @@ const AccountMenu: FC<AccountMenuProps> = ({ account, callback }) => {
       className: '[&>div>a]:!text-red-600 [&>div>a>.p-menuitem-text]:!text-red-600',
       label: i10n('common.action.delete'),
       command() {
-        confirmDialog({
+        confirmDeleteDialog({
           message: i10n('page.accounts.delete.confirm'),
-          header: i10n('common.action.delete'),
-          defaultFocus: 'reject',
-          acceptClassName: 'p-button-danger',
           accept: () => {
             AccountRepository.delete(account.id)
               .then(() => NotificationService.success('page.account.delete.success'))
               .then(() => callback())
               .catch(() => NotificationService.warning('page.account.delete.failed'))
           }
-        });
+        })
       }
     }
   ] as MenuItem[]

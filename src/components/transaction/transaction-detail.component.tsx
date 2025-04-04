@@ -10,7 +10,6 @@ import {
   mdiTrashCanOutline
 } from "@mdi/js";
 import Icon from "@mdi/react";
-import { confirmDialog } from "primereact/confirmdialog";
 import React, { Attributes, FC, useRef, useState } from "react";
 import { NavLink, useNavigate } from "react-router";
 import { i10n } from "../../config/prime-locale";
@@ -18,6 +17,7 @@ import { Resolver } from "../../core";
 import { TransactionRepository } from "../../core/RestAPI";
 import NotificationService from "../../service/notification.service";
 import { Account, DialogOptions, Transaction } from "../../types/types";
+import { confirmDeleteDialog } from "../confirm-dialog";
 import MoneyComponent from "../format/money.component";
 import { Button } from "../layout/button";
 import Tag from "../layout/tag.component";
@@ -119,13 +119,10 @@ const ActionExpander = ({ transaction, onDelete }: { transaction: Transaction, o
   const splitDialogRef = useRef<DialogOptions>(null)
 
   const confirmDeleteClick = () => {
-    confirmDialog({
+    confirmDeleteDialog({
       message: i10n('page.transactions.delete.confirm'),
-      header: i10n('common.action.delete'),
-      defaultFocus: 'reject',
-      acceptClassName: 'p-button-danger',
       accept: onDelete
-    });
+    })
   }
 
   return <div className='flex! justify-start items-stretch gap-2'>

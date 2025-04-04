@@ -1,7 +1,5 @@
 import { ChartData } from "chart.js";
-import { Panel } from "primereact/panel";
 import React, { useEffect, useState } from "react";
-import { i10n } from "../../../config/prime-locale";
 import StatisticalRepository from "../../../core/repositories/statistical-repository";
 import DateRangeService from "../../../service/date-range.service";
 import LocalizationService from "../../../service/localization.service";

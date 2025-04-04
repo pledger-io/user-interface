@@ -1,4 +1,4 @@
-import { mdiCancel, mdiContentSave, mdiContentSaveSettings, mdiPlus } from "@mdi/js";
+import { mdiCancel, mdiContentSaveSettings } from "@mdi/js";
 import { Dialog } from "primereact/dialog";
 import React, { Ref, useImperativeHandle } from "react";
 import { i10n } from "../../../config/prime-locale";

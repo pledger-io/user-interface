@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { Form, Input, SubmitButton } from "../../components/form";
 import { Button } from "../../components/layout/button";
 import Loading from "../../components/layout/loading.component";
-import Translation from "../../components/localization/translation.component";
 import { i10n } from "../../config/prime-locale";
 import ProfileRepository from "../../core/repositories/profile.repository";
 import RestAPI from "../../core/repositories/rest-api";

@@ -1,7 +1,6 @@
 import { mdiDotsVertical, mdiPencilBoxOutline, mdiPlusBox, mdiSquareEditOutline, mdiTrashCanOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import { Column } from "primereact/column";
-import { confirmDialog } from "primereact/confirmdialog";
 import { DataTable } from "primereact/datatable";
 import { Menu } from "primereact/menu";
 import { MenuItem } from "primereact/menuitem";
@@ -12,6 +11,7 @@ import AccountRepository from "../../../core/repositories/account-repository";
 import SavingsRepository from "../../../core/repositories/savings-repository";
 import NotificationService from "../../../service/notification.service";
 import { Account, DialogOptions, SavingGoal } from "../../../types/types";
+import { confirmDeleteDialog } from "../../confirm-dialog";
 import MoneyComponent from "../../format/money.component";
 import { Button } from "../../layout/button";
 import ReserveToGoalComponent from "./reserve-money.component";
@@ -59,18 +59,15 @@ const SavingActionMenu: FC<SavingActionMenuProps> = ({ account, savingGoal, call
       icon: () => <Icon path={ mdiTrashCanOutline } size={ 1 }/>,
       label: i10n('page.account.saving.stop'),
       command() {
-        confirmDialog({
-          message: i10n('page.account.saving.stop.message'),
-          header: i10n('page.account.saving.stop'),
-          defaultFocus: 'reject',
-          acceptClassName: 'p-button-danger',
+        confirmDeleteDialog({
+          message: i10n('page.accounts.delete.confirm'),
           accept: () => {
             SavingsRepository.delete(account.id, savingGoal.id)
               .then(() => AccountRepository.get(account.id).then(callback))
               .then(() => NotificationService.success('page.account.saving.goal.ended'))
               .catch(() => NotificationService.warning('page.account.saving.goal.endingFail'))
           }
-        });
+        })
       }
     }
   ] as MenuItem[]

@@ -13,25 +13,26 @@ import {
   mdiCurrencyEur,
   mdiFileDocumentEdit,
   mdiFileUploadOutline,
-  mdiFormatListBulletedSquare, mdiHamburger,
+  mdiFormatListBulletedSquare,
   mdiHandCoinOutline,
-  mdiLogoutVariant, mdiMenu, mdiMonitorDashboard,
+  mdiLogoutVariant,
+  mdiMenu,
+  mdiMonitorDashboard,
   mdiRobot,
   mdiShuffleVariant,
   mdiSwapHorizontal,
   mdiTune,
   mdiWallet
 } from "@mdi/js";
-import { Button } from "primereact/button";
+
+import Icon from "@mdi/react";
+import { Avatar } from "primereact/avatar";
+import { Ripple } from "primereact/ripple";
+import { StyleClass } from "primereact/styleclass";
 import React, { useEffect, useRef } from "react";
 import { NavLink } from "react-router";
 import logo from '../../assets/logo.png'
-
-import Icon from "@mdi/react";
-import { StyleClass } from "primereact/styleclass";
-import { Ripple } from "primereact/ripple";
 import { i10n } from "../../config/prime-locale";
-import { Avatar } from "primereact/avatar";
 
 
 type SidebarProps = {

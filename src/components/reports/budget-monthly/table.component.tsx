@@ -8,7 +8,6 @@ import { Budget } from "../../../types/types";
 import DateRangeService from "../../../service/date-range.service";
 import MoneyComponent from "../../format/money.component";
 import PercentageComponent from "../../format/percentage.component";
-import Translation from "../../localization/translation.component";
 
 type BudgetTableProps = {
   budgets: Budget[],

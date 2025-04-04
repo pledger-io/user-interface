@@ -18,7 +18,7 @@ type InputGroupProps = {
 /**
  * @deprecated
  */
-export const InputGroup: FC<InputGroupProps> = ({ id, help, title, required = false, valid, className = '', inputClassName = '', children }) => {
+export const InputGroup: FC<InputGroupProps> = ({ id, title, required = false, valid, className = '', inputClassName = '', children }) => {
     return <div
         className={ `Input mb-2 block md:flex ${ valid !== undefined ? (valid ? 'valid' : 'invalid') : '' } ${ className }` }>
         { title && (

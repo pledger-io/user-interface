@@ -1,16 +1,11 @@
+import { mdiCheckDecagram } from "@mdi/js";
+import Icon from "@mdi/react";
 import { Message } from "primereact/message";
-import BreadCrumbItem from "../../components/breadcrumb/breadcrumb-item.component";
-import BreadCrumbs from "../../components/breadcrumb/breadcrumb.component";
-import Translation from "../../components/localization/translation.component";
+import { useState } from "react";
+import { Form } from "../../components/form";
 import { i10n } from "../../config/prime-locale";
 import { Attachment } from "../../core";
-import NavigationComponent from "../../components/profile/navigation.component";
 import ProcessRepository, { ProcessStart } from "../../core/repositories/process.repository";
-import { Form } from "../../components/form";
-import { useState } from "react";
-import Icon from "@mdi/react";
-import { mdiCheckDecagram } from "@mdi/js";
-import Card from "../../components/layout/card.component";
 import NotificationService from "../../service/notification.service";
 
 type ProfileImportStart = ProcessStart & {

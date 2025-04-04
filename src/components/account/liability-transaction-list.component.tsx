@@ -1,4 +1,4 @@
-import { mdiChevronDown, mdiChevronRight, mdiMinus, mdiPlus } from "@mdi/js";
+import { mdiChevronDown, mdiChevronRight } from "@mdi/js";
 import Icon from "@mdi/react";
 import React, { FC, useEffect, useState } from "react";
 import AccountRepository from "../../core/repositories/account-repository";

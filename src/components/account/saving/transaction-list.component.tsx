@@ -5,7 +5,7 @@ import AccountRepository from "../../../core/repositories/account-repository";
 import useQueryParam from "../../../hooks/query-param.hook";
 import { groupTransactionByYear, YearlyTransactions } from "../../../reducers";
 import DateRangeService from "../../../service/date-range.service";
-import { Account, Pagination as PaginationType, Transaction } from "../../../types/types";
+import { Account, Transaction } from "../../../types/types";
 import MoneyComponent from "../../format/money.component";
 import Loading from "../../layout/loading.component";
 import Translation from "../../localization/translation.component";
@@ -14,7 +14,6 @@ import TransactionItem from "../../transaction/transaction-detail.component";
 const TransactionListComponent = ({ account }: { account: Account }) => {
   const [page] = useQueryParam({ key: 'page', initialValue: "1" })
   const [transactions, setTransactions] = useState<YearlyTransactions>()
-  const [pagination, setPagination] = useState<PaginationType>()
 
   useEffect(() => {
     if (!account.history.firstTransaction || !account.history.lastTransaction) {
@@ -29,14 +28,12 @@ const TransactionListComponent = ({ account }: { account: Account }) => {
         const transactions = (result.content || [])
           .reduce(groupTransactionByYear, {})
         setTransactions(transactions)
-        setPagination(result.info)
       })
       .catch(console.log)
   }, [page, account]);
 
   const isLoaded = transactions
   const hasTransactions = transactions && Object.keys(transactions).length > 0
-  const showPagination = pagination && pagination?.records > pagination?.pageSize
   return <>
     { !isLoaded && <Loading/> }
 

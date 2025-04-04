@@ -1,6 +1,4 @@
-import { Panel } from "primereact/panel";
 import React, { useEffect, useState } from "react";
-import { i10n } from "../../../config/prime-locale";
 import { Progressbar } from "../../../core";
 import StatisticalRepository from "../../../core/repositories/statistical-repository";
 import DateRange from "../../../types/date-range.type";

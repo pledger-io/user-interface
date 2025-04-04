@@ -34,7 +34,7 @@ type ImportConfiguration = TaskVariable & {
 }
 
 const ColumnMappingComponent = (props: any) => {
-  const [field, errors, onChange] = useInputField({ onChange: (_) => void 0, field: props })
+  const [field, _, onChange] = useInputField({ onChange: (_) => void 0, field: props })
 
   const onAddColumn = () => {
     onChange({

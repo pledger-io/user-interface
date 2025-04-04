@@ -1,3 +1,4 @@
+import { Card } from "primereact/card";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import BalanceComponent from "../../components/balance.component";
@@ -11,11 +12,10 @@ import AccountBalance from "../../components/reports/income-expense/account-bala
 import TopAccountTable from "../../components/reports/income-expense/top-account";
 
 import YearBalanceChart from "../../components/reports/income-expense/year-balance-chart";
-import { CurrencyRepository } from "../../core/RestAPI";
-import { Currency } from "../../types/types";
-import DateRangeService from "../../service/date-range.service";
-import { Panel } from "primereact/panel";
 import { i10n } from "../../config/prime-locale";
+import { CurrencyRepository } from "../../core/RestAPI";
+import DateRangeService from "../../service/date-range.service";
+import { Currency } from "../../types/types";
 
 
 function IncomeExpenseView() {
@@ -52,17 +52,17 @@ function IncomeExpenseView() {
     </BreadCrumbs>
 
     <div className='px-2 flex flex-col gap-2 mt-4'>
-      <Panel header={ i10n('page.reports.default.title') }>
+      <Card title={ i10n('page.reports.default.title') }>
         <YearBalanceChart year={ parsedYear }
                           currencySymbol={ currencySymbol }
                           currency={ currency }/>
-      </Panel>
+      </Card>
 
       <div className='block md:flex gap-2'>
-        <Panel header={ i10n('page.reports.default.balances') } className='flex-1'>
+        <Card title={ i10n('page.reports.default.balances') } className='flex-1'>
           <AccountBalance year={ parsedYear } currency={ currency }/>
-        </Panel>
-        <Panel header={ i10n('page.reports.default.title') } className='flex-1'>
+        </Card>
+        <Card title={ i10n('page.reports.default.title') } className='flex-1'>
           <table className='w-full [&>tbody>tr>td]:pb-2'>
             <tbody>
             <tr>
@@ -88,16 +88,16 @@ function IncomeExpenseView() {
             </tr>
             </tbody>
           </table>
-        </Panel>
+        </Card>
       </div>
 
       <div className='block md:flex gap-2'>
-        <Panel header={ i10n('page.reports.default.top.debit') } className='flex-1'>
+        <Card title={ i10n('page.reports.default.top.debit') } className='flex-1'>
           <TopAccountTable year={ parsedYear } type={ 'debit' }/>
-        </Panel>
-        <Panel header={ i10n('page.reports.default.top.credit') } className='flex-1'>
+        </Card>
+        <Card title={ i10n('page.reports.default.top.credit') } className='flex-1'>
           <TopAccountTable year={ parsedYear } type={ 'creditor' }/>
-        </Panel>
+        </Card>
       </div>
     </div>
   </>

@@ -1,7 +1,6 @@
 import { mdiCheck, mdiClose, mdiDotsVertical, mdiSquareEditOutline, mdiTrashCanOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import { Column } from "primereact/column";
-import { confirmDialog } from "primereact/confirmdialog";
 import { DataTable } from "primereact/datatable";
 import { Menu } from "primereact/menu";
 import { MenuItem } from "primereact/menuitem";
@@ -11,6 +10,7 @@ import { i10n } from "../../../config/prime-locale";
 import RuleRepository from "../../../core/repositories/rule-repository";
 import NotificationService from "../../../service/notification.service";
 import { Identifier, Rule, RuleChange, RuleCondition } from "../../../types/types";
+import { confirmDeleteDialog } from "../../confirm-dialog";
 import { Button } from "../../layout/button";
 import { EntityNameComponent } from "../../lookup-name.util";
 
@@ -55,18 +55,15 @@ const RuleActionMenu: FC<{ group: string, rule: Rule, callback: (_: Identifier) 
       label: i10n('common.action.delete'),
       className: '[&>div>a]:!text-red-600 [&>div>a>.p-menuitem-text]:!text-red-600',
       command() {
-        confirmDialog({
+        confirmDeleteDialog({
           message: i10n('page.settings.rules.delete.confirm'),
-          header: i10n('common.action.delete'),
-          defaultFocus: 'reject',
-          acceptClassName: 'p-button-danger',
           accept: () => {
             RuleRepository.deleteRule(group, rule.id)
               .then(() => callback(rule.id))
               .then(() => NotificationService.success('page.settings.rules.delete.success'))
               .catch(() => NotificationService.warning('page.settings.rules.delete.error'))
           }
-        });
+        })
       }
     }
   ] as MenuItem[]
