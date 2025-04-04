@@ -1,85 +1,104 @@
 import { mdiPlus } from "@mdi/js";
+import Icon from "@mdi/react";
+import { Card } from "primereact/card";
+import { Column } from "primereact/column";
+import { ConfirmDialog } from "primereact/confirmdialog";
+import { DataTable } from "primereact/datatable";
+import { Paginator } from "primereact/paginator";
 import React, { useEffect, useState } from "react";
-import LiabilityRowComponent from "../../../components/account/liability-row.component";
+import { NavLink, useNavigate } from "react-router";
+import AccountMenu from "../../../components/account/account-menu.component";
+import BalanceComponent from "../../../components/balance.component";
 import BreadCrumbItem from "../../../components/breadcrumb/breadcrumb-item.component";
 import BreadCrumbs from "../../../components/breadcrumb/breadcrumb.component";
-import { Button } from "../../../components/layout/button";
-import Card from "../../../components/layout/card.component";
-import Loading from "../../../components/layout/loading.component";
+import DateComponent from "../../../components/format/date.component";
+import PercentageComponent from "../../../components/format/percentage.component";
 import Translation from "../../../components/localization/translation.component";
-import { Paginator } from "../../../components/layout/paginator.component";
+import { i10n } from "../../../config/prime-locale";
+import { Attachment } from "../../../core";
 import AccountRepository from "../../../core/repositories/account-repository";
-import { Account, Pagination } from "../../../types/types";
 import useQueryParam from "../../../hooks/query-param.hook";
+import { Account, Pagination } from "../../../types/types";
+
+const accountNameColumn = (account: Account) => <>
+  <NavLink className='text-blue-700' to={ `./${ account.id }` }>{ account.name }</NavLink>
+  <div className='text-muted md:pl-1 text-sm flex md:block flex-col'>
+    <span className='font-semibold'>
+        { i10n('Account.lastActivity') }:
+    </span>
+    <DateComponent date={ account.history.lastTransaction }/>
+  </div>
+  <span className='hidden md:block mt-1 pl-1 text-muted text-sm'>{ account.description }</span>
+</>
+
+const percentageColumn = (account: Account) => <>
+  <PercentageComponent percentage={ account.interest.interest } decimals={ 2 }/>
+  (<Translation label={ `Periodicity.${ account.interest?.periodicity }` }/>)
+</>
 
 const LiabilityOverview = () => {
-    const [page] = useQueryParam({ key: 'page', initialValue: "1" })
-    const [accounts, setAccounts] = useState<Account[] | undefined>(undefined)
-    const [pagination, setPagination] = useState<Pagination>()
+  const navigate = useNavigate()
+  const [page] = useQueryParam({ key: 'page', initialValue: "1" })
+  const [accounts, setAccounts] = useState<Account[] | undefined>(undefined)
+  const [pagination, setPagination] = useState<Pagination>()
 
-    const reload = () => {
-        setAccounts(undefined)
-        AccountRepository.search({
-            types: ['loan', 'mortgage', 'debt'] as any,
-            page: parseInt(page)
-        }).then(resultPage => {
-            setAccounts(resultPage.content || [])
-            setPagination(resultPage.info)
-        })
-    }
+  const reload = () => {
+    setAccounts(undefined)
+    AccountRepository.search({
+      types: ['loan', 'mortgage', 'debt'] as any,
+      page: parseInt(page)
+    }).then(resultPage => {
+      setAccounts(resultPage.content || [])
+      setPagination(resultPage.info)
+    })
+  }
 
-    useEffect(reload, [page])
+  useEffect(reload, [page])
 
-    const isLoaded = accounts
-    const hasContent = isLoaded && accounts?.length > 0
-    return (
-        <div id='LiabilityOverview'>
-            <BreadCrumbs>
-                <BreadCrumbItem label='page.nav.settings'/>
-                <BreadCrumbItem label='page.nav.accounts'/>
-                <BreadCrumbItem label='page.nav.accounts.liability'/>
-            </BreadCrumbs>
+  const header = () => <div className='px-2 py-2 border-b-1 text-center font-bold'>
+    { i10n('page.nav.accounts.liability') }
+  </div>
+  return (
+    <>
+      <BreadCrumbs>
+        <BreadCrumbItem label='page.nav.settings'/>
+        <BreadCrumbItem label='page.nav.accounts'/>
+        <BreadCrumbItem label='page.nav.accounts.liability'/>
+      </BreadCrumbs>
 
-            <Card title='page.nav.accounts.liability'
-                  actions={ [<Button label='page.title.accounts.liabilities.add'
-                                     key='add'
-                                     icon={ mdiPlus }
-                                     href='./add'
-                                     variant='primary'/>] }>
-                <table className='Table'>
-                    <thead>
-                    <tr>
-                        <th className='w-[30px]' />
-                        <th><Translation label='Account.name'/></th>
-                        <th className='hidden md:table-cell w-[150px]'>
-                            <Translation label='Account.interest'/>
-                            (<Translation label='Account.interestPeriodicity'/>)
-                        </th>
-                        <th className='w-[120px]'><Translation label='common.account.saldo'/></th>
-                        <th className='w-[25px]'/>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    { !isLoaded && <tr>
-                        <td colSpan={ 5 }><Loading/></td>
-                    </tr> }
-                    { !hasContent && isLoaded &&
-                        <tr>
-                            <td colSpan={ 5 } className='text-center text-gray-500'>
-                                <Translation label='common.overview.noresults'/>
-                            </td>
-                        </tr> }
-                    { hasContent && accounts?.map(a => <LiabilityRowComponent key={ a.id } account={ a }
-                                                                              deleteCallback={ reload }/>) }
-                    </tbody>
-                </table>
+      <ConfirmDialog className='max-w-[25rem]'/>
 
-                { hasContent && <Paginator page={ parseInt(page) }
-                                           records={ pagination?.records }
-                                           pageSize={ pagination?.pageSize }/> }
-            </Card>
+      <Card header={ header } className='my-4 mx-2'>
+        <div className='flex justify-end'>
+          <NavLink to={ './add' }
+                   className='p-button p-button-success p-button-sm !mb-4 gap-1 items-center'>
+            <Icon path={ mdiPlus } size={ .8 }/> { i10n('page.title.accounts.liabilities.add') }
+          </NavLink>
         </div>
-    )
+
+        <DataTable value={ accounts } size='small' loading={ !accounts }>
+          <Column className='w-[3rem]' body={ account => <>
+            { account.iconFileCode && <Attachment.Image fileCode={ account.iconFileCode }/> }
+          </> }/>
+          <Column header={ i10n('Account.name') } body={ accountNameColumn }/>
+          <Column className='w-[9rem]'
+                  body={ percentageColumn }
+                  header={ i10n('Account.interest') + ' (' + i10n('Account.interestPeriodicity') + ')' }/>
+          <Column header={ i10n('common.account.saldo') }
+                  className='w-[9rem]'
+                  body={ (account: Account) =>
+                    <BalanceComponent accounts={ [account] } currency={ account.account.currency }/> }/>
+          <Column className='w-[1rem]' body={ account => <AccountMenu account={ account } callback={ reload }/> }/>
+        </DataTable>
+
+        { (pagination?.records || 0) > 0
+          && <Paginator totalRecords={ pagination?.records }
+                        rows={ pagination?.pageSize }
+                        onPageChange={ ({ page }) => navigate('?page=' + page) }/> }
+
+      </Card>
+    </>
+  )
 }
 
 export default LiabilityOverview

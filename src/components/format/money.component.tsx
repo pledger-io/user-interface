@@ -7,7 +7,7 @@ type MoneyProps = {
 
 const _ = ({ money = 0.0, currency = sessionStorage.getItem('currency') ?? 'EUR' }: MoneyProps) => {
     const [language] = useLocalStorage('language', 'en');
-    const className = 'Text ' + (money > 0 ? 'Green' : money < 0 ? 'Red' : '')
+    const className = money > 0 ? 'text-green-800' : money < 0 ? 'text-red-800' : ''
     const formatter = new Intl.NumberFormat(language as string, {
         currency: currency,
         style: 'currency'

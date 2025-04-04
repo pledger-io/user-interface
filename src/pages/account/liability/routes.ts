@@ -2,6 +2,7 @@ import { lazy } from "react";
 import { RouteObject } from "react-router";
 import AccountRepository from "../../../core/repositories/account-repository";
 import { TransactionRepository } from "../../../core/RestAPI";
+import { ROUTER_ACCOUNT_LIABILITY_KEY, RouterAccount } from "../../../types/router-types";
 
 const routes = {
     id: 'liability-accounts',
@@ -18,9 +19,9 @@ const routes = {
             Component: lazy(() => import('./liability-form')),
         },
         {
-            id: 'liability',
+            id: ROUTER_ACCOUNT_LIABILITY_KEY,
             path: ':id',
-            loader: async ({ params }) => {
+            loader: async ({ params }) : Promise<RouterAccount> => {
                 return await AccountRepository.get(params.id)
             },
             children: [

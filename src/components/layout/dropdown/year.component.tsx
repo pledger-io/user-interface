@@ -1,41 +1,40 @@
-import { useState } from "react";
-import { Button } from "../button";
-import { mdiMenuDown } from "@mdi/js";
-import DatePicker from "react-datepicker";
 import * as React from "react";
+import { useRef } from "react";
+import { mdiMenuDown } from "@mdi/js";
+import Icon from "@mdi/react";
+import { OverlayPanel } from "primereact/overlaypanel";
+import { Calendar } from "primereact/calendar";
 
 type YearDropdownProps = {
-    // The preselected year of the dropdown
-    year?: number,
-    // The callback used when a new year is selected
-    onChange?: (_: number) => void
+  // The preselected year of the dropdown
+  year?: number,
+  // The callback used when a new year is selected
+  onChange?: (_: number) => void
 }
 
-const YearDropdown = ({ year = 1970, onChange = _ => undefined }: YearDropdownProps) => {
-    const [yearOpen, setYearOpen] = useState<boolean>(false)
-    const onSelect = (date: Date | null, _: any) => {
-        setYearOpen(false)
-        if (date && onChange) onChange(date.getFullYear())
-    }
+const YearDropdown = ({ year = 1970, onChange }: YearDropdownProps) => {
+  const yearPickerRef = useRef<OverlayPanel>(null)
 
-    return (
-        <div className='relative'>
-            <Button variant='text'
-                    onClick={ () => setYearOpen(!yearOpen) }
-                    icon={ mdiMenuDown }
-                    className='inline-flex m-0'
-                    iconPos={ 'after' }
-                    message={ '' + year }/>
+  const onSelect = (date: Date | null | undefined) => {
+    yearPickerRef.current?.hide()
+    if (date && onChange) onChange(date.getFullYear())
+  }
 
-            <div className='absolute w-[15em] right-0 z-40'>
-                { yearOpen && (<DatePicker showYearPicker
-                                           dateFormat='yyyy'
-                                           inline
-                                           selected={ new Date(year, 0, 1) }
-                                           onChange={ onSelect }/>) }
-            </div>
-        </div>
-    )
+  return <>
+    <div>
+      <a onClick={ event => yearPickerRef.current?.toggle(event) } className='flex items-center cursor-pointer'>
+        { year }
+        <Icon path={ mdiMenuDown } size={ 1 }/>
+      </a>
+
+      <OverlayPanel ref={ yearPickerRef } className='min-w-[15rem] [&>.p-overlaypanel-content]:p-0!'>
+        <Calendar view='year' inputClassName='hidden'
+                  className='w-full'
+                  value={ new Date(year, 0, 1) }
+                  onChange={ event => onSelect(event.value) } inline/>
+      </OverlayPanel>
+    </div>
+  </>
 }
 
 export default YearDropdown

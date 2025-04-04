@@ -1,20 +1,27 @@
-import React from "react";
+import React, { FC } from "react";
 import { Transaction } from "../../../types/types";
 import { Entity } from "../../form";
 
-const DestinationInputComponent = ({ transaction: { destination, type } }: { transaction: Transaction }) => {
-    if (type?.code?.toLowerCase() === 'credit') {
-        return <Entity.Account id='to'
-                               type='creditor'
-                               value={ destination }
-                               required
-                               title='Transaction.to'/>
-    }
+type DestinationInputComponentProps = {
+  transaction: Transaction,
+  className?: string
+}
 
-    return <Entity.ManagedAccount id='to'
-                                  value={ destination }
-                                  required
-                                  title='Transaction.to'/>
+const DestinationInputComponent: FC<DestinationInputComponentProps> = ({ transaction: { destination, type }, className }) => {
+  if (type?.code?.toLowerCase() === 'credit') {
+    return <Entity.Account id='to'
+                           type='creditor'
+                           className={ className }
+                           value={ destination }
+                           required
+                           title='Transaction.to'/>
+  }
+
+  return <Entity.ManagedAccount id='to'
+                                className={ className }
+                                value={ destination }
+                                required
+                                title='Transaction.to'/>
 }
 
 export default DestinationInputComponent

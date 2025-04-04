@@ -1,4 +1,4 @@
-import {isRouteErrorResponse, useNavigate, useRouteError} from "react-router";
+import { isRouteErrorResponse, useNavigate, useRouteError } from "react-router";
 import SecurityRepository from "../core/repositories/security-repository";
 
 /**
@@ -9,19 +9,22 @@ import SecurityRepository from "../core/repositories/security-repository";
  * @return Always returns an empty JSX element <></>.
  */
 export function RootErrorBoundary() {
-    const error = useRouteError()
-    const navigate = useNavigate()
+  const error = useRouteError()
+  const navigate = useNavigate()
 
-    if (!isRouteErrorResponse(error) && (error as any)?.response?.status === 403) {
-        // todo this does not work. Need to figure out a way to do a proper route redirect
-        navigate('/two-factor')
-        return <></>
-    } else if (!isRouteErrorResponse(error) && (error as any)?.response?.status === 401) {
-        SecurityRepository.logout()
-        window.location.reload()
-        return <></>
-    }
-
-    console.warn('Unexpected error thrown in a router processing.', error)
+  const isNotRouterError = !isRouteErrorResponse(error)
+  const statusCode = (error as any)?.response?.status
+  if (isNotRouterError && statusCode === 403) {
+    console.debug('Forbidden error thrown in a router processing, redirecting to two-factor authentication page.')
+    setTimeout(() => navigate('/two-factor'), 0)
     return <></>
+  } else if (isNotRouterError && statusCode === 401) {
+    console.debug('Unauthorized error thrown in a router processing, logging out user and reloading page.')
+    SecurityRepository.logout()
+    setTimeout(() => navigate(0), 0)
+    return <></>
+  }
+
+  console.warn('Unexpected error thrown in a router processing.', error)
+  return <><strong data-testid='error-message'>Error: { (error as any)?.message }</strong></>
 }

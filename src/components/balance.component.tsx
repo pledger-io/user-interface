@@ -40,7 +40,9 @@ const _ = ({ accounts = [], categories = [], expenses = [],  income , currency, 
     }, [accounts, income, currency, range, categories, expenses, importSlug])
 
     if (balance == null) return <Loading />
-    return <span className='Statistical-Balance'><MoneyComponent money={balance} currency={currency} /></span>
+    return <span>
+        <MoneyComponent money={ balance } currency={ currency } />
+    </span>
 }
 
 export default _

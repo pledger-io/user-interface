@@ -1,25 +1,23 @@
-import { FC, useContext } from "react";
+import { FC, use } from "react";
 
 import { Button } from "../../../components/layout/button";
-import { ButtonProps } from "../../layout/button/button.component";
 import { FormContext } from "../Form";
-
-type SubmitButtonProps = ButtonProps
+import { ButtonProps } from "primereact/button";
 
 /**
  * The submit button component allows for forms to be submitted to the
  * `onSubmit` handler of the form.
  */
-export const SubmitButton: FC<SubmitButtonProps> = (props) => {
-    const formContext = useContext(FormContext)
+export const SubmitButton: FC<ButtonProps> = (props) => {
+    const formContext = use(FormContext)
 
     const hasErrors = Object.values(formContext.errors)
         .filter(fieldErrors => fieldErrors.length > 0)
         .length > 0
 
     return <Button { ...props }
-                   disabled={ hasErrors }
-                   variant='primary'
+                   disabled={ hasErrors || props.disabled }
+                   severity='success'
                    type='submit'/>
 }
 

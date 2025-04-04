@@ -1,134 +1,104 @@
-import { mdiDotsVertical, mdiPlus, mdiSquareEditOutline, mdiTrashCanOutline } from "@mdi/js";
-import React, { Attributes, useEffect, useState } from "react";
-import { NavLink, useRouteLoaderData } from "react-router";
+import { mdiPlus } from "@mdi/js";
+import Icon from "@mdi/react";
+import { Card } from "primereact/card";
+import { Column } from "primereact/column";
+import { ConfirmDialog } from "primereact/confirmdialog";
+import { DataTable } from "primereact/datatable";
+import { Paginator, PaginatorPageChangeEvent } from "primereact/paginator";
+import React, { useEffect, useState } from "react";
+import { NavLink, useNavigate, useRouteLoaderData } from "react-router";
+import AccountMenu from "../../../components/account/account-menu.component";
 import BalanceComponent from "../../../components/balance.component";
 import BreadCrumbItem from "../../../components/breadcrumb/breadcrumb-item.component";
 import BreadCrumbs from "../../../components/breadcrumb/breadcrumb.component";
 import DateComponent from "../../../components/format/date.component";
-import { Button } from "../../../components/layout/button";
-import Card from "../../../components/layout/card.component";
-import { Dropdown } from "../../../components/layout/dropdown";
-import Loading from "../../../components/layout/loading.component";
-import { Paginator } from "../../../components/layout/paginator.component";
-import ConfirmComponent from "../../../components/layout/popup/confirm.component";
-import { PopupCallbacks } from "../../../components/layout/popup/popup.component";
-import Translation from "../../../components/localization/translation.component";
-import { Attachment, When } from "../../../core";
+import { i10n } from "../../../config/prime-locale";
+import { Attachment } from "../../../core";
 import AccountRepository from "../../../core/repositories/account-repository";
-
-import '../../../assets/css/AccountOverview.scss'
-import { Account, Pagination } from "../../../types/types";
 import useQueryParam from "../../../hooks/query-param.hook";
-import NotificationService from "../../../service/notification.service";
+import { ROUTER_ACCOUNT_TYPE_KEY } from "../../../types/router-types";
+import { Account, Pagination } from "../../../types/types";
 
-type AccountRowProps = Attributes & {
-    account: Account
-    deleteCallback: () => void
-}
-const AccountRow = ({ account, deleteCallback }: AccountRowProps) => {
-
-    const dropDownActions: PopupCallbacks = { close: () => null, open: () => null }
-    const onDelete = () => AccountRepository.delete(account.id)
-        .then(() => NotificationService.success('page.account.delete.success'))
-        .then(() => deleteCallback())
-        .catch(() => NotificationService.warning('page.account.delete.failed'))
-
-    return (
-        <tr className='' onMouseLeave={ () => dropDownActions.close() }>
-            <td className='align-middle'>
-                { account.iconFileCode && <Attachment.Image fileCode={ account.iconFileCode }/> }
-            </td>
-            <td>
-                <h2 className='m-0 text-md md:text-lg'><NavLink to={ `./${ account.id }/transactions` }>{ account.name }</NavLink></h2>
-                <When condition={ account.history.lastTransaction !== null }>
-                    <div className='text-muted'>
-                        <Translation label='Account.lastActivity' className='font-semibold'/>:
-                        <DateComponent date={ account.history.lastTransaction }/>
-                    </div>
-                </When>
-                <div className='hidden md:block mt-1 pl-1 text-muted text-sm'>{ account.description }</div>
-            </td>
-            <td className='hidden md:table-cell'>
-                { account.account.iban && `${ account.account.iban }` }
-                { !account.account.iban && account.account.number && `${ account.account.number }` }
-            </td>
-            <td><BalanceComponent accounts={ [account] } currency={ account.account.currency }/></td>
-            <td>
-                <Dropdown icon={ mdiDotsVertical } actions={ dropDownActions }>
-                    <Button label='common.action.edit'
-                            variant='primary'
-                            icon={ mdiSquareEditOutline }
-                            href={ `./${ account.id }/edit` }/>
-                    <ConfirmComponent title='common.action.delete'
-                                      openButton={ <Button label='common.action.delete'
-                                                           variant='warning'
-                                                           icon={ mdiTrashCanOutline }/> }
-                                      onConfirm={ onDelete }>
-                        <Translation label='page.accounts.delete.confirm'/>
-                    </ConfirmComponent>
-                </Dropdown>
-            </td>
-        </tr>
-    )
-}
+const accountNameColumn = (account: Account) => <>
+  <NavLink className='text-blue-700' to={ `./${ account.id }/transactions` }>{ account.name }</NavLink>
+  <div className='text-muted md:pl-1 text-sm flex md:block flex-col'>
+                            <span className='font-semibold'>
+                                { i10n('Account.lastActivity') }:
+                            </span>
+    <DateComponent date={ account.history.lastTransaction }/>
+  </div>
+  <span className='hidden md:block mt-1 pl-1 text-muted text-sm'>
+                            { account.description }
+                        </span>
+</>
 
 const AccountOverview = () => {
-    const [accounts, setAccounts] = useState<Account[] | undefined>(undefined)
-    const [page] = useQueryParam({ key: 'page', initialValue: "1" })
-    const [pagination, setPagination] = useState<Pagination>()
-    const type = useRouteLoaderData('other-accounts')
+  const navigate = useNavigate()
+  const [accounts, setAccounts] = useState<Account[] | undefined>(undefined)
+  const [page] = useQueryParam({ key: 'page', initialValue: "1" })
+  const [pagination, setPagination] = useState<Pagination>()
+  const type = useRouteLoaderData(ROUTER_ACCOUNT_TYPE_KEY)
 
-    const reload = () => {
-        setAccounts(undefined)
-        AccountRepository.search({
-            types: [type] as any,
-            page: parseInt(page)
-        }).then(response => {
-            setAccounts(response.content)
-            setPagination(response.info)
-        })
-    }
+  const reload = () => {
+    setAccounts(undefined)
+    AccountRepository.search({
+      types: [type] as any,
+      page: parseInt(page)
+    }).then(response => {
+      setAccounts(response.content || [])
+      setPagination(response.info)
+    })
+  }
 
-    useEffect(reload, [page, type])
+  useEffect(reload, [page, type])
 
-    return (
-        <div id='AccountPage'>
-            <BreadCrumbs>
-                <BreadCrumbItem label='page.nav.settings'/>
-                <BreadCrumbItem label='page.nav.accounts'/>
-                <BreadCrumbItem label={ `page.nav.accounts.${ type }` }/>
-            </BreadCrumbs>
+  const pageChanged = (event: PaginatorPageChangeEvent) => {
+    navigate('?page=' + (event.page + 1))
+  }
+  const header = () => <div className='px-2 py-2 border-b-1 text-center font-bold'>
+    { i10n(`page.nav.accounts.${ type }`) }
+  </div>
 
-            <Card title={ `page.nav.accounts.${ type }` } actions={
-                [<Button label={ `page.account.${ type }.add` }
-                         key='add'
-                         icon={ mdiPlus }
-                         href='./add'
-                         variant='primary'/>] }>
-                <Loading condition={ accounts !== undefined }>
-                    <table className='Table'>
-                        <thead>
-                        <tr>
-                            <th className='md:w-[30px]'/>
-                            <th><Translation label='Account.name'/></th>
-                            <th className='hidden md:table-cell w-[160px]'><Translation label='Account.number'/></th>
-                            <th className='md:w-[120px]'><Translation label='common.account.saldo'/></th>
-                            <th className='w-[20px]'/>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        { (accounts || []).map(account =>
-                            <AccountRow key={ account.id } account={ account } deleteCallback={ reload }/>) }
-                        </tbody>
-                    </table>
+  return (
+    <div id='AccountPage'>
+      <BreadCrumbs>
+        <BreadCrumbItem label='page.nav.settings'/>
+        <BreadCrumbItem label='page.nav.accounts'/>
+        <BreadCrumbItem label={ `page.nav.accounts.${ type }` }/>
+      </BreadCrumbs>
 
-                    <Paginator page={ parseInt(page) }
-                               records={ pagination?.records }
-                               pageSize={ pagination?.pageSize }/>
-                </Loading>
-            </Card>
+      <ConfirmDialog className='max-w-[25rem]'/>
+
+      <Card header={ header } className='my-4 mx-2'>
+        <div className='flex justify-end'>
+          <NavLink to={ './add' }
+                   className='p-button p-button-success p-button-sm !mb-4 gap-1 items-center'>
+            <Icon path={ mdiPlus } size={ .8 }/> { i10n(`page.account.${ type }.add`) }
+          </NavLink>
         </div>
-    )
+
+        <DataTable loading={ !accounts } value={ accounts } size='small'>
+          <Column className='w-[3rem]' body={ account => <>
+            { account.iconFileCode && <Attachment.Image fileCode={ account.iconFileCode }/> }
+          </> }/>
+          <Column header={ i10n('Account.name') } body={ accountNameColumn }/>
+          <Column header={ i10n('Account.number') }
+                  body={ account => account.account.iban || account.account.number }/>
+          <Column header={ i10n('common.account.saldo') }
+                  className='w-[9rem]'
+                  body={ (account: Account) =>
+                    <BalanceComponent accounts={ [account] } currency={ account.account.currency }/> }/>
+
+          <Column className='w-[1rem]' body={ account => <AccountMenu account={ account } callback={ reload }/> }/>
+        </DataTable>
+
+        { (pagination?.records || 0) > 0
+          && <Paginator totalRecords={ pagination?.records }
+                        rows={ pagination?.pageSize }
+                        onPageChange={ pageChanged }/> }
+      </Card>
+    </div>
+  )
 }
 
 export default AccountOverview

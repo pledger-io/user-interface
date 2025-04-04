@@ -1,55 +1,49 @@
-import { mdiSwapHorizontal } from "@mdi/js";
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import {  mdiSwapHorizontal } from "@mdi/js";
+import Icon from "@mdi/react";
+import { ConfirmDialog } from "primereact/confirmdialog";
+import { Panel } from "primereact/panel";
+import React from "react";
+import { NavLink, useRouteLoaderData } from "react-router";
 import SavingGoalTableComponent from "../../../components/account/saving/saving-goal-table.component";
-
 import SavingSummaryComponent from "../../../components/account/saving/saving-goal.component";
 import TransactionListComponent from "../../../components/account/saving/transaction-list.component";
 import BreadCrumbItem from "../../../components/breadcrumb/breadcrumb-item.component";
 import BreadCrumbs from "../../../components/breadcrumb/breadcrumb.component";
-import { Button } from "../../../components/layout/button";
-import Card from "../../../components/layout/card.component";
+import { i10n } from "../../../config/prime-locale";
 import { Resolver } from "../../../core";
-import AccountRepository from "../../../core/repositories/account-repository";
-import { Account } from "../../../types/types";
+import { RouterAccount } from "../../../types/router-types";
 
 function SavingAccountOverview() {
-    const [account, setAccount] = useState<Account>()
-    const { id } = useParams()
+  const account: RouterAccount = useRouteLoaderData('savings')
 
-    useEffect(() => {
-        AccountRepository.get(id)
-            .then(setAccount)
-    }, [id]);
+  if (!account) return null
+  return <>
+    <BreadCrumbs>
+      <BreadCrumbItem label='page.nav.settings'/>
+      <BreadCrumbItem label='page.nav.accounts'/>l
+      <BreadCrumbItem label='page.nav.accounts.savings'/>
+      <BreadCrumbItem message={ account?.name || 'Loading...' }/>
+    </BreadCrumbs>
 
-    return <>
-        <BreadCrumbs>
-            <BreadCrumbItem label='page.nav.settings'/>
-            <BreadCrumbItem label='page.nav.accounts'/>
-            <BreadCrumbItem label='page.nav.accounts.savings'/>
-            <BreadCrumbItem message={ account?.name || 'Loading...' }/>
-        </BreadCrumbs>
+    <ConfirmDialog className='max-w-[25rem]'/>
 
-        <Card title='page.account.savings.goals'>
-            { account && <SavingSummaryComponent savingAccount={ account }/> }
+    <Panel header={ i10n('page.account.savings.goals') } className='py-4 px-2 !shadow-none'>
+      <SavingSummaryComponent savingAccount={ account }/>
+      <hr className='my-5'/>
+      <SavingGoalTableComponent account={ account }/>
+    </Panel>
 
-            <hr className='my-5' />
+    <Panel header={ i10n('page.account.savings.transactions') } className='py-4 px-2'>
+      <div className='flex justify-end mb-2'>
+        <NavLink to={ `${ Resolver.Account.resolveUrl(account) }/transactions/add/transfer` }
+                 className='p-button p-button-success p-button-sm !mb-4 gap-1 items-center'>
+          <Icon path={ mdiSwapHorizontal } size={ 1 }/> { i10n('page.transactions.transfer.add') }
+        </NavLink>
+      </div>
 
-            { account && <SavingGoalTableComponent account={ account } /> }
-        </Card>
-
-        <Card title='page.account.savings.transactions'>
-            { account && <div className='flex justify-end mb-2'>
-                <Button label='page.transactions.transfer.add'
-                                href={ `${ Resolver.Account.resolveUrl(account) }/transactions/add/transfer` }
-                                className={ Resolver.Account.isManaged(account) ? 'Hidden' : '' }
-                                variant='primary'
-                                icon={ mdiSwapHorizontal }/>
-            </div> }
-
-            { account && <TransactionListComponent account={ account }/> }
-        </Card>
-    </>
+      <TransactionListComponent account={ account }/>
+    </Panel>
+  </>
 }
 
 export default SavingAccountOverview

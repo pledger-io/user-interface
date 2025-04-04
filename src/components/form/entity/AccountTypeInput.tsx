@@ -1,12 +1,18 @@
 import React, { FC, useEffect, useState } from "react";
 import AccountRepository from "../../../core/repositories/account-repository";
 
-import { SelectInput, SelectInputProps, SelectOption } from "../input/SelectInput";
+import { SelectInputProps } from "../input/SelectInput";
+import { useInputField } from "../input/InputGroup";
+import { i10n } from "../../../config/prime-locale";
+import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
+
+type AccountTypeInputProps = Omit<SelectInputProps, 'options'>
 
 /**
  * Specification of a Select but then only meant for an account type selection.
  */
-export const AccountTypeInput: FC<SelectInputProps> = (props) => {
+export const AccountTypeInput: FC<AccountTypeInputProps> = (props) => {
+    const [field, errors, onChange] = useInputField({ onChange: props.onChange, field: props })
     const [accountTypes, setAccountTypes] = useState([])
 
     useEffect(() => {
@@ -14,9 +20,27 @@ export const AccountTypeInput: FC<SelectInputProps> = (props) => {
             .then(setAccountTypes)
     }, [])
 
-    console.log(props.value)
+    const handleChangeEvent = (e: DropdownChangeEvent) => {
+        onChange({
+            currentTarget: {
+                value: e.value
+            }
+        })
+    }
 
-    return <SelectInput { ...props }>
-        { accountTypes.map(type => <SelectOption key={ type } value={ type } label={ `AccountType.${ type }` }/>) }
-    </SelectInput>
+    if (!field) return <>props.id</>
+    return <>
+        <div className={ `flex flex-col gap-2 mt-2 ${ props.className || '' }` }>
+            <label htmlFor={ props.id } className='font-bold'>{ i10n(props.title as string) }{ props.required ? ' *' : '' }</label>
+            <Dropdown id={ props.id }
+                      name={ props.id }
+                      value={ field.value || props.value }
+                      options={ accountTypes }
+                      onChange={ handleChangeEvent }
+                      required={ props.required }
+                      valueTemplate={ item => i10n(`AccountType.${ item }`) }
+                      itemTemplate={ item => i10n(`AccountType.${ item }`) }
+                      invalid={ field.touched ? errors.length > 0 : undefined }/>
+        </div>
+    </>
 }

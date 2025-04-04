@@ -1,58 +1,40 @@
-import React, { CSSProperties } from "react";
-
-import { mdiTable } from "@mdi/js";
-import { Transaction } from "../../types/types";
+import React, { FC, Ref, useImperativeHandle, useState } from "react";
+import { DialogOptions, Transaction } from "../../types/types";
 import MoneyComponent from "../format/money.component";
-import { Button } from "../layout/button";
-import { Dialog } from "../layout/popup";
-import Translation from "../localization/translation.component";
-
-const priceStyle = {
-    textAlign: 'right'
-} as CSSProperties
-const totalRowStyle = {
-    border: 0
-}
-const totalStyle = {
-    ...totalRowStyle,
-    textAlign: 'right',
-    fontWeight: 600
-} as CSSProperties
+import { Dialog } from "primereact/dialog";
+import { i10n } from "../../config/prime-locale";
+import { DataTable } from "primereact/datatable";
+import { Column } from "primereact/column";
 
 type TransactionSplitDialogProps = {
-    transaction: Transaction
-    iconStyle?: boolean
+  transaction: Transaction
+  ref: Ref<DialogOptions>
 }
 
-const TransactionSplitDialog = ({ transaction: { split, currency, amount }, iconStyle = false }: TransactionSplitDialogProps) => {
+const TransactionSplitDialog: FC<TransactionSplitDialogProps> = ({ ref, transaction: { split, currency, amount } }) => {
+  const [visible, setVisible] = useState<boolean>(false)
 
-    return (
-        <Dialog title='page.transactions.detail.title'
-                openButton={ <Button label='page.transaction.action.details'
-                                     variant={ iconStyle ? 'icon' : 'primary' }
-                                     icon={ mdiTable }/> }>
-            <table className='Table'>
-                <thead>
-                <tr>
-                    <th><Translation label='Transaction.description'/></th>
-                    <th><Translation label='Transaction.amount'/></th>
-                </tr>
-                </thead>
-                <tbody>
-                { split.map((row: any, idx: number) => (
-                    <tr key={ idx }>
-                        <td>{ row.description }</td>
-                        <td style={ priceStyle }><MoneyComponent money={ row.amount } currency={ currency }/></td>
-                    </tr>
-                )) }
-                <tr>
-                    <td style={ totalStyle }>Total:</td>
-                    <td style={ totalRowStyle }><MoneyComponent money={ amount } currency={ currency }/></td>
-                </tr>
-                </tbody>
-            </table>
-        </Dialog>
-    )
+  useImperativeHandle(ref, () => ({
+    open() {
+      setVisible(true)
+    }
+  }));
+
+  const footer = () => <>
+    <span className='flex justify-end gap-3'>Total: <MoneyComponent money={ amount } currency={ currency }/></span>
+  </>
+
+  return (
+    <Dialog header={ i10n('page.transactions.detail.title') }
+            visible={ visible }
+            onHide={ () => setVisible(false) }>
+      <DataTable value={ split } size='small' footer={ footer } >
+        <Column field='description' header={ i10n('Transaction.description') }/>
+        <Column header={ i10n('Transaction.amount') }
+                body={ item => <MoneyComponent money={ item.amount } currency={ currency }/> }/>
+      </DataTable>
+    </Dialog>
+  )
 }
 
 export default TransactionSplitDialog
