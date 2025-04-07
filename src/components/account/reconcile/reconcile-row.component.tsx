@@ -2,12 +2,12 @@ import { mdiCancel, mdiContentSaveSettings, mdiDelete, mdiHammer, mdiRedo } from
 import { Dialog } from "primereact/dialog";
 import React, { FC, Ref, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { i10n } from "../../../config/prime-locale";
+import { useNotification } from "../../../context/notification-context";
 import ProcessRepository, {
   BusinessKey,
   ProcessInstance,
   ProcessVariable
 } from "../../../core/repositories/process.repository";
-import NotificationService from "../../../service/notification.service";
 import { Identifier } from "../../../types/types";
 import { confirmDeleteDialog } from "../../confirm-dialog";
 import { Form, Input, SubmitButton } from "../../form";
@@ -32,6 +32,7 @@ const ReconcilePreviousYearComponent: FC<ReconcilePreviousYearProps> = ({
                                                                           onComplete
                                                                         }) => {
   const [visible, setVisible] = React.useState(false);
+  const { success, warning } = useNotification()
 
   useImperativeHandle(ref, () => ({
     open() {
@@ -50,10 +51,10 @@ const ReconcilePreviousYearComponent: FC<ReconcilePreviousYearProps> = ({
     }
 
     ProcessRepository.start('AccountReconcile', processData)
-      .then(() => NotificationService.success('page.accounts.reconcile.success'))
+      .then(() => success('page.accounts.reconcile.success'))
       .then(() => setVisible(false))
       .then(() => setTimeout(onComplete, 500))
-      .catch(() => NotificationService.warning('page.accounts.reconcile.error'))
+      .catch(() => warning('page.accounts.reconcile.error'))
   }
 
   return <Dialog header={ i10n('page.accounts.reconcile.previous') }
@@ -86,6 +87,7 @@ const ReconcilePreviousYearComponent: FC<ReconcilePreviousYearProps> = ({
 const ReconcileRowComponent = ({ process, onRemoved }: { process: ProcessInstance, onRemoved: () => void }) => {
   const [variables, setVariables] = useState<ProcessVariable[]>()
   const previousYearRef = useRef<any>(null)
+  const { success, warning } = useNotification()
 
   useEffect(() => {
     ProcessRepository.variables('AccountReconcile', process.businessKey, process.id)
@@ -105,16 +107,16 @@ const ReconcileRowComponent = ({ process, onRemoved }: { process: ProcessInstanc
         Promise.all(tasks.map(task =>
           ProcessRepository.completeTask('AccountReconcile', process.businessKey, process.id, task.id))))
       .then(() => setTimeout(onRemoved, 20))
-      .catch(() => NotificationService.warning('page.accounts.reconcile.error'))
+      .catch(() => warning('page.accounts.reconcile.error'))
   }
   const onDelete = () => {
     confirmDeleteDialog({
       message: i10n('page.accounts.reconcile.delete.confirm'),
       accept() {
         ProcessRepository.delete('AccountReconcile', process.businessKey, process.id)
-          .then(() => NotificationService.success('page.account.reconcile.delete.success'))
+          .then(() => success('page.account.reconcile.delete.success'))
           .then(() => onRemoved())
-          .catch(() => NotificationService.warning('page.account.reconcile.delete.failed'))
+          .catch(() => warning('page.account.reconcile.delete.failed'))
       }
     })
   }

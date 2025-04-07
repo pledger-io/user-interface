@@ -6,8 +6,8 @@ import { MenuItem } from "primereact/menuitem";
 import React, { FC, useRef } from "react";
 import { useNavigate } from "react-router";
 import { i10n } from "../../config/prime-locale";
+import { useNotification } from "../../context/notification-context";
 import { TransactionScheduleRepository } from "../../core/RestAPI";
-import NotificationService from "../../service/notification.service";
 import { Button } from "../layout/button";
 
 type AccountMenuProps = {
@@ -23,6 +23,7 @@ type AccountMenuProps = {
 const ScheduleTransactionMenu: FC<AccountMenuProps> = ({ schedule, callback }) => {
   const actionMenu = useRef<Menu>(null);
   const navigate = useNavigate();
+  const { success, warning } = useNotification();
 
   const menuOptions = [
     {
@@ -44,9 +45,9 @@ const ScheduleTransactionMenu: FC<AccountMenuProps> = ({ schedule, callback }) =
           acceptClassName: 'p-button-danger',
           accept: () => {
             TransactionScheduleRepository.delete(schedule)
-              .then(() => NotificationService.success('page.budget.schedule.delete.success'))
+              .then(() => success('page.budget.schedule.delete.success'))
               .then(() => callback())
-              .catch(() => NotificationService.warning('page.budget.schedule.delete.failed'))
+              .catch(() => warning('page.budget.schedule.delete.failed'))
           }
         });
       }

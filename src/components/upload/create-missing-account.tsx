@@ -3,13 +3,13 @@ import { Divider } from "primereact/divider";
 import { Message } from "primereact/message";
 import React, { useEffect, useState } from "react";
 import { i10n } from "../../config/prime-locale";
+import { useNotification } from "../../context/notification-context";
 import AccountRepository from "../../core/repositories/account-repository";
 import ProcessRepository, {
   ProcessTask,
   TaskVariable,
   TaskVariables
 } from "../../core/repositories/process.repository";
-import NotificationService from "../../service/notification.service";
 import { AccountRef, Identifier } from "../../types/types";
 import { Entity, Form, Input, SubmitButton } from "../form";
 import MoneyComponent from "../format/money.component";
@@ -31,6 +31,7 @@ type TransactionDetails = {
 const _ = ({ task }: { task: ProcessTask }) => {
   const [transaction, setTransaction] = useState<TransactionDetails>()
   const [assetAccount, setAssetAccount] = useState<boolean>(true)
+  const { warning } = useNotification()
 
   useEffect(() => {
     ProcessRepository.taskVariables('import_job', task.id, 'transaction')
@@ -53,9 +54,9 @@ const _ = ({ task }: { task: ProcessTask }) => {
         }
         ProcessRepository.completeTasksVariables('import_job', task.id, accountCreated)
           .then(() => document.location.reload())
-          .catch(() => NotificationService.warning('page.user.profile.import.error'))
+          .catch(() => warning('page.user.profile.import.error'))
       })
-      .catch(() => NotificationService.warning('page.user.profile.import.error'))
+      .catch(() => warning('page.user.profile.import.error'))
   }
 
   const continueWithAccount = ({ account }: { account: AccountRef }) => {
@@ -70,7 +71,7 @@ const _ = ({ task }: { task: ProcessTask }) => {
 
     ProcessRepository.completeTasksVariables('import_job', task.id, accountCreated)
       .then(() => document.location.reload())
-      .catch(() => NotificationService.warning('page.user.profile.import.error'))
+      .catch(() => warning('page.user.profile.import.error'))
   }
 
   if (!transaction) return <Loading/>

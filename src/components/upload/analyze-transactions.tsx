@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { i10n } from "../../config/prime-locale";
+import { useNotification } from "../../context/notification-context";
 import ProcessRepository, {
   BusinessKey,
   ProcessInstance,
   ProcessTask
 } from "../../core/repositories/process.repository";
-import NotificationService from "../../service/notification.service";
 import { ImportJob } from "../../types/types";
 import Loading from "../layout/loading.component";
 import AccountMappingComponent from "./account-mapping.component";
@@ -15,13 +15,14 @@ import CreateMissingAccount from "./create-missing-account";
 
 const AnalyzeTaskComponent = ({ process }: { process: ProcessInstance }) => {
   const [tasks, setTasks] = useState<ProcessTask>()
+  const { warning } = useNotification()
 
   function loadTasks() {
     ProcessRepository.tasks('import_job', process.businessKey, process.id)
       .then(tasks => {
         setTasks(tasks[0])
       })
-      .catch(() => NotificationService.warning('page.user.profile.import.error'))
+      .catch(() => warning('page.user.profile.import.error'))
   }
 
   useEffect(loadTasks, [process])
@@ -54,6 +55,7 @@ const AnalyzeTaskComponent = ({ process }: { process: ProcessInstance }) => {
 const AnalyzeTransactions = ({ importJob }: { importJob: ImportJob }) => {
   const [process, setProcess] = useState<ProcessInstance>()
   const navigate = useNavigate()
+  const { success, warning } = useNotification()
 
   function loadProcess() {
     ProcessRepository.historyForKey('import_job', importJob.slug as BusinessKey)
@@ -61,12 +63,12 @@ const AnalyzeTransactions = ({ importJob }: { importJob: ImportJob }) => {
         if (processes.length > 0) {
           const process = processes[0]
           if (process.state === 'COMPLETED') {
-            NotificationService.success('page.user.profile.import.success')
+            success('page.user.profile.import.success')
             navigate(`/upload/${ importJob.slug }/result`)
           } else setProcess(processes[0])
         }
       })
-      .catch(() => NotificationService.warning('page.user.profile.import.error'))
+      .catch(() => warning('page.user.profile.import.error'))
   }
 
   useEffect(loadProcess, [importJob])

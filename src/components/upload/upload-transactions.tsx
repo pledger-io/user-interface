@@ -1,5 +1,5 @@
+import { useNotification } from "../../context/notification-context";
 import { Upload } from "../../core/attachment";
-import NotificationService from "../../service/notification.service";
 import { Entity, Form, Input, SubmitButton } from "../form";
 import { mdiCheckDecagram, mdiSkipNext } from "@mdi/js";
 import { useState } from "react";
@@ -12,6 +12,7 @@ import { i10n } from "../../config/prime-locale";
 const UploadTransactionsComponent = () => {
   const [uploadToken, setUploadToken] = useState<string>('')
   const navigate = useNavigate()
+  const { warning } = useNotification()
 
   const onSubmit = (entity: any) => {
     ImportJobRepository.create(entity)
@@ -21,7 +22,7 @@ const UploadTransactionsComponent = () => {
           businessKey: batchImport.slug
         })
           .then(() => navigate(`/upload/${ batchImport.slug }/analyze`))
-          .catch(() => NotificationService.warning('page.user.profile.import.error'))
+          .catch(() => warning('page.user.profile.import.error'))
       })
       .catch(console.error)
   }

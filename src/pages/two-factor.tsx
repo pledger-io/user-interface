@@ -1,44 +1,55 @@
-import { Form, Input, SubmitButton } from "../components/form";
 import { mdiCheck } from "@mdi/js";
-import Message from "../components/layout/message.component";
-import SecurityRepository from "../core/repositories/security-repository";
-import { AxiosError } from "axios";
+import { Card } from "primereact/card";
+import { Message } from "primereact/message";
+import React from "react";
 import { useNavigate } from "react-router";
+import { Form, Input, SubmitButton } from "../components/form";
+import { i10n } from "../config/prime-locale";
+import { NotificationProvider, useNotification } from "../context/notification-context";
+import SecurityRepository from "../core/repositories/security-repository";
 import useQueryParam from "../hooks/query-param.hook";
 
-import Card from "../components/layout/card.component";
-import NotificationService from "../service/notification.service";
-
 const TwoFactor = () => {
-    const navigate = useNavigate();
-    const [from] = useQueryParam({ key: 'from', initialValue: '/dashboard' })
-    const onSubmit = (entity: any) => {
-        SecurityRepository.twoFactor(entity.code)
-            .then(() => navigate(from))
-            .catch((error: AxiosError) => NotificationService.exception(error))
-    }
+  const navigate = useNavigate();
+  const { httpError } = useNotification();
+  const [from] = useQueryParam({ key: 'from', initialValue: '/dashboard' })
+  const onSubmit = (entity: any) => {
+    SecurityRepository.twoFactor(entity.code)
+      .then(() => navigate(from))
+      .catch(httpError)
+  }
 
-    return <div className='flex justify-center h-[100vh] items-center'>
-        <Form entity='UserAccount' onSubmit={ onSubmit }>
-            <Card title='page.login.verify.title'
-                  buttons={ [
-                      <SubmitButton key='verify'
-                                    label='page.login.verify.action'
-                                    icon={ mdiCheck }/>
-                  ] }
-                  className='min-w-[30rem]'>
+  const header = () => <div className='px-2 py-2 border-b-1 text-center font-bold'>
+    { i10n('page.login.verify.title') }
+  </div>
+  return <>
+    <Card header={ header }
+          className='md:w-[24rem] shadow-2xl'>
+      <Form entity='UserAccount' onSubmit={ onSubmit }>
+        <Message text={ i10n('page.login.verify.explain') } severity='info'/>
 
-                <Message label='page.login.verify.explain' variant='info'/>
+        <div className='flex justify-center'>
+          <Input.Otp id='code'
+                      title='UserAccount.twofactor.secret'
+                      required/>
+        </div>
 
-                <Input.Text id='code'
-                            title='UserAccount.twofactor.secret'
-                            type='text'
-                            pattern="^[0-9]{6}$"
-                            required/>
-
-            </Card>
-        </Form>
-    </div>
+        <div className='flex pt-3 items-stretch'>
+          <SubmitButton key='login'
+                        className='w-full p-button-lg'
+                        label='page.login.verify.action' icon={ mdiCheck }/>
+        </div>
+      </Form>
+    </Card>
+  </>
 }
 
-export default TwoFactor;
+const _ = () => {
+  return <NotificationProvider>
+    <div className='flex justify-center h-screen items-center'>
+      <TwoFactor/>
+    </div>
+  </NotificationProvider>
+}
+
+export default _;

@@ -2,10 +2,11 @@ import { mdiAccountPlus, mdiLogin, mdiWeb } from "@mdi/js";
 import Icon from "@mdi/react";
 import { PrimeReactProvider } from "primereact/api";
 import { Card } from "primereact/card";
+import { Divider } from "primereact/divider";
 import { useLocalStorage } from "primereact/hooks";
 import { Menu } from "primereact/menu";
-import { Message } from "primereact/message";
-import React, { useRef, useState } from "react";
+import { Toast } from "primereact/toast";
+import React, { useRef } from "react";
 import { Link, useNavigate } from "react-router";
 import { Form, Input, SubmitButton } from "../components/form";
 import { i10n, Locales, SupportedLocales } from "../config/prime-locale";
@@ -24,8 +25,8 @@ const Flag = ({ language }: { language: SupportedLocales }) => {
 const LoginCard = () => {
   const [_, setLocale] = useLocalStorage<string>('en', 'language')
   const configMenu = useRef<Menu>(null);
+  const toast = useRef<Toast>(null);
   const navigate = useNavigate()
-  const [failure, setFailure] = useState()
   const [from] = useQueryParam({ key: 'from', initialValue: '/dashboard' })
 
   const languageMenu = [
@@ -35,9 +36,10 @@ const LoginCard = () => {
   ]
 
   const header = <div className='p-4 flex justify-between relative overflow-hidden'>
-    <span>Pledger.io</span>
+    <span className="text-2xl font-bold text-primary">Pledger.io</span>
     <Menu model={ languageMenu } popup ref={ configMenu }/>
-    <button type='button' className="cursor-pointer z-10" onClick={ (e) => configMenu?.current?.toggle(e) }
+    <button type='button' className="cursor-pointer z-10 p-2 hover:bg-gray-100 rounded-full transition-all"
+            onClick={ (e) => configMenu?.current?.toggle(e) }
             role='button'>
       <Icon path={ mdiWeb } size={ 1 }/>
     </button>
@@ -47,38 +49,70 @@ const LoginCard = () => {
 
   const onSubmit = (entity: LoginForm) =>
     SecurityRepository.authenticate(entity.username, entity.password)
-      .then(() => navigate(from))
-      .catch(setFailure)
+      .then(() => {
+        toast.current?.show({
+          severity: 'success',
+          summary: 'Success',
+          detail: i10n('page.login.success'),
+          life: 3000
+        });
+
+        setTimeout(() => navigate(from), 1000);
+
+      })
+      .catch(() => {
+        toast.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: i10n('page.login.invalid'),
+          life: 3000
+        });
+      })
+
 
   return <>
-    <Card header={ header } className='md:min-w-[20rem]'>
-      { failure && <Message text={ i10n('page.login.invalid') } severity='error'/> }
+    <Toast ref={ toast } position="top-right" />
+    <Card header={ header } className='md:min-w-[24rem] shadow-2xl'>
+      <div className="text-center mb-5">
+        <h2 className="text-2xl font-semibold text-gray-800">{ i10n('page.login.welcome') }</h2>
+        <p className="text-gray-600">{ i10n('page.login.subtitle') }</p>
+      </div>
 
       <Form entity='UserAccount' onSubmit={ onSubmit }>
         <Input.Text id='username'
                     title='UserAccount.username'
                     autocomplete='username'
                     type='text'
+                    icon='user'
+                    className='[&>.p-icon-field>.p-inputtext]:w-full'
                     required/>
+
         <Input.Text id='password'
                     title='UserAccount.password'
                     autocomplete='current-password'
+                    icon='lock'
                     type='password'
+                    className='[&>.p-icon-field>.p-inputtext]:w-full'
                     required/>
-
-        <div className='flex justify-end'>
-          <Link to={ `/register?from=${ from }` } className='p-button p-button-link p-button-sm flex gap-1'>
-            <Icon path={ mdiAccountPlus } size={ 1 }/>
-            { i10n('page.login.register') }
-          </Link>
-        </div>
 
         <div className='flex pt-3 items-stretch'>
           <SubmitButton key='login'
-                        className='w-full'
+                        className='w-full p-button-lg'
                         label='page.login.login' icon={ mdiLogin }/>
         </div>
+
       </Form>
+      <Divider align="center">
+        <span className="text-gray-500 text-sm">{i10n('common.lang.or')}</span>
+      </Divider>
+
+      <div className='flex justify-center mt-3'>
+        <Link to={ `/register?from=${ from }` } className='p-button p-button-outlined p-button-lg flex gap-2 items-center w-full justify-center'>
+          <Icon path={ mdiAccountPlus } size={ 1 }/>
+          { i10n('page.login.register') }
+        </Link>
+      </div>
+
     </Card>
   </>
 }

@@ -7,9 +7,9 @@ import { MenuItem } from "primereact/menuitem";
 import { ProgressBar } from "primereact/progressbar";
 import React, { FC, useRef, useState } from "react";
 import { i10n } from "../../../config/prime-locale";
+import { useNotification } from "../../../context/notification-context";
 import AccountRepository from "../../../core/repositories/account-repository";
 import SavingsRepository from "../../../core/repositories/savings-repository";
-import NotificationService from "../../../service/notification.service";
 import { Account, DialogOptions, SavingGoal } from "../../../types/types";
 import { confirmDeleteDialog } from "../../confirm-dialog";
 import MoneyComponent from "../../format/money.component";
@@ -48,6 +48,7 @@ type SavingActionMenuProps = {
 const SavingActionMenu: FC<SavingActionMenuProps> = ({ account, savingGoal, callback }) => {
   const actionMenu = useRef<Menu>(null);
   const editSavingRef = useRef<DialogOptions>(null);
+  const { success, warning } = useNotification();
 
   const menuOptions = [
     {
@@ -64,8 +65,8 @@ const SavingActionMenu: FC<SavingActionMenuProps> = ({ account, savingGoal, call
           accept: () => {
             SavingsRepository.delete(account.id, savingGoal.id)
               .then(() => AccountRepository.get(account.id).then(callback))
-              .then(() => NotificationService.success('page.account.saving.goal.ended'))
-              .catch(() => NotificationService.warning('page.account.saving.goal.endingFail'))
+              .then(() => success('page.account.saving.goal.ended'))
+              .catch(() => warning('page.account.saving.goal.endingFail'))
           }
         })
       }

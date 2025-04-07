@@ -7,8 +7,8 @@ import { MenuItem } from "primereact/menuitem";
 import React, { FC, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import { i10n } from "../../../config/prime-locale";
+import { useNotification } from "../../../context/notification-context";
 import RuleRepository from "../../../core/repositories/rule-repository";
-import NotificationService from "../../../service/notification.service";
 import { Identifier, Rule, RuleChange, RuleCondition } from "../../../types/types";
 import { confirmDeleteDialog } from "../../confirm-dialog";
 import { Button } from "../../layout/button";
@@ -41,6 +41,7 @@ const changeList = (changes: RuleChange[]) => {
 const RuleActionMenu: FC<{ group: string, rule: Rule, callback: (_: Identifier) => void }> = ({ group, rule, callback }) => {
   const actionMenu = useRef<Menu>(null);
   const navigate = useNavigate();
+  const { success, warning } = useNotification();
 
   const menuOptions = [
     {
@@ -60,8 +61,8 @@ const RuleActionMenu: FC<{ group: string, rule: Rule, callback: (_: Identifier) 
           accept: () => {
             RuleRepository.deleteRule(group, rule.id)
               .then(() => callback(rule.id))
-              .then(() => NotificationService.success('page.settings.rules.delete.success'))
-              .catch(() => NotificationService.warning('page.settings.rules.delete.error'))
+              .then(() => success('page.settings.rules.delete.success'))
+              .catch(() => warning('page.settings.rules.delete.error'))
           }
         })
       }

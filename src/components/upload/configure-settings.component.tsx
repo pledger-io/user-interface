@@ -2,12 +2,12 @@ import { mdiDelete, mdiPlusBox, mdiSkipNext } from "@mdi/js";
 import { Dropdown } from "primereact/dropdown";
 import React, { useEffect, useState } from "react";
 import { i10n } from "../../config/prime-locale";
+import { useNotification } from "../../context/notification-context";
 import ProcessRepository, {
   ProcessTask,
   TaskVariable,
   TaskVariables
 } from "../../core/repositories/process.repository";
-import NotificationService from "../../service/notification.service";
 import { Identifier } from "../../types/types";
 import { Entity, Form, Input, SubmitButton } from "../form";
 import { useInputField } from "../form/input/InputGroup";
@@ -101,6 +101,7 @@ const ColumnMappingComponent = (props: any) => {
 
 const ConfigureSettingsComponent = ({ task }: { task: ProcessTask }) => {
   const [configuration, setConfiguration] = useState<ImportConfiguration>()
+  const { warning } = useNotification()
 
   useEffect(() => {
     ProcessRepository.taskVariables('import_job', task.id, 'initialConfig')
@@ -131,7 +132,7 @@ const ConfigureSettingsComponent = ({ task }: { task: ProcessTask }) => {
 
     ProcessRepository.completeTasksVariables('import_job', task.id, updatedConfiguration)
       .then(() => document.location.reload())
-      .catch(() => NotificationService.warning('page.user.profile.import.error'))
+      .catch(() => warning('page.user.profile.import.error'))
   }
 
   if (!configuration) return null

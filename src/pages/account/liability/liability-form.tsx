@@ -8,10 +8,10 @@ import { Entity, Form, Input, SubmitButton } from '../../../components/form'
 import { BackButton } from "../../../components/layout/button";
 import Translation from "../../../components/localization/translation.component";
 import { i10n } from "../../../config/prime-locale";
+import { useNotification } from "../../../context/notification-context";
 import AccountRepository from "../../../core/repositories/account-repository";
 import { TransactionRepository } from "../../../core/RestAPI";
 import { Account } from "../../../types/types";
-import NotificationService from "../../../service/notification.service";
 
 class AccountModel {
   name: string
@@ -47,6 +47,7 @@ const LiabilityForm = () => {
   const [account, setAccount] = useState(() => new AccountModel({} as Account))
   const [openingBalance, setOpeningBalance] = useState<OpeningBalance>({ amount: 0 } as OpeningBalance)
   const navigate = useNavigate()
+  const { success, warning } = useNotification()
 
   const editLabel = !id ? 'page.title.accounts.liabilities.add' : 'page.title.accounts.liabilities.edit'
 
@@ -83,14 +84,14 @@ const LiabilityForm = () => {
                 destination: { id: response.content[0].id },
                 description: 'Opening balance'
               })
-                .then(() => NotificationService.success('page.accounts.liability.created.success'))
+                .then(() => success('page.accounts.liability.created.success'))
                 .then(() => navigate(-1))
-                .catch(() => NotificationService.warning('page.accounts.liability.created.failed'))
+                .catch(() => warning('page.accounts.liability.created.failed'))
             })
-        }).catch(() => NotificationService.warning('page.accounts.liability.created.failed'))
+        }).catch(() => warning('page.accounts.liability.created.failed'))
     } else {
       AccountRepository.update(id, updatedEntity)
-        .then(() => NotificationService.success('page.accounts.liability.update.success'))
+        .then(() => success('page.accounts.liability.update.success'))
         .then(() => navigate(-1))
     }
   }

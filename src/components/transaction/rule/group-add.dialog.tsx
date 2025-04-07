@@ -2,8 +2,8 @@ import { mdiCancel, mdiContentSaveSettings } from "@mdi/js";
 import { Dialog } from "primereact/dialog";
 import React, { Ref, useImperativeHandle } from "react";
 import { i10n } from "../../../config/prime-locale";
+import { useNotification } from "../../../context/notification-context";
 import RuleRepository from "../../../core/repositories/rule-repository";
-import NotificationService from "../../../service/notification.service";
 import { DialogOptions } from "../../../types/types";
 import { Form, Input, SubmitButton } from "../../form";
 import { Button } from "../../layout/button";
@@ -15,6 +15,7 @@ type GroupAddDialogProps = {
 
 const GroupAddDialog = (props: GroupAddDialogProps) => {
   const [visible, setVisible] = React.useState(false);
+  const { warning } = useNotification();
 
   useImperativeHandle(props.ref, () => ({
     open() {
@@ -26,7 +27,7 @@ const GroupAddDialog = (props: GroupAddDialogProps) => {
     RuleRepository.createGroup(data.name)
       .then(props.onAdd)
       .then(() => setVisible(false))
-      .catch(() => NotificationService.warning('page.settings.rules.group.add.error'))
+      .catch(() => warning('page.settings.rules.group.add.error'))
 
   return <>
     <Dialog header={ i10n('page.settings.rules.group.rename') }

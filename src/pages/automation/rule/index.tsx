@@ -10,8 +10,8 @@ import { Button } from "../../../components/layout/button";
 import GroupAddDialog from "../../../components/transaction/rule/group-add.dialog";
 import RuleListComponent from "../../../components/transaction/rule/rule-list.component";
 import { i10n } from "../../../config/prime-locale";
+import { useNotification } from "../../../context/notification-context";
 import RuleRepository from "../../../core/repositories/rule-repository";
-import NotificationService from "../../../service/notification.service";
 import { DialogOptions, RuleGroup } from "../../../types/types";
 
 const _ = () => {
@@ -47,72 +47,74 @@ const _ = () => {
       <div className='flex flex-col justify-end gap-2'>
         {
           groups.map((group, idx) =>
-            <RuleGroupComponent key={ group.name } group={ group } index={ idx } size={ groups.length } callback={ loadGroups }/> )
+            <RuleGroupComponent key={ group.name } group={ group } index={ idx } size={ groups.length }
+                                callback={ loadGroups }/>)
         }
       </div>
     </Card>
   </>
 }
 
-const RuleGroupComponent: FC<{ group: RuleGroup, index: number, size: number, callback: () => void}> =
+const RuleGroupComponent: FC<{ group: RuleGroup, index: number, size: number, callback: () => void }> =
   ({ group, index, size, callback }) => {
-  const editGroupDialogRef = React.useRef<DialogOptions>(null)
+    const editGroupDialogRef = React.useRef<DialogOptions>(null)
+    const { warning } = useNotification()
 
-  const onGroupUp = (group: RuleGroup) => RuleRepository.groupUp(group.name)
-    .then(callback)
-    .catch(() => NotificationService.warning('page.settings.rules.group.up.error'))
+    const onGroupUp = (group: RuleGroup) => RuleRepository.groupUp(group.name)
+      .then(callback)
+      .catch(() => warning('page.settings.rules.group.up.error'))
 
-  const onGroupDown = (group: RuleGroup) => RuleRepository.groupDown(group.name)
-    .then(callback)
-    .catch(() => NotificationService.warning('page.settings.rules.group.down.error'))
+    const onGroupDown = (group: RuleGroup) => RuleRepository.groupDown(group.name)
+      .then(callback)
+      .catch(() => warning('page.settings.rules.group.down.error'))
 
-  const onDelete = () => {
-    confirmDialog({
-      message: i10n('page.settings.rules.group.delete.confirm.title'),
-      header: i10n('common.action.delete'),
-      defaultFocus: 'reject',
-      acceptClassName: 'p-button-danger',
-      accept: () => {
-        RuleRepository.deleteGroup(group.name)
-          .then(callback)
-          .catch(() => NotificationService.warning('page.settings.rules.group.delete.error'))
-      }
-    });
-  }
+    const onDelete = () => {
+      confirmDialog({
+        message: i10n('page.settings.rules.group.delete.confirm.title'),
+        header: i10n('common.action.delete'),
+        defaultFocus: 'reject',
+        acceptClassName: 'p-button-danger',
+        accept: () => {
+          RuleRepository.deleteGroup(group.name)
+            .then(callback)
+            .catch(() => warning('page.settings.rules.group.delete.error'))
+        }
+      });
+    }
 
-  return <div className='my-4'>
-    <div className='flex my-4 justify-between items-center gap-2'>
-      <h1 className='text-lg font-bold flex items-center gap-1'>
-        { group.name }
-        <span onClick={ () => editGroupDialogRef.current?.open() }>
+    return <div className='my-4'>
+      <div className='flex my-4 justify-between items-center gap-2'>
+        <h1 className='text-lg font-bold flex items-center gap-1'>
+          { group.name }
+          <span onClick={ () => editGroupDialogRef.current?.open() }>
           <Icon path={ mdiPencilOutline } size={ .75 }
                 title={ i10n('common.action.edit') }
                 className='cursor-pointer text-muted opacity-50 hover:opacity-70'/>
         </span>
-      </h1>
-      <div>
-        <NavLink to={ `/automation/schedule/rules/${ group.name }/create` } className='p-button p-button-text'>
-          <Icon path={ mdiPlus } size={ 1 }/>
-          { i10n('page.settings.rules.add') }
-        </NavLink>
-        <Button icon={ mdiDelete }
-                label='common.action.delete'
-                text
-                onClick={ onDelete }
-                severity='danger'/>
-        { index > 0 && <Button icon={ mdiArrowUp }
-                               text
-                               severity='info'
-                               onClick={ () => onGroupUp(group) }/> }
-        { (index + 1) < size && <Button icon={ mdiArrowDown }
-                                        text
-                                        severity='info'
-                                        onClick={ () => onGroupDown(group) }/> }
+        </h1>
+        <div>
+          <NavLink to={ `/automation/schedule/rules/${ group.name }/create` } className='p-button p-button-text'>
+            <Icon path={ mdiPlus } size={ 1 }/>
+            { i10n('page.settings.rules.add') }
+          </NavLink>
+          <Button icon={ mdiDelete }
+                  label='common.action.delete'
+                  text
+                  onClick={ onDelete }
+                  severity='danger'/>
+          { index > 0 && <Button icon={ mdiArrowUp }
+                                 text
+                                 severity='info'
+                                 onClick={ () => onGroupUp(group) }/> }
+          { (index + 1) < size && <Button icon={ mdiArrowDown }
+                                          text
+                                          severity='info'
+                                          onClick={ () => onGroupDown(group) }/> }
+        </div>
       </div>
-    </div>
 
-    <RuleListComponent group={ group.name }/>
-  </div>
-}
+      <RuleListComponent group={ group.name }/>
+    </div>
+  }
 
 export default _

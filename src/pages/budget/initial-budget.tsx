@@ -7,11 +7,12 @@ import BreadCrumbItem from "../../components/breadcrumb/breadcrumb-item.componen
 import BreadCrumbs from "../../components/breadcrumb/breadcrumb.component";
 import { Form, Input, SubmitButton } from "../../components/form";
 import { i10n } from "../../config/prime-locale";
+import { useNotification } from "../../context/notification-context";
 import BudgetRepository from "../../core/repositories/budget.repository";
-import NotificationService from "../../service/notification.service";
 
 const CreateBudgetView = () => {
   const navigate = useNavigate()
+  const { warning, success } = useNotification()
 
   const onSubmit = (data: any) => {
     const date = new Date(data.startDate)
@@ -20,9 +21,9 @@ const CreateBudgetView = () => {
       month: date.getMonth() + 1,
       income: data.income
     })
-      .then(() => NotificationService.success('page.budget.group.created'))
+      .then(() => success('page.budget.group.created'))
       .then(() => navigate('/budgets'))
-      .catch(() => NotificationService.warning('page.budget.group.create.failed'))
+      .catch(() => warning('page.budget.group.create.failed'))
   }
 
   const header = () => <div className='px-2 py-2 border-b-1 text-center font-bold'>

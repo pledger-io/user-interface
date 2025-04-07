@@ -1,5 +1,6 @@
 import { act, fireEvent, render, waitFor } from '@testing-library/react';
 import React from "react";
+import { NotificationProvider } from "../../../context/notification-context";
 import ReconcileRowComponent from './reconcile-row.component';
 import ProcessRepository, {
     ProcessInstance,
@@ -41,8 +42,9 @@ describe('ReconcileRowComponent', () => {
     }];
 
     it('should load process variables on mount', async () => {
-        vi.spyOn(ProcessRepository, 'variables').mockResolvedValue(mockVariables);
-        render(tableWrapped(<ReconcileRowComponent process={mockProcess} onRemoved={mockOnRemoved}/>));
+      vi.spyOn(ProcessRepository, 'variables').mockResolvedValue(mockVariables);
+      render(tableWrapped(<ReconcileRowComponent process={ mockProcess }
+                                                 onRemoved={ mockOnRemoved }/>), { wrapper: NotificationProvider });
 
         await waitFor(() => expect(ProcessRepository.variables).toHaveBeenCalledWith('AccountReconcile', mockProcess.businessKey, mockProcess.id));
     });
@@ -53,7 +55,7 @@ describe('ReconcileRowComponent', () => {
         vi.spyOn(ProcessRepository, 'variables').mockResolvedValue(mockVariables);
 
         const { getByTestId } = render(tableWrapped(<ReconcileRowComponent process={ mockProcess }
-                                                                            onRemoved={ mockOnRemoved }/>));
+                                                                            onRemoved={ mockOnRemoved }/>), { wrapper: NotificationProvider });
         await waitFor(() => expect(ProcessRepository.variables).toHaveBeenCalledWith('AccountReconcile', mockProcess.businessKey, mockProcess.id));
 
         const retryButton = getByTestId(`retry-button-${mockProcess.id}`);
@@ -70,7 +72,7 @@ describe('ReconcileRowComponent', () => {
         vi.spyOn(ProcessRepository, 'delete').mockResolvedValue();
 
         const { getByTestId } = render(tableWrapped(<ReconcileRowComponent process={mockProcess}
-                                                                         onRemoved={mockOnRemoved}/>));
+                                                                         onRemoved={mockOnRemoved}/>), { wrapper: NotificationProvider });
         await waitFor(() => expect(getByTestId(`remove-row-${mockProcess.id}`)).toBeInTheDocument());
 
         expect(ProcessRepository.delete).not.toHaveBeenCalled();

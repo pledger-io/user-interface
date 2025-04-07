@@ -2,14 +2,16 @@ import React from "react";
 import { Form, Input, SubmitButton } from "../../components/form";
 import Message from "../../components/layout/message.component";
 import Translation from "../../components/localization/translation.component";
+import { useNotification } from "../../context/notification-context";
 import ProfileRepository from "../../core/repositories/profile.repository";
-import NotificationService from "../../service/notification.service";
 
 const ProfilePasswordView = () => {
+  const { success, warning } = useNotification()
+
   const onSubmit = (form: any) => {
     ProfileRepository.patch({ password: form.password })
-      .then(() => NotificationService.success('page.user.password.changed.success'))
-      .catch(() => NotificationService.warning('page.user.password.changed.failed'))
+      .then(() => success('page.user.password.changed.success'))
+      .catch(() => warning('page.user.password.changed.failed'))
   }
 
   return <>

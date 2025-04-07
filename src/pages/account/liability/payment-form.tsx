@@ -3,6 +3,7 @@ import React from 'react'
 import { mdiCancel, mdiContentSave } from "@mdi/js";
 import { useLoaderData, useNavigate, useRouteLoaderData } from "react-router";
 import { i10n } from "../../../config/prime-locale";
+import { useNotification } from "../../../context/notification-context";
 import { ROUTER_ACCOUNT_LIABILITY_KEY, RouterAccount } from "../../../types/router-types";
 import { Category, Transaction } from "../../../types/types";
 import { TransactionService } from "../../../service/TransactionService";
@@ -15,13 +16,14 @@ const LiabilityPayment = () => {
   const account: RouterAccount = useRouteLoaderData(ROUTER_ACCOUNT_LIABILITY_KEY)
   const transaction: Transaction = useLoaderData()
   const navigate = useNavigate()
+  const { success, warning } = useNotification()
 
   const onSubmit = (entity: any) => {
     const { id } = transaction
     TransactionService.persist(account, {
       ...entity,
       to: account
-    }, navigate, id as number)
+    }, navigate, id as number, success, warning)
   }
 
   if (!account) return <></>

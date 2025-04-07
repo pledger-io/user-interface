@@ -9,6 +9,7 @@ import { ToggleInput } from "./ToggleInput";
 import { AmountInput } from "./AmountInput.js";
 import RadioInput from "./RadioInput";
 import { TagInput } from "./TagInput.js";
+import { OtpInput } from "./OtpInput";
 import { ComplexTypeInput } from "./ComplexTypeInput";
 
 export {
@@ -25,5 +26,6 @@ export {
     AmountInput as Amount,
     TagInput as Tags,
     RadioInput as Radio,
+    OtpInput as Otp,
     ComplexTypeInput as ComplexType,
 }

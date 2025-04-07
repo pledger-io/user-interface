@@ -13,9 +13,9 @@ import { Form, SubmitButton } from "../../../components/form";
 import { BackButton, Button } from "../../../components/layout/button";
 import Loading from "../../../components/layout/loading.component";
 import { i10n } from "../../../config/prime-locale";
+import { useNotification } from "../../../context/notification-context";
 import { Resolver } from "../../../core";
 import { TransactionRepository } from "../../../core/RestAPI";
-import NotificationService from "../../../service/notification.service";
 import { ROUTER_ACCOUNT_KEY, RouterAccount } from "../../../types/router-types";
 import { Account, Transaction } from "../../../types/types";
 
@@ -23,6 +23,7 @@ const TransactionForm = () => {
   const { type, transactionType, transactionId } = useParams()
   const [transaction, setTransaction] = useState<Transaction>()
   const navigate = useNavigate()
+  const { warning, success } = useNotification()
   const account: RouterAccount = useRouteLoaderData(ROUTER_ACCOUNT_KEY)
 
   if (!account) return <Loading/>
@@ -56,7 +57,7 @@ const TransactionForm = () => {
   }, [transactionType, transactionId, account])
 
   const onSubmit = useCallback(
-    (e: any) => processSubmit(transactionId as string, e, account.account.currency, navigate),
+    (e: any) => processSubmit(transactionId as string, e, account.account.currency, navigate, warning, success),
     [account?.account.currency, transactionId, navigate])
 
   const initialSplit = () => setTransaction(old => {
@@ -129,7 +130,7 @@ const TransactionForm = () => {
   </div>
 }
 
-const processSubmit = (id: string, entity: any, currency: string, navigate: NavigateFunction) => {
+const processSubmit = (id: string, entity: any, currency: string, navigate: NavigateFunction, warning: any, success: any) => {
   const transaction = {
     description: entity.description,
     source: { id: entity.from.id, name: entity.from.name },
@@ -157,9 +158,9 @@ const processSubmit = (id: string, entity: any, currency: string, navigate: Navi
   }
 
   Promise.all(promises)
-    .then(() => NotificationService.success(replaceAction('page.transaction.{action}.success', parseInt(id))))
+    .then(() => success(replaceAction('page.transaction.{action}.success', parseInt(id))))
     .then(() => navigate(-1))
-    .catch(() => NotificationService.warning(replaceAction('page.transaction.{action}.failed', parseInt(id))))
+    .catch(() => warning(replaceAction('page.transaction.{action}.failed', parseInt(id))))
 }
 
 function replaceAction(text: string, id = NaN) {

@@ -12,21 +12,22 @@ import BreadCrumbs from "../../components/breadcrumb/breadcrumb.component";
 import { confirmDeleteDialog } from "../../components/confirm-dialog";
 import DateComponent from "../../components/format/date.component";
 import { i10n } from "../../config/prime-locale";
+import { useNotification } from "../../context/notification-context";
 import CategoryRepository from "../../core/repositories/category-repository";
 import useQueryParam from "../../hooks/query-param.hook";
-import NotificationService from "../../service/notification.service";
 import { Category, Pagination } from "../../types/types";
 
 const ActionButtons = ({ category, deleteCallback }: { category: Category, deleteCallback: () => void }) => {
+  const { success, warning } = useNotification()
 
   const confirmDelete = () => {
     confirmDeleteDialog({
       message: i10n('page.category.delete.confirm'),
       accept: () => {
         CategoryRepository.delete(category)
-          .then(() => NotificationService.success('page.category.delete.success'))
+          .then(() => success('page.category.delete.success'))
           .then(() => deleteCallback())
-          .catch(() => NotificationService.warning('page.category.delete.failed'))
+          .catch(() => warning('page.category.delete.failed'))
       }
     })
   }

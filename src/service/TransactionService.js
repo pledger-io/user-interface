@@ -1,6 +1,5 @@
 import AccountRepository from "../core/repositories/account-repository";
 import { TransactionRepository } from "../core/RestAPI";
-import NotificationService from "./notification.service";
 
 export const TransactionService = {
     fetchAccount: ({ id }) => {
@@ -26,7 +25,7 @@ export const TransactionService = {
             })
     },
 
-    persist: (account, entity, navigate, id = NaN) => {
+    persist: (account, entity, navigate, id = NaN, success, warning) => {
         const transaction = {
             description: entity.description,
             source: { id: entity.from.id, name: entity.from.name },
@@ -52,9 +51,9 @@ export const TransactionService = {
         }
 
         Promise.all(promises)
-            .then(() => NotificationService.success(replaceAction('page.transaction.{action}.success', id)))
+            .then(() => success(replaceAction('page.transaction.{action}.success', id)))
             .then(() => navigate(-1))
-            .catch(() => NotificationService.warning(replaceAction('page.transaction.{action}.failed', id)))
+            .catch(() => warning(replaceAction('page.transaction.{action}.failed', id)))
     }
 };
 

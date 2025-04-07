@@ -4,9 +4,9 @@ import { Message } from "primereact/message";
 import { useState } from "react";
 import { Form } from "../../components/form";
 import { i10n } from "../../config/prime-locale";
+import { useNotification } from "../../context/notification-context";
 import { Attachment } from "../../core";
 import ProcessRepository, { ProcessStart } from "../../core/repositories/process.repository";
-import NotificationService from "../../service/notification.service";
 
 type ProfileImportStart = ProcessStart & {
   storageToken: string
@@ -14,13 +14,14 @@ type ProfileImportStart = ProcessStart & {
 
 const ProfileConfigImportView = () => {
   const [importing, setImporting] = useState(false)
+  const { success, warning } = useNotification()
 
   const onUploadComplete = ({ fileCode }: any) => {
     setImporting(true)
     ProcessRepository.start('ImportUserProfile', { storageToken: fileCode } as ProfileImportStart)
-      .then(() => NotificationService.success('page.user.profile.import.success'))
+      .then(() => success('page.user.profile.import.success'))
       .then(() => setImporting(false))
-      .catch(() => NotificationService.warning('page.user.profile.import.error'))
+      .catch(() => warning('page.user.profile.import.error'))
   }
 
   return <>

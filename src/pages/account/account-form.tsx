@@ -5,10 +5,10 @@ import BreadCrumbItem from "../../components/breadcrumb/breadcrumb-item.componen
 import BreadCrumbs from "../../components/breadcrumb/breadcrumb.component";
 import { Entity, Form, Input, SubmitButton } from "../../components/form";
 import { BackButton } from "../../components/layout/button";
+import { useNotification } from "../../context/notification-context";
 import { Attachment } from "../../core";
 import AccountRepository from "../../core/repositories/account-repository";
 import { Account } from "../../types/types";
-import NotificationService from "../../service/notification.service";
 import { Card } from "primereact/card";
 import { i10n } from "../../config/prime-locale";
 import { Message } from "primereact/message";
@@ -41,6 +41,7 @@ const AccountForm = ({ type }: { type: string }) => {
   } as Account))
   const [exception, setException] = useState(null)
   const navigate = useNavigate();
+  const { success, warning } = useNotification()
 
   const overviewHref = isNaN(parseInt(id as string)) ? './../' : './../../'
   const addEditBreadcrumb = isNaN(parseInt(id as string)) ? 'page.title.accounts.add' : 'page.title.accounts.edit'
@@ -48,25 +49,25 @@ const AccountForm = ({ type }: { type: string }) => {
   const onSubmit = (entity: any) => {
     if (isNaN(parseInt(id as string))) {
       AccountRepository.create(entity)
-        .then(() => NotificationService.success('page.account.creation.success'))
+        .then(() => success('page.account.creation.success'))
         .then(() => navigate(-1))
         .catch(exception => {
           setException(exception)
-          NotificationService.warning('page.account.creation.failed')
+          warning('page.account.creation.failed')
         })
     } else {
       AccountRepository.update(id, entity)
-        .then(() => NotificationService.success('page.account.update.success'))
+        .then(() => success('page.account.update.success'))
         .then(() => navigate(-1))
         .catch(exception => {
           setException(exception)
-          NotificationService.warning('page.account.update.failed')
+          warning('page.account.update.failed')
         })
     }
   }
   const onPictureChange = (attachment: any) => AccountRepository.icon(id, attachment.fileCode)
-    .then(() => NotificationService.success(''))
-    .catch(() => NotificationService.warning('common.upload.file.failed'))
+    .then(() => success(''))
+    .catch(() => warning('common.upload.file.failed'))
 
   useEffect(() => {
     if (!isNaN(parseInt(id as string)))

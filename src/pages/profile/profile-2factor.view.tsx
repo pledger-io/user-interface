@@ -5,12 +5,13 @@ import { Form, Input, SubmitButton } from "../../components/form";
 import { Button } from "../../components/layout/button";
 import Loading from "../../components/layout/loading.component";
 import { i10n } from "../../config/prime-locale";
+import { useNotification } from "../../context/notification-context";
 import ProfileRepository from "../../core/repositories/profile.repository";
 import RestAPI from "../../core/repositories/rest-api";
-import NotificationService from "../../service/notification.service";
 
 const Profile2FactorView = () => {
   const [qrCode, setQrCode] = useState<string>()
+  const { success, warning } = useNotification()
 
   useEffect(() => {
     ProfileRepository.get2Factor()
@@ -21,14 +22,14 @@ const Profile2FactorView = () => {
 
   const onSubmit = (form: any) => {
     ProfileRepository.enableMfa(form.code)
-      .then(() => NotificationService.success('page.user.profile.twofactor.enable.success'))
+      .then(() => success('page.user.profile.twofactor.enable.success'))
       .then(() => RestAPI.profile())
-      .catch(() => NotificationService.warning('page.user.profile.twofactor.enable.error'))
+      .catch(() => warning('page.user.profile.twofactor.enable.error'))
   }
   const onDisable = () => ProfileRepository.disableMfa()
-    .then(() => NotificationService.success('page.user.profile.twofactor.disable.success'))
+    .then(() => success('page.user.profile.twofactor.disable.success'))
     .then(() => RestAPI.profile())
-    .catch(() => NotificationService.warning('page.user.profile.twofactor.disable.failed'))
+    .catch(() => warning('page.user.profile.twofactor.disable.failed'))
 
   return <>
     <h1 className='font-bold text-lg mb-4'>{ i10n('page.user.profile.twofactor') }</h1>
@@ -41,12 +42,11 @@ const Profile2FactorView = () => {
         </div>
         <div className='flex-1'>
           <Message text={ i10n('page.user.profile.twofactor.explained') } severity='info'/>
-          <Input.Text id='code'
-                      type='text'
+          <Input.Otp id='code'
                       required
                       title='UserAccount.twofactor.secret'/>
 
-          <div className='mx-auto w-fit mt-4'>
+          <div className='w-fit mt-4'>
             <SubmitButton label='page.user.profile.action.twofactor.enable'
                           className='min-w-[100px]'/>
           </div>

@@ -1,8 +1,8 @@
 import { mdiCancel, mdiContentSave } from "@mdi/js";
 import React, { FC, useImperativeHandle } from "react";
+import { useNotification } from "../../../context/notification-context";
 import ProcessRepository, { BusinessKey } from "../../../core/repositories/process.repository";
 import { Account } from "../../../types/types";
-import NotificationService from "../../../service/notification.service";
 import { Form, Input, SubmitButton } from "../../form";
 import { ReconcileStart } from "./types";
 import { Dialog } from "primereact/dialog";
@@ -17,6 +17,7 @@ type ReconcileStartProps = {
 
 const ReconcileStartComponent: FC<ReconcileStartProps> = ({ ref, account, afterCreate }) => {
   const [visible, setVisible] = React.useState(false);
+  const { success, warning } = useNotification();
 
   useImperativeHandle(ref, () => ({
     open() {
@@ -35,10 +36,10 @@ const ReconcileStartComponent: FC<ReconcileStartProps> = ({ ref, account, afterC
     }
 
     ProcessRepository.start('AccountReconcile', processData)
-      .then(() => NotificationService.success('page.accounts.reconcile.success'))
+      .then(() => success('page.accounts.reconcile.success'))
       .then(() => setVisible(false))
       .then(() => setTimeout(afterCreate, 500))
-      .catch(() => NotificationService.warning('page.accounts.reconcile.error'))
+      .catch(() => warning('page.accounts.reconcile.error'))
   }
 
   return <Dialog header={ i10n('page.accounts.reconcile.create') }

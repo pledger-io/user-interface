@@ -3,9 +3,9 @@ import { useLocalStorage } from "primereact/hooks";
 import { Suspense } from "react";
 import { Outlet, useNavigate } from "react-router";
 import Loading from "../components/layout/loading.component";
-import NotificationCenter from "../components/notification";
 import Sidebar from "../components/sidebar";
 import { SupportedLocales } from "../config/prime-locale";
+import { NotificationProvider } from "../context/notification-context";
 import SecurityRepository from "../core/repositories/security-repository";
 
 /**
@@ -36,13 +36,14 @@ export function AuthenticatedComponent() {
 
   return <PrimeReactProvider value={ { ripple: true, locale: locale, cssTransition: true } }>
     <div className='flex'>
-      <Sidebar logoutCallback={ logout } className='w-[218px] min-w-[218px]'/>
-      <main className='h-[100vh] flex flex-col overflow-y-auto flex-grow'>
-        <NotificationCenter/>
-        <Suspense fallback={ <SuspenseLoading/> }>
-          <Outlet/>
-        </Suspense>
-      </main>
+      <NotificationProvider>
+        <Sidebar logoutCallback={ logout } className='w-[218px] min-w-[218px]'/>
+        <main className='h-[100vh] flex flex-col overflow-y-auto flex-grow'>
+          <Suspense fallback={ <SuspenseLoading/> }>
+            <Outlet/>
+          </Suspense>
+        </main>
+      </NotificationProvider>
     </div>
   </PrimeReactProvider>
 }

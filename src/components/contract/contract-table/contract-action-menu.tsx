@@ -13,9 +13,9 @@ import { MenuItem } from "primereact/menuitem";
 import React, { useRef } from "react";
 import { useNavigate } from "react-router";
 import { i10n } from "../../../config/prime-locale";
+import { useNotification } from "../../../context/notification-context";
 import ContractRepository from "../../../core/repositories/contract-repository";
 import { AttachmentRepository } from "../../../core/RestAPI";
-import NotificationService from "../../../service/notification.service";
 import { Contract, DialogOptions } from "../../../types/types";
 import { confirmDeleteDialog } from "../../confirm-dialog";
 import { downloadBlob } from "../../download-blob";
@@ -28,6 +28,7 @@ const ContractMenuActions = ({ contract, callback }: { contract : Contract, call
   const uploadContractRef = useRef<DialogOptions>(null);
   const scheduleContractRef = useRef<DialogOptions>(null);
   const navigate = useNavigate();
+  const { success, warning } = useNotification();
 
   const menuOptions: MenuItem[] = []
 
@@ -54,9 +55,9 @@ const ContractMenuActions = ({ contract, callback }: { contract : Contract, call
       icon: () => <Icon path={ mdiCalendarCheck } size={ 1 } />,
       command() {
         ContractRepository.warn(contract.id)
-          .then(() => NotificationService.success('page.title.budget.contracts.warn.success'))
+          .then(() => success('page.title.budget.contracts.warn.success'))
           .then(callback)
-          .catch(() => NotificationService.warning('page.title.budget.contracts.warn.failed'))
+          .catch(() => warning('page.title.budget.contracts.warn.failed'))
       }
     })
   }
@@ -89,9 +90,9 @@ const ContractMenuActions = ({ contract, callback }: { contract : Contract, call
           message: i10n('page.budget.contracts.delete.confirm'),
           accept: () => {
             ContractRepository.delete(contract.id)
-              .then(() => NotificationService.success('page.budget.contracts.delete.success'))
+              .then(() => success('page.budget.contracts.delete.success'))
               .then(callback)
-              .catch(() => NotificationService.warning('page.budget.contracts.delete.failed'))
+              .catch(() => warning('page.budget.contracts.delete.failed'))
           }
         })
       }

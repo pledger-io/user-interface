@@ -2,9 +2,9 @@ import { mdiSkipNext } from "@mdi/js";
 import { Paginator } from "primereact/paginator";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { useNotification } from "../../context/notification-context";
 import ProcessRepository, { ProcessTask, TaskVariables } from "../../core/repositories/process.repository";
 import useQueryParam from "../../hooks/query-param.hook";
-import NotificationService from "../../service/notification.service";
 import { Account } from "../../types/types";
 import { Entity, Form, SubmitButton } from "../form";
 import Loading from "../layout/loading.component";
@@ -55,6 +55,7 @@ const PageOfAccountMappings = ({ accountMappings }: { accountMappings: AccountMa
 const AccountMappingComponent = ({ task }: { task: ProcessTask }) => {
   const [accountMappings, setAccountMappings] = useState<AccountMapping[]>([]);
   const [processing, setProcessing] = useState(false);
+  const { warning } = useNotification()
 
   useEffect(() => {
     ProcessRepository.taskVariables('import_job', task.id, 'account_mappings')
@@ -87,7 +88,7 @@ const AccountMappingComponent = ({ task }: { task: ProcessTask }) => {
     setProcessing(true)
     ProcessRepository.completeTasksVariables('import_job', task.id, updateVariables)
       .then(() => document.location.reload())
-      .catch(() => NotificationService.warning('page.user.profile.import.error'))
+      .catch(() => warning('page.user.profile.import.error'))
   }
 
   return <>

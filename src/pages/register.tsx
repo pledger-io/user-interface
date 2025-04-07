@@ -35,16 +35,16 @@ const Register = () => {
   ]
 
   const header = <div className='p-4 flex justify-between relative overflow-hidden'>
-    <span>Pledger.io</span>
+    <span className="text-2xl font-bold text-primary">Pledger.io</span>
     <Menu model={ languageMenu } popup ref={ configMenu }/>
-    <button type='button' className="cursor-pointer z-10" onClick={ (e) => configMenu?.current?.toggle(e) }
+    <button type='button' className="cursor-pointer z-10 p-2 hover:bg-gray-100 rounded-full transition-all"
+            onClick={ (e) => configMenu?.current?.toggle(e) }
             role='button'>
       <Icon path={ mdiWeb } size={ 1 }/>
     </button>
-    <img src='images/login-bg.png' className='z-[0] opacity-60 absolute left-0 right-0 top-0 bottom-0'
+    <img src='/ui/images/login-bg.png' className='z-[0] opacity-60 absolute left-0 right-0 top-0 bottom-0'
          alt='background'/>
   </div>
-
 
   const onSubmit = ({ username, password }: LoginForm) => SecurityRepository.register(username, password)
     .then(() => navigate('/login?from=' + from))

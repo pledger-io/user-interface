@@ -2,11 +2,11 @@ import React from "react";
 import { useLoaderData, useNavigate, useParams } from "react-router";
 import { mdiCancel, mdiContentSave } from "@mdi/js";
 import { Entity, Form, Input, SubmitButton } from "../../components/form";
+import { useNotification } from "../../context/notification-context";
 import ContractRepository from "../../core/repositories/contract-repository";
 import { BackButton } from "../../components/layout/button";
 import BreadCrumbs from "../../components/breadcrumb/breadcrumb.component";
 import BreadCrumbItem from "../../components/breadcrumb/breadcrumb-item.component";
-import NotificationService from "../../service/notification.service";
 import { Contract } from "../../types/types";
 import { Card } from "primereact/card";
 import { i10n } from "../../config/prime-locale";
@@ -15,18 +15,19 @@ const ContractEdit = () => {
   const { id } = useParams()
   const contract: Contract = useLoaderData()
   const navigate = useNavigate()
+  const { warning, success } = useNotification()
 
   const onSubmit = (entity: any) => {
     if (id) {
       ContractRepository.update(id, entity)
-        .then(() => NotificationService.success('page.budget.contracts.updated.success'))
+        .then(() => success('page.budget.contracts.updated.success'))
         .then(() => navigate(-1))
-        .catch(() => NotificationService.success('page.budget.contracts.updated.failed'))
+        .catch(() => warning('page.budget.contracts.updated.failed'))
     } else {
       ContractRepository.create(entity)
-        .then(() => NotificationService.success('page.budget.contracts.created.success'))
+        .then(() => success('page.budget.contracts.created.success'))
         .then(() => navigate(-1))
-        .catch(() => NotificationService.success('page.budget.contracts.created.failed'))
+        .catch(() => warning('page.budget.contracts.created.failed'))
     }
   }
 

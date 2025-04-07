@@ -5,8 +5,8 @@ import { MenuItem } from "primereact/menuitem";
 import React, { FC, useRef } from "react";
 import { useNavigate } from "react-router";
 import { i10n } from "../../config/prime-locale";
+import { useNotification } from "../../context/notification-context";
 import AccountRepository from "../../core/repositories/account-repository";
-import NotificationService from "../../service/notification.service";
 import { Account } from "../../types/types";
 import { confirmDeleteDialog } from "../confirm-dialog";
 import { Button } from "../layout/button";
@@ -24,6 +24,7 @@ type AccountMenuProps = {
 const AccountMenu: FC<AccountMenuProps> = ({ account, callback }) => {
   const actionMenu = useRef<Menu>(null);
   const navigate = useNavigate();
+  const { success, warning } = useNotification();
 
   const menuOptions = [
     {
@@ -42,9 +43,9 @@ const AccountMenu: FC<AccountMenuProps> = ({ account, callback }) => {
           message: i10n('page.accounts.delete.confirm'),
           accept: () => {
             AccountRepository.delete(account.id)
-              .then(() => NotificationService.success('page.account.delete.success'))
+              .then(() => success('page.account.delete.success'))
               .then(() => callback())
-              .catch(() => NotificationService.warning('page.account.delete.failed'))
+              .catch(() => warning('page.account.delete.failed'))
           }
         })
       }

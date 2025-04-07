@@ -1,15 +1,15 @@
-import React, { FC, Ref, useImperativeHandle, useState } from "react";
 import { mdiCancel, mdiContentSaveSettings } from "@mdi/js";
+import { Dialog } from "primereact/dialog";
+import { Message } from "primereact/message";
+import React, { FC, Ref, useImperativeHandle, useState } from "react";
+import { i10n } from "../../config/prime-locale";
+import { useNotification } from "../../context/notification-context";
 import { Upload } from "../../core/attachment";
-import { Attachment, DialogOptions, Identifier } from "../../types/types";
-import { AttachmentRepository } from "../../core/RestAPI";
 import ContractRepository from "../../core/repositories/contract-repository";
+import { AttachmentRepository } from "../../core/RestAPI";
+import { Attachment, DialogOptions, Identifier } from "../../types/types";
 import { Form, SubmitButton } from "../form";
 import { Button } from "../layout/button";
-import NotificationService from "../../service/notification.service";
-import { Dialog } from "primereact/dialog";
-import { i10n } from "../../config/prime-locale";
-import { Message } from "primereact/message";
 
 type UploadContractProps = {
   id: Identifier,
@@ -20,6 +20,7 @@ type UploadContractProps = {
 const _: FC<UploadContractProps> = ({ ref, id, onChanges }) => {
   const [attachment, setAttachment] = useState<Attachment | undefined>(undefined)
   const [visible, setVisible] = React.useState(false);
+  const { success, warning } = useNotification();
 
   useImperativeHandle(ref, () => ({
     open() {
@@ -31,7 +32,7 @@ const _: FC<UploadContractProps> = ({ ref, id, onChanges }) => {
     if (attachment) {
       AttachmentRepository.delete(attachment.fileCode)
         .then(() => setAttachment(a))
-        .catch(() => NotificationService.warning('page.budget.contracts.upload.failed'))
+        .catch(() => warning('page.budget.contracts.upload.failed'))
     } else {
       setAttachment(a)
     }
@@ -41,13 +42,13 @@ const _: FC<UploadContractProps> = ({ ref, id, onChanges }) => {
       setVisible(false)
     } else {
       ContractRepository.attach(id, attachment)
-        .then(() => NotificationService.success('page.budget.contracts.upload.success'))
+        .then(() => success('page.budget.contracts.upload.success'))
         .then(() => {
           setAttachment(undefined)
           setVisible(false)
         })
         .then(() => onChanges?.())
-        .catch(() => NotificationService.warning('page.budget.contracts.upload.failed'))
+        .catch(() => warning('page.budget.contracts.upload.failed'))
     }
   }
 

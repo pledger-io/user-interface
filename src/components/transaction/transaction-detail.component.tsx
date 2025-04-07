@@ -13,9 +13,9 @@ import Icon from "@mdi/react";
 import React, { Attributes, FC, useRef, useState } from "react";
 import { NavLink, useNavigate } from "react-router";
 import { i10n } from "../../config/prime-locale";
+import { useNotification } from "../../context/notification-context";
 import { Resolver } from "../../core";
 import { TransactionRepository } from "../../core/RestAPI";
-import NotificationService from "../../service/notification.service";
 import { Account, DialogOptions, Transaction } from "../../types/types";
 import { confirmDeleteDialog } from "../confirm-dialog";
 import MoneyComponent from "../format/money.component";
@@ -42,6 +42,7 @@ function determineAmount(transaction: Transaction, account?: Account) {
 
 const TransactionItem: FC<TransactionItemProps> = ({ transaction, className = '', account }) => {
   const [deleted, setDeleted] = useState(false)
+  const { warning, success } = useNotification()
 
   const isSource = !account || account.id === transaction.source.id
   const sourceAccount = isSource ? transaction.source : transaction.destination
@@ -51,9 +52,9 @@ const TransactionItem: FC<TransactionItemProps> = ({ transaction, className = ''
 
   const onDelete = () => {
     TransactionRepository.delete(transaction.source.id, transaction.id)
-      .then(() => NotificationService.success('page.transactions.delete.success'))
+      .then(() => success('page.transactions.delete.success'))
       .then(() => setDeleted(true))
-      .catch(() => NotificationService.warning('page.transactions.delete.failed'))
+      .catch(() => warning('page.transactions.delete.failed'))
   }
 
   if (deleted) return null

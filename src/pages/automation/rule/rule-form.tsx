@@ -11,14 +11,15 @@ import Translation from "../../../components/localization/translation.component"
 import ChangesComponent from "../../../components/transaction/rule/changes.component";
 import ConditionFieldComponent from "../../../components/transaction/rule/conditions.component";
 import { i10n } from "../../../config/prime-locale";
+import { useNotification } from "../../../context/notification-context";
 import RuleRepository from "../../../core/repositories/rule-repository";
-import NotificationService from "../../../service/notification.service";
 import { Rule } from "../../../types/types";
 
 const RuleForm = () => {
   const { id, group } = useParams()
   const [rule, setRule] = useState<Rule>()
   const navigate = useNavigate()
+  const { warning } = useNotification()
 
   useEffect(() => {
     if (id && group)
@@ -39,11 +40,11 @@ const RuleForm = () => {
     if (id === undefined) {
       RuleRepository.createRule(group || '', entity)
         .then(() => navigate(-1))
-        .catch(() => NotificationService.warning('page.settings.rules.create.failed'))
+        .catch(() => warning('page.settings.rules.create.failed'))
     } else {
       RuleRepository.updateRule(group || '', id, entity)
         .then(() => navigate(-1))
-        .catch(() => NotificationService.warning('page.settings.rules.update.failed'))
+        .catch(() => warning('page.settings.rules.update.failed'))
     }
   }
 

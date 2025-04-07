@@ -3,9 +3,9 @@ import { Dialog } from "primereact/dialog";
 import React, { Attributes, FC, Ref, useImperativeHandle, useState } from "react";
 import Message from "../../components/layout/message.component";
 import { i10n } from "../../config/prime-locale";
+import { useNotification } from "../../context/notification-context";
 
 import { TransactionScheduleRepository } from "../../core/RestAPI";
-import NotificationService from "../../service/notification.service";
 import { DialogOptions, Transaction } from "../../types/types";
 import { Entity, Form, Input, SubmitButton } from "../form";
 import { Button } from "../layout/button";
@@ -39,6 +39,7 @@ type ScheduleTransactionDialogProps = Attributes & {
 const ScheduleTransactionDialog: FC<ScheduleTransactionDialogProps> = ({ ref, transaction, onCreated }) => {
   const [type, setType] = useState(transaction?.type.code.toLowerCase() || 'credit')
   const [visible, setVisible] = useState<boolean>(false)
+  const { success, warning } = useNotification();
 
   useImperativeHandle(ref, () => ({
     open() {
@@ -47,10 +48,10 @@ const ScheduleTransactionDialog: FC<ScheduleTransactionDialogProps> = ({ ref, tr
   }));
 
   const onSubmit = (entity: any) => TransactionScheduleRepository.create(createScheduleEntity(entity))
-    .then(() => NotificationService.success('popup.schedule.transaction.create.success'))
+    .then(() => success('popup.schedule.transaction.create.success'))
     .then(() => onCreated && onCreated())
     .then(() => setVisible(false))
-    .catch(() => NotificationService.warning('popup.schedule.transaction.create.failed'))
+    .catch(() => warning('popup.schedule.transaction.create.failed'))
 
   return (
     <Dialog header={ i10n('page.title.schedule.transaction.add') }

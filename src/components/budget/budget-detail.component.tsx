@@ -1,12 +1,11 @@
 import { mdiCancel, mdiContentSave, mdiPlus } from "@mdi/js";
-import { AxiosError } from "axios";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { Dialog } from "primereact/dialog";
 import React, { useEffect, useState } from "react";
 import { i10n } from "../../config/prime-locale";
+import { useNotification } from "../../context/notification-context";
 import BudgetRepository, { ComputedExpense } from "../../core/repositories/budget.repository";
-import NotificationService from "../../service/notification.service";
 import DateRange from "../../types/date-range.type";
 import { Budget, BudgetExpense, Identifier } from "../../types/types";
 import { Form, Input, SubmitButton } from "../form";
@@ -18,6 +17,7 @@ import ExpenseActions from "./budget-expense-actions.component";
 
 const AddExpenseDialog = ({ onChange }: { onChange: () => void }) => {
   const [visible, setVisible] = useState(false)
+  const { success, httpError } = useNotification()
 
   const onSubmit = (values: any) => {
     const patch = {
@@ -26,10 +26,10 @@ const AddExpenseDialog = ({ onChange }: { onChange: () => void }) => {
     }
 
     BudgetRepository.expense(patch)
-      .then(() => NotificationService.success('page.budget.group.expense.added'))
+      .then(() => success('page.budget.group.expense.added'))
       .then(() => setVisible(false))
       .then(onChange)
-      .catch((error: AxiosError) => NotificationService.exception(error))
+      .catch(httpError)
   }
 
   return <>

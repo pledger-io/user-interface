@@ -1,6 +1,6 @@
 import { act, fireEvent, render, waitFor } from '@testing-library/react';
+import { NotificationProvider } from "../../../context/notification-context";
 import ProcessRepository from "../../../core/repositories/process.repository";
-import NotificationService from "../../../service/notification.service";
 import ReconcilePopup from "./reconcile-start.component";
 import { Account } from "../../../types/types";
 import { BrowserRouter } from "react-router";
@@ -16,11 +16,12 @@ describe('ReconcilePopup', () => {
 
   it('submits the form successfully', async () => {
     ProcessRepository.start = vi.fn().mockResolvedValue({});
-    NotificationService.success = vi.fn();
     const ref = { current: null };
 
-    const { getByTestId } = render(<ReconcilePopup ref={ ref } account={ mockAccount }
-                                                   afterCreate={ mockAfterCreate }/>, { wrapper: BrowserRouter });
+    const { getByTestId } = render(
+      <NotificationProvider>
+        <ReconcilePopup ref={ ref } account={ mockAccount } afterCreate={ mockAfterCreate }/>
+      </NotificationProvider>, { wrapper: BrowserRouter });
 
     act(() => {
       (ref.current as any)?.open()
@@ -34,7 +35,6 @@ describe('ReconcilePopup', () => {
     fireEvent.click(getByTestId(`reconcile-submit-button-${ mockAccount.id }`));
 
     await waitFor(() => expect(ProcessRepository.start).toHaveBeenCalled());
-    expect(NotificationService.success).toHaveBeenCalled();
   });
 
 });

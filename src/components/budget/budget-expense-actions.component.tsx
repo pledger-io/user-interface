@@ -1,17 +1,17 @@
 import { mdiCancel, mdiContentSave, mdiSquareEditOutline } from "@mdi/js";
 import Icon from "@mdi/react";
-import { AxiosError } from "axios";
 import { Dialog } from "primereact/dialog";
 import React, { useState } from "react";
 import { i10n } from "../../config/prime-locale";
+import { useNotification } from "../../context/notification-context";
 import BudgetRepository from "../../core/repositories/budget.repository";
-import NotificationService from "../../service/notification.service";
 import { BudgetExpense } from "../../types/types";
 import { Form, Input, SubmitButton } from "../form";
 import { Button } from "../layout/button";
 
 const ExpenseActions = ({ expense, callback }: { expense: BudgetExpense, callback: () => void }) => {
   const [visible, setVisible] = useState(false)
+  const { warning, httpError } = useNotification()
 
   const onSubmit = (values: any) => {
     const patch = {
@@ -21,10 +21,10 @@ const ExpenseActions = ({ expense, callback }: { expense: BudgetExpense, callbac
     }
 
     BudgetRepository.expense(patch)
-      .then(() => NotificationService.success('page.budget.group.expense.updated'))
+      .then(() => warning('page.budget.group.expense.updated'))
       .then(() => setVisible(false))
       .then(callback)
-      .catch((error: AxiosError) => NotificationService.exception(error))
+      .catch(httpError)
   }
 
   return <>

@@ -4,24 +4,25 @@ import BreadCrumbs from "../../components/breadcrumb/breadcrumb.component";
 import Translation from "../../components/localization/translation.component";
 import Message from "../../components/layout/message.component";
 import { Form, Input, SubmitButton } from "../../components/form";
+import { useNotification } from "../../context/notification-context";
 import RestAPI from "../../core/repositories/rest-api";
 import { mdiContentSave } from "@mdi/js";
 import ProfileRepository from "../../core/repositories/profile.repository";
 
 import NavigationComponent from "../../components/profile/navigation.component";
 import Card from "../../components/layout/card.component";
-import NotificationService from "../../service/notification.service";
 import { RouterAuthentication } from "../../types/router-types";
 
 const ProfileThemeView = () => {
   const authentication: RouterAuthentication | undefined = useRouteLoaderData('authentication')
+  const { success, warning } = useNotification()
 
   const currentTheme = authentication?.user?.theme
   const onSubmit = (form: any) => {
     ProfileRepository.patch({ theme: form.theme })
-      .then(() => NotificationService.success('page.user.profile.theme.success'))
+      .then(() => success('page.user.profile.theme.success'))
       .then(() => RestAPI.profile())
-      .catch(() => NotificationService.warning('page.user.profile.theme.error'))
+      .catch(() => warning('page.user.profile.theme.error'))
   }
 
   return <>

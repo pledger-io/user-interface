@@ -5,9 +5,9 @@ import { MenuItem } from "primereact/menuitem";
 import React, { FC, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import { i10n } from "../../config/prime-locale";
+import { useNotification } from "../../context/notification-context";
 import AccountRepository from "../../core/repositories/account-repository";
 import ProcessRepository, { BusinessKey, ProcessInstance } from "../../core/repositories/process.repository";
-import NotificationService from "../../service/notification.service";
 import { Account, Identifier } from "../../types/types";
 import { confirmDeleteDialog } from "../confirm-dialog";
 import { Button } from "../layout/button";
@@ -31,6 +31,7 @@ const OwnAccountMenu: FC<OwnAccountMenuProps> = ({ account, callback }) => {
   const reconcileOverviewRef = useRef<any>(null)
   const navigate = useNavigate();
   const [reconcileActivity, setReconcileActivity] = useState<ProcessInstance[]>([])
+  const { success, warning } = useNotification()
 
   useEffect(() => {
     if (account.id) loadReconcileActivity(account.id, setReconcileActivity)
@@ -68,9 +69,9 @@ const OwnAccountMenu: FC<OwnAccountMenuProps> = ({ account, callback }) => {
           message: i10n('page.accounts.delete.confirm'),
           accept: () => {
             AccountRepository.delete(account.id)
-              .then(() => NotificationService.success('page.account.delete.success'))
+              .then(() => success('page.account.delete.success'))
               .then(() => callback())
-              .catch(() => NotificationService.warning('page.account.delete.failed'))
+              .catch(() => warning('page.account.delete.failed'))
           }
         })
       }

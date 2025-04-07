@@ -9,13 +9,14 @@ import { BackButton } from "../../../components/layout/button";
 import Loading from "../../../components/layout/loading.component";
 import Message from "../../../components/layout/message.component";
 import { i10n } from "../../../config/prime-locale";
+import { useNotification } from "../../../context/notification-context";
 import { TransactionScheduleRepository } from "../../../core/RestAPI";
-import NotificationService from "../../../service/notification.service";
 
 const TransactionScheduleForm = () => {
   const { id } = useParams()
   const [exception, setException] = useState()
   const navigate = useNavigate()
+  const { success } = useNotification()
   const schedule: any = useLoaderData()
 
   const onSubmit = (entity: any) => {
@@ -28,7 +29,7 @@ const TransactionScheduleForm = () => {
       },
       range: entity.range
     })
-      .then(() => NotificationService.success('page.budget.schedule.edit.success'))
+      .then(() => success('page.budget.schedule.edit.success'))
       .then(() => navigate(-1))
       .catch(setException)
   }

@@ -6,12 +6,10 @@ import { useNavigate, useParams } from "react-router";
 import BreadCrumbItem from "../../components/breadcrumb/breadcrumb-item.component";
 import BreadCrumbs from "../../components/breadcrumb/breadcrumb.component";
 import { Form, Input, SubmitButton } from "../../components/form";
-
 import { BackButton } from "../../components/layout/button";
 import { i10n } from "../../config/prime-locale";
-
+import { useNotification } from "../../context/notification-context";
 import CategoryRepository from "../../core/repositories/category-repository";
-import NotificationService from "../../service/notification.service";
 import { Category } from "../../types/types";
 
 const CategoryForm = () => {
@@ -19,6 +17,7 @@ const CategoryForm = () => {
   const [exception, setException] = useState()
   const { id } = useParams()
   const navigate = useNavigate()
+  const { success, warning } = useNotification()
 
   useEffect(() => {
     if (id) CategoryRepository.get(id).then(setCategory)
@@ -27,19 +26,19 @@ const CategoryForm = () => {
   const onSubmit = (entity: any) => {
     if (id)
       CategoryRepository.update(id, entity)
-        .then(() => NotificationService.success('page.category.create.success'))
+        .then(() => success('page.category.create.success'))
         .then(() => navigate(-1))
         .catch(e => {
           setException(e)
-          NotificationService.warning('page.category.create.failed')
+          warning('page.category.create.failed')
         })
     else
       CategoryRepository.create(entity)
-        .then(() => NotificationService.success('page.category.update.success'))
+        .then(() => success('page.category.update.success'))
         .then(() => navigate(-1))
         .catch(e => {
           setException(e)
-          NotificationService.warning('page.category.update.failed')
+          warning('page.category.update.failed')
         })
   }
 

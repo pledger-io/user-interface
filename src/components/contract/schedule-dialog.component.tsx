@@ -1,10 +1,10 @@
 import React, { FC, Ref, useImperativeHandle } from "react";
+import { useNotification } from "../../context/notification-context";
 import { Entity, Form, Input, SubmitButton } from "../form";
 import { mdiCancel, mdiContentSave } from "@mdi/js";
 import { Account, Contract, DialogOptions } from "../../types/types";
 import ContractRepository from "../../core/repositories/contract-repository";
 import { Button } from "../layout/button";
-import NotificationService from "../../service/notification.service";
 import { Dialog } from "primereact/dialog";
 import { i10n } from "../../config/prime-locale";
 import { Message } from "primereact/message";
@@ -24,6 +24,7 @@ type ScheduleContractModel = {
 
 const ScheduleContract: FC<ScheduleContractProps> = ({ ref, contract }) => {
   const [visible, setVisible] = React.useState(false);
+  const { success, warning } = useNotification();
 
   useImperativeHandle(ref, () => ({
     open() {
@@ -42,9 +43,9 @@ const ScheduleContract: FC<ScheduleContractProps> = ({ ref, contract }) => {
     }
 
     ContractRepository.schedule(contract.id, contractModel)
-      .then(() => NotificationService.success('page.contract.schedule.success'))
+      .then(() => success('page.contract.schedule.success'))
       .then(() => setVisible(false))
-      .catch(() => NotificationService.warning('page.contract.schedule.error'));
+      .catch(() => warning('page.contract.schedule.error'));
   }
 
   return <>
