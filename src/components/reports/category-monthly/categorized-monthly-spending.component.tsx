@@ -57,8 +57,8 @@ const CategorizedMonthlySpendingComponent = ({ currency, year }: CategorizedMont
 
 
   return <>
-    <DataTable value={ expenses } loading={ !expenses } size='small'>
-      <Column header={ i10n('Category.label') } field='name' bodyClassName='font-bold' frozen={ true } alignFrozen='left' />
+    <DataTable value={ expenses } loading={ !expenses } size='small' sortField='name' sortOrder={ 1 }>
+      <Column header={ i10n('Category.label') } field='name' bodyClassName='font-bold' sortable frozen />
       { [...new Array(12).keys()].map(month =>
         <Column key={ month }
                 headerClassName='min-w-[7rem]'

@@ -57,7 +57,7 @@ const CategoryReportView = () => {
       </BreadCrumbs>
 
       <div className='flex gap-2 mx-2 my-4'>
-        <Panel header={ i10n('page.reports.category.title') } className='flex-2'>
+        <Panel header={ i10n('page.reports.category.title') } className='flex-2 h-fit'>
           <CategoryGraph categories={ categories }
                          year={ parseInt(year) }
                          currencySymbol={ currencySymbol }/>

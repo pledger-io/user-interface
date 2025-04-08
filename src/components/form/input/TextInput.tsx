@@ -45,7 +45,7 @@ export const TextInput: FC<TextInputProps> = (props) => {
     <div className={ `flex flex-col gap-2 mt-2 ${ props.className || '' }` }>
       <label htmlFor={ props.id }
              className='font-bold'>{ i10n(props.title as string) }{ props.required ? ' *' : '' }</label>
-      { props.icon && <IconField iconPosition='left'><InputIcon className={ 'pi pi-'+ props.icon }/>{inputField}</IconField> }
+      { props.icon && <IconField iconPosition='left' className='[&.p-icon-field>.p-inputtext]:w-full'><InputIcon className={ 'pi pi-'+ props.icon }/>{inputField}</IconField> }
       { !props.icon && inputField }
       { field.touched && <InputValidationErrors field={ field } errors={ errors }/> }
     </div>

@@ -6,15 +6,16 @@ import DateRangeService from "../service/date-range.service";
 /**
  * Consume a range from the path params {@code year} and {@code month}.
  */
-const useDateRange = () : [DateRange] => {
-    const { year, month } = useParams()
-    const [range, setRange] = useState(() => DateRangeService.currentMonth())
+const useDateRange = (): [DateRange] => {
+  const { year, month } = useParams()
+  const [range, setRange] = useState(() => DateRangeService.currentMonth())
 
-    useEffect(() => {
-        if (year && month) setRange(DateRangeService.forMonth(parseInt(year), parseInt(month)))
-    }, [year, month])
+  useEffect(() => {
+    if (year && !month) setRange(DateRangeService.forYear(parseInt(year)))
+    if (year && month) setRange(DateRangeService.forMonth(parseInt(year), parseInt(month)))
+  }, [year, month])
 
-    return [range]
+  return [range]
 }
 
 export default useDateRange

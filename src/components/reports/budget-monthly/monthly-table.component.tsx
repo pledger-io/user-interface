@@ -61,7 +61,7 @@ const MonthlyPerBudgetTableComponent = ({ budgets, year, currency }: MonthlyPerB
 
   return <>
     <DataTable value={ expenses } loading={ !expenses } size='small'>
-      <Column header={ i10n('Budget.Expense.name') } field='name' />
+      <Column header={ i10n('Budget.Expense.name') } field='name' sortable />
       { [...new Array(12).keys()].map(month =>
         <Column key={ month }
                 headerClassName='min-w-[7rem]'

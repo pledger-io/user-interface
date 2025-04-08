@@ -1,3 +1,4 @@
+import { InputIcon } from "primereact/inputicon";
 import React, { FC } from "react";
 import Icon from "@mdi/react";
 import { mdiAlertCircle, mdiCheck } from "@mdi/js";
@@ -5,6 +6,7 @@ import { useInputField } from "./InputGroup";
 import { FieldType, ValidatorType } from "../form-types";
 import { i10n } from "../../../config/prime-locale";
 import { InputText } from "primereact/inputtext";
+import { IconField } from "primereact/iconfield";
 
 const validations: ValidatorType[] = [
   { label: 'Account.password.at_least_six_chars', validate: value => value && RegExp(/^.{6,63}$/).test(value) },
@@ -37,14 +39,17 @@ export const PasswordInput: FC<PasswordInputProps> = (props) => {
     <div className="flex flex-col gap-2 mt-2">
       <label htmlFor={ props.id } className='font-bold'
              data-testid={ `${ props.id }-label` }>{ i10n(props.title as string) }{ props.required ? ' *' : '' }</label>
-      <InputText id={ props.id }
-                 type='password'
-                 defaultValue={ field.value || props.value }
-                 required={ props.required }
-                 pattern={ props.pattern }
-                 data-testid={ `${ props.id }-input` }
-                 invalid={ field.touched ? errors.length > 0 : undefined }
-                 onChange={ onChange }/>
+      <IconField iconPosition='left' className='[&.p-icon-field>.p-inputtext]:w-full'>
+        <InputIcon className={ 'pi pi-lock' }/>
+        <InputText id={ props.id }
+                   type='password'
+                   defaultValue={ field.value || props.value }
+                   required={ props.required }
+                   pattern={ props.pattern }
+                   data-testid={ `${ props.id }-input` }
+                   invalid={ field.touched ? errors.length > 0 : undefined }
+                   onChange={ onChange }/>
+      </IconField>
     </div>
 
     <div className='py-4 px-2 my-3 mx-2 rounded-sm border-solid border-[1px] border-separator shadow-xl'>

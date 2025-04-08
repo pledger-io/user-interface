@@ -1,4 +1,5 @@
 import { Card } from "primereact/card";
+import { Panel } from "primereact/panel";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import BalanceComponent from "../../components/balance.component";
@@ -59,10 +60,10 @@ function IncomeExpenseView() {
       </Card>
 
       <div className='block md:flex gap-2'>
-        <Card title={ i10n('page.reports.default.balances') } className='flex-1'>
+        <Panel header={ i10n('page.reports.default.balances') } className='flex-1 h-fit'>
           <AccountBalance year={ parsedYear } currency={ currency }/>
-        </Card>
-        <Card title={ i10n('page.reports.default.title') } className='flex-1'>
+        </Panel>
+        <Panel header={ i10n('page.reports.default.title') } className='flex-1 h-fit'>
           <table className='w-full [&>tbody>tr>td]:pb-2'>
             <tbody>
             <tr>
@@ -88,16 +89,16 @@ function IncomeExpenseView() {
             </tr>
             </tbody>
           </table>
-        </Card>
+        </Panel>
       </div>
 
       <div className='block md:flex gap-2'>
-        <Card title={ i10n('page.reports.default.top.debit') } className='flex-1'>
+        <Panel header={ i10n('page.reports.default.top.debit') } className='flex-1 h-fit'>
           <TopAccountTable year={ parsedYear } type={ 'debit' }/>
-        </Card>
-        <Card title={ i10n('page.reports.default.top.credit') } className='flex-1'>
+        </Panel>
+        <Panel header={ i10n('page.reports.default.top.credit') } className='flex-1 h-fit'>
           <TopAccountTable year={ parsedYear } type={ 'creditor' }/>
-        </Card>
+        </Panel>
       </div>
     </div>
   </>

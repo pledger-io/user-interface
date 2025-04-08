@@ -35,16 +35,15 @@ const LoginCard = () => {
     { label: 'Deutsch', icon: () => <Flag language='de'/>, command: () => setLocale('de') }
   ]
 
-  const header = <div className='p-4 flex justify-between relative overflow-hidden'>
-    <span className="text-2xl font-bold text-primary">Pledger.io</span>
+  const header = <div className='p-4 flex justify-between items-center relative overflow-hidden bg-gray-700/20 border-b-gray-500/20 border-b-1'>
+    <span/>
+    <span className="text-2xl font-bold text-blue-800/70">Pledger.io</span>
     <Menu model={ languageMenu } popup ref={ configMenu }/>
     <button type='button' className="cursor-pointer z-10 p-2 hover:bg-gray-100 rounded-full transition-all"
             onClick={ (e) => configMenu?.current?.toggle(e) }
             role='button'>
       <Icon path={ mdiWeb } size={ 1 }/>
     </button>
-    <img src='/ui/images/login-bg.png' className='z-[0] opacity-60 absolute left-0 right-0 top-0 bottom-0'
-         alt='background'/>
   </div>
 
   const onSubmit = (entity: LoginForm) =>
@@ -84,7 +83,6 @@ const LoginCard = () => {
                     autocomplete='username'
                     type='text'
                     icon='user'
-                    className='[&>.p-icon-field>.p-inputtext]:w-full'
                     required/>
 
         <Input.Text id='password'
@@ -92,7 +90,6 @@ const LoginCard = () => {
                     autocomplete='current-password'
                     icon='lock'
                     type='password'
-                    className='[&>.p-icon-field>.p-inputtext]:w-full'
                     required/>
 
         <div className='flex pt-3 items-stretch'>
@@ -107,7 +104,7 @@ const LoginCard = () => {
       </Divider>
 
       <div className='flex justify-center mt-3'>
-        <Link to={ `/register?from=${ from }` } className='p-button p-button-outlined p-button-lg flex gap-2 items-center w-full justify-center'>
+        <Link to={ `/register?from=${ from }` } className='p-button p-button-info p-button-outlined p-button-lg flex gap-2 items-center w-full justify-center'>
           <Icon path={ mdiAccountPlus } size={ 1 }/>
           { i10n('page.login.register') }
         </Link>

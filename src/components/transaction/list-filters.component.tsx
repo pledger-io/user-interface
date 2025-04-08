@@ -18,10 +18,11 @@ export type TransactionFilter = {
 export type FilterChangeHandler = (_: TransactionFilter) => void
 
 type TransactionFiltersProps = {
-  onChange: FilterChangeHandler
+  onChange: FilterChangeHandler,
+  activeFilter: TransactionFilter
 }
 
-const TransactionFilters: FC<TransactionFiltersProps> = ({ onChange }) => {
+const TransactionFilters: FC<TransactionFiltersProps> = ({ onChange, activeFilter }) => {
 
   const onSubmit = (form: any) => {
     const filter = {
@@ -63,6 +64,7 @@ const TransactionFilters: FC<TransactionFiltersProps> = ({ onChange }) => {
                            title='page.transactions.filter.category'/>
           <Entity.Budget id='budget'
                          className='flex-1'
+                         value={ activeFilter.budget }
                          title='page.transactions.filter.budget'/>
           <div className='flex-1'/>
         </div>

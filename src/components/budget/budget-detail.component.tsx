@@ -3,6 +3,7 @@ import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { Dialog } from "primereact/dialog";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router";
 import { i10n } from "../../config/prime-locale";
 import { useNotification } from "../../context/notification-context";
 import BudgetRepository, { ComputedExpense } from "../../core/repositories/budget.repository";
@@ -33,7 +34,8 @@ const AddExpenseDialog = ({ onChange }: { onChange: () => void }) => {
   }
 
   return <>
-    <Button severity='success' label='page.budget.group.action.addExpense' icon={ mdiPlus } onClick={ () => setVisible(true) }/>
+    <Button severity='success' label='page.budget.group.action.addExpense' icon={ mdiPlus }
+            onClick={ () => setVisible(true) }/>
     <Dialog header={ i10n('page.title.budget.group.expense.add') }
             visible={ visible }
             onHide={ () => setVisible(false) }>
@@ -51,8 +53,8 @@ const AddExpenseDialog = ({ onChange }: { onChange: () => void }) => {
           <Button type='reset'
                   text
                   onClick={ () => setVisible(false) }
-                  label='common.action.cancel' icon={ mdiCancel } />
-          <SubmitButton label='common.action.save' icon={ mdiContentSave } />
+                  label='common.action.cancel' icon={ mdiCancel }/>
+          <SubmitButton label='common.action.save' icon={ mdiContentSave }/>
         </div>
       </Form>
 
@@ -129,20 +131,33 @@ const BudgetDetailComponent = ({ range }: { range: DateRange }) => {
     </div>
 
     <DataTable value={ budget.expenses } loading={ !budget }>
-      <Column field='name' header={ i10n('Budget.Expense.name') }/>
+      <Column field='name' header={ i10n('Budget.Expense.name') }
+              body={ (expense: BudgetExpense) => budgetName(range.year(), range.month(), expense) }/>
       <Column body={ (expense: BudgetExpense) => <MoneyComponent money={ expense.expected }/> }
               header={ i10n('page.budget.group.expense.budgeted') }/>
-      <Column body={ (expense: BudgetExpense) => <MoneyComponent money={ getComputedExpense(expense.id)?.computed.spent }/> }
-              header={ i10n('page.budget.group.expense.spent') }/>
-      <Column body={ (expense: BudgetExpense) => <MoneyComponent money={ getComputedExpense(expense.id)?.computed.left }/> }
-              header={ i10n('page.budget.group.expense.left') }/>
+      <Column
+        body={ (expense: BudgetExpense) => <MoneyComponent money={ getComputedExpense(expense.id)?.computed.spent }/> }
+        header={ i10n('page.budget.group.expense.spent') }/>
+      <Column
+        body={ (expense: BudgetExpense) => <MoneyComponent money={ getComputedExpense(expense.id)?.computed.left }/> }
+        header={ i10n('page.budget.group.expense.left') }/>
       <Column className='w-[2rem]'
-              body={ (expense: BudgetExpense) => <ExpenseActions expense={ expense } callback={ loadBudget } /> }/>
+              body={ (expense: BudgetExpense) => <ExpenseActions expense={ expense } callback={ loadBudget }/> }/>
     </DataTable>
 
     <div className='flex justify-end mt-4'>
       { currentMonth.isSame(range.year(), range.month()) && <AddExpenseDialog onChange={ loadBudget }/> }
     </div>
+  </>
+}
+
+const budgetName = (year: number, month: number, expense: BudgetExpense) => {
+  return <>
+    <Link to={ `/transactions/income-expense/${ year }/${ month }?budget=${ expense.id }` }
+          title='go to transactions'
+          className='text-blue-500 hover:underline hover:text-blue-700'>
+      { expense.name }
+    </Link>
   </>
 }
 
