@@ -22,9 +22,14 @@ const BudgetOverview = () => {
   }, [navigate])
 
   const onDateChange = ({ year, month }: any) => navigate(`/budgets/${ year }/${ month }`)
-  const header = () => <div className='px-2 py-2 border-b-1 text-center font-bold'>
-    { i10n('page.budget.overview.title') }
-  </div>
+  const header = () =>
+    <div className='px-2 py-2 border-b-1 font-bold flex gap-1 justify-center'>
+      { i10n('page.budget.overview.title') }:
+      <span className='flex gap-1'>
+        <span>{ i10n(`common.month.${ range.month() }`) }</span>
+          { range.year() }
+      </span>
+    </div>
 
   return <>
     <BreadCrumbs>

@@ -1,61 +1,54 @@
-import { mdiCancel, mdiContentSave, mdiPencil } from "@mdi/js";
-import Icon from "@mdi/react";
+import { mdiCancel, mdiContentSave, mdiPlus } from "@mdi/js";
 import { Dialog } from "primereact/dialog";
 import React, { useState } from "react";
 import { i10n } from "../../config/prime-locale";
 import { useNotification } from "../../context/notification-context";
 import BudgetRepository from "../../core/repositories/budget.repository";
-import { BudgetExpense } from "../../types/types";
 import { Form, Input, SubmitButton } from "../form";
 import { Button } from "../layout/button";
 
-const ExpenseActions = ({ expense, callback }: { expense: BudgetExpense, callback: () => void }) => {
+export const AddExpenseDialog = ({ onChange }: { onChange: () => void }) => {
   const [visible, setVisible] = useState(false)
-  const { warning, httpError } = useNotification()
+  const { success, httpError } = useNotification()
 
   const onSubmit = (values: any) => {
     const patch = {
-      expenseId: expense.id,
-      name: expense.name,
+      name: values.name,
       amount: values.expected
     }
 
     BudgetRepository.expense(patch)
-      .then(() => warning('page.budget.group.expense.updated'))
+      .then(() => success('page.budget.group.expense.added'))
       .then(() => setVisible(false))
-      .then(callback)
+      .then(onChange)
       .catch(httpError)
   }
 
   return <>
-    <a onClick={ () => setVisible(true) } className='cursor-pointer text-gray-400 hover:text-gray-600 with-tooltip' data-pr-tooltip={ i10n('common.action.edit') }>
-      <Icon path={ mdiPencil } size={ .8 } />
-    </a>
-
-    <Dialog header={ i10n('common.action.edit') }
+    <Button severity='success' label='page.budget.group.action.addExpense' icon={ mdiPlus }
+            onClick={ () => setVisible(true) }/>
+    <Dialog header={ i10n('page.title.budget.group.expense.add') }
             visible={ visible }
             onHide={ () => setVisible(false) }>
       <Form entity='Budget' onSubmit={ onSubmit }>
         <Input.Text id='name'
+                    required
                     type='text'
-                    readonly
-                    value={ expense.name }
                     title='Budget.Expense.name'/>
         <Input.Amount id='expected'
-                      min={ 0 }
-                      value={ expense.expected }
+                      min={ 1 }
+                      required
                       title='page.budget.group.expense.budgeted'/>
 
         <div className='flex justify-end gap-2 mt-2'>
           <Button type='reset'
                   text
                   onClick={ () => setVisible(false) }
-                  label='common.action.cancel' icon={ mdiCancel } />
-          <SubmitButton label='common.action.save' icon={ mdiContentSave } />
+                  label='common.action.cancel' icon={ mdiCancel }/>
+          <SubmitButton label='common.action.save' icon={ mdiContentSave }/>
         </div>
       </Form>
+
     </Dialog>
   </>
 }
-
-export default ExpenseActions

@@ -40,6 +40,9 @@ const routes = {
     {
       id: 'transfers',
       path: 'transfers',
+      loader: () => ({
+        searchCommand: {} as TransactionFilter
+      }),
       children: [
         {
           id: 'transfer-list',
