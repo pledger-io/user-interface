@@ -8,8 +8,6 @@ import BreadCrumbs from "../../components/breadcrumb/breadcrumb.component";
 import { Currency, Year } from "../../components/layout/dropdown";
 import MonthlyPerBudgetTableComponent from "../../components/reports/budget-monthly/monthly-table.component";
 import MonthlyTableComponent from "../../components/reports/budget-monthly/table.component";
-import YearlyBudgetExpenseComponent from "../../components/reports/budget-monthly/yearly-budget-expense.component";
-import YearlyBudgetIncomeComponent from "../../components/reports/budget-monthly/yearly-budget-income.component";
 import BudgetYearlyExpense from "../../components/reports/budget-monthly/yearly-expense.component";
 import YearlyIncomeGraphComponent from "../../components/reports/budget-monthly/yearly-income.component";
 import { i10n } from "../../config/prime-locale";
@@ -54,15 +52,6 @@ const BudgetReportView = () => {
         <Year year={ range.year() } onChange={ year => onDateChanged({ newYear: `${ year }` }) }/>
       </BreadCrumbMenu>
     </BreadCrumbs>
-
-    <div className='mx-2 my-4 block md:flex gap-2 justify-normal'>
-      <Panel header={ i10n('page.reports.budget.incomePercent') } className='flex-1 overflow-hidden'>
-        <YearlyBudgetIncomeComponent range={ range } budgets={ budgets }/>
-      </Panel>
-      <Panel header={ i10n('page.reports.budget.expensePercent') } className='flex-1 overflow-hidden'>
-        <YearlyBudgetExpenseComponent range={ range } budgets={ budgets }/>
-      </Panel>
-    </div>
 
     <div className='mx-2 my-4 block md:flex gap-2'>
       <Panel header={ i10n('page.reports.budget.incomePercent') } className='flex-1'>

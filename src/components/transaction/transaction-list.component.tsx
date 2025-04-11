@@ -21,7 +21,7 @@ type TransactionOverviewProps = {
 const TransactionOverview: FC<TransactionOverviewProps> = ({ range, transfers }) => {
   const [page] = useQueryParam({ key: 'page', initialValue: "1" })
   const [searchCommand, setSearchCommand] = useState<TransactionFilter>(() => {
-    const { searchCommand } = useRouteLoaderData('income-expense')
+    const { searchCommand } = useRouteLoaderData(transfers ? 'transfers' : 'income-expense')
     return searchCommand
   })
   const [transactions, setTransactions] = useState<DailyTransactions | undefined>(undefined)

@@ -1,66 +1,18 @@
-import { mdiCancel, mdiContentSave, mdiPlus } from "@mdi/js";
-import { Column } from "primereact/column";
-import { DataTable } from "primereact/datatable";
-import { Dialog } from "primereact/dialog";
+import { DataView } from "primereact/dataview";
+import { Divider } from "primereact/divider";
+import { ProgressBar } from "primereact/progressbar";
+import { Tooltip } from "primereact/tooltip";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router";
 import { i10n } from "../../config/prime-locale";
-import { useNotification } from "../../context/notification-context";
 import BudgetRepository, { ComputedExpense } from "../../core/repositories/budget.repository";
 import DateRange from "../../types/date-range.type";
 import { Budget, BudgetExpense, Identifier } from "../../types/types";
-import { Form, Input, SubmitButton } from "../form";
+import DateComponent from "../format/date.component";
 import MoneyComponent from "../format/money.component";
-import { Button } from "../layout/button";
 import Loading from "../layout/loading.component";
-import Translation from "../localization/translation.component";
+import { AddExpenseDialog } from "./add-expense-dialog";
 import ExpenseActions from "./budget-expense-actions.component";
-
-const AddExpenseDialog = ({ onChange }: { onChange: () => void }) => {
-  const [visible, setVisible] = useState(false)
-  const { success, httpError } = useNotification()
-
-  const onSubmit = (values: any) => {
-    const patch = {
-      name: values.name,
-      amount: values.expected
-    }
-
-    BudgetRepository.expense(patch)
-      .then(() => success('page.budget.group.expense.added'))
-      .then(() => setVisible(false))
-      .then(onChange)
-      .catch(httpError)
-  }
-
-  return <>
-    <Button severity='success' label='page.budget.group.action.addExpense' icon={ mdiPlus }
-            onClick={ () => setVisible(true) }/>
-    <Dialog header={ i10n('page.title.budget.group.expense.add') }
-            visible={ visible }
-            onHide={ () => setVisible(false) }>
-      <Form entity='Budget' onSubmit={ onSubmit }>
-        <Input.Text id='name'
-                    required
-                    type='text'
-                    title='Budget.Expense.name'/>
-        <Input.Amount id='expected'
-                      min={ 1 }
-                      required
-                      title='page.budget.group.expense.budgeted'/>
-
-        <div className='flex justify-end gap-2 mt-2'>
-          <Button type='reset'
-                  text
-                  onClick={ () => setVisible(false) }
-                  label='common.action.cancel' icon={ mdiCancel }/>
-          <SubmitButton label='common.action.save' icon={ mdiContentSave }/>
-        </div>
-      </Form>
-
-    </Dialog>
-  </>
-}
+import { BudgetSummary } from "./budget-summary";
 
 const currentMonth = {
   year: new Date().getFullYear(),
@@ -106,59 +58,51 @@ const BudgetDetailComponent = ({ range }: { range: DateRange }) => {
 
   if (!budget) return <Loading/>
   return <>
-    <div className='flex flex-col mb-4'>
-      <div className='flex'>
-        <Translation label='page.budget.group.budget.period'
-                     className='font-bold mr-2 min-w-[10em] after:content-[":"]'/>
-        <span className='flex gap-1'>
-          <span>{ i10n(`common.month.${ range.month() }`) }</span>
-          { range.year() }
-        </span>
-      </div>
-      <div className='flex'>
-        <Translation label='Budget.expectedIncome'
-                     className='font-bold mr-2 min-w-[10em] after:content-[":"]'/>
+    <BudgetSummary budget={ budget } computedExpenses={ computedExpenses?.map(r => r.computed) || [] }/>
 
-        <MoneyComponent money={ budget?.income }/>
-      </div>
-      <div className='flex'>
-        <Translation label='page.budget.group.expectedExpenses'
-                     className='font-bold mr-2 min-w-[10em] after:content-[":"]'/>
-        <MoneyComponent money={ budget?.expenses
-          .map(expense => expense.expected)
-          .reduce((l, r) => l + r, 0) }/>
-      </div>
-    </div>
-
-    <DataTable value={ budget.expenses } loading={ !budget }>
-      <Column field='name' header={ i10n('Budget.Expense.name') }
-              body={ (expense: BudgetExpense) => budgetName(range.year(), range.month(), expense) }/>
-      <Column body={ (expense: BudgetExpense) => <MoneyComponent money={ expense.expected }/> }
-              header={ i10n('page.budget.group.expense.budgeted') }/>
-      <Column
-        body={ (expense: BudgetExpense) => <MoneyComponent money={ getComputedExpense(expense.id)?.computed.spent }/> }
-        header={ i10n('page.budget.group.expense.spent') }/>
-      <Column
-        body={ (expense: BudgetExpense) => <MoneyComponent money={ getComputedExpense(expense.id)?.computed.left }/> }
-        header={ i10n('page.budget.group.expense.left') }/>
-      <Column className='w-[2rem]'
-              body={ (expense: BudgetExpense) => <ExpenseActions expense={ expense } callback={ loadBudget }/> }/>
-    </DataTable>
+    <Divider/>
 
     <div className='flex justify-end mt-4'>
       { currentMonth.isSame(range.year(), range.month()) && <AddExpenseDialog onChange={ loadBudget }/> }
     </div>
+
+    <DataView value={ budget.expenses }
+              itemTemplate={ expense => budgetTemplate(budget.period.from, expense, getComputedExpense(expense.id)!, loadBudget) }
+              loading={ !budget || !computedExpenses } />
+
+    <Tooltip target='.with-tooltip' position='bottom' />
   </>
 }
 
-const budgetName = (year: number, month: number, expense: BudgetExpense) => {
-  return <>
-    <Link to={ `/transactions/income-expense/${ year }/${ month }?budget=${ expense.id }` }
-          title='go to transactions'
-          className='text-blue-500 hover:underline hover:text-blue-700'>
-      { expense.name }
-    </Link>
-  </>
+const budgetTemplate = (startDate: string, expense: BudgetExpense, computed: MappedExpense, loadBudgets: () => void) => {
+  const percentage = (Math.abs(computed?.computed.spent || 0) / expense.expected * 100)
+  return <div className='flex flex-col gap-1 my-2'>
+    <div className='flex justify-between items-center gap-1'>
+      <div className='flex items-center gap-2 flex-1'>
+        <strong>{ expense.name }</strong>
+        <span className='text-muted text-sm'>(<MoneyComponent money={ expense.expected } className='!text-muted'/> per month)</span>
+      </div>
+      <div className='flex items-center gap-1'>
+        <span data-pr-tooltip={ i10n('page.budget.group.expense.spent') } className='with-tooltip'>
+          <MoneyComponent money={ Math.abs(computed?.computed.spent || 0) } className='!text-muted' />
+        </span>
+        /
+        <span data-pr-tooltip={ i10n('page.budget.group.expense.budgeted') } className='with-tooltip'>
+          <MoneyComponent money={ expense.expected } className='!text-muted'/>
+        </span>
+      </div>
+      <div>
+        <ExpenseActions expense={ expense } callback={ loadBudgets }/>
+      </div>
+    </div>
+    <ProgressBar className='!h-7 !rounded-lg !bg-gray-200 [&>.p-progressbar-value]:rounded-xl opacity-70'
+                 showValue={ false }
+                 color={ percentage >= 95 ? '#950915' : 'oklch(0.64 0.18 145.23)' }
+                 value={ percentage.toFixed(0) } />
+    <div className='text-sm text-gray-500'>
+      Since: <DateComponent date={ startDate }/>
+    </div>
+  </div>
 }
 
 export default BudgetDetailComponent
