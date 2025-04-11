@@ -13,7 +13,7 @@ const _ = (props: ButtonProps) => {
   const label = props.label ? i10n(props.label) : ' '
   return <Button { ...props }
                  label={ label as string }
-                 className={ `flex gap-1 items-center justify-center ${ className }` }
+                 className={ `inline-flex gap-1 items-center justify-center ${ className }` }
                  icon={ () => <Icon path={ props.icon as any } size={ 1 }/> }/>
 }
 

@@ -58,26 +58,31 @@ const TransactionItem: FC<TransactionItemProps> = ({ transaction, className = ''
   }
 
   if (deleted) return null
-  return <div className={ `${ className } flex content-between gap-3 px-2 mb-1 pb-1 border-b-[1px] border-gray-100 last:border-none` }>
-        <span className='text-[.9em] md:text-[1em] md:w-[12em] w-[6em]'>
-            { transaction.metadata.budget &&
-              <div className='text-gray-400'>
-                { transaction.metadata.budget }
-              </div> }
-          { transaction.metadata.category &&
-            <div className='text-gray-400 text-[.8em]'>
-              { transaction.metadata.category }
-            </div> }
-        </span>
-        { transaction.metadata.failureCode &&
-          <span className='text-warning my-auto'>
-                    <Icon path={ mdiAlert } size={ 1 }/>
-                </span> }
-        <span className='flex flex-col flex-1'>
-          <span className='text-[.9em] md:text-[1em]'>{ transaction.description }</span>
-          { transaction.metadata.tags && <div className='flex gap-1'> { transaction.metadata.tags.map(t => <Tag key={ t } label={ t }/>) } </div> }
-        <span className='text-gray-400 flex items-center gap-0.5'>
-          { !account && <>
+  return <div className={ `${ className } flex content-between gap-3 px-2 border-b-[1px] my-0.5 border-gray-100 last:border-none` }>
+    <span className='text-[.9em] md:text-[1em] md:w-[12em] w-[6em]'>
+        { transaction.metadata.budget &&
+          <div className='text-gray-400'>
+            { transaction.metadata.budget }
+          </div>
+        }
+        { transaction.metadata.category &&
+          <div className='text-gray-400 text-[.8em]'>
+            { transaction.metadata.category }
+          </div>
+        }
+    </span>
+    { transaction.metadata.failureCode &&
+      <span className='text-warning my-auto'>
+        <Icon path={ mdiAlert } size={ 1 }/>
+      </span>
+    }
+    <span className='flex flex-col flex-1'>
+      <span className='text-[.9em] md:text-[1em]'>{ transaction.description }</span>
+      { transaction.metadata.tags &&
+        <div className='flex gap-1'> { transaction.metadata.tags.map(t => <Tag key={ t } label={ t }/>) } </div>
+      }
+      <span className='text-gray-400 flex items-center gap-0.5'>
+        { !account && <>
             <NavLink
               to={ `${ Resolver.Account.resolveUrl(sourceAccount) }/transactions/${ transactionDate.getFullYear() }/${ transactionDate.getMonth() + 1 }` }
               className='text-gray-400 hover:text-blue-400'>
@@ -89,32 +94,31 @@ const TransactionItem: FC<TransactionItemProps> = ({ transaction, className = ''
               className='text-gray-400 hover:text-blue-400'>
               { otherAccount.name }
             </NavLink>
-          </> }
-          { account && <>
+          </>
+        }
+        { account && <>
             <NavLink
               to={ `${ Resolver.Account.resolveUrl(otherAccount) }/transactions/${ transactionDate.getFullYear() }/${ transactionDate.getMonth() + 1 }` }
               className='text-gray-400 hover:text-blue-400'>
               { otherAccount.name }
             </NavLink>
-          </> }
-          { transaction.metadata.contract &&
-            <div className='hidden md:flex text-cyan-500 text-[.8em] pt-[.2em] ml-4 gap-0.5 items-center'
-                 title='Contract'>
-              <Icon path={ mdiFileSign } size={ .52 }/>
-              <span>{ transaction.metadata.contract }</span>
-            </div>
-          }
-        </span>
-        <span className='text-[.9em] *:inline-block'>
-            <ActionExpander transaction={ transaction } onDelete={ onDelete }/>
+          </>
+        }
+        { transaction.metadata.contract &&
+          <div className='hidden md:flex text-cyan-500 text-[.8em] pt-[.2em] ml-4 gap-0.5 items-center'
+               title='Contract'>
+            <Icon path={ mdiFileSign } size={ .52 }/>
+            <span>{ transaction.metadata.contract }</span>
+          </div>
+        }
         </span>
     </span>
-    <span className=''><MoneyComponent money={ amount } currency={ transaction.currency }/></span>
+    <div><ActionExpander transaction={ transaction } onDelete={ onDelete }/></div>
+    <span className='w-[5rem] text-right'><MoneyComponent money={ amount } currency={ transaction.currency }/></span>
   </div>
 }
 
 const ActionExpander = ({ transaction, onDelete }: { transaction: Transaction, onDelete: () => void }) => {
-  const [expanded, setExpanded] = useState(false)
   const navigate = useNavigate()
   const scheduleDialogRef = useRef<DialogOptions>(null)
   const splitDialogRef = useRef<DialogOptions>(null)
@@ -126,45 +130,39 @@ const ActionExpander = ({ transaction, onDelete }: { transaction: Transaction, o
     })
   }
 
-  return <div className='flex! justify-start items-stretch gap-2'>
-    { !expanded &&
-      <a onClick={ () => setExpanded(true)} className='text-muted cursor-pointer opacity-40'>
-        <Icon path={ mdiChevronRightBox } size={ 1 } />
-      </a>
-    }
-    <div
-      className={ `${ expanded ? '*:inline-flex opacity-100' : 'max-w-0 overflow-hidden opacity-0' } flex h-[2em] gap-1 transition ease-in-out duration-300` }>
-      <ScheduleTransactionDialog ref={ scheduleDialogRef } transaction={ transaction } />
-      <Button label='page.transaction.action.recurring'
-              outlined
+  return <div className='inline-block'>
+      <ScheduleTransactionDialog ref={ scheduleDialogRef } transaction={ transaction }/>
+      <Button tooltip={ i10n('page.transaction.action.recurring') }
+              text
+              size='small'
               severity='secondary'
+              className='opacity-30 hover:opacity-100'
               icon={ mdiCalendarCheck }
               onClick={ () => scheduleDialogRef.current?.open() }/>
       { transaction.split &&
         <>
-          <Button label='page.transaction.action.details'
-                  outlined
+          <Button tooltip={ i10n('page.transaction.action.details') }
+                  text
                   severity='help'
                   icon={ mdiTable }
+                  className='opacity-30 hover:opacity-100'
                   onClick={ () => splitDialogRef.current?.open() }/>
           <TransactionSplitDialog transaction={ transaction } ref={ splitDialogRef }/>
         </>
       }
-      <Button label='common.action.edit'
-              outlined
+      <Button tooltip={ i10n('common.action.edit') }
+              text
+              size='small'
               icon={ mdiSquareEditOutline }
-              onClick={ () => navigate( `${ Resolver.Transaction.resolveUrl(transaction) }/edit`) }/>
-      <Button label='common.action.delete'
-              outlined
+              className='opacity-30 hover:opacity-100'
+              onClick={ () => navigate(`${ Resolver.Transaction.resolveUrl(transaction) }/edit`) }/>
+      <Button tooltip={ i10n('common.action.delete') }
+              text
+              size='small'
               icon={ mdiTrashCanOutline }
               severity='danger'
+              className='opacity-30 hover:opacity-100'
               onClick={ confirmDeleteClick }/>
-    </div>
-    { expanded &&
-      <a onClick={ () => setExpanded(false) } className='text-muted cursor-pointer opacity-40'>
-        <Icon path={ mdiChevronLeftBox } size={ 1 } />
-      </a>
-    }
   </div>
 }
 

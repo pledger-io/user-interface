@@ -52,7 +52,13 @@
         }
 
         &.icon-only {
+            display: inline !important;
+            min-width: auto !important;
+            padding: 0;
             .p-button-label {
+                display: none;
+            }
+            .p-ink {
                 display: none;
             }
         }
