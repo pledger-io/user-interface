@@ -44,7 +44,8 @@ const BudgetYearlyExpense = ({ year, budgets, currencySymbol }: BudgetYearlyExpe
               label: await LocalizationService.get('graph.series.budget.actual'),
               data: expenses.map(({ balance }) => Math.abs(balance)),
               borderColor: '#de7370',
-              backgroundColor: '#de7370'
+              backgroundColor: '#de7370',
+              type: "bar"
             }
           ]
         })

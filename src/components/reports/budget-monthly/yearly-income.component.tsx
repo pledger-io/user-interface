@@ -38,7 +38,8 @@ const YearlyIncomeGraphComponent = ({ year = 1970, budgets, currencySymbol = '' 
               data: data.map(({ balance }) => balance),
               label: await LocalizationService.get('graph.series.budget.actual'),
               borderColor: '#6996b2',
-              backgroundColor: '#6996b2'
+              backgroundColor: '#6996b2',
+              type: 'bar'
             }
           ]
         } as ChartData)
