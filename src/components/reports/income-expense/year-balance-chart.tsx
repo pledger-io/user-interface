@@ -8,7 +8,7 @@ import { DefaultChartConfig, Service } from "../../../config/global-chart-config
 import DateRangeService from "../../../service/date-range.service";
 
 import Loading from "../../layout/loading.component";
-import LocalizationService from "../../../service/localization.service";
+import { i10n } from "../../../config/prime-locale";
 
 type YearBalanceChartProps = {
     year: number,
@@ -39,9 +39,9 @@ const YearBalanceChart = ({ year, currencySymbol, currency } : YearBalanceChartP
                     currency,
                     onlyIncome: true
                 })))
-                .then(async income => {
-                    const incomeLabel = await LocalizationService.get('graph.series.income')
-                    const rollingAverageLabel = await LocalizationService.get('graph.series.income.sma')
+                .then(income => {
+                    const incomeLabel = i10n('graph.series.income')
+                    const rollingAverageLabel = i10n('graph.series.income.sma')
                     resolve([
                         {
                             label: incomeLabel,
@@ -73,9 +73,9 @@ const YearBalanceChart = ({ year, currencySymbol, currency } : YearBalanceChartP
                     currency,
                     onlyIncome: false
                 })))
-                .then(async expense => {
-                    const expenseLabel = await LocalizationService.get('graph.series.expenses')
-                    const rollingAverageLabel = await LocalizationService.get('graph.series.expenses.sma')
+                .then(expense => {
+                    const expenseLabel = i10n('graph.series.expenses')
+                    const rollingAverageLabel = i10n('graph.series.expenses.sma')
 
                     resolve([
                         {

@@ -12,7 +12,6 @@ import { Identifier } from "../../types/types";
 import { Entity, Form, Input, SubmitButton } from "../form";
 import { useInputField } from "../form/input/InputGroup";
 import { Button } from "../layout/button";
-import Translation from "../localization/translation.component";
 
 type ImportConfiguration = TaskVariable & {
   importConfiguration: {
@@ -163,19 +162,19 @@ const ConfigureSettingsComponent = ({ task }: { task: ProcessTask }) => {
         <Input.Toggle id='has-headers'
                       className='ml-[15vw]'
                       value={ configuration.importConfiguration["has-headers"] }/>
-        <Translation label='ImportConfig.Json.headers'/>
+        { i10n('ImportConfig.Json.headers') }
       </div>
       <div className='flex gap-2 items-center'>
         <Input.Toggle id='generateAccounts'
                       className='ml-[15vw]'
                       value={ configuration.generateAccounts }/>
-        <Translation label='ImportConfig.Json.generateAccount'/>
+        { i10n('ImportConfig.Json.generateAccount') }
       </div>
       <div className='flex gap-2 items-center'>
         <Input.Toggle id='applyRules'
                       className='ml-[15vw]'
                       value={ configuration.applyRules }/>
-        <Translation label='ImportConfig.Json.applyRules'/>
+        { i10n('ImportConfig.Json.applyRules') }
       </div>
 
       <div className='flex justify-end'>

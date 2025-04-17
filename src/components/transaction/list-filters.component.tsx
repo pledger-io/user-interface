@@ -4,7 +4,6 @@ import { Identifiable } from "../../types/types";
 import { Entity, Form, Input } from "../form";
 import { mdiFilter } from "@mdi/js";
 import { Button } from "../layout/button";
-import Translation from "../localization/translation.component";
 
 export type TransactionFilter = {
   account?: string,
@@ -71,11 +70,11 @@ const TransactionFilters: FC<TransactionFiltersProps> = ({ onChange, activeFilte
 
         <div className='flex px-2 pb-1 items-center gap-2'>
           <Input.Toggle id='onlyExpense' className='w-8'/>
-          <Translation label='page.transaction.filter.expense' className='flex-auto'/>
+          <span className='flex-auto'>{i10n('page.transaction.filter.expense')}</span>
         </div>
         <div className='flex px-2 items-center gap-2'>
           <Input.Toggle id='onlyIncome' className='w-8'/>
-          <Translation label='page.transaction.filter.income' className='flex-auto'/>
+          <span className='flex-auto'>{i10n('page.transaction.filter.income')}</span>
         </div>
 
         <div className='flex justify-center mb-4'>

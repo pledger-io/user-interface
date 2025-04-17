@@ -6,7 +6,6 @@ import BreadCrumbItem from "../../../components/breadcrumb/breadcrumb-item.compo
 import BreadCrumbs from "../../../components/breadcrumb/breadcrumb.component";
 import { Entity, Form, Input, SubmitButton } from '../../../components/form'
 import { BackButton } from "../../../components/layout/button";
-import Translation from "../../../components/localization/translation.component";
 import { i10n } from "../../../config/prime-locale";
 import { useNotification } from "../../../context/notification-context";
 import AccountRepository from "../../../core/repositories/account-repository";
@@ -154,8 +153,7 @@ const LiabilityForm = () => {
             </div>
           </fieldset>
           <fieldset className='flex-1'>
-            <legend className='font-bold text-xl underline'><Translation
-              label='page.account.accounts.liability.opening'/></legend>
+            <legend className='font-bold text-xl underline'>{ i10n('page.account.accounts.liability.opening') }</legend>
 
             <Input.Date id='startDate'
                         readonly={ id !== undefined }
@@ -173,8 +171,7 @@ const LiabilityForm = () => {
           </fieldset>
         </div>
         <fieldset className='my-4'>
-          <legend className='font-bold text-xl underline'><Translation
-            label='page.account.accounts.accountdetails'/></legend>
+          <legend className='font-bold text-xl underline'>{ i10n('page.account.accounts.accountdetails') }</legend>
 
           <Input.Text id='number'
                       type='text'

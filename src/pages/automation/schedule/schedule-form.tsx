@@ -1,5 +1,6 @@
 import { mdiCancel, mdiContentSave } from "@mdi/js";
 import { Card } from "primereact/card";
+import { Message } from "primereact/message";
 import React, { useState } from "react";
 import { useLoaderData, useNavigate, useParams } from "react-router";
 import BreadCrumbItem from "../../../components/breadcrumb/breadcrumb-item.component";
@@ -7,7 +8,6 @@ import BreadCrumbs from "../../../components/breadcrumb/breadcrumb.component";
 import { Form, Input, SubmitButton } from "../../../components/form";
 import { BackButton } from "../../../components/layout/button";
 import Loading from "../../../components/layout/loading.component";
-import Message from "../../../components/layout/message.component";
 import { i10n } from "../../../config/prime-locale";
 import { useNotification } from "../../../context/notification-context";
 import { TransactionScheduleRepository } from "../../../core/RestAPI";
@@ -50,7 +50,7 @@ const TransactionScheduleForm = () => {
     <Card header={ header } className='my-4 mx-2'>
       <Form entity='ScheduledTransaction' onSubmit={ onSubmit }>
 
-        { exception && <Message message={ exception } variant='warning'/> }
+        { exception && <Message text={ exception } severity='warn'/> }
 
         <fieldset>
           <legend className='font-bold text-xl underline'>{ i10n('page.budget.schedule.edit.meta') }</legend>

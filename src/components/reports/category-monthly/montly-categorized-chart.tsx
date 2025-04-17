@@ -8,7 +8,7 @@ import { DefaultChartConfig, Service } from "../../../config/global-chart-config
 import StatisticalRepository from "../../../core/repositories/statistical-repository";
 import DateRangeService from "../../../service/date-range.service";
 
-import LocalizationService from "../../../service/localization.service";
+import { i10n } from "../../../config/prime-locale";
 
 import Loading from "../../layout/loading.component";
 
@@ -35,9 +35,9 @@ const CategoryGraph = ({ categories, year, currencySymbol }: CategoryGraphProps)
                 onlyIncome: true,
                 categories: categories
             })
-                .then(async income => {
+                .then(income => {
                     resolve([{
-                        label: await LocalizationService.get('graph.series.income'),
+                        label: i10n('graph.series.income'),
                         backgroundColor: '#7fc6a5',
                         // @ts-expect-error mapping issues
                         data: income.map(({ date, amount }) => ({ x: date, y: amount }))
@@ -51,9 +51,9 @@ const CategoryGraph = ({ categories, year, currencySymbol }: CategoryGraphProps)
                 onlyIncome: false,
                 categories: categories
             })
-                .then(async income => {
+                .then(income => {
                     resolve([{
-                        label: await LocalizationService.get('graph.series.expenses'),
+                        label: i10n('graph.series.expenses'),
                         backgroundColor: '#dc3545',
                         // @ts-expect-error mapping issues
                         data: income.map(({ date, amount }) => ({ x: date, y: Math.abs(amount) }))

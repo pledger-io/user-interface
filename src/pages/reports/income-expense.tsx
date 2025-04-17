@@ -8,10 +8,8 @@ import BreadCrumbMenu from "../../components/breadcrumb/breadcrumb-menu.componen
 import BreadCrumbs from "../../components/breadcrumb/breadcrumb.component";
 import CurrencyDropdown from "../../components/layout/dropdown/currency.component";
 import YearDropdown from "../../components/layout/dropdown/year.component";
-import Translation from "../../components/localization/translation.component";
 import AccountBalance from "../../components/reports/income-expense/account-balance";
 import TopAccountTable from "../../components/reports/income-expense/top-account";
-
 import YearBalanceChart from "../../components/reports/income-expense/year-balance-chart";
 import { i10n } from "../../config/prime-locale";
 import { CurrencyRepository } from "../../core/RestAPI";
@@ -67,21 +65,21 @@ function IncomeExpenseView() {
           <table className='w-full [&>tbody>tr>td]:pb-2'>
             <tbody>
             <tr>
-              <td><Translation label='common.in'/></td>
+              <td>{ i10n('common.in') }</td>
               <td className='text-right w-28'>
                 <BalanceComponent currency={ currency }
                                   income={ true }
                                   range={ range }/></td>
             </tr>
             <tr>
-              <td><Translation label='common.out'/></td>
+              <td>{ i10n('common.out') }</td>
               <td className='text-right'>
                 <BalanceComponent currency={ currency }
                                   income={ false }
                                   range={ range }/></td>
             </tr>
             <tr>
-              <td className='text-right italic font-bold'><Translation label='common.difference'/>:</td>
+              <td className='text-right italic font-bold'>{ i10n('common.difference') }:</td>
               <td className='text-right border-t-2'>
                 <BalanceComponent currency={ currency }
                                   range={ range }/>

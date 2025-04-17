@@ -2,7 +2,7 @@ import { ChartData } from "chart.js";
 import React, { useEffect, useState } from "react";
 import StatisticalRepository from "../../../core/repositories/statistical-repository";
 import DateRangeService from "../../../service/date-range.service";
-import LocalizationService from "../../../service/localization.service";
+import { i10n } from "../../../config/prime-locale";
 import { Budget, BudgetExpense } from "../../../types/types";
 import Loading from "../../layout/loading.component";
 import BudgetChart from "./chart.component";
@@ -30,18 +30,18 @@ const BudgetYearlyExpense = ({ year, budgets, currencySymbol }: BudgetYearlyExpe
         onlyIncome: false,
         expenses: uniqueExpenses.map(id => ({ id }))
       })))
-      .then(async expenses => {
+      .then(expenses => {
         setChartData({
           labels: DateRangeService.months(year).map(m => m.startDate()),
           datasets: [
             {
-              label: await LocalizationService.get('graph.series.budget.expected'),
+              label: i10n('graph.series.budget.expected'),
               data: budgets.map(({ expenses }) => expenses.reduce((total, { expected }) => total + expected, 0)),
               borderColor: '#f0c77c',
               backgroundColor: '#f0c77c'
             },
             {
-              label: await LocalizationService.get('graph.series.budget.actual'),
+              label: i10n('graph.series.budget.actual'),
               data: expenses.map(({ balance }) => Math.abs(balance)),
               borderColor: '#de7370',
               backgroundColor: '#de7370',

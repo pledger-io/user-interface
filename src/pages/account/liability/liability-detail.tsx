@@ -11,7 +11,6 @@ import BreadCrumbs from "../../../components/breadcrumb/breadcrumb.component";
 import MoneyComponent from "../../../components/format/money.component";
 import PercentageComponent from "../../../components/format/percentage.component";
 import Loading from "../../../components/layout/loading.component";
-import Translation from "../../../components/localization/translation.component";
 import { i10n } from "../../../config/prime-locale";
 import { Resolver } from "../../../core";
 import AccountRepository from "../../../core/repositories/account-repository";
@@ -57,8 +56,7 @@ const LiabilityDetailView = () => {
           </div>
           <div className="flex">
             <label className='min-w-[8em]'>{ i10n('Account.interestPeriodicity') }:</label>
-            <span className='flex-1'><Translation
-              label={ `Periodicity.${ account.interest?.periodicity }` }/></span>
+            <span className='flex-1'>{ i10n(`Periodicity.${ account.interest?.periodicity }`) }</span>
           </div>
           <div className="flex">
             <label className='min-w-[8em]'>{ i10n('page.accounts.liability.startBalance') }:</label>

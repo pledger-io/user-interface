@@ -7,9 +7,6 @@ import StatisticalRepository from "../../core/repositories/statistical-repositor
 import { DefaultChartConfig, Service as ChartService } from "../../config/global-chart-config";
 import BudgetRepository from "../../core/repositories/budget.repository";
 import RestAPI from "../../core/repositories/rest-api";
-
-import LocalizationService from "../../service/localization.service";
-
 import Loading from "../layout/loading.component";
 import { Panel } from "primereact/panel";
 import { i10n } from "../../config/prime-locale";
@@ -28,12 +25,12 @@ function BudgetBalance({ range } : Readonly<{ range : DateRange }>) {
                     labels: expenses.map(({ name }) => name),
                     datasets: [
                         {
-                            label: await LocalizationService.get('graph.series.budget.expected'),
+                            label: i10n('graph.series.budget.expected'),
                             data: expenses.map(expense => expense.expected * 12 * percentageOfYear),
                             backgroundColor: '#9abdd2'
                         },
                         {
-                            label: await LocalizationService.get('graph.series.budget.actual'),
+                            label: i10n('graph.series.budget.actual'),
                             data: (await Promise.all(
                                 expenses.map((expense : BudgetExpense) =>
                                     StatisticalRepository.balance({

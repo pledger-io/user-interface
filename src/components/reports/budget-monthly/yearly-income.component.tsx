@@ -2,7 +2,7 @@ import { ChartData } from "chart.js";
 import React, { useEffect, useState } from "react";
 import StatisticalRepository from "../../../core/repositories/statistical-repository";
 import DateRangeService from "../../../service/date-range.service";
-import LocalizationService from "../../../service/localization.service";
+import { i10n } from "../../../config/prime-locale";
 import { Budget } from "../../../types/types";
 import Loading from "../../layout/loading.component";
 import BudgetChart from "./chart.component";
@@ -24,19 +24,19 @@ const YearlyIncomeGraphComponent = ({ year = 1970, budgets, currencySymbol = '' 
         dateRange: m.toBackend(),
         onlyIncome: true
       })))
-      .then(async data => {
+      .then(data => {
         setChartData({
           labels: DateRangeService.months(year).map(m => m.startDate()),
           datasets: [
             {
-              label: await LocalizationService.get('graph.series.budget.expected'),
+              label: i10n('graph.series.budget.expected'),
               data: budgets.map(({ income }) => income),
               borderColor: '#f0c77c',
               backgroundColor: '#f0c77c'
             },
             {
               data: data.map(({ balance }) => balance),
-              label: await LocalizationService.get('graph.series.budget.actual'),
+              label: i10n('graph.series.budget.actual'),
               borderColor: '#6996b2',
               backgroundColor: '#6996b2',
               type: 'bar'

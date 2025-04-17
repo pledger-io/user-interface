@@ -1,4 +1,5 @@
-import useLocalStorage from "../../hooks/local-storage.hook";
+import { useLocalStorage } from "primereact/hooks";
+import { SupportedLocales } from "../../config/prime-locale";
 
 type FormattedPercentageProps = {
     percentage?: number,
@@ -6,7 +7,7 @@ type FormattedPercentageProps = {
 }
 
 const _ = ({ percentage = 0, decimals = 2 }: FormattedPercentageProps) => {
-    const [language] = useLocalStorage('language', 'en');
+    const [language] = useLocalStorage<SupportedLocales>('en', 'language');
     const formatter = new Intl.NumberFormat(language as string, {
         minimumFractionDigits: decimals,
         maximumFractionDigits: decimals

@@ -8,10 +8,10 @@ import useQueryParam from "../../hooks/query-param.hook";
 import MoneyComponent from "../format/money.component";
 import { Button } from "../layout/button";
 import Loading from "../layout/loading.component";
-import Translation from "../localization/translation.component";
 import TransactionItem from "../transaction/transaction-detail.component";
 import { Paginator } from "primereact/paginator";
 import { useNavigate } from "react-router";
+import { i10n } from "../../config/prime-locale";
 
 const ImportJobTransactionComponent = ({ slug }: { slug: string }) => {
   const [page] = useQueryParam({ key: 'page', initialValue: "1" })
@@ -36,7 +36,7 @@ const ImportJobTransactionComponent = ({ slug }: { slug: string }) => {
 
   return <>
     <h1 className='mt-5 mb-2 text-lg font-bold'>
-      <Translation label='page.title.transactions.overview'/>
+      { i10n('page.title.transactions.overview') }
     </h1>
 
     <div className='flex justify-end mb-4'>
@@ -51,7 +51,7 @@ const ImportJobTransactionComponent = ({ slug }: { slug: string }) => {
     { !isLoaded && <Loading/> }
 
     { isLoaded && !hasTransactions && <div className='text-center text-gray-500'>
-      <Translation label='common.overview.noresults'/>
+      { i10n('common.overview.noresults') }
     </div> }
 
     { transactions && Object.keys(transactions).sort().reverse().map(year => {

@@ -2,8 +2,6 @@ import {
   mdiAlert,
   mdiArrowRight,
   mdiCalendarCheck,
-  mdiChevronLeftBox,
-  mdiChevronRightBox,
   mdiFileSign,
   mdiSquareEditOutline,
   mdiTable,

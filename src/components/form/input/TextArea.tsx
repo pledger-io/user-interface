@@ -8,6 +8,7 @@ import { InputTextarea } from "primereact/inputtextarea";
 type TextAreaProps = FieldType & {
     title?: string,
     help?: string,
+  disabled?: boolean,
     onChange?: (_: any) => void
 }
 
@@ -25,8 +26,10 @@ export const TextArea: FC<TextAreaProps> = (props) => {
             <InputTextarea id={ props.id }
                            name={ props.id }
                            required={ props.required }
+                           disabled={ props.disabled }
                            onChange={ onChange }
                            onBlur={ onBlur }
+                           rows={ 5 }
                            defaultValue={ field.value || props.value }/>
         </div>
 

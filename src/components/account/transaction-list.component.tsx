@@ -2,6 +2,7 @@ import { Paginator } from "primereact/paginator";
 import React, { FC, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import TransactionItem from "../../components/transaction/transaction-detail.component";
+import { i10n } from "../../config/prime-locale";
 import { Resolver } from "../../core";
 import AccountRepository from "../../core/repositories/account-repository";
 import useQueryParam from "../../hooks/query-param.hook";
@@ -10,7 +11,6 @@ import DateRange from "../../types/date-range.type";
 import { Account, Pagination } from "../../types/types";
 import MoneyComponent from "../format/money.component";
 import Loading from "../layout/loading.component";
-import Translation from "../localization/translation.component";
 
 type TransactionListProps = {
   account: Account,
@@ -43,7 +43,7 @@ const TransactionList: FC<TransactionListProps> = ({ account, range }) => {
     { !isLoaded && <Loading/> }
 
     { isLoaded && !hasTransactions && <div className='text-center text-gray-500'>
-      <Translation label='common.overview.noresults'/>
+      { i10n('common.overview.noresults') }
     </div> }
 
     { hasTransactions && Object.keys(transactions).map(key => {
@@ -62,12 +62,12 @@ const TransactionList: FC<TransactionListProps> = ({ account, range }) => {
             { date.getDate() }
           </div>
           <div className='flex flex-col'>
-                        <span className='text-[.9em] text-neutral-500'>
-                            { `${ date.getFullYear() }.${ date.getMonth() }` }
-                        </span>
+            <span className='text-[.9em] text-neutral-500'>
+                { `${ date.getFullYear() }.${ date.getMonth() }` }
+            </span>
             <span className='rounded-sm bg-gray-300 py-0.5 text-[.75em] text-white text-center font-bold'>
-                            <Translation label={ `common.weekday.${ date.getDay() }` }/>
-                        </span>
+              { i10n(`common.weekday.${ date.getDay() }`) }
+            </span>
           </div>
           <div className='flex-1 justify-end flex gap-16 font-bold'>
             { income > 0 && <MoneyComponent money={ income }/> }

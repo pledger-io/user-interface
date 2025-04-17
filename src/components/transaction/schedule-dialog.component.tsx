@@ -1,7 +1,7 @@
 import { mdiCancel, mdiContentSave } from "@mdi/js";
 import { Dialog } from "primereact/dialog";
+import { Message } from "primereact/message";
 import React, { Attributes, FC, Ref, useImperativeHandle, useState } from "react";
-import Message from "../../components/layout/message.component";
 import { i10n } from "../../config/prime-locale";
 import { useNotification } from "../../context/notification-context";
 
@@ -59,7 +59,7 @@ const ScheduleTransactionDialog: FC<ScheduleTransactionDialogProps> = ({ ref, tr
             className='max-w-[35rem]'
             visible={ visible }>
       <Form onSubmit={ onSubmit } entity='ScheduledTransaction'>
-        <Message label='page.budget.schedule.explained' variant='info'/>
+        <Message text={ i10n('page.budget.schedule.explained') } severity='info'/>
 
         <fieldset>
           <legend className='font-bold text-xl underline'>{ i10n('popup.schedule.transaction.info') }</legend>

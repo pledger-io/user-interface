@@ -1,16 +1,16 @@
+import { Card } from "primereact/card";
+import { Message } from "primereact/message";
+import React from "react";
 import { useRouteLoaderData } from "react-router";
 import BreadCrumbItem from "../../components/breadcrumb/breadcrumb-item.component";
 import BreadCrumbs from "../../components/breadcrumb/breadcrumb.component";
-import Translation from "../../components/localization/translation.component";
-import Message from "../../components/layout/message.component";
 import { Form, Input, SubmitButton } from "../../components/form";
+import { i10n } from "../../config/prime-locale";
 import { useNotification } from "../../context/notification-context";
 import RestAPI from "../../core/repositories/rest-api";
 import { mdiContentSave } from "@mdi/js";
 import ProfileRepository from "../../core/repositories/profile.repository";
-
 import NavigationComponent from "../../components/profile/navigation.component";
-import Card from "../../components/layout/card.component";
 import { RouterAuthentication } from "../../types/router-types";
 
 const ProfileThemeView = () => {
@@ -37,9 +37,9 @@ const ProfileThemeView = () => {
           <NavigationComponent/>
         </div>
         <div className='flex-1'>
-          <h1 className='font-bold text-lg'><Translation label='page.user.profile.theme'/></h1>
+          <h1 className='font-bold text-lg'>{ i10n('page.user.profile.theme') }</h1>
 
-          <Message label='page.user.profile.theme.explain' variant='info'/>
+          <Message text={ i10n('page.user.theme.explain') } severity='info'/>
 
           <Form entity='Profile' onSubmit={ onSubmit }>
             <Input.Radio id='theme'

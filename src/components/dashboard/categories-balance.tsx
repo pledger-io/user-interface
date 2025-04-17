@@ -7,8 +7,6 @@ import StatisticalRepository from "../../core/repositories/statistical-repositor
 import { Chart } from "react-chartjs-2";
 import { DefaultChartConfig, Service as ChartService } from "../../config/global-chart-config";
 import RestAPI from "../../core/repositories/rest-api";
-
-import LocalizationService from "../../service/localization.service";
 import Loading from "../layout/loading.component";
 import { Panel } from "primereact/panel";
 import { i10n } from "../../config/prime-locale";
@@ -22,7 +20,7 @@ const CategoriesBalance = ({ range } : { range: DateRange }) => {
                 setCategorySeries({
                     labels: categories.map(c => c.label),
                     datasets: [{
-                        label: await LocalizationService.get('graph.series.category'),
+                        label: i10n('graph.series.category'),
                         backgroundColor: '#9abdd2',
                         data: (await Promise.all(
                             categories.map(c =>

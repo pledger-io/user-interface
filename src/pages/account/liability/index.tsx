@@ -13,7 +13,6 @@ import BreadCrumbItem from "../../../components/breadcrumb/breadcrumb-item.compo
 import BreadCrumbs from "../../../components/breadcrumb/breadcrumb.component";
 import DateComponent from "../../../components/format/date.component";
 import PercentageComponent from "../../../components/format/percentage.component";
-import Translation from "../../../components/localization/translation.component";
 import { i10n } from "../../../config/prime-locale";
 import { Attachment } from "../../../core";
 import AccountRepository from "../../../core/repositories/account-repository";
@@ -33,7 +32,7 @@ const accountNameColumn = (account: Account) => <>
 
 const percentageColumn = (account: Account) => <>
   <PercentageComponent percentage={ account.interest.interest } decimals={ 2 }/>
-  (<Translation label={ `Periodicity.${ account.interest?.periodicity }` }/>)
+  ({ i10n(`Periodicity.${ account.interest?.periodicity }`) })
 </>
 
 const LiabilityOverview = () => {

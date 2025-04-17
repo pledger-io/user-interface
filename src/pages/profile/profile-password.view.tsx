@@ -1,7 +1,7 @@
+import { Message } from "primereact/message";
 import React from "react";
 import { Form, Input, SubmitButton } from "../../components/form";
-import Message from "../../components/layout/message.component";
-import Translation from "../../components/localization/translation.component";
+import { i10n } from "../../config/prime-locale";
 import { useNotification } from "../../context/notification-context";
 import ProfileRepository from "../../core/repositories/profile.repository";
 
@@ -15,9 +15,9 @@ const ProfilePasswordView = () => {
   }
 
   return <>
-    <h1 className='font-bold text-lg'><Translation label='page.header.user.password'/></h1>
+    <h1 className='font-bold text-lg'>{ i10n('page.header.user.password') }</h1>
 
-    <Message label='page.user.password.change.explain' variant='info'/>
+    <Message text={ i10n('page.user.password.change.explain') } severity='info'/>
 
     <Form entity='Profile' onSubmit={ onSubmit }>
       <div className='max-w-[30em] mx-auto'>

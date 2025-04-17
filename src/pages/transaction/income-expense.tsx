@@ -8,6 +8,7 @@ import BreadCrumbMenu from "../../components/breadcrumb/breadcrumb-menu.componen
 import BreadCrumbs from "../../components/breadcrumb/breadcrumb.component";
 import CategorizedPieChart from "../../components/graphs/categorized-pie-chart";
 import { YearMonth } from "../../components/layout/dropdown";
+import { GenerateTransaction } from "../../components/transaction/generate-transaction.component";
 import NewTransactionDialog from "../../components/transaction/transaction-dialog.component";
 import TransactionOverview from "../../components/transaction/transaction-list.component";
 import { i10n } from "../../config/prime-locale";
@@ -58,6 +59,7 @@ const TransactionGlobalView = () => {
 
     <Panel header={ i10n('page.title.transactions.overview') } className='mx-2'>
       <div className='flex justify-end gap-2'>
+        <GenerateTransaction />
         <NewTransactionDialog type='debit' icon={ mdiCashPlus } variant='success'/>
         <NewTransactionDialog type='credit' icon={ mdiCashMinus } variant='warning'/>
       </div>

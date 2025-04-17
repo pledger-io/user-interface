@@ -1,10 +1,8 @@
 import PropTypes from 'prop-types';
 import React from "react";
 import { mdiDelete, mdiTablePlus } from "@mdi/js";
-
 import { FormContext } from "../Form";
 import { Button } from "../../layout/button";
-import Translation from "../../localization/translation.component";
 import { Resolver } from "../../../core";
 import { i10n } from "../../../config/prime-locale.js";
 

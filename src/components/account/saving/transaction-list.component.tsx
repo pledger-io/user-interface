@@ -1,6 +1,7 @@
 import { mdiChevronDown, mdiChevronRight } from "@mdi/js";
 import Icon from "@mdi/react";
 import React, { FC, useEffect, useState } from "react";
+import { i10n } from "../../../config/prime-locale";
 import AccountRepository from "../../../core/repositories/account-repository";
 import useQueryParam from "../../../hooks/query-param.hook";
 import { groupTransactionByYear, YearlyTransactions } from "../../../reducers";
@@ -8,7 +9,6 @@ import DateRangeService from "../../../service/date-range.service";
 import { Account, Transaction } from "../../../types/types";
 import MoneyComponent from "../../format/money.component";
 import Loading from "../../layout/loading.component";
-import Translation from "../../localization/translation.component";
 import TransactionItem from "../../transaction/transaction-detail.component";
 
 const TransactionListComponent = ({ account }: { account: Account }) => {
@@ -39,7 +39,7 @@ const TransactionListComponent = ({ account }: { account: Account }) => {
 
     { isLoaded && !hasTransactions &&
       <div className='text-center text-gray-500'>
-        <Translation label='common.overview.noresults'/>
+        { i10n('common.overview.noresults') }
       </div>
     }
 

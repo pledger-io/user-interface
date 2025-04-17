@@ -2,7 +2,7 @@ import { mdiContentSave } from "@mdi/js";
 import React, { useEffect, useState } from "react";
 import { Form, Input, SubmitButton } from "../../components/form";
 import Loading from "../../components/layout/loading.component";
-import Translation from "../../components/localization/translation.component";
+import { i10n } from "../../config/prime-locale";
 import { useNotification } from "../../context/notification-context";
 import ProfileRepository from "../../core/repositories/profile.repository";
 import RestAPI from "../../core/repositories/rest-api";
@@ -28,7 +28,7 @@ const ProfileCurrencyView = () => {
   }
 
   return <>
-    <h1 className='font-bold text-lg'><Translation label='page.user.profile.currency'/></h1>
+    <h1 className='font-bold text-lg'>{ i10n('page.user.profile.currency') }</h1>
 
     { !currencies && <Loading/> }
     { currencies && <Form entity='Profile' onSubmit={ onSubmit }>

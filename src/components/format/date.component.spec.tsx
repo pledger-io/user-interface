@@ -3,7 +3,7 @@ import DateComponent from "./date.component";
 
 describe(DateComponent, () => {
     test("Dutch date correct format", () => {
-        localStorage.setItem("language", "nl")
+        localStorage.setItem("language", '"nl"')
         const { container } = render(<DateComponent date={'2020-01-02'} />)
 
         const element = container.querySelector('.FormattedDate')
@@ -11,7 +11,7 @@ describe(DateComponent, () => {
     })
 
     test("English date correct formate", () => {
-        localStorage.setItem("language", "en")
+        localStorage.setItem("language", '"en"')
         const { container } = render(<DateComponent date={'2020-01-02'} />)
 
         const element = container.querySelector('.FormattedDate')

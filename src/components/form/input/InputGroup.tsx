@@ -1,5 +1,5 @@
 import React, { ChangeEventHandler, FC, ReactNode, use, useEffect } from "react";
-import Translation from "../../localization/translation.component";
+import { i10n } from "../../../config/prime-locale";
 
 import { FormContext } from "../Form";
 import { FieldType, FormContextType, InputBlurFunc, InputChangeFunc } from "../form-types";
@@ -24,7 +24,7 @@ export const InputGroup: FC<InputGroupProps> = ({ id, title, required = false, v
         { title && (
             <label htmlFor={ id }
                    className={ `max-w-full md-max-w-[15vw] inline-flex items-center ${ required ? 'font-bold' : '' }` }>
-                <Translation label={ title }/>
+                {i10n(title)}
             </label>
         ) }
         <div className={`px-1 md:px-0 md:flex-1 ${ inputClassName }`}>{ children }</div>
@@ -88,7 +88,7 @@ export const InputValidationErrors: FC<InputValidationErrorsProps> = ({ errors, 
     return <>
         { errors.map((error: string) =>
             <small className='text-dark-warning' key={ error }>
-                <Translation label={ `${ formContext.entity }.${ field.id }.${ error }` }/>
+                {i10n(`${ formContext.entity }.${ field.id }.${ error }`)}
             </small>) }
     </>
 }

@@ -10,7 +10,7 @@ describe("Percentage formatter", () => {
         expect(element).toHaveTextContent('34.33%')
     })
     test("Percentage should have , as separator", () => {
-        localStorage.setItem("language", "nl")
+        localStorage.setItem("language", '"nl"')
         const { container } = render(<PercentageComponent decimals={2} percentage={0.34333}/>)
 
         const element = container.querySelector('.Percentage')

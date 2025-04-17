@@ -1,7 +1,6 @@
 import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
 import React, { FC, useEffect, useState } from "react";
 import { i10n } from "../../../config/prime-locale";
-import LocalizationService from "../../../service/localization.service";
 import { FieldType } from "../form-types";
 
 import { useInputField } from "./InputGroup";
@@ -65,7 +64,7 @@ export const SelectOption: FC<SelectOptionProps> = ({ message, value, label }) =
     const [display, setDisplay] = useState('')
 
     useEffect(() => {
-        if (label) LocalizationService.get(label).then(setDisplay)
+        if (label) setDisplay(i10n(label))
     }, [label])
     useEffect(() => {
         if (message) setDisplay(message)

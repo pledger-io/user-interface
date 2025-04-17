@@ -14,7 +14,6 @@ import { AccountRef, Identifier } from "../../types/types";
 import { Entity, Form, Input, SubmitButton } from "../form";
 import MoneyComponent from "../format/money.component";
 import Loading from "../layout/loading.component";
-import Translation from "../localization/translation.component";
 
 type AccountCreated = TaskVariable & {
   value: Identifier
@@ -82,12 +81,12 @@ const _ = ({ task }: { task: ProcessTask }) => {
     </div>
 
     <div className='max-w-[40em] mx-auto grid grid-cols-4 border-[1px] p-2 mb-4'>
-      <div className='col-span-4 text-center font-extrabold'><Translation label='page.transaction.add.details'/></div>
-      <div className='font-bold'><Translation label='page.account.accounts.accountdetails'/>:</div>
+      <div className='col-span-4 text-center font-extrabold'>{ i10n('page.transaction.add.details') }</div>
+      <div className='font-bold'>{ i10n('page.account.accounts.accountdetails') }:</div>
       <div className='col-span-3'>{ transaction.opposingName }</div>
-      <div className='font-bold'><Translation label='Transaction.description'/>:</div>
+      <div className='font-bold'>{ i10n('Transaction.description') }:</div>
       <div className='col-span-3'>{ transaction.description }</div>
-      <div className='font-bold'><Translation label='Transaction.amount'/>:</div>
+      <div className='font-bold'>{ i10n('Transaction.amount') }:</div>
       <div className='col-span-3'><MoneyComponent money={ transaction.amount }/></div>
     </div>
 
@@ -126,11 +125,11 @@ const _ = ({ task }: { task: ProcessTask }) => {
         <div className='flex mb-2'>
           <span className='flex-auto max-w-full md-max-w-[15vw]'/>
           <span className='flex-3 flex gap-3'>
-                        <Input.Toggle id='ownAccount'
-                                      onChange={ () => setAssetAccount(!assetAccount) }
-                                      value={ true }/>
-                        <Translation label='page.nav.accounts.accounts'/>
-                    </span>
+            <Input.Toggle id='ownAccount'
+                          onChange={ () => setAssetAccount(!assetAccount) }
+                          value={ true }/>
+            { i10n('page.nav.accounts.accounts') }
+          </span>
         </div>
 
         { assetAccount && <Entity.AccountType id='type'

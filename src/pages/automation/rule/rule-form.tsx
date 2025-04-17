@@ -1,13 +1,12 @@
 import { mdiCancel, mdiContentSave } from "@mdi/js";
 import { Card } from "primereact/card";
+import { Message } from "primereact/message";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import BreadCrumbItem from "../../../components/breadcrumb/breadcrumb-item.component";
 import BreadCrumbs from "../../../components/breadcrumb/breadcrumb.component";
 import { Form, Input, SubmitButton } from "../../../components/form";
 import { BackButton } from "../../../components/layout/button";
-import Message from "../../../components/layout/message.component";
-import Translation from "../../../components/localization/translation.component";
 import ChangesComponent from "../../../components/transaction/rule/changes.component";
 import ConditionFieldComponent from "../../../components/transaction/rule/conditions.component";
 import { i10n } from "../../../config/prime-locale";
@@ -64,7 +63,7 @@ const RuleForm = () => {
 
     <Card header={ header } className='my-4 mx-2'>
       <Form entity='TransactionRule' onSubmit={ onSubmit }>
-        <Message label='page.settings.rules.help' variant='info'/>
+        <Message text={ i10n('page.settings.rules.help') } severity='info'/>
 
         <fieldset>
           <legend className='font-bold text-xl underline'>{ i10n('page.settings.rules.generic') }</legend>
@@ -80,11 +79,11 @@ const RuleForm = () => {
 
           <div className='flex gap-2 items-center my-2 mx-4'>
             <Input.Toggle id='restrictive' value={ rule?.restrictive }/>
-            <Translation label='TransactionRule.restrictive.explain'/>
+            { i10n('TransactionRule.restrictive.explain') }
           </div>
           <div className='flex gap-2 items-center mx-4'>
             <Input.Toggle id='active' value={ rule?.active }/>
-            <Translation label='TransactionRule.active.explain'/>
+            { i10n('TransactionRule.active.explain') }
           </div>
         </fieldset>
 
