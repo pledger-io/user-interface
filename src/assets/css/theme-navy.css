@@ -1,0 +1,18 @@
+@import 'primereact/resources/themes/saga-blue/theme.css' layer(app.theme);
+
+body {
+    --app-body-background: #c7e0f9;
+    --app-background: #fff;
+    --app-border-color: #192d3e;
+    --app-header-background: #002C51;
+    --app-header-text: #fff;
+    --sidebar-color: #fff;
+    --sidebar-icon-color: #74828e;
+    --sidebar-background: #002C51;
+    --sidebar-title-color: #b7deff;
+    --sidebar-sub-background: #002C51;
+    --card-header-background: #3f8cbf;
+    --card-header-color: #fff;
+    --wizard-step-color: #6c757d;
+    --link-color: #007bff;
+}

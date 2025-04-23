@@ -1,5 +1,4 @@
 import { mdiPlus } from "@mdi/js";
-import Icon from "@mdi/react";
 import { Card } from "primereact/card";
 import { Column } from "primereact/column";
 import { ConfirmDialog } from "primereact/confirmdialog";
@@ -12,6 +11,7 @@ import BalanceComponent from "../../../components/balance.component";
 import BreadCrumbItem from "../../../components/breadcrumb/breadcrumb-item.component";
 import BreadCrumbs from "../../../components/breadcrumb/breadcrumb.component";
 import DateComponent from "../../../components/format/date.component";
+import { Button } from "../../../components/layout/button";
 import { i10n } from "../../../config/prime-locale";
 import { Attachment } from "../../../core";
 import AccountRepository from "../../../core/repositories/account-repository";
@@ -70,11 +70,12 @@ const AccountOverview = () => {
       <ConfirmDialog className='max-w-[25rem]'/>
 
       <Card header={ header } className='my-4 mx-2'>
-        <div className='flex justify-end'>
-          <NavLink to={ './add' }
-                   className='p-button p-button-success p-button-sm !mb-4 gap-1 items-center'>
-            <Icon path={ mdiPlus } size={ .8 }/> { i10n(`page.account.${ type }.add`) }
-          </NavLink>
+        <div className='flex justify-end mb-4'>
+          <Button label={ `page.account.${ type }.add` }
+                  severity='success'
+                  size='small'
+                  onClick={ () => navigate(`./add`) }
+                  icon={ mdiPlus } />
         </div>
 
         <DataTable loading={ !accounts } value={ accounts } size='small'>

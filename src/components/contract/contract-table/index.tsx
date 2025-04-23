@@ -27,7 +27,7 @@ type ContractTableProps = {
 }
 const ContractTable: FC<ContractTableProps> = ({ contracts, onChanges }) => {
 
-  return <DataTable value={ contracts } loading={ !contracts }>
+  return <DataTable value={ contracts } loading={ !contracts } size='small'>
     <Column header={ i10n('Contract.name') }
             body={ contract => <NameColumn contract={ contract }/> }/>
     <Column header={ i10n('Contract.company') }

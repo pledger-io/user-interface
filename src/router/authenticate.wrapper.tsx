@@ -6,6 +6,7 @@ import Loading from "../components/layout/loading.component";
 import Sidebar from "../components/sidebar";
 import { SupportedLocales } from "../config/prime-locale";
 import { NotificationProvider } from "../context/notification-context";
+import { ThemeProvider } from "../context/theme-context";
 import SecurityRepository from "../core/repositories/security-repository";
 
 /**
@@ -36,14 +37,16 @@ export function AuthenticatedComponent() {
 
   return <PrimeReactProvider value={ { ripple: true, locale: locale, cssTransition: true } }>
     <div className='flex'>
-      <NotificationProvider>
-        <Sidebar logoutCallback={ logout } className='w-[218px] min-w-[218px]'/>
-        <main className='h-[100vh] flex flex-col overflow-y-auto flex-grow'>
-          <Suspense fallback={ <SuspenseLoading/> }>
-            <Outlet/>
-          </Suspense>
-        </main>
-      </NotificationProvider>
+      <ThemeProvider>
+        <NotificationProvider>
+          <Sidebar logoutCallback={ logout } className='w-[218px] min-w-[218px]'/>
+          <main className='h-[100vh] flex flex-col overflow-y-auto flex-grow'>
+            <Suspense fallback={ <SuspenseLoading/> }>
+              <Outlet/>
+            </Suspense>
+          </main>
+        </NotificationProvider>
+      </ThemeProvider>
     </div>
   </PrimeReactProvider>
 }

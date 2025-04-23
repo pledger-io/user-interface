@@ -1,61 +1,42 @@
-import { Card } from "primereact/card";
-import { Message } from "primereact/message";
+import { mdiContentSave } from "@mdi/js";
 import React from "react";
 import { useRouteLoaderData } from "react-router";
-import BreadCrumbItem from "../../components/breadcrumb/breadcrumb-item.component";
-import BreadCrumbs from "../../components/breadcrumb/breadcrumb.component";
 import { Form, Input, SubmitButton } from "../../components/form";
 import { i10n } from "../../config/prime-locale";
 import { useNotification } from "../../context/notification-context";
-import RestAPI from "../../core/repositories/rest-api";
-import { mdiContentSave } from "@mdi/js";
+import { Themes, useTheme } from "../../context/theme-context";
 import ProfileRepository from "../../core/repositories/profile.repository";
-import NavigationComponent from "../../components/profile/navigation.component";
+import RestAPI from "../../core/repositories/rest-api";
 import { RouterAuthentication } from "../../types/router-types";
 
 const ProfileThemeView = () => {
-  const authentication: RouterAuthentication | undefined = useRouteLoaderData('authentication')
+  const authentication: RouterAuthentication | undefined = useRouteLoaderData('authenticated')
   const { success, warning } = useNotification()
+  const { setTheme } = useTheme()
 
   const currentTheme = authentication?.user?.theme
   const onSubmit = (form: any) => {
     ProfileRepository.patch({ theme: form.theme })
       .then(() => success('page.user.profile.theme.success'))
-      .then(() => RestAPI.profile())
+      .then(() => RestAPI.profile().then(profile => setTheme(profile.theme)))
       .catch(() => warning('page.user.profile.theme.error'))
   }
 
   return <>
-    <BreadCrumbs>
-      <BreadCrumbItem label='page.title.user.profile'/>
-      <BreadCrumbItem label='page.user.profile.theme'/>
-    </BreadCrumbs>
+    <h1 className='font-bold text-lg mb-4'>{ i10n('page.user.profile.theme') }</h1>
 
-    <Card title='page.title.user.profile'>
-      <div className='flex gap-4'>
-        <div className='w-30'>
-          <NavigationComponent/>
-        </div>
-        <div className='flex-1'>
-          <h1 className='font-bold text-lg'>{ i10n('page.user.profile.theme') }</h1>
+    <Form entity='Profile' onSubmit={ onSubmit }>
+      <Input.Radio id='theme'
+                   options={ [
+                     Themes.dark,
+                     Themes.navy,
+                     Themes.light
+                   ] }
+                   value={ currentTheme }/>
 
-          <Message text={ i10n('page.user.theme.explain') } severity='info'/>
-
-          <Form entity='Profile' onSubmit={ onSubmit }>
-            <Input.Radio id='theme'
-                         options={ [
-                           { value: 'dark', message: 'Dark' },
-                           { value: 'navy', message: 'Navy' },
-                           { value: 'light', message: 'Light' }
-                         ] }
-                         value={ currentTheme }/>
-
-            <SubmitButton label='common.action.save'
-                          icon={ mdiContentSave }/>
-          </Form>
-        </div>
-      </div>
-    </Card>
+      <SubmitButton label='common.action.save'
+                    icon={ mdiContentSave }/>
+    </Form>
   </>
 }
 

@@ -1,6 +1,7 @@
 import { mdiChevronDown, mdiChevronRight } from "@mdi/js";
 import Icon from "@mdi/react";
 import React, { FC, useEffect, useState } from "react";
+import { i10n } from "../../config/prime-locale";
 import AccountRepository from "../../core/repositories/account-repository";
 import useQueryParam from "../../hooks/query-param.hook";
 import { groupTransactionByYear, YearlyTransactions } from "../../reducers";
@@ -25,15 +26,17 @@ const LiabilityTransactionList: FC<LiabilityTransactionListProps> = ({ account, 
     setTransactions(undefined)
     AccountRepository.transactions(account.id, correctedRange, page)
       .then(result => {
-        const transactions = result.content
+        const transactions = (result.content || [])
           .reduce(groupTransactionByYear, {})
-        setTransactions(transactions || [])
+        setTransactions(transactions)
       })
       .catch(console.log)
   }, [page, account, range]);
 
   if (!transactions) return <Loading/>
   return <>
+    { Object.keys(transactions).length === 0 && <div className='text-center text-gray-500'> { i10n('common.overview.noresults') }</div>}
+
     { transactions &&
       Object.keys(transactions)
       .sort((l, r) => l.localeCompare(r))

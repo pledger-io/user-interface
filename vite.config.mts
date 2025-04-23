@@ -9,6 +9,9 @@ export default defineConfig({
         react(),
         tailwindcss()
     ],
+    build: {
+        cssCodeSplit: true,
+    },
     server: {
         proxy: {
             '/api': {

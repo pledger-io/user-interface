@@ -1,14 +1,15 @@
 import { mdiCartPlus, mdiCashPlus, mdiSwapHorizontal } from "@mdi/js";
-import Icon from "@mdi/react";
+import { ConfirmDialog } from "primereact/confirmdialog";
 import { Panel } from "primereact/panel";
 import React, { FC, useEffect, useState } from "react";
-import { NavLink, useNavigate, useParams, useRouteLoaderData } from "react-router";
+import { useNavigate, useParams, useRouteLoaderData } from "react-router";
 import TransactionList from "../../components/account/transaction-list.component";
 import BreadCrumbItem from "../../components/breadcrumb/breadcrumb-item.component";
 import BreadCrumbMenu from "../../components/breadcrumb/breadcrumb-menu.component";
 import BreadCrumbs from "../../components/breadcrumb/breadcrumb.component";
 import BalanceChart from "../../components/graphs/balance-chart";
 import CategorizedPieChart from "../../components/graphs/categorized-pie-chart";
+import { Button } from "../../components/layout/button";
 import { YearMonth } from "../../components/layout/dropdown";
 import Grid from "../../components/layout/grid.component";
 import Loading from "../../components/layout/loading.component";
@@ -16,7 +17,6 @@ import { i10n } from "../../config/prime-locale";
 import { Resolver } from "../../core";
 import DateRangeService from "../../service/date-range.service";
 import { ROUTER_ACCOUNT_KEY, RouterAccount } from "../../types/router-types";
-import { ConfirmDialog } from "primereact/confirmdialog";
 
 const TYPE_MAPPING = {
   expense: 'creditor',
@@ -95,22 +95,25 @@ const AccountDetailView: FC = () => {
       </> }
 
       <Panel header={ i10n('page.title.transactions.overview') }>
-        <div className='flex justify-end gap-2'>
+        <div className='flex justify-end gap-2 mb-4'>
           { (!Resolver.Account.isManaged(account) || Resolver.Account.isCreditor(account)) &&
-            <NavLink to={ `${ Resolver.Account.resolveUrl(account) }/transactions/add/debit` }
-                     className='p-button p-button-success p-button-sm !mb-4 gap-1 items-center'>
-              <Icon path={ mdiCashPlus } size={ .8 }/> { i10n('page.transactions.debit.add') }
-            </NavLink> }
+            <Button icon={ mdiCashPlus }
+                    severity='success'
+                    size='small'
+                    onClick={ () => navigate(`${ Resolver.Account.resolveUrl(account) }/transactions/add/debit`) }
+                    label='page.transactions.debit.add' /> }
           { (!Resolver.Account.isManaged(account) || Resolver.Account.isDebtor(account)) &&
-            <NavLink to={ `${ Resolver.Account.resolveUrl(account) }/transactions/add/credit` }
-                     className='p-button p-button-warning p-button-sm !mb-4 gap-1 items-center'>
-              <Icon path={ mdiCartPlus } size={ .8 }/> { i10n('page.transactions.credit.add') }
-            </NavLink> }
+            <Button icon={ mdiCartPlus }
+                    severity='warning'
+                    size='small'
+                    onClick={ () => navigate(`${ Resolver.Account.resolveUrl(account) }/transactions/add/credit`) }
+                    label='page.transactions.credit.add' /> }
           { !Resolver.Account.isManaged(account) &&
-            <NavLink to={ `${ Resolver.Account.resolveUrl(account) }/transactions/add/transfer` }
-                     className='p-button p-button-primary p-button-sm !mb-4 gap-1 items-center'>
-              <Icon path={ mdiSwapHorizontal } size={ .8 }/> { i10n('page.transactions.transfer.add') }
-            </NavLink> }
+            <Button icon={ mdiSwapHorizontal }
+                    severity='secondary'
+                    size='small'
+                    onClick={ () => navigate(`${ Resolver.Account.resolveUrl(account) }/transactions/add/transfer`) }
+                    label='page.transactions.transfer.add' /> }
         </div>
 
         <TransactionList range={ range } account={ account }/>

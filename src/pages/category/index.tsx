@@ -11,6 +11,7 @@ import BreadCrumbItem from "../../components/breadcrumb/breadcrumb-item.componen
 import BreadCrumbs from "../../components/breadcrumb/breadcrumb.component";
 import { confirmDeleteDialog } from "../../components/confirm-dialog";
 import DateComponent from "../../components/format/date.component";
+import { Button } from "../../components/layout/button";
 import { i10n } from "../../config/prime-locale";
 import { useNotification } from "../../context/notification-context";
 import CategoryRepository from "../../core/repositories/category-repository";
@@ -19,6 +20,7 @@ import { Category, Pagination } from "../../types/types";
 
 const ActionButtons = ({ category, deleteCallback }: { category: Category, deleteCallback: () => void }) => {
   const { success, warning } = useNotification()
+  const navigate = useNavigate()
 
   const confirmDelete = () => {
     confirmDeleteDialog({
@@ -32,12 +34,17 @@ const ActionButtons = ({ category, deleteCallback }: { category: Category, delet
     })
   }
   return <div className='flex gap-0.5 items-center'>
-    <NavLink to={ `${ category.id }/edit` }>
-      <Icon path={ mdiSquareEditOutline } size={ .8 }/>
-    </NavLink>
-    <a onClick={ confirmDelete } className='cursor-pointer text-dark-warning'>
-      <Icon path={ mdiTrashCanOutline } size={ .8 }/>
-    </a>
+    <Button icon={ mdiSquareEditOutline }
+            onClick={ () => navigate(`${ category.id }/edit`) }
+            tooltip={ i10n('common.action.edit') }
+            tooltipOptions={ { position: 'left' } }
+            text />
+    <Button icon={ mdiTrashCanOutline }
+            severity='danger'
+            tooltip={ i10n('common.action.delete') }
+            tooltipOptions={ { position: 'left' } }
+            onClick={ confirmDelete }
+            text />
   </div>
 }
 

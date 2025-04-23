@@ -25,8 +25,8 @@ const NewTransactionDialog: FC<NewTransactionDialogProps> = ({ variant, icon, ty
 
   return <>
     <Button label={ `page.transactions.${ type }.add` }
+            size='small'
             severity={ variant }
-            className='[&>.Translation]:hidden text-xl md:text-sm md:[&>.Translation]:block'
             onClick={ () => setVisible(true) }
             icon={ icon }/>
     <Dialog

@@ -54,6 +54,7 @@ export const GenerateTransaction = () => {
   return <>
     <Button label={ `page.transactions.generate` }
             severity='info'
+            size='small'
             onClick={ () => setVisible(true) }
             icon={ mdiScriptTextOutline }/>
 
