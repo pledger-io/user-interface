@@ -1,5 +1,4 @@
 import { mdiPlus } from "@mdi/js";
-import Icon from "@mdi/react";
 import { Card } from "primereact/card";
 import { Column } from "primereact/column";
 import { ConfirmDialog } from "primereact/confirmdialog";

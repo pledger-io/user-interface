@@ -1,8 +1,8 @@
 import { mdiCartPlus, mdiCashPlus, mdiSwapHorizontal } from "@mdi/js";
-import Icon from "@mdi/react";
+import { ConfirmDialog } from "primereact/confirmdialog";
 import { Panel } from "primereact/panel";
 import React, { FC, useEffect, useState } from "react";
-import { NavLink, useNavigate, useParams, useRouteLoaderData } from "react-router";
+import { useNavigate, useParams, useRouteLoaderData } from "react-router";
 import TransactionList from "../../components/account/transaction-list.component";
 import BreadCrumbItem from "../../components/breadcrumb/breadcrumb-item.component";
 import BreadCrumbMenu from "../../components/breadcrumb/breadcrumb-menu.component";
@@ -17,7 +17,6 @@ import { i10n } from "../../config/prime-locale";
 import { Resolver } from "../../core";
 import DateRangeService from "../../service/date-range.service";
 import { ROUTER_ACCOUNT_KEY, RouterAccount } from "../../types/router-types";
-import { ConfirmDialog } from "primereact/confirmdialog";
 
 const TYPE_MAPPING = {
   expense: 'creditor',
