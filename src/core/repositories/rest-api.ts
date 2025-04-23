@@ -41,10 +41,6 @@ const RestAPI = (() => {
     let userProfile = {}
     function updateProfile(profile: any) {
         userProfile = profile
-
-        document.body.classList.remove('dark', 'navy')
-        document.body.classList.add(profile.theme)
-
         return profile
     }
 

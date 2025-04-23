@@ -3,8 +3,6 @@ import Pledger from './pledger-io';
 import { createRoot } from "react-dom/client";
 import PrimeLocale from "./config/prime-locale";
 
-import './index.css';
-import './assets/css/Theme.scss'
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 

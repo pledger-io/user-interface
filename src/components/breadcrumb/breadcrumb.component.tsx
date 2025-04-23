@@ -31,7 +31,7 @@ const BreadCrumbs = ({ children }: PropsWithChildren) => {
       .map(child => ((child as ReactElement<typeof BreadCrumbMenu>).props as PropsWithChildren).children)
 
   return <>
-    <div className='bg-white flex justify-between'>
+    <div className='bg-[var(--app-background)] flex justify-between'>
       <BreadCrumb model={ breadCrumbElements } className='border-none!' />
 
       <div className='flex items-center gap-2'>

@@ -1,0 +1,153 @@
+@layer base, app.theme, app.icons, app.overrides;
+@import 'tailwindcss';
+@import 'primeicons/primeicons.css' layer(app . icons);
+
+@theme inline {
+  --border-radius: .5rem;
+  --border-radius-sm: .25rem;
+  --color-primary: var(--primary-color);
+  --color-dark-primary: var(--dark-primary-color);
+  --color-secondary: var(--secondary-color);
+  --color-dark-secondary: var(--dark-secondary-color);
+  --color-warning: var(--warning-color);
+  --color-dark-warning: var(--dark-warning-color);
+  --color-success: var(--success-color);
+  --color-dark-success: var(--dark-success-color);
+  --color-info: var(--info-color);
+  --color-dark-info: var(--dark-info-color);
+  --color-header: var(--card-header-background);
+  --color-separator: var(--app-border-color);
+  --color-background: var(--app-background);
+  --color-muted: var(--app-text-muted-color);
+
+  --radius-lg: 0.5rem;
+
+  --text-xs: 0.7rem;
+  --text-sm: 0.8rem;
+  --text-lg: 1.1rem;
+}
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
+
+@layer app.overrides {
+  body {
+    font-size: .875rem;
+  }
+
+  .p-inputtext {
+    padding: 0.45rem .65rem;
+  }
+
+  .p-button {
+    padding: 0.45rem .65rem;
+
+    &.p-button-sm {
+      padding: 0.45rem .65rem;
+    }
+
+    &.icon-only {
+      display: inline !important;
+      min-width: auto !important;
+      padding: 0;
+
+      .p-button-label {
+        display: none;
+      }
+
+      .p-ink {
+        display: none;
+      }
+    }
+  }
+
+  .p-breadcrumb {
+    padding: .8rem;
+  }
+
+  .p-panel {
+    .p-panel-header {
+      padding: 1rem 1.25rem;
+    }
+  }
+
+  .p-menu {
+    .p-menuitem-link {
+      display: inline-flex;
+      gap: 0.25rem;
+
+      padding-top: .35rem;
+      padding-bottom: .35rem;
+    }
+  }
+
+  .p-datatable {
+    .p-datatable-emptymessage td {
+      text-align: center;
+      font-style: italic;
+      color: var(--app-text-muted-color);
+    }
+  }
+
+  .p-datepicker {
+    .p-datepicker-header {
+      .p-datepicker-title {
+        display: flex;
+        gap: 0.25rem;
+      }
+    }
+  }
+
+  .p-datepicker-monthpicker {
+    .p-datepicker-group-container {
+      display: none;
+    }
+  }
+
+  .p-fileupload {
+    .p-fileupload-content {
+      .p-fileupload-row {
+        div[data-pc-section="details"] {
+          text-align: center;
+        }
+
+        .p-fileupload-filename, span[data-pc-section="filesize"] {
+          display: none;
+        }
+
+        div[data-pc-section="actions"] {
+          max-width: 3rem;
+        }
+      }
+    }
+  }
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  background: var(--app-body-background);
+
+  --selectable-hover-color: rgba(0, 0, 0, 0.075);
+}
+
+
+

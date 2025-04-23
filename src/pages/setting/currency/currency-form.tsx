@@ -66,7 +66,7 @@ const _ = () => {
                             maxLength={ 1 }
                             required/>
 
-                <div className='flex justify-end gap-2 mt-2'>
+                <div className='flex justify-end gap-2 mt-4'>
                     <SubmitButton label='common.action.save' icon={ mdiContentSave } />
                     <BackButton key='cancel' label='common.action.cancel' icon={ mdiCancel } />
                 </div>

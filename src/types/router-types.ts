@@ -2,7 +2,7 @@ import { Account, UserProfile } from "./types";
 
 export type RouterAuthentication = {
   user: UserProfile
-}
+} | undefined
 export type RouterAccountType = string | undefined
 export type RouterAccount = Account | undefined
 

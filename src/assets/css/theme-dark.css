@@ -1,0 +1,18 @@
+@import 'primereact/resources/themes/lara-dark-blue/theme.css' layer(app.theme);
+
+body {
+    --app-body-background: rgb(41, 53, 73);
+    --app-background: #374151;
+    --app-border-color: #d3c9c9;
+    --app-header-background: #fff;
+    --app-header-text: #000;
+    --sidebar-color: #fff;
+    --sidebar-icon-color: #74828e;
+    --sidebar-background: #2f353a;
+    --sidebar-title-color: #e4e7ea;
+    --sidebar-sub-background: #3a4046;
+    --card-header-background: #f0f3f5;
+    --card-header-color: #000;
+    --wizard-step-color: #6c757d;
+    --link-color: #007bff;
+}

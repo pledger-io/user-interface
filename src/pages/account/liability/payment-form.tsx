@@ -98,7 +98,7 @@ const LiabilityPayment = () => {
                       id='tags'/>
         </fieldset>
 
-        <div className='flex justify-end gap-2 mt-2'>
+        <div className='flex justify-end gap-2 mt-4'>
           <BackButton label='common.action.cancel' icon={ mdiCancel }/>
           <SubmitButton label='common.action.save' icon={ mdiContentSave }/>
         </div>

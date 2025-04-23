@@ -1,22 +1,23 @@
-import React, { useEffect, useState } from "react";
 import { mdiPlus } from "@mdi/js";
+import { Card } from "primereact/card";
+import { Column } from "primereact/column";
+import { ConfirmDialog } from "primereact/confirmdialog";
+import { DataTable } from "primereact/datatable";
+import React, { useEffect, useState } from "react";
+import { NavLink, useNavigate } from "react-router";
+import OwnAccountMenu from "../../../components/account/own-account-menu";
+import BalanceComponent from "../../../components/balance.component";
+import BreadCrumbItem from "../../../components/breadcrumb/breadcrumb-item.component";
+import BreadCrumbs from "../../../components/breadcrumb/breadcrumb.component";
+import DateComponent from "../../../components/format/date.component";
+import { Button } from "../../../components/layout/button";
+import { i10n } from "../../../config/prime-locale";
 import AccountRepository from "../../../core/repositories/account-repository";
 import { Account } from "../../../types/types";
-import BreadCrumbs from "../../../components/breadcrumb/breadcrumb.component";
-import BreadCrumbItem from "../../../components/breadcrumb/breadcrumb-item.component";
-import { i10n } from "../../../config/prime-locale";
-import { Card } from "primereact/card";
-import { NavLink } from "react-router";
-import Icon from "@mdi/react";
-import { DataTable } from "primereact/datatable";
-import { Column } from "primereact/column";
-import BalanceComponent from "../../../components/balance.component";
-import DateComponent from "../../../components/format/date.component";
-import OwnAccountMenu from "../../../components/account/own-account-menu";
-import { ConfirmDialog } from "primereact/confirmdialog";
 
 const OwnAccountsView = () => {
   const [accounts, setAccounts] = useState<Account[] | undefined>(undefined)
+  const navigate = useNavigate()
 
   const loadAccounts = () => {
     setAccounts(undefined)
@@ -39,11 +40,12 @@ const OwnAccountsView = () => {
     <ConfirmDialog className='max-w-[25rem]'/>
 
     <Card className='my-4 mx-2' header={ header }>
-      <div className='flex justify-end'>
-        <NavLink to={ '/accounts/own/add' } key='add'
-                 className='p-button p-button-success p-button-sm !mb-4 gap-1 items-center'>
-          <Icon path={ mdiPlus } size={ .8 }/> { i10n('page.account.accounts.add') }
-        </NavLink>
+      <div className='flex justify-end mb-4'>
+        <Button label={ `page.account.accounts.add` }
+                severity='success'
+                size='small'
+                onClick={ () => navigate('/accounts/own/add') }
+                icon={ mdiPlus } />
       </div>
 
       <DataTable loading={ !accounts } value={ accounts } size='small'>

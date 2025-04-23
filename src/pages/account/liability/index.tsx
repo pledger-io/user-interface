@@ -13,6 +13,7 @@ import BreadCrumbItem from "../../../components/breadcrumb/breadcrumb-item.compo
 import BreadCrumbs from "../../../components/breadcrumb/breadcrumb.component";
 import DateComponent from "../../../components/format/date.component";
 import PercentageComponent from "../../../components/format/percentage.component";
+import { Button } from "../../../components/layout/button";
 import { i10n } from "../../../config/prime-locale";
 import { Attachment } from "../../../core";
 import AccountRepository from "../../../core/repositories/account-repository";
@@ -68,11 +69,12 @@ const LiabilityOverview = () => {
       <ConfirmDialog className='max-w-[25rem]'/>
 
       <Card header={ header } className='my-4 mx-2'>
-        <div className='flex justify-end'>
-          <NavLink to={ './add' }
-                   className='p-button p-button-success p-button-sm !mb-4 gap-1 items-center'>
-            <Icon path={ mdiPlus } size={ .8 }/> { i10n('page.title.accounts.liabilities.add') }
-          </NavLink>
+        <div className='flex justify-end mb-4'>
+          <Button label={ `page.title.accounts.liabilities.add` }
+                  severity='success'
+                  size='small'
+                  onClick={ () => navigate('/accounts/liability/add') }
+                  icon={ mdiPlus } />
         </div>
 
         <DataTable value={ accounts } size='small' loading={ !accounts }>
