@@ -75,7 +75,7 @@ describe('CategoryInput', () => {
     fireEvent.change(input, { target: { value: 'Selected Category' } })
 
     await waitFor(() => expect(mockedAxios.get).toHaveBeenCalledWith('categories/auto-complete?token=Selected Category', {}))
-    await waitFor(() => fireEvent.click(getByTestId('category-input-create')))
+    await waitFor(() => fireEvent.click(getByTestId('autocomplete-input-create')))
 
     await waitFor(() => {
       expect(mockProps.onChange).toHaveBeenCalledWith(

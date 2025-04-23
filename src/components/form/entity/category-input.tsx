@@ -1,6 +1,4 @@
-import { mdiPlus } from "@mdi/js";
-import Icon from "@mdi/react";
-import { AutoComplete, AutoCompleteChangeEvent } from "primereact/autocomplete";
+import { AutoComplete } from "primereact/autocomplete";
 import React, { useRef } from "react";
 import { i10n } from "../../../config/prime-locale";
 import CategoryRepository from "../../../core/repositories/category-repository";
@@ -8,6 +6,7 @@ import restApi from "../../../core/repositories/rest-api";
 import { Category, Identifiable } from "../../../types/types";
 import { FieldType } from "../form-types";
 import { InputValidationErrors, useInputField } from "../input/InputGroup";
+import { autoCompleteChangeHandler, autoCompleteFooter } from "./auto-complete-helpers";
 
 type CategoryInputProps = FieldType & {
   inputOnly?: boolean,
@@ -47,13 +46,6 @@ export const CategoryInput = (props: CategoryInputProps) => {
     restApi.get<Category[]>(`categories/auto-complete?token=${ query }`)
       .then(categories => setFoundCategories(categories.map(mapCategoryToAutocomplete)))
   }
-  const onChangeHandler = (e: AutoCompleteChangeEvent) => {
-    onChange({
-      currentTarget: {
-        value: e.value
-      }
-    })
-  }
 
   const onCreate = () => {
     const label = (autoCompleteRef.current?.getInput() as any).value
@@ -67,17 +59,6 @@ export const CategoryInput = (props: CategoryInputProps) => {
 
           autoCompleteRef.current?.hide()
         })
-  }
-
-  const createFooter = () => {
-    return <>
-      <div className='bg-gray-500/30 py-0.5 text-center cursor-pointer' onClick={ onCreate } data-testid='category-input-create'>
-        <span className='mx-auto inline-flex'>
-          <Icon path={mdiPlus} size={1}/>
-          { i10n('page.settings.categories.add') }
-        </span>
-      </div>
-    </>
   }
 
   if (!field) return props.id
@@ -96,12 +77,12 @@ export const CategoryInput = (props: CategoryInputProps) => {
                     showEmptyMessage={ true }
                     emptyMessage={ i10n('common.overview.noresults') }
                     invalid={ field.touched ? errors.length > 0 : undefined }
-                    value={ field.value || props.value }
+                    value={ field.value }
                     suggestions={ foundCategories }
-                    onChange={ onChangeHandler }
+                    onChange={ autoCompleteChangeHandler(onChange) }
                     itemTemplate={ category => CategoryAutocompleteRow(category) }
                     selectedItemTemplate={ category => category.name }
-                    panelFooterTemplate={ !props.inputOnly ? createFooter : undefined }
+                    panelFooterTemplate={ !props.inputOnly ? autoCompleteFooter(onCreate, 'page.settings.categories.add') : undefined }
                     completeMethod={ event => autoComplete(event.query) }/>
 
       { field.touched && <InputValidationErrors field={ field } errors={ errors }/> }
