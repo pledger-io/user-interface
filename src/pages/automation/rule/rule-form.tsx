@@ -63,7 +63,7 @@ const RuleForm = () => {
 
     <Card header={ header } className='my-4 mx-2'>
       <Form entity='TransactionRule' onSubmit={ onSubmit }>
-        <Message text={ i10n('page.settings.rules.help') } severity='info'/>
+        <Message text={ i10n('page.settings.rules.help') } severity='info' className='my-4 w-full opacity-80'/>
 
         <fieldset>
           <legend className='font-bold text-xl underline'>{ i10n('page.settings.rules.generic') }</legend>

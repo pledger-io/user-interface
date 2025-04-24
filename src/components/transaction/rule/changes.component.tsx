@@ -60,6 +60,7 @@ const ChangesComponent = (props: any) => {
 
     <Button label='page.settings.rules.change.add'
             type='button'
+            size='small'
             severity='secondary'
             onClick={ onAddChange }
             icon={ mdiPlusBox }/>

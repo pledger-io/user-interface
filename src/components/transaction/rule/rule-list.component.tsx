@@ -88,7 +88,7 @@ const RuleListComponent = ({ group }: { group: string }) => {
       .then(rules => setRules(rules.sort((a, b) => a.sort - b.sort)))
   }, [group])
 
-  return <DataTable value={ rules } loading={ !rules }>
+  return <DataTable value={ rules } loading={ !rules } size='small'>
     <Column field='name' header={ i10n('TransactionRule.name') }/>
     <Column body={ rule => conditionList(rule.conditions) } header={ i10n('TransactionRule.conditions') }/>
     <Column body={ rule => changeList(rule.changes) } header={ i10n('TransactionRule.changes') }/>

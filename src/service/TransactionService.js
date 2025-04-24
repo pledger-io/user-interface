@@ -1,30 +1,6 @@
-import AccountRepository from "../core/repositories/account-repository";
 import { TransactionRepository } from "../core/RestAPI";
 
 export const TransactionService = {
-    fetchAccount: ({ id }) => {
-        return AccountRepository.get(id)
-    },
-
-    fetchTransaction: ({ id, transactionId }) => {
-        if (isNaN(transactionId)) {
-            return new Promise(resolve => resolve());
-        }
-
-        return TransactionRepository.get(id, transactionId)
-            .then(transaction => {
-                return {
-                    ...transaction,
-                    metadata: {
-                        contract: transaction.metadata.contract ? { id: -1, name: transaction.metadata.contract } : undefined,
-                        category: transaction.metadata.category ? { id: -1, name: transaction.metadata.category } : undefined,
-                        budget: transaction.metadata.budget ? { id: -1, name: transaction.metadata.budget } : undefined,
-                        tags: transaction.metadata.tags
-                    }
-                }
-            })
-    },
-
     persist: (account, entity, navigate, id = NaN, success, warning) => {
         const transaction = {
             description: entity.description,

@@ -89,7 +89,7 @@ const RuleGroupComponent: FC<{ group: RuleGroup, index: number, size: number, ca
           <span onClick={ () => editGroupDialogRef.current?.open() }>
           <Icon path={ mdiPencilOutline } size={ .75 }
                 title={ i10n('common.action.edit') }
-                className='cursor-pointer text-muted opacity-50 hover:opacity-70'/>
+                className='cursor-pointer text-muted opacity-20 hover:opacity-70'/>
         </span>
         </h1>
         <div>

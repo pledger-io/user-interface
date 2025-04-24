@@ -65,7 +65,7 @@ export const AccountInput: FC<AccountInputProps> = (props) => {
     <div className={ `flex flex-col gap-2 mt-2 ${ props.className || '' }` }>
       <label htmlFor={ props.id }
              className='font-bold'
-             data-testid={ `category-input-${ props.id }` }>
+             data-testid={ `account-input-${ props.id }` }>
         { i10n(props.title as string) }
       </label>
 
