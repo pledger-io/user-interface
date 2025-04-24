@@ -17,7 +17,7 @@ type UploadAttachmentProps = {
 const EmptyTemplate: FC<{text: string}> = ({ text }) => {
     return <>
         <div className="flex items-center flex-col text-muted">
-            <Icon path={ mdiCloudUploadOutline } size={ 10 } className='bg-[var(--surface-b)] rounded-full p-5'/>
+            <Icon path={ mdiCloudUploadOutline } size={ 5 } className='bg-[var(--surface-b)] rounded-full p-5'/>
             <span className='text-lg'>{ i10n(text) }</span>
         </div>
     </>
@@ -26,7 +26,7 @@ const EmptyTemplate: FC<{text: string}> = ({ text }) => {
 const headerTemplate = (props: any) => {
     const { chooseButton, uploadButton } = props;
 
-    return <div className={ `border-[var(--surface-d)] border-1 py-2 bg-transparent! gap-2 flex justify-center` }>
+    return <div className={ `py-2 bg-transparent! gap-2 flex justify-center` }>
         { chooseButton }
         { uploadButton }
     </div>
@@ -46,9 +46,8 @@ const UploadAttachment = ({ accepts = '*/*', label, onUpload, max = 1 }: UploadA
                     customUpload={ true}
                     uploadHandler={ upload }
                     headerTemplate={ headerTemplate }
-                    uploadOptions={ { label: i10n(label), iconOnly: true, icon: () => <Icon path={ mdiCloudUploadOutline } size={ 1 }/>, className: 'p-button-outlined p-button-rounded' } }
-                    chooseOptions={ { label: i10n(label), iconOnly: false, icon: () => <Icon path={ mdiPlus } size={ 1 }/>, className: 'p-button-outlined p-button-rounded' } }
-                    cancelOptions={ { iconOnly: true, className: 'p-button-outlined p-button-rounded' } }
+                    uploadOptions={ { label: i10n(label), iconOnly: false, icon: () => <Icon path={ mdiCloudUploadOutline } size={ 1 }/>, className: 'p-button-outlined p-button-rounded' } }
+                    chooseOptions={ { label: i10n(label), iconOnly: true, icon: () => <Icon path={ mdiPlus } size={ 1 }/>, className: 'p-button-outlined p-button-rounded' } }
                     emptyTemplate={ <EmptyTemplate text={ label } /> }
                     accept={ accepts }/>
     )

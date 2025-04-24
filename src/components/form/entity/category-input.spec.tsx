@@ -1,6 +1,7 @@
 import { fireEvent, render, waitFor } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 import { mockedAxios } from "../../../../__mocks__/axios";
+import { NotificationProvider } from "../../../context/notification-context";
 import { Form } from "../Form";
 import { CategoryInput } from './category-input'
 
@@ -19,7 +20,9 @@ const mockProps = {
 
 const formWrapped = (component: any) => {
   return <Form entity='TestForm' onSubmit={ _ => undefined }>
-    { component }
+    <NotificationProvider>
+      { component }
+    </NotificationProvider>
   </Form>
 }
 
@@ -75,7 +78,7 @@ describe('CategoryInput', () => {
     fireEvent.change(input, { target: { value: 'Selected Category' } })
 
     await waitFor(() => expect(mockedAxios.get).toHaveBeenCalledWith('categories/auto-complete?token=Selected Category', {}))
-    await waitFor(() => fireEvent.click(getByTestId('category-input-create')))
+    await waitFor(() => fireEvent.click(getByTestId('autocomplete-input-create')))
 
     await waitFor(() => {
       expect(mockProps.onChange).toHaveBeenCalledWith(

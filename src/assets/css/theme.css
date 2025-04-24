@@ -121,6 +121,9 @@
 
   .p-fileupload {
     .p-fileupload-content {
+      border: none;
+      padding: 1rem 2rem;
+
       .p-fileupload-row {
         div[data-pc-section="details"] {
           text-align: center;

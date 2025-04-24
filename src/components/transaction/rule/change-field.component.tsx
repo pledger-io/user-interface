@@ -41,7 +41,6 @@ const ChangeFieldComponent = (props: {
     { label: i10n('TransactionRule.Column.TAGS'), value: 'TAGS' },
   ]
 
-  if (change.change && !entity) return <Loading/>
   return <>
     <div className='flex gap-1 mb-2 items-center my-2'>
       <Dropdown id={ `chang_${ change.uuid }_field` }
@@ -77,7 +76,7 @@ const ChangeFieldComponent = (props: {
 
 
       { change.field === 'CATEGORY'
-        && <Entity.Category value={ { id: -1, name: entity?.label } }
+        && <Entity.Category value={ entity }
                             onChange={ (value: Category) => onValueChange(change.uuid, 'change', value.id as string) }
                             id={ `chang_${ change.uuid }_change` }
                             className='m-0! flex-1 [&>label]:hidden!'

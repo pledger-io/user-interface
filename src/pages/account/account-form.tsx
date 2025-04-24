@@ -1,6 +1,7 @@
 import { mdiCancel, mdiContentSave } from "@mdi/js";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
+import { AccountIconReplace } from "../../components/account/account-icon-replace";
 import BreadCrumbItem from "../../components/breadcrumb/breadcrumb-item.component";
 import BreadCrumbs from "../../components/breadcrumb/breadcrumb.component";
 import { Entity, Form, Input, SubmitButton } from "../../components/form";
@@ -95,7 +96,7 @@ const AccountForm = ({ type }: { type: string }) => {
         { exception && <Message text={ exception } severity='error'/> }
 
         <fieldset className='flex gap-2'>
-          <div className='flex-2'>
+          <div className='flex-3'>
             <legend className='font-bold text-xl underline'>{ i10n('page.account.accounts.general') }</legend>
 
             <Input.Text id='name'
@@ -120,9 +121,7 @@ const AccountForm = ({ type }: { type: string }) => {
             </div>
           </div>
           <div className='flex-1'>
-            <Attachment.Upload label='page.accounts.accounts.changeIcon'
-                               accepts='image/*'
-                               onUpload={ onPictureChange }/>
+            <AccountIconReplace accountId={ id } onChange={ onPictureChange }/>
           </div>
         </fieldset>
 

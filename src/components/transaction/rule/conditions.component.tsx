@@ -114,6 +114,7 @@ const ConditionFieldComponent = (props: any) => {
 
     <Button label='page.settings.rules.condition.add'
             type='button'
+            size='small'
             severity='secondary'
             onClick={ onAddCondition }
             icon={ mdiPlusBox }/>
