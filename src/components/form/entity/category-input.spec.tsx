@@ -1,6 +1,7 @@
 import { fireEvent, render, waitFor } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 import { mockedAxios } from "../../../../__mocks__/axios";
+import { NotificationProvider } from "../../../context/notification-context";
 import { Form } from "../Form";
 import { CategoryInput } from './category-input'
 
@@ -19,7 +20,9 @@ const mockProps = {
 
 const formWrapped = (component: any) => {
   return <Form entity='TestForm' onSubmit={ _ => undefined }>
-    { component }
+    <NotificationProvider>
+      { component }
+    </NotificationProvider>
   </Form>
 }
 
