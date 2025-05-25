@@ -11,7 +11,7 @@ const ContractRepository = (api => {
     return {
         list:   ()                                  => api.get<ContractList>('contracts'),
         get:    (id: Identifier)                    => api.get<Contract>(`contracts/${id}`),
-        create: (entity: Contract)                  => api.post<Contract, Contract>('contracts', entity),
+        create: (entity: Contract)                  => api.put<Contract, Contract>('contracts', entity),
         update: (id: Identifier, entity: Contract)  => api.post<Contract, Contract>(`contracts/${id}`, entity),
         delete: (id: Identifier)                    => api.delete(`contracts/${id}`),
         schedule: (id: Identifier, entity: any)     => api.put<any, Contract>(`contracts/${id}/schedule`, entity),
