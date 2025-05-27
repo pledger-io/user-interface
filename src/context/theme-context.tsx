@@ -1,11 +1,12 @@
+import { PrimeReactContext } from "primereact/api";
 import { createContext, FC, ReactNode, use, useEffect, useMemo, useState } from "react";
 import { useRouteLoaderData } from "react-router";
 import { RouterAuthentication } from "../types/router-types";
 
 export const Themes = {
-  light: { value: 'light', message: 'Light' },
-  dark: { value: 'dark', message: 'Dark' },
-  navy: { value: 'navy', message: 'Navy' }
+  light: { value: 'light', message: 'Light', stylesheet: 'lara-light-blue' },
+  dark: { value: 'dark', message: 'Dark', stylesheet: 'lara-dark-blue' },
+  navy: { value: 'navy', message: 'Navy', stylesheet: 'saga-blue' },
 }
 
 type SupportedThemes = keyof typeof Themes;
@@ -22,9 +23,15 @@ const ThemeContext = createContext<ThemeContext | undefined>(undefined);
 export const ThemeProvider: FC<ThemeProviderProps> = ({ children }) => {
   const [currentTheme, setCurrentTheme] = useState<SupportedThemes>('light');
   const profile: RouterAuthentication = useRouteLoaderData('authenticated')
+  const { changeTheme } = use(PrimeReactContext);
 
   const context: ThemeContext = useMemo(() => ({
     setTheme: theme => {
+      const previousTheme = Themes[currentTheme]
+      const newTheme = Themes[theme]
+
+      console.log('Changing theme', previousTheme, newTheme)
+      changeTheme!(previousTheme.stylesheet, newTheme.stylesheet, 'theme-link')
       document.getElementById('theme-' + currentTheme)?.setAttribute('disabled', 'true')
       document.getElementById('theme-' + theme)?.removeAttribute('disabled')
       setCurrentTheme(theme)

@@ -2,12 +2,29 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import tailwindcss from '@tailwindcss/vite'
+import { viteStaticCopy } from "vite-plugin-static-copy";
 
 export default defineConfig({
     base: '/ui',
     plugins: [
         react(),
-        tailwindcss()
+        tailwindcss(),
+        viteStaticCopy({
+            targets: [
+                {
+                    src: 'node_modules/primereact/resources/themes/lara-dark-blue/*',
+                    dest: 'assets/themes/lara-dark-blue/'
+                },
+                {
+                    src: 'node_modules/primereact/resources/themes/lara-light-blue/*',
+                    dest: 'assets/themes/lara-light-blue/'
+                },
+                {
+                    src: 'node_modules/primereact/resources/themes/saga-blue/*',
+                    dest: 'assets/themes/saga-blue/'
+                }
+            ]
+        })
     ],
     build: {
         cssCodeSplit: true,
@@ -15,8 +32,15 @@ export default defineConfig({
     server: {
         proxy: {
             '/api': {
-                target: 'http://localhost:8080',
+                target: 'http://finance.local',
                 changeOrigin: true
+            },
+            '/ui/ui/assets/': {
+                target: 'http://localhost:5173',
+                rewrite: path => {
+                    console.log(path.substring(3))
+                    return path.substring(3)
+                }
             }
         }
     },
