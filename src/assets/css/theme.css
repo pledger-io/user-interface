@@ -1,6 +1,6 @@
 @layer base, app.theme, app.icons, app.overrides;
 @import 'tailwindcss';
-@import 'primeicons/primeicons.css' layer(app . icons);
+@import 'primeicons/primeicons.css' layer(app.icons);
 
 @theme inline {
   --border-radius: .5rem;

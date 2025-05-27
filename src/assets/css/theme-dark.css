@@ -1,5 +1,3 @@
-@import 'primereact/resources/themes/lara-dark-blue/theme.css' layer(app.theme);
-
 body {
     --app-body-background: rgb(41, 53, 73);
     --app-background: #374151;
