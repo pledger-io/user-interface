@@ -1,6 +1,7 @@
 import { PrimeReactProvider } from "primereact/api";
 import { useLocalStorage } from "primereact/hooks";
 import { Suspense } from "react";
+import { useAuth } from "react-oidc-context";
 import { Outlet, useNavigate } from "react-router";
 import Loading from "../components/layout/loading.component";
 import Sidebar from "../components/sidebar";
@@ -29,8 +30,10 @@ function SuspenseLoading() {
 export function AuthenticatedComponent() {
   const [locale] = useLocalStorage<SupportedLocales>('en', 'language')
   const navigate = useNavigate()
+  const auth = useAuth();
 
   const logout = () => {
+    auth.signoutSilent();
     SecurityRepository.logout()
     navigate("/login")
   }

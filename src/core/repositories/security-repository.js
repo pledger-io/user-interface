@@ -13,23 +13,26 @@ const SecurityRepository = (api => {
         isAuthenticated: () => {
             return sessionStorage.getItem('token') != null
         },
-        authenticate: (username, password) => api.post('security/authenticate', { username: username, password: password })
+        authenticate: (username, password) => api.post('security/authenticate', {
+            username: username,
+            password: password
+        })
             .then(serverResponse => {
                 const token = new TokenResponse(serverResponse)
                 sessionStorage.setItem('refresh-token', token.refreshToken);
                 sessionStorage.setItem('token', token.accessToken);
             }),
-        twoFactor: (code) => api.post('security/2-factor', { verificationCode: code })
+        twoFactor: (code) => api.post('security/2-factor', {verificationCode: code})
             .then(serverResponse => {
                 const token = new TokenResponse(serverResponse)
                 sessionStorage.setItem('refresh-token', token.refreshToken);
                 sessionStorage.setItem('token', token.accessToken);
             }),
-        register: (username, password) => api.put(`security/create-account`, { username, password }),
+        register: (username, password) => api.put(`security/create-account`, {username, password}),
         logout: () => {
-                sessionStorage.removeItem('token');
-                sessionStorage.removeItem('refresh-token');
-            }
+            sessionStorage.removeItem('token');
+            sessionStorage.removeItem('refresh-token');
+        }
     }
 })(RestAPI)
 
