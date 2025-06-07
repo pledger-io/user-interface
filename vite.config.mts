@@ -32,7 +32,7 @@ export default defineConfig({
     server: {
         proxy: {
             '/api': {
-                target: 'http://finance.local',
+                target: 'http://localhost:8080',
                 changeOrigin: true
             },
             '/ui/ui/assets/': {
@@ -41,6 +41,10 @@ export default defineConfig({
                     console.log(path.substring(3))
                     return path.substring(3)
                 }
+            },
+            '/.well-known': {
+                target: 'http://localhost:8080',
+                changeOrigin: true
             }
         }
     },

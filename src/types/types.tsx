@@ -225,3 +225,9 @@ export type UserProfile = {
 export type DialogOptions = {
   open: () => void
 }
+
+export type OpenIdConfig = {
+  authority: string,
+  clientId: string,
+  clientSecret: string
+}

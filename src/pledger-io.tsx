@@ -1,26 +1,29 @@
-import { createBrowserRouter, redirect, RouterProvider } from "react-router";
+import { User } from "oidc-client-ts";
 import { lazy } from "react";
+import { AuthProvider } from "react-oidc-context";
+import { createBrowserRouter, redirect, RouterProvider } from "react-router";
 import Loading from "./components/layout/loading.component";
-
-import LoginPage from "./pages/login";
-import RegisterPage from "./pages/register";
-import TwoFactorPage from "./pages/two-factor";
 
 import account from "./pages/account/routes";
 import automation from "./pages/automation/routes";
 import budget from "./pages/budget/routes";
 import category from "./pages/category/routes";
 import contract from "./pages/contract/routes";
+
+import LoginPage from "./pages/login";
 import profile from "./pages/profile/routes";
+import RegisterPage from "./pages/register";
 import reports from "./pages/reports/routes";
-import transactions from "./pages/transaction/routes";
 import settings from "./pages/setting/routes";
+import transactions from "./pages/transaction/routes";
+import TwoFactorPage from "./pages/two-factor";
 import upload from "./pages/upload/routes";
 
 import { anonymousLoader } from "./router/anonymous.loader";
+import { AuthenticatedComponent } from "./router/authenticate.wrapper";
 import { authenticatedLoader } from "./router/authenticated.loader";
 import { RootErrorBoundary } from "./router/error-boundary";
-import { AuthenticatedComponent } from "./router/authenticate.wrapper";
+import { OpenIdConfig } from "./types/types";
 
 const router = createBrowserRouter([
   {
@@ -74,9 +77,18 @@ const router = createBrowserRouter([
   basename: '/ui'
 })
 
-function _() {
+function _({ openIdConfig }: {openIdConfig: OpenIdConfig}) {
+  const openIdSignIn = (user: User | undefined) => {
+    if (user) {
+      sessionStorage.setItem('refresh-token', user.refresh_token as string);
+      sessionStorage.setItem('token', user.access_token);
+    }
+  }
+
   return (
-    <RouterProvider router={ router }/>
+    <AuthProvider {...openIdConfig} onSigninCallback={openIdSignIn}>
+      <RouterProvider router={ router }/>
+    </AuthProvider>
   )
 }
 

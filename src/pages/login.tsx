@@ -7,8 +7,10 @@ import { useLocalStorage } from "primereact/hooks";
 import { Menu } from "primereact/menu";
 import { Toast } from "primereact/toast";
 import React, { useRef } from "react";
+import { useAuth } from "react-oidc-context";
 import { Link, useNavigate } from "react-router";
 import { Form, Input, SubmitButton } from "../components/form";
+import { Button } from "../components/layout/button";
 import { i10n, Locales, SupportedLocales } from "../config/prime-locale";
 import { ThemeProvider } from "../context/theme-context";
 import SecurityRepository from "../core/repositories/security-repository";
@@ -28,7 +30,19 @@ const LoginCard = () => {
   const configMenu = useRef<Menu>(null);
   const toast = useRef<Toast>(null);
   const navigate = useNavigate()
+  const auth = useAuth()
   const [from] = useQueryParam({ key: 'from', initialValue: '/dashboard' })
+
+  if (auth.isAuthenticated) {
+    toast.current?.show({
+      id: 'login',
+      severity: 'success',
+      summary: 'Success',
+      detail: i10n('page.login.success'),
+      life: 250
+    });
+    setTimeout(() => navigate(from), 500);
+  }
 
   const languageMenu = [
     { label: 'English', icon: () => <Flag language='en'/>, command: () => setLocale('en') },
@@ -69,7 +83,6 @@ const LoginCard = () => {
         });
       })
 
-
   return <>
     <Toast ref={ toast } position="top-right" />
     <Card header={ header } className='md:min-w-[24rem] shadow-2xl'>
@@ -100,16 +113,41 @@ const LoginCard = () => {
         </div>
 
       </Form>
+
+      {
+        auth.settings.authority &&
+        <div className='flex justify-center mt-3'>
+          <Link to={ `/register?from=${ from }` } className='p-button p-button-info p-button-outlined p-button-lg flex gap-2 items-center w-full justify-center'>
+            <Icon path={ mdiAccountPlus } size={ 1 }/>
+            { i10n('page.login.register') }
+          </Link>
+        </div>
+      }
+
       <Divider align="center">
         <span className="text-gray-500 text-sm">{i10n('common.lang.or')}</span>
       </Divider>
 
-      <div className='flex justify-center mt-3'>
-        <Link to={ `/register?from=${ from }` } className='p-button p-button-info p-button-outlined p-button-lg flex gap-2 items-center w-full justify-center'>
-          <Icon path={ mdiAccountPlus } size={ 1 }/>
-          { i10n('page.login.register') }
-        </Link>
-      </div>
+      {
+        !auth.settings.authority &&
+        <div className='flex justify-center mt-3'>
+          <Link to={ `/register?from=${ from }` } className='p-button p-button-info p-button-outlined p-button-lg flex gap-2 items-center w-full justify-center'>
+            <Icon path={ mdiAccountPlus } size={ 1 }/>
+            { i10n('page.login.register') }
+          </Link>
+        </div>
+      }
+
+      {
+        auth.settings.authority &&
+        <div className='flex justify-center mt-3'>
+          <Button label='page.login.openid_connect'
+                  severity='secondary'
+                  icon={ mdiLogin }
+                  className='w-full'
+                  onClick={() => auth.signinRedirect()} />
+        </div>
+      }
 
     </Card>
   </>
