@@ -29,6 +29,11 @@ export default defineConfig({
     build: {
         cssCodeSplit: true,
     },
+    esbuild: {
+        supported: {
+            'top-level-await': true //browsers can handle top-level-await features
+        },
+    },
     server: {
         proxy: {
             '/api': {
