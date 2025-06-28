@@ -24,7 +24,7 @@
     "react-oidc-context": "^3.3.0",
     "react-router": "^7.1.1",
     "spacetime": "^7.6.2",
-    "vite": "^6.1.1",
+    "vite": "^7.0.0",
     "vite-plugin-svgr": "^4.3.0",
     "vite-tsconfig-paths": "^5.1.4"
   },
