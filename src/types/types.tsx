@@ -231,3 +231,22 @@ export type OpenIdConfig = {
   clientId: string,
   clientSecret: string
 }
+
+export type SpendingInsight = {
+  type: 'UNUSUAL_AMOUNT' | 'UNUSUAL_FREQUENCY' | 'UNUSUAL_MERCHANT' | 'UNUSUAL_TIMING' | 'POTENTIAL_DUPLICATE' | 'BUDGET_EXCEEDED' | 'SPENDING_SPIKE' | 'UNUSUAL_LOCATION';
+  category: string;
+  severity: 'INFO' | 'WARNING' | 'ALERT';
+  score: number;
+  detectedDate: string;
+  message: string;
+  transactionId: number | null;
+  metadata: Record<string, unknown>;
+}
+
+export type SpendingPattern = {
+  type: 'RECURRING_MONTHLY' | 'RECURRING_WEEKLY' | 'SEASONAL' | 'INCREASING_TREND' | 'DECREASING_TREND';
+  category: string;
+  confidence: number;
+  detectedDate: string;
+  metadata?: Record<string, any>;
+}
