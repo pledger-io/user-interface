@@ -1,5 +1,5 @@
 import RestApi from "./rest-api";
-import { Balance, Identifiable } from "../../types/types";
+import { Balance, Identifiable, SpendingInsight, SpendingPattern } from "../../types/types";
 
 export type BalanceRequestFilter = {
     onlyIncome: boolean,
@@ -29,7 +29,9 @@ const StatisticalRepository = (api => {
         balance: (filter: BalanceRequestFilter): Promise<Balance>                              => api.post('statistics/balance', filter),
         daily: (filter: BalanceRequestFilter): Promise<DateBalance[]>                          => api.post('statistics/balance/daily', filter),
         monthly: (filter: BalanceRequestFilter): Promise<DateBalance[]>                        => api.post('statistics/balance/monthly', filter),
-        split: (splitBy: string, filter: BalanceRequestFilter): Promise<BalancePartition[]>    => api.post(`statistics/balance/partitioned/${encodeURI(splitBy)}`, filter)
+        split: (splitBy: string, filter: BalanceRequestFilter): Promise<BalancePartition[]>    => api.post(`statistics/balance/partitioned/${encodeURI(splitBy)}`, filter),
+        insights: (year: number, month: number): Promise<SpendingInsight[]>                    => api.get(`statistics/spending/insights?year=${ year }&month=${ month }`),
+        patterns: (year: number, month: number): Promise<SpendingPattern[]>                    => api.get(`statistics/spending/patterns?year=${ year }&month=${ month }`)
     }
 })(RestApi)
 

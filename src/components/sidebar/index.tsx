@@ -14,7 +14,7 @@ import {
   mdiFileDocumentEdit,
   mdiFileUploadOutline,
   mdiFormatListBulletedSquare,
-  mdiHandCoinOutline,
+  mdiHandCoinOutline, mdiHomeAnalytics,
   mdiLogoutVariant,
   mdiMenu,
   mdiMonitorDashboard,
@@ -119,7 +119,7 @@ const Sidebar = ({ logoutCallback, className }: SidebarProps) => {
               <SectionLink url='/dashboard' icon={ mdiMonitorDashboard }
                            onClick={ onClick }
                            title='page.nav.dashboard'/>
-              <SectionLink url='/reports/income-expense' icon={ mdiChartAreaspline }
+              <SectionLink url='/reports/income-expense' icon={ mdiHomeAnalytics }
                            onClick={ onClick }
                            title='page.reports.default.title'/>
               <SectionLink url='/reports/monthly-budget' icon={ mdiChartPie }
@@ -138,6 +138,9 @@ const Sidebar = ({ logoutCallback, className }: SidebarProps) => {
               <SectionLink url='/contracts' icon={ mdiFileDocumentEdit }
                            onClick={ onClick }
                            title='page.nav.budget.contracts'/>
+              <SectionLink url='/reports/spending-insight' icon={ mdiChartAreaspline }
+                           onClick={ onClick }
+                           title='page.reports.insights.title'/>
             </Section>
           </li>
           <li>
