@@ -36,7 +36,7 @@ const MetadataFieldsetComponent = ({ transaction, suggestionFunc }: {
     id: -1,
     name: suggestion?.CONTRACT
   })
-  const tags = transaction.metadata?.tags || suggestion?.TAGS?.map((tag: any) => tag.name)
+  const tags = transaction.metadata?.tags || suggestion?.TAGS?.map((tag: any) => tag.name).filter(tag => tag.length > 0)
   return <fieldset className='mt-4'>
     <legend className='font-bold text-xl underline'>{ i10n('page.transaction.add.link') }</legend>
     <Entity.Category id='category'
