@@ -2,10 +2,15 @@ import { Card } from "primereact/card";
 import React from 'react'
 import { mdiCancel, mdiContentSave } from "@mdi/js";
 import { useLoaderData, useNavigate, useRouteLoaderData } from "react-router";
+import MetadataFieldsetComponent, {
+  Suggestion,
+  SuggestionFunction
+} from "../../../components/account/transaction/metadata-fieldset.component";
 import { i10n } from "../../../config/prime-locale";
 import { useNotification } from "../../../context/notification-context";
+import { TransactionRepository } from "../../../core/RestAPI";
 import { ROUTER_ACCOUNT_LIABILITY_KEY, RouterAccount } from "../../../types/router-types";
-import { Category, Transaction } from "../../../types/types";
+import { Transaction } from "../../../types/types";
 import { TransactionService } from "../../../service/TransactionService";
 import BreadCrumbItem from "../../../components/breadcrumb/breadcrumb-item.component";
 import BreadCrumbs from "../../../components/breadcrumb/breadcrumb.component";
@@ -26,6 +31,23 @@ const LiabilityPayment = () => {
     }, navigate, id as number, success, warning)
   }
 
+  const suggestionFunction: SuggestionFunction = { suggest: (_: Suggestion) => void 0 }
+  const onInputChanged = (e: any) => {
+    if (['from', 'to', 'amount', 'description'].indexOf(e.changed) == -1) {
+      return
+    }
+    const suggestionReq = {
+      source: e.value.from?.name,
+      destination: e.value.to?.name,
+      amount: e.value.amount ? parseFloat(e.amount) : null,
+      description: e.value.description
+    }
+
+    TransactionRepository.suggest(suggestionReq)
+      .then((result: Suggestion) => suggestionFunction.suggest(result))
+      .catch(console.error)
+  }
+
   if (!account) return <></>
   const model = transaction as Transaction
   return <>
@@ -40,7 +62,7 @@ const LiabilityPayment = () => {
 
     <Card className='mx-2 my-4'
           header={ <div className='px-2 py-2 border-b-1 text-center font-bold'>{ i10n('page.transactions.add') }</div> }>
-      <Form onSubmit={ onSubmit } entity='Transaction'>
+      <Form onSubmit={ onSubmit } entity='Transaction' onChange={ onInputChanged }>
         <fieldset>
           <legend className='font-bold text-xl underline'>{ i10n('page.transaction.add.details') }</legend>
           <Input.Text id='description'
@@ -83,19 +105,7 @@ const LiabilityPayment = () => {
         </fieldset>
 
         <fieldset className='mt-4'>
-          <legend className='font-bold text-xl underline'>{ i10n('page.transaction.add.link') }</legend>
-
-          <Entity.Category id='category'
-                           value={ { label: model.metadata?.category } as Category }
-                           title='Transaction.category'/>
-
-          <Entity.Budget id='budget'
-                         value={ { label: model.metadata?.budget } }
-                         title='Transaction.budget'/>
-
-          <Input.Tags title='Transaction.tags'
-                      value={ model?.metadata?.tags }
-                      id='tags'/>
+          <MetadataFieldsetComponent transaction={ transaction } suggestionFunc={ suggestionFunction } />
         </fieldset>
 
         <div className='flex justify-end gap-2 mt-4'>
