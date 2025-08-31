@@ -1,9 +1,11 @@
+import { InputIcon } from "primereact/inputicon";
 import React from "react";
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
 import { Slider } from "primereact/slider";
 import { Button } from "primereact/button";
 import { getInsightTypeOptions, getSeverityOptions, i10nWithFallback } from "./utils";
+import { IconField } from "primereact/iconfield";
 
 interface InsightFiltersProps {
   searchTerm: string;
@@ -35,15 +37,15 @@ const InsightFilters: React.FC<InsightFiltersProps> = ({
     <div className="mb-4 p-3 bg-gray-50 rounded-lg">
       <div className="flex flex-col md:flex-row gap-3 mb-3">
         <div className="flex-1">
-          <span className="p-input-icon-left w-full">
-            <i className="pi pi-search" />
-            <InputText 
+          <IconField iconPosition="left">
+            <InputIcon className="pi pi-search"/>
+            <InputText
               value={searchTerm} 
               onChange={(e) => setSearchTerm(e.target.value)} 
               placeholder={i10nWithFallback('search')}
               className="w-full"
             />
-          </span>
+          </IconField>
         </div>
         <div className="flex flex-1 gap-2">
           <Dropdown
