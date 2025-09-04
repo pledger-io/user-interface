@@ -690,10 +690,17 @@
   resolved "https://registry.yarnpkg.com/@esbuild/win32-x64/-/win32-x64-0.25.5.tgz#7fc114af5f6563f19f73324b5d5ff36ece0803d1"
   integrity sha512-TXv6YnJ8ZMVdX+SXWVBo/0p8LTcrUYngpWjvm91TMjjBQii7Oz11Lw5lbDV5Y0TzuhSJHwiH4hEtC1I42mMS0g==
 
-"@eslint-community/eslint-utils@^4.2.0", "@eslint-community/eslint-utils@^4.7.0":
+"@eslint-community/eslint-utils@^4.2.0":
   version "4.7.0"
   resolved "https://registry.yarnpkg.com/@eslint-community/eslint-utils/-/eslint-utils-4.7.0.tgz#607084630c6c033992a082de6e6fbc1a8b52175a"
   integrity sha512-dyybb3AcajC7uha6CvhdVRJqaKyn7w2YKqKyAN37NKYgZT36w+iRb0Dymmc5qEJ549c/S31cMMSFd75bteCpCw==
+  dependencies:
+    eslint-visitor-keys "^3.4.3"
+
+"@eslint-community/eslint-utils@^4.7.0":
+  version "4.8.0"
+  resolved "https://registry.yarnpkg.com/@eslint-community/eslint-utils/-/eslint-utils-4.8.0.tgz#0e3b5e45566d1bce1ec47d8aae2fc2ad77ad0894"
+  integrity sha512-MJQFqrZgcW0UNYLGOuQpey/oTN59vyWwplvCGZztn1cKz9agZPPYpJB7h2OMmuu7VLqkvEjN8feFZJmxNF9D+Q==
   dependencies:
     eslint-visitor-keys "^3.4.3"
 
@@ -707,92 +714,92 @@
   resolved "https://registry.yarnpkg.com/@eslint-community/regexpp/-/regexpp-4.12.1.tgz#cfc6cffe39df390a3841cde2abccf92eaa7ae0e0"
   integrity sha512-CCZCDJuduB9OUkFkY2IgppNZMi2lBQgD2qzwXkEia16cge2pijY/aXi96CJMquDMn3nJdlPV1A5KrJEXwfLNzQ==
 
-"@eslint-react/ast@1.51.2":
-  version "1.51.2"
-  resolved "https://registry.yarnpkg.com/@eslint-react/ast/-/ast-1.51.2.tgz#f6d4868f864fdf6deee54add6d97b420cb9df0a2"
-  integrity sha512-ro3AjpT+PDl0CVYjbqKFIPZtsaco6+9vdvstKusTqzqG6cpq2Arzm1rZ86RFitgo4TUOJH1IWUB1TWm3z2q2Vw==
+"@eslint-react/ast@1.53.0":
+  version "1.53.0"
+  resolved "https://registry.yarnpkg.com/@eslint-react/ast/-/ast-1.53.0.tgz#7736e38159bdae60b69b5bbb5c29d295ace4bc2a"
+  integrity sha512-TyJURQF4IEOLWUQvmCukc6GQsaqzW2ALwY97gy1AaCTR+9CXz12qF84JQydxVmph2LOndPJk1KCrnNkLAvxzIw==
   dependencies:
-    "@eslint-react/eff" "1.51.2"
-    "@typescript-eslint/types" "^8.33.1"
-    "@typescript-eslint/typescript-estree" "^8.33.1"
-    "@typescript-eslint/utils" "^8.33.1"
+    "@eslint-react/eff" "1.53.0"
+    "@typescript-eslint/types" "^8.42.0"
+    "@typescript-eslint/typescript-estree" "^8.42.0"
+    "@typescript-eslint/utils" "^8.42.0"
     string-ts "^2.2.1"
-    ts-pattern "^5.7.1"
+    ts-pattern "^5.8.0"
 
-"@eslint-react/core@1.51.2":
-  version "1.51.2"
-  resolved "https://registry.yarnpkg.com/@eslint-react/core/-/core-1.51.2.tgz#e3e17166d27368bee9ef537d5c35717ae82bd869"
-  integrity sha512-qo8pvQc8DMJgiL0+M+7g9Z7KYFvTnA+Ph3yJlD7915UnITafgw570xeSfI5pDtJ7TN+3UJBRzclQelYC89v2+w==
+"@eslint-react/core@1.53.0":
+  version "1.53.0"
+  resolved "https://registry.yarnpkg.com/@eslint-react/core/-/core-1.53.0.tgz#a20cf7303824a620eb66545dd96cb5b56d3a7454"
+  integrity sha512-LP53OVMymLnEqJtmHeCyYMtFjK9Mw4F7lui5VO9YlbELopynPrpeiMPyVScxydLzW/toE7ZpDLTaB8B7Nrfdpw==
   dependencies:
-    "@eslint-react/ast" "1.51.2"
-    "@eslint-react/eff" "1.51.2"
-    "@eslint-react/kit" "1.51.2"
-    "@eslint-react/shared" "1.51.2"
-    "@eslint-react/var" "1.51.2"
-    "@typescript-eslint/scope-manager" "^8.33.1"
-    "@typescript-eslint/type-utils" "^8.33.1"
-    "@typescript-eslint/types" "^8.33.1"
-    "@typescript-eslint/utils" "^8.33.1"
+    "@eslint-react/ast" "1.53.0"
+    "@eslint-react/eff" "1.53.0"
+    "@eslint-react/kit" "1.53.0"
+    "@eslint-react/shared" "1.53.0"
+    "@eslint-react/var" "1.53.0"
+    "@typescript-eslint/scope-manager" "^8.42.0"
+    "@typescript-eslint/type-utils" "^8.42.0"
+    "@typescript-eslint/types" "^8.42.0"
+    "@typescript-eslint/utils" "^8.42.0"
     birecord "^0.1.1"
-    ts-pattern "^5.7.1"
+    ts-pattern "^5.8.0"
 
-"@eslint-react/eff@1.51.2":
-  version "1.51.2"
-  resolved "https://registry.yarnpkg.com/@eslint-react/eff/-/eff-1.51.2.tgz#670c23f2558cc9a71610c8c16350b284b8f505d0"
-  integrity sha512-1cv83iz29cHYpeogwSwJQbZ4/3/0N9nd/856Wq2Opx783pvyrou8+43sOhytc4HL458tubj203I3wNEyyhhNnQ==
+"@eslint-react/eff@1.53.0":
+  version "1.53.0"
+  resolved "https://registry.yarnpkg.com/@eslint-react/eff/-/eff-1.53.0.tgz#47b35169895264fd84fa60b50e6916b31e57ae2d"
+  integrity sha512-jlGTpgrLD+txK1ApUg7hX1/Oje2D9Bv/uHtnzdgBT6cI8vpt8EEXXclAxz9NN4insfEu+g5GZB8sQSvtsQCzwQ==
 
 "@eslint-react/eslint-plugin@^1.32.0":
-  version "1.51.2"
-  resolved "https://registry.yarnpkg.com/@eslint-react/eslint-plugin/-/eslint-plugin-1.51.2.tgz#30e688d7585a4a007b121033adb380f76e81c855"
-  integrity sha512-wXSDrOvMi2DX8dTiXDDSyGkTm77xn/I3qLRYyn1gX/7GV6GPq+wzHF2aL4n8bRRdYmUBCD2ztLp9VaniKNT5YQ==
+  version "1.53.0"
+  resolved "https://registry.yarnpkg.com/@eslint-react/eslint-plugin/-/eslint-plugin-1.53.0.tgz#caddfbc5496c549883e5969dc40f72c39254e61d"
+  integrity sha512-/IOVFGKUdsDp2VxhecR+mywa0eKzBGi1K6x7+LL174rQN4bLhG9pUQctspGX3EJHH10Nw7Pdi8LYF9/LwL02XQ==
   dependencies:
-    "@eslint-react/eff" "1.51.2"
-    "@eslint-react/kit" "1.51.2"
-    "@eslint-react/shared" "1.51.2"
-    "@typescript-eslint/scope-manager" "^8.33.1"
-    "@typescript-eslint/type-utils" "^8.33.1"
-    "@typescript-eslint/types" "^8.33.1"
-    "@typescript-eslint/utils" "^8.33.1"
-    eslint-plugin-react-debug "1.51.2"
-    eslint-plugin-react-dom "1.51.2"
-    eslint-plugin-react-hooks-extra "1.51.2"
-    eslint-plugin-react-naming-convention "1.51.2"
-    eslint-plugin-react-web-api "1.51.2"
-    eslint-plugin-react-x "1.51.2"
+    "@eslint-react/eff" "1.53.0"
+    "@eslint-react/kit" "1.53.0"
+    "@eslint-react/shared" "1.53.0"
+    "@typescript-eslint/scope-manager" "^8.42.0"
+    "@typescript-eslint/type-utils" "^8.42.0"
+    "@typescript-eslint/types" "^8.42.0"
+    "@typescript-eslint/utils" "^8.42.0"
+    eslint-plugin-react-debug "1.53.0"
+    eslint-plugin-react-dom "1.53.0"
+    eslint-plugin-react-hooks-extra "1.53.0"
+    eslint-plugin-react-naming-convention "1.53.0"
+    eslint-plugin-react-web-api "1.53.0"
+    eslint-plugin-react-x "1.53.0"
 
-"@eslint-react/kit@1.51.2":
-  version "1.51.2"
-  resolved "https://registry.yarnpkg.com/@eslint-react/kit/-/kit-1.51.2.tgz#440ed58ddcd5e306ff1cb8e37a195ba1c5329b81"
-  integrity sha512-+uip93wD1Qp6nvMdzv8JXkZw/dxMoJ95x4fGKNvTCBei4XaLjrdIueaUno4hgsSyzNptzOMxGnEyplSLo3ukuQ==
+"@eslint-react/kit@1.53.0":
+  version "1.53.0"
+  resolved "https://registry.yarnpkg.com/@eslint-react/kit/-/kit-1.53.0.tgz#6ce7cd0c61b7969d482bc76b7db97dd32360de91"
+  integrity sha512-1OqcBpLtqsQSTgSBS8lxpoRojj7RLdZ0vBsnHlmWmARJhBV9+dlyu3scPduiohai3zjUdFLfLKvUqZpNeNbZig==
   dependencies:
-    "@eslint-react/eff" "1.51.2"
-    "@typescript-eslint/utils" "^8.33.1"
-    ts-pattern "^5.7.1"
-    zod "^3.25.56"
+    "@eslint-react/eff" "1.53.0"
+    "@typescript-eslint/utils" "^8.42.0"
+    ts-pattern "^5.8.0"
+    zod "^4.1.5"
 
-"@eslint-react/shared@1.51.2":
-  version "1.51.2"
-  resolved "https://registry.yarnpkg.com/@eslint-react/shared/-/shared-1.51.2.tgz#877f9551fb8d483fb485990b69a47643794a63b3"
-  integrity sha512-+C1a0/+KMmTgbnTPsW3fMv0D24E6xPuFCwvyeg8MA2Xz046UpLz9u4ds5/T6ebGqM4c3EfN6iIxNV5RHz8P2Zw==
+"@eslint-react/shared@1.53.0":
+  version "1.53.0"
+  resolved "https://registry.yarnpkg.com/@eslint-react/shared/-/shared-1.53.0.tgz#497625fcc62f13aa77d3b62e8a5c6903e51aefa6"
+  integrity sha512-8cKjzAJZOmpwoH8KsbyAUpLd3N2Lw6N4TSVZ+W8OnsspOfLhmN9VEyuS442fiHwZ33+mXulVewfpKahFOb9XAA==
   dependencies:
-    "@eslint-react/eff" "1.51.2"
-    "@eslint-react/kit" "1.51.2"
-    "@typescript-eslint/utils" "^8.33.1"
-    ts-pattern "^5.7.1"
-    zod "^3.25.56"
+    "@eslint-react/eff" "1.53.0"
+    "@eslint-react/kit" "1.53.0"
+    "@typescript-eslint/utils" "^8.42.0"
+    ts-pattern "^5.8.0"
+    zod "^4.1.5"
 
-"@eslint-react/var@1.51.2":
-  version "1.51.2"
-  resolved "https://registry.yarnpkg.com/@eslint-react/var/-/var-1.51.2.tgz#98cc319c0183b4932c58ef9de5f5f3fc087fb5df"
-  integrity sha512-vHm2jsQ96aARePi1vbv3yTHSs8G3tZ6zeKsG30ntT2WzuRXAlG3VpuiANGVSkhSaaxMXm2tBUWl82GYYSzs7Vg==
+"@eslint-react/var@1.53.0":
+  version "1.53.0"
+  resolved "https://registry.yarnpkg.com/@eslint-react/var/-/var-1.53.0.tgz#43fe75c4187449c128d5a3d71cc5b401e87bd2ac"
+  integrity sha512-9IKGvSUyVABV07A9IJDa3QMGvpXwlJzb6UegJMW5OxUA5fkKcAqPZPp7fgoLkhqCpN/8l/rwbhdq1PcHxgmFsQ==
   dependencies:
-    "@eslint-react/ast" "1.51.2"
-    "@eslint-react/eff" "1.51.2"
-    "@typescript-eslint/scope-manager" "^8.33.1"
-    "@typescript-eslint/types" "^8.33.1"
-    "@typescript-eslint/utils" "^8.33.1"
+    "@eslint-react/ast" "1.53.0"
+    "@eslint-react/eff" "1.53.0"
+    "@typescript-eslint/scope-manager" "^8.42.0"
+    "@typescript-eslint/types" "^8.42.0"
+    "@typescript-eslint/utils" "^8.42.0"
     string-ts "^2.2.1"
-    ts-pattern "^5.7.1"
+    ts-pattern "^5.8.0"
 
 "@eslint/config-array@^0.21.0":
   version "0.21.0"
@@ -2038,7 +2045,16 @@
     "@typescript-eslint/types" "^8.36.0"
     debug "^4.3.4"
 
-"@typescript-eslint/scope-manager@8.33.1", "@typescript-eslint/scope-manager@^8.33.1":
+"@typescript-eslint/project-service@8.42.0":
+  version "8.42.0"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/project-service/-/project-service-8.42.0.tgz#636eb3418b6c42c98554dce884943708bf41a583"
+  integrity sha512-vfVpLHAhbPjilrabtOSNcUDmBboQNrJUiNAGoImkZKnMjs2TIcWG33s4Ds0wY3/50aZmTMqJa6PiwkwezaAklg==
+  dependencies:
+    "@typescript-eslint/tsconfig-utils" "^8.42.0"
+    "@typescript-eslint/types" "^8.42.0"
+    debug "^4.3.4"
+
+"@typescript-eslint/scope-manager@8.33.1":
   version "8.33.1"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/scope-manager/-/scope-manager-8.33.1.tgz#d1e0efb296da5097d054bc9972e69878a2afea73"
   integrity sha512-dM4UBtgmzHR9bS0Rv09JST0RcHYearoEoo3pG5B6GoTR9XcyeqX87FEhPo+5kTvVfKCvfHaHrcgeJQc6mrDKrA==
@@ -2054,7 +2070,15 @@
     "@typescript-eslint/types" "8.36.0"
     "@typescript-eslint/visitor-keys" "8.36.0"
 
-"@typescript-eslint/tsconfig-utils@8.33.1", "@typescript-eslint/tsconfig-utils@^8.33.1":
+"@typescript-eslint/scope-manager@8.42.0", "@typescript-eslint/scope-manager@^8.42.0":
+  version "8.42.0"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/scope-manager/-/scope-manager-8.42.0.tgz#36016757bc85b46ea42bae47b61f9421eddedde3"
+  integrity sha512-51+x9o78NBAVgQzOPd17DkNTnIzJ8T/O2dmMBLoK9qbY0Gm52XJcdJcCl18ExBMiHo6jPMErUQWUv5RLE51zJw==
+  dependencies:
+    "@typescript-eslint/types" "8.42.0"
+    "@typescript-eslint/visitor-keys" "8.42.0"
+
+"@typescript-eslint/tsconfig-utils@8.33.1":
   version "8.33.1"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/tsconfig-utils/-/tsconfig-utils-8.33.1.tgz#7836afcc097a4657a5ed56670851a450d8b70ab8"
   integrity sha512-STAQsGYbHCF0/e+ShUQ4EatXQ7ceh3fBCXkNU7/MZVKulrlq1usH7t2FhxvCpuCi5O5oi1vmVaAjrGeL71OK1g==
@@ -2063,6 +2087,11 @@
   version "8.36.0"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/tsconfig-utils/-/tsconfig-utils-8.36.0.tgz#63ef8a20ae9b5754c6ceacbe87b2fe1aab12ba13"
   integrity sha512-Nhh3TIEgN18mNbdXpd5Q8mSCBnrZQeY9V7Ca3dqYvNDStNIGRmJA6dmrIPMJ0kow3C7gcQbpsG2rPzy1Ks/AnA==
+
+"@typescript-eslint/tsconfig-utils@8.42.0", "@typescript-eslint/tsconfig-utils@^8.33.1", "@typescript-eslint/tsconfig-utils@^8.42.0":
+  version "8.42.0"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/tsconfig-utils/-/tsconfig-utils-8.42.0.tgz#21a3e74396fd7443ff930bc41b27789ba7e9236e"
+  integrity sha512-kHeFUOdwAJfUmYKjR3CLgZSglGHjbNTi1H8sTYRYV2xX6eNz4RyJ2LIgsDLKf8Yi0/GL1WZAC/DgZBeBft8QAQ==
 
 "@typescript-eslint/type-utils@8.36.0":
   version "8.36.0"
@@ -2074,17 +2103,18 @@
     debug "^4.3.4"
     ts-api-utils "^2.1.0"
 
-"@typescript-eslint/type-utils@^8.0.0", "@typescript-eslint/type-utils@^8.33.1":
-  version "8.33.1"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/type-utils/-/type-utils-8.33.1.tgz#d73ee1a29d8a0abe60d4abbff4f1d040f0de15fa"
-  integrity sha512-1cG37d9xOkhlykom55WVwG2QRNC7YXlxMaMzqw2uPeJixBFfKWZgaP/hjAObqMN/u3fr5BrTwTnc31/L9jQ2ww==
+"@typescript-eslint/type-utils@^8.0.0", "@typescript-eslint/type-utils@^8.42.0":
+  version "8.42.0"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/type-utils/-/type-utils-8.42.0.tgz#d6733e7a9fbdf5af60c09c6038dffde13f4e4253"
+  integrity sha512-9KChw92sbPTYVFw3JLRH1ockhyR3zqqn9lQXol3/YbI6jVxzWoGcT3AsAW0mu1MY0gYtsXnUGV/AKpkAj5tVlQ==
   dependencies:
-    "@typescript-eslint/typescript-estree" "8.33.1"
-    "@typescript-eslint/utils" "8.33.1"
+    "@typescript-eslint/types" "8.42.0"
+    "@typescript-eslint/typescript-estree" "8.42.0"
+    "@typescript-eslint/utils" "8.42.0"
     debug "^4.3.4"
     ts-api-utils "^2.1.0"
 
-"@typescript-eslint/types@8.33.1", "@typescript-eslint/types@^8.33.1":
+"@typescript-eslint/types@8.33.1":
   version "8.33.1"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/types/-/types-8.33.1.tgz#b693111bc2180f8098b68e9958cf63761657a55f"
   integrity sha512-xid1WfizGhy/TKMTwhtVOgalHwPtV8T32MS9MaH50Cwvz6x6YqRIPdD2WvW0XaqOzTV9p5xdLY0h/ZusU5Lokg==
@@ -2094,7 +2124,12 @@
   resolved "https://registry.yarnpkg.com/@typescript-eslint/types/-/types-8.36.0.tgz#d3d184adc2899e2912c13b17c1590486ef37c7ac"
   integrity sha512-xGms6l5cTJKQPZOKM75Dl9yBfNdGeLRsIyufewnxT4vZTrjC0ImQT4fj8QmtJK84F58uSh5HVBSANwcfiXxABQ==
 
-"@typescript-eslint/typescript-estree@8.33.1", "@typescript-eslint/typescript-estree@^8.33.1":
+"@typescript-eslint/types@8.42.0", "@typescript-eslint/types@^8.33.1", "@typescript-eslint/types@^8.42.0":
+  version "8.42.0"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/types/-/types-8.42.0.tgz#ae15c09cebda20473772902033328e87372db008"
+  integrity sha512-LdtAWMiFmbRLNP7JNeY0SqEtJvGMYSzfiWBSmx+VSZ1CH+1zyl8Mmw1TT39OrtsRvIYShjJWzTDMPWZJCpwBlw==
+
+"@typescript-eslint/typescript-estree@8.33.1":
   version "8.33.1"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/typescript-estree/-/typescript-estree-8.33.1.tgz#d271beed470bc915b8764e22365d4925c2ea265d"
   integrity sha512-+s9LYcT8LWjdYWu7IWs7FvUxpQ/DGkdjZeE/GGulHvv8rvYwQvVaUZ6DE+j5x/prADUgSbbCWZ2nPI3usuVeOA==
@@ -2126,15 +2161,21 @@
     semver "^7.6.0"
     ts-api-utils "^2.1.0"
 
-"@typescript-eslint/utils@8.33.1", "@typescript-eslint/utils@^8.32.1", "@typescript-eslint/utils@^8.33.1":
-  version "8.33.1"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/utils/-/utils-8.33.1.tgz#ea22f40d3553da090f928cf17907e963643d4b96"
-  integrity sha512-52HaBiEQUaRYqAXpfzWSR2U3gxk92Kw006+xZpElaPMg3C4PgM+A5LqwoQI1f9E5aZ/qlxAZxzm42WX+vn92SQ==
+"@typescript-eslint/typescript-estree@8.42.0", "@typescript-eslint/typescript-estree@^8.42.0":
+  version "8.42.0"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/typescript-estree/-/typescript-estree-8.42.0.tgz#593c3af87d4462252c0d7239d1720b84a1b56864"
+  integrity sha512-ku/uYtT4QXY8sl9EDJETD27o3Ewdi72hcXg1ah/kkUgBvAYHLwj2ofswFFNXS+FL5G+AGkxBtvGt8pFBHKlHsQ==
   dependencies:
-    "@eslint-community/eslint-utils" "^4.7.0"
-    "@typescript-eslint/scope-manager" "8.33.1"
-    "@typescript-eslint/types" "8.33.1"
-    "@typescript-eslint/typescript-estree" "8.33.1"
+    "@typescript-eslint/project-service" "8.42.0"
+    "@typescript-eslint/tsconfig-utils" "8.42.0"
+    "@typescript-eslint/types" "8.42.0"
+    "@typescript-eslint/visitor-keys" "8.42.0"
+    debug "^4.3.4"
+    fast-glob "^3.3.2"
+    is-glob "^4.0.3"
+    minimatch "^9.0.4"
+    semver "^7.6.0"
+    ts-api-utils "^2.1.0"
 
 "@typescript-eslint/utils@8.36.0":
   version "8.36.0"
@@ -2145,6 +2186,26 @@
     "@typescript-eslint/scope-manager" "8.36.0"
     "@typescript-eslint/types" "8.36.0"
     "@typescript-eslint/typescript-estree" "8.36.0"
+
+"@typescript-eslint/utils@8.42.0", "@typescript-eslint/utils@^8.42.0":
+  version "8.42.0"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/utils/-/utils-8.42.0.tgz#95f8e0c697ff2f7da5f72e16135011f878d815c0"
+  integrity sha512-JnIzu7H3RH5BrKC4NoZqRfmjqCIS1u3hGZltDYJgkVdqAezl4L9d1ZLw+36huCujtSBSAirGINF/S4UxOcR+/g==
+  dependencies:
+    "@eslint-community/eslint-utils" "^4.7.0"
+    "@typescript-eslint/scope-manager" "8.42.0"
+    "@typescript-eslint/types" "8.42.0"
+    "@typescript-eslint/typescript-estree" "8.42.0"
+
+"@typescript-eslint/utils@^8.32.1":
+  version "8.33.1"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/utils/-/utils-8.33.1.tgz#ea22f40d3553da090f928cf17907e963643d4b96"
+  integrity sha512-52HaBiEQUaRYqAXpfzWSR2U3gxk92Kw006+xZpElaPMg3C4PgM+A5LqwoQI1f9E5aZ/qlxAZxzm42WX+vn92SQ==
+  dependencies:
+    "@eslint-community/eslint-utils" "^4.7.0"
+    "@typescript-eslint/scope-manager" "8.33.1"
+    "@typescript-eslint/types" "8.33.1"
+    "@typescript-eslint/typescript-estree" "8.33.1"
 
 "@typescript-eslint/visitor-keys@8.33.1":
   version "8.33.1"
@@ -2160,6 +2221,14 @@
   integrity sha512-vZrhV2lRPWDuGoxcmrzRZyxAggPL+qp3WzUrlZD+slFueDiYHxeBa34dUXPuC0RmGKzl4lS5kFJYvKCq9cnNDA==
   dependencies:
     "@typescript-eslint/types" "8.36.0"
+    eslint-visitor-keys "^4.2.1"
+
+"@typescript-eslint/visitor-keys@8.42.0":
+  version "8.42.0"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/visitor-keys/-/visitor-keys-8.42.0.tgz#87c6caaa1ac307bc73a87c1fc469f88f0162f27e"
+  integrity sha512-3WbiuzoEowaEn8RSnhJBrxSwX8ULYE9CXaPepS2C2W3NSA5NNIvBaslpBSBElPq0UGr0xVJlXFWOAKIkyylydQ==
+  dependencies:
+    "@typescript-eslint/types" "8.42.0"
     eslint-visitor-keys "^4.2.1"
 
 "@vitejs/plugin-react-swc@^3.8.0":
@@ -3177,114 +3246,114 @@ escodegen@^2.0.0:
   optionalDependencies:
     source-map "~0.6.1"
 
-eslint-plugin-react-debug@1.51.2:
-  version "1.51.2"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-react-debug/-/eslint-plugin-react-debug-1.51.2.tgz#2c8dd34b4a793e80b8bb6f035ee5a936ba52fb98"
-  integrity sha512-5PxCAjrFXl/rE+W7FF9JeNDtRlqBhBDw/YjOnj0bCG0vu9tCtqf7XJVsaAWsx18KisiQrBV7GsJvm/7gmQFTng==
+eslint-plugin-react-debug@1.53.0:
+  version "1.53.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react-debug/-/eslint-plugin-react-debug-1.53.0.tgz#f9989125c355beca0e75f88682865b0313bc0ae1"
+  integrity sha512-YLMYNFTmas1Q957qwzrbSybHueBNKTRCQMBD8zVE5+Grg2flhB+pOUxStRBQ3/1WlL93xIfe4mTJkb3HtI2wxA==
   dependencies:
-    "@eslint-react/ast" "1.51.2"
-    "@eslint-react/core" "1.51.2"
-    "@eslint-react/eff" "1.51.2"
-    "@eslint-react/kit" "1.51.2"
-    "@eslint-react/shared" "1.51.2"
-    "@eslint-react/var" "1.51.2"
-    "@typescript-eslint/scope-manager" "^8.33.1"
-    "@typescript-eslint/type-utils" "^8.33.1"
-    "@typescript-eslint/types" "^8.33.1"
-    "@typescript-eslint/utils" "^8.33.1"
+    "@eslint-react/ast" "1.53.0"
+    "@eslint-react/core" "1.53.0"
+    "@eslint-react/eff" "1.53.0"
+    "@eslint-react/kit" "1.53.0"
+    "@eslint-react/shared" "1.53.0"
+    "@eslint-react/var" "1.53.0"
+    "@typescript-eslint/scope-manager" "^8.42.0"
+    "@typescript-eslint/type-utils" "^8.42.0"
+    "@typescript-eslint/types" "^8.42.0"
+    "@typescript-eslint/utils" "^8.42.0"
     string-ts "^2.2.1"
-    ts-pattern "^5.7.1"
+    ts-pattern "^5.8.0"
 
-eslint-plugin-react-dom@1.51.2:
-  version "1.51.2"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-react-dom/-/eslint-plugin-react-dom-1.51.2.tgz#8b412a9e91a9172940f8afb1a7dab85ab3456dff"
-  integrity sha512-4nm3HFMZCkuZjeHyPnjboq07aInTGtRf7HWBA/zgJOkS2+jo4bRt7V4GyFFFj24Zq4mcM+p0ZeWxbGK0E4Uu4A==
+eslint-plugin-react-dom@1.53.0:
+  version "1.53.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react-dom/-/eslint-plugin-react-dom-1.53.0.tgz#0c2cdcc415030920188e1348229874ff1241eb3c"
+  integrity sha512-JfjDWxFLCuAo+Vm2S6uVGxHMteN37r193PORuCfERpi3LCh97xq0FI3j05SKHvyQmV87jUuBbKLvOBTylTSRvw==
   dependencies:
-    "@eslint-react/ast" "1.51.2"
-    "@eslint-react/core" "1.51.2"
-    "@eslint-react/eff" "1.51.2"
-    "@eslint-react/kit" "1.51.2"
-    "@eslint-react/shared" "1.51.2"
-    "@eslint-react/var" "1.51.2"
-    "@typescript-eslint/scope-manager" "^8.33.1"
-    "@typescript-eslint/types" "^8.33.1"
-    "@typescript-eslint/utils" "^8.33.1"
+    "@eslint-react/ast" "1.53.0"
+    "@eslint-react/core" "1.53.0"
+    "@eslint-react/eff" "1.53.0"
+    "@eslint-react/kit" "1.53.0"
+    "@eslint-react/shared" "1.53.0"
+    "@eslint-react/var" "1.53.0"
+    "@typescript-eslint/scope-manager" "^8.42.0"
+    "@typescript-eslint/types" "^8.42.0"
+    "@typescript-eslint/utils" "^8.42.0"
     compare-versions "^6.1.1"
     string-ts "^2.2.1"
-    ts-pattern "^5.7.1"
+    ts-pattern "^5.8.0"
 
-eslint-plugin-react-hooks-extra@1.51.2:
-  version "1.51.2"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks-extra/-/eslint-plugin-react-hooks-extra-1.51.2.tgz#b6f7bda0f56d852f06561769a3c9dcb40edf8801"
-  integrity sha512-wo3KFmVDRx+4KkiC2iqsU544JG1vy4CIWstHcpdZ7fT3gEuRGiGFNlWOAQ0wH/RMvPwMXstc127FPS8R3sUL9A==
+eslint-plugin-react-hooks-extra@1.53.0:
+  version "1.53.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks-extra/-/eslint-plugin-react-hooks-extra-1.53.0.tgz#30cbf2089b3628414f515294ac348bee406686af"
+  integrity sha512-9IkvlBl+92iKZ7+NnYxL54Js2LLaR5mSHDkbCFpm9SP+L8OgjshYzhJOzKog3WH3SfwaKgTy4BV0V8k5xJbF2g==
   dependencies:
-    "@eslint-react/ast" "1.51.2"
-    "@eslint-react/core" "1.51.2"
-    "@eslint-react/eff" "1.51.2"
-    "@eslint-react/kit" "1.51.2"
-    "@eslint-react/shared" "1.51.2"
-    "@eslint-react/var" "1.51.2"
-    "@typescript-eslint/scope-manager" "^8.33.1"
-    "@typescript-eslint/type-utils" "^8.33.1"
-    "@typescript-eslint/types" "^8.33.1"
-    "@typescript-eslint/utils" "^8.33.1"
+    "@eslint-react/ast" "1.53.0"
+    "@eslint-react/core" "1.53.0"
+    "@eslint-react/eff" "1.53.0"
+    "@eslint-react/kit" "1.53.0"
+    "@eslint-react/shared" "1.53.0"
+    "@eslint-react/var" "1.53.0"
+    "@typescript-eslint/scope-manager" "^8.42.0"
+    "@typescript-eslint/type-utils" "^8.42.0"
+    "@typescript-eslint/types" "^8.42.0"
+    "@typescript-eslint/utils" "^8.42.0"
     string-ts "^2.2.1"
-    ts-pattern "^5.7.1"
+    ts-pattern "^5.8.0"
 
-eslint-plugin-react-naming-convention@1.51.2:
-  version "1.51.2"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-react-naming-convention/-/eslint-plugin-react-naming-convention-1.51.2.tgz#37435729fbfa303169d53823e3400b6a4e6be782"
-  integrity sha512-oFoxppmuYwj+D6NpxRmVyUjySnuqfsZltz1y+S0BYROA/XDWAdpLkqfVbsJQSHSsytgqk5wpHtsB2FD6Y0jelA==
+eslint-plugin-react-naming-convention@1.53.0:
+  version "1.53.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react-naming-convention/-/eslint-plugin-react-naming-convention-1.53.0.tgz#f77832ee9a7987c7bc113020be035e3d8667ac3b"
+  integrity sha512-te+Y/Z+WHtzQk7UUhl/tZrpZoS7ZkdRHpuxZRwmFrvWecNbWnJHrcrmNSHSkaYzb0kBqoJDrre3sHeJnWanKSQ==
   dependencies:
-    "@eslint-react/ast" "1.51.2"
-    "@eslint-react/core" "1.51.2"
-    "@eslint-react/eff" "1.51.2"
-    "@eslint-react/kit" "1.51.2"
-    "@eslint-react/shared" "1.51.2"
-    "@eslint-react/var" "1.51.2"
-    "@typescript-eslint/scope-manager" "^8.33.1"
-    "@typescript-eslint/type-utils" "^8.33.1"
-    "@typescript-eslint/types" "^8.33.1"
-    "@typescript-eslint/utils" "^8.33.1"
+    "@eslint-react/ast" "1.53.0"
+    "@eslint-react/core" "1.53.0"
+    "@eslint-react/eff" "1.53.0"
+    "@eslint-react/kit" "1.53.0"
+    "@eslint-react/shared" "1.53.0"
+    "@eslint-react/var" "1.53.0"
+    "@typescript-eslint/scope-manager" "^8.42.0"
+    "@typescript-eslint/type-utils" "^8.42.0"
+    "@typescript-eslint/types" "^8.42.0"
+    "@typescript-eslint/utils" "^8.42.0"
     string-ts "^2.2.1"
-    ts-pattern "^5.7.1"
+    ts-pattern "^5.8.0"
 
-eslint-plugin-react-web-api@1.51.2:
-  version "1.51.2"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-react-web-api/-/eslint-plugin-react-web-api-1.51.2.tgz#c7a6fc298adf245dd2576af367fb1c5e384b2bae"
-  integrity sha512-nSJUX3vYTcXGW9VI3ingkQzDb8qC51Y/VGMKysCNFUq3ReXdMGtbW4j+UqsaTYbZmzai3BwI0eE4aAjBXEBivA==
+eslint-plugin-react-web-api@1.53.0:
+  version "1.53.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react-web-api/-/eslint-plugin-react-web-api-1.53.0.tgz#5e4059c99c17eff60b4b39e4df6a95a6aaeb2cf9"
+  integrity sha512-Cq6vQN0lpOoUsOv+7/5nzTDQA+dFFaRd16f0vlQ98wdlXHD+fj8Gfuy7IQlHWYNmPJInK6KaSs8gS074PoqrUg==
   dependencies:
-    "@eslint-react/ast" "1.51.2"
-    "@eslint-react/core" "1.51.2"
-    "@eslint-react/eff" "1.51.2"
-    "@eslint-react/kit" "1.51.2"
-    "@eslint-react/shared" "1.51.2"
-    "@eslint-react/var" "1.51.2"
-    "@typescript-eslint/scope-manager" "^8.33.1"
-    "@typescript-eslint/types" "^8.33.1"
-    "@typescript-eslint/utils" "^8.33.1"
+    "@eslint-react/ast" "1.53.0"
+    "@eslint-react/core" "1.53.0"
+    "@eslint-react/eff" "1.53.0"
+    "@eslint-react/kit" "1.53.0"
+    "@eslint-react/shared" "1.53.0"
+    "@eslint-react/var" "1.53.0"
+    "@typescript-eslint/scope-manager" "^8.42.0"
+    "@typescript-eslint/types" "^8.42.0"
+    "@typescript-eslint/utils" "^8.42.0"
     string-ts "^2.2.1"
-    ts-pattern "^5.7.1"
+    ts-pattern "^5.8.0"
 
-eslint-plugin-react-x@1.51.2:
-  version "1.51.2"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-react-x/-/eslint-plugin-react-x-1.51.2.tgz#fd10c0c625fc224f836cfca29c087587264f3b8c"
-  integrity sha512-PW/93ckImql0/nDEzxFWpjucZe1FLNWs0sMT+T/HPT7WCs78IlAQ3y6Iz/18yonnl0sTOmDFqN06O7Py1+crGQ==
+eslint-plugin-react-x@1.53.0:
+  version "1.53.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react-x/-/eslint-plugin-react-x-1.53.0.tgz#166814b9c55771531120e83311aea215461c5163"
+  integrity sha512-5a1CpHtBXQQUPB6dbxvcqg97QJ+APWNbZJQEBKNCiVjnx1DpCOzhAwZ2jMOZe+HS96Cf3TqqlRf4HBUm4KYYxg==
   dependencies:
-    "@eslint-react/ast" "1.51.2"
-    "@eslint-react/core" "1.51.2"
-    "@eslint-react/eff" "1.51.2"
-    "@eslint-react/kit" "1.51.2"
-    "@eslint-react/shared" "1.51.2"
-    "@eslint-react/var" "1.51.2"
-    "@typescript-eslint/scope-manager" "^8.33.1"
-    "@typescript-eslint/type-utils" "^8.33.1"
-    "@typescript-eslint/types" "^8.33.1"
-    "@typescript-eslint/utils" "^8.33.1"
+    "@eslint-react/ast" "1.53.0"
+    "@eslint-react/core" "1.53.0"
+    "@eslint-react/eff" "1.53.0"
+    "@eslint-react/kit" "1.53.0"
+    "@eslint-react/shared" "1.53.0"
+    "@eslint-react/var" "1.53.0"
+    "@typescript-eslint/scope-manager" "^8.42.0"
+    "@typescript-eslint/type-utils" "^8.42.0"
+    "@typescript-eslint/types" "^8.42.0"
+    "@typescript-eslint/utils" "^8.42.0"
     compare-versions "^6.1.1"
     is-immutable-type "^5.0.1"
     string-ts "^2.2.1"
-    ts-pattern "^5.7.1"
+    ts-pattern "^5.8.0"
 
 eslint-scope@^8.4.0:
   version "8.4.0"
@@ -6047,10 +6116,10 @@ ts-jest@^29.2.5:
     type-fest "^4.41.0"
     yargs-parser "^21.1.1"
 
-ts-pattern@^5.7.1:
-  version "5.7.1"
-  resolved "https://registry.yarnpkg.com/ts-pattern/-/ts-pattern-5.7.1.tgz#d675888a86949923e464c13c35d97c5a4f778c43"
-  integrity sha512-EGs8PguQqAAUIcQfK4E9xdXxB6s2GK4sJfT/vcc9V1ELIvC4LH/zXu2t/5fajtv6oiRCxdv7BgtVK3vWgROxag==
+ts-pattern@^5.8.0:
+  version "5.8.0"
+  resolved "https://registry.yarnpkg.com/ts-pattern/-/ts-pattern-5.8.0.tgz#1bf2dcdc58ae96ac7b64e59c9515d7ce1bf0ff19"
+  integrity sha512-kIjN2qmWiHnhgr5DAkAafF9fwb0T5OhMVSWrm8XEdTFnX6+wfXwYOFjeF86UZ54vduqiR7BfqScFmXSzSaH8oA==
 
 tsconfck@^3.0.3:
   version "3.1.5"
@@ -6463,7 +6532,7 @@ yocto-queue@^0.1.0:
   resolved "https://registry.yarnpkg.com/yocto-queue/-/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
 
-zod@^3.25.56:
-  version "3.25.56"
-  resolved "https://registry.yarnpkg.com/zod/-/zod-3.25.56.tgz#4cff0340b7cd3778314dac1e74d6a663ffeef914"
-  integrity sha512-rd6eEF3BTNvQnR2e2wwolfTmUTnp70aUTqr0oaGbHifzC3BKJsoV+Gat8vxUMR1hwOKBs6El+qWehrHbCpW6SQ==
+zod@^4.1.5:
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/zod/-/zod-4.1.5.tgz#7a21fc3178928ede50a28f7d0db4414c4cdb0161"
+  integrity sha512-rcUUZqlLJgBC33IT3PNMgsCq6TzLQEG/Ei/KTCU0PedSWRMAXoOUN+4t/0H+Q8bdnLPdqUYnvboJT0bn/229qg==
