@@ -9,7 +9,7 @@
     "@mdi/react": "^1.6.1",
     "@tailwindcss/vite": "^4.0.7",
     "@testing-library/jest-dom": "^6.8.0",
-    "@vitejs/plugin-react-swc": "^3.8.0",
+    "@vitejs/plugin-react-swc": "^4.0.0",
     "axios": "^1.7.2",
     "chart.js": "^4.4.7",
     "chartjs-adapter-spacetime": "^1.0.1",
