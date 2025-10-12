@@ -31,7 +31,7 @@ const CategoryGraph = ({ categories, year, currencySymbol }: CategoryGraphProps)
 
         const incomePromise = new Promise<ChartDataset[]>((resolve, fail) =>
             StatisticalRepository.monthly({
-                dateRange: DateRangeService.forYear(year).toBackend(),
+                range: DateRangeService.forYear(year).toBackend(),
                 onlyIncome: true,
                 categories: categories
             })
@@ -47,7 +47,7 @@ const CategoryGraph = ({ categories, year, currencySymbol }: CategoryGraphProps)
         )
         const expensePromise = new Promise<ChartDataset[]>((resolve, fail) =>
             StatisticalRepository.monthly({
-                dateRange: DateRangeService.forYear(year).toBackend(),
+                range: DateRangeService.forYear(year).toBackend(),
                 onlyIncome: false,
                 categories: categories
             })

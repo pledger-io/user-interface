@@ -26,8 +26,8 @@ const BudgetYearlyExpense = ({ year, budgets, currencySymbol }: BudgetYearlyExpe
 
     Promise.all(DateRangeService.months(year)
       .map(month => StatisticalRepository.balance({
-        dateRange: month.toBackend(),
-        onlyIncome: false,
+        range: month.toBackend(),
+        type: 'EXPENSE',
         expenses: uniqueExpenses.map(id => ({ id }))
       })))
       .then(expenses => {

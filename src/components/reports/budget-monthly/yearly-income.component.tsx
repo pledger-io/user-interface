@@ -21,8 +21,8 @@ const YearlyIncomeGraphComponent = ({ year = 1970, budgets, currencySymbol = '' 
 
     Promise.all(DateRangeService.months(year)
       .map(m => StatisticalRepository.balance({
-        dateRange: m.toBackend(),
-        onlyIncome: true
+        range: m.toBackend(),
+        type: 'EXPENSE'
       })))
       .then(data => {
         setChartData({

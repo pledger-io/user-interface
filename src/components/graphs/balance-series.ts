@@ -1,6 +1,6 @@
 import { ChartDataset } from "chart.js/dist/types";
 import DateRange from "../../types/date-range.type";
-import StatisticalRepository from "../../core/repositories/statistical-repository";
+import StatisticalRepository, { BalanceRequestFilter } from "../../core/repositories/statistical-repository";
 import { Balance } from "../../types/types";
 import DateRangeService from "../../service/date-range.service";
 import { i10n } from "../../config/prime-locale";
@@ -9,10 +9,13 @@ import { BalanceSeriesFilter } from "./chart-types";
 export const BalanceSeries = async (filter : BalanceSeriesFilter): Promise<ChartDataset> => {
     const label = i10n(filter.title)
     const adjustedFilter = {
-        ...filter,
-        onlyIncome: filter.onlyIncome || false,
-        allMoney: filter.allMoney || true,
-        dateRange: filter.dateRange.toBackend()
+        accounts: filter.accounts,
+        categories: filter.categories,
+        contracts: filter.contracts,
+        expenses: filter.expenses,
+        currency: filter.currency,
+        type: filter.allMoney ? 'ALL' : (filter.onlyIncome ? 'INCOME' : 'EXPENSE'),
+        range: filter.dateRange.toBackend()
     } as any
 
     const points : { x: any, y: number }[] = []
@@ -31,7 +34,7 @@ export const BalanceSeries = async (filter : BalanceSeriesFilter): Promise<Chart
 
     let balance = startBalance.balance
     for (let idx = 0; idx < dailyBalance.length; idx++) {
-        balance += dailyBalance[idx].amount
+        balance += dailyBalance[idx].balance
         points.push({ x: dailyBalance[idx].date, y: balance })
     }
     points.push({ x: filter.dateRange.endString(), y: endBalance.balance })
@@ -46,10 +49,9 @@ export const BalanceSeries = async (filter : BalanceSeriesFilter): Promise<Chart
 const balanceWithAdjustedRange = (filter: BalanceSeriesFilter, range: DateRange) : Promise<Balance> => {
     const adjustedFilter = {
         ...filter,
-        onlyIncome: filter.onlyIncome || false,
-        allMoney: filter.allMoney || true,
-        dateRange: range.toBackend()
-    } as any
+        type: filter.onlyIncome == undefined ? 'ALL' : (filter.onlyIncome ? 'INCOME' : 'EXPENSE'),
+        range: range.toBackend()
+    } as BalanceRequestFilter
 
     return StatisticalRepository.balance(adjustedFilter)
 }
