@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import DateRange from "../types/date-range.type";
-import StatisticalRepository from "../core/repositories/statistical-repository";
-import { Identifiable } from "../types/types";
+import StatisticalRepository, { BalanceRequestFilter } from "../core/repositories/statistical-repository";
 import MoneyComponent from "./format/money.component";
 import Loading from "./layout/loading.component";
 
 type Props = {
-    accounts?: Identifiable[]
-    categories?: Identifiable[]
-    expenses?: Identifiable[]
+    accounts?: number[]
+    categories?: number[]
+    expenses?: number[]
     income?: boolean
     currency?: string
     range?: DateRange
@@ -21,17 +20,16 @@ const _ = ({ accounts = [], categories = [], expenses = [],  income , currency, 
     useEffect(() => {
         const filter: any = {
             accounts: accounts,
-            allMoney: income == undefined || !income,
+            type: income == undefined ? 'ALL' : income ? 'INCOME' : 'EXPENSE',
             expenses: expenses,
-            onlyIncome: income,
             currency: currency,
             categories: categories,
             importSlug: importSlug
-        }
+        } as BalanceRequestFilter
         if (range) {
-            filter.dateRange = {
-                start: range.startString(),
-                end: range.endString()
+            filter.range = {
+                startDate: range.startString(),
+                endDate: range.endString()
             }
         }
 

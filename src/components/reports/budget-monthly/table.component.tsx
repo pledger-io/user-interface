@@ -30,8 +30,8 @@ const BudgetTable: FC<BudgetTableProps> = ({ budgets, year, currency }) => {
     const ranges = DateRangeService.months(year)
     const promises = ranges.map(async (month: DateRange) => {
       const balance = await StatisticalRepository.balance({
-        onlyIncome: false,
-        dateRange: month.toBackend()
+        type: 'EXPENSE',
+        range: month.toBackend()
       })
 
       return {

@@ -1,7 +1,9 @@
 import axios, { AxiosResponse } from "axios";
+import { jwtDecode, JwtPayload } from "jwt-decode";
+import { UserProfile } from "../../types/types";
 
 const config = {
-    root: '/api'
+    root: '/v2/api'
 }
 
 const axiosInstance = axios.create({
@@ -37,10 +39,28 @@ const axiosInstance = axios.create({
     },
 })
 
+function extractJwtTokenFromBearer (): JwtPayload | null {
+  const token = sessionStorage.getItem('token')
+  if (!token) {
+    return null;
+  }
+
+  try {
+    console.log('Jwt token', jwtDecode(token as string))
+    return jwtDecode(token as string);
+  } catch (error) {
+    console.error('Failed to decode JWT token:', error);
+    return null;
+  }
+}
+
 const RestAPI = (() => {
-    let userProfile = {}
+    let userProfile = {} as UserProfile
     function updateProfile(profile: any) {
-        userProfile = profile
+        userProfile = {
+          ...profile,
+          username: extractJwtTokenFromBearer()?.sub
+        }
         return profile
     }
 
@@ -48,8 +68,8 @@ const RestAPI = (() => {
         .then(response => response.data)
 
     const api = {
-        profile: () => api.get('profile').then(updateProfile),
-        user: () => userProfile,
+        profile: () => api.get(`user-account/${extractJwtTokenFromBearer()?.sub}`).then(updateProfile),
+        user: (): UserProfile => userProfile,
 
         get:   <U>(uri: string, settings = {}): Promise<U>              => handle(axiosInstance.get(uri, settings)),
         patch: <T,U>(uri: string, body: T, settings = {}): Promise<U>   => handle(axiosInstance.patch(uri, body, settings)),

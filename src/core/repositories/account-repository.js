@@ -7,8 +7,8 @@ const AccountRepository = (api => {
             page: page
         }),
         types: () => api.get('account-types'),
-        top: (type, year) => api.get(`accounts/top/${type}/${year}-01-01/${year}-12-31`),
-        own: () => api.get('accounts/my-own'),
+        top: (type, year) => api.get(`accounts/top-by-spending?type=${type}&startDate=${year}-01-01&endDate=${year}-12-31`),
+        own: () => api.get('accounts?offset=0&numberOfResults=9999').then((result) => result.content),
         get: id => api.get(`accounts/${id}`),
         firstTransaction: (id, description) => api.get(`accounts/${id}/transactions/first?description=${description}`),
         transactions: (id, range, page) => api.post(`accounts/${id}/transactions`, {

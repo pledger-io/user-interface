@@ -26,23 +26,21 @@ const AccountBalanceComponent = ({ year, currency }: AccountBalanceProp) => {
       .then(async (account: Account[]) => {
         const accounts = await Promise.all(account.map(async account => {
           const startBalance = (await StatisticalRepository.balance({
-            accounts: [account],
+            accounts: [account.id],
             currency: currency,
-            allMoney: true,
-            onlyIncome: false,
-            dateRange: {
-              start: '1970-01-01',
-              end: `${ year }-01-01`
+            type: 'ALL',
+            range: {
+              startDate: '1970-01-01',
+              endDate: `${ year }-01-01`
             }
           })).balance
           const endBalance = (await StatisticalRepository.balance({
-            accounts: [account],
-            allMoney: true,
-            onlyIncome: false,
+            accounts: [account.id],
+            type: 'ALL',
             currency: currency,
-            dateRange: {
-              start: '1970-01-01',
-              end: `${ year + 1 }-01-01`
+            range: {
+              startDate: '1970-01-01',
+              endDate: `${ year + 1 }-01-01`
             }
           })).balance
 

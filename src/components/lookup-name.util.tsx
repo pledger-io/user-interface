@@ -15,7 +15,7 @@ async function lookup_entity<T>(type: RuleField, id: Identifier) : Promise<T> {
         case 'CATEGORY':
             // @ts-expect-error type is incorrect
             return await CategoryRepository.get(id)
-                .then((c: Category) => ({ ...c, name: c.label }))
+                .then((c: Category) => ({ ...c, name: c.name }))
         case 'BUDGET':
             return (await BudgetRepository.budgetMonth(new Date().getFullYear(), new Date().getMonth() + 1))
                 .expenses.filter((e : BudgetExpense) => e.id == id)[0] as T
@@ -34,7 +34,7 @@ async function lookup_name(type: RuleField, id: Identifier) : Promise<string> {
         case 'CHANGE_TRANSFER_FROM':
             return (await lookup_entity<Account>(type, id)).name
         case 'CATEGORY':
-            return (await lookup_entity<Category>(type, id)).label
+            return (await lookup_entity<Category>(type, id)).name
         case 'BUDGET':
             return (await lookup_entity<BudgetExpense>(type, id)).name
         case 'CONTRACT':

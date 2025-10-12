@@ -61,7 +61,7 @@ const CategoryForm = () => {
           <Input.Text id='name'
                       title='Category.label'
                       type='text'
-                      value={ category.label }
+                      value={ category.name }
                       required/>
           <Input.TextArea id='description'
                           title='Category.description'

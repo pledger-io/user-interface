@@ -33,7 +33,7 @@ const CategoryAutocompleteRow = (category: AutocompleteCategory) => {
 function mapCategoryToAutocomplete(category: Category): AutocompleteCategory {
   return {
     id: category.id,
-    name: category.label,
+    name: category.name,
     description: category.description
   }
 }

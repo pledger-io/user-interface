@@ -46,19 +46,19 @@ const TransactionRepository = (api => {
 const CurrencyRepository = (api => {
     let knownCurrencies = []
     return {
-        list: () => api.get('settings/currencies').then(currencies => {
+        list: () => api.get('currencies').then(currencies => {
             knownCurrencies = currencies
             return currencies
         }),
-        get: code => api.get(`settings/currencies/${code}`),
-        change: (code, enabled) => api.patch(`settings/currencies/${code}`, { enabled: enabled })
+        get: code => api.get(`currencies/${code}`),
+        change: (code, enabled) => api.patch(`currencies/${code}`, { enabled: enabled })
             .then(response => {
                 const currency = knownCurrencies.find(currency => currency.code === code)
                 currency.enabled = enabled
                 return response
             }),
-        create: (model) => api.put(`settings/currencies`, model),
-        update: (code, model) => api.post(`settings/currencies/${code}`, model),
+        create: (model) => api.put(`currencies`, model),
+        update: (code, model) => api.post(`currencies/${code}`, model),
         cached: (code) => knownCurrencies.find(currency => currency.code === code)
     }
 })(RestApi)
@@ -73,17 +73,10 @@ const TransactionScheduleRepository = (api => {
     }
 })(RestApi)
 
-const LocalizationRepository = (api => {
-    return {
-        get: language => api.get(`localization/lang/${language}/`)
-    }
-})(RestApi)
-
 export {
     AttachmentRepository,
     TransactionRepository,
     TransactionScheduleRepository,
     CurrencyRepository,
-    SettingRepository,
-    LocalizationRepository
+    SettingRepository
 }

@@ -27,12 +27,12 @@ const MonthlySpendingComponent = ({ categories, range }: MonthlySpendingComponen
     const incomePromise = StatisticalRepository.monthly({
       categories: categories,
       onlyIncome: true,
-      dateRange: range.toBackend()
+      range: range.toBackend()
     })
     const expensePromise = StatisticalRepository.monthly({
       categories: categories,
       onlyIncome: false,
-      dateRange: range.toBackend()
+      range: range.toBackend()
     })
 
     Promise.all([incomePromise, expensePromise])

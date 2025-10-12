@@ -11,16 +11,10 @@ type SummaryProps = {
 
 const Summary = ({ range, compareRange }: SummaryProps) => {
     const baseCommand = {
-        dateRange: {
-            start: range.startString(),
-            end: range.endString()
-        }
+        range: range.toBackend(),
     }
     const compareBaseCommand = {
-        dateRange: {
-            start: compareRange.startString(),
-            end: compareRange.endString()
-        }
+        range: range.toBackend()
     }
 
     return <div className="flex flex-wrap gap-2 mt-4">
@@ -29,11 +23,11 @@ const Summary = ({ range, compareRange }: SummaryProps) => {
                 title='page.dashboard.income'
                 icon={ mdiSwapVerticalCircle }
                 currentPromise={
-                    StatisticalRepository.balance({ ...baseCommand, onlyIncome: true })
+                    StatisticalRepository.balance({ ...baseCommand, type: 'INCOME' })
                         .then(({ balance }) => balance)
                 }
                 previousPromise={
-                    StatisticalRepository.balance({ ...compareBaseCommand, onlyIncome: true })
+                    StatisticalRepository.balance({ ...compareBaseCommand, type: 'INCOME' })
                         .then(({ balance }) => balance)
                 }
                 currency='EUR'/>
@@ -42,11 +36,11 @@ const Summary = ({ range, compareRange }: SummaryProps) => {
                 title='page.dashboard.expense'
                 icon={ mdiContactlessPaymentCircle }
                 currentPromise={
-                    StatisticalRepository.balance({ ...baseCommand, onlyIncome: false })
+                    StatisticalRepository.balance({ ...baseCommand, type: 'EXPENSE' })
                         .then(({ balance }) => Math.abs(balance))
                 }
                 previousPromise={
-                    StatisticalRepository.balance({ ...compareBaseCommand, onlyIncome: false })
+                    StatisticalRepository.balance({ ...compareBaseCommand, type: 'EXPENSE' })
                         .then(({ balance }) => Math.abs(balance))
                 }
                 currency='EUR'/>
@@ -58,15 +52,15 @@ const Summary = ({ range, compareRange }: SummaryProps) => {
                 icon={ mdiScaleBalance }
                 currentPromise={
                     StatisticalRepository.balance({
-                        dateRange: { start: '1970-01-01', end: range.endString() },
-                        allMoney: true
+                        range: { startDate: '1970-01-01', endDate: range.endString() },
+                        type: 'ALL'
                     } as BalanceRequestFilter)
                         .then(({ balance }) => balance)
                 }
                 previousPromise={
                     StatisticalRepository.balance({
-                        dateRange: { start: '1970-01-01', end: compareRange.endString() },
-                        allMoney: true
+                        range: { startDate: '1970-01-01', endDate: compareRange.endString() },
+                        type: 'ALL'
                     } as BalanceRequestFilter)
                         .then(({ balance }) => balance)
                 }

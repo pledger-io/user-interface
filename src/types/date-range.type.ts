@@ -48,8 +48,8 @@ class DateRange {
 
   toBackend() {
     return {
-      start: this.startString(),
-      end: this.endString()
+      startDate: this.startString(),
+      endDate: this.endString()
     }
   }
 

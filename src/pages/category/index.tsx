@@ -88,8 +88,8 @@ const CategoryListing = () => {
       </div>
 
       <DataTable value={ categories } size='small' loading={ !categories }>
-        <Column header={ i10n('Category.label') } body={ category => <>
-          <div>{ category.label }</div>
+        <Column header={ i10n('Category.label') } body={ (category: Category) => <>
+          <div>{ category.name }</div>
           <div className='text-sm text-muted'>{ category.description }</div>
         </> }/>
         <Column body={ category => <DateComponent date={ category.lastUsed }/> }

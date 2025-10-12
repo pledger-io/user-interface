@@ -18,18 +18,18 @@ const CategoriesBalance = ({ range } : { range: DateRange }) => {
         CategoryRepository.all()
             .then(async (categories : Category[]) => {
                 setCategorySeries({
-                    labels: categories.map(c => c.label),
+                    labels: categories.map(c => c.name),
                     datasets: [{
                         label: i10n('graph.series.category'),
                         backgroundColor: '#9abdd2',
                         data: (await Promise.all(
                             categories.map(c =>
                                 StatisticalRepository.balance({
-                                    dateRange: range.toBackend(),
-                                    onlyIncome: false,
-                                    categories: [{ id: c.id }]
+                                    range: range.toBackend(),
+                                    type: 'EXPENSE',
+                                    categories: [ c.id ]
                                 }))))
-                            .map(b => Math.abs(b.balance))
+                            .map(({ balance }) => Math.abs(balance))
                     }]
                 })
             })

@@ -35,7 +35,7 @@ export type Account = AccountRef & {
 }
 
 export type Category = Identifiable & {
-  label: string,
+  name: string,
   description: string
   lastUsed: string
 }
@@ -216,6 +216,7 @@ export type ApiError = {
 }
 
 export type UserProfile = {
+  username?: string,
   theme: string,
   defaultCurrency?: Currency,
   currency: string
