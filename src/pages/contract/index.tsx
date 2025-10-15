@@ -12,14 +12,14 @@ import ContractRepository, { ContractList } from "../../core/repositories/contra
 import { ConfirmDialog } from "primereact/confirmdialog";
 
 const ContractOverview = () => {
-  const [contracts, setContracts] = useState<ContractList>()
+  const [inactiveContracts, setInactiveContracts] = useState<ContractList>()
+  const [activeContracts, setActiveContracts] = useState<ContractList>()
 
   const loadContracts = () => {
-    ContractRepository.list()
-      .then(response => setContracts({
-        active: response.active || [],
-        terminated: response.terminated || []
-      }))
+    ContractRepository.list('INACTIVE')
+      .then(setInactiveContracts)
+    ContractRepository.list('ACTIVE')
+      .then(setActiveContracts)
   }
 
   useEffect(loadContracts, [])
@@ -47,10 +47,10 @@ const ContractOverview = () => {
 
       <TabView>
         <TabPanel header={ i10n('page.budget.contracts.active') }>
-          <ContractTable contracts={ contracts?.active } onChanges={ loadContracts }/>
+          <ContractTable contracts={ activeContracts } onChanges={ loadContracts }/>
         </TabPanel>
         <TabPanel header={ i10n('page.budget.contracts.inactive') }>
-          <ContractTable contracts={ contracts?.terminated } onChanges={ loadContracts }/>
+          <ContractTable contracts={ inactiveContracts } onChanges={ loadContracts }/>
         </TabPanel>
       </TabView>
     </Card>

@@ -40,8 +40,7 @@ const ContractTransactions: FC<ContractTransactionsProps> = ({ contract }) => {
           </h1>
           <span className='flex-1 text-right font-bold'>
                         <MoneyComponent
-                          money={ transactions[year].reduce((accumulator: number, transaction: Transaction) => accumulator - transaction.amount, 0) }
-                          currency={ contract.company.account.currency }/>
+                          money={ transactions[year].reduce((accumulator: number, transaction: Transaction) => accumulator - transaction.amount, 0) } />
                     </span>
         </div>
 

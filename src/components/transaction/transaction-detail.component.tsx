@@ -14,7 +14,7 @@ import { i10n } from "../../config/prime-locale";
 import { useNotification } from "../../context/notification-context";
 import { Resolver } from "../../core";
 import { TransactionRepository } from "../../core/RestAPI";
-import { Account, DialogOptions, Transaction } from "../../types/types";
+import { Account, AccountRef, DialogOptions, Transaction } from "../../types/types";
 import { confirmDeleteDialog } from "../confirm-dialog";
 import MoneyComponent from "../format/money.component";
 import { Button } from "../layout/button";
@@ -24,11 +24,11 @@ import TransactionSplitDialog from "./split-dialog.component";
 
 type TransactionItemProps = Attributes & {
   transaction: Transaction,
-  account?: Account,
+  account?: AccountRef,
   className?: string
 }
 
-function determineAmount(transaction: Transaction, account?: Account) {
+function determineAmount(transaction: Transaction, account?: AccountRef) {
   if (account) {
     const isSource = !account || account.id === transaction.source.id
     return isSource ? (-transaction.amount) : transaction.amount

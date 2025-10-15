@@ -13,10 +13,10 @@ const AttachmentRepository = (api => {
         upload: blob => {
             const formData = new FormData()
             formData.append('upload', blob, blob.name)
-            return api.post('attachment', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+            return api.post('files', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
         },
         download: fileCode => new Promise((resolved, reject) => {
-            api.get(`attachment/${fileCode}`, { responseType: 'blob' })
+            api.get(`files/${fileCode}`, { responseType: 'blob' })
                 .then(rawData => {
                     const fileReader = new FileReader();
                     fileReader.onloadend = () => {
@@ -26,7 +26,7 @@ const AttachmentRepository = (api => {
                     fileReader.readAsDataURL(rawData);
                 }).catch(reject)
         }),
-        delete: fileCode => api.delete(`attachment/${fileCode}`)
+        delete: fileCode => api.delete(`files/${fileCode}`)
     }
 })(RestApi)
 
@@ -66,7 +66,7 @@ const CurrencyRepository = (api => {
 const TransactionScheduleRepository = (api => {
     return {
         list: () => api.get('schedule/transaction'),
-        create: schedule => api.put('schedule/transaction', schedule),
+        create: schedule => api.post('schedules', schedule),
         get: id => api.get(`schedule/transaction/${id}`),
         delete: ({ id }) => api.delete(`schedule/transaction/${id}`),
         update: (id, schedule) => api.patch(`schedule/transaction/${id}`, schedule)
