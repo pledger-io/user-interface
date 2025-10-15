@@ -8,7 +8,7 @@ type DestinationInputComponentProps = {
 }
 
 const DestinationInputComponent: FC<DestinationInputComponentProps> = ({ transaction: { destination, type }, className }) => {
-  if (type?.code?.toLowerCase() === 'credit') {
+  if (type?.toLowerCase() === 'credit') {
     return <Entity.Account id='to'
                            type='creditor'
                            className={ className }

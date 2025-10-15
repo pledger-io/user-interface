@@ -37,7 +37,7 @@ type ScheduleTransactionDialogProps = Attributes & {
 }
 
 const ScheduleTransactionDialog: FC<ScheduleTransactionDialogProps> = ({ ref, transaction, onCreated }) => {
-  const [type, setType] = useState(transaction?.type.code.toLowerCase() || 'credit')
+  const [type, setType] = useState(transaction?.type.toLowerCase() || 'credit')
   const [visible, setVisible] = useState<boolean>(false)
   const { success, warning } = useNotification();
 

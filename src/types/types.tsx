@@ -51,7 +51,7 @@ export type Currency = Identifiable & {
 export type Contract = Identifiable & {
   name: string,
   description?: string,
-  company: Account,
+  company: AccountRef,
   start: string,
   end: string,
   fileToken?: string,
@@ -75,9 +75,7 @@ export type Transaction = {
   }
   currency: string,
   amount: number,
-  type: {
-    code: 'DEBIT' | 'CREDIT' | 'TRANSFER'
-  },
+  type: 'DEBIT' | 'CREDIT' | 'TRANSFER',
   dates: {
     transaction: string
   },

@@ -8,7 +8,7 @@ type SourceInputComponentProps = {
 }
 
 const SourceInputComponent = ({ transaction: { source, type }, className }: SourceInputComponentProps) => {
-  if (type.code.toLowerCase() === 'debit') {
+  if (type.toLowerCase() === 'debit') {
     return <Entity.Account id='from'
                            type='debtor'
                            className={ className }

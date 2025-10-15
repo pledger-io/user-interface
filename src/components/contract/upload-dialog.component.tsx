@@ -41,7 +41,9 @@ const _: FC<UploadContractProps> = ({ ref, id, onChanges }) => {
     if (!attachment) {
       setVisible(false)
     } else {
-      ContractRepository.attach(id, attachment)
+      ContractRepository.update(id, {
+        attachmentCode: attachment.fileCode
+      } as any)
         .then(() => success('page.budget.contracts.upload.success'))
         .then(() => {
           setAttachment(undefined)
