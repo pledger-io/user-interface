@@ -35,7 +35,7 @@ const YearlyIncomeGraphComponent = ({ year = 1970, budgets, currencySymbol = '' 
               backgroundColor: '#f0c77c'
             },
             {
-              data: data.map(({ balance }) => balance),
+              data: data.map(({ balance }) => Math.abs(balance)),
               label: i10n('graph.series.budget.actual'),
               borderColor: '#6996b2',
               backgroundColor: '#6996b2',

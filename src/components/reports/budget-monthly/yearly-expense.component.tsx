@@ -28,7 +28,7 @@ const BudgetYearlyExpense = ({ year, budgets, currencySymbol }: BudgetYearlyExpe
       .map(month => StatisticalRepository.balance({
         range: month.toBackend(),
         type: 'EXPENSE',
-        expenses: uniqueExpenses.map(id => ({ id }))
+        expenses: uniqueExpenses
       })))
       .then(expenses => {
         setChartData({

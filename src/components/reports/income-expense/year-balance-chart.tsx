@@ -37,7 +37,7 @@ const YearBalanceChart = ({ year, currencySymbol, currency } : YearBalanceChartP
                 StatisticalRepository.balance({
                     range: month.toBackend(),
                     currency,
-                    type: 'EXPENSE'
+                    type: 'INCOME'
                 })))
                 .then(income => {
                     const incomeLabel = i10n('graph.series.income')

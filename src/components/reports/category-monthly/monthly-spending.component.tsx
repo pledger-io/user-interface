@@ -25,13 +25,13 @@ const MonthlySpendingComponent = ({ categories, range }: MonthlySpendingComponen
     if (!range) return
 
     const incomePromise = StatisticalRepository.monthly({
-      categories: categories,
-      onlyIncome: true,
+      categories: categories.map(({ id }) => id),
+      type: 'INCOME',
       range: range.toBackend()
     })
     const expensePromise = StatisticalRepository.monthly({
-      categories: categories,
-      onlyIncome: false,
+      categories: categories.map(({ id }) => id),
+      type: 'EXPENSE',
       range: range.toBackend()
     })
 
@@ -41,8 +41,8 @@ const MonthlySpendingComponent = ({ categories, range }: MonthlySpendingComponen
           .map(month => {
           return {
             month: month,
-            income: income[month].amount,
-            expense: expense[month].amount
+            income: income[month].balance,
+            expense: expense[month].balance
           }
         })
 

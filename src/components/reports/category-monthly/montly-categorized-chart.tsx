@@ -32,15 +32,15 @@ const CategoryGraph = ({ categories, year, currencySymbol }: CategoryGraphProps)
         const incomePromise = new Promise<ChartDataset[]>((resolve, fail) =>
             StatisticalRepository.monthly({
                 range: DateRangeService.forYear(year).toBackend(),
-                onlyIncome: true,
-                categories: categories
+                type: 'INCOME',
+                categories: categories.map(({ id }) => id)
             })
                 .then(income => {
                     resolve([{
                         label: i10n('graph.series.income'),
                         backgroundColor: '#7fc6a5',
                         // @ts-expect-error mapping issues
-                        data: income.map(({ date, amount }) => ({ x: date, y: amount }))
+                        data: income.map(({ date, balance }) => ({ x: date, y: balance }))
                 }])
             })
                 .catch(fail)
@@ -48,15 +48,15 @@ const CategoryGraph = ({ categories, year, currencySymbol }: CategoryGraphProps)
         const expensePromise = new Promise<ChartDataset[]>((resolve, fail) =>
             StatisticalRepository.monthly({
                 range: DateRangeService.forYear(year).toBackend(),
-                onlyIncome: false,
-                categories: categories
+                type: 'EXPENSE',
+                categories: categories.map(({ id }) => id)
             })
                 .then(income => {
                     resolve([{
                         label: i10n('graph.series.expenses'),
                         backgroundColor: '#dc3545',
                         // @ts-expect-error mapping issues
-                        data: income.map(({ date, amount }) => ({ x: date, y: Math.abs(amount) }))
+                        data: income.map(({ date, balance }) => ({ x: date, y: Math.abs(balance) }))
                     }])
                 })
                 .catch(fail)
