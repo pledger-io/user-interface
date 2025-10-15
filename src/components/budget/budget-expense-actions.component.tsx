@@ -11,17 +11,17 @@ import { Button } from "../layout/button";
 
 const ExpenseActions = ({ expense, callback }: { expense: BudgetExpense, callback: () => void }) => {
   const [visible, setVisible] = useState(false)
-  const { warning, httpError } = useNotification()
+  const { success, httpError } = useNotification()
 
   const onSubmit = (values: any) => {
     const patch = {
-      expenseId: expense.id,
+      id: expense.id,
       name: expense.name,
       amount: values.expected
     }
 
     BudgetRepository.expense(patch)
-      .then(() => warning('page.budget.group.expense.updated'))
+      .then(() => success('page.budget.group.expense.updated'))
       .then(() => setVisible(false))
       .then(callback)
       .catch(httpError)
