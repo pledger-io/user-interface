@@ -25,7 +25,7 @@ const CategorizedMonthlySpendingComponent = ({ currency, year }: CategorizedMont
       .map(async month => {
         const splitOnMonth = await StatisticalRepository.split('category', {
           range: month.toBackend(),
-          onlyIncome: false,
+          type: 'EXPENSE'
         })
 
         return {
