@@ -249,3 +249,9 @@ export type SpendingPattern = {
   detectedDate: string;
   metadata?: Record<string, any>;
 }
+
+export enum AvailableSetting {
+  RecordSetPageSize='RecordSetPageSize',
+  AutocompleteLimit='AutocompleteLimit',
+  RegistrationOpen='RegistrationOpen'
+}

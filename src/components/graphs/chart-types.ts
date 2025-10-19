@@ -10,5 +10,6 @@ export type BalanceSeriesFilter = {
     categories?: Identifiable[],
     contracts?: Identifiable[],
     expenses?: Identifiable[],
-    currency?: string
+    currency?: string,
+    monthly?: boolean
 }

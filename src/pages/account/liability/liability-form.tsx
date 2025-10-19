@@ -25,7 +25,7 @@ class AccountModel {
 
   constructor(account: Account) {
     this.name = account.name
-    this.interest = (account?.interest?.interest || 0) * 100
+    this.interest = parseFloat(((account?.interest?.interest || 0) * 100).toPrecision(2))
     this.interestPeriodicity = account.interest?.periodicity
     this.description = account.description
     this.currency = account?.account?.currency
@@ -69,18 +69,19 @@ const LiabilityForm = () => {
       startDate: undefined,
       startBalance: undefined
     }
+    console.log(entity)
 
     if (!id) {
       AccountRepository.create(updatedEntity)
         .then(created => {
-          AccountRepository.search({ types: ['reconcile'] as any })
+          AccountRepository.search({ types: ['reconcile'] as any, numberOfResults: 1 })
             .then(response => {
               TransactionRepository.create(created.id, {
                 date: entity.startDate,
                 amount: entity.startBalance,
                 currency: entity.currency,
-                source: { id: created.id },
-                destination: { id: response.content[0].id },
+                source: created.id,
+                target: response.content[0].id,
                 description: 'Opening balance'
               })
                 .then(() => success('page.accounts.liability.created.success'))

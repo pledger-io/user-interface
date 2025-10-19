@@ -67,8 +67,9 @@ const LiabilityDetailView = () => {
           <div className="flex">
             <label className='min-w-[8em]'>{ i10n('page.accounts.liability.paid') }:</label>
             <span className='flex-1'>
-                <BalanceComponent accounts={ [{ id: account.id }] }
+                <BalanceComponent accounts={ [ account.id ] }
                                   income={ true }
+                                  range={ range }
                                   currency={ account.account.currency }/>
             </span>
           </div>

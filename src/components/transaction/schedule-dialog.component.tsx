@@ -14,13 +14,15 @@ const createScheduleEntity = (entity: any) => {
   return {
     name: entity.name,
     amount: entity.amount,
-    source: {
-      id: entity.from.id,
-      name: entity.from.name
-    },
-    destination: {
-      id: entity.to.id,
-      name: entity.to.name
+    transferBetween: {
+      source: {
+        id: entity.from.id,
+        name: entity.from.name
+      },
+      destination: {
+        id: entity.to.id,
+        name: entity.to.name
+      }
     },
     schedule: {
       periodicity: entity.periodicity,

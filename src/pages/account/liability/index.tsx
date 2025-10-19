@@ -3,6 +3,7 @@ import { Card } from "primereact/card";
 import { Column } from "primereact/column";
 import { ConfirmDialog } from "primereact/confirmdialog";
 import { DataTable } from "primereact/datatable";
+import { useSessionStorage } from "primereact/hooks";
 import { Paginator } from "primereact/paginator";
 import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router";
@@ -17,7 +18,8 @@ import { i10n } from "../../../config/prime-locale";
 import { Attachment } from "../../../core";
 import AccountRepository from "../../../core/repositories/account-repository";
 import useQueryParam from "../../../hooks/query-param.hook";
-import { Account, Pagination } from "../../../types/types";
+import DateRangeService from "../../../service/date-range.service";
+import { Account, AvailableSetting, Pagination } from "../../../types/types";
 
 const accountNameColumn = (account: Account) => <>
   <NavLink className='text-blue-700' to={ `./${ account.id }` }>{ account.name }</NavLink>
@@ -40,12 +42,14 @@ const LiabilityOverview = () => {
   const [page] = useQueryParam({ key: 'page', initialValue: "1" })
   const [accounts, setAccounts] = useState<Account[] | undefined>(undefined)
   const [pagination, setPagination] = useState<Pagination>()
+  const [numberOfResults, _] = useSessionStorage(20, AvailableSetting.RecordSetPageSize)
 
   const reload = () => {
     setAccounts(undefined)
     AccountRepository.search({
       types: ['loan', 'mortgage', 'debt'] as any,
-      page: parseInt(page)
+      offset: (parseInt(page || "1") - 1) * numberOfResults,
+      numberOfResults
     }).then(resultPage => {
       setAccounts(resultPage.content || [])
       setPagination(resultPage.info)
@@ -87,7 +91,9 @@ const LiabilityOverview = () => {
           <Column header={ i10n('common.account.saldo') }
                   className='w-[9rem]'
                   body={ (account: Account) =>
-                    <BalanceComponent accounts={ [account] } currency={ account.account.currency }/> }/>
+                    <BalanceComponent accounts={ [account.id] }
+                                      currency={ account.account.currency }
+                                      range={ DateRangeService.forRange(account.history.firstTransaction, account.history.lastTransaction) }/> }/>
           <Column className='w-[1rem]' body={ account => <AccountMenu account={ account } callback={ reload }/> }/>
         </DataTable>
 

@@ -20,7 +20,7 @@ export const BudgetInput = (props : any) => {
   const [foundBudgets, setFoundBudgets] = React.useState<BudgetExpense[]>([])
 
   const autoComplete = (query: string) => {
-    restApi.get<BudgetExpense[]>(`budgets/auto-complete?token=${ query }`)
+    restApi.get<BudgetExpense[]>(`budgets/expenses?name=${ query }`)
       .then(setFoundBudgets)
   }
 

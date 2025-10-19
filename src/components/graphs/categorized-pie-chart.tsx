@@ -3,7 +3,7 @@ import useDateRange from "../../hooks/date-range.hook";
 import { isArray } from "chart.js/helpers";
 import { Account } from "../../types/types";
 import { Chart } from 'primereact/chart';
-import StatisticalRepository from "../../core/repositories/statistical-repository";
+import StatisticalRepository, { BalanceRequestFilter } from "../../core/repositories/statistical-repository";
 import { ChartData, Tooltip, TooltipPosition } from "chart.js";
 import { defaultGraphColors } from "../../config/global-chart-config";
 
@@ -33,13 +33,10 @@ const CategorizedPieChart: FC<CategorizedPieChartProps> = ({ id, split, incomeOn
         setPieSeries(undefined)
 
         const searchCommand = {
-            dateRange: {
-                start: range.startString(),
-                end: range.endString()
-            },
-            onlyIncome: incomeOnly,
-            accounts: Array.isArray(accounts) ? accounts : (accounts ? [accounts] : undefined)
-        }
+            range: range.toBackend(),
+            type: incomeOnly ? 'INCOME' : 'EXPENSE',
+            accounts: Array.isArray(accounts) ? accounts.map(({ id }) => id) : (accounts ? [accounts.id] : undefined)
+        } as BalanceRequestFilter
 
         StatisticalRepository.split(split, searchCommand)
             .then(series => {
