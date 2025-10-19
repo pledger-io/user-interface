@@ -6,17 +6,13 @@ import { i10n } from "../../../config/prime-locale.js";
 import restAPI from "../../../core/repositories/rest-api";
 import { InputValidationErrors, useInputField } from "./InputGroup";
 
-type Tag = {
-  name: string,
-}
-
 export const TagInput = (props: any) => {
   const [field, errors, onChange] = useInputField({ onChange: props.onChange, field: props })
   const [options, setOptions] = useState<string[]>([])
   const autoCompleteRef = useRef<AutoComplete>(null)
 
   const autoComplete = (query: string) => {
-    restAPI.get<Tag[]>(`transactions/tags/auto-complete?token=${query}`).then(tags => setOptions(tags.map(t => t.name)))
+    restAPI.get<string[]>(`tags?name=${query}`).then(tags => setOptions(tags))
   }
   const onChangeHandler = (e: AutoCompleteChangeEvent) => {
     onChange({
@@ -27,7 +23,7 @@ export const TagInput = (props: any) => {
   }
   const onCreate = () => {
     const tagValue = (autoCompleteRef.current?.getInput() as any).value
-    restAPI.post('transactions/tags', { tag: tagValue })
+    restAPI.post('tags', { name: tagValue })
       .then(_ => {
         onChange({
           currentTarget: {

@@ -25,7 +25,7 @@ export const ContractInput = (props: ContractInputProps) => {
   const [foundContracts, setFoundContracts] = React.useState<Contract[]>([])
 
   const autoComplete = (query: string) => {
-    RestAPI.get<Contract[]>(`contracts/auto-complete?token=${query}`)
+    RestAPI.get<Contract[]>(`contracts?name=${query}`)
       .then(setFoundContracts)
   }
 

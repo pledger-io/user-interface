@@ -7,6 +7,7 @@ import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import {Themes} from "./context/theme-context.js";
 import {PrimeReactContext, PrimeReactProvider} from "primereact/api";
+import {SettingRepository} from "./core/RestAPI.js";
 
 const themeLink = document.getElementById('theme-link')
 document.head.removeChild(themeLink);
@@ -40,6 +41,11 @@ if (openIdConfigResponse.ok) {
 PrimeLocale()
   .then(() => {
     console.log('All localizations loaded, starting application.')
+    SettingRepository.list()
+      .then(data => {
+        console.debug('Fetched all application settings from the backend.')
+        data.forEach(({name, value}) => {sessionStorage.setItem(name, value)})
+      })
     createRoot(document.getElementById('root'))
       .render((
         <React.StrictMode>

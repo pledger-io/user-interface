@@ -3,6 +3,7 @@ import { Card } from "primereact/card";
 import { Column } from "primereact/column";
 import { ConfirmDialog } from "primereact/confirmdialog";
 import { DataTable } from "primereact/datatable";
+import { useSessionStorage } from "primereact/hooks";
 import { Paginator, PaginatorPageChangeEvent } from "primereact/paginator";
 import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate, useRouteLoaderData } from "react-router";
@@ -11,13 +12,15 @@ import BalanceComponent from "../../../components/balance.component";
 import BreadCrumbItem from "../../../components/breadcrumb/breadcrumb-item.component";
 import BreadCrumbs from "../../../components/breadcrumb/breadcrumb.component";
 import DateComponent from "../../../components/format/date.component";
+import MoneyComponent from "../../../components/format/money.component";
 import { Button } from "../../../components/layout/button";
 import { i10n } from "../../../config/prime-locale";
 import { Attachment } from "../../../core";
 import AccountRepository from "../../../core/repositories/account-repository";
 import useQueryParam from "../../../hooks/query-param.hook";
+import DateRangeService from "../../../service/date-range.service";
 import { ROUTER_ACCOUNT_TYPE_KEY } from "../../../types/router-types";
-import { Account, Pagination } from "../../../types/types";
+import { Account, AvailableSetting, Pagination } from "../../../types/types";
 
 const accountNameColumn = (account: Account) => <>
   <NavLink className='text-blue-700' to={ `./${ account.id }/transactions` }>{ account.name }</NavLink>
@@ -38,12 +41,14 @@ const AccountOverview = () => {
   const [page] = useQueryParam({ key: 'page', initialValue: "1" })
   const [pagination, setPagination] = useState<Pagination>()
   const type = useRouteLoaderData(ROUTER_ACCOUNT_TYPE_KEY)
+  const [numberOfResults, _] = useSessionStorage(20, AvailableSetting.RecordSetPageSize)
 
   const reload = () => {
     setAccounts(undefined)
     AccountRepository.search({
       types: [type] as any,
-      page: parseInt(page)
+      offset: (parseInt(page) - 1) * numberOfResults,
+      numberOfResults
     }).then(response => {
       setAccounts(response.content || [])
       setPagination(response.info)
@@ -87,8 +92,7 @@ const AccountOverview = () => {
                   body={ account => account.account.iban || account.account.number }/>
           <Column header={ i10n('common.account.saldo') }
                   className='w-[9rem]'
-                  body={ (account: Account) =>
-                    <BalanceComponent accounts={ [account] } currency={ account.account.currency }/> }/>
+                  body={ (account: Account) => determineBalance(account) } />
 
           <Column className='w-[1rem]' body={ account => <AccountMenu account={ account } callback={ reload }/> }/>
         </DataTable>
@@ -100,6 +104,16 @@ const AccountOverview = () => {
       </Card>
     </div>
   )
+}
+
+function determineBalance(account: Account) {
+  if (!account.history) {
+    return <MoneyComponent money={ 0 } currency={ account.account.currency } />
+  }
+
+  return <BalanceComponent accounts={ [account.id] }
+                           range={ DateRangeService.forRange(account.history.firstTransaction, account.history.lastTransaction) }
+                           currency={ account.account.currency }/>
 }
 
 export default AccountOverview

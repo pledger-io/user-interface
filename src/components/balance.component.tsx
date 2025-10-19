@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import DateRange from "../types/date-range.type";
 import StatisticalRepository, { BalanceRequestFilter } from "../core/repositories/statistical-repository";
+import { Identifier } from "../types/types";
 import MoneyComponent from "./format/money.component";
 import Loading from "./layout/loading.component";
 
 type Props = {
-    accounts?: number[]
-    categories?: number[]
-    expenses?: number[]
+    accounts?: Identifier[]
+    categories?: Identifier[]
+    expenses?: Identifier[]
     income?: boolean
     currency?: string
     range?: DateRange

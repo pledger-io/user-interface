@@ -4,14 +4,14 @@ export const TransactionService = {
     persist: (account, entity, navigate, id = NaN, success, warning) => {
         const transaction = {
             description: entity.description,
-            source: { id: entity.from.id, name: entity.from.name },
-            destination: { id: entity.to.id, name: entity.to.name },
+            source: entity.from.id,
+            target: entity.to.id,
             amount: entity.amount,
             currency: account.account.currency,
             date: entity.date,
-            budget: entity.budget ? { id: -1, name: entity.budget.name } : null,
-            category: entity.category ? { id: -1, name: entity.category.name } : null,
-            contract: entity.contract ? { id: -1, name: entity.contract.name } : null,
+            budget: entity.budget ? entity.budget.id : null,
+            category: entity.category ? entity.category.id : null,
+            contract: entity.contract ? entity.contract.id : null,
             tags: entity.tags,
         }
 

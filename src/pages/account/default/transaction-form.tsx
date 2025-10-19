@@ -12,6 +12,7 @@ import BreadCrumbs from "../../../components/breadcrumb/breadcrumb.component";
 import { Form, SubmitButton } from "../../../components/form";
 import { BackButton, Button } from "../../../components/layout/button";
 import Loading from "../../../components/layout/loading.component";
+import { lookup_entity_by_name } from "../../../components/lookup-name.util";
 import { i10n } from "../../../config/prime-locale";
 import { useNotification } from "../../../context/notification-context";
 import { Resolver } from "../../../core";
@@ -32,15 +33,18 @@ const TransactionForm = () => {
     // load transaction defaults
     if (transactionId) {
       TransactionRepository.get(account?.id, transactionId)
-        .then(t => setTransaction({
-          ...t,
-          metadata: {
-            contract: t.metadata.contract ? { id: -1, name: t.metadata.contract } : undefined,
-            category: t.metadata.category ? { id: -1, name: t.metadata.category } : undefined,
-            budget: t.metadata.budget ? { id: -1, name: t.metadata.budget } : undefined,
-            tags: t.metadata.tags
+        .then(async t => {
+          const metadata = {
+            contract: t.metadata.contract ? await lookup_entity_by_name('CONTRACT', t.metadata.contract) : undefined,
+              category: t.metadata.category ? await lookup_entity_by_name('CATEGORY', t.metadata.category) : undefined,
+              budget: t.metadata.budget ? await lookup_entity_by_name('BUDGET', t.metadata.budget) : undefined,
+              tags: t.metadata.tags
           }
-        }))
+          setTransaction({
+            ...t,
+            metadata
+          })
+        })
     } else {
       const isDebit = transactionType === 'debit'
       const code = Resolver.Account.isManaged(account) ?
@@ -49,9 +53,7 @@ const TransactionForm = () => {
       setTransaction({
         source: !isDebit ? account : null,
         destination: isDebit ? account : null,
-        type: {
-          code: code
-        }
+        type: code
       } as Transaction)
     }
   }, [transactionType, transactionId, account])
@@ -132,16 +134,16 @@ const TransactionForm = () => {
 
 const processSubmit = (id: string, entity: any, currency: string, navigate: NavigateFunction, warning: any, success: any) => {
   const transaction = {
-    description: entity.description,
-    source: { id: entity.from.id, name: entity.from.name },
-    destination: { id: entity.to.id, name: entity.to.name },
-    amount: entity.amount,
-    currency: currency,
     date: entity.date,
-    budget: entity.budget ? { id: -1, name: entity.budget.name } : null,
-    category: entity.category ? { id: -1, name: entity.category.name } : null,
-    contract: entity.contract ? { id: -1, name: entity.contract.name } : null,
-    tags: entity.tags,
+    currency: currency,
+    description: entity.description,
+    amount: entity.amount,
+    source: entity.from.id,
+    target: entity.to.id,
+    category: entity.category ? entity.category.id : undefined,
+    expense: entity.budget ? entity.budget.id : undefined,
+    contract: entity.contract ? entity.contract.id : undefined,
+    tags: entity.tags
   }
 
   const promises = []
@@ -152,9 +154,7 @@ const processSubmit = (id: string, entity: any, currency: string, navigate: Navi
   }
 
   if (entity.split) {
-    promises.push(TransactionRepository.splits(id, {
-      splits: entity.split
-    }))
+    promises.push(TransactionRepository.splits(id, entity.split))
   }
 
   Promise.all(promises)

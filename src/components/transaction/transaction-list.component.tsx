@@ -20,15 +20,25 @@ type TransactionOverviewProps = {
 
 const TransactionOverview: FC<TransactionOverviewProps> = ({ range, transfers }) => {
   const [page] = useQueryParam({ key: 'page', initialValue: "1" })
-  const [searchCommand, setSearchCommand] = useState<TransactionFilter>(() => {
-    const { searchCommand } = useRouteLoaderData(transfers ? 'transfers' : 'income-expense')
-    return searchCommand
-  })
+  const [searchCommand, setSearchCommand] = useState<TransactionFilter>({})
   const [transactions, setTransactions] = useState<DailyTransactions | undefined>(undefined)
   const [pagination, setPagination] = useState<Pagination>()
 
+  const routerData = useRouteLoaderData(transfers ? 'transfers' : 'income-expense').searchCommand
   useEffect(() => {
-    if (!(searchCommand as any).dateRange) return
+    setSearchCommand({
+      offset: 0,
+      numberOfResults: 150,
+      startDate: range.startString(),
+      endDate: range.endString(),
+      ...routerData
+    })
+  }, []);
+
+  useEffect(() => {
+    if (!(searchCommand as any).range) return
+
+    console.log("search command", searchCommand)
 
     setTransactions(undefined)
     TransactionRepository.search(searchCommand)
@@ -42,12 +52,11 @@ const TransactionOverview: FC<TransactionOverviewProps> = ({ range, transfers })
     setSearchCommand(previous => {
       return {
         ...previous,
-        dateRange: {
-          start: range.startString(),
-          end: range.endString()
-        },
-        page: parseInt(page),
-        transfers: transfers
+        startDate: range.startString(),
+        endDate: range.endString(),
+        offset: parseInt(page) * 150,
+        numberOfResults: 150,
+        type: transfers ? 'TRANSFER' : undefined
       }
     })
   }, [page, range, transfers])

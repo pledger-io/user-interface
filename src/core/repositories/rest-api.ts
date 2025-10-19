@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import { jwtDecode, JwtPayload } from "jwt-decode";
 import { UserProfile } from "../../types/types";
 
@@ -9,6 +9,9 @@ const config = {
 const axiosInstance = axios.create({
     baseURL: config.root,
     timeout: 1200000,
+    paramsSerializer: {
+      indexes: null
+    },
     transformRequest: (data, headers) => {
         if (sessionStorage.getItem('token')) {
             headers.Authorization = 'Bearer ' + sessionStorage.getItem('token')
@@ -71,11 +74,11 @@ const RestAPI = (() => {
         profile: () => api.get(`user-account/${extractJwtTokenFromBearer()?.sub}`).then(updateProfile),
         user: (): UserProfile => userProfile,
 
-        get:   <U>(uri: string, settings = {}): Promise<U>              => handle(axiosInstance.get(uri, settings)),
-        patch: <T,U>(uri: string, body: T, settings = {}): Promise<U>   => handle(axiosInstance.patch(uri, body, settings)),
-        post:  <T,U>(uri: string, body: T, settings = {}): Promise<U>   => handle(axiosInstance.post(uri, body, settings)),
-        put:   <T,U>(uri: string, body: T, settings = {}): Promise<U>   => handle(axiosInstance.put(uri, body, settings)),
-        delete: (uri: string, settings = {}): Promise<void>             => handle(axiosInstance.delete(uri, settings))
+        get:   <U>(uri: string, settings: AxiosRequestConfig | any = {}): Promise<U>              => handle(axiosInstance.get(uri, settings)),
+        patch: <T,U>(uri: string, body: T, settings: AxiosRequestConfig | any = {}): Promise<U>   => handle(axiosInstance.patch(uri, body, settings)),
+        post:  <T,U>(uri: string, body: T, settings: AxiosRequestConfig | any = {}): Promise<U>   => handle(axiosInstance.post(uri, body, settings)),
+        put:   <T,U>(uri: string, body: T, settings: AxiosRequestConfig | any = {}): Promise<U>   => handle(axiosInstance.put(uri, body, settings)),
+        delete: (uri: string, settings: AxiosRequestConfig | any = {}): Promise<void>             => handle(axiosInstance.delete(uri, settings))
     }
 
     return api

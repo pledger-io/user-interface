@@ -4,7 +4,7 @@ import { i10n } from "../../../config/prime-locale";
 import { useNotification } from "../../../context/notification-context";
 import CategoryRepository from "../../../core/repositories/category-repository";
 import restApi from "../../../core/repositories/rest-api";
-import { Category, Identifiable } from "../../../types/types";
+import { Category, Identifiable, PagedResponse } from "../../../types/types";
 import { FieldType } from "../form-types";
 import { InputValidationErrors, useInputField } from "../input/InputGroup";
 import { autoCompleteChangeHandler, autoCompleteFooter } from "./auto-complete-helpers";
@@ -45,8 +45,8 @@ export const CategoryInput = (props: CategoryInputProps) => {
   const { success } = useNotification()
 
   const autoComplete = (query: string) => {
-    restApi.get<Category[]>(`categories/auto-complete?token=${ query }`)
-      .then(categories => setFoundCategories(categories.map(mapCategoryToAutocomplete)))
+    restApi.get<PagedResponse<Category>>(`categories?offset=0&numberOfResults=15&name=${ query }`)
+      .then(categories => setFoundCategories(categories.content.map(mapCategoryToAutocomplete)))
   }
 
   const onCreate = () => {

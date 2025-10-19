@@ -4,7 +4,7 @@ import { i10n } from "../../../config/prime-locale";
 import { useNotification } from "../../../context/notification-context";
 import AccountRepository from "../../../core/repositories/account-repository";
 import RestAPI from "../../../core/repositories/rest-api";
-import { Account } from "../../../types/types";
+import { Account, PagedResponse } from "../../../types/types";
 import { FieldType } from "../form-types";
 import { InputValidationErrors, useInputField } from "../input/InputGroup";
 import { autoCompleteChangeHandler, autoCompleteFooter } from "./auto-complete-helpers";
@@ -38,8 +38,8 @@ export const AccountInput: FC<AccountInputProps> = (props) => {
   const { success } = useNotification()
 
   const autoComplete = (query: string) => {
-    RestAPI.get<Account[]>(`accounts/auto-complete?${ props.type ? 'type=' + props.type + '&' : '' }token=${ query }`)
-      .then(setFoundAccounts)
+    RestAPI.get<PagedResponse<Account>>(`accounts?${ props.type ? 'type=' + props.type + '&' : '' }name=${ query }&offset=0&numberOfResults=15`)
+      .then(page => setFoundAccounts(page.content))
   }
 
   const onCreate = () => {
