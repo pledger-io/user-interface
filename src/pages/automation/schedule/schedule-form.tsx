@@ -27,7 +27,7 @@ const TransactionScheduleForm = () => {
         periodicity: entity.periodicity,
         interval: entity.interval
       },
-      range: entity.range
+      activeBetween: entity.range
     })
       .then(() => success('page.budget.schedule.edit.success'))
       .then(() => navigate(-1))

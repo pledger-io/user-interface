@@ -80,8 +80,8 @@ export const DateRangeInput = (props: any) => {
 
   const onDateChanged = (startDate: DateChangedType, endDate: DateChangedType) => {
     const value = {
-      start: dateToString(startDate) || field.value?.start,
-      end: dateToString(endDate) || field.value?.end,
+      startDate: dateToString(startDate) || field.value?.startDate,
+      endDate: dateToString(endDate) || field.value?.endDate,
     }
 
     onChange(
@@ -95,8 +95,8 @@ export const DateRangeInput = (props: any) => {
   }
 
   if (!field) return <></>
-  const startDate = field.value?.start ? new Date(field.value.start) : undefined
-  const endDate = field.value?.end ? new Date(field.value.end) : undefined
+  const startDate = field.value?.startDate ? new Date(field.value.startDate) : undefined
+  const endDate = field.value?.endDate ? new Date(field.value.endDate) : undefined
   return <>
     <div className={ `flex flex-col gap-2 mt-2 ${ props.className || '' }` }>
       <label htmlFor={ props.id } className='font-bold'>{ i10n(props.title as string) }</label>
