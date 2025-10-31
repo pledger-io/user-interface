@@ -7,7 +7,7 @@ import { CategoryInput } from './category-input'
 
 vi.mock('../../../core/repositories/category-repository', () => ({
   default: {
-    create: vi.fn(() => Promise.resolve({ id: 1, label: 'New Category' })),
+    create: vi.fn(() => Promise.resolve({ id: 1, name: 'New Category' })),
   },
 }))
 
@@ -29,7 +29,8 @@ const formWrapped = (component: any) => {
 describe('CategoryInput', () => {
 
   beforeEach(() => {
-    mockedAxios.get.mockResolvedValueOnce({ data: [{ id: 1, label: 'Category 1' }, { id: 2, label: 'Category 2' }] })
+    mockedAxios.get.mockResolvedValueOnce({ data: { content: [{ id: 1, name: 'Category 1' }, { id: 2, name: 'Category 2' }] } })
+    mockProps.onChange.mockReset()
   })
 
   it('should render the label and input field correctly', () => {
@@ -48,7 +49,13 @@ describe('CategoryInput', () => {
 
     fireEvent.change(input, { target: { value: 'Category' } })
 
-    await waitFor(() => expect(mockedAxios.get).toHaveBeenCalledWith('categories/auto-complete?token=Category', {}))
+    await waitFor(() => expect(mockedAxios.get).toHaveBeenCalledWith('categories', {
+      "params": {
+        "name": "Category",
+        "numberOfResults": 20,
+        "offset": 0,
+      }
+    }))
     await waitFor(() => expect(getByTestId(`category-autocomplete-row-1`)).toHaveTextContent('Category 1'))
   })
 
@@ -58,7 +65,13 @@ describe('CategoryInput', () => {
     const input = getByRole('combobox')
     fireEvent.change(input, { target: { value: 'Selected Category' } })
 
-    await waitFor(() => expect(mockedAxios.get).toHaveBeenCalledWith('categories/auto-complete?token=Selected Category', {}))
+    await waitFor(() => expect(mockedAxios.get).toHaveBeenCalledWith('categories', {
+      "params": {
+        "name": "Category",
+        "numberOfResults": 20,
+        "offset": 0,
+      }
+    }))
 
     const category1 = await waitFor(() => getByTestId(`category-autocomplete-row-1`))
     fireEvent.click(category1)
@@ -77,14 +90,20 @@ describe('CategoryInput', () => {
     const input = getByRole('combobox')
     fireEvent.change(input, { target: { value: 'Selected Category' } })
 
-    await waitFor(() => expect(mockedAxios.get).toHaveBeenCalledWith('categories/auto-complete?token=Selected Category', {}))
+    await waitFor(() => expect(mockedAxios.get).toHaveBeenCalledWith('categories', {
+      params: {
+        name: 'Selected Category',
+        numberOfResults: 20,
+        offset: 0,
+      }
+    }))
     await waitFor(() => fireEvent.click(getByTestId('autocomplete-input-create')))
 
     await waitFor(() => {
       expect(mockProps.onChange).toHaveBeenCalledWith(
         expect.objectContaining({
           id: 1,
-          label: 'New Category'
+          name: 'New Category'
         })
       )
     })

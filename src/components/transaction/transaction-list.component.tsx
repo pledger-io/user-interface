@@ -1,3 +1,4 @@
+import { useSessionStorage } from "primereact/hooks";
 import React, { FC, useEffect, useState } from "react";
 import { useRouteLoaderData } from "react-router";
 import { i10n } from "../../config/prime-locale";
@@ -6,7 +7,7 @@ import { TransactionRepository } from "../../core/RestAPI";
 import useQueryParam from "../../hooks/query-param.hook";
 import { DailyTransactions, groupTransactionByDay } from "../../reducers";
 import DateRange from "../../types/date-range.type";
-import { Pagination } from "../../types/types";
+import { AvailableSetting, Pagination } from "../../types/types";
 import MoneyComponent from "../format/money.component";
 import Loading from "../layout/loading.component";
 import { Paginator } from "../layout/paginator.component";
@@ -23,6 +24,7 @@ const TransactionOverview: FC<TransactionOverviewProps> = ({ range, transfers })
   const [searchCommand, setSearchCommand] = useState<TransactionFilter>({})
   const [transactions, setTransactions] = useState<DailyTransactions | undefined>(undefined)
   const [pagination, setPagination] = useState<Pagination>()
+  const [numberOfResults, _] = useSessionStorage(20, AvailableSetting.RecordSetPageSize)
 
   const routerData = useRouteLoaderData(transfers ? 'transfers' : 'income-expense').searchCommand
   useEffect(() => {
@@ -36,10 +38,7 @@ const TransactionOverview: FC<TransactionOverviewProps> = ({ range, transfers })
   }, []);
 
   useEffect(() => {
-    if (!(searchCommand as any).range) return
-
-    console.log("search command", searchCommand)
-
+    if (!(searchCommand as any).startDate) return
     setTransactions(undefined)
     TransactionRepository.search(searchCommand)
       .then(response => {
@@ -54,8 +53,8 @@ const TransactionOverview: FC<TransactionOverviewProps> = ({ range, transfers })
         ...previous,
         startDate: range.startString(),
         endDate: range.endString(),
-        offset: parseInt(page) * 150,
-        numberOfResults: 150,
+        offset: (parseInt(page) -1) * numberOfResults,
+        numberOfResults: numberOfResults,
         type: transfers ? 'TRANSFER' : undefined
       }
     })

@@ -24,14 +24,14 @@ type TransactionFiltersProps = {
 const TransactionFilters: FC<TransactionFiltersProps> = ({ onChange, activeFilter }) => {
 
   const onSubmit = (form: any) => {
+    const type = form.onlyIncome == form.onlyExpense ? '' : (form.onlyExpense ? 'EXPENSE' : 'INCOME');
     const filter = {
-      account: form.account?.name,
-      category: form.category,
-      budget: form.budget,
-      onlyIncome: form.onlyIncome,
-      onlyExpenses: form.onlyExpenses,
+      account: form.account?.id,
+      category: form.category?.id,
+      expense: form.budget?.id,
+      type: type,
       description: form.description,
-      currency: form.currency?.id
+      currency: form.currency
     }
 
     onChange(filter)
@@ -45,6 +45,7 @@ const TransactionFilters: FC<TransactionFiltersProps> = ({ onChange, activeFilte
         <div className='flex px-2 gap-2'>
           <Entity.Account id='account'
                           title='page.transactions.filter.account'
+                          type={ ['debtor', 'creditor'] }
                           className='flex-1'
                           inputOnly={ true }/>
           <Input.Text id='description'
