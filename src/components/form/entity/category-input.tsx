@@ -1,10 +1,11 @@
 import { AutoComplete } from "primereact/autocomplete";
+import { useSessionStorage } from "primereact/hooks";
 import React, { useRef } from "react";
 import { i10n } from "../../../config/prime-locale";
 import { useNotification } from "../../../context/notification-context";
 import CategoryRepository from "../../../core/repositories/category-repository";
 import restApi from "../../../core/repositories/rest-api";
-import { Identifiable } from "../../../types/types";
+import { AvailableSetting, Category, Identifiable, PagedResponse } from "../../../types/types";
 import { FieldType } from "../form-types";
 import { InputValidationErrors, useInputField } from "../input/InputGroup";
 import { autoCompleteChangeHandler, autoCompleteFooter } from "./auto-complete-helpers";
@@ -16,12 +17,7 @@ type CategoryInputProps = FieldType & {
   className?: string
 }
 
-type AutocompleteCategory = Identifiable & {
-  name: string,
-  description: string
-}
-
-const CategoryAutocompleteRow = (category: AutocompleteCategory) => {
+const CategoryAutocompleteRow = (category: Category) => {
   return (
     <span data-testid={ `category-autocomplete-row-${ category.id }` }>
       { category.name }
@@ -30,25 +26,22 @@ const CategoryAutocompleteRow = (category: AutocompleteCategory) => {
   )
 }
 
-function mapCategoryToAutocomplete(category: Category): AutocompleteCategory {
-  return {
-    id: category.id,
-    name: category.name,
-    description: category.description
-  }
-}
-
 export const CategoryInput = (props: CategoryInputProps) => {
   const [field, errors, onChange] = useInputField({ onChange: props.onChange, field: props })
-  const [foundCategories, setFoundCategories] = React.useState<AutocompleteCategory[]>([])
+  const [foundCategories, setFoundCategories] = React.useState<Category[]>([])
   const autoCompleteRef = useRef<AutoComplete>(null)
   const { success } = useNotification()
+  const [numberOfResults, _] = useSessionStorage(20, AvailableSetting.AutocompleteLimit)
 
   const autoComplete = (query: string) => {
-    restApi.get<any>(`categories/auto-complete?token=${ query }`, {})
-      .then((categories: { id: number; label: string }[]) =>
-        setFoundCategories(categories.map(c => ({ id: c.id, name: c.label, description: '' })))
-      )
+    restApi.get<PagedResponse<Category>>(`categories`, {
+      params: {
+        name: query,
+        offset: 0,
+        numberOfResults: numberOfResults,
+      }
+    })
+      .then(response => setFoundCategories(response.content))
   }
 
   const onCreate = () => {
