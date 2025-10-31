@@ -65,11 +65,11 @@ const CurrencyRepository = (api => {
 
 const TransactionScheduleRepository = (api => {
     return {
-        list: () => api.get('schedule/transaction'),
+        list: () => api.get('schedules'),
         create: schedule => api.post('schedules', schedule),
-        get: id => api.get(`schedule/transaction/${id}`),
-        delete: ({ id }) => api.delete(`schedule/transaction/${id}`),
-        update: (id, schedule) => api.patch(`schedule/transaction/${id}`, schedule)
+        get: id => api.get(`schedules/${id}`),
+        delete: ({ id }) => api.delete(`schedules/${id}`),
+        update: (id, schedule) => api.patch(`schedules/${id}`, schedule)
     }
 })(RestApi)
 

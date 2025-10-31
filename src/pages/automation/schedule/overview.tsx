@@ -55,15 +55,15 @@ const ScheduledTransactionOverview = () => {
                     { schedule.name }
                     <div className='text-muted'>{ schedule.description }</div>
                   </> }/>
-          <Column header={ i10n('page.budget.schedule.daterange') } body={ (schedule: ScheduledTransaction) => <DateRangeComponent range={ schedule.range }/> }/>
+          <Column header={ i10n('page.budget.schedule.daterange') } body={ (schedule: ScheduledTransaction) => <DateRangeComponent range={ schedule.activeBetween }/> }/>
           <Column header={ i10n('ScheduledTransaction.source') }
-                  body={ (schedule: ScheduledTransaction) => <NavLink to={ Resolver.Account.resolveUrl(schedule.source) + '/transactions' }>{ schedule.source.name }</NavLink> }/>
+                  body={ (schedule: ScheduledTransaction) => <NavLink to={ Resolver.Account.resolveUrl(schedule.transferBetween.source) + '/transactions' }>{ schedule.transferBetween.source.name }</NavLink> }/>
           <Column header={ i10n('ScheduledTransaction.destination') }
-                  body={ (schedule: ScheduledTransaction) => <NavLink to={ Resolver.Account.resolveUrl(schedule.destination) + '/transactions' }>{ schedule.destination.name }</NavLink> }/>
+                  body={ (schedule: ScheduledTransaction) => <NavLink to={ Resolver.Account.resolveUrl(schedule.transferBetween.destination) + '/transactions' }>{ schedule.transferBetween.destination.name }</NavLink> }/>
           <Column header={ i10n('ScheduledTransaction.amount') }
                   headerClassName='w-[5rem]'
                   className='text-right!'
-                  body={ (schedule: ScheduledTransaction) => <MoneyComponent money={ schedule.amount } currency={ schedule.source.account.currency }/>}/>
+                  body={ (schedule: ScheduledTransaction) => <MoneyComponent money={ schedule.amount } />}/>
           <Column headerClassName='w-[2rem]' body={ schedule => <ScheduleTransactionMenuComponent schedule={ schedule } callback={ loadSchedules } /> }/>
         </DataTable>
       </Card>
@@ -71,9 +71,9 @@ const ScheduledTransactionOverview = () => {
 }
 
 const DateRangeComponent = ({ range }: { range?: ScheduledTransactionRange }) => {
-  if (!range || !range?.start) return <></>
+  if (!range || !range?.startDate) return <></>
   return <>
-    <DateComponent date={ range.start } /> - <DateComponent date={ range.end } />
+    <DateComponent date={ range.startDate } /> - <DateComponent date={ range.endDate } />
   </>
 }
 

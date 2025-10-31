@@ -137,18 +137,21 @@ const ReconcileRowComponent = ({ process, onRemoved }: { process: ProcessInstanc
         icon={ mdiHammer }
         outlined
         severity='info'
+        className='!p-0.5'
         onClick={ () => previousYearRef?.current?.open() }
         data-testid={ `previous-year-button-${ process.id }` }/>
       <Button
         icon={ mdiRedo }
         outlined
         severity='success'
+        className='!p-0.5'
         onClick={ onRetry }
         data-testid={ `retry-button-${ process.id }` }/>
       <Button
         icon={ mdiDelete }
         outlined
         severity='warning'
+        className='!p-0.5'
         onClick={ onDelete }
         data-testid={ `remove-row-${ process.id }` }/>
     </td>

@@ -83,17 +83,19 @@ export type Transaction = {
 }
 
 export type ScheduledTransactionRange = {
-  start: string,
-  end: string,
+  startDate: string,
+  endDate: string,
 }
 export type ScheduledTransaction = {
   id: Identifier,
   name: string,
   description: string,
   amount: number,
-  source: Account,
-  destination: Account,
-  range?: ScheduledTransactionRange,
+  transferBetween: {
+    source: AccountRef,
+    destination: AccountRef,
+  }
+  activeBetween?: ScheduledTransactionRange,
   schedule: {
     periodicity: 'MONTHS' | 'YEARS' | 'WEEKS',
     interval: number
