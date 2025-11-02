@@ -1,3 +1,4 @@
+import { useSessionStorage } from "primereact/hooks";
 import React, { useEffect, useState } from "react";
 import { mdiCheck, mdiClose, mdiDelete, mdiPlus } from "@mdi/js";
 import BreadCrumbItem from "../../components/breadcrumb/breadcrumb-item.component";
@@ -6,7 +7,7 @@ import { NavLink, useNavigate } from "react-router";
 import Icon from "@mdi/react";
 import { i10n } from "../../config/prime-locale";
 import { Card } from "primereact/card";
-import { ImportJob, Pagination } from "../../types/types";
+import { AvailableSetting, ImportJob, Pagination } from "../../types/types";
 import useQueryParam from "../../hooks/query-param.hook";
 import { DataTable } from "primereact/datatable";
 import ImportJobRepository from "../../core/repositories/import-job.repository";
@@ -31,10 +32,10 @@ const BatchOverview = () => {
   const [batchImports, setBatchImports] = useState<ImportJob[]>()
   const [page] = useQueryParam({ key: 'page', initialValue: "1" })
   const navigate = useNavigate()
+  const [numberOfResults, _] = useSessionStorage(20, AvailableSetting.RecordSetPageSize)
 
   useEffect(() => {
-    console.log('Loading page: ' + page)
-    ImportJobRepository.list(parseInt(page))
+    ImportJobRepository.list((parseInt(page) -1) * numberOfResults, numberOfResults)
       .then(({ content, info }) => {
         setBatchImports(content || [])
         setPagination(info)

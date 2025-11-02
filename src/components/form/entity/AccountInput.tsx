@@ -74,11 +74,11 @@ export const AccountInput: FC<AccountInputProps> = (props) => {
   if (!field) return props.id
   return <>
     <div className={ `flex flex-col gap-2 mt-2 ${ props.className || '' }` }>
-      <label htmlFor={ props.id }
+      { props.title && <label htmlFor={ props.id }
              className='font-bold'
              data-testid={ `account-input-${ props.id }` }>
         { i10n(props.title as string) }
-      </label>
+      </label> }
 
       <AutoComplete id={ props.id }
                     ref={ autoCompleteRef }

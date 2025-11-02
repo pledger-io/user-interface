@@ -29,17 +29,17 @@ const UploadTransactionsComponent = () => {
 
   return <>
     <Form entity='BatchImport' onSubmit={ onSubmit }>
-      <Input.Hidden id='uploadToken' required value={ uploadToken }/>
+      <Input.Hidden id='fileToken' required value={ uploadToken }/>
 
       <Entity.ImportConfig id='configuration' title='Import.config' required/>
 
-      <div className={ `w-[25em] mx-auto mt-5` }>
+      { !uploadToken && <div className={ `w-[25em] mx-auto mt-5` }>
         <Upload
           required
           label="ImportConfig.content"
           onUpload={ ({ fileCode }) => setUploadToken(fileCode) }
           accepts="text/csv"/>
-      </div>
+      </div> }
 
       { uploadToken &&
         <div className='mt-2 flex justify-center'>
