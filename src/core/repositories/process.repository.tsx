@@ -59,7 +59,7 @@ const ProcessRepository = (api => {
         completeTask: (definitionId: ProcessIdentifier, businessKey: BusinessKey, instanceId: string, taskId: string): Promise<void> =>
             api.delete(`runtime-engine/${definitionId}/${businessKey}/${instanceId}/tasks/${taskId}`),
         completeTasksVariables: (definitionId: ProcessIdentifier, taskId: string, variables: TaskVariables): Promise<void> =>
-            api.post(`runtime-engine/${definitionId}/dummy/dummy/tasks/${taskId}/complete`, variables),
+            api.post(`runtime-engine/${definitionId}/dummy/dummy/tasks/${taskId}`, variables),
         taskVariables: (definitionId: ProcessIdentifier, taskId: string, variable?: string): Promise<TaskVariables> =>
             api.get(`runtime-engine/${definitionId}/dummy/dummy/tasks/${taskId}/variables${variable ? `?variable=${variable}` : ''}`),
         start: start,

@@ -79,7 +79,7 @@ const AccountMappingComponent = ({ task }: { task: ProcessTask }) => {
     const updateVariables: TaskVariables = {
       variables: {
         account_mappings: {
-          _type: 'com.jongsoft.finance.rest.process.VariableMap$VariableList',
+          _type: 'com.jongsoft.finance.rest.model.runtime.ListVariable',
           content: updatedMapping
         }
       }
