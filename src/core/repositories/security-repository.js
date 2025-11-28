@@ -22,13 +22,13 @@ const SecurityRepository = (api => {
                 sessionStorage.setItem('refresh-token', token.refreshToken);
                 sessionStorage.setItem('token', token.accessToken);
             }),
-        twoFactor: (code) => api.post('security/2-factor', {verificationCode: code})
+        twoFactor: (code) => api.post('user-account/verify-2-factor', {verificationCode: code})
             .then(serverResponse => {
                 const token = new TokenResponse(serverResponse)
                 sessionStorage.setItem('refresh-token', token.refreshToken);
                 sessionStorage.setItem('token', token.accessToken);
             }),
-        register: (username, password) => api.put(`security/create-account`, {username, password}),
+        register: (username, password) => api.post(`user-account`, {username, password}),
         logout: () => {
             sessionStorage.removeItem('token');
             sessionStorage.removeItem('refresh-token');

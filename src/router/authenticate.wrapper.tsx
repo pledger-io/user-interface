@@ -5,9 +5,9 @@ import { useAuth } from "react-oidc-context";
 import { Outlet, useNavigate } from "react-router";
 import Loading from "../components/layout/loading.component";
 import Sidebar from "../components/sidebar";
-import { SupportedLocales } from "../config/prime-locale";
 import { NotificationProvider } from "../context/notification-context";
 import { ThemeProvider } from "../context/theme-context";
+import { SupportedLocales } from "../core/repositories/i18n-repository";
 import SecurityRepository from "../core/repositories/security-repository";
 
 /**

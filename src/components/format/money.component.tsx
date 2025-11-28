@@ -1,5 +1,5 @@
 import { useLocalStorage } from "primereact/hooks";
-import { SupportedLocales } from "../../config/prime-locale";
+import { SupportedLocales } from "../../core/repositories/i18n-repository";
 
 type MoneyProps = {
     money?: number
