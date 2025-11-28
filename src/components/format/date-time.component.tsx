@@ -1,5 +1,5 @@
 import { useLocalStorage } from "primereact/hooks";
-import { SupportedLocales } from "../../config/prime-locale";
+import { SupportedLocales } from "../../core/repositories/i18n-repository";
 
 const _ = ({ date }: { date?: string }) => {
   const [language] = useLocalStorage<SupportedLocales>('en', 'language');

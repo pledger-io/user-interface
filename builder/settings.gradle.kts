@@ -3,7 +3,7 @@ rootProject.name = "pledger-ui"
 pluginManagement {
     plugins {
         id("java")
-        id("io.micronaut.library").version("4.5.3")
+        id("io.micronaut.library").version("4.6.1")
 
         id("signing")
         id("maven-publish")

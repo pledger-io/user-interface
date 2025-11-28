@@ -158,7 +158,7 @@ function CreateTransactionPanel({ generated, stepperRef, closeDialog }: { genera
     type: {
       code: generated.type || 'CREDIT'
     }
-  }
+  } as unknown as Transaction
 
   if (!generated) return <></>
   return <>
@@ -184,8 +184,8 @@ function CreateTransactionPanel({ generated, stepperRef, closeDialog }: { genera
                     required/>
       </div>
 
-      <SourceInputComponent transaction={ accountFiller as Transaction } className='flex-1'/>
-      <DestinationInputComponent transaction={ accountFiller as Transaction } className='flex-1'/>
+      <SourceInputComponent transaction={ accountFiller } className='flex-1'/>
+      <DestinationInputComponent transaction={ accountFiller } className='flex-1'/>
 
 
       <div className='flex justify-between pt-2'>

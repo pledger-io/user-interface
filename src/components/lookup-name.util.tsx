@@ -11,7 +11,7 @@ async function lookup_entity_by_name<T>(type: RuleField, name: string): Promise<
     case 'TO_ACCOUNT':
     case 'CHANGE_TRANSFER_TO':
     case 'CHANGE_TRANSFER_FROM':
-      return (await AccountRepository.search({ types: undefined, page: 0 })).content.filter((account: Account) => account.name === name)[0];
+      return (await AccountRepository.search({ types: undefined, numberOfResults: 9999 })).content.filter((account: Account) => account.name === name)[0];
     case 'CATEGORY':
       return (await CategoryRepository.all()).filter(category => category.name == name)[0] as T
     case 'BUDGET':
