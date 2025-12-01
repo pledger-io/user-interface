@@ -20,7 +20,7 @@ const BudgetYearlyExpense = ({ year, budgets, currencySymbol }: BudgetYearlyExpe
     if (budgets.length === 0) return
     setChartData(undefined)
 
-    const uniqueExpenses = budgets.reduce((left, right) => [...left, ...right.expenses], new Array<BudgetExpense>())
+    const uniqueExpenses = budgets.reduce((left, right) => [...left, ...(right.expenses || [])], new Array<BudgetExpense>())
       .map(({ id }) => id)
       .filter((value, index, self) => self.indexOf(value) === index)
 
@@ -36,7 +36,7 @@ const BudgetYearlyExpense = ({ year, budgets, currencySymbol }: BudgetYearlyExpe
           datasets: [
             {
               label: i10n('graph.series.budget.expected'),
-              data: budgets.map(({ expenses }) => expenses.reduce((total, { expected }) => total + expected, 0)),
+              data: budgets.map(({ expenses }) => (expenses || []).reduce((total, { expected }) => total + expected, 0)),
               borderColor: '#f0c77c',
               backgroundColor: '#f0c77c'
             },

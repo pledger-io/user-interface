@@ -60,7 +60,7 @@ const ProfileRepository = (api => {
                 .catch(fail)
             }),
         exportProfile: ()                                   => new Promise((accept, fail) => {
-            api.get<Blob>('profile/export', { responseType: 'blob' })
+            api.get<Blob>(`export`, { responseType: 'blob' })
                 .then(fileReader(accept,f=> toBlob(f.result as string)))
                 .catch(fail)
         })

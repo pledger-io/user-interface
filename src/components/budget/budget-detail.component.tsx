@@ -31,6 +31,7 @@ const BudgetDetailComponent = ({ range }: { range: DateRange }) => {
   const loadBudget = () => {
     BudgetRepository.budgetMonth(range.year(), range.month())
       .then(budget => {
+        setBudget(budget)
         Promise.all(
           budget.expenses.map(e =>
             BudgetRepository.compute(e.id, range.year(), range.month())
@@ -42,7 +43,6 @@ const BudgetDetailComponent = ({ range }: { range: DateRange }) => {
               })
           ))
           .then(computedExpenses => {
-            setBudget(budget)
             setComputedExpenses(computedExpenses)
           })
       })

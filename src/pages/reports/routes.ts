@@ -1,19 +1,32 @@
 import { lazy } from "react";
 import { RouteObject } from "react-router";
+import BudgetRepository from "../../core/repositories/budget.repository";
 
 const routes = {
   id: 'reports',
   path: 'reports',
   children: [
     {
-      id: 'report-budget-balance',
+      id: 'budget-reports',
       path: 'monthly-budget',
-      Component: lazy(() => import('./budget-monthly'))
-    },
-    {
-      id: 'report-budget-balance-monthly',
-      path: 'monthly-budget/:year/:currency',
-      Component: lazy(() => import('./budget-monthly'))
+      loader: async () => {
+        const firstBudget = await (BudgetRepository.firstBudget().catch(() => null));
+        return {
+          firstBudget,
+        }
+      },
+      children: [
+        {
+          id: 'report-budget-balance',
+          path: '',
+          Component: lazy(() => import('./budget-monthly'))
+        },
+        {
+          id: 'report-budget-balance-monthly',
+          path: ':year/:currency',
+          Component: lazy(() => import('./budget-monthly'))
+        },
+      ]
     },
     {
       id: 'report-income-expense',

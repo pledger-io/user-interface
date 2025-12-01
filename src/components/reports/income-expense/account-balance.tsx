@@ -54,6 +54,8 @@ const AccountBalanceComponent = ({ year, currency }: AccountBalanceProp) => {
       }).catch(console.error)
   }, [currency, year])
 
+  console.log(accounts)
+
   return <>
     <DataTable value={ accounts } size='small' loading={ !accounts }>
       <Column header={ i10n('Account.name') } field='account.name' headerClassName='!bg-[unset]'/>

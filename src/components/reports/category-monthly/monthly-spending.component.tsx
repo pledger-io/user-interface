@@ -41,8 +41,8 @@ const MonthlySpendingComponent = ({ categories, range }: MonthlySpendingComponen
           .map(month => {
           return {
             month: month,
-            income: income[month].balance,
-            expense: expense[month].balance
+            income: income[month]?.balance || 0,
+            expense: expense[month]?.balance || 0
           }
         })
 
