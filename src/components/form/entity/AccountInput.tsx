@@ -1,10 +1,11 @@
 import { AutoComplete } from "primereact/autocomplete";
+import { useSessionStorage } from "primereact/hooks";
 import React, { FC, useRef } from "react";
 import { i10n } from "../../../config/prime-locale";
 import { useNotification } from "../../../context/notification-context";
 import AccountRepository from "../../../core/repositories/account-repository";
 import RestAPI from "../../../core/repositories/rest-api";
-import { Account } from "../../../types/types";
+import { Account, AvailableSetting, PagedResponse } from "../../../types/types";
 import { FieldType } from "../form-types";
 import { InputValidationErrors, useInputField } from "../input/InputGroup";
 import { autoCompleteChangeHandler, autoCompleteFooter } from "./auto-complete-helpers";
@@ -19,9 +20,10 @@ const AccountAutocompleteRow = (account: Account) => {
   )
 }
 
+type AccountType = 'debtor' | 'creditor'
 type AccountInputProps = FieldType & {
   value?: Account,
-  type?: 'debtor' | 'creditor',
+  type?: AccountType | AccountType[],
   title?: string,
   className?: string,
   inputOnly?: boolean,
@@ -36,10 +38,19 @@ export const AccountInput: FC<AccountInputProps> = (props) => {
   const [foundAccounts, setFoundAccounts] = React.useState<Account[]>([])
   const autoCompleteRef = useRef<AutoComplete>(null)
   const { success } = useNotification()
+  const [numberOfResults, _] = useSessionStorage(20, AvailableSetting.AutocompleteLimit)
+
 
   const autoComplete = (query: string) => {
-    RestAPI.get<Account[]>(`accounts/auto-complete?${ props.type ? 'type=' + props.type + '&' : '' }token=${ query }`)
-      .then(setFoundAccounts)
+    RestAPI.get<PagedResponse<Account>>(`accounts`, {
+      params: {
+        type: props.type,
+        accountName: query,
+        offset: 0,
+        numberOfResults: numberOfResults
+      }
+    })
+      .then(page => setFoundAccounts(page.content))
   }
 
   const onCreate = () => {
@@ -63,11 +74,11 @@ export const AccountInput: FC<AccountInputProps> = (props) => {
   if (!field) return props.id
   return <>
     <div className={ `flex flex-col gap-2 mt-2 ${ props.className || '' }` }>
-      <label htmlFor={ props.id }
+      { props.title && <label htmlFor={ props.id }
              className='font-bold'
              data-testid={ `account-input-${ props.id }` }>
         { i10n(props.title as string) }
-      </label>
+      </label> }
 
       <AutoComplete id={ props.id }
                     ref={ autoCompleteRef }

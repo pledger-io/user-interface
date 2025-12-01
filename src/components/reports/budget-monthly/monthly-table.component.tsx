@@ -26,8 +26,8 @@ const MonthlyPerBudgetTableComponent = ({ budgets, year, currency }: MonthlyPerB
 
     const dataPromises = DateRangeService.months(year).map(async month => {
       const splitOnMonth = await StatisticalRepository.split('budget', {
-        dateRange: month.toBackend(),
-        onlyIncome: false,
+        range: month.toBackend(),
+        type: 'EXPENSE',
         currency: currency
       })
 

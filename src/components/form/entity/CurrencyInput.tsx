@@ -17,7 +17,7 @@ export const CurrencyInput: FC<CurrencyInputProps> = (props) => {
     const [currencies, setCurrencies] = useState<Currency[]>()
 
     useEffect(() => {
-        restApi.get<Currency[]>('settings/currencies')
+        restApi.get<Currency[]>('currencies')
             .then(currencies => setCurrencies(currencies.filter(c => c.enabled)))
     }, [])
 

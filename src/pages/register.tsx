@@ -9,8 +9,9 @@ import { Message } from "primereact/message";
 import React, { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { Form, Input, SubmitButton } from "../components/form";
-import { i10n, Locales, SupportedLocales } from "../config/prime-locale";
+import { i10n } from "../config/prime-locale";
 import { ThemeProvider } from "../context/theme-context";
+import { Locales, SupportedLocales } from "../core/repositories/i18n-repository";
 import SecurityRepository from "../core/repositories/security-repository";
 import useQueryParam from "../hooks/query-param.hook";
 

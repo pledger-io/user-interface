@@ -34,7 +34,12 @@ const ScheduleContract: FC<ScheduleContractProps> = ({ ref, contract }) => {
 
   const onSubmit = (e: ScheduleContractModel) => {
     const contractModel = {
-      source: e.from,
+      name: contract.name,
+      contract: contract.id,
+      transferBetween: {
+        source: e.from,
+        destination: contract.company
+      },
       amount: e.amount,
       schedule: {
         periodicity: e.periodicity,
@@ -42,7 +47,7 @@ const ScheduleContract: FC<ScheduleContractProps> = ({ ref, contract }) => {
       }
     }
 
-    ContractRepository.schedule(contract.id, contractModel)
+    ContractRepository.schedule(contractModel)
       .then(() => success('page.contract.schedule.success'))
       .then(() => setVisible(false))
       .catch(() => warning('page.contract.schedule.error'));

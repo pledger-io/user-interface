@@ -20,9 +20,8 @@ const currentMonth = {
   isSame: (year: number, month: number) => year === currentMonth.year && month === currentMonth.month
 }
 
-type MappedExpense = {
-  id: Identifier,
-  computed: ComputedExpense
+type MappedExpense = ComputedExpense & {
+  id: Identifier
 }
 
 const BudgetDetailComponent = ({ range }: { range: DateRange }) => {
@@ -32,18 +31,18 @@ const BudgetDetailComponent = ({ range }: { range: DateRange }) => {
   const loadBudget = () => {
     BudgetRepository.budgetMonth(range.year(), range.month())
       .then(budget => {
+        setBudget(budget)
         Promise.all(
           budget.expenses.map(e =>
             BudgetRepository.compute(e.id, range.year(), range.month())
               .then((computed): MappedExpense => {
                 return {
                   id: e.id,
-                  computed: computed[0]
+                  ...computed[0]
                 }
               })
           ))
           .then(computedExpenses => {
-            setBudget(budget)
             setComputedExpenses(computedExpenses)
           })
       })
@@ -58,7 +57,7 @@ const BudgetDetailComponent = ({ range }: { range: DateRange }) => {
 
   if (!budget) return <Loading/>
   return <>
-    <BudgetSummary budget={ budget } computedExpenses={ computedExpenses?.map(r => r.computed) || [] }/>
+    <BudgetSummary budget={ budget } computedExpenses={ computedExpenses || [] }/>
 
     <Divider/>
 
@@ -75,7 +74,7 @@ const BudgetDetailComponent = ({ range }: { range: DateRange }) => {
 }
 
 const budgetTemplate = (startDate: string, expense: BudgetExpense, computed: MappedExpense, loadBudgets: () => void) => {
-  const percentage = (Math.abs(computed?.computed.spent || 0) / expense.expected * 100)
+  const percentage = (Math.abs(computed?.spent || 0) / expense.expected * 100)
   return <div className='flex flex-col gap-1 my-2'>
     <div className='flex justify-between items-center gap-1'>
       <div className='flex items-center gap-2 flex-1'>
@@ -84,7 +83,7 @@ const budgetTemplate = (startDate: string, expense: BudgetExpense, computed: Map
       </div>
       <div className='flex items-center gap-1'>
         <span data-pr-tooltip={ i10n('page.budget.group.expense.spent') } className='with-tooltip'>
-          <MoneyComponent money={ Math.abs(computed?.computed.spent || 0) } className='!text-muted' />
+          <MoneyComponent money={ Math.abs(computed?.spent || 0) } className='!text-muted' />
         </span>
         /
         <span data-pr-tooltip={ i10n('page.budget.group.expense.budgeted') } className='with-tooltip'>

@@ -25,14 +25,14 @@ const MonthlySpendingComponent = ({ categories, range }: MonthlySpendingComponen
     if (!range) return
 
     const incomePromise = StatisticalRepository.monthly({
-      categories: categories,
-      onlyIncome: true,
-      dateRange: range.toBackend()
+      categories: categories.map(({ id }) => id),
+      type: 'INCOME',
+      range: range.toBackend()
     })
     const expensePromise = StatisticalRepository.monthly({
-      categories: categories,
-      onlyIncome: false,
-      dateRange: range.toBackend()
+      categories: categories.map(({ id }) => id),
+      type: 'EXPENSE',
+      range: range.toBackend()
     })
 
     Promise.all([incomePromise, expensePromise])
@@ -41,8 +41,8 @@ const MonthlySpendingComponent = ({ categories, range }: MonthlySpendingComponen
           .map(month => {
           return {
             month: month,
-            income: income[month].amount,
-            expense: expense[month].amount
+            income: income[month]?.balance || 0,
+            expense: expense[month]?.balance || 0
           }
         })
 

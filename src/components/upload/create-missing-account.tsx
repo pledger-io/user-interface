@@ -46,7 +46,7 @@ const _ = ({ task }: { task: ProcessTask }) => {
         const accountCreated: TaskVariables = {
           variables: {
             accountId: {
-              '_type': 'com.jongsoft.finance.rest.process.VariableMap$WrappedVariable',
+              '_type': 'com.jongsoft.finance.rest.model.runtime.WrappedVariable',
               value: account.id
             } as AccountCreated
           }
@@ -62,7 +62,7 @@ const _ = ({ task }: { task: ProcessTask }) => {
     const accountCreated: TaskVariables = {
       variables: {
         accountId: {
-          '_type': 'com.jongsoft.finance.rest.process.VariableMap$WrappedVariable',
+          '_type': 'com.jongsoft.finance.rest.model.runtime.WrappedVariable',
           value: account.id
         } as AccountCreated
       }
@@ -95,6 +95,7 @@ const _ = ({ task }: { task: ProcessTask }) => {
         <legend className='font-bold text-xl underline'>{ i10n('page.user.profile.import.account.lookup') }</legend>
         <Entity.Account id='account'
                         title='Account.name'
+                        type={ ['debtor', 'creditor'] }
                         inputOnly={ true }
                         required={ true }/>
 

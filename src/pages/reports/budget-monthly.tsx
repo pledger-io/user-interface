@@ -1,7 +1,7 @@
 import { Card } from "primereact/card";
 import { Panel } from "primereact/panel";
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate, useParams, useRouteLoaderData } from "react-router";
 import BreadCrumbItem from "../../components/breadcrumb/breadcrumb-item.component";
 import BreadCrumbMenu from "../../components/breadcrumb/breadcrumb-menu.component";
 import BreadCrumbs from "../../components/breadcrumb/breadcrumb.component";
@@ -22,15 +22,17 @@ const BudgetReportView = () => {
   const { currency = 'EUR', year = "" + new Date().getFullYear() } = useParams()
   const [budgets, setBudgets] = useState<Budget[]>([])
   const navigate = useNavigate()
+  const { firstBudget } = useRouteLoaderData('budget-reports')
 
   useEffect(() => {
     setRange(DateRangeService.forYear(parseInt(year)))
+    if (!firstBudget) return
 
     Promise.all([...new Array(12).keys()]
       .map(month => BudgetRepository.budgetMonth(parseInt(year), month + 1)))
       .then(setBudgets)
       .catch(console.error)
-  }, [year])
+  }, [year, firstBudget])
   useEffect(() => {
     CurrencyRepository.get(currency)
       .then((c) => setCurrencySymbol(c.symbol))
@@ -53,22 +55,28 @@ const BudgetReportView = () => {
       </BreadCrumbMenu>
     </BreadCrumbs>
 
-    <div className='mx-2 my-4 block md:flex gap-2'>
-      <Panel header={ i10n('page.reports.budget.incomePercent') } className='flex-1'>
-        <YearlyIncomeGraphComponent year={ parseInt(year) } budgets={ budgets } currencySymbol={ currencySymbol }/>
-      </Panel>
-      <Panel header={ i10n('page.reports.budget.expensePercent') } className='flex-1'>
-        <BudgetYearlyExpense year={ parseInt(year) } budgets={ budgets } currencySymbol={ currencySymbol }/>
-      </Panel>
-    </div>
+    { !firstBudget && <Card className='mx-2 my-4'>
+      { i10n('common.overview.noresults') }
+    </Card> }
 
-    <Card className='mx-2 my-4'>
-      <MonthlyTableComponent budgets={ budgets } year={ parseInt(year) } currency={ currency }/>
-    </Card>
+    { firstBudget && <>
+      <div className='mx-2 my-4 block md:flex gap-2'>
+        <Panel header={ i10n('page.reports.budget.incomePercent') } className='flex-1'>
+          <YearlyIncomeGraphComponent year={ parseInt(year) } budgets={ budgets } currencySymbol={ currencySymbol }/>
+        </Panel>
+        <Panel header={ i10n('page.reports.budget.expensePercent') } className='flex-1'>
+          <BudgetYearlyExpense year={ parseInt(year) } budgets={ budgets } currencySymbol={ currencySymbol }/>
+        </Panel>
+      </div>
 
-    <Card className='mx-2 my-4'>
-      <MonthlyPerBudgetTableComponent budgets={ budgets } year={ parseInt(year) } currency={ currency }/>
-    </Card>
+      <Card className='mx-2 my-4'>
+        <MonthlyTableComponent budgets={ budgets } year={ parseInt(year) } currency={ currency }/>
+      </Card>
+
+      <Card className='mx-2 my-4'>
+        <MonthlyPerBudgetTableComponent budgets={ budgets } year={ parseInt(year) } currency={ currency }/>
+      </Card>
+    </> }
   </div>
 }
 

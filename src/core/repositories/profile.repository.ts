@@ -39,9 +39,9 @@ function fileReader(resolved: ResolvedFunction, callback: FileReadFunction) {
 
 const ProfileRepository = (api => {
     return {
-        patch: (data: ProfilePatch) => api.patch('profile', data),
+        patch: (data: ProfilePatch) => api.patch(`user-account/${api.user().username}`, data),
         get2Factor: () : Promise<string | ArrayBuffer | null> => new Promise((resolved, reject) => {
-            api.get<Blob>('profile/multi-factor/qr-code', { responseType: 'blob' })
+            api.get<Blob>(`user-account/${api.user().username}/2-factor`, { responseType: 'blob' })
                 .then(rawData => {
                     const fileReader = new FileReader();
                     fileReader.onloadend = () => {
@@ -51,16 +51,16 @@ const ProfileRepository = (api => {
                     fileReader.readAsDataURL(rawData);
                 }).catch(reject)
         }),
-        enableMfa: (verificationCode: string)               => api.post('profile/multi-factor/enable', { verificationCode }),
-        disableMfa: ()                                      => api.post('profile/multi-factor/disable', {}),
-        sessions: ()                                        => api.get<Session[]>('profile/sessions'),
+        enableMfa: (verificationCode: string)               => api.patch(`user-account/${api.user().username}/2-factor`, { verificationCode, action: 'ENABLE' }),
+        disableMfa: ()                                      => api.patch(`user-account/${api.user().username}/2-factor`, { action: 'DISABLE' }),
+        sessions: ()                                        => api.get<Session[]>(`user-account/${api.user().username}/sessions`),
         exportTransactions: ()                              => new Promise((accept, fail) => {
             api.get<Blob>('transactions/export', { responseType: 'blob' })
                 .then(fileReader(accept,f=> toBlob(f.result as string, 'text/plain')))
                 .catch(fail)
             }),
         exportProfile: ()                                   => new Promise((accept, fail) => {
-            api.get<Blob>('profile/export', { responseType: 'blob' })
+            api.get<Blob>(`export`, { responseType: 'blob' })
                 .then(fileReader(accept,f=> toBlob(f.result as string)))
                 .catch(fail)
         })

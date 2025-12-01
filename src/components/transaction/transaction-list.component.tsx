@@ -1,3 +1,4 @@
+import { useSessionStorage } from "primereact/hooks";
 import React, { FC, useEffect, useState } from "react";
 import { useRouteLoaderData } from "react-router";
 import { i10n } from "../../config/prime-locale";
@@ -6,7 +7,7 @@ import { TransactionRepository } from "../../core/RestAPI";
 import useQueryParam from "../../hooks/query-param.hook";
 import { DailyTransactions, groupTransactionByDay } from "../../reducers";
 import DateRange from "../../types/date-range.type";
-import { Pagination } from "../../types/types";
+import { AvailableSetting, Pagination } from "../../types/types";
 import MoneyComponent from "../format/money.component";
 import Loading from "../layout/loading.component";
 import { Paginator } from "../layout/paginator.component";
@@ -20,16 +21,24 @@ type TransactionOverviewProps = {
 
 const TransactionOverview: FC<TransactionOverviewProps> = ({ range, transfers }) => {
   const [page] = useQueryParam({ key: 'page', initialValue: "1" })
-  const [searchCommand, setSearchCommand] = useState<TransactionFilter>(() => {
-    const { searchCommand } = useRouteLoaderData(transfers ? 'transfers' : 'income-expense')
-    return searchCommand
-  })
+  const [searchCommand, setSearchCommand] = useState<TransactionFilter>({})
   const [transactions, setTransactions] = useState<DailyTransactions | undefined>(undefined)
   const [pagination, setPagination] = useState<Pagination>()
+  const [numberOfResults, _] = useSessionStorage(20, AvailableSetting.RecordSetPageSize)
+
+  const routerData = useRouteLoaderData(transfers ? 'transfers' : 'income-expense').searchCommand
+  useEffect(() => {
+    setSearchCommand({
+      offset: 0,
+      numberOfResults: 150,
+      startDate: range.startString(),
+      endDate: range.endString(),
+      ...routerData
+    })
+  }, []);
 
   useEffect(() => {
-    if (!(searchCommand as any).dateRange) return
-
+    if (!(searchCommand as any).startDate) return
     setTransactions(undefined)
     TransactionRepository.search(searchCommand)
       .then(response => {
@@ -42,12 +51,11 @@ const TransactionOverview: FC<TransactionOverviewProps> = ({ range, transfers })
     setSearchCommand(previous => {
       return {
         ...previous,
-        dateRange: {
-          start: range.startString(),
-          end: range.endString()
-        },
-        page: parseInt(page),
-        transfers: transfers
+        startDate: range.startString(),
+        endDate: range.endString(),
+        offset: (parseInt(page) -1) * numberOfResults,
+        numberOfResults: numberOfResults,
+        type: transfers ? 'TRANSFER' : undefined
       }
     })
   }, [page, range, transfers])

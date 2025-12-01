@@ -33,7 +33,7 @@ jobs:
         if: always()
         uses:  davelosert/vitest-coverage-report-action@v2
       - name: Create JAR bundle
-        run: ./builder/gradlew -b builder/build.gradle.kts jar
+        run: ./builder/gradlew -p builder jar
       - name: Store artifact
         uses: actions/upload-artifact@v4
         with:

@@ -30,8 +30,8 @@ const BudgetTable: FC<BudgetTableProps> = ({ budgets, year, currency }) => {
     const ranges = DateRangeService.months(year)
     const promises = ranges.map(async (month: DateRange) => {
       const balance = await StatisticalRepository.balance({
-        onlyIncome: false,
-        dateRange: month.toBackend()
+        type: 'EXPENSE',
+        range: month.toBackend()
       })
 
       return {
@@ -55,10 +55,10 @@ const BudgetTable: FC<BudgetTableProps> = ({ budgets, year, currency }) => {
       <Column header={ i10n('graph.series.budget.actual') }
               body={ (row) => <MoneyComponent money={ row.expenses } currency={ currency } /> }/>
       <Column header={ i10n('common.difference') }
-              body={ (row) => <MoneyComponent money={ row.expected - row.expenses } currency={ currency } /> }/>
+              body={ (row) => <MoneyComponent money={ row.expected - row.expenses || 0 } currency={ currency } /> }/>
       <Column header={ i10n('common.percentage') }
               bodyClassName={ (row) => row.expected < row.expenses ? 'text-red-500' : 'text-green-600' }
-              body={ (row) => <PercentageComponent percentage={ row.expenses / row.expected } decimals={ 2 }/> }/>
+              body={ (row) => <PercentageComponent percentage={ row.expenses / row.expected || 0 } decimals={ 2 }/> }/>
     </DataTable>
   </>
 }

@@ -35,9 +35,9 @@ const YearBalanceChart = ({ year, currencySymbol, currency } : YearBalanceChartP
         const incomePromise = new Promise<ChartDataset[]>((resolve, fail) =>
             Promise.all(months.map(month =>
                 StatisticalRepository.balance({
-                    dateRange: month.toBackend(),
+                    range: month.toBackend(),
                     currency,
-                    onlyIncome: true
+                    type: 'INCOME'
                 })))
                 .then(income => {
                     const incomeLabel = i10n('graph.series.income')
@@ -69,9 +69,9 @@ const YearBalanceChart = ({ year, currencySymbol, currency } : YearBalanceChartP
         const expensePromise = new Promise<ChartDataset[]>((resolve, fail) =>
             Promise.all(months.map(month =>
                 StatisticalRepository.balance({
-                    dateRange: month.toBackend(),
+                    range: month.toBackend(),
                     currency,
-                    onlyIncome: false
+                    type: 'EXPENSE'
                 })))
                 .then(expense => {
                     const expenseLabel = i10n('graph.series.expenses')

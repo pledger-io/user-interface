@@ -32,7 +32,7 @@ const ContractMenuActions = ({ contract, callback }: { contract : Contract, call
 
   const menuOptions: MenuItem[] = []
 
-  if (contract.contractAvailable) {
+  if (contract.fileToken) {
     menuOptions.push({
       label: i10n('page.budget.contracts.action.downloadContract'),
       icon: () => <Icon path={ mdiDownload } size={ 1 } />,

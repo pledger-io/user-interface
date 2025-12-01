@@ -24,7 +24,8 @@ function LiabilityGraph(props: Readonly<LiabilityGraphProps>) {
                 title: 'graph.series.balance',
                 dateRange: range,
                 allMoney: true,
-                accounts: [account]
+                accounts: [account],
+                monthly: true,
             }).then(result => setBalanceSeries({
                 datasets: [result]
             }))

@@ -14,13 +14,15 @@ const createScheduleEntity = (entity: any) => {
   return {
     name: entity.name,
     amount: entity.amount,
-    source: {
-      id: entity.from.id,
-      name: entity.from.name
-    },
-    destination: {
-      id: entity.to.id,
-      name: entity.to.name
+    transferBetween: {
+      source: {
+        id: entity.from.id,
+        name: entity.from.name
+      },
+      destination: {
+        id: entity.to.id,
+        name: entity.to.name
+      }
     },
     schedule: {
       periodicity: entity.periodicity,
@@ -37,7 +39,7 @@ type ScheduleTransactionDialogProps = Attributes & {
 }
 
 const ScheduleTransactionDialog: FC<ScheduleTransactionDialogProps> = ({ ref, transaction, onCreated }) => {
-  const [type, setType] = useState(transaction?.type.code.toLowerCase() || 'credit')
+  const [type, setType] = useState(transaction?.type.toLowerCase() || 'credit')
   const [visible, setVisible] = useState<boolean>(false)
   const { success, warning } = useNotification();
 

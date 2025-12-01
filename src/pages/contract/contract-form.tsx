@@ -7,7 +7,7 @@ import ContractRepository from "../../core/repositories/contract-repository";
 import { BackButton } from "../../components/layout/button";
 import BreadCrumbs from "../../components/breadcrumb/breadcrumb.component";
 import BreadCrumbItem from "../../components/breadcrumb/breadcrumb-item.component";
-import { Contract } from "../../types/types";
+import { Account, Contract } from "../../types/types";
 import { Card } from "primereact/card";
 import { i10n } from "../../config/prime-locale";
 
@@ -54,7 +54,7 @@ const ContractEdit = () => {
                         title='Contract.company'
                         type='creditor'
                         required
-                        value={ contract?.company }/>
+                        value={ contract?.company as Account }/>
 
         <div className='md:flex gap-4'>
           <Input.Date id='start'

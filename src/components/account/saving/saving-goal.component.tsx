@@ -28,7 +28,7 @@ const SavingSummaryComponent = ({ savingAccount }: { savingAccount: Account }) =
                   icon={ () => <Icon path={ mdiHelpCircleOutline } size={ 1 }/> }
                   tooltip={ i10n('page.accounts.saving.amount.current.help') }/>
         </td>
-        <td className='pl-3'><BalanceComponent accounts={ [savingAccount] }/></td>
+        <td className='pl-3'><BalanceComponent accounts={ [savingAccount.id] }/></td>
       </tr>
       <tr>
         <td className='flex gap-5 justify-between font-bold items-center'>

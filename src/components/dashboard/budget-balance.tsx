@@ -34,9 +34,9 @@ function BudgetBalance({ range } : Readonly<{ range : DateRange }>) {
                             data: (await Promise.all(
                                 expenses.map((expense : BudgetExpense) =>
                                     StatisticalRepository.balance({
-                                        dateRange: range.toBackend(),
-                                        onlyIncome: false,
-                                        expenses: [{ id: expense.id }]
+                                        range: range.toBackend(),
+                                        type: 'EXPENSE',
+                                        expenses: [ expense.id ]
                                     })))).map(balance => Math.abs(balance.balance)),
                             backgroundColor: '#7fc6a5'
                         }

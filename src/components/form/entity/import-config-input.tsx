@@ -108,9 +108,9 @@ const UploadConfigDialog = ({ ref, callback }: { ref: Ref<DialogOptions>, callba
                    required
                    type='text'/>
 
-        <Upload onUpload={ event => setUploadToken(event.fileCode) }
+        { !uploadToken && <Upload onUpload={ event => setUploadToken(event.fileCode) }
                 label="ImportConfig.content"
-                accepts="application/json"/>
+                accepts="application/json"/> }
 
         <div className='flex gap-1 justify-end mt-4'>
           <Button label='common.action.cancel'

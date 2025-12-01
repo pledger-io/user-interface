@@ -35,7 +35,7 @@ export type Account = AccountRef & {
 }
 
 export type Category = Identifiable & {
-  label: string,
+  name: string,
   description: string
   lastUsed: string
 }
@@ -51,7 +51,7 @@ export type Currency = Identifiable & {
 export type Contract = Identifiable & {
   name: string,
   description?: string,
-  company: Account,
+  company: AccountRef,
   start: string,
   end: string,
   fileToken?: string,
@@ -75,9 +75,7 @@ export type Transaction = {
   }
   currency: string,
   amount: number,
-  type: {
-    code: 'DEBIT' | 'CREDIT' | 'TRANSFER'
-  },
+  type: 'DEBIT' | 'CREDIT' | 'TRANSFER',
   dates: {
     transaction: string
   },
@@ -85,17 +83,19 @@ export type Transaction = {
 }
 
 export type ScheduledTransactionRange = {
-  start: string,
-  end: string,
+  startDate: string,
+  endDate: string,
 }
 export type ScheduledTransaction = {
   id: Identifier,
   name: string,
   description: string,
   amount: number,
-  source: Account,
-  destination: Account,
-  range?: ScheduledTransactionRange,
+  transferBetween: {
+    source: AccountRef,
+    destination: AccountRef,
+  }
+  activeBetween?: ScheduledTransactionRange,
   schedule: {
     periodicity: 'MONTHS' | 'YEARS' | 'WEEKS',
     interval: number
@@ -216,6 +216,7 @@ export type ApiError = {
 }
 
 export type UserProfile = {
+  username?: string,
   theme: string,
   defaultCurrency?: Currency,
   currency: string
@@ -249,4 +250,10 @@ export type SpendingPattern = {
   confidence: number;
   detectedDate: string;
   metadata?: Record<string, any>;
+}
+
+export enum AvailableSetting {
+  RecordSetPageSize='RecordSetPageSize',
+  AutocompleteLimit='AutocompleteLimit',
+  RegistrationOpen='RegistrationOpen'
 }
