@@ -37,8 +37,8 @@ const TransactionRepository = (api => {
         update: (transactionId, transaction) => api.put(`transactions/${transactionId}`, transaction),
         splits: (transactionId, split) => api.patch(`transactions/${transactionId}`, split),
         search: searchCommand => api.get('transactions', {params: searchCommand}),
-        suggest: suggestCommand => api.post('transactions/suggestions', suggestCommand),
-        extract: extractCommand => api.post('transactions/generate-transaction', extractCommand),
+        suggest: suggestCommand => api.get('ai/auto-complete', { params: suggestCommand }),
+        extract: extractCommand => api.post('ai/extract', extractCommand),
         delete: (id, transactionId) => api.delete(`transactions/${transactionId}`),
     }
 })(RestApi)

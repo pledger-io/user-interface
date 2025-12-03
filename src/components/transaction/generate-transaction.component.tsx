@@ -68,7 +68,7 @@ export const GenerateTransaction = () => {
           <Form entity='Transaction' onSubmit={ onSubmit }>
             <Message severity='info' text={ i10n('page.transactions.generate.info') }/>
 
-            <Input.TextArea id='fromText'
+            <Input.TextArea id='text'
                             required
                             disabled={ processing }
                             title='Transaction.description'/>
@@ -153,11 +153,9 @@ function CreateTransactionPanel({ generated, stepperRef, closeDialog }: { genera
   }
 
   const accountFiller = {
-    source: from,
-    destination: to,
-    type: {
-      code: generated.type || 'CREDIT'
-    }
+    source: from?.name,
+    destination: to?.name,
+    type: generated.type || 'CREDIT'
   } as unknown as Transaction
 
   if (!generated) return <></>
