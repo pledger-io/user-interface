@@ -6,7 +6,7 @@ export type CategoryPage = PagedResponse<Category>
 const CategoryRepository = (api => {
   return {
     all: () => api.get<CategoryPage>('categories?offset=0&numberOfResults=99999').then(results => results.content || []),
-    list: (page: number, name: string | undefined) => api.get<CategoryPage>(`categories`, {
+    list: (page: number, name: string | undefined = undefined) => api.get<CategoryPage>(`categories`, {
       params: {
         offset: (page - 1) * (parseInt(sessionStorage.getItem('RecordSetPageSize') || '50')),
         numberOfResults: sessionStorage.getItem('RecordSetPageSize') || 50,
