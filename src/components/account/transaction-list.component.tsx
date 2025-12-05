@@ -25,6 +25,7 @@ const TransactionList: FC<TransactionListProps> = ({ account, range }) => {
 
   useEffect(() => {
     setTransactions(undefined)
+    console.debug("fetching transactions")
     AccountRepository.transactions(account.id, range, page)
       .then(result => {
         const transactions = (result.content || [])

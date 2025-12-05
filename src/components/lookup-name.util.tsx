@@ -13,7 +13,7 @@ async function lookup_entity_by_name<T>(type: RuleField, name: string): Promise<
     case 'CHANGE_TRANSFER_FROM':
       return (await AccountRepository.search({ types: undefined, numberOfResults: 9999 })).content.filter((account: Account) => account.name === name)[0];
     case 'CATEGORY':
-      return (await CategoryRepository.all()).filter(category => category.name == name)[0] as T
+      return (await CategoryRepository.list(1, name)).content.filter(category => category.name == name)[0] as T
     case 'BUDGET':
       return (await BudgetRepository.budgetMonth(new Date().getFullYear(), new Date().getMonth() + 1))
         .expenses.filter((e : BudgetExpense) => e.name == name)[0] as T

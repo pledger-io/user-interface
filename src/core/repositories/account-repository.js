@@ -17,8 +17,8 @@ const AccountRepository = (api => {
             .then((result) => result.content[0]),
         transactions: (id, range, page) => api.get(`transactions`, {
             params: {
-                offset: (page - 1) * (sessionStorage.getItem('RecordSetPageSize')),
-                numberOfResults: sessionStorage.getItem('RecordSetPageSize'),
+                offset: (page - 1) * (sessionStorage.getItem('RecordSetPageSize') || 50),
+                numberOfResults: sessionStorage.getItem('RecordSetPageSize') || 50,
                 account: id,
                 startDate: range.startString(),
                 endDate: range.endString(),

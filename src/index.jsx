@@ -45,7 +45,7 @@ PrimeLocale()
       .then(data => {
         console.debug('Fetched all application settings from the backend.')
         data.forEach(({name, value}) => {sessionStorage.setItem(name, value)})
-      })
+      }).catch(error => console.warn("Failed to load application settings", error))
     createRoot(document.getElementById('root'))
       .render((
         <React.StrictMode>
