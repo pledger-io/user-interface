@@ -22,7 +22,7 @@ jobs:
           distribution: 'temurin'
           architecture: x64
       - name: Download artifact
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v7
         with:
           name: build-artifact
       - name: Create JAR bundle
