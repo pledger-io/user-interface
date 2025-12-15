@@ -3684,9 +3684,9 @@ sonar-scanner@^3.1.0:
   integrity sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==
 
 spacetime@^7.6.2:
-  version "7.10.0"
-  resolved "https://registry.yarnpkg.com/spacetime/-/spacetime-7.10.0.tgz#f3bc406bd65127a66924b206d5c8b52bcca5b063"
-  integrity sha512-tanJSLq0/+Qvq1bmK0Nh2Ppk0lFOkGwpes29/64E6hyK4kn5d6LPt65Eidm2Xaf3gLvmG8KaXh8LmeymPlw0Aw==
+  version "7.12.0"
+  resolved "https://registry.yarnpkg.com/spacetime/-/spacetime-7.12.0.tgz#2377bd181772253542c0fd356676a082408ca62e"
+  integrity sha512-n7iQdr/oiTc0Yc0m5/8lpqRPMxuD9c6Yk7F8Np5+jH7tawt+dJZeCLDHNnr2kP5tUlv1H0fazdCOE9EQUv0B3g==
 
 stackback@0.0.2:
   version "0.0.2"
