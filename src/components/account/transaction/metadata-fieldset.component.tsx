@@ -23,11 +23,16 @@ type LocatedEntities = {
 }
 
 async function lookup_suggestion<T>(type: RuleField, name: string | undefined): Promise<T | undefined> {
-  if (name && type) {
-    return await lookup_entity_by_name(type, name);
-  }
+  return new Promise((resolve, reject) => {
+    if (name && type) {
+      console.trace(`Looking up ${type} with name: ${name}`)
+      return lookup_entity_by_name(type, name)
+        .then(entity => resolve(entity as T))
+        .catch(reject);
+    }
 
-  return Promise.reject(undefined)
+    resolve(undefined)
+  })
 }
 
 const MetadataFieldsetComponent = ({ transaction, suggestionFunc }: {
@@ -39,7 +44,7 @@ const MetadataFieldsetComponent = ({ transaction, suggestionFunc }: {
   useEffect(() => {
     if (suggestionFunc) {
       suggestionFunc.suggest = async (suggestion: Suggestion) => {
-        setSuggestion({
+        setSuggestion( {
           tags: suggestion.tags,
           category: await lookup_suggestion<Category>('CATEGORY', suggestion?.category),
           budget: await lookup_suggestion('BUDGET', suggestion?.budget),

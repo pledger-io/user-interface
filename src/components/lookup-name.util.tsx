@@ -5,23 +5,35 @@ import ContractRepository from "../core/repositories/contract-repository";
 import { useEffect, useState } from "react";
 import BudgetRepository from "../core/repositories/budget.repository";
 
-async function lookup_entity_by_name<T>(type: RuleField, name: string): Promise<T> {
+function lookup_entity_by_name<T>(type: RuleField, name: string): Promise<T> {
+  let promise: Promise<T>;
+
   switch (type) {
     case 'SOURCE_ACCOUNT':
     case 'TO_ACCOUNT':
     case 'CHANGE_TRANSFER_TO':
     case 'CHANGE_TRANSFER_FROM':
-      return (await AccountRepository.search({ types: undefined, numberOfResults: 9999 })).content.filter((account: Account) => account.name === name)[0];
+      promise = AccountRepository.search({ types: undefined, numberOfResults: 9999 })
+        .then(response => response.content.filter((account: Account) => account.name === name))
+        .then(accounts => accounts[0] as T);
+      break;
     case 'CATEGORY':
-      return (await CategoryRepository.list(1, name)).content.filter(category => category.name == name)[0] as T
+      promise = CategoryRepository.list(1, name)
+        .then(response => response.content.filter((category: Category) => category.name === name))
+        .then(categories => categories[0] as T);
+      break;
     case 'BUDGET':
-      return (await BudgetRepository.budgetMonth(new Date().getFullYear(), new Date().getMonth() + 1))
-        .expenses.filter((e : BudgetExpense) => e.name == name)[0] as T
+      promise =  BudgetRepository.budgetMonth(new Date().getFullYear(), new Date().getMonth() + 1)
+        .then(budget => (budget.expenses || []).filter((e : BudgetExpense) => e.name == name))
+        .then(expenses => expenses[0] as T);
+      break;
     case 'CONTRACT':
-      return (await ContractRepository.list('ACTIVE')).map(contract => contract.name == name)[0] as T
+      return ContractRepository.list('ACTIVE')
+        .then(contracts => contracts.map(contract => contract.name == name))
+        .then(contracts => contracts[0] as T);
   }
 
-  throw new Error(`Unable to lookup entity type for ${type}`);
+  return promise;
 }
 
 async function lookup_entity<T>(type: RuleField, id: Identifier) : Promise<T> {

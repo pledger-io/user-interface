@@ -47,7 +47,7 @@ export default defineConfig({
                     return path.substring(3)
                 }
             },
-            '/.well-known': {
+            '/.well-known/openid-connect': {
                 target: 'http://localhost:8080',
                 changeOrigin: true
             }
