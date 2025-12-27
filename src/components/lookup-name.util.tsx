@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import BudgetRepository from "../core/repositories/budget.repository";
 
 function lookup_entity_by_name<T>(type: RuleField, name: string): Promise<T> {
-  let promise: Promise<T>;
+  let promise: Promise<T> = new Promise<T>((resolve, reject) => reject());
 
   switch (type) {
     case 'SOURCE_ACCOUNT':
