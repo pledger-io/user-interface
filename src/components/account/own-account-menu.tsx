@@ -86,6 +86,7 @@ const OwnAccountMenu: FC<OwnAccountMenuProps> = ({ account, callback }) => {
     <Menu popup popupAlignment='right' ref={ actionMenu } model={ menuOptions }/>
     <Button icon={ mdiDotsVertical }
             text
+            className='p-0!'
             onClick={ (event) => actionMenu?.current?.toggle(event) }
             aria-controls="popup_menu_right"
             aria-haspopup/>

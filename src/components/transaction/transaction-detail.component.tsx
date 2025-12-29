@@ -1,7 +1,7 @@
 import {
   mdiAlert,
   mdiArrowRight,
-  mdiCalendarCheck,
+  mdiCalendarCheck, mdiDotsVertical,
   mdiFileSign,
   mdiSquareEditOutline,
   mdiTable,
@@ -41,6 +41,7 @@ function determineAmount(transaction: Transaction, account?: AccountRef) {
 const TransactionItem: FC<TransactionItemProps> = ({ transaction, className = '', account }) => {
   const [deleted, setDeleted] = useState(false)
   const { warning, success } = useNotification()
+  const navigate = useNavigate()
 
   const isSource = !account || account.id === transaction.source.id
   const sourceAccount = isSource ? transaction.source : transaction.destination
@@ -55,9 +56,16 @@ const TransactionItem: FC<TransactionItemProps> = ({ transaction, className = ''
       .catch(() => warning('page.transactions.delete.failed'))
   }
 
+  const onEditClick = () => {
+    // only do this when display width < 768px
+    if (window.innerWidth < 768) {
+      navigate(`${ Resolver.Transaction.resolveUrl(transaction) }/edit`)
+    }
+  }
+
   if (deleted) return null
   return <div className={ `${ className } flex content-between gap-3 px-2 border-b-[1px] my-0.5 border-gray-100 last:border-none` }>
-    <span className='text-[.9em] md:text-[1em] md:w-[12em] w-[6em]'>
+    <span className='text-[.9em] md:text-[1em] md:w-[12em] w-[6em]' onClick={ onEditClick }>
         { transaction.metadata.budget &&
           <div className='text-gray-400'>
             { transaction.metadata.budget }
@@ -75,11 +83,11 @@ const TransactionItem: FC<TransactionItemProps> = ({ transaction, className = ''
       </span>
     }
     <span className='flex flex-col flex-1'>
-      <span className='text-[.9em] md:text-[1em]'>{ transaction.description }</span>
+      <span className='text-[.9em] md:text-[1em]' onClick={ onEditClick }>{ transaction.description }</span>
       { transaction.metadata.tags &&
         <div className='flex gap-1'> { transaction.metadata.tags.map(t => <Tag key={ t } label={ t }/>) } </div>
       }
-      <span className='text-gray-400 flex items-center gap-0.5'>
+      <span className='text-gray-400 flex items-center gap-0.5 text-[.95em]'>
         { !account && <>
             <NavLink
               to={ `${ Resolver.Account.resolveUrl(sourceAccount) }/transactions/${ transactionDate.getFullYear() }/${ transactionDate.getMonth() + 1 }` }
@@ -111,8 +119,8 @@ const TransactionItem: FC<TransactionItemProps> = ({ transaction, className = ''
         }
         </span>
     </span>
-    <div><ActionExpander transaction={ transaction } onDelete={ onDelete }/></div>
-    <span className='w-[5rem] text-right'><MoneyComponent money={ amount } currency={ transaction.currency }/></span>
+    <ActionExpander transaction={ transaction } onDelete={ onDelete }/>
+    <span className='w-[5rem] text-right' onClick={ onEditClick }><MoneyComponent money={ amount } currency={ transaction.currency }/></span>
   </div>
 }
 
@@ -128,13 +136,13 @@ const ActionExpander = ({ transaction, onDelete }: { transaction: Transaction, o
     })
   }
 
-  return <div className='inline-block'>
+  return <div className='gap-0.5 hidden md:flex'>
       <ScheduleTransactionDialog ref={ scheduleDialogRef } transaction={ transaction }/>
       <Button tooltip={ i10n('page.transaction.action.recurring') }
               text
               size='small'
               severity='secondary'
-              className='opacity-30 hover:opacity-100'
+              className='opacity-30 hover:opacity-100 p-0!'
               icon={ mdiCalendarCheck }
               onClick={ () => scheduleDialogRef.current?.open() }/>
       { transaction.split &&
@@ -143,7 +151,7 @@ const ActionExpander = ({ transaction, onDelete }: { transaction: Transaction, o
                   text
                   severity='help'
                   icon={ mdiTable }
-                  className='opacity-30 hover:opacity-100'
+                  className='opacity-30 hover:opacity-100 p-0!'
                   onClick={ () => splitDialogRef.current?.open() }/>
           <TransactionSplitDialog transaction={ transaction } ref={ splitDialogRef }/>
         </>
@@ -152,14 +160,14 @@ const ActionExpander = ({ transaction, onDelete }: { transaction: Transaction, o
               text
               size='small'
               icon={ mdiSquareEditOutline }
-              className='opacity-30 hover:opacity-100'
+              className='opacity-30 hover:opacity-100 p-0!'
               onClick={ () => navigate(`${ Resolver.Transaction.resolveUrl(transaction) }/edit`) }/>
       <Button tooltip={ i10n('common.action.delete') }
               text
               size='small'
               icon={ mdiTrashCanOutline }
               severity='danger'
-              className='opacity-30 hover:opacity-100'
+              className='opacity-30 hover:opacity-100 p-0!'
               onClick={ confirmDeleteClick }/>
   </div>
 }

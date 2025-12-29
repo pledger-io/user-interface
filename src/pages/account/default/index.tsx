@@ -28,7 +28,7 @@ const accountNameColumn = (account: Account) => <>
                             <span className='font-semibold'>
                                 { i10n('Account.lastActivity') }:
                             </span>
-    <DateComponent date={ account.history.lastTransaction }/>
+    <DateComponent date={ account.history?.lastTransaction || new Date().toISOString() }/>
   </div>
   <span className='hidden md:block mt-1 pl-1 text-muted text-sm'>
                             { account.description }
@@ -89,9 +89,11 @@ const AccountOverview = () => {
           </> }/>
           <Column header={ i10n('Account.name') } body={ accountNameColumn }/>
           <Column header={ i10n('Account.number') }
+                  className='hidden md:table-cell'
+                  headerClassName='hidden md:table-cell'
                   body={ account => account.account.iban || account.account.number }/>
           <Column header={ i10n('common.account.saldo') }
-                  className='w-[9rem]'
+                  className='w-1 md:w-[9rem]'
                   body={ (account: Account) => determineBalance(account) } />
 
           <Column className='w-[1rem]' body={ account => <AccountMenu account={ account } callback={ reload }/> }/>

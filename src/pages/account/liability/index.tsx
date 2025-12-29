@@ -85,7 +85,8 @@ const LiabilityOverview = () => {
             { account.iconFileCode && <Attachment.Image fileCode={ account.iconFileCode }/> }
           </> }/>
           <Column header={ i10n('Account.name') } body={ accountNameColumn }/>
-          <Column className='w-[9rem]'
+          <Column className='hidden md:table-cell w-[9rem]'
+                  headerClassName='hidden md:table-cell'
                   body={ percentageColumn }
                   header={ i10n('Account.interest') + ' (' + i10n('Account.interestPeriodicity') + ')' }/>
           <Column header={ i10n('common.account.saldo') }

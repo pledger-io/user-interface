@@ -116,7 +116,7 @@ const TransactionForm = () => {
         { transactionId && !transaction.split && <>
           <fieldset className='mt-4 flex justify-center'>
             <Button label='page.transaction.action.split'
-                    className='w-xl px-auto'
+                    className='w-auto md:w-xl px-auto'
                     outlined={ true }
                     icon={ mdiCallSplit }
                     onClick={ initialSplit }/>

@@ -1,4 +1,4 @@
-@layer base, app.theme, app.icons, app.overrides;
+@layer base, primereact, app.theme, app.icons, app.overrides;
 @import 'tailwindcss';
 @import 'primeicons/primeicons.css' layer(app.icons);
 
@@ -53,12 +53,17 @@
   .p-inputtext {
     padding: 0.45rem .65rem;
   }
+  .p-icon-field-left > .p-inputtext {
+    padding-left: 2rem;
+  }
+
 
   .p-button {
     padding: 0.45rem .65rem;
 
     &.p-button-sm {
       padding: 0.45rem .65rem;
+      font-size: .8rem;
     }
 
     &.icon-only {

@@ -3,14 +3,12 @@ import { Card } from "primereact/card";
 import { Column } from "primereact/column";
 import { ConfirmDialog } from "primereact/confirmdialog";
 import { DataTable } from "primereact/datatable";
-import { InputNumber } from "primereact/inputnumber";
 import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router";
 import OwnAccountMenu from "../../../components/account/own-account-menu";
 import BalanceComponent from "../../../components/balance.component";
 import BreadCrumbItem from "../../../components/breadcrumb/breadcrumb-item.component";
 import BreadCrumbs from "../../../components/breadcrumb/breadcrumb.component";
-import { Amount } from "../../../components/form/input";
 import DateComponent from "../../../components/format/date.component";
 import MoneyComponent from "../../../components/format/money.component";
 import { Button } from "../../../components/layout/button";
@@ -66,11 +64,13 @@ const OwnAccountsView = () => {
           </div> }
         </> }/>
         <Column header={ i10n('Account.number') }
+                className='hidden md:table-cell'
+                headerClassName='hidden md:table-cell'
                 body={ account => account.account.iban || account.account.number }/>
         <Column header={ i10n('common.account.saldo') }
-                className='w-[9rem]'
+                className='w-1 md:w-[9rem]'
                 body={ (account: Account) => determineBalance(account) }/>
-        <Column className='w-[1rem]'
+        <Column className='md:w-[1rem]'
                 body={ account => <OwnAccountMenu account={ account } callback={ loadAccounts }/> }/>
       </DataTable>
     </Card>

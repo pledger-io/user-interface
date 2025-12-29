@@ -99,18 +99,21 @@ const AccountDetailView: FC = () => {
           { (!Resolver.Account.isManaged(account) || Resolver.Account.isCreditor(account)) &&
             <Button icon={ mdiCashPlus }
                     severity='success'
+                    className='[&>svg]:hidden md:[&>svg]:block'
                     size='small'
                     onClick={ () => navigate(`${ Resolver.Account.resolveUrl(account) }/transactions/add/debit`) }
                     label='page.transactions.debit.add' /> }
           { (!Resolver.Account.isManaged(account) || Resolver.Account.isDebtor(account)) &&
             <Button icon={ mdiCartPlus }
                     severity='warning'
+                    className='[&>svg]:hidden md:[&>svg]:block'
                     size='small'
                     onClick={ () => navigate(`${ Resolver.Account.resolveUrl(account) }/transactions/add/credit`) }
                     label='page.transactions.credit.add' /> }
           { !Resolver.Account.isManaged(account) &&
             <Button icon={ mdiSwapHorizontal }
                     severity='secondary'
+                    className='[&>svg]:hidden md:[&>svg]:block'
                     size='small'
                     onClick={ () => navigate(`${ Resolver.Account.resolveUrl(account) }/transactions/add/transfer`) }
                     label='page.transactions.transfer.add' /> }
