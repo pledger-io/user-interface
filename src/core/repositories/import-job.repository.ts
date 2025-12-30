@@ -16,7 +16,7 @@ const ImportJobRepository = (api => {
     delete: (slug: string) => api.delete(`batch-importer/${ slug }`),
     transactions: (slug: string, page: number) => api.get<TransactionPage>('transactions', {
       params: {
-        offset: (page - 1) * (sessionStorage.getItem('RecordSetPageSize') || 50),
+        offset: (page - 1) * (sessionStorage.getItem('RecordSetPageSize') ? parseInt(sessionStorage.getItem('RecordSetPageSize') as string) : 50),
         numberOfResults: sessionStorage.getItem('RecordSetPageSize') || 50,
         startDate: '1900-01-01',
         endDate: new Date().toISOString().split('T')[0],
