@@ -1,10 +1,6 @@
 import RestAPI from "./rest-api";
 import { BatchConfig, ImportJob, PagedResponse, Transaction } from "../../types/types";
 
-type PageRequest = {
-  page: number
-}
-
 type ImportJobPage = PagedResponse<ImportJob>
 type TransactionPage = PagedResponse<Transaction>
 
@@ -18,9 +14,17 @@ const ImportJobRepository = (api => {
       }
     }),
     delete: (slug: string) => api.delete(`batch-importer/${ slug }`),
-    transactions: (slug: string, page: number) => api.post<PageRequest, TransactionPage>(`import/${ slug }/transactions`, { page }),
+    transactions: (slug: string, page: number) => api.get<TransactionPage>('transactions', {
+      params: {
+        offset: (page - 1) * (sessionStorage.getItem('RecordSetPageSize') || 50),
+        numberOfResults: sessionStorage.getItem('RecordSetPageSize') || 50,
+        startDate: '1900-01-01',
+        endDate: new Date().toISOString().split('T')[0],
+        importSlug: slug
+      }
+    }),
 
-    runTransactionRules: (slug: string) => api.post(`batch-importer/${ slug }/transactions/run-rule-automation`, {}),
+    runTransactionRules: (slug: string) => api.get(`batch-importer/${ slug }/transactions/run-rule-automation`, {}),
 
     getImportConfigs: (): Promise<BatchConfig[]> => api.get('batch-importer-config'),
     createImportConfig: (config: any) => api.post<any, any>('batch-importer-config', config),
