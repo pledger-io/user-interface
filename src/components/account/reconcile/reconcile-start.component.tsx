@@ -1,10 +1,9 @@
 import { mdiCancel, mdiContentSave } from "@mdi/js";
 import React, { FC, useImperativeHandle } from "react";
 import { useNotification } from "../../../context/notification-context";
-import ProcessRepository, { BusinessKey } from "../../../core/repositories/process.repository";
+import AccountRepository from "../../../core/repositories/account-repository";
 import { Account } from "../../../types/types";
 import { Form, Input, SubmitButton } from "../../form";
-import { ReconcileStart } from "./types";
 import { Dialog } from "primereact/dialog";
 import { i10n } from "../../../config/prime-locale";
 import { Button } from "../../layout/button";
@@ -26,16 +25,15 @@ const ReconcileStartComponent: FC<ReconcileStartProps> = ({ ref, account, afterC
   }));
 
   const onSubmit = (data: any) => {
-    const processData: ReconcileStart = {
-      businessKey: account.id as BusinessKey,
-      accountId: account.id,
-      openBalance: data.openBalance,
-      endBalance: data.endBalance,
-      startDate: `${ data.year }-01-01`,
-      endDate: `${ parseInt(data.year) + 1 }-01-01`,
+    const processData = {
+      balance: {
+        start: data.openBalance,
+        end: data.endBalance
+      },
+      period: data.year
     }
 
-    ProcessRepository.start('AccountReconcile', processData)
+    AccountRepository.yearReconcile(account.id, processData)
       .then(() => success('page.accounts.reconcile.success'))
       .then(() => setVisible(false))
       .then(() => setTimeout(afterCreate, 500))

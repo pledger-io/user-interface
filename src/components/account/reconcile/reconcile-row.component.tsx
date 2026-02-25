@@ -1,20 +1,13 @@
 import { mdiCancel, mdiContentSaveSettings, mdiDelete, mdiHammer, mdiRedo } from "@mdi/js";
 import { Dialog } from "primereact/dialog";
-import React, { FC, Ref, useEffect, useImperativeHandle, useRef, useState } from "react";
+import React, { FC, Ref, useImperativeHandle, useRef } from "react";
 import { i10n } from "../../../config/prime-locale";
 import { useNotification } from "../../../context/notification-context";
-import ProcessRepository, {
-  BusinessKey,
-  ProcessInstance,
-  ProcessVariable
-} from "../../../core/repositories/process.repository";
-import { Identifier } from "../../../types/types";
-import { confirmDeleteDialog } from "../../confirm-dialog";
+import AccountRepository from "../../../core/repositories/account-repository";
+import { AccountReconcile, Identifier } from "../../../types/types";
 import { Form, Input, SubmitButton } from "../../form";
 import MoneyComponent from "../../format/money.component";
 import { Button } from "../../layout/button";
-import Loading from "../../layout/loading.component";
-import { ReconcileStart } from "./types";
 
 type ReconcilePreviousYearProps = {
   accountId: Identifier
@@ -41,16 +34,15 @@ const ReconcilePreviousYearComponent: FC<ReconcilePreviousYearProps> = ({
   }));
 
   const onFormSubmit = (data: any) => {
-    const processData: ReconcileStart = {
-      businessKey: accountId as BusinessKey,
-      accountId: accountId,
-      openBalance: data.openBalance,
-      endBalance: endBalance,
-      startDate: `${ year }-01-01`,
-      endDate: `${ year + 1 }-01-01`,
+    const processData = {
+      balance: {
+        start: data.openBalance,
+        end: data.endBalance
+      },
+      period: year
     }
 
-    ProcessRepository.start('AccountReconcile', processData)
+    AccountRepository.yearReconcile(accountId, processData)
       .then(() => success('page.accounts.reconcile.success'))
       .then(() => setVisible(false))
       .then(() => setTimeout(onComplete, 500))
@@ -84,82 +76,62 @@ const ReconcilePreviousYearComponent: FC<ReconcilePreviousYearProps> = ({
   </Dialog>
 }
 
-const ReconcileRowComponent = ({ process, onRemoved }: { process: ProcessInstance, onRemoved: () => void }) => {
-  const [variables, setVariables] = useState<ProcessVariable[]>()
+const ReconcileRowComponent = ({ process, onRemoved, accountId }: { process: AccountReconcile, onRemoved: () => void, accountId: Identifier}) => {
   const previousYearRef = useRef<any>(null)
-  const { success, warning } = useNotification()
-
-  useEffect(() => {
-    ProcessRepository.variables('AccountReconcile', process.businessKey, process.id)
-      .then(setVariables)
-  }, [process])
-
-  if (!variables) {
-    return <tr>
-      <td colSpan={ 6 }><Loading/></td>
-    </tr>
-  }
+  const { warning } = useNotification()
 
   const onRetry = () => {
-    setVariables(undefined)
-    ProcessRepository.tasks('AccountReconcile', process.businessKey, process.id)
-      .then(tasks =>
-        Promise.all(tasks.map(task =>
-          ProcessRepository.completeTask('AccountReconcile', process.businessKey, process.id, task.id))))
+    AccountRepository.yearReconcile(accountId, process)
       .then(() => setTimeout(onRemoved, 20))
       .catch(() => warning('page.accounts.reconcile.error'))
   }
+
   const onDelete = () => {
-    confirmDeleteDialog({
-      message: i10n('page.accounts.reconcile.delete.confirm'),
-      accept() {
-        ProcessRepository.delete('AccountReconcile', process.businessKey, process.id)
-          .then(() => success('page.account.reconcile.delete.success'))
-          .then(() => onRemoved())
-          .catch(() => warning('page.account.reconcile.delete.failed'))
-      }
-    })
+    // confirmDeleteDialog({
+    //   message: i10n('page.accounts.reconcile.delete.confirm'),
+    //   accept() {
+    //     ProcessRepository.delete('AccountReconcile', process.businessKey, process.id)
+    //       .then(() => success('page.account.reconcile.delete.success'))
+    //       .then(() => onRemoved())
+    //       .catch(() => warning('page.account.reconcile.delete.failed'))
+    //   }
+    // })
   }
 
-  const findValue = (name: string) => variables.find(variable => variable.name === name)?.value
-
-  const year = parseInt(findValue('startDate')?.substring(0, 4))
-  const computedStartBalance = parseFloat(findValue('computedStartBalance'))
-  const desiredStartBalance = parseFloat(findValue('openBalance'))
   return <tr>
     <td className='flex gap-0.5'>
-      <ReconcilePreviousYearComponent year={ year - 1 }
+      <ReconcilePreviousYearComponent year={ process.period - 1 }
                                       ref={ previousYearRef }
-                                      endBalance={ desiredStartBalance }
-                                      accountId={ parseInt(process.businessKey) }
+                                      endBalance={ process.balance.start }
+                                      accountId={ accountId }
                                       onComplete={ onRemoved }/>
       <Button
         icon={ mdiHammer }
         outlined
         severity='info'
-        className='!p-0.5'
+        className='p-0.5!'
         onClick={ () => previousYearRef?.current?.open() }
-        data-testid={ `previous-year-button-${ process.id }` }/>
+        data-testid={ `previous-year-button-${ process.period }` }/>
       <Button
         icon={ mdiRedo }
         outlined
         severity='success'
-        className='!p-0.5'
+        className='p-0.5!'
         onClick={ onRetry }
-        data-testid={ `retry-button-${ process.id }` }/>
+        data-testid={ `retry-button-${ process.period }` }/>
       <Button
         icon={ mdiDelete }
         outlined
         severity='warning'
-        className='!p-0.5'
+        className='p-0.5! mr-2'
         onClick={ onDelete }
-        data-testid={ `remove-row-${ process.id }` }/>
+        data-testid={ `remove-row-${ process.period }` }/>
     </td>
-    <td>{ findValue('startDate').substring(0, 4) }</td>
-    <td><MoneyComponent money={ desiredStartBalance }/></td>
-    <td><MoneyComponent money={ computedStartBalance }/></td>
-    <td><MoneyComponent money={ findValue('endBalance') }/></td>
-    <td><MoneyComponent money={ findValue('computedEndBalance') }/></td>
+    <td>{ process.period }</td>
+    <td><MoneyComponent money={ process.balance.start }/></td>
+    <td><MoneyComponent money={ process.computed?.start }/></td>
+    <td><MoneyComponent money={ process.balance.end }/></td>
+    <td><MoneyComponent money={ NaN }/></td>
     <td></td>
   </tr>
 }

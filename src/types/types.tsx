@@ -34,6 +34,17 @@ export type Account = AccountRef & {
   savingGoals: SavingGoal[],
 }
 
+export type AccountReconcile = {
+  period: number
+  balance: {
+    start: number
+    end: number
+  }
+  computed?: {
+    start: number
+  }
+}
+
 export type Category = Identifiable & {
   name: string,
   description: string

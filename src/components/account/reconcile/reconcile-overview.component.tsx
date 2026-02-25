@@ -2,8 +2,8 @@ import { Dialog } from "primereact/dialog";
 import { Message } from "primereact/message";
 import React, { FC, useEffect, useImperativeHandle, useState } from "react";
 import { i10n } from "../../../config/prime-locale";
-import ProcessRepository, { BusinessKey, ProcessInstance } from "../../../core/repositories/process.repository";
-import { Identifier } from "../../../types/types";
+import AccountRepository from "../../../core/repositories/account-repository";
+import { AccountReconcile, Identifier } from "../../../types/types";
 import Loading from "../../layout/loading.component";
 import ReconcileRowComponent from "./reconcile-row.component";
 
@@ -14,7 +14,7 @@ type ReconcileOverviewProps = {
 }
 
 const ReconcileOverviewComponent: FC<ReconcileOverviewProps> = ({ ref, accountId, onRemoved }) => {
-  const [reconcileActivity, setReconcileActivity] = useState<ProcessInstance[]>()
+  const [reconcileActivity, setReconcileActivity] = useState<AccountReconcile[]>()
   const [visible, setVisible] = React.useState(false);
 
   useImperativeHandle(ref, () => ({
@@ -25,8 +25,7 @@ const ReconcileOverviewComponent: FC<ReconcileOverviewProps> = ({ ref, accountId
 
   const loadReconcileActivity = () => {
     setReconcileActivity(undefined)
-    ProcessRepository.historyForKey('AccountReconcile', accountId as BusinessKey)
-      .then(processes => processes.filter(process => process.state === 'ACTIVE'))
+    AccountRepository.reconcile(accountId)
       .then(setReconcileActivity)
   }
   useEffect(loadReconcileActivity, [accountId])
@@ -38,7 +37,7 @@ const ReconcileOverviewComponent: FC<ReconcileOverviewProps> = ({ ref, accountId
 
   return <Dialog header={ i10n('page.accounts.reconcile.active') }
                  visible={ visible }
-                 className='max-w-[40rem]'
+                 className='max-w-240'
                  onHide={ () => setVisible(false) }>
 
     <Message text={ i10n('page.accounts.reconcile.active.explained') }
@@ -71,7 +70,7 @@ const ReconcileOverviewComponent: FC<ReconcileOverviewProps> = ({ ref, accountId
         <td colSpan={ 6 }><Loading/></td>
       </tr> }
       { reconcileActivity?.map(process =>
-        <ReconcileRowComponent key={ process.id } process={ process } onRemoved={ loadReconcileActivity }/>) }
+        <ReconcileRowComponent key={ process.period } accountId={ accountId } process={ process } onRemoved={ loadReconcileActivity }/>) }
       </tbody>
     </table>
 

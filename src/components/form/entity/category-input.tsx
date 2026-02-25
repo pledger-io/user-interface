@@ -5,7 +5,7 @@ import { i10n } from "../../../config/prime-locale";
 import { useNotification } from "../../../context/notification-context";
 import CategoryRepository from "../../../core/repositories/category-repository";
 import restApi from "../../../core/repositories/rest-api";
-import { AvailableSetting, Category, Identifiable, PagedResponse } from "../../../types/types";
+import { AvailableSetting, Category, PagedResponse } from "../../../types/types";
 import { FieldType } from "../form-types";
 import { InputValidationErrors, useInputField } from "../input/InputGroup";
 import { autoCompleteChangeHandler, autoCompleteFooter } from "./auto-complete-helpers";

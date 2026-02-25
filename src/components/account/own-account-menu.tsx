@@ -7,17 +7,16 @@ import { useNavigate } from "react-router";
 import { i10n } from "../../config/prime-locale";
 import { useNotification } from "../../context/notification-context";
 import AccountRepository from "../../core/repositories/account-repository";
-import ProcessRepository, { BusinessKey, ProcessInstance } from "../../core/repositories/process.repository";
-import { Account, Identifier } from "../../types/types";
+import { Account, AccountReconcile, Identifier } from "../../types/types";
 import { confirmDeleteDialog } from "../confirm-dialog";
 import { Button } from "../layout/button";
 import ReconcileOverviewComponent from "./reconcile/reconcile-overview.component";
 import ReconcileStartComponent from "./reconcile/reconcile-start.component";
 
-const loadReconcileActivity = (accountId: Identifier, callback: (process: ProcessInstance[]) => void) => {
-  ProcessRepository.historyForKey('AccountReconcile', accountId as BusinessKey)
-    .then(processes => processes.filter(process => process.state === 'ACTIVE'))
-    .then(callback)
+const loadReconcileActivity = (accountId: Identifier, callback: (process: AccountReconcile[]) => void) => {
+  AccountRepository.reconcile(accountId)
+    .then(reconciles => callback(reconciles))
+    .catch(error => console.error('Failed to get reconcile', error));
 }
 
 type OwnAccountMenuProps = {
@@ -30,7 +29,7 @@ const OwnAccountMenu: FC<OwnAccountMenuProps> = ({ account, callback }) => {
   const reconcileStartRef = useRef<any>(null)
   const reconcileOverviewRef = useRef<any>(null)
   const navigate = useNavigate();
-  const [reconcileActivity, setReconcileActivity] = useState<ProcessInstance[]>([])
+  const [reconcileActivity, setReconcileActivity] = useState<AccountReconcile[]>([])
   const { success, warning } = useNotification()
 
   useEffect(() => {
