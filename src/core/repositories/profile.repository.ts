@@ -54,8 +54,9 @@ const ProfileRepository = (api => {
         enableMfa: (verificationCode: string)               => api.patch(`user-account/${api.user().username}/2-factor`, { verificationCode, action: 'ENABLE' }),
         disableMfa: ()                                      => api.patch(`user-account/${api.user().username}/2-factor`, { action: 'DISABLE' }),
         sessions: ()                                        => api.get<Session[]>(`user-account/${api.user().username}/sessions`),
+        importProfile: (importData: any)                    => api.post('import', importData),
         exportTransactions: ()                              => new Promise((accept, fail) => {
-            api.get<Blob>('transactions/export', { responseType: 'blob' })
+            api.get<Blob>('export/transactions', { responseType: 'blob' })
                 .then(fileReader(accept,f=> toBlob(f.result as string, 'text/plain')))
                 .catch(fail)
             }),
