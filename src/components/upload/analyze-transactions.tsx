@@ -1,81 +1,59 @@
+import { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { i10n } from "../../config/prime-locale";
 import { useNotification } from "../../context/notification-context";
-import ProcessRepository, {
-  BusinessKey,
-  ProcessInstance,
-  ProcessTask
-} from "../../core/repositories/process.repository";
-import { ImportJob } from "../../types/types";
+import ImportJobRepository from "../../core/repositories/import-job.repository";
+import { ImportJob, ImportJobTask } from "../../types/types";
 import Loading from "../layout/loading.component";
-import AccountMappingComponent from "./account-mapping.component";
 import ConfigureSettingsComponent from "./configure-settings.component";
 import CreateMissingAccount from "./create-missing-account";
 
-const AnalyzeTaskComponent = ({ process }: { process: ProcessInstance }) => {
-  const [tasks, setTasks] = useState<ProcessTask>()
-  const { warning } = useNotification()
-
-  function loadTasks() {
-    ProcessRepository.tasks('import_job', process.businessKey, process.id)
-      .then(tasks => {
-        setTasks(tasks[0])
-      })
-      .catch(() => warning('page.user.profile.import.error'))
-  }
-
-  useEffect(loadTasks, [process])
-
+const AnalyzeTaskComponent = ({ slug, tasks }: { slug: string, tasks: ImportJobTask[] }) => {
   const activeStyle = 'border-b-blue-300 border-b-[1px]'
 
+  const firstTask = tasks[0];
   return <>
-    <div className="flex border-b-[1px] text-muted mb-5">
+    <div className="flex border-b text-muted mb-5">
       <span className={ `py-3 px-5` }>{ i10n('page.nav.settings.import.start') }</span>
-      <span className={ `py-3 px-5 ${ tasks?.definition === 'task_configure' ? activeStyle : '' }` }>
+      <span className={ `py-3 px-5 ${ firstTask?.name === 'configuration' ? activeStyle : '' }` }>
         { i10n('page.settings.import.analyze.settings') }
       </span>
-      <span className={ `py-3 px-5 ${ tasks?.definition === 'confirm_mappings' ? activeStyle : '' }` }>
-        { i10n('page.nav.settings.import') }
-      </span>
-      <span className={ `py-3 px-5 ${ tasks?.definition === 'user_create_account' ? activeStyle : '' }` }>
+      <span className={ `py-3 px-5 ${ firstTask?.name === 'account-mapping' ? activeStyle : '' }` }>
         { i10n('page.settings.import.details') }
       </span>
     </div>
 
     { !tasks && <div className='text-center'><Loading/></div> }
 
-    { tasks?.definition === 'task_configure' && <ConfigureSettingsComponent task={ tasks }/> }
-    { tasks?.definition === 'confirm_mappings' && <AccountMappingComponent task={ tasks }/> }
-    { tasks?.definition === 'user_create_account' && <CreateMissingAccount task={ tasks }/> }
+    { firstTask?.name === 'configuration' && <ConfigureSettingsComponent task={ firstTask } slug={ slug } /> }
+    { firstTask?.name === 'account-mapping' && <CreateMissingAccount task={ firstTask } slug={ slug } /> }
   </>
 }
 
 
 const AnalyzeTransactions = ({ importJob }: { importJob: ImportJob }) => {
-  const [process, setProcess] = useState<ProcessInstance>()
-  const navigate = useNavigate()
-  const { success, warning } = useNotification()
+  const [tasks, setTasks] = useState<ImportJobTask[]>()
+  const { warning } = useNotification()
 
-  function loadProcess() {
-    ProcessRepository.historyForKey('import_job', importJob.slug as BusinessKey)
-      .then(processes => {
-        if (processes.length > 0) {
-          const process = processes[0]
-          if (process.state === 'COMPLETED') {
-            success('page.user.profile.import.success')
-            navigate(`/upload/${ importJob.slug }/result`)
-          } else setProcess(processes[0])
+  function loadTasks() {
+    ImportJobRepository.tasks(importJob.slug)
+      .then(setTasks)
+      .catch((e: AxiosError) => {
+        if (e.status === 400 && (e.response?.data as any)?.message == 'Batch is not waiting for user tasks.') {
+          setTasks([])
+          setTimeout(loadTasks, 500)
+        } else {
+          warning('page.user.profile.import.error')
         }
       })
-      .catch(() => warning('page.user.profile.import.error'))
   }
 
-  useEffect(loadProcess, [importJob])
+  useEffect(loadTasks, [importJob])
 
-  if (!process) return null
+  if (!tasks) return <Loading />
   return <>
-    <AnalyzeTaskComponent process={ process }/>
+    <AnalyzeTaskComponent tasks={ tasks } slug={ importJob.slug }/>
   </>
 }
 

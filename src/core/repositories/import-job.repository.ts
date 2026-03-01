@@ -1,5 +1,5 @@
 import RestAPI from "./rest-api";
-import { BatchConfig, ImportJob, PagedResponse, Transaction } from "../../types/types";
+import { BatchConfig, ImportJob, ImportJobTask, PagedResponse, Transaction } from "../../types/types";
 
 type ImportJobPage = PagedResponse<ImportJob>
 type TransactionPage = PagedResponse<Transaction>
@@ -13,6 +13,8 @@ const ImportJobRepository = (api => {
         offset, numberOfResults
       }
     }),
+    tasks: (slug: string) => api.get<ImportJobTask[]>(`batch-importer/${slug}/tasks`),
+    completeTask: (slug: string, task: ImportJobTask) => api.post(`batch-importer/${slug}/tasks`, task),
     delete: (slug: string) => api.delete(`batch-importer/${ slug }`),
     transactions: (slug: string, page: number) => api.get<TransactionPage>('transactions', {
       params: {

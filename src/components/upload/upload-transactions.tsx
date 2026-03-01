@@ -4,7 +4,6 @@ import { Entity, Form, Input, SubmitButton } from "../form";
 import { mdiCheckDecagram, mdiSkipNext } from "@mdi/js";
 import { useState } from "react";
 import ImportJobRepository from "../../core/repositories/import-job.repository";
-import ProcessRepository from "../../core/repositories/process.repository";
 import { useNavigate } from "react-router";
 import Icon from "@mdi/react";
 import { i10n } from "../../config/prime-locale";
@@ -16,15 +15,8 @@ const UploadTransactionsComponent = () => {
 
   const onSubmit = (entity: any) => {
     ImportJobRepository.create(entity)
-      .then(batchImport => {
-        ProcessRepository.start('import_job', {
-          importJobSlug: batchImport.slug,
-          businessKey: batchImport.slug
-        })
-          .then(() => navigate(`/upload/${ batchImport.slug }/analyze`))
-          .catch(() => warning('page.user.profile.import.error'))
-      })
-      .catch(console.error)
+      .then(response => navigate(`/upload/${ response.slug }/analyze`))
+      .catch(() => warning('page.user.profile.import.error'))
   }
 
   return <>

@@ -1,4 +1,4 @@
-import React, { Context, createContext, FC, FormEvent, ReactNode, useEffect, useState } from "react";
+import React, { Context, createContext, FC, SubmitEvent, ReactNode, useEffect, useState } from "react";
 import { AddFieldFunc, FieldType, FormContextType, OnValueChangeFunc } from "./form-types";
 
 function validateField(field: FieldType) {
@@ -85,9 +85,10 @@ export const Form: FC<FormProps> = ({ entity, onSubmit, onChange, style = 'group
             })
         }
     }
-    const onFormSubmit = (event: FormEvent) => {
+    const onFormSubmit = (event: SubmitEvent<HTMLFormElement>) => {
         console.info('Handling the form submit.')
         event.preventDefault()
+        event.stopPropagation()
 
         const entity: Record<string, any> = {}
         Object.entries(fields)
@@ -96,7 +97,7 @@ export const Form: FC<FormProps> = ({ entity, onSubmit, onChange, style = 'group
         return false;
     }
 
-    // eslint-disable-next-line @eslint-react/no-unstable-context-value
+     
     const formContext: FormContextType = {
         fields,
         errors,

@@ -1,35 +1,31 @@
 import { mdiDelete, mdiPlusBox, mdiSkipNext } from "@mdi/js";
 import { Dropdown } from "primereact/dropdown";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { i10n } from "../../config/prime-locale";
 import { useNotification } from "../../context/notification-context";
-import ProcessRepository, {
-  ProcessTask,
-  TaskVariable,
-  TaskVariables
-} from "../../core/repositories/process.repository";
-import { Identifier } from "../../types/types";
+import ImportJobRepository from "../../core/repositories/import-job.repository";
+import { Identifier, ImportJobTask } from "../../types/types";
 import { Entity, Form, Input, SubmitButton } from "../form";
 import { useInputField } from "../form/input/InputGroup";
 import { Button } from "../layout/button";
 
-type ImportConfiguration = TaskVariable & {
-  importConfiguration: {
-    'has-headers': boolean,
-    'apply-rules': boolean,
-    'date-format': string,
-    delimiter: string,
-    'column-roles': string[],
-    'custom-indicator': {
-      deposit: string,
-      credit: string
+type ImportConfiguration = ImportJobTask & {
+  variables?: {
+    importerConfiguration: {
+      'has-headers': boolean,
+      'apply-rules': boolean,
+      'date-format': string,
+      delimiter: string,
+      'column-roles': string[],
+      'custom-indicator': {
+        deposit: string,
+        credit: string
+      }
     },
-    type: 'com.jongsoft.finance.importer.csv.CSVConfiguration'
-  },
-  applyRules: boolean,
-  generateAccounts: boolean,
-  accountId?: Identifier,
-  _type: 'com.jongsoft.finance.serialized.ImportJobSettings'
+    applyRules: boolean,
+    generateAccounts: boolean,
+    accountId?: Identifier
+  }
 }
 
 const ColumnMappingComponent = (props: any) => {
@@ -65,7 +61,7 @@ const ColumnMappingComponent = (props: any) => {
       <div className='flex flex-col gap-2'>
         {/* eslint-disable-next-line @eslint-react/no-array-index-key */ }
         { field.value.map((mapping: string, index: number) => <div key={ index } className='flex-1 flex items-center gap-1'>
-          <span className='min-w-[8rem]'>{ i10n('ImportConfig.Json.column' )}{ index }</span>
+          <span className='min-w-32'>{ i10n('ImportConfig.Json.column' )}{ index }</span>
           <Dropdown id={ `${ props.id }-${ index }` }
                     className='flex-1'
                     options={ [
@@ -98,49 +94,44 @@ const ColumnMappingComponent = (props: any) => {
   </>
 }
 
-const ConfigureSettingsComponent = ({ task }: { task: ProcessTask }) => {
-  const [configuration, setConfiguration] = useState<ImportConfiguration>()
+const ConfigureSettingsComponent = ({ slug, task }: { slug: string, task: ImportJobTask }) => {
   const { warning } = useNotification()
 
-  useEffect(() => {
-    ProcessRepository.taskVariables('import_job', task.id, 'initialConfig')
-      .then(variables => {
-        setConfiguration(variables.variables.initialConfig as ImportConfiguration)
-      })
-  }, [task]);
-
+  const importConfigurationTask = task as ImportConfiguration
   const onSubmit = (entity: any) => {
-    const updatedConfiguration: TaskVariables = {
+    const updatedConfiguration: ImportConfiguration = {
+      ...importConfigurationTask,
       variables: {
-        updatedConfig: {
-          _type: 'com.jongsoft.finance.serialized.ImportJobSettings',
-          applyRules: entity.applyRules,
-          generateAccounts: entity.generateAccounts,
-          accountId: entity.account.id,
-          importConfiguration: {
-            'has-headers': entity['has-headers'],
-            'date-format': entity['date-format'],
-            delimiter: entity.delimiter,
-            'column-roles': entity['column-roles'],
-            'custom-indicator': configuration ? configuration.importConfiguration['custom-indicator'] : {},
-            type: 'com.jongsoft.finance.importer.csv.CSVConfiguration'
-          }
-        } as ImportConfiguration
+        ...importConfigurationTask.variables,
+        applyRules: entity.applyRules,
+        generateAccounts: entity.generateAccounts,
+        accountId: entity.account.id,
+        importerConfiguration: {
+          ...importConfigurationTask.variables.importerConfiguration,
+          'has-headers': entity['has-headers'],
+          'date-format': entity['date-format'],
+          delimiter: entity.delimiter,
+          'column-roles': entity['column-roles']
+        }
       }
     }
 
-    ProcessRepository.completeTasksVariables('import_job', task.id, updatedConfiguration)
-      .then(() => document.location.reload())
+    ImportJobRepository.completeTask(slug, updatedConfiguration)
+      .then(() => {
+        setTimeout(() => {
+          document.location.reload()
+        }, 2000)
+      })
       .catch(() => warning('page.user.profile.import.error'))
   }
 
-  if (!configuration) return null
+  const configuration = importConfigurationTask.variables
   return <>
     <Form entity='' onSubmit={ onSubmit }>
       <Input.Text title='ImportConfig.Json.dateFormat'
                   type='text'
                   id='date-format'
-                  value={ configuration.importConfiguration["date-format"] }/>
+                  value={ configuration.importerConfiguration["date-format"] }/>
 
       <Entity.ManagedAccount id='account'
                              required={ true }
@@ -152,16 +143,16 @@ const ConfigureSettingsComponent = ({ task }: { task: ProcessTask }) => {
                       { label: 'ImportConfig.Json.delimiter.comma', value: ',' },
                       { label: 'ImportConfig.Json.delimiter.dotComma', value: ';' }
                     ] }
-                    value={ configuration.importConfiguration["delimiter"] } />
+                    value={ configuration.importerConfiguration["delimiter"] } />
 
       <ColumnMappingComponent id='column-roles'
                               title='page.settings.import.analyze.columns'
-                              value={ configuration.importConfiguration["column-roles"] }/>
+                              value={ configuration.importerConfiguration["column-roles"] }/>
 
       <div className='flex gap-2 items-center'>
         <Input.Toggle id='has-headers'
                       className='ml-[15vw]'
-                      value={ configuration.importConfiguration["has-headers"] }/>
+                      value={ configuration.importerConfiguration["has-headers"] }/>
         { i10n('ImportConfig.Json.headers') }
       </div>
       <div className='flex gap-2 items-center'>

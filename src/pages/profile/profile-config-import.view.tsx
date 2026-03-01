@@ -6,11 +6,6 @@ import { Form } from "../../components/form";
 import { i10n } from "../../config/prime-locale";
 import { useNotification } from "../../context/notification-context";
 import { Attachment } from "../../core";
-import ProcessRepository, { ProcessStart } from "../../core/repositories/process.repository";
-
-type ProfileImportStart = ProcessStart & {
-  storageToken: string
-}
 
 const ProfileConfigImportView = () => {
   const [importing, setImporting] = useState(false)
@@ -18,10 +13,10 @@ const ProfileConfigImportView = () => {
 
   const onUploadComplete = ({ fileCode }: any) => {
     setImporting(true)
-    ProcessRepository.start('ImportUserProfile', { storageToken: fileCode } as ProfileImportStart)
-      .then(() => success('page.user.profile.import.success'))
-      .then(() => setImporting(false))
-      .catch(() => warning('page.user.profile.import.error'))
+    // ProcessRepository.start('ImportUserProfile', { storageToken: fileCode } as ProfileImportStart)
+    //   .then(() => success('page.user.profile.import.success'))
+    //   .then(() => setImporting(false))
+    //   .catch(() => warning('page.user.profile.import.error'))
   }
 
   return <>

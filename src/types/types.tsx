@@ -211,6 +211,12 @@ export type ImportJob = Identifiable & {
   }
 }
 
+export type ImportJobTask = {
+  id: string,
+  name: string,
+  variables: any
+}
+
 export type ApiError = {
   message: string
   _embedded: {

@@ -62,8 +62,9 @@ const ImportConfigInput = (props: Readonly<ImportConfigInputProps>) => {
                   invalid={ field.touched ? errors.length > 0 : undefined }/>
         <Button icon={ mdiPlus }
                 severity='info'
+                type='button'
                 onClick={ () => dialogRef.current?.open() }
-                className='!rounded-none'/>
+                className='rounded-none!'/>
       </div>
     </div>
   </>

@@ -37,7 +37,7 @@ export const TextInput: FC<TextInputProps> = (props) => {
                                 maxLength={ props.maxLength }
                                 data-testid={ `${ props.id }-input` }
                                 tooltip={ tooltipText }
-                                tooltipOptions={ { position: 'mouse', className: 'max-w-xs' } }
+                                tooltipOptions={ { position: 'bottom', className: 'max-w-xs' } }
                                 invalid={ field.touched ? errors.length > 0 : undefined }
                                 onChange={ onChange }/>
 
