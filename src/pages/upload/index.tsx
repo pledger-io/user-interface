@@ -57,7 +57,7 @@ const BatchOverview = () => {
   const pageChanged = (event: PaginatorPageChangeEvent) => {
     navigate('?page=' + (event.page + 1))
   }
-  const header = () => <div className='px-2 py-2 border-b-1 text-center font-bold'>
+  const header = () => <div className='px-2 py-2 border-b text-center font-bold'>
     {i10n('page.nav.settings.import')}
   </div>
 
@@ -67,12 +67,12 @@ const BatchOverview = () => {
       <BreadCrumbItem label='page.nav.settings.import'/>
     </BreadCrumbs>
 
-    <ConfirmDialog className='max-w-[25rem]'/>
+    <ConfirmDialog className='max-w-100'/>
 
     <Card header={ header } className='my-4 mx-2'>
       <div className='flex justify-end'>
         <NavLink to={ '/upload/create' }
-                 className='p-button p-button-success p-button-sm !mb-4 gap-1 items-center'>
+                 className='p-button p-button-success p-button-sm mb-4! gap-1 items-center'>
           <Icon path={ mdiPlus } size={ .8 }/> { i10n('page.settings.import.new') }
         </NavLink>
       </div>

@@ -19,7 +19,7 @@ const TransactionGlobalView = () => {
   const onDateChange = (year: number, month: number) =>
     navigate(`/transactions/transfers/${ year }/${ month }`)
 
-  const header = () =>  <div className='px-2 py-2 border-b-1 text-center font-bold'>
+  const header = () =>  <div className='px-2 py-2 border-b text-center font-bold'>
     { i10n('page.title.transactions.overview') }
   </div>
 
@@ -36,7 +36,7 @@ const TransactionGlobalView = () => {
       </BreadCrumbMenu>
     </BreadCrumbs>
 
-    <ConfirmDialog className='max-w-[25rem]'/>
+    <ConfirmDialog className='max-w-100'/>
 
     <Card header={ header } className='mx-2 my-4'>
       <div className='flex justify-end gap-2 mb-4'>

@@ -10,7 +10,7 @@ import { i10n } from "../../config/prime-locale";
 const ImportJobResultOverview = () => {
   const importJob = useLoaderData()
 
-  const header = () => <div className='px-2 py-2 border-b-1 text-center font-bold'>
+  const header = () => <div className='px-2 py-2 border-b text-center font-bold'>
     { i10n('page.settings.import.details') }
   </div>
 
@@ -23,7 +23,7 @@ const ImportJobResultOverview = () => {
 
     <Card header={ header } className='my-4 mx-2'>
       <ImportJobSummaryComponent importJob={ importJob }/>
-      <ImportJobTransactionComponent slug={ importJob.slug }/>
+      <ImportJobTransactionComponent batchId={ importJob.id } slug={ importJob.slug }/>
     </Card>
   </>
 }

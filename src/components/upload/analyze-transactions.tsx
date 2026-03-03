@@ -41,8 +41,8 @@ const AnalyzeTransactions = ({ importJob }: { importJob: ImportJob }) => {
       .then(setTasks)
       .catch((e: AxiosError) => {
         if (e.status === 400 && (e.response?.data as any)?.message == 'Batch is not waiting for user tasks.') {
-          setTasks([])
-          setTimeout(loadTasks, 500)
+          setTasks(undefined)
+          setTimeout(loadTasks, 1500)
         } else {
           warning('page.user.profile.import.error')
         }

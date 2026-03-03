@@ -21,7 +21,7 @@ type LoginForm = {
 }
 
 const Flag = ({ language }: { language: SupportedLocales }) => {
-  return <img src={ Locales[language].flag } className='h-[1rem] mr-2' alt='language '/>
+  return <img src={ Locales[language].flag } className='h-4 mr-2' alt='language '/>
 }
 
 const Register = () => {

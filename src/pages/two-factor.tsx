@@ -19,7 +19,7 @@ const TwoFactor = () => {
       .catch(httpError)
   }
 
-  const header = () => <div className='px-2 py-2 border-b-1 text-center font-bold'>
+  const header = () => <div className='px-2 py-2 border-b text-center font-bold'>
     { i10n('page.login.verify.title') }
   </div>
   return <>

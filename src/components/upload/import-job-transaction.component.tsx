@@ -13,7 +13,7 @@ import { Paginator } from "primereact/paginator";
 import { useNavigate } from "react-router";
 import { i10n } from "../../config/prime-locale";
 
-const ImportJobTransactionComponent = ({ slug }: { slug: string }) => {
+const ImportJobTransactionComponent = ({ batchId, slug }: { batchId: number, slug: string }) => {
   const [page] = useQueryParam({ key: 'page', initialValue: "1" })
   const [transactions, setTransactions] = useState<YearlyTransactions>()
   const [pagination, setPagination] = useState<Pagination>()
@@ -21,7 +21,7 @@ const ImportJobTransactionComponent = ({ slug }: { slug: string }) => {
 
   useEffect(() => {
     setTransactions(undefined)
-    ImportJobRepository.transactions(slug, parseInt(page))
+    ImportJobRepository.transactions(batchId, parseInt(page))
       .then(result => {
         const transactions = (result.content || [])
           .reduce(groupTransactionByYear, {})
@@ -29,7 +29,7 @@ const ImportJobTransactionComponent = ({ slug }: { slug: string }) => {
         setPagination(result.info)
       })
       .catch(console.error)
-  }, [page, slug]);
+  }, [page, batchId]);
 
   const isLoaded = transactions
   const hasTransactions = transactions && Object.keys(transactions).length > 0
@@ -63,7 +63,7 @@ const ImportJobTransactionComponent = ({ slug }: { slug: string }) => {
         .reduce((a, t) => a + t.amount, 0)
 
       return <div className='flex flex-col' key={ year }>
-        <div className='border-b-[1px] pb-1 mb-1 flex'>
+        <div className='border-b pb-1 mb-1 flex'>
           <h1 className='font-bold flex-1'>
             { year }
           </h1>

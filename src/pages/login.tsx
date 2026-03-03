@@ -23,7 +23,7 @@ type LoginForm = {
 }
 
 const Flag = ({ language }: { language: SupportedLocales }) => {
-  return <img src={ Locales[language].flag } className='h-[1rem] mr-2' alt='language '/>
+  return <img src={ Locales[language].flag } className='h-4 mr-2' alt='language '/>
 }
 
 const LoginCard = () => {
@@ -51,7 +51,7 @@ const LoginCard = () => {
     { label: 'Deutsch', icon: () => <Flag language='de'/>, command: () => setLocale('de') }
   ]
 
-  const header = <div className='p-4 flex justify-between items-center relative overflow-hidden bg-gray-700/20 border-b-gray-500/20 border-b-1'>
+  const header = <div className='p-4 flex justify-between items-center relative overflow-hidden bg-gray-700/20 border-b-gray-500/20 border-b'>
     <span/>
     <span className="text-2xl font-bold text-blue-800/70">Pledger.io</span>
     <Menu model={ languageMenu } popup ref={ configMenu }/>

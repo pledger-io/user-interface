@@ -34,7 +34,7 @@ const TransactionGlobalView = () => {
       </BreadCrumbMenu>
     </BreadCrumbs>
 
-    <ConfirmDialog className='max-w-[25rem]'/>
+    <ConfirmDialog className='max-w-100'/>
 
     <div className='hidden lg:flex mx-2 gap-2 my-4 justify-normal'>
       <Panel header={ i10n('page.transactions.expense.category') }

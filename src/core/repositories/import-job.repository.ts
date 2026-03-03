@@ -16,13 +16,13 @@ const ImportJobRepository = (api => {
     tasks: (slug: string) => api.get<ImportJobTask[]>(`batch-importer/${slug}/tasks`),
     completeTask: (slug: string, task: ImportJobTask) => api.post(`batch-importer/${slug}/tasks`, task),
     delete: (slug: string) => api.delete(`batch-importer/${ slug }`),
-    transactions: (slug: string, page: number) => api.get<TransactionPage>('transactions', {
+    transactions: (batchId: number, page: number) => api.get<TransactionPage>('transactions', {
       params: {
         offset: (page - 1) * (sessionStorage.getItem('RecordSetPageSize') ? parseInt(sessionStorage.getItem('RecordSetPageSize') as string) : 50),
         numberOfResults: sessionStorage.getItem('RecordSetPageSize') || 50,
         startDate: '1900-01-01',
         endDate: new Date().toISOString().split('T')[0],
-        importSlug: slug
+        importSlug: batchId
       }
     }),
 
