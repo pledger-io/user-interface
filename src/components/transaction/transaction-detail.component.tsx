@@ -64,7 +64,7 @@ const TransactionItem: FC<TransactionItemProps> = ({ transaction, className = ''
   }
 
   if (deleted) return null
-  return <div className={ `${ className } flex content-between gap-3 px-2 border-b-[1px] my-0.5 border-gray-100 last:border-none` }>
+  return <div className={ `${ className } flex content-between gap-3 px-2 border-b my-0.5 border-gray-100 last:border-none` }>
     <span className='text-[.9em] md:text-[1em] md:w-[12em] w-[6em]' onClick={ onEditClick }>
         { transaction.metadata.budget &&
           <div className='text-gray-400'>
@@ -120,7 +120,7 @@ const TransactionItem: FC<TransactionItemProps> = ({ transaction, className = ''
         </span>
     </span>
     <ActionExpander transaction={ transaction } onDelete={ onDelete }/>
-    <span className='w-[5rem] text-right' onClick={ onEditClick }><MoneyComponent money={ amount } currency={ transaction.currency }/></span>
+    <span className='w-20 text-right' onClick={ onEditClick }><MoneyComponent money={ amount } currency={ transaction.currency } className={ Resolver.Transaction.isTransfer(transaction) ? 'text-gray-500!' : ''}/></span>
   </div>
 }
 

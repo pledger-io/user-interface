@@ -50,13 +50,13 @@ const Resolver = {
     },
     Transaction: {
         isCredit({ type }) {
-            return type?.code === 'CREDIT'
+            return type === 'CREDIT'
         },
         isDebit({ type }) {
-            return type?.code === 'DEBIT'
+            return type === 'DEBIT'
         },
         isTransfer({ type }) {
-            return type?.code === 'TRANSFER'
+            return type === 'TRANSFER'
         },
         resolveUrl({ id, source }) {
             return `${Resolver.Account.resolveUrl(source)}/transactions/${id}`
