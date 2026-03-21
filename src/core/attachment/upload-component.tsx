@@ -17,7 +17,7 @@ type UploadAttachmentProps = {
 const EmptyTemplate: FC<{text: string}> = ({ text }) => {
     return <>
         <div className="flex items-center flex-col text-muted">
-            <Icon path={ mdiCloudUploadOutline } size={ 5 } className='bg-[var(--surface-b)] rounded-full p-5'/>
+            <Icon path={ mdiCloudUploadOutline } size={ 5 } className='bg-(--surface-b) rounded-full p-5'/>
             <span className='text-lg'>{ i10n(text) }</span>
         </div>
     </>

@@ -62,7 +62,7 @@ const AccountDetailView: FC = () => {
       </BreadCrumbMenu>
     </BreadCrumbs>
 
-    <ConfirmDialog className='max-w-[25rem]'/>
+    <ConfirmDialog className='max-w-100'/>
 
     <div className='flex flex-col gap-2 p-2'>
       { isOwnType && <>

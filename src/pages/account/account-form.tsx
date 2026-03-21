@@ -7,7 +7,6 @@ import BreadCrumbs from "../../components/breadcrumb/breadcrumb.component";
 import { Entity, Form, Input, SubmitButton } from "../../components/form";
 import { BackButton } from "../../components/layout/button";
 import { useNotification } from "../../context/notification-context";
-import { Attachment } from "../../core";
 import AccountRepository from "../../core/repositories/account-repository";
 import { Account } from "../../types/types";
 import { Card } from "primereact/card";
@@ -22,6 +21,7 @@ class AccountModel {
   bic: string
   number: string
   type: string
+  imageIcon: string
 
   constructor(account: Account) {
     this.name = account.name
@@ -31,6 +31,7 @@ class AccountModel {
     this.bic = account.account.bic
     this.number = account.account.number
     this.type = account.type
+    this.imageIcon = account.iconFileCode
   }
 }
 
@@ -66,9 +67,7 @@ const AccountForm = ({ type }: { type: string }) => {
         })
     }
   }
-  const onPictureChange = (attachment: any) => AccountRepository.icon(id, attachment.fileCode)
-    .then(() => success(''))
-    .catch(() => warning('common.upload.file.failed'))
+  const onPictureChange = (attachment: any) => setAccount({ ...account, imageIcon: attachment.fileCode })
 
   useEffect(() => {
     if (!isNaN(parseInt(id as string)))
@@ -78,7 +77,7 @@ const AccountForm = ({ type }: { type: string }) => {
         .catch(setException)
   }, [id])
 
-  const header = () => <div className='px-2 py-2 border-b-1 text-center font-bold'>
+  const header = () => <div className='px-2 py-2 border-b text-center font-bold'>
     { i10n(addEditBreadcrumb) }
   </div>
 
@@ -92,6 +91,7 @@ const AccountForm = ({ type }: { type: string }) => {
 
     <Card className='my-4 mx-2' header={ header }>
       <Form entity='Account' onSubmit={ onSubmit }>
+        <Input.Hidden id='imageIcon' value={ account.imageIcon } />
         { (type === 'creditor' || type === 'debtor') && (<Input.Hidden id='type' value={ type }/>) }
         { exception && <Message text={ exception } severity='error'/> }
 
@@ -109,7 +109,7 @@ const AccountForm = ({ type }: { type: string }) => {
             <div className='flex gap-2 md:flex-row flex-col'>
               { type !== 'creditor' && type !== 'debtor' && (
                 <Entity.AccountType id='type'
-                                    className='flex-grow'
+                                    className='grow'
                                     value={ account.type }
                                     title='Account.type'
                                     required/>) }
@@ -121,7 +121,7 @@ const AccountForm = ({ type }: { type: string }) => {
             </div>
           </div>
           <div className='flex-1'>
-            <AccountIconReplace accountId={ id } onChange={ onPictureChange }/>
+            <AccountIconReplace account={ account } onChange={ onPictureChange }/>
           </div>
         </fieldset>
 

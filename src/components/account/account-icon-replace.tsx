@@ -8,19 +8,17 @@ import { Account, Attachment, Identifier } from "../../types/types";
 import { Button } from "../layout/button";
 
 type AccountIconReplaceProps = {
-  accountId?: Identifier
+  account?: {
+    imageIcon: string
+    name: string
+  }
   onChange: (attachment: Attachment) => void
 }
 
-export const AccountIconReplace: FC<AccountIconReplaceProps> = ({ accountId, onChange }) => {
-  const [ account, setAccount ] = useState<Account>()
+export const AccountIconReplace: FC<AccountIconReplaceProps> = ({ account, onChange }) => {
   const [ upload, setUpload ] = useState<boolean>(false)
 
-  useEffect(() => {
-    if (accountId) AccountRepository.get(accountId).then(setAccount)
-  }, [accountId]);
-
-  if (!account) return <>
+  if (!account?.name) return <>
     <Icon path={ mdiCancel } size={8} className='text-gray-500/20 mx-auto'/>
   </>;
 
@@ -29,7 +27,7 @@ export const AccountIconReplace: FC<AccountIconReplaceProps> = ({ accountId, onC
     onChange(attachment)
   }
 
-  const showUpload = !account.iconFileCode || upload
+  const showUpload = !account.imageIcon || upload
   return <>
     { showUpload &&
       <UploadAttachment label='page.accounts.accounts.changeIcon'
@@ -38,7 +36,7 @@ export const AccountIconReplace: FC<AccountIconReplaceProps> = ({ accountId, onC
     }
     { !showUpload &&
       <div className='flex flex-col items-center justify-center h-full'>
-        <ImageAttachment fileCode={ account.iconFileCode } />
+        <ImageAttachment fileCode={ account.imageIcon } />
         <Button icon={ mdiImageRefreshOutline }
                 onClick={ () => setUpload(true) }
                 label='page.accounts.accounts.changeIcon'
