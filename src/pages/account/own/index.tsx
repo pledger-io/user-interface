@@ -28,7 +28,7 @@ const OwnAccountsView = () => {
 
   useEffect(loadAccounts, [])
 
-  const header = () => <div className='px-2 py-2 border-b-1 text-center font-bold'>
+  const header = () => <div className='px-2 py-2 border-b text-center font-bold'>
     { i10n('page.nav.accounts.accounts') }
   </div>
 
@@ -39,7 +39,7 @@ const OwnAccountsView = () => {
       <BreadCrumbItem label='page.nav.accounts.accounts'/>
     </BreadCrumbs>
 
-    <ConfirmDialog className='max-w-[25rem]'/>
+    <ConfirmDialog className='max-w-100'/>
 
     <Card className='my-4 mx-2' header={ header }>
       <div className='flex justify-end mb-4'>
@@ -68,9 +68,9 @@ const OwnAccountsView = () => {
                 headerClassName='hidden md:table-cell'
                 body={ account => account.account.iban || account.account.number }/>
         <Column header={ i10n('common.account.saldo') }
-                className='w-1 md:w-[9rem]'
+                className='w-1 md:w-36'
                 body={ (account: Account) => determineBalance(account) }/>
-        <Column className='md:w-[1rem]'
+        <Column className='md:w-4'
                 body={ account => <OwnAccountMenu account={ account } callback={ loadAccounts }/> }/>
       </DataTable>
     </Card>

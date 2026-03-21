@@ -85,7 +85,7 @@ const TransactionList: FC<TransactionListProps> = ({ account, range }) => {
     { showPagination &&
       <Paginator totalRecords={ pagination.records }
                  rows={ pagination.pageSize }
-                 first={ parseInt(page) - 1 }
+                 first={ (parseInt( page ) - 1) * (pagination?.pageSize || 10) }
                  onPageChange={ (e) => navigate(`?page=${ e.page + 1 }`) }/> }
   </>
 }

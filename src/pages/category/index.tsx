@@ -67,7 +67,7 @@ const CategoryListing = () => {
     load()
   }, [load])
 
-  const header = () => <div className='px-2 py-2 border-b-1 text-center font-bold'>
+  const header = () => <div className='px-2 py-2 border-b text-center font-bold'>
     { i10n('page.nav.settings.categories') }
   </div>
 
@@ -95,12 +95,13 @@ const CategoryListing = () => {
         <Column body={ category => <DateComponent date={ category.lastUsed }/> }
                 header={ i10n('Category.lastActivity') }></Column>
         <Column body={ category => <ActionButtons category={ category } deleteCallback={ load }/> }
-                className='w-[1rem]'/>
+                className='w-4'/>
       </DataTable>
 
       { (pagination?.records || 0) > 0
         && <Paginator totalRecords={ pagination?.records }
                       rows={ pagination?.pageSize }
+                      first={ (parseInt( page ) - 1) * (pagination?.pageSize || 10) }
                       onPageChange={ ({ page }) => navigate('?page=' + (page + 1)) }/> }
     </Card>
 

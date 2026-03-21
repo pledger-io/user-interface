@@ -1,6 +1,7 @@
 import { useSessionStorage } from "primereact/hooks";
+import { Paginator } from "primereact/paginator";
 import React, { FC, useEffect, useState } from "react";
-import { useRouteLoaderData } from "react-router";
+import { useNavigate, useRouteLoaderData } from "react-router";
 import { i10n } from "../../config/prime-locale";
 import { Resolver } from "../../core";
 import { TransactionRepository } from "../../core/RestAPI";
@@ -10,7 +11,6 @@ import DateRange from "../../types/date-range.type";
 import { AvailableSetting, Pagination } from "../../types/types";
 import MoneyComponent from "../format/money.component";
 import Loading from "../layout/loading.component";
-import { Paginator } from "../layout/paginator.component";
 import TransactionFilters, { TransactionFilter } from "./list-filters.component";
 import TransactionItem from "./transaction-detail.component";
 
@@ -25,6 +25,7 @@ const TransactionOverview: FC<TransactionOverviewProps> = ({ range, transfers })
   const [transactions, setTransactions] = useState<DailyTransactions | undefined>(undefined)
   const [pagination, setPagination] = useState<Pagination>()
   const [numberOfResults, _] = useSessionStorage(20, AvailableSetting.RecordSetPageSize)
+  const navigate = useNavigate()
 
   const routerData = useRouteLoaderData(transfers ? 'transfers' : 'income-expense').searchCommand
   useEffect(() => {
@@ -87,7 +88,7 @@ const TransactionOverview: FC<TransactionOverviewProps> = ({ range, transfers })
 
       return <div key={ key } className='flex flex-col gap-0.5 pb-3'>
         <div
-          className='flex gap-2 items-center border-b-[1px] py-1 mb-1 px-2 md:rounded-lg bg-blue-300/10 md:bg-blue-200/20'>
+          className='flex gap-2 items-center border-b py-1 mb-1 px-2 md:rounded-lg bg-blue-300/10 md:bg-blue-200/20'>
           <div className='font-bold text-[1.25em] text-muted'>
             { date.getDate() }
           </div>
@@ -109,9 +110,10 @@ const TransactionOverview: FC<TransactionOverviewProps> = ({ range, transfers })
       </div>
     }) }
 
-    { showPagination && <Paginator page={ parseInt(page) }
-                                   records={ pagination?.records }
-                                   pageSize={ pagination?.pageSize }/> }
+    { showPagination && <Paginator totalRecords={ pagination.records }
+                                   rows={ pagination.pageSize }
+                                   first={ (parseInt( page ) - 1) * (pagination?.pageSize || 10) }
+                                   onPageChange={ (e) => navigate(`?page=${ e.page + 1 }`) }/> }
   </>
 }
 

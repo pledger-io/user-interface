@@ -58,7 +58,7 @@ const LiabilityOverview = () => {
 
   useEffect(reload, [page])
 
-  const header = () => <div className='px-2 py-2 border-b-1 text-center font-bold'>
+  const header = () => <div className='px-2 py-2 border-b text-center font-bold'>
     { i10n('page.nav.accounts.liability') }
   </div>
   return (
@@ -69,7 +69,7 @@ const LiabilityOverview = () => {
         <BreadCrumbItem label='page.nav.accounts.liability'/>
       </BreadCrumbs>
 
-      <ConfirmDialog className='max-w-[25rem]'/>
+      <ConfirmDialog className='max-w-100'/>
 
       <Card header={ header } className='my-4 mx-2'>
         <div className='flex justify-end mb-4'>
@@ -81,26 +81,27 @@ const LiabilityOverview = () => {
         </div>
 
         <DataTable value={ accounts } size='small' loading={ !accounts }>
-          <Column className='w-[3rem]' body={ account => <>
+          <Column className='w-12' body={ account => <>
             { account.iconFileCode && <Attachment.Image fileCode={ account.iconFileCode }/> }
           </> }/>
           <Column header={ i10n('Account.name') } body={ accountNameColumn }/>
-          <Column className='hidden md:table-cell w-[9rem]'
+          <Column className='hidden md:table-cell w-36'
                   headerClassName='hidden md:table-cell'
                   body={ percentageColumn }
                   header={ i10n('Account.interest') + ' (' + i10n('Account.interestPeriodicity') + ')' }/>
           <Column header={ i10n('common.account.saldo') }
-                  className='w-[9rem]'
+                  className='w-36'
                   body={ (account: Account) =>
                     <BalanceComponent accounts={ [account.id] }
                                       currency={ account.account.currency }
                                       range={ DateRangeService.forRange(account.history.firstTransaction, account.history.lastTransaction) }/> }/>
-          <Column className='w-[1rem]' body={ account => <AccountMenu account={ account } callback={ reload }/> }/>
+          <Column className='w-4' body={ account => <AccountMenu account={ account } callback={ reload }/> }/>
         </DataTable>
 
         { (pagination?.records || 0) > 0
           && <Paginator totalRecords={ pagination?.records }
                         rows={ pagination?.pageSize }
+                        first={ (parseInt( page ) - 1) * (pagination?.pageSize || 10) }
                         onPageChange={ ({ page }) => navigate('?page=' + page) }/> }
 
       </Card>

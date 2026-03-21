@@ -60,7 +60,7 @@ const AccountOverview = () => {
   const pageChanged = (event: PaginatorPageChangeEvent) => {
     navigate('?page=' + (event.page + 1))
   }
-  const header = () => <div className='px-2 py-2 border-b-1 text-center font-bold'>
+  const header = () => <div className='px-2 py-2 border-b text-center font-bold'>
     { i10n(`page.nav.accounts.${ type }`) }
   </div>
 
@@ -72,7 +72,7 @@ const AccountOverview = () => {
         <BreadCrumbItem label={ `page.nav.accounts.${ type }` }/>
       </BreadCrumbs>
 
-      <ConfirmDialog className='max-w-[25rem]'/>
+      <ConfirmDialog className='max-w-100'/>
 
       <Card header={ header } className='my-4 mx-2'>
         <div className='flex justify-end mb-4'>
@@ -84,7 +84,7 @@ const AccountOverview = () => {
         </div>
 
         <DataTable loading={ !accounts } value={ accounts } size='small'>
-          <Column className='w-[3rem]' body={ account => <>
+          <Column className='w-12' body={ account => <>
             { account.iconFileCode && <Attachment.Image fileCode={ account.iconFileCode }/> }
           </> }/>
           <Column header={ i10n('Account.name') } body={ accountNameColumn }/>
@@ -93,15 +93,16 @@ const AccountOverview = () => {
                   headerClassName='hidden md:table-cell'
                   body={ account => account.account.iban || account.account.number }/>
           <Column header={ i10n('common.account.saldo') }
-                  className='w-1 md:w-[9rem]'
+                  className='w-1 md:w-36'
                   body={ (account: Account) => determineBalance(account) } />
 
-          <Column className='w-[1rem]' body={ account => <AccountMenu account={ account } callback={ reload }/> }/>
+          <Column className='w-4' body={ account => <AccountMenu account={ account } callback={ reload }/> }/>
         </DataTable>
 
         { (pagination?.records || 0) > 0
           && <Paginator totalRecords={ pagination?.records }
                         rows={ pagination?.pageSize }
+                        first={ (parseInt( page ) - 1) * (pagination?.pageSize || 10) }
                         onPageChange={ pageChanged }/> }
       </Card>
     </div>
