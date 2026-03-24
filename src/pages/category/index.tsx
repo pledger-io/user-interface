@@ -1,5 +1,4 @@
-import { mdiPlus, mdiSquareEditOutline, mdiTrashCanOutline } from "@mdi/js";
-import Icon from "@mdi/react";
+import { Icon } from "@iconify-icon/react";
 import { Card } from "primereact/card";
 import { Column } from "primereact/column";
 import { ConfirmDialog } from "primereact/confirmdialog";
@@ -34,12 +33,12 @@ const ActionButtons = ({ category, deleteCallback }: { category: Category, delet
     })
   }
   return <div className='flex gap-0.5 items-center'>
-    <Button icon={ mdiSquareEditOutline }
+    <Button icon={ 'mdi:square-edit-outline' }
             onClick={ () => navigate(`${ category.id }/edit`) }
             tooltip={ i10n('common.action.edit') }
             tooltipOptions={ { position: 'left' } }
             text />
-    <Button icon={ mdiTrashCanOutline }
+    <Button icon={ 'mdi:trash-can-outline' }
             severity='danger'
             tooltip={ i10n('common.action.delete') }
             tooltipOptions={ { position: 'left' } }
@@ -82,8 +81,8 @@ const CategoryListing = () => {
     <Card className='my-4 mx-2' header={ header }>
       <div className='flex justify-end'>
         <NavLink to={ './add' } key='add'
-                 className='p-button p-button-success p-button-sm !mb-4 gap-1 items-center'>
-          <Icon path={ mdiPlus } size={ .8 }/> { i10n('page.settings.categories.add') }
+                 className='p-button p-button-success p-button-sm mb-4! gap-1 items-center'>
+          <Icon icon={ 'mdi:plus' } width='.9em'/> { i10n('page.settings.categories.add') }
         </NavLink>
       </div>
 

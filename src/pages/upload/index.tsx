@@ -1,10 +1,9 @@
+import { Icon } from "@iconify-icon/react";
 import { useSessionStorage } from "primereact/hooks";
 import React, { useEffect, useState } from "react";
-import { mdiCheck, mdiClose, mdiDelete, mdiPlus } from "@mdi/js";
 import BreadCrumbItem from "../../components/breadcrumb/breadcrumb-item.component";
 import BreadCrumbs from "../../components/breadcrumb/breadcrumb.component";
 import { NavLink, useNavigate } from "react-router";
-import Icon from "@mdi/react";
 import { i10n } from "../../config/prime-locale";
 import { Card } from "primereact/card";
 import { AvailableSetting, ImportJob, Pagination } from "../../types/types";
@@ -18,8 +17,8 @@ import { Button } from "../../components/layout/button";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 
 const checkMarkIcon = (checked: boolean) => {
-  if (checked) return <Icon path={ mdiCheck } size={ 1 } className='text-success mx-auto'/>
-  return <Icon path={ mdiClose } size={ 1 } className='text-warning mx-auto'/>
+  if (checked) return <Icon icon={ 'mdi-check' } size={ 1 } className='text-success mx-auto'/>
+  return <Icon icon={ 'mdi-close' } size={ 1 } className='text-warning mx-auto'/>
 }
 
 const importJobLink = (job: ImportJob) => {
@@ -73,7 +72,7 @@ const BatchOverview = () => {
       <div className='flex justify-end'>
         <NavLink to={ '/upload/create' }
                  className='p-button p-button-success p-button-sm mb-4! gap-1 items-center'>
-          <Icon path={ mdiPlus } size={ .8 }/> { i10n('page.settings.import.new') }
+          <Icon icon={ 'mdi-plus' } size={ .8 }/> { i10n('page.settings.import.new') }
         </NavLink>
       </div>
 
@@ -87,7 +86,7 @@ const BatchOverview = () => {
                 bodyClassName='w-[2rem]'
                 body={ job => checkMarkIcon(job.finished) } />
         <Column bodyClassName='w-[2rem]'
-                body={ job => <Button icon={ mdiDelete }
+                body={ job => <Button icon={ 'mdi-delete' }
                                       tooltipOptions={ { position: 'bottom' } }
                                       tooltip={ i10n('common.action.delete') }
                                       onClick={ () => onDeleteClick(job.slug) }

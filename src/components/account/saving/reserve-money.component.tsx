@@ -1,4 +1,3 @@
-import { mdiCancel, mdiContentSaveSettings } from "@mdi/js";
 import { Dialog } from "primereact/dialog";
 import React, { Ref, useImperativeHandle } from "react";
 import { i10n } from "../../../config/prime-locale";
@@ -41,8 +40,8 @@ const ReserveToGoalComponent = ({ ref, account, savingGoal, onChanged }: Reserve
                 severity='secondary'
                 text
                 onClick={ () => setVisible(false) }
-                icon={ mdiCancel }/>
-        <SubmitButton key='save-btn' label='dialog.savings.assign.action' icon={ mdiContentSaveSettings }/>
+                icon={ 'mdi:cancel' }/>
+        <SubmitButton key='save-btn' label='dialog.savings.assign.action' icon={ 'mdi:content-save-settings' }/>
       </div>
     </Form>
   </Dialog>

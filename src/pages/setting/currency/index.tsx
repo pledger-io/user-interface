@@ -1,5 +1,4 @@
-import { mdiPlus, mdiSquareEditOutline } from "@mdi/js";
-import Icon from "@mdi/react";
+import { Icon } from "@iconify-icon/react";
 import { Card } from "primereact/card";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
@@ -27,7 +26,7 @@ const CurrencyPage = () => {
     .then(() => success('page.settings.currencies.enabled.success'))
     .catch(() => warning('page.settings.currencies.enabled.failed'))
 
-  const header = () => <div className='px-2 py-2 border-b-1 text-center font-bold'>
+  const header = () => <div className='px-2 py-2 border-b text-center font-bold'>
     { i10n('page.settings.currencies.title') }
   </div>
 
@@ -40,21 +39,21 @@ const CurrencyPage = () => {
     <Card header={ header } className='my-4 mx-2'>
       <div className='flex justify-end'>
         <NavLink to={ '/settings/currencies/add' } key='add'
-                 className='p-button p-button-success p-button-sm !mb-4 gap-1 items-center'>
-          <Icon path={ mdiPlus } size={ .8 }/> { i10n('page.settings.currencies.add') }
+                 className='p-button p-button-success p-button-sm mb-4! gap-1 items-center'>
+          <Icon icon={ 'mdi:plus' } /> { i10n('page.settings.currencies.add') }
         </NavLink>
       </div>
 
       <DataTable value={ currencies } loading={ !currencies }>
-        <Column className='w-[1rem]' body={ (currency: Currency) => <NavLink to={ `${ currency.code }/edit` }>
-          <Icon path={ mdiSquareEditOutline } size={ 1 }/>
+        <Column className='w-4' body={ (currency: Currency) => <NavLink to={ `${ currency.code }/edit` }>
+          <Icon icon={ 'mdi:square-edit-outline' }/>
         </NavLink> }/>
-        <Column field='symbol' className='w-[1rem]'/>
-        <Column field='code' className='w-[1rem]'/>
+        <Column field='symbol' className='w-4'/>
+        <Column field='code' className='w-4'/>
         <Column field='name' header={ i10n('Currency.name') }/>
         <Column field='numberDecimals' header={ i10n('Currency.decimalPlaces') }/>
         <Column header={ i10n('Currency.enabled') }
-                className='w-[1rem]'
+                className='w-4'
                 body={ (currency: Currency) => <Form onSubmit={ _ => undefined } entity='Currency'>
                   <Input.Toggle id={ `toggle-${ currency.code }` }
                                 value={ currency.enabled }

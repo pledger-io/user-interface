@@ -1,13 +1,3 @@
-import {
-  mdiCalendarCheck,
-  mdiCalendarPlus,
-  mdiDotsVertical,
-  mdiDownload,
-  mdiSquareEditOutline,
-  mdiTrashCanOutline,
-  mdiUpload
-} from "@mdi/js";
-import Icon from "@mdi/react";
 import { Menu } from "primereact/menu";
 import { MenuItem } from "primereact/menuitem";
 import React, { useRef } from "react";
@@ -22,6 +12,7 @@ import { downloadBlob } from "../../download-blob";
 import { Button } from "../../layout/button";
 import ScheduleContract from "../schedule-dialog.component";
 import UploadContract from "../upload-dialog.component";
+import { Icon } from "@iconify-icon/react";
 
 const ContractMenuActions = ({ contract, callback }: { contract : Contract, callback: () => void }) => {
   const actionMenu = useRef<Menu>(null);
@@ -35,7 +26,7 @@ const ContractMenuActions = ({ contract, callback }: { contract : Contract, call
   if (contract.fileToken) {
     menuOptions.push({
       label: i10n('page.budget.contracts.action.downloadContract'),
-      icon: () => <Icon path={ mdiDownload } size={ 1 } />,
+      icon: () => <Icon icon={ 'mdi:download' } size={ 1 } />,
       command() {
         AttachmentRepository.download(contract.fileToken)
           .then(data => downloadBlob(data, `Contract-${contract.name}.pdf`))
@@ -44,7 +35,7 @@ const ContractMenuActions = ({ contract, callback }: { contract : Contract, call
   } else {
     menuOptions.push({
       label: i10n('page.budget.contracts.action.uploadContract'),
-      icon: () => <Icon path={ mdiUpload } size={ 1 } />,
+      icon: () => <Icon icon={ 'mdi:upload' } size={ 1 } />,
       command: () => uploadContractRef.current?.open()
     })
   }
@@ -52,7 +43,7 @@ const ContractMenuActions = ({ contract, callback }: { contract : Contract, call
   if (!contract.notification && !contract.terminated) {
     menuOptions.push({
       label: i10n('page.title.budget.contracts.warn'),
-      icon: () => <Icon path={ mdiCalendarCheck } size={ 1 } />,
+      icon: () => <Icon icon={ 'mdi:calendar-check' } size={ 1 } />,
       command() {
         ContractRepository.warn(contract.id)
           .then(() => success('page.title.budget.contracts.warn.success'))
@@ -65,7 +56,7 @@ const ContractMenuActions = ({ contract, callback }: { contract : Contract, call
   if (!contract.terminated) {
     menuOptions.push({
       label: i10n('page.contract.action.schedule'),
-      icon: () => <Icon path={ mdiCalendarPlus } size={ 1 } />,
+      icon: () => <Icon icon={ 'mdi:calendar-plus' } size={ 1 } />,
       command: () => scheduleContractRef.current?.open()
     })
     if (menuOptions.length > 0) {
@@ -74,7 +65,7 @@ const ContractMenuActions = ({ contract, callback }: { contract : Contract, call
       })
     }
     menuOptions.push({
-      icon: () => <Icon path={ mdiSquareEditOutline } size={ 1 }/>,
+      icon: () => <Icon icon={ 'mdi:square-edit-outline' } size={ 1 }/>,
       label: i10n('common.action.edit'),
       command() {
         navigate(`./${ contract.id }/edit`)
@@ -82,7 +73,7 @@ const ContractMenuActions = ({ contract, callback }: { contract : Contract, call
     })
 
     menuOptions.push({
-      icon: () => <Icon path={ mdiTrashCanOutline } size={ 1 }/>,
+      icon: () => <Icon icon={ 'mdi:trash-can-outline' } size={ 1 }/>,
       className: '[&>div>a]:!text-red-600 [&>div>a>.p-menuitem-text]:!text-red-600',
       label: i10n('common.action.delete'),
       command() {
@@ -103,9 +94,9 @@ const ContractMenuActions = ({ contract, callback }: { contract : Contract, call
     <Menu popup popupAlignment='right' ref={ actionMenu } model={ menuOptions } className='min-w-[17em]'/>
     <UploadContract id={ contract.id } onChanges={ callback } ref={ uploadContractRef }/>
     <ScheduleContract contract={ contract } ref={ scheduleContractRef } />
-    <Button icon={ mdiDotsVertical }
+    <Button icon={ 'mdi:dots-vertical' }
             text
-            className='!border-none'
+            className='border-none!'
             onClick={ (event) => actionMenu?.current?.toggle(event) }
             aria-controls="popup_menu_right" aria-haspopup/>
   </>

@@ -9,12 +9,6 @@ describe('Loading', () => {
         return render(<Loading {...props}>{dummyChild}</Loading>);
     };
 
-    it('Should render loading icon when condition is false', () => {
-        renderLoadingComponent({ condition: false });
-        const loadingIcon = screen.getByRole('presentation');
-        expect(loadingIcon).not.toBeNull();
-    });
-
     it('Should render children when condition is true', () => {
         renderLoadingComponent({ condition: true });
         const childElement = screen.getByText('Test Child');

@@ -1,5 +1,4 @@
-import { mdiAccountPlus, mdiLogin, mdiWeb } from "@mdi/js";
-import Icon from "@mdi/react";
+import { Icon } from "@iconify-icon/react";
 import { PrimeReactProvider } from "primereact/api";
 import { Card } from "primereact/card";
 import { Divider } from "primereact/divider";
@@ -58,7 +57,7 @@ const LoginCard = () => {
     <button type='button' className="cursor-pointer z-10 p-2 hover:bg-gray-100 rounded-full transition-all"
             onClick={ (e) => configMenu?.current?.toggle(e) }
             role='button'>
-      <Icon path={ mdiWeb } size={ 1 }/>
+      <Icon icon='mdi:web' size={ 1 }/>
     </button>
   </div>
 
@@ -110,7 +109,7 @@ const LoginCard = () => {
         <div className='flex pt-3 items-stretch'>
           <SubmitButton key='login'
                         className='w-full p-button-lg'
-                        label='page.login.login' icon={ mdiLogin }/>
+                        label='page.login.login' icon={ 'mdi:login' }/>
         </div>
 
       </Form>
@@ -119,7 +118,7 @@ const LoginCard = () => {
         auth.settings.authority &&
         <div className='flex justify-center mt-3'>
           <Link to={ `/register?from=${ from }` } className='p-button p-button-info p-button-outlined p-button-lg flex gap-2 items-center w-full justify-center'>
-            <Icon path={ mdiAccountPlus } size={ 1 }/>
+            <Icon icon={ 'mdi:account-add' } size={ 1 }/>
             { i10n('page.login.register') }
           </Link>
         </div>
@@ -133,7 +132,7 @@ const LoginCard = () => {
         !auth.settings.authority &&
         <div className='flex justify-center mt-3'>
           <Link to={ `/register?from=${ from }` } className='p-button p-button-info p-button-outlined p-button-lg flex gap-2 items-center w-full justify-center'>
-            <Icon path={ mdiAccountPlus } size={ 1 }/>
+            <Icon icon={ 'mdi:account-add' } size={ 1 }/>
             { i10n('page.login.register') }
           </Link>
         </div>
@@ -144,7 +143,7 @@ const LoginCard = () => {
         <div className='flex justify-center mt-3'>
           <Button label='page.login.openid_connect'
                   severity='secondary'
-                  icon={ mdiLogin }
+                  icon={ 'mdi:login' }
                   className='w-full'
                   onClick={() => auth.signinRedirect()} />
         </div>

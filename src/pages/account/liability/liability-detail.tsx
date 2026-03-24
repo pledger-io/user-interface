@@ -1,5 +1,4 @@
-import { mdiCashPlus } from "@mdi/js";
-import Icon from "@mdi/react";
+import { Icon } from "@iconify-icon/react";
 import { Panel } from "primereact/panel";
 import React, { useEffect, useState } from 'react'
 import { NavLink, useParams } from "react-router";
@@ -91,7 +90,7 @@ const LiabilityDetailView = () => {
         <div className='flex justify-end mb-2'>
           <NavLink to={ `${ Resolver.Account.resolveUrl(account) }/transactions/add` }
                    className='p-button p-button-success gap-1'>
-            <Icon path={ mdiCashPlus } size={ 1 } />
+            <Icon icon={ 'mdi:cash-plus' } size={ 1 } />
             { i10n('page.account.liability.payment.add') }
           </NavLink>
         </div>

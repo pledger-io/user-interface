@@ -1,4 +1,3 @@
-import { mdiSkipNext } from "@mdi/js";
 import { Divider } from "primereact/divider";
 import { Message } from "primereact/message";
 import React, { useState } from "react";
@@ -81,7 +80,7 @@ const _ = ({ slug, task }: { slug: string, task: ImportJobTask }) => {
                         required={ true }/>
 
         <div className='flex justify-end mt-4'>
-          <SubmitButton label='common.action.next' icon={ mdiSkipNext } />
+          <SubmitButton label='common.action.next' icon={ 'mdi:skip-next' } />
         </div>
       </fieldset>
     </Form>
@@ -140,7 +139,7 @@ const _ = ({ slug, task }: { slug: string, task: ImportJobTask }) => {
           </span> }
 
         <div className='flex justify-end mt-4'>
-          <SubmitButton label='common.action.next' icon={ mdiSkipNext } />
+          <SubmitButton label='common.action.next' icon={ 'mdi:skip-next' } />
         </div>
       </fieldset>
     </Form>

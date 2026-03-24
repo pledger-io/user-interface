@@ -1,6 +1,5 @@
 import { Card } from "primereact/card";
 import React from 'react'
-import { mdiCancel, mdiContentSave } from "@mdi/js";
 import { useLoaderData, useNavigate, useRouteLoaderData } from "react-router";
 import MetadataFieldsetComponent, {
   Suggestion,
@@ -61,7 +60,7 @@ const LiabilityPayment = () => {
     </BreadCrumbs>
 
     <Card className='mx-2 my-4'
-          header={ <div className='px-2 py-2 border-b-1 text-center font-bold'>{ i10n('page.transactions.add') }</div> }>
+          header={ <div className='px-2 py-2 border-b text-center font-bold'>{ i10n('page.transactions.add') }</div> }>
       <Form onSubmit={ onSubmit } entity='Transaction' onChange={ onInputChanged }>
         <fieldset>
           <legend className='font-bold text-xl underline'>{ i10n('page.transaction.add.details') }</legend>
@@ -109,8 +108,8 @@ const LiabilityPayment = () => {
         </fieldset>
 
         <div className='flex justify-end gap-2 mt-4'>
-          <BackButton label='common.action.cancel' icon={ mdiCancel }/>
-          <SubmitButton label='common.action.save' icon={ mdiContentSave }/>
+          <BackButton label='common.action.cancel' icon={ 'mdi:cancel' }/>
+          <SubmitButton label='common.action.save' icon={ 'mdi:content-save' }/>
         </div>
       </Form>
     </Card>

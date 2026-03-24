@@ -1,10 +1,9 @@
-import { mdiCloudUploadOutline, mdiPlus } from "@mdi/js";
+import { Icon } from "@iconify-icon/react";
 import React, { FC } from "react";
 import { AttachmentRepository } from "../RestAPI";
 import { Attachment } from "../../types/types";
 import { FileUpload, FileUploadHandlerEvent } from "primereact/fileupload";
 import { i10n } from "../../config/prime-locale";
-import Icon from "@mdi/react";
 
 type UploadAttachmentProps = {
     accepts?: string,
@@ -17,7 +16,7 @@ type UploadAttachmentProps = {
 const EmptyTemplate: FC<{text: string}> = ({ text }) => {
     return <>
         <div className="flex items-center flex-col text-muted">
-            <Icon path={ mdiCloudUploadOutline } size={ 5 } className='bg-(--surface-b) rounded-full p-5'/>
+            <Icon icon={ 'mdi:cloud-upload-outline' } size={ 5 } className='bg-(--surface-b) rounded-full p-5'/>
             <span className='text-lg'>{ i10n(text) }</span>
         </div>
     </>
@@ -46,8 +45,8 @@ const UploadAttachment = ({ accepts = '*/*', label, onUpload, max = 1 }: UploadA
                     customUpload={ true}
                     uploadHandler={ upload }
                     headerTemplate={ headerTemplate }
-                    uploadOptions={ { label: i10n(label), iconOnly: false, icon: () => <Icon path={ mdiCloudUploadOutline } size={ 1 }/>, className: 'p-button-outlined p-button-rounded' } }
-                    chooseOptions={ { label: i10n(label), iconOnly: true, icon: () => <Icon path={ mdiPlus } size={ 1 }/>, className: 'p-button-outlined p-button-rounded' } }
+                    uploadOptions={ { label: i10n(label), iconOnly: false, icon: () => <Icon icon={ 'mdi:cloud-upload-outline' } size={ 1 }/>, className: 'p-button-outlined p-button-rounded' } }
+                    chooseOptions={ { label: i10n(label), iconOnly: true, icon: () => <Icon icon={ 'mdi:plus' } size={ 1 }/>, className: 'p-button-outlined p-button-rounded' } }
                     emptyTemplate={ <EmptyTemplate text={ label } /> }
                     accept={ accepts }/>
     )

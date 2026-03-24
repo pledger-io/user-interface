@@ -1,4 +1,3 @@
-import { mdiDownload } from "@mdi/js";
 import { Button } from "../../components/layout/button";
 import { i10n } from "../../config/prime-locale";
 import ProfileRepository from "../../core/repositories/profile.repository";
@@ -23,7 +22,7 @@ const ProfileExportView = () => {
 
     <div className='h-full flex items-center justify-center'>
       <Button label='page.user.profile.transactions'
-              icon={ mdiDownload }
+              icon={ 'mdi:download' }
               onClick={ downloadClick }/>
     </div>
   </>

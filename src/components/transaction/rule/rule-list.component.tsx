@@ -1,5 +1,4 @@
-import { mdiCheck, mdiClose, mdiDotsVertical, mdiSquareEditOutline, mdiTrashCanOutline } from "@mdi/js";
-import Icon from "@mdi/react";
+import { Icon } from "@iconify-icon/react";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { Menu } from "primereact/menu";
@@ -15,8 +14,8 @@ import { Button } from "../../layout/button";
 import { EntityNameComponent } from "../../lookup-name.util";
 
 const checkMarkIcon = (checked: boolean) => {
-  if (checked) return <Icon path={ mdiCheck } size={ 1 } className='text-success mx-auto'/>
-  return <Icon path={ mdiClose } size={ 1 } className='text-warning mx-auto'/>
+  if (checked) return <Icon icon={ 'mdi:check' } className='text-success mx-auto'/>
+  return <Icon icon={ 'mdi:close' } className='text-warning mx-auto'/>
 }
 
 const conditionList = (conditions: RuleCondition[]) => {
@@ -45,14 +44,14 @@ const RuleActionMenu: FC<{ group: string, rule: Rule, callback: (_: Identifier) 
 
   const menuOptions = [
     {
-      icon: () => <Icon path={ mdiSquareEditOutline } size={ 1 }/>,
+      icon: () => <Icon icon={ 'mdi:square-edit-outline' }/>,
       label: i10n('common.action.edit'),
       command() {
         navigate(`/automation/schedule/rules/${ group }/${ rule.id }/edit`)
       }
     },
     {
-      icon: () => <Icon path={ mdiTrashCanOutline } size={ 1 }/>,
+      icon: () => <Icon icon={ 'mdi:trash-can-outline' }/>,
       label: i10n('common.action.delete'),
       className: '[&>div>a]:!text-red-600 [&>div>a>.p-menuitem-text]:!text-red-600',
       command() {
@@ -72,9 +71,9 @@ const RuleActionMenu: FC<{ group: string, rule: Rule, callback: (_: Identifier) 
   return <>
     <Menu popup popupAlignment='right' ref={ actionMenu } model={ menuOptions }/>
 
-    <Button icon={ mdiDotsVertical }
+    <Button icon={ 'mdi:dots-vertical' }
             text
-            className='!border-none'
+            className='border-none!'
             onClick={ (event) => actionMenu?.current?.toggle(event) }
             aria-controls="popup_menu_right" aria-haspopup/>
   </>

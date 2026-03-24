@@ -4,7 +4,6 @@ import { i10n } from "../../../config/prime-locale";
 import { RuleCondition, RuleField, RuleOperator } from "../../../types/types";
 import { useInputField } from "../../form/input/InputGroup";
 import { Resolver } from "../../../core";
-import { mdiDelete, mdiPlusBox } from "@mdi/js";
 import React from "react";
 import { Button } from "../../layout/button";
 
@@ -97,14 +96,14 @@ const ConditionFieldComponent = (props: any) => {
         <Dropdown id={ `cond[${ condition.uuid }].field` }
                   options={ operatorOptions }
                   value={ lookupCondition(condition) }
-                  className='w-[15rem]'
+                  className='w-60'
                   onChange={ event => onFieldChange(condition.uuid, event.value)} />
         <input type='text'
                onChange={ (event) => onConditionChange(condition.uuid, event.currentTarget.value) }
                defaultValue={ condition.condition }
                id={ `cond[${ condition.uuid }].cond` }
                className='flex-1 p-inputtext'/>
-        { condition.uuid && <Button icon={ mdiDelete }
+        { condition.uuid && <Button icon={ 'mdi:delete' }
                                     text
                                     type='button'
                                     onClick={ () => onDeleteCondition(condition.uuid || '') }
@@ -117,7 +116,7 @@ const ConditionFieldComponent = (props: any) => {
             size='small'
             severity='secondary'
             onClick={ onAddCondition }
-            icon={ mdiPlusBox }/>
+            icon={ 'mdi:plus-box' }/>
   </>
 }
 

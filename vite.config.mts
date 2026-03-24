@@ -4,6 +4,7 @@ import react from '@vitejs/plugin-react-swc'
 import tailwindcss from '@tailwindcss/vite'
 import { viteStaticCopy } from "vite-plugin-static-copy";
 
+const backendUri = 'http://finance.local'
 export default defineConfig({
     base: '/ui',
     plugins: [
@@ -37,7 +38,7 @@ export default defineConfig({
     server: {
         proxy: {
             '/v2/api': {
-                target: 'http://localhost:8080',
+                target: backendUri,
                 changeOrigin: true
             },
             '/ui/ui/assets/': {
@@ -48,7 +49,7 @@ export default defineConfig({
                 }
             },
             '/.well-known/openid-connect': {
-                target: 'http://localhost:8080',
+                target: backendUri,
                 changeOrigin: true
             }
         }

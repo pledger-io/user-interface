@@ -8,7 +8,7 @@ import { useInputField } from "../input/InputGroup";
 
 export const ManagedAccountSelect = (props: any) => {
   const [field, errors, onChange] = useInputField({ onChange: props.onChange, field: props })
-  const [accounts, setAccounts] = useState<Account[]>([])
+  const [accounts, setAccounts] = useState<Account[] | undefined>(undefined)
   const [selectedId, setSelectedId] = useState<number | null>(null)
 
   useEffect(() => {
@@ -21,7 +21,7 @@ export const ManagedAccountSelect = (props: any) => {
   }, [props.value]);
 
   const valueSelected = (event: any) => {
-    const selectedAccount = accounts.filter(account => account.id == event.value)[0]
+    const selectedAccount = (accounts || []).filter(account => account.id == event.value)[0]
     onChange({
       persist: () => {},
       currentTarget: { value: selectedAccount }
@@ -30,7 +30,7 @@ export const ManagedAccountSelect = (props: any) => {
     if (props.onChange) props.onChange(selectedAccount)
   }
 
-  if (!field || !accounts.length) return <Loading/>
+  if (!field || !accounts) return <Loading/>
   return <>
     <div className={ `flex flex-col gap-2 mt-2 ${ props.className || '' }` }>
       <label htmlFor={ props.id } className='font-bold'>{ i10n(props.title as string) }</label>

@@ -1,11 +1,10 @@
+import { Icon } from "@iconify-icon/react";
 import { useNotification } from "../../context/notification-context";
 import { Upload } from "../../core/attachment";
 import { Entity, Form, Input, SubmitButton } from "../form";
-import { mdiCheckDecagram, mdiSkipNext } from "@mdi/js";
 import { useState } from "react";
 import ImportJobRepository from "../../core/repositories/import-job.repository";
 import { useNavigate } from "react-router";
-import Icon from "@mdi/react";
 import { i10n } from "../../config/prime-locale";
 
 const UploadTransactionsComponent = () => {
@@ -36,14 +35,14 @@ const UploadTransactionsComponent = () => {
       { uploadToken &&
         <div className='mt-2 flex justify-center'>
           <span>
-            <Icon path={ mdiCheckDecagram } size={ 1 } className='text-green-500 mr-2'/>
+            <Icon icon={ 'mdi:check-decagram' } className='text-green-500 mr-2'/>
           </span>
           { i10n('common.upload.file.success') }
         </div>
       }
 
       <div className='flex justify-end'>
-        <SubmitButton icon={ mdiSkipNext }
+        <SubmitButton icon={ 'mdi:skip-next' }
                       label='common.action.next'/>
       </div>
     </Form>

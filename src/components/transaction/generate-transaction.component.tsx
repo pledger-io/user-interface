@@ -1,5 +1,4 @@
-import { mdiContentSave, mdiLoading, mdiPageNext, mdiScriptTextOutline, mdiSkipNext, mdiSkipPrevious } from "@mdi/js";
-import Icon from "@mdi/react";
+import { Icon } from "@iconify-icon/react";
 import { Badge } from "primereact/badge";
 import { Dialog } from "primereact/dialog";
 import { Message } from "primereact/message";
@@ -56,11 +55,11 @@ export const GenerateTransaction = () => {
             severity='info'
             size='small'
             onClick={ () => setVisible(true) }
-            icon={ mdiScriptTextOutline }/>
+            icon={ 'mdi:script-text-outline' }/>
 
     <Dialog onHide={ closeDialog }
             header={ i10n('page.transactions.generate') }
-            className='min-w-[30rem]'
+            className='min-w-120'
             visible={ visible }>
 
       <Stepper ref={ stepperRef } linear>
@@ -74,17 +73,17 @@ export const GenerateTransaction = () => {
                             title='Transaction.description'/>
 
             <div className='flex justify-end mt-4 items-center gap-2'>
-              { processing && <Icon path={ mdiLoading } spin={ true } size={ 1 }/> }
+              { processing && <Icon icon={ 'svg-spinners:tadpole' } width='1em'/> }
               <SubmitButton label='page.transactions.process'
                             text
                             severity='success'
                             disabled={ processing }
-                            icon={ mdiPageNext }/>
+                            icon={ 'mdi:page-next' }/>
             </div>
           </Form>
         </StepperPanel>
         <StepperPanel header={ i10n('page.transactions.generated') }>
-          <div className='max-w-[40em] mx-auto grid grid-cols-4 border-[1px] p-2 mb-4'>
+          <div className='max-w-[40em] mx-auto grid grid-cols-4 border p-2 mb-4'>
             <div className='font-bold'>{ i10n('Transaction.date') }:</div>
             <div className='col-span-3'><DateComponent date={ generated.date }/></div>
             <div className='font-bold'>{ i10n('Transaction.type') }:</div>
@@ -102,14 +101,14 @@ export const GenerateTransaction = () => {
             <Button label='common.action.back'
                     size='small'
                     text
-                    icon={ mdiSkipPrevious }
+                    icon={ 'mdi:skip-previous' }
                     onClick={ () => stepperRef.current?.prevCallback() }
                     severity='secondary' />
             <Button label='page.transactions.generate.confirm'
                     size='small'
                     text
                     onClick={ () => stepperRef.current?.nextCallback() }
-                    icon={ mdiSkipNext }
+                    icon={ 'mdi:skip-next' }
                     severity='success' />
           </div>
         </StepperPanel>
@@ -190,10 +189,10 @@ function CreateTransactionPanel({ generated, stepperRef, closeDialog }: { genera
         <Button label='common.action.back'
                 size='small'
                 text
-                icon={ mdiSkipPrevious }
+                icon={ 'mdi:skip-previous' }
                 onClick={ () => stepperRef.current?.prevCallback() }
                 severity='secondary' />
-        <SubmitButton label='common.action.save' size='small' icon={ mdiContentSave }/>
+        <SubmitButton label='common.action.save' size='small' icon={ 'mdi:content-save' }/>
       </div>
     </Form>
   </>

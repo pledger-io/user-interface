@@ -1,4 +1,3 @@
-import { mdiDelete, mdiPlusBox, mdiSkipNext } from "@mdi/js";
 import { Dropdown } from "primereact/dropdown";
 import React from "react";
 import { i10n } from "../../config/prime-locale";
@@ -78,7 +77,7 @@ const ColumnMappingComponent = (props: any) => {
                     ] }
                     onChange={ (event) => onColumnChanges(index, event.value) }
                     value={ mapping }/>
-          <Button icon={ mdiDelete }
+          <Button icon={ 'mdi:delete' }
                   text
                   onClick={ () => onDelete(index) }
                   severity='danger'/>
@@ -88,7 +87,7 @@ const ColumnMappingComponent = (props: any) => {
         <Button label='page.settings.import.details.add'
                 severity='secondary'
                 onClick={ onAddColumn }
-                icon={ mdiPlusBox }/>
+                icon={ 'mdi:plus-box' }/>
       </div>
     </div>
   </>
@@ -169,7 +168,7 @@ const ConfigureSettingsComponent = ({ slug, task }: { slug: string, task: Import
       </div>
 
       <div className='flex justify-end'>
-        <SubmitButton label='common.action.next' icon={ mdiSkipNext } iconPos='right' />
+        <SubmitButton label='common.action.next' icon={ 'mdi:skip-next' } iconPos='right' />
       </div>
     </Form>
   </>

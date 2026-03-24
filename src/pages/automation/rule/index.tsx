@@ -1,5 +1,4 @@
-import { mdiArrowDown, mdiArrowUp, mdiDelete, mdiPencilOutline, mdiPlus } from "@mdi/js";
-import Icon from "@mdi/react";
+import { Icon } from "@iconify-icon/react";
 import { Card } from "primereact/card";
 import { confirmDialog, ConfirmDialog } from "primereact/confirmdialog";
 import React, { FC, useEffect } from "react";
@@ -32,7 +31,7 @@ const _ = () => {
       <BreadCrumbItem label='page.nav.settings.rules'/>
     </BreadCrumbs>
 
-    <ConfirmDialog className='max-w-[25rem]'/>
+    <ConfirmDialog className='max-w-100'/>
 
     <Card className='my-4 mx-2'>
       <div className='flex justify-end'>
@@ -41,7 +40,7 @@ const _ = () => {
                 severity='secondary'
                 size='small'
                 onClick={ () => addGroupDialogRef.current?.open() }
-                icon={ mdiPlus }/>
+                icon={ 'mdi:plus' }/>
       </div>
 
       <div className='flex flex-col justify-end gap-2'>
@@ -87,26 +86,26 @@ const RuleGroupComponent: FC<{ group: RuleGroup, index: number, size: number, ca
         <h1 className='text-lg font-bold flex items-center gap-1'>
           { group.name }
           <span onClick={ () => editGroupDialogRef.current?.open() }>
-          <Icon path={ mdiPencilOutline } size={ .75 }
+          <Icon icon={ 'mdi:pencil-outline' }
                 title={ i10n('common.action.edit') }
                 className='cursor-pointer text-muted opacity-20 hover:opacity-70'/>
         </span>
         </h1>
         <div>
           <NavLink to={ `/automation/schedule/rules/${ group.name }/create` } className='p-button p-button-text'>
-            <Icon path={ mdiPlus } size={ 1 }/>
+            <Icon icon={ 'mdi:plus' }/>
             { i10n('page.settings.rules.add') }
           </NavLink>
-          <Button icon={ mdiDelete }
+          <Button icon={ 'mdi:delete' }
                   label='common.action.delete'
                   text
                   onClick={ onDelete }
                   severity='danger'/>
-          { index > 0 && <Button icon={ mdiArrowUp }
+          { index > 0 && <Button icon={ 'mdi:arrow-up' }
                                  text
                                  severity='info'
                                  onClick={ () => onGroupUp(group) }/> }
-          { (index + 1) < size && <Button icon={ mdiArrowDown }
+          { (index + 1) < size && <Button icon={ 'mdi:arrow-down' }
                                           text
                                           severity='info'
                                           onClick={ () => onGroupDown(group) }/> }

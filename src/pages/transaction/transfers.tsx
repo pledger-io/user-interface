@@ -1,4 +1,3 @@
-import { mdiSwapHorizontal } from "@mdi/js";
 import { Card } from "primereact/card";
 import { ConfirmDialog } from "primereact/confirmdialog";
 import React from "react";
@@ -40,7 +39,7 @@ const TransactionGlobalView = () => {
 
     <Card header={ header } className='mx-2 my-4'>
       <div className='flex justify-end gap-2 mb-4'>
-        <NewTransactionDialog type='transfer' icon={ mdiSwapHorizontal } variant='info'/>
+        <NewTransactionDialog type='transfer' icon={ 'mdi-swap-horizontal' } variant='info'/>
       </div>
       <TransactionOverview range={ range } transfers={ true }/>
     </Card>

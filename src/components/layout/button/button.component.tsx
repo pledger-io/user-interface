@@ -1,4 +1,4 @@
-import Icon from "@mdi/react";
+import { Icon } from "@iconify-icon/react";
 import React from "react";
 
 import { Button, ButtonProps } from "primereact/button";
@@ -14,7 +14,7 @@ const _ = (props: ButtonProps) => {
   return <Button { ...props }
                  label={ label as string }
                  className={ `inline-flex gap-1 items-center justify-center ${ className }` }
-                 icon={ () => <Icon path={ props.icon as any } size={ 1 }/> }/>
+                 icon={ () => <Icon icon={ props.icon as any } width='1.2em'/> }/>
 }
 
 export default _;

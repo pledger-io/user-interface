@@ -1,5 +1,4 @@
-import { mdiAlertCircleOutline } from "@mdi/js";
-import Icon from "@mdi/react";
+import { Icon } from "@iconify-icon/react";
 import { Button } from "primereact/button";
 import { confirmDialog } from "primereact/confirmdialog";
 import { i10n } from "../config/prime-locale";
@@ -13,7 +12,7 @@ export const confirmDeleteDialog = ({ accept, message }: ConfirmDeleteDialogProp
   confirmDialog({
     message,
     header: i10n('common.action.delete'),
-    icon: () => <Icon path={ mdiAlertCircleOutline } size={ 1 }/>,
+    icon: () => <Icon icon={ 'mdi:alert-circle-outline' } size={ 1 }/>,
     defaultFocus: 'reject',
     footer: x => {
       return <>

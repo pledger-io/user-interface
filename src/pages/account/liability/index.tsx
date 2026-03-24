@@ -1,4 +1,3 @@
-import { mdiPlus } from "@mdi/js";
 import { Card } from "primereact/card";
 import { Column } from "primereact/column";
 import { ConfirmDialog } from "primereact/confirmdialog";
@@ -77,7 +76,7 @@ const LiabilityOverview = () => {
                   severity='success'
                   size='small'
                   onClick={ () => navigate('/accounts/liability/add') }
-                  icon={ mdiPlus } />
+                  icon={ 'mdi:plus' } />
         </div>
 
         <DataTable value={ accounts } size='small' loading={ !accounts }>

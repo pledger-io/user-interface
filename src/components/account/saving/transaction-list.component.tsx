@@ -1,5 +1,4 @@
-import { mdiChevronDown, mdiChevronRight } from "@mdi/js";
-import Icon from "@mdi/react";
+import { Icon } from "@iconify-icon/react";
 import React, { FC, useEffect, useState } from "react";
 import { i10n } from "../../../config/prime-locale";
 import AccountRepository from "../../../core/repositories/account-repository";
@@ -61,11 +60,11 @@ const SavingYearOverview: FC<{ year: string, transactions: Transaction[], accoun
 
   return <>
     <div className='flex flex-col' key={ year }>
-      <div className='border-b-[1px] pb-1 mb-1 flex'>
+      <div className='border-b pb-1 mb-1 flex'>
         <h1 className='font-bold flex-1 cursor-pointer flex' onClick={ () => setCollapsed(!collapsed) }>
           <a className='cursor-pointer' onClick={ () => setCollapsed(!collapsed) }>
-            { !collapsed && <Icon path={ mdiChevronDown } size={ 1 } /> }
-            { collapsed && <Icon path={ mdiChevronRight } size={ 1 } /> }
+            { !collapsed && <Icon icon={ 'mdi:chevron-down' } size={ 1 } /> }
+            { collapsed && <Icon icon={ 'mdi:chevron-right' } size={ 1 } /> }
           </a>
           { year }
         </h1>

@@ -1,4 +1,3 @@
-import { mdiCallSplit, mdiCancel, mdiContentSave } from "@mdi/js";
 import { Card } from "primereact/card";
 import React, { useCallback, useEffect, useState } from "react";
 import { NavigateFunction, useNavigate, useParams, useRouteLoaderData } from "react-router";
@@ -90,7 +89,7 @@ const TransactionForm = () => {
       .catch(console.error)
   }
 
-  const header = () => <div className='px-2 py-2 border-b-1 text-center font-bold'>
+  const header = () => <div className='px-2 py-2 border-b text-center font-bold'>
     { i10n('page.transactions.add') }
   </div>
   const backendType = Resolver.Account.convertToBackendType(type)
@@ -118,14 +117,14 @@ const TransactionForm = () => {
             <Button label='page.transaction.action.split'
                     className='w-auto md:w-xl px-auto'
                     outlined={ true }
-                    icon={ mdiCallSplit }
+                    icon={ 'mdi:call-split' }
                     onClick={ initialSplit }/>
           </fieldset>
         </> }
 
         <div className='flex justify-end gap-2 mt-4'>
-          <BackButton label='common.action.cancel' icon={ mdiCancel }/>
-          <SubmitButton label='common.action.save' icon={ mdiContentSave }/>
+          <BackButton label='common.action.cancel' icon={ 'mdi:cancel' }/>
+          <SubmitButton label='common.action.save' icon={ 'mdi:content-save' }/>
         </div>
       </Form>
     </Card>

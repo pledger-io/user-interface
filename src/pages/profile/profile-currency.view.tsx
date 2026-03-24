@@ -1,4 +1,3 @@
-import { mdiContentSave } from "@mdi/js";
 import React, { useEffect, useState } from "react";
 import { Form, Input, SubmitButton } from "../../components/form";
 import Loading from "../../components/layout/loading.component";
@@ -37,7 +36,7 @@ const ProfileCurrencyView = () => {
                    value={ current }/>
 
       <SubmitButton label='common.action.save'
-                    icon={ mdiContentSave }/>
+                    icon={ 'mdi:content-save' }/>
     </Form> }
   </>
 }

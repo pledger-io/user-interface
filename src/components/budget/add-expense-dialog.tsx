@@ -1,4 +1,3 @@
-import { mdiCancel, mdiContentSave, mdiPlus } from "@mdi/js";
 import { Dialog } from "primereact/dialog";
 import React, { useState } from "react";
 import { i10n } from "../../config/prime-locale";
@@ -25,7 +24,7 @@ export const AddExpenseDialog = ({ onChange }: { onChange: () => void }) => {
   }
 
   return <>
-    <Button severity='success' label='page.budget.group.action.addExpense' icon={ mdiPlus }
+    <Button severity='success' label='page.budget.group.action.addExpense' icon={ 'mdi:plus' }
             onClick={ () => setVisible(true) }/>
     <Dialog header={ i10n('page.title.budget.group.expense.add') }
             visible={ visible }
@@ -44,8 +43,8 @@ export const AddExpenseDialog = ({ onChange }: { onChange: () => void }) => {
           <Button type='reset'
                   text
                   onClick={ () => setVisible(false) }
-                  label='common.action.cancel' icon={ mdiCancel }/>
-          <SubmitButton label='common.action.save' icon={ mdiContentSave }/>
+                  label='common.action.cancel' icon={ 'mdi:cancel' }/>
+          <SubmitButton label='common.action.save' icon={ 'mdi:content-save' }/>
         </div>
       </Form>
 

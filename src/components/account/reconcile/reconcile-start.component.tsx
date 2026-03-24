@@ -1,4 +1,3 @@
-import { mdiCancel, mdiContentSave } from "@mdi/js";
 import React, { FC, useImperativeHandle } from "react";
 import { useNotification } from "../../../context/notification-context";
 import AccountRepository from "../../../core/repositories/account-repository";
@@ -67,9 +66,9 @@ const ReconcileStartComponent: FC<ReconcileStartProps> = ({ ref, account, afterC
                 severity='secondary'
                 type='reset'
                 onClick={ () => setVisible(false) }
-                icon={ mdiCancel }/>
+                icon={ 'mdi:cancel' }/>
         <SubmitButton label='common.action.save'
-                      icon={ mdiContentSave }
+                      icon={ 'mdi:content-save' }
                       data-testid={ `reconcile-submit-button-${ account.id }` }/>
       </div>
     </Form>

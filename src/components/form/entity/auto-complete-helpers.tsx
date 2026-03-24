@@ -1,5 +1,4 @@
-import { mdiPlus } from "@mdi/js";
-import Icon from "@mdi/react";
+import { Icon } from "@iconify-icon/react";
 import { AutoCompleteChangeEvent } from "primereact/autocomplete";
 import React from "react";
 import { i10n } from "../../../config/prime-locale";
@@ -21,7 +20,7 @@ export function autoCompleteFooter(onCreate: () => void, label: string) {
          onClick={ onCreate }
          data-testid='autocomplete-input-create'>
       <span className='mx-auto inline-flex'>
-        <Icon path={ mdiPlus } size={ 1 }/>
+        <Icon icon={ 'mdi:plus' } size={ 1 }/>
         { i10n(label) }
       </span>
     </div>

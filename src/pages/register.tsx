@@ -1,5 +1,4 @@
-import { mdiAccountPlus, mdiLogin, mdiWeb } from "@mdi/js";
-import Icon from "@mdi/react";
+import { Icon } from "@iconify-icon/react";
 import { PrimeReactProvider } from "primereact/api";
 import { Card } from "primereact/card";
 import { Divider } from "primereact/divider";
@@ -44,7 +43,7 @@ const Register = () => {
     <button type='button' className="cursor-pointer z-10 p-2 hover:bg-gray-100 rounded-full transition-all"
             onClick={ (e) => configMenu?.current?.toggle(e) }
             role='button'>
-      <Icon path={ mdiWeb } size={ 1 }/>
+      <Icon icon={ 'mdi:web' } size={ 1 }/>
     </button>
   </div>
 
@@ -68,7 +67,7 @@ const Register = () => {
         <div className='flex pt-3 items-stretch'>
           <SubmitButton key='login'
                         className='w-full p-button-lg'
-                        label='page.register.register' icon={ mdiAccountPlus }/>
+                        label='page.register.register' icon={ 'mdi:register' }/>
         </div>
       </Form>
 
@@ -78,7 +77,7 @@ const Register = () => {
 
       <div className='flex justify-center mt-3'>
         <Link to={ `/login?from=${ from }` } className='p-button p-button-info p-button-outlined p-button-lg flex gap-2 items-center w-full justify-center'>
-          <Icon path={ mdiLogin } size={ 1 }/>
+          <Icon icon={ 'mdi:login' } size={ 1 }/>
           { i10n('page.register.login') }
         </Link>
       </div>

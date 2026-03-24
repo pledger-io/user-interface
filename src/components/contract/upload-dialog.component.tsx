@@ -1,4 +1,3 @@
-import { mdiCancel, mdiContentSaveSettings } from "@mdi/js";
 import { Dialog } from "primereact/dialog";
 import { Message } from "primereact/message";
 import React, { FC, Ref, useImperativeHandle, useState } from "react";
@@ -74,11 +73,11 @@ const _: FC<UploadContractProps> = ({ ref, id, onChanges }) => {
                   severity='secondary'
                   text
                   onClick={ () => setVisible(false) }
-                  icon={ mdiCancel }/>
+                  icon={ 'mdi:cancel' }/>
           <SubmitButton key='save-btn'
                         disabled={ !attachment }
                         label='common.action.save'
-                        icon={ mdiContentSaveSettings }/>
+                        icon={ 'mdi:content-save-settings' }/>
         </div>
       </Form>
 

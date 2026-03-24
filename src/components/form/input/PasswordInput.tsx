@@ -1,7 +1,6 @@
+import { Icon } from "@iconify-icon/react";
 import { InputIcon } from "primereact/inputicon";
 import React, { FC } from "react";
-import Icon from "@mdi/react";
-import { mdiAlertCircle, mdiCheck } from "@mdi/js";
 import { useInputField } from "./InputGroup";
 import { FieldType, ValidatorType } from "../form-types";
 import { i10n } from "../../../config/prime-locale";
@@ -58,8 +57,8 @@ export const PasswordInput: FC<PasswordInputProps> = (props) => {
         return <div key={ rule.label }
                     className={ `flex gap-2
                                             ${ invalid ? 'text-dark-warning' : 'text-dark-success' }` }>
-          { invalid && <Icon path={ mdiAlertCircle } size={ .8 } className='mt-0.5'/> }
-          { !invalid && <Icon path={ mdiCheck } size={ .8 } className='mt-0.5'/> }
+          { invalid && <Icon icon={ 'mdi:alert-circle' } size={ .8 } className='mt-0.5'/> }
+          { !invalid && <Icon icon={ 'mdi:check' } size={ .8 } className='mt-0.5'/> }
           { i10n(rule.label) }
         </div>
       }) }

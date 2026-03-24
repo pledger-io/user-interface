@@ -1,5 +1,4 @@
-import { mdiBagChecked, mdiCheck, mdiDotsVertical, mdiSquareEditOutline, mdiTrashCanOutline } from "@mdi/js";
-import Icon from "@mdi/react";
+import { Icon } from "@iconify-icon/react";
 import { Menu } from "primereact/menu";
 import { MenuItem } from "primereact/menuitem";
 import React, { FC, useEffect, useRef, useState } from "react";
@@ -39,13 +38,13 @@ const OwnAccountMenu: FC<OwnAccountMenuProps> = ({ account, callback }) => {
   let reconcileOption: MenuItem = {}
   if (reconcileActivity && reconcileActivity.length > 0) {
     reconcileOption = {
-      icon: () => <Icon path={ mdiCheck } size={ 1 }/>,
+      icon: () => <Icon icon={ 'mdi:check' } size={ 1 }/>,
       label: i10n('page.accounts.reconcile.active'),
       command: () => reconcileOverviewRef.current.open()
     }
   } else if (reconcileActivity) {
     reconcileOption = {
-      icon: () => <Icon path={ mdiBagChecked } size={ 1 }/>,
+      icon: () => <Icon icon={ 'mdi:bag-checked' } size={ 1 }/>,
       label: i10n('page.reports.default.reconcile'),
       command: () => reconcileStartRef.current.open()
     }
@@ -53,14 +52,14 @@ const OwnAccountMenu: FC<OwnAccountMenuProps> = ({ account, callback }) => {
 
   const menuOptions = [
     {
-      icon: () => <Icon path={ mdiSquareEditOutline } size={ 1 }/>,
+      icon: () => <Icon icon={ 'mdi:square-edit-outline' } size={ 1 }/>,
       label: i10n('common.action.edit'),
       command() {
         navigate(`/accounts/own/${ account.id }/edit`)
       }
     },
     {
-      icon: () => <Icon path={ mdiTrashCanOutline } size={ 1 }/>,
+      icon: () => <Icon icon={ 'mdi:trash-can-outline' } size={ 1 }/>,
       label: i10n('common.action.delete'),
       className: '[&>div>a]:!text-red-600 [&>div>a>.p-menuitem-text]:!text-red-600',
       command() {
@@ -83,7 +82,7 @@ const OwnAccountMenu: FC<OwnAccountMenuProps> = ({ account, callback }) => {
 
   return <>
     <Menu popup popupAlignment='right' ref={ actionMenu } model={ menuOptions }/>
-    <Button icon={ mdiDotsVertical }
+    <Button icon={ 'mdi:dots-vertical' }
             text
             className='p-0!'
             onClick={ (event) => actionMenu?.current?.toggle(event) }

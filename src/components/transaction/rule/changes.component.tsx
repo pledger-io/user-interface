@@ -1,4 +1,3 @@
-import { mdiPlusBox } from "@mdi/js";
 import React from "react";
 import { Resolver } from "../../../core";
 import { RuleChange, RuleCondition } from "../../../types/types";
@@ -63,7 +62,7 @@ const ChangesComponent = (props: any) => {
             size='small'
             severity='secondary'
             onClick={ onAddChange }
-            icon={ mdiPlusBox }/>
+            icon={ 'mdi:plus-box' }/>
   </>
 }
 

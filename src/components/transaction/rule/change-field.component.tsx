@@ -1,4 +1,3 @@
-import { mdiDelete } from "@mdi/js";
 import { Dropdown } from "primereact/dropdown";
 import { SelectItem } from "primereact/selectitem";
 import React, { useEffect, useState } from "react";
@@ -6,7 +5,6 @@ import { i10n } from "../../../config/prime-locale";
 import { Account, BudgetExpense, Category, Contract, RuleChange } from "../../../types/types";
 import { Entity, Input } from "../../form";
 import { Button } from "../../layout/button";
-import Loading from "../../layout/loading.component";
 import { lookup_entity } from "../../lookup-name.util";
 
 export type ChangeProperty = keyof RuleChange
@@ -46,7 +44,7 @@ const ChangeFieldComponent = (props: {
       <Dropdown id={ `chang_${ change.uuid }_field` }
                 options={ selectOptions }
                 value={ change.field }
-                className='w-[15rem]'
+                className='w-60'
                 onChange={ event => onValueChange(change.uuid, 'field', event.value)} />
 
       { (change.field === 'CHANGE_TRANSFER_TO' || change.field === 'CHANGE_TRANSFER_FROM')
@@ -104,7 +102,7 @@ const ChangeFieldComponent = (props: {
                        className='m-0! flex-1 [&>label]:hidden!'
                        onChange={ (value: string[]) => onValueChange(change.uuid, 'change', value.join(",")) }/> }
 
-      { change.uuid && <Button icon={ mdiDelete }
+      { change.uuid && <Button icon={ 'mdi:delete' }
                                type='button'
                                text
                                onClick={ () => onChangeDelete(change) }

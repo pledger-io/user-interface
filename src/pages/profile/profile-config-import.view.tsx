@@ -1,5 +1,4 @@
-import { mdiCheckDecagram, mdiCloudUploadOutline, mdiPlus } from "@mdi/js";
-import Icon from "@mdi/react";
+import { Icon } from "@iconify-icon/react";
 import { FileUpload, FileUploadHandlerEvent } from "primereact/fileupload";
 import { Message } from "primereact/message";
 import React, { FC, useState } from "react";
@@ -20,7 +19,7 @@ const headerTemplate = (props: any) => {
 const EmptyTemplate: FC<{text: string}> = ({ text }) => {
   return <>
     <div className="flex items-center flex-col text-muted">
-      <Icon path={ mdiCloudUploadOutline } size={ 5 } className='bg-(--surface-b) rounded-full p-5'/>
+      <Icon icon={ 'mdi:cloud-upload-outline' } width='10em' className='bg-(--surface-b) rounded-full p-5'/>
       <span className='text-lg'>{ i10n(text) }</span>
     </div>
   </>
@@ -54,8 +53,8 @@ const ProfileConfigImportView = () => {
                     customUpload={ true}
                     uploadHandler={ onUpload }
                     headerTemplate={ headerTemplate }
-                    uploadOptions={ { label: i10n('page.title.user.profile.import'), iconOnly: false, icon: () => <Icon path={ mdiCloudUploadOutline } size={ 1 }/>, className: 'p-button-outlined p-button-rounded' } }
-                    chooseOptions={ { label: i10n('page.title.user.profile.import'), iconOnly: true, icon: () => <Icon path={ mdiPlus } size={ 1 }/>, className: 'p-button-outlined p-button-rounded' } }
+                    uploadOptions={ { label: i10n('page.title.user.profile.import'), iconOnly: false, icon: () => <Icon icon={ 'mdi:cloud-upload-outline' }/>, className: 'p-button-outlined p-button-rounded' } }
+                    chooseOptions={ { label: i10n('page.title.user.profile.import'), iconOnly: true, icon: () => <Icon icon={ 'mdi:plus' }/>, className: 'p-button-outlined p-button-rounded' } }
                     emptyTemplate={ <EmptyTemplate text={ 'page.title.user.profile.import' } /> }
                     accept='application/json'/>
       </div>
@@ -64,8 +63,7 @@ const ProfileConfigImportView = () => {
     { importing &&
       <div className='mt-2 flex justify-center'>
         <span>
-            <Icon path={ mdiCheckDecagram }
-                  size={ 1 }
+            <Icon icon={ 'mdi:check-decagram' }
                   className='text-green-500 mr-2'/>
         </span>
         { i10n('common.upload.file.success') }

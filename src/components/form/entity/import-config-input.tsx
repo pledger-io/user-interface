@@ -8,7 +8,6 @@ import { i10n } from "../../../config/prime-locale";
 import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
 import { Dialog } from "primereact/dialog";
 import { Button } from "../../layout/button";
-import { mdiCancel, mdiContentSave, mdiPlus } from "@mdi/js";
 import { Form } from "../Form";
 import { SelectInput } from "../input/SelectInput";
 import { TextInput } from "../input/TextInput";
@@ -60,7 +59,7 @@ const ImportConfigInput = (props: Readonly<ImportConfigInputProps>) => {
                   optionValue='name'
                   optionLabel='name'
                   invalid={ field.touched ? errors.length > 0 : undefined }/>
-        <Button icon={ mdiPlus }
+        <Button icon={ 'mdi:plus' }
                 severity='info'
                 type='button'
                 onClick={ () => dialogRef.current?.open() }
@@ -119,9 +118,9 @@ const UploadConfigDialog = ({ ref, callback }: { ref: Ref<DialogOptions>, callba
                   severity='secondary'
                   type='reset'
                   onClick={ () => setVisible(false) }
-                  icon={ mdiCancel }/>
+                  icon={ 'mdi:cancel' }/>
           <SubmitButton label='common.action.save'
-                        icon={ mdiContentSave }
+                        icon={ 'mdi:content-save' }
                         disabled={ !uploadToken }
                         data-testid={ `import-config-submit-button` }/>
         </div>

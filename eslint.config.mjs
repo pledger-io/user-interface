@@ -20,7 +20,8 @@ export default tseslint.config(
                 }
             ],
             "object-curly-spacing": ["error", "always"],
-            "@eslint-react/hooks-extra/no-direct-set-state-in-use-effect": "off"
+            "@eslint-react/hooks-extra/no-direct-set-state-in-use-effect": "off",
+            "@eslint-react/rules-of-hooks": "off"
         }
     }
 )

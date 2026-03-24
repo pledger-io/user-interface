@@ -2,7 +2,6 @@ import React, { FC } from "react";
 import { i10n } from "../../config/prime-locale";
 import { Identifiable } from "../../types/types";
 import { Entity, Form, Input } from "../form";
-import { mdiFilter } from "@mdi/js";
 import { Button } from "../layout/button";
 
 export type TransactionFilter = {
@@ -39,7 +38,7 @@ const TransactionFilters: FC<TransactionFiltersProps> = ({ onChange, activeFilte
 
   return <div className='max-w-[90em] mx-auto my-4 hidden md:block'>
     <Form entity='Transaction' onSubmit={ onSubmit }>
-      <fieldset className='border-solid! border-[1px]! border-separator!'>
+      <fieldset className='border-solid! border! border-separator!'>
         <legend className='text-xl font-normal px-2'>{ i10n('page.transactions.filter') }</legend>
 
         <div className='flex px-2 gap-2'>
@@ -82,7 +81,7 @@ const TransactionFilters: FC<TransactionFiltersProps> = ({ onChange, activeFilte
           <Button type='submit'
                   label='page.transactions.filter'
                   outlined={ true }
-                  icon={ mdiFilter }
+                  icon={ 'mdi:filter' }
                   severity='secondary' />
         </div>
       </fieldset>

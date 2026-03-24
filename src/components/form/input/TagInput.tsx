@@ -1,5 +1,4 @@
-import { mdiPlus } from "@mdi/js";
-import Icon from "@mdi/react";
+import { Icon } from "@iconify-icon/react";
 import { AutoComplete, AutoCompleteChangeEvent } from "primereact/autocomplete";
 import React, { useRef, useState } from "react";
 import { i10n } from "../../../config/prime-locale.js";
@@ -39,7 +38,7 @@ export const TagInput = (props: any) => {
     return <>
       <div className='bg-gray-500/30 py-0.5 text-center cursor-pointer' onClick={ onCreate }>
         <span className='mx-auto inline-flex'>
-          <Icon path={mdiPlus} size={1}/>
+          <Icon icon={ 'mdi-plus' } size={1}/>
           Create new tag
         </span>
       </div>
@@ -53,7 +52,7 @@ export const TagInput = (props: any) => {
       <AutoComplete id={ props.id }
                     ref={ autoCompleteRef }
                     multiple={ true }
-                    className='w-full [&>*]:w-full'
+                    className='w-full *:w-full'
                     showEmptyMessage={ true }
                     emptyMessage={ i10n('common.overview.noresults') }
                     invalid={ field.touched ? errors.length > 0 : undefined }

@@ -1,5 +1,4 @@
-import { mdiHelpCircleOutline } from "@mdi/js";
-import Icon from "@mdi/react";
+import { Icon } from "@iconify-icon/react";
 import { Button } from "primereact/button";
 import React from "react";
 import { i10n } from "../../../config/prime-locale";
@@ -25,7 +24,7 @@ const SavingSummaryComponent = ({ savingAccount }: { savingAccount: Account }) =
         <td className='flex gap-5 justify-between font-bold items-center'>
           { i10n('page.accounts.saving.amount.current') }
           <Button text
-                  icon={ () => <Icon path={ mdiHelpCircleOutline } size={ 1 }/> }
+                  icon={ () => <Icon icon={ 'mdi:help-circle-outline' }/> }
                   tooltip={ i10n('page.accounts.saving.amount.current.help') }/>
         </td>
         <td className='pl-3'><BalanceComponent accounts={ [savingAccount.id] }/></td>
@@ -34,7 +33,7 @@ const SavingSummaryComponent = ({ savingAccount }: { savingAccount: Account }) =
         <td className='flex gap-5 justify-between font-bold items-center'>
           { i10n('page.accounts.saving.amount.required') }
           <Button text
-                  icon={ () => <Icon path={ mdiHelpCircleOutline } size={ 1 }/> }
+                  icon={ () => <Icon icon={ 'mdi:help-circle-outline' }/> }
                   tooltip={ i10n('page.accounts.saving.amount.required.help') }/>
         </td>
         <td className='pl-3'><MoneyComponent money={ requiredSavings }
@@ -44,7 +43,7 @@ const SavingSummaryComponent = ({ savingAccount }: { savingAccount: Account }) =
         <td className='flex gap-5 justify-between font-bold items-center'>
           { i10n('page.account.saving.suggestedSaving') }
           <Button text
-                  icon={ () => <Icon path={ mdiHelpCircleOutline } size={ 1 }/> }
+                  icon={ () => <Icon icon={ 'mdi:help-circle-outline' }/> }
                   tooltip={ i10n('page.account.saving.suggestedSaving.help') }/>
         </td>
         <td className='pl-3'><MoneyComponent money={ suggestedMonthlySaving }

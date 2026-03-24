@@ -1,6 +1,5 @@
 import React from "react";
 import { useLoaderData, useNavigate, useParams } from "react-router";
-import { mdiCancel, mdiContentSave } from "@mdi/js";
 import { Entity, Form, Input, SubmitButton } from "../../components/form";
 import { useNotification } from "../../context/notification-context";
 import ContractRepository from "../../core/repositories/contract-repository";
@@ -31,7 +30,7 @@ const ContractEdit = () => {
     }
   }
 
-  const header = () => <div className='px-2 py-2 border-b-1 text-center font-bold'>
+  const header = () => <div className='px-2 py-2 border-b text-center font-bold'>
     { i10n(!id ? 'page.budget.contracts.add' : 'page.budget.contracts.edit') }
   </div>
 
@@ -74,8 +73,8 @@ const ContractEdit = () => {
                         title='Contract.description'/>
 
         <div className='flex justify-end gap-2 mt-4'>
-          <BackButton label='common.action.cancel' icon={ mdiCancel }/>
-          <SubmitButton label='common.action.save' icon={ mdiContentSave }/>
+          <BackButton label='common.action.cancel' icon={ 'mdi:cancel' }/>
+          <SubmitButton label='common.action.save' icon={ 'mdi:content-save' }/>
         </div>
       </Form>
     </Card>

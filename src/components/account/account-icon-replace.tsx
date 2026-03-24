@@ -1,10 +1,8 @@
-import { mdiCancel, mdiImageRefreshOutline } from "@mdi/js";
-import Icon from "@mdi/react";
-import React, { FC, useEffect, useState } from "react";
+import { Icon } from "@iconify-icon/react";
+import React, { FC, useState } from "react";
 import ImageAttachment from "../../core/attachment/image-attachment";
 import UploadAttachment from "../../core/attachment/upload-component";
-import AccountRepository from "../../core/repositories/account-repository";
-import { Account, Attachment, Identifier } from "../../types/types";
+import {  Attachment } from "../../types/types";
 import { Button } from "../layout/button";
 
 type AccountIconReplaceProps = {
@@ -19,7 +17,7 @@ export const AccountIconReplace: FC<AccountIconReplaceProps> = ({ account, onCha
   const [ upload, setUpload ] = useState<boolean>(false)
 
   if (!account?.name) return <>
-    <Icon path={ mdiCancel } size={8} className='text-gray-500/20 mx-auto'/>
+    <Icon icon={ 'mdi:cancel' } width='16em' className='text-gray-500/20 mx-auto'/>
   </>;
 
   const afterUpload = (attachment: Attachment) => {
@@ -37,7 +35,7 @@ export const AccountIconReplace: FC<AccountIconReplaceProps> = ({ account, onCha
     { !showUpload &&
       <div className='flex flex-col items-center justify-center h-full'>
         <ImageAttachment fileCode={ account.imageIcon } />
-        <Button icon={ mdiImageRefreshOutline }
+        <Button icon={ 'mdi:image-refresh-outline' }
                 onClick={ () => setUpload(true) }
                 label='page.accounts.accounts.changeIcon'
                 text/>

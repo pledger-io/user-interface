@@ -1,9 +1,8 @@
-import Icon from "@mdi/react";
+import { Icon } from "@iconify-icon/react";
 import { Calendar } from "primereact/calendar";
 import { OverlayPanel } from "primereact/overlaypanel";
 import { useRef } from "react";
 import { i10n } from "../../../config/prime-locale";
-import { mdiMenuDown } from "@mdi/js";
 
 type MonthYearDropdownProps = {
   // The preselected year and month of the dropdown
@@ -37,21 +36,21 @@ const MonthYearDropdown = ({ selected: { year, month }, onChange }: MonthYearDro
       <div className='flex gap-2 justify-end relative'>
         <a onClick={ event => monthPickerRef.current?.toggle(event) } className='flex items-center cursor-pointer'>
           { i10n('common.month.' + month) }
-          <Icon path={ mdiMenuDown } size={ 1 }/>
+          <Icon icon={ 'mdi-menu-down' } size={ 1 }/>
         </a>
         <a onClick={ e => yearPickerRef.current?.toggle(e) } className='flex items-center cursor-pointer'>
           { year }
-          <Icon path={ mdiMenuDown } size={ 1 }/>
+          <Icon icon={ 'mdi-menu-down' } size={ 1 }/>
         </a>
 
-        <OverlayPanel ref={ monthPickerRef } className='min-w-[15rem] [&>.p-overlaypanel-content]:p-0!'>
+        <OverlayPanel ref={ monthPickerRef } className='min-w-60 [&>.p-overlaypanel-content]:p-0!'>
           <Calendar view='month' inputClassName='hidden'
                     className='w-full'
                     value={ selectedDate }
                     onChange={ event => onMonthSelect(event.value) } inline/>
         </OverlayPanel>
 
-        <OverlayPanel ref={ yearPickerRef } className='min-w-[15rem] [&>.p-overlaypanel-content]:p-0!'>
+        <OverlayPanel ref={ yearPickerRef } className='min-w-60 [&>.p-overlaypanel-content]:p-0!'>
           <Calendar view='year' inputClassName='hidden'
                     className='w-full'
                     value={ selectedDate }

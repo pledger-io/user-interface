@@ -1,4 +1,3 @@
-import { mdiCancel, mdiContentSaveSettings, mdiDelete, mdiHammer, mdiRedo } from "@mdi/js";
 import { Dialog } from "primereact/dialog";
 import React, { FC, Ref, useImperativeHandle, useRef } from "react";
 import { i10n } from "../../../config/prime-locale";
@@ -69,8 +68,8 @@ const ReconcilePreviousYearComponent: FC<ReconcilePreviousYearProps> = ({
                 severity='secondary'
                 text
                 onClick={ () => setVisible(false) }
-                icon={ mdiCancel }/>
-        <SubmitButton key='save-btn' label='common.action.save' icon={ mdiContentSaveSettings }/>
+                icon={ 'mdi:cancel' }/>
+        <SubmitButton key='save-btn' label='common.action.save' icon={ 'mdi:content-save-settings' }/>
       </div>
     </Form>
   </Dialog>
@@ -106,21 +105,21 @@ const ReconcileRowComponent = ({ process, onRemoved, accountId }: { process: Acc
                                       accountId={ accountId }
                                       onComplete={ onRemoved }/>
       <Button
-        icon={ mdiHammer }
+        icon={ 'mdi:hammer' }
         outlined
         severity='info'
         className='p-0.5!'
         onClick={ () => previousYearRef?.current?.open() }
         data-testid={ `previous-year-button-${ process.period }` }/>
       <Button
-        icon={ mdiRedo }
+        icon={ 'mdi:redo' }
         outlined
         severity='success'
         className='p-0.5!'
         onClick={ onRetry }
         data-testid={ `retry-button-${ process.period }` }/>
       <Button
-        icon={ mdiDelete }
+        icon={ 'mdi:delete' }
         outlined
         severity='warning'
         className='p-0.5! mr-2'

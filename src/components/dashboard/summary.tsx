@@ -1,6 +1,5 @@
 import DateRange from "../../types/date-range.type";
 import SummaryComponent from "./summary-component";
-import { mdiAbacus, mdiContactlessPaymentCircle, mdiScaleBalance, mdiSwapVerticalCircle } from "@mdi/js";
 import React from "react";
 import StatisticalRepository, { BalanceRequestFilter } from "../../core/repositories/statistical-repository";
 
@@ -21,7 +20,7 @@ const Summary = ({ range, compareRange }: SummaryProps) => {
         <div className="flex-1 flex-wrap flex gap-2">
             <SummaryComponent
                 title='page.dashboard.income'
-                icon={ mdiSwapVerticalCircle }
+                icon={ 'mdi:swap-vertical-circle' }
                 currentPromise={
                     StatisticalRepository.balance({ ...baseCommand, type: 'INCOME' })
                         .then(({ balance }) => balance)
@@ -34,7 +33,7 @@ const Summary = ({ range, compareRange }: SummaryProps) => {
 
             <SummaryComponent
                 title='page.dashboard.expense'
-                icon={ mdiContactlessPaymentCircle }
+                icon={ 'mdi:contactless-payment-circle' }
                 currentPromise={
                     StatisticalRepository.balance({ ...baseCommand, type: 'EXPENSE' })
                         .then(({ balance }) => Math.abs(balance))
@@ -49,7 +48,7 @@ const Summary = ({ range, compareRange }: SummaryProps) => {
         <div className="flex-1 flex-wrap flex gap-2">
             <SummaryComponent
                 title='page.dashboard.balance'
-                icon={ mdiScaleBalance }
+                icon={ 'mdi:scale-balance' }
                 currentPromise={
                     StatisticalRepository.balance({
                         range: { startDate: '1970-01-01', endDate: range.endString() },
@@ -69,7 +68,7 @@ const Summary = ({ range, compareRange }: SummaryProps) => {
             <SummaryComponent
                 title='page.dashboard.budget'
                 currency='EUR'
-                icon={ mdiAbacus }/>
+                icon={ 'mdi:abacus' }/>
         </div>
     </div>
 }

@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React from "react";
-import { mdiDelete, mdiTablePlus } from "@mdi/js";
 import { FormContext } from "../Form";
 import { Button } from "../../layout/button";
 import { Resolver } from "../../../core";
@@ -103,8 +102,8 @@ export class ComplexTypeInput extends React.Component {
     return <table className='w-full'>
       {headers && <thead>
       <tr>
-        {headers.map(header => <th key={header} className='font-bold p-3 text-left border-b-1'>{ i10n(header) }</th>)}
-        <th className='font-bold p-3 text-left border-b-1 w-[1rem]'/>
+        {headers.map(header => <th key={header} className='font-bold p-3 text-left border-b'>{ i10n(header) }</th>)}
+        <th className='font-bold p-3 text-left border-b w-4'/>
       </tr>
       </thead>}
       <tbody>
@@ -115,7 +114,7 @@ export class ComplexTypeInput extends React.Component {
           <td>
             <Button
               type='button'
-              icon={mdiDelete}
+              icon={ 'mdi:delete' }
               onClick={() => this.removeEntity(entity)}
               severity='warning'
               outlined={ true} />
@@ -127,7 +126,7 @@ export class ComplexTypeInput extends React.Component {
         <td colSpan={headers.length + 1} className='text-right'>
           <Button
             type='button'
-            icon={mdiTablePlus}
+            icon={ 'mdi:table-plus' }
             onClick={() => this.addEntity()}
             outlined={ true }
             className='primary'/>

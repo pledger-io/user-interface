@@ -1,4 +1,3 @@
-import { mdiRadar } from "@mdi/js";
 import React, { useEffect, useState } from "react";
 import { Resolver } from "../../core";
 import { groupTransactionByYear, YearlyTransactions } from "../../reducers";
@@ -44,7 +43,7 @@ const ImportJobTransactionComponent = ({ batchId, slug }: { batchId: number, slu
               className='mb-2'
               severity='info'
               size='small'
-              icon={ mdiRadar }
+              icon={ 'mdi:radar' }
               label='page.settings.import.details.transactions.rules.run'/>
     </div>
 

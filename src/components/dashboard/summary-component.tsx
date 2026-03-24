@@ -1,4 +1,4 @@
-import Icon from "@mdi/react";
+import { Icon } from "@iconify-icon/react";
 import { Card } from "primereact/card";
 import React, { FC, useEffect, useState } from "react";
 import MoneyComponent from "../format/money.component";
@@ -51,7 +51,7 @@ const SummaryComponent: FC<SummaryComponentProps> = ({ title, icon, currency, cu
 
   return <Card className='flex-1 my-0!'>
     <div className='flex flex-row justify-between'>
-      <div className='min-w-[100px] min-h-[125px]'>
+      <div className='min-w-25 min-h-31.25'>
         <h1 className='text-2xl'>
           { i10n(title) }
         </h1>
@@ -61,7 +61,7 @@ const SummaryComponent: FC<SummaryComponentProps> = ({ title, icon, currency, cu
         { previous !== null && (
           <div className={ `
                             bg-no-repeat flex items-center mt-2
-                            whitespace-nowrap bg-left-bottom
+                            whitespace-nowrap bg-bottom-left
                             text-sm` }
                style={ { lineHeight: '1.5rem' } }>
             <img src={ ComparisonData[comparisonClass].icon } className='w-8 h-8 mr-1' alt={ comparisonClass }/>
@@ -69,7 +69,7 @@ const SummaryComponent: FC<SummaryComponentProps> = ({ title, icon, currency, cu
           </div>
         ) }
       </div>
-      { icon && <Icon path={ icon } className='w-[125px]'/> }
+      { icon && <Icon icon={ icon } width={ 125 } /> }
     </div>
   </Card>
 }

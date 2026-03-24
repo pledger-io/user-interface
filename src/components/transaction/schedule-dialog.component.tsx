@@ -1,4 +1,3 @@
-import { mdiCancel, mdiContentSave } from "@mdi/js";
 import { Dialog } from "primereact/dialog";
 import { Message } from "primereact/message";
 import React, { Attributes, FC, Ref, useImperativeHandle, useState } from "react";
@@ -58,7 +57,7 @@ const ScheduleTransactionDialog: FC<ScheduleTransactionDialogProps> = ({ ref, tr
   return (
     <Dialog header={ i10n('page.title.schedule.transaction.add') }
             onHide={ () => setVisible(false) }
-            className='max-w-[35rem]'
+            className='max-w-140'
             visible={ visible }>
       <Form onSubmit={ onSubmit } entity='ScheduledTransaction'>
         <Message text={ i10n('page.budget.schedule.explained') } severity='info'/>
@@ -136,9 +135,9 @@ const ScheduleTransactionDialog: FC<ScheduleTransactionDialogProps> = ({ ref, tr
                   type='reset'
                   severity='secondary'
                   onClick={ () => setVisible(false) }
-                  icon={ mdiCancel }/>
+                  icon={ 'mdi:cancel' }/>
           <SubmitButton label='common.action.save'
-                        icon={ mdiContentSave }
+                        icon={ 'mdi:content-save' }
                         data-testid={ `schedule-transaction-submit-${ transaction?.id || 1 }` }/>
         </div>
       </Form>

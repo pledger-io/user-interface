@@ -1,5 +1,4 @@
-import { mdiDotsVertical, mdiSquareEditOutline, mdiTrashCanOutline } from "@mdi/js";
-import Icon from "@mdi/react";
+import { Icon } from "@iconify-icon/react";
 import { confirmDialog } from "primereact/confirmdialog";
 import { Menu } from "primereact/menu";
 import { MenuItem } from "primereact/menuitem";
@@ -27,14 +26,14 @@ const ScheduleTransactionMenu: FC<AccountMenuProps> = ({ schedule, callback }) =
 
   const menuOptions = [
     {
-      icon: () => <Icon path={ mdiSquareEditOutline } size={ 1 }/>,
+      icon: () => <Icon icon={ 'mdi:square-edit-outline' }/>,
       label: i10n('common.action.edit'),
       command() {
         navigate(`./${ schedule.id }/edit`)
       }
     },
     {
-      icon: () => <Icon path={ mdiTrashCanOutline } size={ 1 }/>,
+      icon: () => <Icon icon={ 'mdi:trash-can-outline' }/>,
       label: i10n('common.action.delete'),
       className: '[&>div>a]:!text-red-600 [&>div>a>.p-menuitem-text]:!text-red-600',
       command() {
@@ -56,9 +55,9 @@ const ScheduleTransactionMenu: FC<AccountMenuProps> = ({ schedule, callback }) =
 
   return <>
     <Menu popup popupAlignment='right' ref={ actionMenu } model={ menuOptions }/>
-    <Button icon={ mdiDotsVertical }
+    <Button icon={ 'mdi:dots-vertical' }
             outlined={ true }
-            className='!border-none'
+            className='border-none!'
             onClick={ (event) => actionMenu?.current?.toggle(event) }
             aria-controls="popup_menu_right" aria-haspopup/>
   </>

@@ -1,4 +1,3 @@
-import { mdiContentSave } from "@mdi/js";
 import React from "react";
 import { useRouteLoaderData } from "react-router";
 import { Form, Input, SubmitButton } from "../../components/form";
@@ -35,7 +34,7 @@ const ProfileThemeView = () => {
                    value={ currentTheme }/>
 
       <SubmitButton label='common.action.save'
-                    icon={ mdiContentSave }/>
+                    icon={ 'mdi:content-save' }/>
     </Form>
   </>
 }

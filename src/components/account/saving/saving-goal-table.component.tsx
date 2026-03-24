@@ -1,5 +1,4 @@
-import { mdiDotsVertical, mdiPencilBoxOutline, mdiPlusBox, mdiSquareEditOutline, mdiTrashCanOutline } from "@mdi/js";
-import Icon from "@mdi/react";
+import { Icon } from "@iconify-icon/react";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { Menu } from "primereact/menu";
@@ -31,8 +30,8 @@ const SavedSoFarColumn: FC<SavedSoFarColumnProps> = ({ savingGoal, account, onUp
   const addReservationRef = useRef<DialogOptions>(null)
 
   return <div className='flex items-center'>
-    <ProgressBar value={ savingGoal.reserved / savingGoal.goal } className='flex-grow'/>
-    <Button icon={ mdiPlusBox } severity='help' text size='small' onClick={ () => addReservationRef.current?.open() }/>
+    <ProgressBar value={ savingGoal.reserved / savingGoal.goal } className='grow'/>
+    <Button icon={ 'mdi:plus-box' } severity='help' text size='small' onClick={ () => addReservationRef.current?.open() }/>
     <ReserveToGoalComponent account={ account }
                             savingGoal={ savingGoal }
                             onChanged={ onUpdated }
@@ -52,12 +51,12 @@ const SavingActionMenu: FC<SavingActionMenuProps> = ({ account, savingGoal, call
 
   const menuOptions = [
     {
-      icon: () => <Icon path={ mdiSquareEditOutline } size={ 1 }/>,
+      icon: () => <Icon icon={ 'mdi:square-edit-outline' }/>,
       label: i10n('common.action.edit'),
       command: () => editSavingRef.current?.open()
     },
     {
-      icon: () => <Icon path={ mdiTrashCanOutline } size={ 1 }/>,
+      icon: () => <Icon icon={ 'mdi:trash-can-outline' }/>,
       label: i10n('page.account.saving.stop'),
       command() {
         confirmDeleteDialog({
@@ -76,9 +75,9 @@ const SavingActionMenu: FC<SavingActionMenuProps> = ({ account, savingGoal, call
   return <>
     <Menu popup popupAlignment='right' ref={ actionMenu } model={ menuOptions }/>
     <EditSavingGoalComponent account={ account } savingGoal={ savingGoal } onChanged={ callback } ref={ editSavingRef }/>
-    <Button icon={ mdiDotsVertical }
+    <Button icon={ 'mdi:dots-vertical' }
             text
-            className='!border-none'
+            className='border-none!'
             onClick={ (event) => actionMenu?.current?.toggle(event) }
             aria-controls="popup_menu_right" aria-haspopup/>
   </>
@@ -94,7 +93,7 @@ const SavingGoalTableComponent = ({ account }: SavingGoalTableComponentProps) =>
     <div className='flex justify-end mb-4'>
       <Button label='page.account.savings.new'
               size='small'
-              icon={ mdiPencilBoxOutline }
+              icon={ 'mdi:pencil-box-outline' }
               onClick={ () => editSavingRef.current?.open() }
               severity='success'/>
       <EditSavingGoalComponent account={ account } onChanged={ onUpdated } ref={ editSavingRef }/>

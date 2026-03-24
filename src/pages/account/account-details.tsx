@@ -1,4 +1,3 @@
-import { mdiCartPlus, mdiCashPlus, mdiSwapHorizontal } from "@mdi/js";
 import { ConfirmDialog } from "primereact/confirmdialog";
 import { Panel } from "primereact/panel";
 import React, { FC, useEffect, useState } from "react";
@@ -97,21 +96,21 @@ const AccountDetailView: FC = () => {
       <Panel header={ i10n('page.title.transactions.overview') }>
         <div className='flex justify-end gap-2 mb-4'>
           { (!Resolver.Account.isManaged(account) || Resolver.Account.isCreditor(account)) &&
-            <Button icon={ mdiCashPlus }
+            <Button icon={ 'mdi:cash-plus' }
                     severity='success'
                     className='[&>svg]:hidden md:[&>svg]:block'
                     size='small'
                     onClick={ () => navigate(`${ Resolver.Account.resolveUrl(account) }/transactions/add/debit`) }
                     label='page.transactions.debit.add' /> }
           { (!Resolver.Account.isManaged(account) || Resolver.Account.isDebtor(account)) &&
-            <Button icon={ mdiCartPlus }
+            <Button icon={ 'mdi:cart-plus' }
                     severity='warning'
                     className='[&>svg]:hidden md:[&>svg]:block'
                     size='small'
                     onClick={ () => navigate(`${ Resolver.Account.resolveUrl(account) }/transactions/add/credit`) }
                     label='page.transactions.credit.add' /> }
           { !Resolver.Account.isManaged(account) &&
-            <Button icon={ mdiSwapHorizontal }
+            <Button icon={ 'mdi:swap-horizontal' }
                     severity='secondary'
                     className='[&>svg]:hidden md:[&>svg]:block'
                     size='small'

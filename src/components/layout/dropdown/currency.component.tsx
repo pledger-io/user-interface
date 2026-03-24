@@ -1,9 +1,8 @@
+import { Icon } from "@iconify-icon/react";
 import * as React from "react";
 import { useEffect, useRef, useState } from "react";
 import { CurrencyRepository } from "../../../core/RestAPI";
-import { mdiMenuDown } from "@mdi/js";
 import { Currency } from "../../../types/types";
-import Icon from "@mdi/react";
 import { Menu } from "primereact/menu";
 import { MenuItem } from "primereact/menuitem";
 
@@ -36,11 +35,11 @@ const CurrencyDropdown = ({ currency, onChange }: CurrencyDropdownProps) => {
   return <>
     <a onClick={ event => menuRef.current?.toggle(event) } className='flex items-center cursor-pointer'>
       { currency }
-      <Icon path={ mdiMenuDown } size={ 1 }/>
+      <Icon icon={ 'mdi-menu-down' } size={ 1 }/>
     </a>
     <Menu ref={ menuRef }
           popup
-          className='max-w-[8rem]'
+          className='max-w-32'
           model={ currencies } />
   </>
 }

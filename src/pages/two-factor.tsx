@@ -1,4 +1,3 @@
-import { mdiCheck } from "@mdi/js";
 import { Card } from "primereact/card";
 import { Message } from "primereact/message";
 import React from "react";
@@ -37,7 +36,7 @@ const TwoFactor = () => {
         <div className='flex pt-3 items-stretch'>
           <SubmitButton key='login'
                         className='w-full p-button-lg'
-                        label='page.login.verify.action' icon={ mdiCheck }/>
+                        label='page.login.verify.action' icon={ 'mdi:check' }/>
         </div>
       </Form>
     </Card>

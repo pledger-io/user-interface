@@ -1,20 +1,11 @@
-import {
-  mdiAlert,
-  mdiArrowRight,
-  mdiCalendarCheck, mdiDotsVertical,
-  mdiFileSign,
-  mdiSquareEditOutline,
-  mdiTable,
-  mdiTrashCanOutline
-} from "@mdi/js";
-import Icon from "@mdi/react";
+import { Icon } from "@iconify-icon/react";
 import React, { Attributes, FC, useRef, useState } from "react";
 import { NavLink, useNavigate } from "react-router";
 import { i10n } from "../../config/prime-locale";
 import { useNotification } from "../../context/notification-context";
 import { Resolver } from "../../core";
 import { TransactionRepository } from "../../core/RestAPI";
-import { Account, AccountRef, DialogOptions, Transaction } from "../../types/types";
+import { AccountRef, DialogOptions, Transaction } from "../../types/types";
 import { confirmDeleteDialog } from "../confirm-dialog";
 import MoneyComponent from "../format/money.component";
 import { Button } from "../layout/button";
@@ -79,7 +70,7 @@ const TransactionItem: FC<TransactionItemProps> = ({ transaction, className = ''
     </span>
     { transaction.metadata.failureCode &&
       <span className='text-warning my-auto'>
-        <Icon path={ mdiAlert } size={ 1 }/>
+        <Icon icon={ 'mdi:alert' } width='1em'/>
       </span>
     }
     <span className='flex flex-col flex-1'>
@@ -94,7 +85,7 @@ const TransactionItem: FC<TransactionItemProps> = ({ transaction, className = ''
               className='text-gray-400 hover:text-blue-400'>
               { sourceAccount.name }
             </NavLink>
-            <Icon path={ mdiArrowRight } size={ .6 } className='inline-block'/>
+            <Icon icon={ 'mdi:arrow-right' } width='.6em' className='inline-block'/>
             <NavLink
               to={ `${ Resolver.Account.resolveUrl(otherAccount) }/transactions/${ transactionDate.getFullYear() }/${ transactionDate.getMonth() + 1 }` }
               className='text-gray-400 hover:text-blue-400'>
@@ -113,7 +104,7 @@ const TransactionItem: FC<TransactionItemProps> = ({ transaction, className = ''
         { transaction.metadata.contract &&
           <div className='hidden md:flex text-cyan-500 text-[.8em] pt-[.2em] ml-4 gap-0.5 items-center'
                title='Contract'>
-            <Icon path={ mdiFileSign } size={ .52 }/>
+            <Icon icon={ 'mdi:file-sign' } width='.52em'/>
             <span>{ transaction.metadata.contract }</span>
           </div>
         }
@@ -143,14 +134,14 @@ const ActionExpander = ({ transaction, onDelete }: { transaction: Transaction, o
               size='small'
               severity='secondary'
               className='opacity-30 hover:opacity-100 p-0!'
-              icon={ mdiCalendarCheck }
+              icon={ 'mdi:calendar-check' }
               onClick={ () => scheduleDialogRef.current?.open() }/>
       { transaction.split &&
         <>
           <Button tooltip={ i10n('page.transaction.action.details') }
                   text
                   severity='help'
-                  icon={ mdiTable }
+                  icon={ 'mdi:table' }
                   className='opacity-30 hover:opacity-100 p-0!'
                   onClick={ () => splitDialogRef.current?.open() }/>
           <TransactionSplitDialog transaction={ transaction } ref={ splitDialogRef }/>
@@ -159,13 +150,13 @@ const ActionExpander = ({ transaction, onDelete }: { transaction: Transaction, o
       <Button tooltip={ i10n('common.action.edit') }
               text
               size='small'
-              icon={ mdiSquareEditOutline }
+              icon={ 'mdi:square-edit-outline' }
               className='opacity-30 hover:opacity-100 p-0!'
               onClick={ () => navigate(`${ Resolver.Transaction.resolveUrl(transaction) }/edit`) }/>
       <Button tooltip={ i10n('common.action.delete') }
               text
               size='small'
-              icon={ mdiTrashCanOutline }
+              icon={ 'mdi:trash-can-outline' }
               severity='danger'
               className='opacity-30 hover:opacity-100 p-0!'
               onClick={ confirmDeleteClick }/>

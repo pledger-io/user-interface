@@ -1,7 +1,6 @@
+import { Icon } from "@iconify-icon/react";
 import * as React from "react";
 import { useRef } from "react";
-import { mdiMenuDown } from "@mdi/js";
-import Icon from "@mdi/react";
 import { OverlayPanel } from "primereact/overlaypanel";
 import { Calendar } from "primereact/calendar";
 
@@ -24,10 +23,10 @@ const YearDropdown = ({ year = 1970, onChange }: YearDropdownProps) => {
     <div>
       <a onClick={ event => yearPickerRef.current?.toggle(event) } className='flex items-center cursor-pointer'>
         { year }
-        <Icon path={ mdiMenuDown } size={ 1 }/>
+        <Icon icon={ 'mdi-menu-down' } size={ 1 }/>
       </a>
 
-      <OverlayPanel ref={ yearPickerRef } className='min-w-[15rem] [&>.p-overlaypanel-content]:p-0!'>
+      <OverlayPanel ref={ yearPickerRef } className='min-w-60 [&>.p-overlaypanel-content]:p-0!'>
         <Calendar view='year' inputClassName='hidden'
                   className='w-full'
                   value={ new Date(year, 0, 1) }

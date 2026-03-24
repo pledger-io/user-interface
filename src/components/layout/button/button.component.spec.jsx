@@ -1,6 +1,5 @@
 import { fireEvent, render } from '@testing-library/react';
 import ButtonComponent from './button.component';
-import { mdiAbacus } from "@mdi/js";
 import {BrowserRouter} from "react-router";
 import {mockedReactRouter} from "../../../../__mocks__/react-router.jsx";
 
@@ -45,9 +44,9 @@ describe('Button', () => {
     });
 
     it('renders with icon before label when iconPos is before', () => {
-        const { getByTestId } = render(<ButtonComponent icon={ mdiAbacus } iconPos="before" data-testid="button" />, {wrapper: BrowserRouter});
+        const { getByTestId } = render(<ButtonComponent icon={ 'mdi:abacus' } iconPos="before" data-testid="button" />, {wrapper: BrowserRouter});
         const button = getByTestId('button');
-        expect(button.firstChild.nodeName).toBe('svg');
+        expect(button.firstChild.nodeName).toBe('ICONIFY-ICON');
     });
 
     it('renders with disabled attribute when disabled prop is true', () => {

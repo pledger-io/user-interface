@@ -1,4 +1,3 @@
-import { mdiCalendarCheck } from "@mdi/js";
 import { Card } from "primereact/card";
 import { Column } from "primereact/column";
 import { ConfirmDialog } from "primereact/confirmdialog";
@@ -38,13 +37,13 @@ const ScheduledTransactionOverview = () => {
         <BreadCrumbItem label='page.nav.budget.recurring'/>
       </BreadCrumbs>
 
-      <ConfirmDialog className='max-w-[25rem]'/>
+      <ConfirmDialog className='max-w-100'/>
 
       <Card header={ header } className='my-4 mx-2'>
         <div className='flex justify-end mb-4'>
           <Button label='page.transaction.action.recurring'
                   severity='success'
-                  icon={ mdiCalendarCheck }
+                  icon={ 'mdi:calendar-check' }
                   onClick={ () => newScheduleDialogRef.current?.open() }/>
         </div>
         <ScheduleTransactionDialog ref={ newScheduleDialogRef } onCreated={ loadSchedules }/>

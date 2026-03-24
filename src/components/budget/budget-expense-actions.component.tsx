@@ -1,5 +1,4 @@
-import { mdiCancel, mdiContentSave, mdiPencil } from "@mdi/js";
-import Icon from "@mdi/react";
+import { Icon } from "@iconify-icon/react";
 import { Dialog } from "primereact/dialog";
 import React, { useState } from "react";
 import { i10n } from "../../config/prime-locale";
@@ -29,7 +28,7 @@ const ExpenseActions = ({ expense, callback }: { expense: BudgetExpense, callbac
 
   return <>
     <a onClick={ () => setVisible(true) } className='cursor-pointer text-gray-400 hover:text-gray-600 with-tooltip' data-pr-tooltip={ i10n('common.action.edit') }>
-      <Icon path={ mdiPencil } size={ .8 } />
+      <Icon icon={ 'mdi:pencil' } size={ .8 } />
     </a>
 
     <Dialog header={ i10n('common.action.edit') }
@@ -50,8 +49,8 @@ const ExpenseActions = ({ expense, callback }: { expense: BudgetExpense, callbac
           <Button type='reset'
                   text
                   onClick={ () => setVisible(false) }
-                  label='common.action.cancel' icon={ mdiCancel } />
-          <SubmitButton label='common.action.save' icon={ mdiContentSave } />
+                  label='common.action.cancel' icon={ 'mdi:cancel' } />
+          <SubmitButton label='common.action.save' icon={ 'mdi:content-save' } />
         </div>
       </Form>
     </Dialog>

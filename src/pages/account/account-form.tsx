@@ -1,4 +1,3 @@
-import { mdiCancel, mdiContentSave } from "@mdi/js";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { AccountIconReplace } from "../../components/account/account-icon-replace";
@@ -120,7 +119,7 @@ const AccountForm = ({ type }: { type: string }) => {
                                required/>
             </div>
           </div>
-          <div className='flex-1'>
+          <div className='flex-1 text-center'>
             <AccountIconReplace account={ account } onChange={ onPictureChange }/>
           </div>
         </fieldset>
@@ -157,8 +156,8 @@ const AccountForm = ({ type }: { type: string }) => {
         </fieldset>
 
         <div className='flex justify-end gap-2 mt-4'>
-          <BackButton label='common.action.cancel' icon={ mdiCancel }/>
-          <SubmitButton label='common.action.save' icon={ mdiContentSave }/>
+          <BackButton label='common.action.cancel' icon={ 'mdi:cancel' }/>
+          <SubmitButton label='common.action.save' icon={ 'mdi:content-save' }/>
         </div>
       </Form>
     </Card>

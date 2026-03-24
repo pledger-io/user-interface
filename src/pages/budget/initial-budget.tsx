@@ -1,4 +1,3 @@
-import { mdiContentSave } from "@mdi/js";
 import { Card } from "primereact/card";
 import { Message } from "primereact/message";
 import React from "react";
@@ -26,7 +25,7 @@ const CreateBudgetView = () => {
       .catch(() => warning('page.budget.group.create.failed'))
   }
 
-  const header = () => <div className='px-2 py-2 border-b-1 text-center font-bold'>
+  const header = () => <div className='px-2 py-2 border-b text-center font-bold'>
     { i10n('page.nav.budget.initial.setup') }
   </div>
 
@@ -53,7 +52,7 @@ const CreateBudgetView = () => {
                       title='Budget.expectedIncome'/>
 
         <div className='flex justify-end mt-4'>
-          <SubmitButton key='save' label='page.budget.group.action.initial' icon={ mdiContentSave }/>
+          <SubmitButton key='save' label='page.budget.group.action.initial' icon={ 'mdi:content-save' }/>
         </div>
       </Form>
     </Card>

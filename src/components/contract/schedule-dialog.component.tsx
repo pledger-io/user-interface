@@ -1,7 +1,6 @@
 import React, { FC, Ref, useImperativeHandle } from "react";
 import { useNotification } from "../../context/notification-context";
 import { Entity, Form, Input, SubmitButton } from "../form";
-import { mdiCancel, mdiContentSave } from "@mdi/js";
 import { Account, Contract, DialogOptions } from "../../types/types";
 import ContractRepository from "../../core/repositories/contract-repository";
 import { Button } from "../layout/button";
@@ -94,9 +93,9 @@ const ScheduleContract: FC<ScheduleContractProps> = ({ ref, contract }) => {
                   type='reset'
                   severity='secondary'
                   onClick={ () => setVisible(false) }
-                  icon={ mdiCancel }/>
+                  icon={ 'mdi:cancel' }/>
           <SubmitButton label='common.action.save'
-                        icon={ mdiContentSave }
+                        icon={ 'mdi:content-save' }
                         data-testid={ `schedule-transaction-submit-${ contract?.id || 1 }` }/>
         </div>
       </Form>

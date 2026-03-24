@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { mdiCancel, mdiContentSave } from "@mdi/js";
 import BreadCrumbItem from "../../../components/breadcrumb/breadcrumb-item.component";
 import BreadCrumbs from "../../../components/breadcrumb/breadcrumb.component";
 import { BackButton } from "../../../components/layout/button";
@@ -33,7 +32,7 @@ const _ = () => {
 
     const overviewUri = code == null ? './..' : './../..'
     const pageBreadCrumb = code == null ? 'page.settings.currencies.add' : 'page.settings.currencies.edit'
-    const header = () => <div className='px-2 py-2 border-b-1 text-center font-bold'>
+    const header = () => <div className='px-2 py-2 border-b text-center font-bold'>
         { i10n(pageBreadCrumb) }
     </div>
 
@@ -67,8 +66,8 @@ const _ = () => {
                             required/>
 
                 <div className='flex justify-end gap-2 mt-4'>
-                    <SubmitButton label='common.action.save' icon={ mdiContentSave } />
-                    <BackButton key='cancel' label='common.action.cancel' icon={ mdiCancel } />
+                    <SubmitButton label='common.action.save' icon={ 'mdi:content-save' } />
+                    <BackButton key='cancel' label='common.action.cancel' icon={ 'mdi:cancel' } />
                 </div>
             </Form>
         </Card>

@@ -1,4 +1,3 @@
-import { mdiLockOff } from "@mdi/js";
 import { Message } from "primereact/message";
 import { useEffect, useState } from "react";
 import { Form, Input, SubmitButton } from "../../components/form";
@@ -48,7 +47,7 @@ const Profile2FactorView = () => {
 
           <div className='w-fit mt-4'>
             <SubmitButton label='page.user.profile.action.twofactor.enable'
-                          className='min-w-[100px]'/>
+                          className='min-w-25'/>
           </div>
         </div>
       </div>
@@ -59,7 +58,7 @@ const Profile2FactorView = () => {
 
       <Button label='page.user.profile.action.twofactor.disable'
               onClick={ onDisable }
-              icon={ mdiLockOff }
+              icon={ 'mdi:lock-off' }
               severity='warning'/>
     </> }
   </>

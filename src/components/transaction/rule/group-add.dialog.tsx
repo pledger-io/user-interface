@@ -1,4 +1,3 @@
-import { mdiCancel, mdiContentSaveSettings } from "@mdi/js";
 import { Dialog } from "primereact/dialog";
 import React, { Ref, useImperativeHandle } from "react";
 import { i10n } from "../../../config/prime-locale";
@@ -46,8 +45,8 @@ const GroupAddDialog = (props: GroupAddDialogProps) => {
                   severity='secondary'
                   text
                   onClick={() => setVisible(false)}
-                  icon={mdiCancel}/>
-          <SubmitButton key='save-btn' label='common.action.save' icon={mdiContentSaveSettings}/>
+                  icon={ 'mdi:cancel'}/>
+          <SubmitButton key='save-btn' label='common.action.save' icon={ 'mdi:content-save-settings' }/>
         </div>
       </Form>
     </Dialog>

@@ -1,4 +1,3 @@
-import { mdiCashMinus, mdiCashPlus } from "@mdi/js";
 import { ConfirmDialog } from "primereact/confirmdialog";
 import { Panel } from "primereact/panel";
 import React from "react";
@@ -60,8 +59,8 @@ const TransactionGlobalView = () => {
     <Panel header={ i10n('page.title.transactions.overview') } className='mx-2'>
       <div className='flex justify-end gap-2'>
         <GenerateTransaction />
-        <NewTransactionDialog type='debit' icon={ mdiCashPlus } variant='success'/>
-        <NewTransactionDialog type='credit' icon={ mdiCashMinus } variant='warning'/>
+        <NewTransactionDialog type='debit' icon={ 'mdi-cash-plus' } variant='success'/>
+        <NewTransactionDialog type='credit' icon={ 'mdi-cash-minus' } variant='warning'/>
       </div>
 
       <TransactionOverview range={ range } transfers={ false }/>

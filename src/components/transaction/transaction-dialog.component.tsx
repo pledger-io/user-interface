@@ -1,4 +1,3 @@
-import { mdiPageNext } from "@mdi/js";
 import { Dialog } from "primereact/dialog";
 import React, { FC } from "react";
 import { useNavigate } from "react-router";
@@ -41,7 +40,7 @@ const NewTransactionDialog: FC<NewTransactionDialogProps> = ({ variant, icon, ty
         <div className='flex justify-end mt-4'>
           <SubmitButton label='common.action.next'
                         severity='success'
-                        icon={ mdiPageNext }/>
+                        icon={ 'mdi:page-next' }/>
         </div>
       </Form>
     </Dialog>

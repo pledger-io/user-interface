@@ -1,5 +1,4 @@
-import Icon from "@mdi/react";
-import { mdiLoading } from "@mdi/js";
+import { Icon } from "@iconify-icon/react";
 import { FC, ReactNode } from "react";
 
 type LoadingProps = {
@@ -14,7 +13,7 @@ const Loading: FC<LoadingProps> = ({ condition, children }) => {
     if (!condition) {
         return (
             <div className='flex justify-center'>
-                <Icon path={ mdiLoading } spin={ true } size={ 2 } />
+                <Icon icon='svg-spinners:tadpole' width='2em' />
             </div>
         )
     } else {
