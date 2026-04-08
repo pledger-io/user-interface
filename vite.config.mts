@@ -14,15 +14,18 @@ export default defineConfig({
             targets: [
                 {
                     src: 'node_modules/primereact/resources/themes/lara-dark-blue/*',
-                    dest: 'assets/themes/lara-dark-blue/'
+                    dest: 'assets/themes/lara-dark-blue/',
+                    rename: { stripBase: true }
                 },
                 {
                     src: 'node_modules/primereact/resources/themes/lara-light-blue/*',
-                    dest: 'assets/themes/lara-light-blue/'
+                    dest: 'assets/themes/lara-light-blue/',
+                    rename: { stripBase: true }
                 },
                 {
                     src: 'node_modules/primereact/resources/themes/saga-blue/*',
-                    dest: 'assets/themes/saga-blue/'
+                    dest: 'assets/themes/saga-blue/',
+                    rename: { stripBase: true }
                 }
             ]
         })
