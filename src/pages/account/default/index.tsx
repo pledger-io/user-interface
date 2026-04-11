@@ -114,7 +114,7 @@ function determineBalance(account: Account) {
   }
 
   return <BalanceComponent accounts={ [account.id] }
-                           range={ DateRangeService.forRange(account.history.firstTransaction, account.history.lastTransaction) }
+                           range={ DateRangeService.forRangeInclusive(account.history.firstTransaction, account.history.lastTransaction) }
                            currency={ account.account.currency }/>
 }
 

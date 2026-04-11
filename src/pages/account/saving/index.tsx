@@ -35,7 +35,7 @@ function SavingAccountOverview() {
     <Panel header={ i10n('page.account.savings.transactions') } className='py-4 px-2'>
       <div className='flex justify-end mb-2'>
         <NavLink to={ `${ Resolver.Account.resolveUrl(account) }/transactions/add/transfer` }
-                 className='p-button p-button-success p-button-sm !mb-4 gap-1 items-center'>
+                 className='p-button p-button-success p-button-sm mb-4! gap-1 items-center'>
           <Icon icon={ 'mdi:swap-horizontal' } size={ 1 }/> { i10n('page.transactions.transfer.add') }
         </NavLink>
       </div>

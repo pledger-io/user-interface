@@ -93,7 +93,7 @@ const LiabilityOverview = () => {
                   body={ (account: Account) =>
                     <BalanceComponent accounts={ [account.id] }
                                       currency={ account.account.currency }
-                                      range={ DateRangeService.forRange(account.history.firstTransaction, account.history.lastTransaction) }/> }/>
+                                      range={ DateRangeService.forRangeInclusive(account.history.firstTransaction, account.history.lastTransaction) }/> }/>
           <Column className='w-4' body={ account => <AccountMenu account={ account } callback={ reload }/> }/>
         </DataTable>
 

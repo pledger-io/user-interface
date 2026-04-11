@@ -31,6 +31,17 @@ const DateRangeService = (() => {
 
       return new DateRange(parsedStart, parsedEnd)
     },
+    forRangeInclusive: (start: string, end: string) => {
+      const parsedStart = new Date(start)
+      let parsedEnd = new Date(end)
+      parsedEnd = new Date(parsedEnd.setDate(parsedEnd.getDate() + 1))
+
+      if (parsedStart.getDate() === parsedEnd.getDate()) {
+        parsedEnd = new Date(parsedEnd.setDate(parsedEnd.getDate() + 1))
+      }
+
+      return new DateRange(parsedStart, parsedEnd)
+    },
     // Return a list of monthly ranges for the given year
     months: (year: number): DateRange[] => {
       return [...new Array(12).keys()]

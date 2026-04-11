@@ -21,7 +21,7 @@ const TransactionListComponent = ({ account }: { account: Account }) => {
     }
 
     setTransactions(undefined)
-    const range = DateRangeService.forRange(account.history.firstTransaction, account.history.lastTransaction)
+    const range = DateRangeService.forRangeInclusive(account.history.firstTransaction, account.history.lastTransaction)
     AccountRepository.transactions(account.id, range, page)
       .then(result => {
         const transactions = (result.content || [])
