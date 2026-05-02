@@ -28,7 +28,7 @@
     "vite-tsconfig-paths": "^6.0.0"
   },
   "devDependencies": {
-    "@eslint-react/eslint-plugin": "^4.0.0",
+    "@eslint-react/eslint-plugin": "^5.0.0",
     "@iconify-icon/react": "^3.0.3",
     "@stylistic/eslint-plugin": "^5.0.0",
     "@testing-library/dom": "^10.4.0",
