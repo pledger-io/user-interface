@@ -1,5 +1,5 @@
 import { User } from "oidc-client-ts";
-import { lazy } from "react";
+import { lazy, useEffect, useState } from "react";
 import { AuthProvider } from "react-oidc-context";
 import { createBrowserRouter, redirect, RouterProvider } from "react-router";
 import Loading from "./components/layout/loading.component";
@@ -23,7 +23,6 @@ import { anonymousLoader } from "./router/anonymous.loader";
 import { AuthenticatedComponent } from "./router/authenticate.wrapper";
 import { authenticatedLoader } from "./router/authenticated.loader";
 import { RootErrorBoundary } from "./router/error-boundary";
-import { OpenIdConfig } from "./types/types";
 
 const router = createBrowserRouter([
   {
@@ -77,7 +76,22 @@ const router = createBrowserRouter([
   basename: '/ui'
 })
 
-function _({ openIdConfig }: {openIdConfig: OpenIdConfig}) {
+function constructRedirectUri() {
+  const hasParams = document.location.search.includes('?');
+  if (!hasParams) {
+    return document.location.href;
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  let redirectUrl = document.location.href.substring(0, document.location.href.indexOf('?'))
+  if (params.has('from')) {
+    redirectUrl += '?from=' + params.has('from');
+  }
+  return redirectUrl;
+}
+
+function _() {
+  const [openIdConfiguration, setOpenIdConfiguration] = useState<any>({})
   const openIdSignIn = (user: User | undefined) => {
     if (user) {
       sessionStorage.setItem('refresh-token', user.refresh_token as string);
@@ -85,11 +99,29 @@ function _({ openIdConfig }: {openIdConfig: OpenIdConfig}) {
     }
   }
 
-  return (
-    <AuthProvider {...openIdConfig} onSigninCallback={openIdSignIn}>
-      <RouterProvider router={ router }/>
-    </AuthProvider>
-  )
+  useEffect(() => {
+    fetch('/.well-known/openid-connect')
+      .then(response => {
+        response.json()
+          .then(openIdConfig => setOpenIdConfiguration({
+              authority: openIdConfig.authority,
+              client_id: openIdConfig['client-id'],
+              client_secret: openIdConfig['client-secret'],
+              redirect_uri:  constructRedirectUri()
+            }))
+      })
+  }, [])
+
+  console.debug("Authentication", openIdConfiguration)
+  if (openIdConfiguration?.authority) {
+    return (
+      <AuthProvider {...openIdConfiguration} onSigninCallback={openIdSignIn}>
+        <RouterProvider router={ router }/>
+      </AuthProvider>
+    )
+
+    return <RouterProvider router={ router }/>
+  }
 }
 
 export default _;

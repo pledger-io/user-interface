@@ -37,6 +37,11 @@ const SettingActionButtons: FC<{setting: Setting, callback: () => void}> = ({ se
                                 type='text'
                                 title={ `page.setting.overview.setting.${ setting.name }` }
                                 value={ setting.value }/> }
+              { setting.type === 'STRING' &&
+                <Input.Text id='value'
+                            type='text'
+                            title={ `page.setting.overview.setting.${ setting.name }` }
+                            value={ setting.value }/> }
                 { setting.type === 'FLAG' && <>
                     { i10n(`page.setting.overview.setting.${ setting.name }`) }
                     <Input.Toggle id='value' value={ setting.value == 'true' }/>
@@ -78,7 +83,7 @@ const SettingPage = () => {
         <Card header={ header } className='my-4 mx-2'>
             <DataTable value={ settings } loading={ !settings } size='small'>
                 <Column header={ i10n('Setting.name') } body={ setting => i10n(`page.setting.overview.setting.${ setting.name }`)}/>
-                <Column field='type' header={ i10n('Setting.type') }/>
+                <Column field='type' header={ i10n('Setting.type') } body={ setting => i10n(`page.setting.overview.setting.type.${ setting.type }`) }/>
                 <Column field='value' header={ i10n('Setting.currentValue') }/>
                 <Column className='max-w-8' body={ setting => <SettingActionButtons setting={ setting } callback={ loadSettings }/> } />
             </DataTable>

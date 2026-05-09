@@ -22,6 +22,10 @@ const SecurityRepository = (api => {
                 sessionStorage.setItem('refresh-token', token.refreshToken);
                 sessionStorage.setItem('token', token.accessToken);
             }),
+        refresh: (refreshToken) => api.post('security/oauth', {
+            refresh_token: refreshToken,
+            grant_type: 'refresh_token'
+        }),
         twoFactor: (code) => api.post('user-account/verify-2-factor', {verificationCode: code})
             .then(serverResponse => {
                 const token = new TokenResponse(serverResponse)

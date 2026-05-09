@@ -13,31 +13,6 @@ const themeLink = document.getElementById('theme-link')
 document.head.removeChild(themeLink);
 document.head.appendChild(themeLink);
 
-function constructRedirectUri() {
-  const hasParams = document.location.search.includes('?');
-  if (!hasParams) {
-    return document.location.href;
-  }
-
-  const params = new URLSearchParams(window.location.search);
-  let redirectUrl = document.location.href.substring(0, document.location.href.indexOf('?'))
-  if (params.has('from')) {
-    redirectUrl += '?from=' + params.has('from');
-  }
-  return redirectUrl;
-}
-
-const openIdConfigResponse = await fetch('/.well-known/openid-connect');
-if (openIdConfigResponse.ok) {
-  const openIdConfig = await openIdConfigResponse.json()
-  document.openIdConfig = {
-    authority: openIdConfig.authority,
-    client_id: openIdConfig.clientId,
-    client_secret: openIdConfig.clientSecret,
-    redirect_uri:  constructRedirectUri()
-  };
-}
-
 PrimeLocale()
   .then(() => {
     console.log('All localizations loaded, starting application.')
@@ -49,7 +24,7 @@ PrimeLocale()
     createRoot(document.getElementById('root'))
       .render((
         <React.StrictMode>
-          <Pledger openIdConfig={document.openIdConfig}/>
+          <Pledger />
         </React.StrictMode>
       ));
   })

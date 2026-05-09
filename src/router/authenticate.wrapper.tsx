@@ -1,6 +1,6 @@
 import { PrimeReactProvider } from "primereact/api";
 import { useLocalStorage } from "primereact/hooks";
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 import { useAuth } from "react-oidc-context";
 import { Outlet, useNavigate } from "react-router";
 import Loading from "../components/layout/loading.component";
@@ -15,7 +15,7 @@ import SecurityRepository from "../core/repositories/security-repository";
  * centered horizontally and vertically, occupying the full height of the viewport.
  */
 function SuspenseLoading() {
-  return <div className='flex h-[100vh] justify-center items-center'>
+  return <div className='flex h-screen justify-center items-center'>
     <Loading/>
   </div>
 }
@@ -38,12 +38,26 @@ export function AuthenticatedComponent() {
     navigate("/login")
   }
 
+  useEffect(() => {
+    const onTokenExpired = () => {
+      console.warn("Users credentials expired and should be refreshed.")
+      if (auth.isAuthenticated) {
+        sessionStorage.setItem('token', auth.user?.access_token as string);
+      } else {
+        SecurityRepository.refresh(sessionStorage.getItem('refresh-token'));
+      }
+    }
+
+    window.addEventListener('credentials-expired', onTokenExpired);
+    return () => window.removeEventListener('credentials-expired', onTokenExpired);
+  }, [])
+
   return <PrimeReactProvider value={ { ripple: true, locale: locale, cssTransition: true } }>
     <div className='flex'>
       <ThemeProvider>
         <NotificationProvider>
-          <Sidebar logoutCallback={ logout } className='w-[218px] min-w-[218px]'/>
-          <main className='h-[100vh] flex flex-col overflow-y-auto flex-grow'>
+          <Sidebar logoutCallback={ logout } className='w-54.5 min-w-54.5'/>
+          <main className='h-screen flex flex-col overflow-y-auto grow'>
             <Suspense fallback={ <SuspenseLoading/> }>
               <Outlet/>
             </Suspense>

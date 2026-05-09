@@ -41,6 +41,9 @@ const LoginCard = () => {
       detail: i10n('page.login.success'),
       life: 250
     });
+
+    sessionStorage.setItem('refresh-token', auth?.user?.refresh_token as string);
+    sessionStorage.setItem('token', auth?.user?.access_token as string);
     setTimeout(() => navigate(from), 500);
   }
 
