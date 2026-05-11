@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react-swc'
 import tailwindcss from '@tailwindcss/vite'
 import { viteStaticCopy } from "vite-plugin-static-copy";
 
-const backendUri = 'http://finance.local'
+const backendUri = 'http://localhost:8080'
 export default defineConfig({
     base: '/ui',
     plugins: [

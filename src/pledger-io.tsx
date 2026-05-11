@@ -113,15 +113,11 @@ function _() {
   }, [])
 
   console.debug("Authentication", openIdConfiguration)
-  if (openIdConfiguration?.authority) {
-    return (
-      <AuthProvider {...openIdConfiguration} onSigninCallback={openIdSignIn}>
-        <RouterProvider router={ router }/>
-      </AuthProvider>
-    )
-
-    return <RouterProvider router={ router }/>
-  }
+  return (
+    <AuthProvider {...openIdConfiguration} onSigninCallback={openIdSignIn}>
+      <RouterProvider router={ router }/>
+    </AuthProvider>
+  )
 }
 
 export default _;
