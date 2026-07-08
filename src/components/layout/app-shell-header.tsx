@@ -1,7 +1,9 @@
 import { Icon } from "@iconify-icon/react";
 import React from "react";
+import { useLocalStorage } from "primereact/hooks";
 import { NavLink, useLocation } from "react-router";
 import { i10n } from "../../config/prime-locale";
+import { SupportedLocales } from "../../core/repositories/i18n-repository";
 import { navigationSections, resolveActiveSection, SectionDestination } from "../../navigation/sections";
 import SectionLocalNav from "./section-local-nav";
 
@@ -19,13 +21,13 @@ const translate = (key: string) => {
   return translated
 }
 
-const currentMonthContext = () => {
-  const language = localStorage.getItem('language') || 'en'
+const currentMonthContext = (language: SupportedLocales) => {
   return new Intl.DateTimeFormat(language, { month: 'long', year: 'numeric' }).format(new Date())
 }
 
 const AppShellHeader = ({ onToggleNavigation, onOpenCommandLauncher, sectionDestinations }: AppShellHeaderProps) => {
   const location = useLocation()
+  const [language] = useLocalStorage<SupportedLocales>('en', 'language')
   const activeSection = resolveActiveSection(location.pathname)
   const titleKey = navigationSections.find(section => section.id === activeSection)?.labelKey ?? 'page.nav.dashboard'
   const title = translate(titleKey)
@@ -42,7 +44,7 @@ const AppShellHeader = ({ onToggleNavigation, onOpenCommandLauncher, sectionDest
 
       <div className='min-w-0'>
         <div className='truncate text-lg font-semibold'>{ title }</div>
-        <div className='text-xs text-muted'>{ currentMonthContext() }</div>
+        <div className='text-xs text-muted'>{ currentMonthContext(language) }</div>
       </div>
 
       <div className='ml-auto flex items-center gap-2'>

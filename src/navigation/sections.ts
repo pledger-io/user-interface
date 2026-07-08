@@ -84,7 +84,7 @@ export const sectionDestinations: SectionDestination[] = [
     section: 'overview',
     to: '/reports/income-expense',
     icon: 'mdi:home-analytics',
-    labelKey: 'page.title.reports.default',
+    labelKey: 'page.reports.default.title',
     descriptionKey: 'page.reports.default.title',
     keywords: ['reports', 'income', 'expense'],
     aliases: ['financial reports'],
@@ -146,17 +146,6 @@ export const sectionDestinations: SectionDestination[] = [
     matchPrefixes: ['/transactions/transfers']
   },
   {
-    id: 'transactions.upload',
-    section: 'transactions',
-    to: '/upload/create',
-    icon: 'mdi:file-upload-outline',
-    labelKey: 'page.nav.settings.import',
-    descriptionKey: 'page.settings.import.new',
-    keywords: ['import', 'upload', 'transactions'],
-    aliases: ['import transactions'],
-    matchPrefixes: ['/upload']
-  },
-  {
     id: 'transactions.categories',
     section: 'transactions',
     to: '/categories',
@@ -166,6 +155,17 @@ export const sectionDestinations: SectionDestination[] = [
     keywords: ['categories', 'classification'],
     aliases: ['manage categories'],
     matchPrefixes: ['/categories']
+  },
+  {
+    id: 'transactions.upload-overview',
+    section: 'transactions',
+    to: '/upload',
+    icon: 'mdi:file-table-outline',
+    labelKey: 'page.title.import.overview',
+    descriptionKey: 'page.nav.settings.import.status',
+    keywords: ['import', 'overview', 'history'],
+    aliases: ['import history', 'import status'],
+    matchPrefixes: ['/upload']
   },
   {
     id: 'budgets.groups',

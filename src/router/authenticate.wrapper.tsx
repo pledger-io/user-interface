@@ -104,34 +104,19 @@ export function AuthenticatedComponent() {
     }
   }
 
-  const translate = (key: string, fallback: string) => {
+  const translate = (key: string) => {
     const translated = i10n(key)
     if (translated === key || translated.startsWith('_missing_localization_')) {
-      return fallback
+      return key
     }
     return translated
-  }
-
-  const descriptionFallbacks: Record<string, string> = {
-    'page.dashboard.description': 'Overview of your finances',
-    'page.reports.default.title': 'Review financial reports',
-    'page.reports.insights.description': 'Analyze spending patterns and alerts',
-    'page.transactions.description': 'Browse income and expense transactions',
-    'page.transactions.transfer.description': 'Review transfer transactions',
-    'page.settings.import.new': 'Create a new transaction import batch',
-    'page.budget.description': 'Review budget groups and monthly budgets',
-    'page.contracts.description': 'Manage recurring contracts',
-    'page.accounts.description': 'Manage your own and external accounts',
-    'page.automation.description': 'Manage recurring transactions and rules',
-    'page.settings.description': 'Configure application preferences',
-    'page.nav.settings.categories': 'Manage transaction categories'
   }
 
   const activeSection = resolveActiveSection(location.pathname)
   const currentSectionDestinations = sectionDestinationsFor(activeSection)
   const commands: CommandAction[] = sectionDestinations.map(destination => {
-    const label = translate(destination.labelKey, destination.to)
-    const description = translate(destination.descriptionKey, descriptionFallbacks[destination.descriptionKey] ?? label)
+    const label = translate(destination.labelKey)
+    const description = translate(destination.descriptionKey)
     return {
       id: destination.id,
       section: destination.section,
