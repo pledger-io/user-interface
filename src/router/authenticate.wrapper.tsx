@@ -1,14 +1,25 @@
 import { PrimeReactProvider } from "primereact/api";
 import { useLocalStorage } from "primereact/hooks";
-import { Suspense, useEffect } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useAuth } from "react-oidc-context";
-import { Outlet, useNavigate } from "react-router";
+import { Outlet, useLocation, useNavigate } from "react-router";
+import AppShellHeader from "../components/layout/app-shell-header";
+import CommandLauncher, { CommandAction } from "../components/layout/command-launcher";
 import Loading from "../components/layout/loading.component";
 import Sidebar from "../components/sidebar";
+import { i10n } from "../config/prime-locale";
 import { NotificationProvider } from "../context/notification-context";
 import { ThemeProvider } from "../context/theme-context";
 import { SupportedLocales } from "../core/repositories/i18n-repository";
 import SecurityRepository from "../core/repositories/security-repository";
+import { resolveActiveSection, sectionDestinations, sectionDestinationsFor } from "../navigation/sections";
+
+const isDesktopScreen = () => {
+  if (!window.matchMedia) {
+    return true
+  }
+  return window.matchMedia('(min-width: 768px)').matches
+}
 
 /**
  * A React component that displays a loading state with a flex container
@@ -30,7 +41,10 @@ function SuspenseLoading() {
 export function AuthenticatedComponent() {
   const [locale] = useLocalStorage<SupportedLocales>('en', 'language')
   const navigate = useNavigate()
+  const location = useLocation()
   const auth = useAuth();
+  const [navigationOpen, setNavigationOpen] = useState(isDesktopScreen)
+  const [commandLauncherOpen, setCommandLauncherOpen] = useState(false)
 
   const logout = () => {
     auth.signoutSilent();
@@ -52,16 +66,111 @@ export function AuthenticatedComponent() {
     return () => window.removeEventListener('credentials-expired', onTokenExpired);
   }, [])
 
+  useEffect(() => {
+    const onShortcut = (event: KeyboardEvent) => {
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
+        event.preventDefault()
+        setCommandLauncherOpen(true)
+      }
+    }
+
+    window.addEventListener('keydown', onShortcut)
+    return () => window.removeEventListener('keydown', onShortcut)
+  }, [])
+
+  useEffect(() => {
+    if (!window.matchMedia) {
+      return
+    }
+    const desktopMediaQuery = window.matchMedia('(min-width: 768px)')
+
+    const onScreenSizeChanged = (event: MediaQueryListEvent) => {
+      setNavigationOpen(event.matches)
+    }
+
+    desktopMediaQuery.addEventListener('change', onScreenSizeChanged)
+    return () => desktopMediaQuery.removeEventListener('change', onScreenSizeChanged)
+  }, [])
+
+  const closeNavigation = () => {
+    if (!isDesktopScreen()) {
+      setNavigationOpen(false)
+    }
+  }
+
+  const toggleNavigation = () => {
+    if (!isDesktopScreen()) {
+      setNavigationOpen(previous => !previous)
+    }
+  }
+
+  const translate = (key: string, fallback: string) => {
+    const translated = i10n(key)
+    if (translated === key || translated.startsWith('_missing_localization_')) {
+      return fallback
+    }
+    return translated
+  }
+
+  const descriptionFallbacks: Record<string, string> = {
+    'page.dashboard.description': 'Overview of your finances',
+    'page.reports.default.title': 'Review financial reports',
+    'page.reports.insights.description': 'Analyze spending patterns and alerts',
+    'page.transactions.description': 'Browse income and expense transactions',
+    'page.transactions.transfer.description': 'Review transfer transactions',
+    'page.settings.import.new': 'Create a new transaction import batch',
+    'page.budget.description': 'Review budget groups and monthly budgets',
+    'page.contracts.description': 'Manage recurring contracts',
+    'page.accounts.description': 'Manage your own and external accounts',
+    'page.automation.description': 'Manage recurring transactions and rules',
+    'page.settings.description': 'Configure application preferences',
+    'page.nav.settings.categories': 'Manage transaction categories'
+  }
+
+  const activeSection = resolveActiveSection(location.pathname)
+  const currentSectionDestinations = sectionDestinationsFor(activeSection)
+  const commands: CommandAction[] = sectionDestinations.map(destination => {
+    const label = translate(destination.labelKey, destination.to)
+    const description = translate(destination.descriptionKey, descriptionFallbacks[destination.descriptionKey] ?? label)
+    return {
+      id: destination.id,
+      section: destination.section,
+      label,
+      description,
+      to: destination.to,
+      icon: destination.icon,
+      keywords: destination.keywords,
+      aliases: destination.aliases,
+      matchPrefixes: destination.matchPrefixes
+    }
+  })
+
   return <PrimeReactProvider value={ { ripple: true, locale: locale, cssTransition: true } }>
-    <div className='flex'>
+    <div className='flex h-screen overflow-hidden bg-background'>
       <ThemeProvider>
         <NotificationProvider>
-          <Sidebar logoutCallback={ logout } className='w-54.5 min-w-54.5'/>
-          <main className='h-screen flex flex-col overflow-y-auto grow'>
-            <Suspense fallback={ <SuspenseLoading/> }>
-              <Outlet/>
-            </Suspense>
-          </main>
+          <Sidebar
+            logoutCallback={ logout }
+            isOpen={ navigationOpen }
+            onClose={ closeNavigation }
+          />
+          <div className='flex min-h-0 grow flex-col'>
+            <AppShellHeader
+              onToggleNavigation={ toggleNavigation }
+              onOpenCommandLauncher={ () => setCommandLauncherOpen(true) }
+              sectionDestinations={ currentSectionDestinations }
+            />
+            <main className='min-h-0 grow overflow-y-auto'>
+              <Suspense fallback={ <SuspenseLoading/> }>
+                <Outlet/>
+              </Suspense>
+            </main>
+          </div>
+          <CommandLauncher
+            visible={ commandLauncherOpen }
+            commands={ commands }
+            onHide={ () => setCommandLauncherOpen(false) }
+          />
         </NotificationProvider>
       </ThemeProvider>
     </div>
