@@ -41,12 +41,7 @@ const axiosInstance = axios.create({
         }
         return data
     },
-    transformResponse: (data, headers, status) => {
-        if (status === 401 && sessionStorage.getItem('token')) {
-            window.dispatchEvent(new Event('credentials-expired'))
-            return null
-        }
-
+    transformResponse: (data, headers) => {
         const isJson = headers['content-type'] === 'application/json'
             && headers['content-disposition'] === undefined
         if (isJson && typeof data === 'string' && data.length > 0) {
@@ -58,7 +53,7 @@ const axiosInstance = axios.create({
 })
 
 const refreshClient = axios.create({
-  baseURL: "/v2/api",
+  baseURL: "/v2/api/",
   timeout: 1200000,
 });
 
@@ -71,6 +66,14 @@ axiosInstance.interceptors.response.use(
 
     const status = error.response?.status;
     if (status !== 401 || originalRequest._retry) {
+      return Promise.reject(error);
+    }
+
+    const refreshToken = sessionStorage.getItem('refresh-token');
+    if (!refreshToken) {
+      sessionStorage.removeItem('token');
+      sessionStorage.removeItem('refresh-token');
+      window.location.assign("/ui/login");
       return Promise.reject(error);
     }
 
@@ -87,8 +90,8 @@ axiosInstance.interceptors.response.use(
     isRefreshing = true;
 
     try {
-      const { data }= await refreshClient.post('/v2/api/security/oauth', {
-        refresh_token: sessionStorage.getItem('refresh-token'),
+      const { data }= await refreshClient.post('security/oauth', {
+        refresh_token: refreshToken,
         grant_type: "refresh_token",
       });
 
@@ -101,7 +104,8 @@ axiosInstance.interceptors.response.use(
     } catch (refreshError) {
       processQueue(refreshError, null);
       sessionStorage.removeItem('token');
-      window.location.href = "/ui/login";
+      sessionStorage.removeItem('refresh-token');
+      window.location.assign("/ui/login");
       return Promise.reject(refreshError);
     } finally {
       isRefreshing = false;

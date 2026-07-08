@@ -53,20 +53,6 @@ export function AuthenticatedComponent() {
   }
 
   useEffect(() => {
-    const onTokenExpired = () => {
-      console.warn("Users credentials expired and should be refreshed.")
-      if (auth.isAuthenticated) {
-        sessionStorage.setItem('token', auth.user?.access_token as string);
-      } else {
-        SecurityRepository.refresh(sessionStorage.getItem('refresh-token'));
-      }
-    }
-
-    window.addEventListener('credentials-expired', onTokenExpired);
-    return () => window.removeEventListener('credentials-expired', onTokenExpired);
-  }, [])
-
-  useEffect(() => {
     const onShortcut = (event: KeyboardEvent) => {
       if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
         event.preventDefault()
