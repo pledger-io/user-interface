@@ -16,6 +16,7 @@ const routes = {
         return {
           searchCommand: {
             budget: params.budget ? await lookup_entity('BUDGET', params.budget) : undefined,
+            uncategorized: params.uncategorized === 'true'
           } as TransactionFilter
         }
       },

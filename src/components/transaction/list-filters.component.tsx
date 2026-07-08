@@ -8,6 +8,7 @@ export type TransactionFilter = {
   account?: string,
   category?: Identifiable,
   budget?: Identifiable,
+  uncategorized?: boolean,
   onlyIncome?: boolean,
   onlyExpenses?: boolean,
   description?: string,

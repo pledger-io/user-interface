@@ -8,7 +8,7 @@ import { TransactionRepository } from "../../core/RestAPI";
 import useQueryParam from "../../hooks/query-param.hook";
 import { DailyTransactions, groupTransactionByDay } from "../../reducers";
 import DateRange from "../../types/date-range.type";
-import { AvailableSetting, Pagination } from "../../types/types";
+import { AvailableSetting, Pagination, Transaction } from "../../types/types";
 import MoneyComponent from "../format/money.component";
 import Loading from "../layout/loading.component";
 import TransactionFilters, { TransactionFilter } from "./list-filters.component";
@@ -41,10 +41,24 @@ const TransactionOverview: FC<TransactionOverviewProps> = ({ range, transfers })
   useEffect(() => {
     if (!(searchCommand as any).startDate) return
     setTransactions(undefined)
-    TransactionRepository.search(searchCommand)
+    const { budget, uncategorized, ...command } = (searchCommand as any)
+    const searchRequest = {
+      ...command,
+      expense: budget?.id || budget,
+      offset: uncategorized ? 0 : command.offset,
+      numberOfResults: uncategorized ? 5000 : command.numberOfResults
+    }
+
+    TransactionRepository.search(searchRequest)
       .then(response => {
-        setTransactions((response.content || []).reduce(groupTransactionByDay, {}))
-        setPagination(response.info)
+        const showOnlyUncategorized = Boolean(uncategorized)
+        const filteredTransactions = showOnlyUncategorized
+          ? (response.content || []).filter((transaction: Transaction) => !transaction.metadata?.category)
+          : (response.content || [])
+        setTransactions(filteredTransactions.reduce(groupTransactionByDay, {}))
+        setPagination(showOnlyUncategorized
+          ? { records: filteredTransactions.length, pageSize: filteredTransactions.length || 1 }
+          : response.info)
       })
   }, [searchCommand])
 
