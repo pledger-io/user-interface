@@ -1,5 +1,5 @@
 import { Icon } from "@iconify-icon/react";
-import React, { Attributes, FC, useRef, useState } from "react";
+import React, { Attributes, FC, MouseEvent, useRef, useState } from "react";
 import { NavLink, useNavigate } from "react-router";
 import { i10n } from "../../config/prime-locale";
 import { useNotification } from "../../context/notification-context";
@@ -47,16 +47,25 @@ const TransactionItem: FC<TransactionItemProps> = ({ transaction, className = ''
       .catch(() => warning('page.transactions.delete.failed'))
   }
 
+  const navigateToEdit = () => navigate(`${ Resolver.Transaction.resolveUrl(transaction) }/edit`)
+
   const onEditClick = () => {
-    // only do this when display width < 768px
     if (window.innerWidth < 768) {
-      navigate(`${ Resolver.Transaction.resolveUrl(transaction) }/edit`)
+      navigateToEdit()
     }
   }
 
+  const onRowClick = (event: MouseEvent<HTMLDivElement>) => {
+    if (window.innerWidth >= 768) return
+    if ((event.target as HTMLElement).closest('a,button,[role="button"]')) return
+    navigateToEdit()
+  }
+
   if (deleted) return null
-  return <div className={ `${ className } flex content-between gap-3 px-2 border-b my-0.5 border-gray-100 last:border-none` }>
-    <span className='text-[.9em] md:text-[1em] md:w-[12em] w-[6em]' onClick={ onEditClick }>
+  return <div
+    className={ `${ className } group flex content-between gap-3 px-2 border-b my-0.5 border-gray-100 hover:bg-surface-100/70 rounded-sm last:border-none` }
+    onClick={ onRowClick }>
+    <span className='text-[.9em] md:text-[1em] md:w-[12em] w-[6em]'>
         { transaction.metadata.budget &&
           <div className='text-gray-400'>
             { transaction.metadata.budget }
@@ -74,7 +83,11 @@ const TransactionItem: FC<TransactionItemProps> = ({ transaction, className = ''
       </span>
     }
     <span className='flex flex-col flex-1'>
-      <span className='text-[.9em] md:text-[1em]' onClick={ onEditClick }>{ transaction.description }</span>
+      <span className='text-[.9em] md:text-[1em]'>{ transaction.description }</span>
+      <span className='md:hidden text-[.72em] text-muted flex items-center gap-0.5'>
+        <Icon icon='mdi:pencil-outline' width='.85em'/>
+        { i10n('page.transaction.action.mobile.edit') }
+      </span>
       { transaction.metadata.tags &&
         <div className='flex gap-1'> { transaction.metadata.tags.map(t => <Tag key={ t } label={ t }/>) } </div>
       }
@@ -103,7 +116,7 @@ const TransactionItem: FC<TransactionItemProps> = ({ transaction, className = ''
         }
         { transaction.metadata.contract &&
           <div className='hidden md:flex text-cyan-500 text-[.8em] pt-[.2em] ml-4 gap-0.5 items-center'
-               title='Contract'>
+               title={ i10n('Transaction.contract') }>
             <Icon icon={ 'mdi:file-sign' } width='.52em'/>
             <span>{ transaction.metadata.contract }</span>
           </div>
@@ -111,7 +124,14 @@ const TransactionItem: FC<TransactionItemProps> = ({ transaction, className = ''
         </span>
     </span>
     <ActionExpander transaction={ transaction } onDelete={ onDelete }/>
-    <span className='w-20 text-right' onClick={ onEditClick }><MoneyComponent money={ amount } currency={ transaction.currency } className={ Resolver.Transaction.isTransfer(transaction) ? 'text-gray-500!' : ''}/></span>
+    <button
+      type='button'
+      className='md:hidden my-auto text-muted'
+      aria-label={ i10n('page.transaction.action.mobile.edit') }
+      onClick={ onEditClick }>
+      <Icon icon='mdi:chevron-right' width='1em'/>
+    </button>
+    <span className='w-20 text-right'><MoneyComponent money={ amount } currency={ transaction.currency } className={ Resolver.Transaction.isTransfer(transaction) ? 'text-gray-500!' : ''}/></span>
   </div>
 }
 
@@ -127,13 +147,13 @@ const ActionExpander = ({ transaction, onDelete }: { transaction: Transaction, o
     })
   }
 
-  return <div className='gap-0.5 hidden md:flex'>
+  return <div className='gap-0.5 hidden md:flex items-center opacity-75 group-hover:opacity-100 transition-opacity'>
       <ScheduleTransactionDialog ref={ scheduleDialogRef } transaction={ transaction }/>
       <Button tooltip={ i10n('page.transaction.action.recurring') }
               text
               size='small'
               severity='secondary'
-              className='opacity-30 hover:opacity-100 p-0!'
+              className='p-0!'
               icon={ 'mdi:calendar-check' }
               onClick={ () => scheduleDialogRef.current?.open() }/>
       { transaction.split &&
@@ -142,7 +162,7 @@ const ActionExpander = ({ transaction, onDelete }: { transaction: Transaction, o
                   text
                   severity='help'
                   icon={ 'mdi:table' }
-                  className='opacity-30 hover:opacity-100 p-0!'
+                  className='p-0!'
                   onClick={ () => splitDialogRef.current?.open() }/>
           <TransactionSplitDialog transaction={ transaction } ref={ splitDialogRef }/>
         </>
@@ -151,14 +171,14 @@ const ActionExpander = ({ transaction, onDelete }: { transaction: Transaction, o
               text
               size='small'
               icon={ 'mdi:square-edit-outline' }
-              className='opacity-30 hover:opacity-100 p-0!'
+              className='p-0!'
               onClick={ () => navigate(`${ Resolver.Transaction.resolveUrl(transaction) }/edit`) }/>
       <Button tooltip={ i10n('common.action.delete') }
               text
               size='small'
               icon={ 'mdi:trash-can-outline' }
               severity='danger'
-              className='opacity-30 hover:opacity-100 p-0!'
+              className='p-0!'
               onClick={ confirmDeleteClick }/>
   </div>
 }
