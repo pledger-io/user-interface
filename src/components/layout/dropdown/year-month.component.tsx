@@ -18,13 +18,30 @@ type MonthYearDropdownProps = {
   maxDate?: Date
 }
 
-const MonthYearDropdown = ({ selected: { year, month }, onChange }: MonthYearDropdownProps) => {
+const MonthYearDropdown = ({ selected: { year, month }, onChange, minDate, maxDate }: MonthYearDropdownProps) => {
   const yearPickerRef = useRef<OverlayPanel>(null)
   const monthPickerRef = useRef<OverlayPanel>(null)
 
+  const clampMonthForYear = (nextYear: number, nextMonth: number) => {
+    let minMonth = 1
+    let maxMonth = 12
+
+    if (minDate && minDate.getFullYear() === nextYear) {
+      minMonth = minDate.getMonth() + 1
+    }
+    if (maxDate && maxDate.getFullYear() === nextYear) {
+      maxMonth = maxDate.getMonth() + 1
+    }
+
+    return Math.min(Math.max(nextMonth, minMonth), maxMonth)
+  }
+
   const onYearSelect = (date: Date | null | undefined) => {
     yearPickerRef.current?.hide()
-    if (date) onChange({ year: date.getFullYear(), month: month })
+    if (date) {
+      const selectedYear = date.getFullYear()
+      onChange({ year: selectedYear, month: clampMonthForYear(selectedYear, month) })
+    }
   }
   const onMonthSelect = (date: Date | null | undefined) => {
     monthPickerRef.current?.hide()
@@ -46,6 +63,8 @@ const MonthYearDropdown = ({ selected: { year, month }, onChange }: MonthYearDro
         <OverlayPanel ref={ monthPickerRef } className='min-w-60 [&>.p-overlaypanel-content]:p-0!'>
           <Calendar view='month' inputClassName='hidden'
                     className='w-full'
+                    minDate={ minDate }
+                    maxDate={ maxDate }
                     value={ selectedDate }
                     onChange={ event => onMonthSelect(event.value) } inline/>
         </OverlayPanel>
@@ -53,6 +72,8 @@ const MonthYearDropdown = ({ selected: { year, month }, onChange }: MonthYearDro
         <OverlayPanel ref={ yearPickerRef } className='min-w-60 [&>.p-overlaypanel-content]:p-0!'>
           <Calendar view='year' inputClassName='hidden'
                     className='w-full'
+                    minDate={ minDate }
+                    maxDate={ maxDate }
                     value={ selectedDate }
                     onChange={ event => onYearSelect(event.value) } inline/>
         </OverlayPanel>
