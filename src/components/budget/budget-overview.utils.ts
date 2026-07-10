@@ -86,7 +86,7 @@ export const getBudgetRecommendationActions = (
   riskLevel: BudgetRiskLevel,
   canEditBudget: boolean
 ): BudgetRecommendationAction[] => {
-  if (riskLevel === "low") return ["transactions"]
+  if (riskLevel === "low") return canEditBudget ? ["transactions", "edit"] : ["transactions"]
   if (riskLevel === "medium") return canEditBudget ? ["transactions", "edit"] : ["transactions"]
   return canEditBudget ? ["edit", "transactions"] : ["transactions"]
 }

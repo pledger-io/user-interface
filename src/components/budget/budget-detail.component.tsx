@@ -27,6 +27,8 @@ const isCurrentMonth = (year: number, month: number) => {
   return year === now.getFullYear() && month === now.getMonth() + 1
 }
 
+const isOpenBudgetPeriod = (period?: { endDate?: string, until?: string } | null) => !period?.endDate && !period?.until
+
 type MappedExpense = ComputedExpense & {
   id: Identifier
 }
@@ -149,7 +151,7 @@ const BudgetDetailComponent = ({ range }: { range: DateRange }) => {
 
   if (!budget) return null
 
-  const canEditBudget = isCurrentMonth(range.year(), range.month())
+  const canEditBudget = isCurrentMonth(range.year(), range.month()) && isOpenBudgetPeriod((budget as any).period)
 
   const expenseOverview: ExpenseProjection[] = budget.expenses.map(expense => {
     const computed = computedById[expense.id as any] || { id: expense.id, ...fallbackComputedExpense }

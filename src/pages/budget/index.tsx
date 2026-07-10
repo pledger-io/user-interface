@@ -105,7 +105,7 @@ const BudgetOverview = () => {
       <BreadCrumbItem label='page.nav.budget.groups'/>
 
       <BreadCrumbMenu>
-        { !isFirstBudgetLoading && <YearMonth
+        { !isFirstBudgetLoading && !hasFirstBudgetError && <YearMonth
             minDate={ firstBudget }
             maxDate={ today }
             onChange={ onDateChange }
@@ -115,7 +115,8 @@ const BudgetOverview = () => {
 
     { hasFirstBudgetError && <div className='mx-2 mt-4 lg:mx-6'>
       <Message severity='error'
-               text={ i10n('page.budget.overview.error.body') }/>
+               text={ i10n('page.budget.overview.firstBudget.error.title') }/>
+      <p className='mt-2 text-sm text-red-700'>{ i10n('page.budget.overview.firstBudget.error.body') }</p>
       <div className='mt-2 flex justify-end'>
         <button onClick={ loadFirstBudget }
                 className='rounded-md border border-red-300 bg-white px-3 py-1 text-sm font-medium text-red-700 hover:bg-red-100'>
@@ -124,9 +125,9 @@ const BudgetOverview = () => {
       </div>
     </div> }
 
-    <Card header={ header } className='mx-2 my-4 lg:mx-6'>
+    { !hasFirstBudgetError && <Card header={ header } className='mx-2 my-4 lg:mx-6'>
       <BudgetDetailComponent range={ range }/>
-    </Card>
+    </Card> }
   </>
 }
 

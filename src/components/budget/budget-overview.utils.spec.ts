@@ -119,7 +119,7 @@ describe("budget overview projection utilities", () => {
   })
 
   it("prioritizes recommendation actions by risk level", () => {
-    expect(getBudgetRecommendationActions("low", true)).toEqual(["transactions"])
+    expect(getBudgetRecommendationActions("low", true)).toEqual(["transactions", "edit"])
     expect(getBudgetRecommendationActions("medium", true)).toEqual(["transactions", "edit"])
     expect(getBudgetRecommendationActions("high", true)).toEqual(["edit", "transactions"])
   })
