@@ -168,6 +168,17 @@ export const sectionDestinations: SectionDestination[] = [
     matchPrefixes: ['/upload']
   },
   {
+    id: 'transactions.upload-create',
+    section: 'transactions',
+    to: '/upload/create',
+    icon: 'mdi:file-import-outline',
+    labelKey: 'page.title.import.upload',
+    descriptionKey: 'page.nav.settings.import',
+    keywords: ['import', 'upload', 'transactions'],
+    aliases: ['new import'],
+    matchPrefixes: ['/upload/create']
+  },
+  {
     id: 'budgets.groups',
     section: 'budgets',
     to: '/budgets',
