@@ -38,7 +38,7 @@ const AppShellHeader = ({ onToggleNavigation, onOpenCommandLauncher, sectionDest
         type='button'
         aria-label={ translate('a11y.navigation.open') }
         onClick={ onToggleNavigation }
-        className='md:hidden rounded-md border border-separator bg-transparent p-2 hover:bg-blue-100/40'>
+        className='ui-interactive-surface md:hidden rounded-md border border-separator bg-transparent p-2'>
         <Icon icon='mdi:menu' width='1.2em'/>
       </button>
 
@@ -52,7 +52,7 @@ const AppShellHeader = ({ onToggleNavigation, onOpenCommandLauncher, sectionDest
           type='button'
           aria-label={ translate('a11y.command.open') }
           onClick={ onOpenCommandLauncher }
-          className='inline-flex items-center gap-2 rounded-md border border-separator bg-background px-2 py-2 text-sm hover:bg-blue-100/30'>
+          className='ui-interactive-surface inline-flex items-center gap-2 rounded-md border border-separator bg-background px-2 py-2 text-sm'>
           <Icon icon='mdi:magnify' width='1em'/>
           <span className='hidden sm:inline'>{ translate('common.action.search') }</span>
           <span className='hidden rounded border border-separator px-1 text-xs text-muted md:inline'>{ translate('layout.command.shortcut') }</span>
@@ -60,31 +60,31 @@ const AppShellHeader = ({ onToggleNavigation, onOpenCommandLauncher, sectionDest
 
         <NavLink
           to='/upload/create'
-          className='hidden md:inline-flex items-center gap-1 rounded-md border border-separator bg-background px-2 py-2 text-sm hover:bg-blue-100/30'>
+          className='ui-interactive-surface hidden md:inline-flex items-center gap-1 rounded-md border border-separator bg-background px-2 py-2 text-sm'>
           <Icon icon='mdi:file-upload-outline' width='1em'/>
           <span>{ translate('page.nav.settings.import') }</span>
         </NavLink>
 
         <NavLink
           to='/reports/spending-insight'
-          className='hidden md:inline-flex items-center gap-1 rounded-md border border-separator bg-background px-2 py-2 text-sm hover:bg-blue-100/30'>
+          className='ui-interactive-surface hidden md:inline-flex items-center gap-1 rounded-md border border-separator bg-background px-2 py-2 text-sm'>
           <Icon icon='mdi:chart-areaspline' width='1em'/>
           <span>{ translate('page.reports.insights.title') }</span>
         </NavLink>
       </div>
     </div>
-    <div className='mt-2 flex items-center gap-2 md:hidden'>
+    <div className='mt-2 flex flex-wrap items-center gap-2 md:hidden'>
       <NavLink
         to='/upload/create'
-        className='inline-flex items-center gap-1 rounded-md border border-separator bg-background px-2 py-1.5 text-sm hover:bg-blue-100/30'>
+        className='ui-interactive-surface inline-flex min-w-0 flex-1 items-center justify-center gap-1 rounded-md border border-separator bg-background px-2 py-1.5 text-sm'>
         <Icon icon='mdi:file-upload-outline' width='1em'/>
-        <span>{ translate('page.nav.settings.import') }</span>
+        <span className='truncate'>{ translate('page.nav.settings.import') }</span>
       </NavLink>
       <NavLink
         to='/reports/spending-insight'
-        className='inline-flex items-center gap-1 rounded-md border border-separator bg-background px-2 py-1.5 text-sm hover:bg-blue-100/30'>
+        className='ui-interactive-surface inline-flex min-w-0 flex-1 items-center justify-center gap-1 rounded-md border border-separator bg-background px-2 py-1.5 text-sm'>
         <Icon icon='mdi:chart-areaspline' width='1em'/>
-        <span>{ translate('page.reports.insights.title') }</span>
+        <span className='truncate'>{ translate('page.reports.insights.title') }</span>
       </NavLink>
     </div>
     <SectionLocalNav destinations={ sectionDestinations }/>

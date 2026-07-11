@@ -1,7 +1,7 @@
 import { DataView } from "primereact/dataview";
 import { Divider } from "primereact/divider";
 import { ProgressBar } from "primereact/progressbar";
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useReducer, useRef } from "react";
 import { Link } from "react-router";
 import { i10n } from "../../config/prime-locale";
 import BudgetRepository, { ComputedExpense } from "../../core/repositories/budget.repository";
@@ -58,19 +58,57 @@ const progressColorByRisk: Record<BudgetRiskLevel, string> = {
   high: "#b91c1c"
 }
 
+type BudgetLoadState = {
+  status: "loading" | "ready" | "error" | "notFound"
+  budget: Budget | null
+  computedExpenses: MappedExpense[]
+}
+
+type BudgetLoadAction =
+  | { type: "loading" }
+  | { type: "ready", budget: Budget, computedExpenses: MappedExpense[] }
+  | { type: "notFound" }
+  | { type: "error" }
+
+const budgetLoadReducer = (state: BudgetLoadState, action: BudgetLoadAction): BudgetLoadState => {
+  switch (action.type) {
+    case "loading":
+      return {
+        ...state,
+        status: "loading"
+      }
+    case "ready":
+      return {
+        status: "ready",
+        budget: action.budget,
+        computedExpenses: action.computedExpenses
+      }
+    case "notFound":
+      return {
+        status: "notFound",
+        budget: null,
+        computedExpenses: []
+      }
+    case "error":
+      return {
+        status: "error",
+        budget: null,
+        computedExpenses: []
+      }
+  }
+}
+
 const BudgetDetailComponent = ({ range }: { range: DateRange }) => {
-  const [budget, setBudget] = useState<Budget | null>(null)
-  const [computedExpenses, setComputedExpenses] = useState<MappedExpense[]>([])
-  const [isLoading, setIsLoading] = useState<boolean>(true)
-  const [loadError, setLoadError] = useState<boolean>(false)
-  const [budgetNotFound, setBudgetNotFound] = useState<boolean>(false)
+  const [loadState, dispatchLoadState] = useReducer(budgetLoadReducer, {
+    status: "loading",
+    budget: null,
+    computedExpenses: []
+  })
   const requestIdRef = useRef(0)
 
   const loadBudget = useCallback(() => {
     const requestId = ++requestIdRef.current
-    setIsLoading(true)
-    setLoadError(false)
-    setBudgetNotFound(false)
+    dispatchLoadState({ type: "loading" })
 
     BudgetRepository.budgetMonth(range.year(), range.month())
       .then(async budget => {
@@ -79,7 +117,6 @@ const BudgetDetailComponent = ({ range }: { range: DateRange }) => {
           ...budget,
           expenses: Array.isArray(budget.expenses) ? budget.expenses : []
         } as Budget
-        setBudget(normalizedBudget)
         const computed = await Promise.allSettled(normalizedBudget.expenses.map(async expense => {
           const balance = await BudgetRepository.compute(expense.id, range.year(), range.month())
           return {
@@ -88,26 +125,23 @@ const BudgetDetailComponent = ({ range }: { range: DateRange }) => {
           } as MappedExpense
         }))
         if (requestIdRef.current !== requestId) return
-        setComputedExpenses(computed.map((result, index) => {
+        const computedExpenses = computed.map((result, index) => {
           if (result.status === "fulfilled") return result.value
           return { id: normalizedBudget.expenses[index].id, ...fallbackComputedExpense }
-        }))
+        })
+        dispatchLoadState({
+          type: "ready",
+          budget: normalizedBudget,
+          computedExpenses
+        })
       })
       .catch((error: any) => {
         if (requestIdRef.current !== requestId) return
         if (error?.response?.status === 404 || error?.status === 404) {
-          setBudgetNotFound(true)
-          setBudget(null)
-          setComputedExpenses([])
+          dispatchLoadState({ type: "notFound" })
           return
         }
-        setLoadError(true)
-        setBudget(null)
-        setComputedExpenses([])
-      })
-      .finally(() => {
-        if (requestIdRef.current !== requestId) return
-        setIsLoading(false)
+        dispatchLoadState({ type: "error" })
       })
   }, [range])
 
@@ -115,10 +149,15 @@ const BudgetDetailComponent = ({ range }: { range: DateRange }) => {
     loadBudget()
   }, [loadBudget]);
 
-  const computedById = useMemo(() => computedExpenses.reduce<Record<string, MappedExpense>>((accumulator, item) => {
+  const computedById = useMemo(() => loadState.computedExpenses.reduce<Record<string, MappedExpense>>((accumulator, item) => {
     accumulator[item.id as any] = item
     return accumulator
-  }, {}), [computedExpenses])
+  }, {}), [loadState.computedExpenses])
+
+  const isLoading = loadState.status === "loading"
+  const loadError = loadState.status === "error"
+  const budgetNotFound = loadState.status === "notFound"
+  const budget = loadState.budget
 
   if (isLoading) {
     return <div className='rounded-lg border border-slate-200 bg-slate-50 px-4 py-8'>

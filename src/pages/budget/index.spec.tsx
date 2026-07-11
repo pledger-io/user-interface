@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router";
 import { describe, expect, it, vi, beforeEach } from "vitest";
 import BudgetOverview from "./index";
@@ -99,11 +99,38 @@ describe("BudgetOverview first-budget handling", () => {
     renderPage();
 
     expect(await screen.findByText("page.budget.overview.firstBudget.error.title")).toBeInTheDocument();
+    expect(navigateMock).not.toHaveBeenCalled();
     expect(screen.getByText("page.budget.overview.firstBudget.error.body")).toBeInTheDocument();
     expect(screen.queryByTestId("budget-detail")).not.toBeInTheDocument();
     expect(screen.queryByTestId("year-month")).not.toBeInTheDocument();
     expect(screen.queryByText("page.budget.overview.error.title")).not.toBeInTheDocument();
     expect(screen.queryByText("page.budget.overview.notfound.title")).not.toBeInTheDocument();
+  });
+
+  it("keeps detail hidden while retrying and shows detail when retry succeeds", async () => {
+    const retryDeferred = deferredPromise<{ period: { startDate: string } }>();
+    firstBudgetMock
+      .mockRejectedValueOnce({ status: 500 })
+      .mockReturnValueOnce(retryDeferred.promise);
+
+    renderPage();
+
+    expect(await screen.findByText("page.budget.overview.firstBudget.error.title")).toBeInTheDocument();
+    expect(screen.queryByTestId("budget-detail")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("year-month")).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: "page.budget.overview.action.retry" }));
+
+    await waitFor(() => {
+      expect(screen.queryByText("page.budget.overview.firstBudget.error.title")).not.toBeInTheDocument();
+    });
+    expect(screen.queryByTestId("budget-detail")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("year-month")).not.toBeInTheDocument();
+
+    retryDeferred.resolve({ period: { startDate: "2026-01-01" } });
+
+    expect(await screen.findByTestId("year-month")).toBeInTheDocument();
+    expect(screen.getByTestId("budget-detail")).toBeInTheDocument();
   });
 
   it("redirects to first setup when first-budget returns 400", async () => {
@@ -132,6 +159,7 @@ describe("BudgetOverview first-budget handling", () => {
     renderPage();
 
     expect(screen.queryByTestId("year-month")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("budget-detail")).not.toBeInTheDocument();
 
     deferred.resolve({ period: { startDate: "2026-01-01" } });
     expect(await screen.findByTestId("year-month")).toBeInTheDocument();

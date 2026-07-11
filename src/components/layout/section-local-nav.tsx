@@ -47,10 +47,10 @@ const SectionLocalNav = ({ destinations }: SectionLocalNavProps) => {
         return <NavLink
           key={ destination.id }
           to={ destination.to }
-          className={ `whitespace-nowrap rounded-md px-3 py-1.5 text-sm transition-colors ${
+          className={ `ui-interactive-surface whitespace-nowrap rounded-md px-3 py-1.5 text-sm ${
             active
-              ? 'bg-blue-100/60 text-blue-900 font-medium'
-              : 'text-700 hover:bg-blue-100/30 hover:text-gray-900'
+              ? 'ui-interactive-active'
+              : ''
           }` }>
           { translate(destination.labelKey) }
         </NavLink>
@@ -63,9 +63,9 @@ const SectionLocalNav = ({ destinations }: SectionLocalNavProps) => {
         aria-label={ translate('a11y.navigation.section.open') }
         aria-expanded={ mobileMenuOpen }
         onClick={ () => setMobileMenuOpen(true) }
-        className='w-full rounded-md border border-separator bg-background px-3 py-2 text-left text-sm'>
+        className='ui-interactive-surface w-full rounded-md border border-separator bg-background px-3 py-2 text-left text-sm'>
         <span className='text-muted'>{ sectionPagesLabel }</span>
-        { activeLabel && <span className='ml-2 font-medium text-900'>{ translate(activeLabel) }</span> }
+        { activeLabel && <span className='ml-2 font-medium'>{ translate(activeLabel) }</span> }
       </button>
       <Dialog
         header={ sectionPagesLabel }
@@ -82,10 +82,10 @@ const SectionLocalNav = ({ destinations }: SectionLocalNavProps) => {
               key={ destination.id }
               to={ destination.to }
               onClick={ () => setMobileMenuOpen(false) }
-              className={ `flex items-center gap-2 rounded-md px-3 py-2 ${
+              className={ `ui-interactive-surface flex items-center gap-2 rounded-md px-3 py-2 ${
                 active
-                  ? 'bg-blue-100/60 text-blue-900 font-medium'
-                  : 'text-700 hover:bg-blue-100/30 hover:text-gray-900'
+                  ? 'ui-interactive-active'
+                  : ''
               }` }>
               <Icon icon={ destination.icon } width='1.1em'/>
               <span>{ translate(destination.labelKey) }</span>

@@ -61,6 +61,12 @@ vi.mock("./budget-expense-actions.component", () => ({
   default: ({ expense }: { expense: { id: string } }) => <button>{ `edit-${ expense.id }` }</button>
 }));
 
+const renderComponent = (year = 2026, month = 7) => render(
+  <MemoryRouter>
+    <BudgetDetailComponent range={ { year: () => year, month: () => month } as any }/>
+  </MemoryRouter>
+);
+
 describe("BudgetDetailComponent recommendations", () => {
   beforeEach(() => {
     vi.useFakeTimers({ toFake: ["Date"] });
@@ -132,5 +138,86 @@ describe("BudgetDetailComponent recommendations", () => {
     const actionButton = within(card).getByRole("button", { name: "edit-medium" });
     expect(transactionLink.compareDocumentPosition(actionButton) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
 
+  });
+
+  it("shows not-found state when budget month returns 404", async () => {
+    budgetMonthMock.mockRejectedValue({ status: 404 });
+
+    renderComponent();
+
+    expect(await screen.findByText("page.budget.overview.notfound.title")).toBeInTheDocument();
+    expect(screen.getByText("page.budget.overview.notfound.body")).toBeInTheDocument();
+    expect(screen.queryByText("page.budget.overview.error.title")).not.toBeInTheDocument();
+  });
+
+  it("shows generic error state when budget month fails non-404", async () => {
+    budgetMonthMock.mockRejectedValue({ status: 500 });
+
+    renderComponent();
+
+    expect(await screen.findByText("page.budget.overview.error.title")).toBeInTheDocument();
+    expect(screen.getByText("page.budget.overview.error.body")).toBeInTheDocument();
+    expect(screen.queryByText("page.budget.overview.notfound.title")).not.toBeInTheDocument();
+  });
+
+  it("renders with fallback values when one compute call fails", async () => {
+    budgetMonthMock.mockResolvedValue({
+      period: { startDate: "2026-07-01" },
+      expenses: [
+        { id: "ok", name: "Okay", expected: 100 },
+        { id: "failed", name: "Failed", expected: 200 }
+      ]
+    });
+    computeMock
+      .mockResolvedValueOnce([{ spent: -30, left: 70, dailySpent: 1, dailyLeft: 2 }])
+      .mockRejectedValueOnce(new Error("compute failed"));
+
+    renderComponent();
+
+    expect(await screen.findByTestId("expense-card-ok")).toBeInTheDocument();
+    expect(screen.getByTestId("expense-card-failed")).toBeInTheDocument();
+    expect(screen.queryByText("page.budget.overview.error.title")).not.toBeInTheDocument();
+    expect(screen.getByText("summary")).toBeInTheDocument();
+  });
+
+  it("shows edit controls for current open month only", async () => {
+    budgetMonthMock.mockResolvedValue({
+      period: { startDate: "2026-07-01" },
+      expenses: [{ id: "open-current", name: "Open Current", expected: 100 }]
+    });
+    computeMock.mockResolvedValue([{ spent: -20, left: 80, dailySpent: 0, dailyLeft: 0 }]);
+
+    renderComponent(2026, 7);
+
+    expect(await screen.findByText("add-expense")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "edit-open-current" })).toBeInTheDocument();
+  });
+
+  it("hides edit controls for current closed month", async () => {
+    budgetMonthMock.mockResolvedValue({
+      period: { startDate: "2026-07-01", endDate: "2026-07-31" },
+      expenses: [{ id: "closed-current", name: "Closed Current", expected: 100 }]
+    });
+    computeMock.mockResolvedValue([{ spent: -20, left: 80, dailySpent: 0, dailyLeft: 0 }]);
+
+    renderComponent(2026, 7);
+
+    expect(await screen.findByTestId("expense-card-closed-current")).toBeInTheDocument();
+    expect(screen.queryByText("add-expense")).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "edit-closed-current" })).not.toBeInTheDocument();
+  });
+
+  it("hides edit controls for non-current month", async () => {
+    budgetMonthMock.mockResolvedValue({
+      period: { startDate: "2026-06-01" },
+      expenses: [{ id: "past-open", name: "Past Open", expected: 100 }]
+    });
+    computeMock.mockResolvedValue([{ spent: -20, left: 80, dailySpent: 0, dailyLeft: 0 }]);
+
+    renderComponent(2026, 6);
+
+    expect(await screen.findByTestId("expense-card-past-open")).toBeInTheDocument();
+    expect(screen.queryByText("add-expense")).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "edit-past-open" })).not.toBeInTheDocument();
   });
 });

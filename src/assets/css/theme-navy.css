@@ -13,4 +13,16 @@ body {
     --card-header-color: #fff;
     --wizard-step-color: #6c757d;
     --link-color: #007bff;
+
+    --ui-focus-ring-color: #60a5fa;
+    --ui-interactive-hover-bg: rgba(96, 165, 250, 0.16);
+    --ui-interactive-active-bg: rgba(37, 99, 235, 0.48);
+    --ui-interactive-active-text: #ffffff;
+    --ui-control-background: #ffffff;
+    --ui-control-border-color: #192d3e;
+    --ui-control-disabled-background: rgba(148, 163, 184, 0.2);
+    --ui-surface-card-bg: #ffffff;
+    --ui-surface-card-border: #192d3e;
+    --ui-badge-bg: rgba(2, 44, 81, 0.2);
+    --ui-badge-color: #002c51;
 }

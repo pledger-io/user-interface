@@ -259,8 +259,8 @@ const CommandLauncher = ({ visible, commands, onHide }: CommandLauncherProps) =>
       onMouseEnter={ () => setHighlightedIndex(index) }
       tabIndex={ -1 }
       aria-selected={ highlightedIndex === index }
-      className={ `flex w-full items-start gap-2 px-3 py-2 text-left hover:bg-blue-100/30 ${
-        highlightedIndex === index ? 'bg-blue-100/30' : ''
+      className={ `ui-interactive-surface flex w-full items-start gap-2 px-3 py-2 text-left ${
+        highlightedIndex === index ? 'ui-interactive-active' : ''
       }` }>
       <Icon icon={ command.icon } width='1.2em' className='mt-0.5'/>
       <span className='min-w-0 grow'>

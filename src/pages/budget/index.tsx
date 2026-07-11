@@ -1,7 +1,7 @@
 import { Card } from "primereact/card";
 import { Message } from "primereact/message";
 import { useNavigate } from "react-router";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import BreadCrumbItem from "../../components/breadcrumb/breadcrumb-item.component";
 import BreadCrumbMenu from "../../components/breadcrumb/breadcrumb-menu.component";
 import BreadCrumbs from "../../components/breadcrumb/breadcrumb.component";
@@ -54,35 +54,72 @@ const errorStatusCode = (error: unknown) => {
   return typedError?.status || typedError?.response?.status
 }
 
+type FirstBudgetLoadState = {
+  status: "loading" | "ready" | "error"
+  firstBudget?: Date
+}
+
+type FirstBudgetLoadAction =
+  | { type: "loading" }
+  | { type: "ready", firstBudget: Date }
+  | { type: "error" }
+
+const firstBudgetLoadReducer = (state: FirstBudgetLoadState, action: FirstBudgetLoadAction): FirstBudgetLoadState => {
+  switch (action.type) {
+    case "loading":
+      return {
+        ...state,
+        status: "loading"
+      }
+    case "ready":
+      return {
+        status: "ready",
+        firstBudget: action.firstBudget
+      }
+    case "error":
+      return {
+        status: "error",
+        firstBudget: undefined
+      }
+  }
+}
+
 const BudgetOverview = () => {
-  const [firstBudget, setFirstBudget] = useState<Date>()
-  const [isFirstBudgetLoading, setIsFirstBudgetLoading] = useState(true)
-  const [hasFirstBudgetError, setHasFirstBudgetError] = useState(false)
+  const [firstBudgetState, dispatchFirstBudget] = useReducer(firstBudgetLoadReducer, {
+    status: "loading",
+    firstBudget: undefined
+  })
   const [today] = useState(() => new Date())
   const navigate = useNavigate()
   const [range] = useDateRange()
+  const requestIdRef = useRef(0)
 
   const loadFirstBudget = useCallback(() => {
-    setHasFirstBudgetError(false)
-    setIsFirstBudgetLoading(true)
+    const requestId = ++requestIdRef.current
+    dispatchFirstBudget({ type: "loading" })
+
     BudgetRepository.firstBudget()
       .then(budget => {
+        if (requestIdRef.current !== requestId) return
         const parsed = extractFirstBudgetDate(budget)
         if (!parsed) {
-          setHasFirstBudgetError(true)
+          dispatchFirstBudget({ type: "error" })
           return
         }
-        setFirstBudget(parsed)
+        dispatchFirstBudget({
+          type: "ready",
+          firstBudget: parsed
+        })
       })
       .catch(error => {
+        if (requestIdRef.current !== requestId) return
         const statusCode = errorStatusCode(error)
         if (statusCode === 400 || statusCode === 404) {
           navigate('/budgets/first-setup')
           return
         }
-        setHasFirstBudgetError(true)
+        dispatchFirstBudget({ type: "error" })
       })
-      .finally(() => setIsFirstBudgetLoading(false))
   }, [navigate])
 
   useEffect(() => {
@@ -90,6 +127,9 @@ const BudgetOverview = () => {
   }, [loadFirstBudget])
 
   const onDateChange = ({ year, month }: any) => navigate(`/budgets/${ year }/${ month }`)
+  const isFirstBudgetReady = firstBudgetState.status === "ready"
+  const hasFirstBudgetError = firstBudgetState.status === "error"
+  const firstBudget = firstBudgetState.firstBudget
   const header = () =>
     <div className='px-2 py-2 border-b font-bold flex flex-wrap gap-1 justify-center text-center'>
       { i10n('page.budget.overview.title') }:
@@ -105,7 +145,7 @@ const BudgetOverview = () => {
       <BreadCrumbItem label='page.nav.budget.groups'/>
 
       <BreadCrumbMenu>
-        { !isFirstBudgetLoading && !hasFirstBudgetError && <YearMonth
+        { isFirstBudgetReady && !hasFirstBudgetError && firstBudget && <YearMonth
             minDate={ firstBudget }
             maxDate={ today }
             onChange={ onDateChange }
@@ -125,7 +165,7 @@ const BudgetOverview = () => {
       </div>
     </div> }
 
-    { !hasFirstBudgetError && <Card header={ header } className='mx-2 my-4 lg:mx-6'>
+    { isFirstBudgetReady && !hasFirstBudgetError && <Card header={ header } className='mx-2 my-4 lg:mx-6'>
       <BudgetDetailComponent range={ range }/>
     </Card> }
   </>
