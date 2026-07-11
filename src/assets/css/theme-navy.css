@@ -1,28 +1,42 @@
 body {
-    --app-body-background: #c7e0f9;
-    --app-background: #fff;
-    --app-border-color: #192d3e;
-    --app-header-background: #002C51;
-    --app-header-text: #fff;
-    --sidebar-color: #fff;
-    --sidebar-icon-color: #74828e;
-    --sidebar-background: #002C51;
-    --sidebar-title-color: #b7deff;
-    --sidebar-sub-background: #002C51;
-    --card-header-background: #3f8cbf;
-    --card-header-color: #fff;
-    --wizard-step-color: #6c757d;
-    --link-color: #007bff;
+    --app-body-background: #061321;
+    --app-background: #0b2238;
+    --app-border-color: #4f7090;
+    --app-header-background: #082e4a;
+    --app-header-text: #eaf4ff;
+    --app-text-muted-color: #8fa8bf;
 
-    --ui-focus-ring-color: #60a5fa;
-    --ui-interactive-hover-bg: rgba(96, 165, 250, 0.16);
-    --ui-interactive-active-bg: rgba(37, 99, 235, 0.48);
-    --ui-interactive-active-text: #ffffff;
-    --ui-control-background: #ffffff;
-    --ui-control-border-color: #192d3e;
-    --ui-control-disabled-background: rgba(148, 163, 184, 0.2);
-    --ui-surface-card-bg: #ffffff;
-    --ui-surface-card-border: #192d3e;
-    --ui-badge-bg: rgba(2, 44, 81, 0.2);
-    --ui-badge-color: #002c51;
+    --sidebar-color: #dce9f6;
+    --sidebar-icon-color: #8fb1cb;
+    --sidebar-background: #08273f;
+    --sidebar-title-color: #9fe4d7;
+    --sidebar-sub-background: #0a2e4b;
+
+    --card-header-background: #123a5d;
+    --card-header-color: #eef6ff;
+    --wizard-step-color: #8fa8bf;
+    --link-color: #69b8ff;
+
+    --ui-focus-ring-color: #32b39a;
+    --ui-interactive-hover-bg: rgba(50, 179, 154, 0.16);
+    --ui-interactive-active-bg: rgba(50, 179, 154, 0.28);
+    --ui-interactive-active-text: #e9fffb;
+    --ui-control-background: #112a40;
+    --ui-control-border-color: #5b7c9a;
+    --ui-control-disabled-background: rgba(143, 168, 191, 0.22);
+    --ui-surface-card-bg: #0f263c;
+    --ui-surface-card-border: #577a99;
+    --ui-badge-bg: rgba(50, 179, 154, 0.2);
+    --ui-badge-color: #b8f4e9;
+
+    --primary-color: #0d4f7f;
+    --dark-primary-color: #0b3f65;
+    --secondary-color: #32b39a;
+    --dark-secondary-color: #17877c;
+    --success-color: #2ea86f;
+    --dark-success-color: #1f7d52;
+    --warning-color: #d39a3a;
+    --dark-warning-color: #a67525;
+    --info-color: #2f8fcb;
+    --dark-info-color: #1f6fa5;
 }

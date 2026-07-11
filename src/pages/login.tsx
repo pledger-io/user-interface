@@ -15,6 +15,7 @@ import { ThemeProvider } from "../context/theme-context";
 import { Locales, SupportedLocales } from "../core/repositories/i18n-repository";
 import SecurityRepository from "../core/repositories/security-repository";
 import useQueryParam from "../hooks/query-param.hook";
+import logoWordmark from "../assets/logo-wordmark.png";
 
 type LoginForm = {
   username: string,
@@ -53,11 +54,11 @@ const LoginCard = () => {
     { label: 'Deutsch', icon: () => <Flag language='de'/>, command: () => setLocale('de') }
   ]
 
-  const header = <div className='p-4 flex justify-between items-center relative overflow-hidden bg-gray-700/20 border-b-gray-500/20 border-b'>
+  const header = <div className='p-4 flex justify-between items-center relative overflow-hidden bg-[#edf4f9] border-b border-[#d4e1ec]'>
     <span/>
-    <span className="text-2xl font-bold text-blue-800/70">Pledger.io</span>
+    <img src={ logoWordmark } alt='Pledger.io' className='h-10 w-auto max-w-[13rem]'/>
     <Menu model={ languageMenu } popup ref={ configMenu }/>
-    <button type='button' className="cursor-pointer z-10 p-2 hover:bg-gray-100 rounded-full transition-all"
+    <button type='button' className="cursor-pointer z-10 p-2 hover:bg-[#dfeaf4] rounded-full transition-all"
             onClick={ (e) => configMenu?.current?.toggle(e) }
             role='button'>
       <Icon icon='mdi:web' size={ 1 }/>

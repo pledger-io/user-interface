@@ -5,7 +5,7 @@ import { i10n } from "../../config/prime-locale";
 import { navigationSections, resolveActiveSection } from "../../navigation/sections";
 import React from "react";
 import { NavLink, useLocation } from "react-router";
-import logo from '../../assets/logo.png'
+import logoWordmark from '../../assets/logo-wordmark.png'
 type SidebarProps = {
   logoutCallback: () => void
   isOpen: boolean
@@ -52,14 +52,12 @@ const Sidebar = ({ logoutCallback, isOpen, onClose }: SidebarProps) => {
       aria-label={ translate('a11y.navigation.label') }
       inert={ navigationHidden }>
       <div className='flex h-full flex-col'>
-        <div className='px-3 py-3 border-b border-separator flex flex-row items-center gap-2 relative overflow-hidden'>
+        <div className='px-3 py-3 border-b border-separator flex items-center justify-center relative overflow-hidden'>
           <img src='/ui/images/login-bg.png' className='absolute left-0 right-0 top-0 bottom-0 opacity-20'
                alt={ translate('a11y.image.background') }/>
-          <img className='w-8 h-8 z-1'
-               src={ logo } alt={ translate('a11y.image.logo') }/>
-          <span className='z-1 text-lg font-semibold'>
-            Pledger<span className='text-muted'>.io</span>
-          </span>
+          <img className='z-1 h-8 w-auto max-w-[11.5rem]'
+               src={ logoWordmark }
+               alt={ translate('a11y.image.logo') }/>
         </div>
 
         <nav className='grow overflow-y-auto px-2 py-3'>
