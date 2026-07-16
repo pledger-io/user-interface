@@ -174,11 +174,6 @@
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.28.6.tgz#d267a43cb1836dc4d182cce93ae75ba954ef6d2b"
   integrity sha512-05WQkdpL9COIMz4LjTxGpPNCdlpyimKppYNoJ5Di5EUObifl8t4tuLuUBBZEpoLYOmfvIWrsp9fCl0HoPRVTdA==
 
-"@babel/runtime@^7.5.5", "@babel/runtime@^7.8.7":
-  version "7.29.7"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.29.7.tgz#12022450c45a4da6d8d8287b18a4ff2ddb23f768"
-  integrity sha512-Nq8OhGWiZIZGV6hLHoyAKLLcJihP/xFeBMGJoUrxTX2psI8dCifzLhZISFb+VWS3wFMRDmCGw5R+dOySCqPLhw==
-
 "@babel/template@^7.28.6":
   version "7.28.6"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.28.6.tgz#0e7e56ecedb78aeef66ce7972b082fce76a23e57"
@@ -526,6 +521,16 @@
   dependencies:
     "@tybys/wasm-util" "^0.10.3"
 
+"@noble/ed25519@2.3.0":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@noble/ed25519/-/ed25519-2.3.0.tgz#df0dbe424cfd7da4968b956b819c15db5fbe7f21"
+  integrity sha512-M7dvXL2B92/M7dw9+gzuydL8qn/jiqNHaoR3Q+cb1q1GHV7uwE17WCyFMG+Y+TZb5izcaXk5TdJRrDUxHXL78A==
+
+"@noble/hashes@2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@noble/hashes/-/hashes-2.2.0.tgz#22da1d16a469954fce877055d559900a6c73b63b"
+  integrity sha512-IYqDGiTXab6FniAgnSdZwgWbomxpy9FtYvLKs7wCUs2a8RkITG+DFGO1DM9cr+E3/RgADRpFjrKVaJ1z6sjtEg==
+
 "@oxc-project/types@=0.139.0":
   version "0.139.0"
   resolved "https://registry.yarnpkg.com/@oxc-project/types/-/types-0.139.0.tgz#38d76b9dbf934c2a02be174fb32ceebf182fe742"
@@ -619,6 +624,77 @@
     "@parcel/watcher-win32-arm64" "2.5.6"
     "@parcel/watcher-win32-ia32" "2.5.6"
     "@parcel/watcher-win32-x64" "2.5.6"
+
+"@primereact/core@11.0.0":
+  version "11.0.0"
+  resolved "https://registry.yarnpkg.com/@primereact/core/-/core-11.0.0.tgz#68172dbddb89ed14e977a4a7da8c45f26cb8f275"
+  integrity sha512-8ceGyUgGcZvbn6XMaOwdlyf6HCd6qYvD5tjrZyDKFUcvi17BiY5oPLthwZUYh1JsNiwHgKUV8B/Eo9rjI9VWyA==
+  dependencies:
+    "@primereact/hooks" "11.0.0"
+    "@primereact/types" "11.0.0"
+    "@primeui/license-manager" "^1.0.0"
+    "@primeuix/locale" "^0.1.0"
+    "@primeuix/motion" "^1.0.0"
+    "@primeuix/styled" "^1.0.0"
+    "@primeuix/utils" "^0.8.0"
+
+"@primereact/headless@11.0.0":
+  version "11.0.0"
+  resolved "https://registry.yarnpkg.com/@primereact/headless/-/headless-11.0.0.tgz#6304c18b614009d317a134fe6534523272cd7e05"
+  integrity sha512-fFNRK5xCGFwOOITgLeBQ+RC/+SWDFrTVBwkDZ6qlsHWpn8XjCVBLpA+QsYuoP2z8MkY3mk6+NnwZqi/y6YL90w==
+  dependencies:
+    "@primereact/core" "11.0.0"
+    "@primereact/hooks" "11.0.0"
+    "@primeui/license-manager" "^1.0.0"
+    "@primeuix/styled" "^1.0.0"
+    "@primeuix/utils" "^0.8.0"
+
+"@primereact/hooks@11.0.0":
+  version "11.0.0"
+  resolved "https://registry.yarnpkg.com/@primereact/hooks/-/hooks-11.0.0.tgz#deb15b9fe82f3437187373feac2207ffb0f753a0"
+  integrity sha512-ohah+jaiQd2piCnY436VC4UKdQgHAdB8x5e84S9AnsNIsWVjv91htDNQ0IBdikii8zxTfSPIZCDjM5IBYqed8Q==
+  dependencies:
+    "@primeuix/utils" "^0.8.0"
+
+"@primereact/types@11.0.0":
+  version "11.0.0"
+  resolved "https://registry.yarnpkg.com/@primereact/types/-/types-11.0.0.tgz#eb433955b1c45a29ea8ee6b9223848547d76aa4e"
+  integrity sha512-xuioS0Ou3AOeS4PxtYULKkn4kwCMLKX/l7yxFc39YsF4cFDLBqRJzESgsKrDYm0wcZRYWGa44pAcYKwxUO/4QQ==
+
+"@primeui/license-manager@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@primeui/license-manager/-/license-manager-1.0.0.tgz#f57a8984f8999e6fb82168366fc6bcd9ed279953"
+  integrity sha512-89J7r8cclEqoHVwjOX1adPcB/blFSocpzuYlzmd+6r0gxzg2Vd4jM54TKXt9/qwAT/kOv4vYnHKZ6hcP2GFtfA==
+  dependencies:
+    "@noble/ed25519" "2.3.0"
+    "@noble/hashes" "2.2.0"
+
+"@primeuix/locale@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@primeuix/locale/-/locale-0.1.0.tgz#dcd386296aac8228edaa8f780a69c106aadcae29"
+  integrity sha512-/qLGiwQ/YN83GPSygKEI3cwgZ+rb0R0rNNtQrOGGaHIaG3zpkGS3QbK/qtDUi0leC69jJgY39GDX+gCeUXPKdg==
+  dependencies:
+    "@primeuix/utils" "^0.8.0"
+
+"@primeuix/motion@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@primeuix/motion/-/motion-1.0.0.tgz#625c2423adee9fa22cfd298a595828a8c20bf028"
+  integrity sha512-rqpFRKmUVp9BI3YQKdok0rLUwzYShXzuuxy72Kq74xYRV14eR+4+XrIXOdyVs7j7CYV0ajYowiRpJCrVgdrq6A==
+  dependencies:
+    "@primeuix/utils" "^0.8.0"
+
+"@primeuix/styled@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@primeuix/styled/-/styled-1.0.0.tgz#61ce5d9b8b0d3c96774cc7c5b59178cadaafa28b"
+  integrity sha512-6SXoeQWwKswSqTv1ygaXNfY7otHo6Rb9mxbKJK5WF8adWlZ6CtwmlNfIP+p8cH/zGccsei/5Bu7IetXlMoZGjQ==
+  dependencies:
+    "@primeui/license-manager" "^1.0.0"
+    "@primeuix/utils" "^0.8.0"
+
+"@primeuix/utils@^0.8.0":
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/@primeuix/utils/-/utils-0.8.0.tgz#8c8c961d78f590b9c48a979e47fc5562b00e6f0a"
+  integrity sha512-dZSMKU2XJ7W7VDLuFMS/o4k+QYw4SYIpqSNhR/jdasMaaXl8eq0Gt7fTzTwwq7hgfmfOsI6V5xtzUUIvybOJ/w==
 
 "@rolldown/binding-android-arm64@1.1.5":
   version "1.1.5"
@@ -1090,11 +1166,6 @@
   version "7.0.15"
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.15.tgz#596a1747233694d50f6ad8a7869fcb6f56cf5841"
   integrity sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==
-
-"@types/react-transition-group@^4.4.1":
-  version "4.4.12"
-  resolved "https://registry.yarnpkg.com/@types/react-transition-group/-/react-transition-group-4.4.12.tgz#b5d76568485b02a307238270bfe96cb51ee2a044"
-  integrity sha512-8TV6R3h2j7a91c+1DXdJi3Syo69zzIZbz7Lg5tORM5LEJG7X/E6a1V3drRyBRZq7/utz7A+c4OgYLiLcYGHG6w==
 
 "@types/react@^19.0.2":
   version "19.2.17"
@@ -1594,7 +1665,7 @@ css.escape@^1.5.1:
   resolved "https://registry.yarnpkg.com/css.escape/-/css.escape-1.5.1.tgz#42e27d4fa04ae32f931a4b4d4191fa9cddee97cb"
   integrity sha512-YUifsXXuknHlUsmlgyY0PKzgPOr7/FjCePfHNt0jxm83wHZi44VDMQ7/fGNkjY3/jV1MC+1CmZbaHzugyeRtpg==
 
-csstype@^3.0.2, csstype@^3.2.2:
+csstype@^3.2.2:
   version "3.2.3"
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.2.3.tgz#ec48c0f3e993e50648c86da559e2610995cf989a"
   integrity sha512-z1HGKcYy2xA8AGQfwrn0PAy+PB7X/GSj3UVJW9qKyn43xWa+gl5nXmU4qqLMRzWVLFC8KusUX8T/0kCiOYpAIQ==
@@ -1648,14 +1719,6 @@ dom-accessibility-api@^0.6.3:
   version "0.6.3"
   resolved "https://registry.yarnpkg.com/dom-accessibility-api/-/dom-accessibility-api-0.6.3.tgz#993e925cc1d73f2c662e7d75dd5a5445259a8fd8"
   integrity sha512-7ZgogeTnjuHbo+ct10G9Ffp0mif17idi0IyWNVA/wcwcm7NPOD/WEHVP3n7n3MhXqxoIYm8d6MuZohYWIZ4T3w==
-
-dom-helpers@^5.0.1:
-  version "5.2.1"
-  resolved "https://registry.yarnpkg.com/dom-helpers/-/dom-helpers-5.2.1.tgz#d9400536b2bf8225ad98fe052e029451ac40e902"
-  integrity sha512-nRCa7CK3VTrM2NmGkIy4cbK7IZlgBE/PYMn55rrXefr5xXDP0LdtfPnblFDoVdcAfslJ7or6iqAUnx0CCGIWQA==
-  dependencies:
-    "@babel/runtime" "^7.8.7"
-    csstype "^3.0.2"
 
 dot-case@^3.0.4:
   version "3.0.4"
@@ -2767,15 +2830,15 @@ primeicons@^8.0.0:
   resolved "https://registry.yarnpkg.com/primeicons/-/primeicons-8.0.0.tgz#413bbcef56480beb8f96a5628f1de695011375c8"
   integrity sha512-eZGk+Mgb4fE+LkJi9LvllbnB4RVUF9kzmnLVnT3ZMY6stqKVh7TUJ0mFoMNIEgTnJSvhaGcJotDiSvtVvkHd7g==
 
-primereact@^10.9.2:
-  version "10.9.8"
-  resolved "https://registry.yarnpkg.com/primereact/-/primereact-10.9.8.tgz#45a4f45252454f287fdce59f190905ce08de0a40"
-  integrity sha512-kX0hOce2WpG24CzRJWlHrRPsvbCsOyBDqsHCC/p4W8okxHIdkOxxIkQBUVO0gRuh0Lxl5o7lmEEtUMzrlicf8g==
+primereact@^11.0.0:
+  version "11.0.0"
+  resolved "https://registry.yarnpkg.com/primereact/-/primereact-11.0.0.tgz#33d1eb42011934f8c70c86e0849fbe47b5d87f4b"
+  integrity sha512-F4m7J6Ifk2zNW3iugt/8cez7WIr+8XehiIK6uLuw7zsZQJ6FBbAFpGjAq8zr6qfp3lqbnc90zbdaU3V8oHgE4g==
   dependencies:
-    "@types/react-transition-group" "^4.4.1"
-    react-transition-group "^4.4.1"
+    "@primereact/core" "11.0.0"
+    "@primereact/headless" "11.0.0"
 
-prop-types@^15.6.2, prop-types@^15.8.1:
+prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -2833,16 +2896,6 @@ react-router@^7.1.1:
   dependencies:
     cookie "^1.0.1"
     set-cookie-parser "^2.6.0"
-
-react-transition-group@^4.4.1:
-  version "4.4.5"
-  resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-4.4.5.tgz#e53d4e3f3344da8521489fbef8f2581d42becdd1"
-  integrity sha512-pZcd1MCJoiKiBR2NRxeCRg13uCXbydPnmB4EOeRrY7480qNWO8IIgQG6zlDkm6uRMsURXPuKq0GWtiM59a5Q6g==
-  dependencies:
-    "@babel/runtime" "^7.5.5"
-    dom-helpers "^5.0.1"
-    loose-envify "^1.4.0"
-    prop-types "^15.6.2"
 
 react@^19.0.0:
   version "19.2.7"
