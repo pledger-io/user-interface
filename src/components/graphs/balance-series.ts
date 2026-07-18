@@ -1,4 +1,4 @@
-import { ChartDataset } from "chart.js/dist/types";
+import { ChartDataset } from "chart.js";
 import DateRange from "../../types/date-range.type";
 import StatisticalRepository, {
   BalanceRequestFilter,

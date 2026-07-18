@@ -1,8 +1,7 @@
 import DateRange from "../../../types/date-range.type";
 import { useEffect, useState } from "react";
 import StatisticalRepository from "../../../core/repositories/statistical-repository";
-import { ChartDataset } from "chart.js/dist/types";
-import { ChartData } from "chart.js";
+import { ChartData, ChartDataset } from "chart.js";
 import { Chart } from "react-chartjs-2";
 import { DefaultChartConfig, Service } from "../../../config/global-chart-config";
 import DateRangeService from "../../../service/date-range.service";
