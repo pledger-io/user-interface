@@ -11,7 +11,7 @@ export type ComputedExpense = {
 
 const BudgetRepository = (api => {
     return {
-        firstBudget: (): Promise<string>                                            => api.get('budgets'),
+        firstBudget: (): Promise<Budget>                                            => api.get('budgets?firstOnly=true'),
         budgetMonth: (year: number, month: number): Promise<Budget>                 => api.get(`budgets?year=${year}&month=${month}`),
         create: (budget: any): Promise<Budget>                                      => api.post('budgets', budget),
         compute: (expenseId: Identifier, year: number, month: number): Promise<any> => api.get(`budgets/expenses/balance?expenseId=${expenseId}&year=${year}&month=${month}`),

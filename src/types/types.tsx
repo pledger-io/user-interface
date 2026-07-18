@@ -137,7 +137,7 @@ export type Budget = {
   income: number,
   expenses: BudgetExpense[],
   period: {
-    from: string,
+    startDate: string,
     until?: string
   }
 }

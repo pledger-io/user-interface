@@ -8,7 +8,23 @@ import { BudgetExpense } from "../../types/types";
 import { Form, Input, SubmitButton } from "../form";
 import { Button } from "../layout/button";
 
-const ExpenseActions = ({ expense, callback }: { expense: BudgetExpense, callback: () => void }) => {
+type ExpenseActionsProps = {
+  expense: BudgetExpense
+  callback: () => void
+  mode?: "icon" | "button"
+  buttonLabel?: string
+  buttonClassName?: string
+  buttonText?: boolean
+}
+
+const ExpenseActions = ({
+  expense,
+  callback,
+  mode = "icon",
+  buttonLabel = "common.action.edit",
+  buttonClassName = "",
+  buttonText = true
+}: ExpenseActionsProps) => {
   const [visible, setVisible] = useState(false)
   const { success, httpError } = useNotification()
 
@@ -27,9 +43,21 @@ const ExpenseActions = ({ expense, callback }: { expense: BudgetExpense, callbac
   }
 
   return <>
-    <a onClick={ () => setVisible(true) } className='cursor-pointer text-gray-400 hover:text-gray-600 with-tooltip' data-pr-tooltip={ i10n('common.action.edit') }>
-      <Icon icon={ 'mdi:pencil' } size={ .8 } />
-    </a>
+    { mode === "icon"
+      ? <button type='button'
+                onClick={ () => setVisible(true) }
+                aria-label={ i10n('common.action.edit') }
+                className='cursor-pointer text-gray-400 hover:text-gray-600 with-tooltip'
+                data-pr-tooltip={ i10n('common.action.edit') }>
+        <Icon icon={ 'mdi:pencil' } size={ .8 } />
+      </button>
+      : <Button type='button'
+                onClick={ () => setVisible(true) }
+                icon='mdi:pencil'
+                text={ buttonText }
+                className={ buttonClassName }
+                label={ buttonLabel }/>
+    }
 
     <Dialog header={ i10n('common.action.edit') }
             visible={ visible }

@@ -45,13 +45,99 @@
   }
 }
 
+@layer app.theme {
+  body {
+    --ui-space-1: 0.25rem;
+    --ui-space-2: 0.5rem;
+    --ui-space-3: 0.75rem;
+    --ui-space-4: 1rem;
+
+    --ui-radius-control: 0.5rem;
+    --ui-radius-card: 0.75rem;
+    --ui-radius-badge: 999px;
+
+    --ui-font-size-xs: 0.75rem;
+    --ui-font-size-sm: 0.875rem;
+    --ui-font-size-md: 1rem;
+
+    --ui-control-padding-y: 0.45rem;
+    --ui-control-padding-x: 0.65rem;
+    --ui-control-min-height: 2.25rem;
+
+    --ui-focus-ring-width: 2px;
+    --ui-focus-ring-color: #2563eb;
+    --ui-focus-ring-shadow: color-mix(in srgb, var(--ui-focus-ring-color) 28%, transparent);
+
+    --ui-interactive-bg: transparent;
+    --ui-interactive-hover-bg: rgba(37, 99, 235, 0.12);
+    --ui-interactive-active-bg: rgba(37, 99, 235, 0.2);
+    --ui-interactive-text: inherit;
+    --ui-interactive-hover-text: inherit;
+    --ui-interactive-active-text: inherit;
+    --ui-interactive-disabled-bg: rgba(148, 163, 184, 0.16);
+    --ui-interactive-disabled-text: var(--app-text-muted-color);
+
+    --ui-control-background: var(--app-background);
+    --ui-control-border-color: var(--app-border-color);
+    --ui-control-disabled-background: rgba(148, 163, 184, 0.16);
+
+    --ui-surface-card-bg: var(--app-background);
+    --ui-surface-card-border: var(--app-border-color);
+
+    --ui-badge-bg: rgba(37, 99, 235, 0.14);
+    --ui-badge-color: #1e3a8a;
+  }
+
+  :where(button, a, input, textarea, select, [role='button'], [tabindex]:not([tabindex='-1'])):focus-visible {
+    outline: var(--ui-focus-ring-width) solid var(--ui-focus-ring-color);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 3px var(--ui-focus-ring-shadow);
+  }
+
+  .ui-interactive-surface {
+    border-radius: var(--ui-radius-control);
+    color: var(--ui-interactive-text);
+    transition: background-color 140ms ease, color 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
+  }
+
+  .ui-interactive-surface:hover {
+    background: var(--ui-interactive-hover-bg);
+    color: var(--ui-interactive-hover-text);
+  }
+
+  .ui-interactive-surface:active {
+    background: var(--ui-interactive-active-bg);
+    color: var(--ui-interactive-active-text);
+  }
+
+  .ui-interactive-surface[aria-disabled='true'],
+  .ui-interactive-surface:disabled,
+  .ui-interactive-surface.is-disabled {
+    background: var(--ui-interactive-disabled-bg);
+    color: var(--ui-interactive-disabled-text);
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+
+  .ui-interactive-active {
+    background: var(--ui-interactive-active-bg);
+    color: var(--ui-interactive-active-text);
+    font-weight: 500;
+  }
+}
+
 @layer app.overrides {
   body {
     font-size: .875rem;
   }
 
   .p-inputtext {
-    padding: 0.45rem .65rem;
+    padding: var(--ui-control-padding-y) var(--ui-control-padding-x);
+    min-height: var(--ui-control-min-height);
+    border-radius: var(--ui-radius-control);
+    border-color: var(--ui-control-border-color);
+    background: var(--ui-control-background);
+    font-size: var(--ui-font-size-sm);
   }
   .p-icon-field-left > .p-inputtext {
     padding-left: 2rem;
@@ -59,10 +145,29 @@
 
 
   .p-button {
-    padding: 0.45rem .65rem;
+    min-height: var(--ui-control-min-height);
+    padding: var(--ui-control-padding-y) var(--ui-control-padding-x);
+    border-radius: var(--ui-radius-control);
+    transition: background-color 140ms ease, color 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
+
+    &:hover:not(:disabled):not(.p-disabled) {
+      filter: brightness(0.98);
+    }
+
+    &:active:not(:disabled):not(.p-disabled) {
+      filter: brightness(0.94);
+    }
+
+    &:disabled,
+    &.p-disabled {
+      background: var(--ui-interactive-disabled-bg);
+      border-color: var(--ui-control-border-color);
+      color: var(--ui-interactive-disabled-text);
+      opacity: 1;
+    }
 
     &.p-button-sm {
-      padding: 0.45rem .65rem;
+      padding: var(--ui-control-padding-y) var(--ui-control-padding-x);
       font-size: .8rem;
     }
 
@@ -81,14 +186,51 @@
     }
   }
 
+  .p-inputtext:focus-visible,
+  .p-dropdown:focus-visible,
+  .p-button:focus-visible,
+  .p-dialog .p-dialog-header-icon:focus-visible {
+    outline: var(--ui-focus-ring-width) solid var(--ui-focus-ring-color);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 3px var(--ui-focus-ring-shadow);
+  }
+
+  .p-inputtext:disabled,
+  .p-inputtextarea:disabled,
+  .p-dropdown.p-disabled {
+    background: var(--ui-control-disabled-background);
+    color: var(--ui-interactive-disabled-text);
+    opacity: 1;
+  }
+
   .p-breadcrumb {
     padding: .8rem;
   }
 
+  .p-card,
   .p-panel {
+    border: 1px solid var(--ui-surface-card-border);
+    border-radius: var(--ui-radius-card);
+    background: var(--ui-surface-card-bg);
+
     .p-panel-header {
       padding: 1rem 1.25rem;
     }
+  }
+
+  .p-dialog {
+    border: 1px solid var(--ui-surface-card-border);
+    border-radius: var(--ui-radius-card);
+    overflow: hidden;
+  }
+
+  .p-badge,
+  .p-tag {
+    border-radius: var(--ui-radius-badge);
+    background: var(--ui-badge-bg);
+    color: var(--ui-badge-color);
+    font-size: var(--ui-font-size-xs);
+    font-weight: 600;
   }
 
   .p-menu {

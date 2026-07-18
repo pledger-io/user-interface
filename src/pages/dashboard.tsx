@@ -19,15 +19,17 @@ const Dashboard = () => {
     <BreadCrumbs>
       <BreadCrumbItem label='page.nav.dashboard'/>
     </BreadCrumbs>
-    <div className="px-2 flex flex-col gap-4">
+    <div className="px-2 flex flex-col gap-6 pb-4">
       <Summary range={ range } compareRange={ compareRange }/>
 
-      <BalanceChart range={ range }/>
+      <section className="flex flex-col gap-4" aria-label="dashboard-charts">
+        <BalanceChart range={ range }/>
 
-      <Grid type='column' minWidth='35em'>
-        <BudgetBalance range={ range }/>
-        <CategoriesBalance range={ range }/>
-      </Grid>
+        <Grid type='column' minWidth='35em'>
+          <BudgetBalance range={ range }/>
+          <CategoriesBalance range={ range }/>
+        </Grid>
+      </section>
     </div>
   </>
 }

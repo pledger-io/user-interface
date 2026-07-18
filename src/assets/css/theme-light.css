@@ -1,16 +1,40 @@
 body {
-    --app-body-background: #e4e5e6;
-    --app-background: #fff;
-    --app-border-color: rgba(184, 184, 184, 0.67);
-    --app-header-background: rgba(165, 198, 228, 0.61);
-    --app-header-text: #858484;
-    --sidebar-color: #fff;
-    --sidebar-icon-color: rgba(152, 191, 227, 0.79);
-    --sidebar-background: #fafafa;
-    --sidebar-title-color: rgba(4, 55, 92, 0.61);
-    --sidebar-sub-background: rgba(165, 198, 228, 0.61);
-    --card-header-background: rgba(152, 191, 227, 0.53);
-    --card-header-color: #7a90df;
-    --wizard-step-color: #6c757d;
-    --link-color: #012445;
+    --app-body-background: #f3f7fb;
+    --app-background: #ffffff;
+    --app-border-color: #d2dfeb;
+    --app-header-background: #eaf3fa;
+    --app-header-text: #0b3f65;
+    --app-text-muted-color: #64748b;
+    --sidebar-color: #ffffff;
+    --sidebar-icon-color: #0d4f7f;
+    --sidebar-background: #f9fbfd;
+    --sidebar-title-color: #0d4f7f;
+    --sidebar-sub-background: #eaf3fa;
+    --card-header-background: #eaf3fa;
+    --card-header-color: #0b3f65;
+    --wizard-step-color: #64748b;
+    --link-color: #0d4f7f;
+
+    --ui-focus-ring-color: #17877c;
+    --ui-interactive-hover-bg: rgba(13, 79, 127, 0.1);
+    --ui-interactive-active-bg: rgba(13, 79, 127, 0.18);
+    --ui-interactive-active-text: #082e4a;
+    --ui-control-background: #ffffff;
+    --ui-control-border-color: #d2dfeb;
+    --ui-control-disabled-background: rgba(100, 116, 139, 0.16);
+    --ui-surface-card-bg: #ffffff;
+    --ui-surface-card-border: #d2dfeb;
+    --ui-badge-bg: rgba(13, 79, 127, 0.12);
+    --ui-badge-color: #0b3f65;
+
+    --primary-color: #0d4f7f;
+    --dark-primary-color: #0b3f65;
+    --secondary-color: #32b39a;
+    --dark-secondary-color: #17877c;
+    --success-color: #1f8a5b;
+    --dark-success-color: #166a45;
+    --warning-color: #b7791f;
+    --dark-warning-color: #8a5d17;
+    --info-color: #13659d;
+    --dark-info-color: #0e4d78;
 }
