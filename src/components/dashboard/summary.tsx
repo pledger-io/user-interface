@@ -46,7 +46,7 @@ const toLocalDateString = (date: Date) => {
 }
 
 const parseDateStringAsLocalDate = (date: string) => {
-    const [year, month, day] = date.split('-').map(part => parseInt(part, 10))
+    const [year, month, day] = date.split('-').map(part => Number.parseInt(part, 10))
     return new Date(year, (month || 1) - 1, day || 1)
 }
 
@@ -69,6 +69,46 @@ const severitySignal: Record<AlertSeverity, string> = {
     ALERT: '[!]',
     WARNING: '[~]',
     INFO: '[i]'
+}
+
+const budgetSeverityFor = (summaryData: DashboardSummaryData): AlertSeverity => {
+    if (summaryData.actualBudget > summaryData.expectedBudget) return 'ALERT'
+    if (summaryData.actualBudget >= summaryData.expectedBudget * 0.85) return 'WARNING'
+    return 'INFO'
+}
+
+const unusualSeverityFor = (summaryData: DashboardSummaryData): AlertSeverity =>
+    summaryData.unusualInsights > 0 ? 'WARNING' : 'INFO'
+
+const uncategorizedSeverityFor = (summaryData: DashboardSummaryData): AlertSeverity =>
+    summaryData.uncategorizedExpense > 0 ? 'WARNING' : 'INFO'
+
+const budgetStatusMessage = (summaryData: DashboardSummaryData) => {
+    if (summaryData.expectedBudget === 0) {
+        return translate('page.dashboard.summary.budget.missing', 'No budget configured for this month.')
+    }
+    return translate('page.dashboard.summary.budget.progress', 'Actual versus expected spend for this month.')
+}
+
+const overspendingMessage = (severity: AlertSeverity) => {
+    if (severity === 'ALERT') {
+        return translate('page.dashboard.actions.overspending.alert', 'Budget spend exceeded expected monthly amount.')
+    }
+    return translate('page.dashboard.actions.overspending.normal', 'Budget spend is currently within expected range.')
+}
+
+const unusualMessage = (summaryData: DashboardSummaryData) => {
+    if (summaryData.unusualInsights > 0) {
+        return `${ summaryData.unusualInsights } ${ translate('page.dashboard.actions.unusual.detected', 'insight(s) require review.') }`
+    }
+    return translate('page.dashboard.actions.unusual.none', 'No unusual spending insights detected.')
+}
+
+const uncategorizedMessage = (summaryData: DashboardSummaryData): React.ReactNode => {
+    if (summaryData.uncategorizedExpense > 0) {
+        return <><MoneyComponent money={ summaryData.uncategorizedExpense }/> { translate('page.dashboard.actions.uncategorized.amount', 'spent without category assignment.') }</>
+    }
+    return translate('page.dashboard.actions.uncategorized.none', 'No uncategorized spending detected.')
 }
 
 const Summary = ({ range, compareRange }: SummaryProps) => {
@@ -189,15 +229,9 @@ const Summary = ({ range, compareRange }: SummaryProps) => {
     const formatPercentage = (value: number) =>
         new Intl.NumberFormat(language, { style: 'percent', minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(value / 100)
 
-    const budgetSeverity: AlertSeverity = summaryData
-        ? (summaryData.actualBudget > summaryData.expectedBudget ? 'ALERT' : summaryData.actualBudget >= summaryData.expectedBudget * 0.85 ? 'WARNING' : 'INFO')
-        : 'INFO'
-    const unusualSeverity: AlertSeverity = summaryData
-        ? (summaryData.unusualInsights > 0 ? 'WARNING' : 'INFO')
-        : 'INFO'
-    const uncategorizedSeverity: AlertSeverity = summaryData
-        ? (summaryData.uncategorizedExpense > 0 ? 'WARNING' : 'INFO')
-        : 'INFO'
+    const budgetSeverity = summaryData ? budgetSeverityFor(summaryData) : 'INFO'
+    const unusualSeverity = summaryData ? unusualSeverityFor(summaryData) : 'INFO'
+    const uncategorizedSeverity = summaryData ? uncategorizedSeverityFor(summaryData) : 'INFO'
 
     const overspendingLink = summaryData?.overspendingExpenseId
         ? `/transactions/income-expense?budget=${ encodeURIComponent(summaryData.overspendingExpenseId.toString()) }`
@@ -261,9 +295,7 @@ const Summary = ({ range, compareRange }: SummaryProps) => {
                     <span className="text-muted text-sm">/ <MoneyComponent money={ summaryData.expectedBudget }/></span>
                 </div>
                 <div className="text-xs mt-2 text-muted">
-                    { summaryData.expectedBudget === 0
-                        ? translate('page.dashboard.summary.budget.missing', 'No budget configured for this month.')
-                        : translate('page.dashboard.summary.budget.progress', 'Actual versus expected spend for this month.') }
+                    { budgetStatusMessage(summaryData) }
                 </div>
             </article>
 
@@ -286,9 +318,7 @@ const Summary = ({ range, compareRange }: SummaryProps) => {
                 </div>
                 <div className="mt-2 font-medium">{ translate('page.dashboard.actions.overspending.title', 'Overspending risk') }</div>
                 <div className="text-sm text-muted mt-1">
-                    { budgetSeverity === 'ALERT'
-                        ? translate('page.dashboard.actions.overspending.alert', 'Budget spend exceeded expected monthly amount.')
-                        : translate('page.dashboard.actions.overspending.normal', 'Budget spend is currently within expected range.') }
+                    { overspendingMessage(budgetSeverity) }
                 </div>
                 <Link
                     to={ overspendingLink }
@@ -305,9 +335,7 @@ const Summary = ({ range, compareRange }: SummaryProps) => {
                 </div>
                 <div className="mt-2 font-medium">{ translate('page.dashboard.actions.unusual.title', 'Unusual spending') }</div>
                 <div className="text-sm text-muted mt-1">
-                    { summaryData.unusualInsights > 0
-                        ? `${ summaryData.unusualInsights } ${ translate('page.dashboard.actions.unusual.detected', 'insight(s) require review.') }`
-                        : translate('page.dashboard.actions.unusual.none', 'No unusual spending insights detected.') }
+                    { unusualMessage(summaryData) }
                 </div>
                 <Link
                     to={ `/reports/spending-insight/${ year }/${ month }` }
@@ -324,9 +352,7 @@ const Summary = ({ range, compareRange }: SummaryProps) => {
                 </div>
                 <div className="mt-2 font-medium">{ translate('page.dashboard.actions.uncategorized.title', 'Uncategorized transactions') }</div>
                 <div className="text-sm text-muted mt-1">
-                    { summaryData.uncategorizedExpense > 0
-                        ? <><MoneyComponent money={ summaryData.uncategorizedExpense }/> { translate('page.dashboard.actions.uncategorized.amount', 'spent without category assignment.') }</>
-                        : translate('page.dashboard.actions.uncategorized.none', 'No uncategorized spending detected.') }
+                    { uncategorizedMessage(summaryData) }
                 </div>
                 <Link
                     to={ `/transactions/income-expense/${ year }/${ month }?uncategorized=true` }

@@ -66,7 +66,7 @@ axiosInstance.interceptors.response.use(
 
     const status = error.response?.status;
     if (status !== 401 || originalRequest._retry) {
-      return Promise.reject(error);
+      throw error;
     }
 
     const refreshToken = sessionStorage.getItem('refresh-token');
@@ -74,7 +74,7 @@ axiosInstance.interceptors.response.use(
       sessionStorage.removeItem('token');
       sessionStorage.removeItem('refresh-token');
       window.location.assign("/ui/login");
-      return Promise.reject(error);
+      throw error;
     }
 
     if (isRefreshing) {
@@ -106,7 +106,7 @@ axiosInstance.interceptors.response.use(
       sessionStorage.removeItem('token');
       sessionStorage.removeItem('refresh-token');
       window.location.assign("/ui/login");
-      return Promise.reject(refreshError);
+      throw refreshError;
     } finally {
       isRefreshing = false;
     }

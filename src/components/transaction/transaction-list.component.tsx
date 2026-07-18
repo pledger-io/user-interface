@@ -52,7 +52,7 @@ const loadSavedFilterViews = (transfers: boolean): SavedFilterView[] => {
     const parsedValue = JSON.parse(value)
     if (!Array.isArray(parsedValue)) return []
 
-    return parsedValue.filter(view => view && view.id && view.name && view.filters)
+    return parsedValue.filter(view => view?.id && view?.name && view?.filters)
   } catch {
     return []
   }
@@ -62,6 +62,68 @@ const displayFilterValue = (value: any) => {
   if (!value) return ""
   if (typeof value === "string") return value
   return value.name || value.description || value.id || ""
+}
+
+const createSavedFilterViewId = () => {
+  if (globalThis.crypto?.randomUUID) {
+    return globalThis.crypto.randomUUID()
+  }
+
+  return `saved-view-${ Date.now() }`
+}
+
+const determineCurrentPreset = (searchCommand: Record<string, any>, transfers: boolean): TransactionQuickPreset => {
+  if (searchCommand.uncategorized) return "uncategorized"
+  if (!transfers && (searchCommand.type === "INCOME" || (searchCommand.onlyIncome && !searchCommand.onlyExpenses))) {
+    return "income"
+  }
+  if (!transfers && (searchCommand.type === "EXPENSE" || (searchCommand.onlyExpenses && !searchCommand.onlyIncome))) {
+    return "expenses"
+  }
+  return "all"
+}
+
+const buildActiveFilterChips = (searchCommand: Record<string, any>, transfers: boolean): ActiveFilterChip[] => {
+  const chips: ActiveFilterChip[] = []
+
+  const chipsToBuild: { key: string, i18nKey: string, value?: any }[] = [
+    { key: "account", i18nKey: "page.transactions.filter.account", value: searchCommand.account },
+    { key: "category", i18nKey: "page.transactions.filter.category", value: searchCommand.category },
+    { key: "budget", i18nKey: "page.transactions.filter.budget", value: searchCommand.budget },
+    { key: "description", i18nKey: "page.transaction.filter.description", value: searchCommand.description },
+    { key: "currency", i18nKey: "page.transaction.filter.currency", value: searchCommand.currency }
+  ]
+
+  chipsToBuild.forEach(({ key, i18nKey, value }) => {
+    if (!value) return
+    chips.push({
+      id: key,
+      label: `${ i10n(i18nKey) }: ${ displayFilterValue(value) }`
+    })
+  })
+
+  if (searchCommand.uncategorized) {
+    chips.push({
+      id: "uncategorized",
+      label: i10n('page.transactions.filters.preset.uncategorized')
+    })
+  }
+
+  if (!transfers && (searchCommand.type === 'INCOME' || (searchCommand.onlyIncome && !searchCommand.onlyExpenses))) {
+    chips.push({
+      id: "onlyIncome",
+      label: i10n('page.transactions.filters.preset.income')
+    })
+  }
+
+  if (!transfers && (searchCommand.type === 'EXPENSE' || (searchCommand.onlyExpenses && !searchCommand.onlyIncome))) {
+    chips.push({
+      id: "onlyExpenses",
+      label: i10n('page.transactions.filters.preset.expenses')
+    })
+  }
+
+  return chips
 }
 
 const TransactionOverview: FC<TransactionOverviewProps> = ({ range, transfers }) => {
@@ -164,55 +226,7 @@ const TransactionOverview: FC<TransactionOverviewProps> = ({ range, transfers })
     setSelectedSavedFilterId("")
   }
 
-  const activeFilterChips: ActiveFilterChip[] = []
-  if (searchCommand.account) {
-    activeFilterChips.push({
-      id: "account",
-      label: `${ i10n('page.transactions.filter.account') }: ${ displayFilterValue(searchCommand.account) }`
-    })
-  }
-  if (searchCommand.category) {
-    activeFilterChips.push({
-      id: "category",
-      label: `${ i10n('page.transactions.filter.category') }: ${ displayFilterValue(searchCommand.category) }`
-    })
-  }
-  if (searchCommand.budget) {
-    activeFilterChips.push({
-      id: "budget",
-      label: `${ i10n('page.transactions.filter.budget') }: ${ displayFilterValue(searchCommand.budget) }`
-    })
-  }
-  if (searchCommand.description) {
-    activeFilterChips.push({
-      id: "description",
-      label: `${ i10n('page.transaction.filter.description') }: ${ searchCommand.description }`
-    })
-  }
-  if (searchCommand.currency) {
-    activeFilterChips.push({
-      id: "currency",
-      label: `${ i10n('page.transaction.filter.currency') }: ${ searchCommand.currency }`
-    })
-  }
-  if (searchCommand.uncategorized) {
-    activeFilterChips.push({
-      id: "uncategorized",
-      label: i10n('page.transactions.filters.preset.uncategorized')
-    })
-  }
-  if (!transfers && (searchCommand.type === 'INCOME' || (searchCommand.onlyIncome && !searchCommand.onlyExpenses))) {
-    activeFilterChips.push({
-      id: "onlyIncome",
-      label: i10n('page.transactions.filters.preset.income')
-    })
-  }
-  if (!transfers && (searchCommand.type === 'EXPENSE' || (searchCommand.onlyExpenses && !searchCommand.onlyIncome))) {
-    activeFilterChips.push({
-      id: "onlyExpenses",
-      label: i10n('page.transactions.filters.preset.expenses')
-    })
-  }
+  const activeFilterChips = buildActiveFilterChips(searchCommand, transfers)
 
   const onRemoveFilterChip = (filterKey: string) => {
     setSearchCommand(previous => {
@@ -228,13 +242,7 @@ const TransactionOverview: FC<TransactionOverviewProps> = ({ range, transfers })
     setSelectedSavedFilterId("")
   }
 
-  const currentPreset: TransactionQuickPreset = searchCommand.uncategorized
-    ? "uncategorized"
-    : !transfers && (searchCommand.type === "INCOME" || (searchCommand.onlyIncome && !searchCommand.onlyExpenses))
-      ? "income"
-      : !transfers && (searchCommand.type === "EXPENSE" || (searchCommand.onlyExpenses && !searchCommand.onlyIncome))
-        ? "expenses"
-        : "all"
+  const currentPreset = determineCurrentPreset(searchCommand, transfers)
 
   const availablePresets = transfers ? TRANSFER_QUICK_PRESETS : QUICK_PRESETS
 
@@ -255,14 +263,14 @@ const TransactionOverview: FC<TransactionOverviewProps> = ({ range, transfers })
   const saveCurrentFilters = (name: string) => {
     if (!name) return
     const filters = pickMutableFilters(searchCommand)
-    const id = `${ Date.now() }-${ Math.random().toString(36).slice(2, 8) }`
+    const id = createSavedFilterViewId()
     setSavedFilterViews(previous => [...previous, { id, name, filters }])
     setSelectedSavedFilterId(id)
   }
 
   const renameSavedFilter = (updatedName: string) => {
-    const selectedView = savedFilterViews.find(view => view.id === selectedSavedFilterId)
-    if (!selectedView) return
+    const hasSelectedView = savedFilterViews.some(view => view.id === selectedSavedFilterId)
+    if (!hasSelectedView) return
     if (!updatedName) return
     setSavedFilterViews(previous => previous.map(view => view.id === selectedSavedFilterId
       ? { ...view, name: updatedName }

@@ -42,8 +42,7 @@ const Register = () => {
     <img src={ logoWordmark } alt='Pledger.io' className='h-10 w-auto max-w-[13rem]'/>
     <Menu model={ languageMenu } popup ref={ configMenu }/>
     <button type='button' className="cursor-pointer z-10 p-2 hover:bg-[#dfeaf4] rounded-full transition-all"
-            onClick={ (e) => configMenu?.current?.toggle(e) }
-            role='button'>
+            onClick={ (e) => configMenu?.current?.toggle(e) }>
       <Icon icon={ 'mdi:web' } size={ 1 }/>
     </button>
   </div>

@@ -26,10 +26,10 @@ const MonthYearDropdown = ({ selected: { year, month }, onChange, minDate, maxDa
     let minMonth = 1
     let maxMonth = 12
 
-    if (minDate && minDate.getFullYear() === nextYear) {
+    if (minDate?.getFullYear() === nextYear) {
       minMonth = minDate.getMonth() + 1
     }
-    if (maxDate && maxDate.getFullYear() === nextYear) {
+    if (maxDate?.getFullYear() === nextYear) {
       maxMonth = maxDate.getMonth() + 1
     }
 

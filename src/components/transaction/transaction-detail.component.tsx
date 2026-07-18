@@ -61,10 +61,21 @@ const TransactionItem: FC<TransactionItemProps> = ({ transaction, className = ''
     navigateToEdit()
   }
 
+  const onRowKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (window.innerWidth >= 768) return
+    if (event.key !== 'Enter' && event.key !== ' ') return
+    if ((event.target as HTMLElement).closest('a,button,[role="button"]')) return
+    event.preventDefault()
+    navigateToEdit()
+  }
+
   if (deleted) return null
   return <div
     className={ `${ className } group flex content-between gap-3 px-2 border-b my-0.5 border-gray-100 hover:bg-surface-100/70 rounded-sm last:border-none` }
-    onClick={ onRowClick }>
+    onClick={ onRowClick }
+    onKeyDown={ onRowKeyDown }
+    role='button'
+    tabIndex={ window.innerWidth < 768 ? 0 : -1 }>
     <span className='text-[.9em] md:text-[1em] md:w-[12em] w-[6em]'>
         { transaction.metadata.budget &&
           <div className='text-gray-400'>

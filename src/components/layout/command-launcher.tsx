@@ -96,7 +96,7 @@ const CommandLauncher = ({ visible, commands, onHide }: CommandLauncherProps) =>
       const description = command.description.toLowerCase()
       const keywordText = command.keywords.join(' ').toLowerCase()
       const aliasText = command.aliases.join(' ').toLowerCase()
-      const words = label.split(/[^a-z0-9]+/).filter(Boolean)
+      const words = new Set(label.split(/[^a-z0-9]+/).filter(Boolean))
 
       let textScore = 0
       if (label === search) {
@@ -105,7 +105,7 @@ const CommandLauncher = ({ visible, commands, onHide }: CommandLauncherProps) =>
       if (label.startsWith(search)) {
         textScore += 90
       }
-      if (searchWords.some(word => words.includes(word))) {
+      if (searchWords.some(word => words.has(word))) {
         textScore += 70
       }
       if (keywordText.includes(search) || aliasText.includes(search) || description.includes(search)) {
@@ -230,7 +230,7 @@ const CommandLauncher = ({ visible, commands, onHide }: CommandLauncherProps) =>
 
     if (event.key === 'Enter' && allVisibleCommands.length > 0) {
       event.preventDefault()
-      const selectedIndex = highlightedIndex >= 0 ? highlightedIndex : 0
+      const selectedIndex = Math.max(highlightedIndex, 0)
       onSelect(allVisibleCommands[selectedIndex])
     }
   }
@@ -254,11 +254,10 @@ const CommandLauncher = ({ visible, commands, onHide }: CommandLauncherProps) =>
       key={ `${ command.id }-${ index }` }
       type='button'
       id={ `${ listboxId }-option-${ index }` }
-      role='option'
       onClick={ () => onSelect(command) }
       onMouseEnter={ () => setHighlightedIndex(index) }
       tabIndex={ -1 }
-      aria-selected={ highlightedIndex === index }
+      aria-current={ highlightedIndex === index }
       className={ `ui-interactive-surface flex w-full items-start gap-2 px-3 py-2 text-left ${
         highlightedIndex === index ? 'ui-interactive-active' : ''
       }` }>
@@ -304,10 +303,7 @@ const CommandLauncher = ({ visible, commands, onHide }: CommandLauncherProps) =>
           value={ query }
           autoFocus
           aria-label={ translate('a11y.command.input') }
-          role='combobox'
           aria-controls={ listboxId }
-          aria-expanded={ true }
-          aria-autocomplete='list'
           aria-activedescendant={ activeOptionId }
           onChange={ event => {
             setQuery(event.target.value)
@@ -321,7 +317,6 @@ const CommandLauncher = ({ visible, commands, onHide }: CommandLauncherProps) =>
 
       <div
         id={ listboxId }
-        role='listbox'
         aria-label={ translate('layout.command.title') }
         className='max-h-[22rem] overflow-y-auto border border-separator rounded-md'>
         <div className='border-b border-separator'>

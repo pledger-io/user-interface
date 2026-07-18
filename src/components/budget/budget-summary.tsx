@@ -29,6 +29,12 @@ const statusTranslationKey = (highestRisk: BudgetRiskLevel) => {
   return "page.budget.overview.status.healthy"
 }
 
+const highestRiskLevel = (riskCount: Record<BudgetRiskLevel, number>): BudgetRiskLevel => {
+  if (riskCount.high > 0) return "high"
+  if (riskCount.medium > 0) return "medium"
+  return "low"
+}
+
 export const BudgetSummary = ({ budget, expenseOverview }: { budget: Budget, expenseOverview: BudgetExpenseOverview[] }) => {
   const totalBudget = budget.expenses.map(e => e.expected).reduce((l, r) => l + r, 0)
   const totalSpent = Math.abs(expenseOverview.reduce((total, item) => total + item.spent, 0))
@@ -41,11 +47,7 @@ export const BudgetSummary = ({ budget, expenseOverview }: { budget: Budget, exp
   }, { low: 0, medium: 0, high: 0 })
 
   const riskItems: BudgetRiskLevel[] = ["high", "medium", "low"]
-  const highestRisk: BudgetRiskLevel = riskCount.high > 0
-    ? "high"
-    : riskCount.medium > 0
-      ? "medium"
-      : "low"
+  const highestRisk = highestRiskLevel(riskCount)
 
   return <>
     <div className='grid grid-cols-1 lg:grid-cols-3 gap-4'>

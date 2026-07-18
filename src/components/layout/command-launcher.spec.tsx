@@ -59,7 +59,7 @@ describe('CommandLauncher', () => {
   it('selects first command with Enter', () => {
     const onHide = vi.fn()
     renderLauncher(onHide)
-    const input = screen.getByRole('combobox')
+    const input = screen.getByRole('textbox')
     fireEvent.keyDown(input, { key: 'Enter' })
 
     expect(onHide).toHaveBeenCalledTimes(1)
@@ -69,7 +69,7 @@ describe('CommandLauncher', () => {
   it('selects highlighted command with keyboard navigation', () => {
     const onHide = vi.fn()
     renderLauncher(onHide)
-    const input = screen.getByRole('combobox')
+    const input = screen.getByRole('textbox')
     fireEvent.keyDown(input, { key: 'ArrowDown' })
     fireEvent.keyDown(input, { key: 'ArrowDown' })
     fireEvent.keyDown(input, { key: 'Enter' })
@@ -80,7 +80,7 @@ describe('CommandLauncher', () => {
 
   it('shows empty-state message for no matches', () => {
     renderLauncher()
-    const input = screen.getByRole('combobox')
+    const input = screen.getByRole('textbox')
     fireEvent.change(input, { target: { value: 'not-found-route' } })
     expect(screen.getByText('layout.command.empty')).toBeInTheDocument()
   })

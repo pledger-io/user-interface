@@ -27,11 +27,12 @@ const parseBudgetDateAsLocal = (value: unknown): Date | null => {
 
   if (typeof value === "string") {
     const normalized = value.trim().replace(/^"|"$/g, "")
-    const isoMatch = normalized.match(/^(\d{4})-(\d{2})(?:-(\d{2}))?$/)
+    const isoPattern = /^(\d{4})-(\d{2})(?:-(\d{2}))?$/
+    const isoMatch = isoPattern.exec(normalized)
     if (isoMatch) {
-      const year = parseInt(isoMatch[1], 10)
-      const month = parseInt(isoMatch[2], 10)
-      const day = parseInt(isoMatch[3] || "1", 10)
+      const year = Number.parseInt(isoMatch[1], 10)
+      const month = Number.parseInt(isoMatch[2], 10)
+      const day = Number.parseInt(isoMatch[3] || "1", 10)
       return new Date(year, month - 1, day)
     }
 
