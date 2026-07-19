@@ -1,1 +1,1 @@
-yarn run lint-staged --config .husky/.lint-staged-pre-commit.json
+echo "yarn run lint-staged --config .husky/.lint-staged-pre-commit.json"

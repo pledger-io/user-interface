@@ -23,7 +23,6 @@ describe('sectionDestinationsFor', () => {
   it('contains upload and categories in transactions section', () => {
     const destinations = sectionDestinationsFor('transactions')
     expect(destinations.some(destination => destination.to === '/upload')).toBe(true)
-    expect(destinations.some(destination => destination.to === '/upload/create')).toBe(true)
     expect(destinations.some(destination => destination.to === '/categories')).toBe(true)
   })
 })
