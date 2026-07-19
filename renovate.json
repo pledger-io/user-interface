@@ -7,6 +7,11 @@
     {
       "groupName": "Patch version bumps",
       "matchUpdateTypes": ["patch"]
+    },
+    {
+      "description": "PrimeReact v11+ requires a commercial license; stay on v10",
+      "matchPackageNames": ["primereact"],
+      "allowedVersions": "<11.0.0"
     }
   ],
   "addLabels": ["dependencies"],
