@@ -43,9 +43,9 @@ export const AmountInput = (props: AmountInputProps) => {
                          data-testid={ `${ props.id }-input` }
                          currency={ props.currency || 'EUR' }
                          onChange={ handleChangeEvent }/>
-        </div>
 
-        { field.touched && <InputValidationErrors field={ field } errors={ errors }/> }
+          { field.touched && <InputValidationErrors field={ field } errors={ errors }/> }
+        </div>
     </>
 }
 
