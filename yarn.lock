@@ -3443,9 +3443,9 @@ w3c-xmlserializer@^5.0.0:
     xml-name-validator "^5.0.0"
 
 web-vitals@^6.0.0:
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/web-vitals/-/web-vitals-6.1.0.tgz#42f33069308a91d3e5e053c9a6c4a09460201a88"
-  integrity sha512-ZNoJ/MbU6aaR2WjKrFVUvy5WQx+G96YvXQFSsmKTz3A/0VlAFywjUcxl00hc/S6wef2stfgQ4yWYIJCWCNudkA==
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/web-vitals/-/web-vitals-6.1.1.tgz#855ba63ed40847c55e061ac13f55ee5f6435b723"
+  integrity sha512-r93gKnR6ZC2O8F3JrS0AAGIQ0v0OhXuyg4DAj2oG7K+GPkwXfUSc3ZcWeu50AsV5yIc6xxnTjERipJ6EvSw2vg==
 
 webidl-conversions@^8.0.1:
   version "8.0.1"
