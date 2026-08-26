@@ -70,7 +70,7 @@
     ]
   },
   "engines": {
-    "node": ">=22.0.0 <=26.7.0"
+    "node": ">=22.0.0 <=26.8.1"
   },
   "packageManager": "yarn@1.22.22",
   "resolutions": {
