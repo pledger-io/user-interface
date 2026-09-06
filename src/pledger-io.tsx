@@ -76,22 +76,7 @@ const router = createBrowserRouter([
   basename: '/ui'
 })
 
-function constructRedirectUri() {
-  const hasParams = document.location.search.includes('?');
-  if (!hasParams) {
-    return document.location.href;
-  }
-
-  const params = new URLSearchParams(window.location.search);
-  let redirectUrl = document.location.href.substring(0, document.location.href.indexOf('?'))
-  if (params.has('from')) {
-    redirectUrl += '?from=' + params.has('from');
-  }
-  return redirectUrl;
-}
-
 function _() {
-  const [openIdConfiguration, setOpenIdConfiguration] = useState<any>({})
   const openIdSignIn = (user: User | undefined) => {
     if (user) {
       sessionStorage.setItem('refresh-token', user.refresh_token as string);
@@ -99,22 +84,9 @@ function _() {
     }
   }
 
-  useEffect(() => {
-    fetch('/.well-known/openid-connect')
-      .then(response => {
-        response.json()
-          .then(openIdConfig => setOpenIdConfiguration({
-              authority: openIdConfig.authority,
-              client_id: openIdConfig['client-id'],
-              client_secret: openIdConfig['client-secret'],
-              redirect_uri:  constructRedirectUri()
-            }))
-      })
-  }, [])
-
-  console.debug("Authentication", openIdConfiguration)
+  console.debug("Authentication", (window as any).oidcConfig)
   return (
-    <AuthProvider {...openIdConfiguration} onSigninCallback={openIdSignIn}>
+    <AuthProvider {...(window as any).oidcConfig} onSigninCallback={openIdSignIn}>
       <RouterProvider router={ router }/>
     </AuthProvider>
   )

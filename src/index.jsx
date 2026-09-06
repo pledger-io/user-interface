@@ -13,7 +13,33 @@ const themeLink = document.getElementById('theme-link')
 document.head.removeChild(themeLink);
 document.head.appendChild(themeLink);
 
-PrimeLocale()
+function constructRedirectUri() {
+  const hasParams = document.location.search.includes('?');
+  if (!hasParams) {
+    return document.location.href;
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  let redirectUrl = document.location.href.substring(0, document.location.href.indexOf('?'))
+  if (params.has('from')) {
+    redirectUrl += '?from=' + params.has('from');
+  }
+  return redirectUrl;
+}
+
+Promise.all([
+  PrimeLocale(),
+  fetch('/.well-known/openid-connect')
+    .then(response => {
+      response.json()
+        .then(openIdConfig => window.oidcConfig = {
+          authority: openIdConfig.authority,
+          client_id: openIdConfig['client-id'],
+          client_secret: openIdConfig['client-secret'],
+          redirect_uri:  constructRedirectUri()
+        })
+    })
+])
   .then(() => {
     console.log('All localizations loaded, starting application.')
     SettingRepository.list()
@@ -34,7 +60,7 @@ PrimeLocale()
       .render((
         <React.StrictMode>
           <PrimeReactProvider>
-              <LoadingFailed />
+            <LoadingFailed />
           </PrimeReactProvider>
         </React.StrictMode>
       ));
