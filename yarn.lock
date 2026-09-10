@@ -165,12 +165,7 @@
   dependencies:
     "@babel/types" "^7.29.8"
 
-"@babel/runtime@^7.12.5":
-  version "7.28.6"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.28.6.tgz#d267a43cb1836dc4d182cce93ae75ba954ef6d2b"
-  integrity sha512-05WQkdpL9COIMz4LjTxGpPNCdlpyimKppYNoJ5Di5EUObifl8t4tuLuUBBZEpoLYOmfvIWrsp9fCl0HoPRVTdA==
-
-"@babel/runtime@^7.5.5", "@babel/runtime@^7.8.7":
+"@babel/runtime@^7.12.5", "@babel/runtime@^7.5.5", "@babel/runtime@^7.8.7":
   version "7.29.7"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.29.7.tgz#12022450c45a4da6d8d8287b18a4ff2ddb23f768"
   integrity sha512-Nq8OhGWiZIZGV6hLHoyAKLLcJihP/xFeBMGJoUrxTX2psI8dCifzLhZISFb+VWS3wFMRDmCGw5R+dOySCqPLhw==
@@ -1015,16 +1010,16 @@
     redent "^3.0.0"
 
 "@testing-library/react@^16.1.0":
-  version "16.3.2"
-  resolved "https://registry.yarnpkg.com/@testing-library/react/-/react-16.3.2.tgz#672883b7acb8e775fc0492d9e9d25e06e89786d0"
-  integrity sha512-XU5/SytQM+ykqMnAnvB2umaJNIOsLF3PVv//1Ew4CTcpz0/BRyy/af40qqrt7SjKpDdT1saBMc42CUok5gaw+g==
+  version "16.3.3"
+  resolved "https://registry.yarnpkg.com/@testing-library/react/-/react-16.3.3.tgz#426907e7716f37038dab8aa69d8f0459f9ec24b2"
+  integrity sha512-Uo193NgQbPMz6lrrhtRQQFcMC6Re/ELLFbbuVL30WDlZxlpZf9/lMHTAVxPRLw1q1iu9OJmR1c2BLiENRstdBg==
   dependencies:
     "@babel/runtime" "^7.12.5"
 
 "@testing-library/user-event@^14.5.2":
-  version "14.6.6"
-  resolved "https://registry.yarnpkg.com/@testing-library/user-event/-/user-event-14.6.6.tgz#ecd5614fe2dbb76a1744a9b5a96e305b8591ceac"
-  integrity sha512-Jbs9FpkkIDw8FgSc6kOVsOv8JuuqGAL7J4X1oot77JxAoDlkNn2GRkd0aYRVuQ+pVQAiHWVkE4rX/dkF5fBiCw==
+  version "14.6.7"
+  resolved "https://registry.yarnpkg.com/@testing-library/user-event/-/user-event-14.6.7.tgz#c453ccfcaffed110cc79048ed18fccb0f4224f3b"
+  integrity sha512-MPCpX8bxe8zS+JmmTwLp8jd0dy1rAm60Te/SL8JrQM3qvQJcBOs1d7IefJMyZzqM3EWBrDn/LWDt1BCGu4ASfg==
 
 "@tybys/wasm-util@^0.10.2", "@tybys/wasm-util@^0.10.3":
   version "0.10.3"
@@ -2611,9 +2606,9 @@ lines-and-columns@^1.1.6:
   integrity sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==
 
 lint-staged@^17.0.0:
-  version "17.5.0"
-  resolved "https://registry.yarnpkg.com/lint-staged/-/lint-staged-17.5.0.tgz#4a52ae41a703cd535dae321589c431c923c15f40"
-  integrity sha512-ah2qsNtvKP1+Ak4rAvEEIvcXDLjjbr/xmxCvlequxqEOFYk0qINcZcRxD3Ic8wRn7/oQ8+wC9s0DfDrdMVCRFg==
+  version "17.5.1"
+  resolved "https://registry.yarnpkg.com/lint-staged/-/lint-staged-17.5.1.tgz#a9222014fc2680934837b5b2214e98c050d2ea3e"
+  integrity sha512-7EDuco1xnBMeVpvAbeMq1U5KXwJGLmY8q6l+Ye78r36C4mPc+Vg1Z2SK8gHyRTyvPro90A0q5/FAZ+Au23d6QQ==
   dependencies:
     picomatch "^4.0.7"
     string-argv "^0.3.2"
@@ -2895,14 +2890,14 @@ pretty-format@^27.0.2:
     react-is "^17.0.1"
 
 primeicons@^8.0.0:
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/primeicons/-/primeicons-8.0.0.tgz#413bbcef56480beb8f96a5628f1de695011375c8"
-  integrity sha512-eZGk+Mgb4fE+LkJi9LvllbnB4RVUF9kzmnLVnT3ZMY6stqKVh7TUJ0mFoMNIEgTnJSvhaGcJotDiSvtVvkHd7g==
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/primeicons/-/primeicons-8.0.1.tgz#312c1d614ad1d01e68db6ccd12b06ea88ad59896"
+  integrity sha512-5O1zIpEKUk0pKfEQSdNVJRxPivo0271zAe7vnZGl+fughxixv4PnVou2J6pPy2wy83nrDn58BqeBwWnpCZmjkw==
 
 "primereact@>=10.9.2 <11.0.0":
-  version "10.9.8"
-  resolved "https://registry.yarnpkg.com/primereact/-/primereact-10.9.8.tgz#45a4f45252454f287fdce59f190905ce08de0a40"
-  integrity sha512-kX0hOce2WpG24CzRJWlHrRPsvbCsOyBDqsHCC/p4W8okxHIdkOxxIkQBUVO0gRuh0Lxl5o7lmEEtUMzrlicf8g==
+  version "10.9.9"
+  resolved "https://registry.yarnpkg.com/primereact/-/primereact-10.9.9.tgz#9f2f9dcd67aed7a441053b3adfafb088c186dddd"
+  integrity sha512-cM2mI1+usdIhQQQZre85Lv2GaiYrKaRlTUT+xXQSWwhPmel+YwhljNQ210mpjuY30aF3eQg6hU5Yl0VwJp0PWQ==
   dependencies:
     "@types/react-transition-group" "^4.4.1"
     react-transition-group "^4.4.1"
@@ -2959,9 +2954,9 @@ react-oidc-context@^3.3.0:
   integrity sha512-/Azvm9W4DhhOtSDBE73kFInh1b6zZRRfILKbgmk2syExMF0PCYJOn/dGdOOi2BFX8x0rCeUe45NXHU+/+xDcrQ==
 
 react-router@^8.2.0:
-  version "8.3.0"
-  resolved "https://registry.yarnpkg.com/react-router/-/react-router-8.3.0.tgz#b7bc69c3e3833ba79ebf892aef03d62b649508f8"
-  integrity sha512-qyPMvW83jGIct3yiieisxdk9M745anqhpIMKN5m1t6yBMfgVPpt77aHOqs5fUlEJRMCGffg9BaQLH9oPVOL7xQ==
+  version "8.3.1"
+  resolved "https://registry.yarnpkg.com/react-router/-/react-router-8.3.1.tgz#d704ca5a564e2bc89ce05a537ab577578e947b7b"
+  integrity sha512-TEOpiO2g0TJHEOJeRVv4amUFun9v1npCKszvcquNvzETUtJ8udV86ah5eFoHT7g26bsBvT6EiIhqulR8eDF++A==
   dependencies:
     cookie-es "^3.1.1"
 
