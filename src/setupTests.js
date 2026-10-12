@@ -18,3 +18,18 @@ vi.stubGlobal('localStorage', {
     removeItem: vi.fn(),
     clear: vi.fn()
 });
+// The real iconify-icon element fetches icons from the network and renders them on a timer,
+// which can fire after the jsdom environment is torn down ("document is not defined").
+vi.mock('@iconify-icon/react', async () => {
+    const React = await import('react');
+    return {
+        Icon: React.forwardRef(({ icon, className, inline, ...props }, ref) =>
+            React.createElement('iconify-icon', {
+                ...props,
+                ref,
+                icon: typeof icon === 'object' ? JSON.stringify(icon) : icon,
+                class: className,
+                inline: inline || undefined,
+            })),
+    };
+});
