@@ -67,7 +67,7 @@ describe('CategoryInput', () => {
 
     await waitFor(() => expect(mockedAxios.get).toHaveBeenCalledWith('categories', {
       "params": {
-        "name": "Category",
+        "name": "Selected Category",
         "numberOfResults": 20,
         "offset": 0,
       }
