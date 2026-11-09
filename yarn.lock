@@ -2557,14 +2557,7 @@ lz-string@^1.5.0:
   resolved "https://registry.yarnpkg.com/lz-string/-/lz-string-1.5.0.tgz#c1ab50f77887b712621201ba9fd4e3a6ed099941"
   integrity sha512-h5bgJWpxJNswbU7qCrV0tIKQCaS3blPDrqKWx+QxzuzL1zGUzij9XCWLrSLsJPu5t+eWA/ycetzYAO5IOMcWAQ==
 
-magic-string@^1.1.0:
-  version "1.4.5"
-  resolved "https://registry.yarnpkg.com/magic-string/-/magic-string-1.4.5.tgz#201c852d51eb0664d6f66cf7ab93b20b416e48d9"
-  integrity sha512-oLLC2+YvQUfAa+vxoufE/yc1icb87M9iXIRqAoR/2EhE/8cb3SF/+Gi0c2By1B+5Vz2e2vQtUvHiu1+63Znh+w==
-  dependencies:
-    "@jridgewell/sourcemap-codec" "^1.6.0"
-
-magic-string@^1.4.3:
+magic-string@^1.1.0, magic-string@^1.4.3:
   version "1.4.5"
   resolved "https://registry.yarnpkg.com/magic-string/-/magic-string-1.4.5.tgz#201c852d51eb0664d6f66cf7ab93b20b416e48d9"
   integrity sha512-oLLC2+YvQUfAa+vxoufE/yc1icb87M9iXIRqAoR/2EhE/8cb3SF/+Gi0c2By1B+5Vz2e2vQtUvHiu1+63Znh+w==
@@ -2764,7 +2757,7 @@ picomatch@^4.0.4, picomatch@^4.0.7:
   resolved "https://registry.yarnpkg.com/picomatch/-/picomatch-4.0.7.tgz#6313360034ccb36b3dc61ecbdff78121f90fe21f"
   integrity sha512-qcJu88Q2IWqJsDD529JKMdwGm/dvInW4HvQnRwiH9JtihJvzGOscDtHE3x1pBKeUOTysQ8kVmLnJ2kJu7yhcGA==
 
-postcss@^8.5.30:
+postcss@^8.5.32:
   version "8.5.32"
   resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.5.32.tgz#fbccef8388a0c77508c713bfd37728d646595803"
   integrity sha512-LJlKCCAUFKOuZxipUdYw1NzIITEsPcgyOG9LkvRJvuKj/bRzbuRY0ARXvL0pWGpsZvn8jku+LMep2eU0seHp8g==
@@ -2911,7 +2904,7 @@ resolve-from@^4.0.0:
   resolved "https://registry.yarnpkg.com/resolve-from/-/resolve-from-4.0.0.tgz#4abcd852ad32dd7baabfe9b40e00a36db5f392e6"
   integrity sha512-pb/MYmXstAkysRFx8piNI1tGFNQIFA3vkE3Gq4EuA1dF6gHp/+vgZqsCGJapvy8N3Q+4o7FwvquPJcnZ7RYy4g==
 
-rolldown@~1.2.14:
+rolldown@~1.2.16:
   version "1.2.16"
   resolved "https://registry.yarnpkg.com/rolldown/-/rolldown-1.2.16.tgz#6c99aafa32361d578fbd945aeb43e533bb8f4c28"
   integrity sha512-bWvlMpFKiTfDKfnK7FC2MPgPeWCf/Kpwsq49ApdW+FQaBZb6O6dZ4MAPbPUjp7hYQrw/RobqCzn64BRrQecGHw==
@@ -3370,14 +3363,14 @@ vite-tsconfig-paths@^6.0.0:
     tsconfck "^3.0.3"
 
 vite@^8.0.0:
-  version "8.3.5"
-  resolved "https://registry.yarnpkg.com/vite/-/vite-8.3.5.tgz#9614f66026cb92fe486cb9d3c90780b2a69fc85d"
-  integrity sha512-z1YpjieJ9g0ebTmQpLBv/oq9E3F9EIlOe+7LahW8SrE3LTiG3udBRUXQOlYXP9b+IC2q2phHeVxj9xGlw34OEQ==
+  version "8.3.6"
+  resolved "https://registry.yarnpkg.com/vite/-/vite-8.3.6.tgz#ff2eb6b0b18e910c08a79c59a80faebecd422808"
+  integrity sha512-UI7dK29NnS54Fk+mmo7o+jI6U8Fp7hDl+X5Q1k45WH+d4dSlbLVUETGQ+hfkNgvLQGyoElPj837nZyv4MBc0VA==
   dependencies:
     lightningcss "^1.33.0"
     picomatch "^4.0.7"
-    postcss "^8.5.30"
-    rolldown "~1.2.14"
+    postcss "^8.5.32"
+    rolldown "~1.2.16"
     tinyglobby "^0.2.17"
   optionalDependencies:
     fsevents "~2.3.3"
